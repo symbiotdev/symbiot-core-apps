@@ -30,6 +30,8 @@
     "expo-crypto": "*",
     "expo-blur": "*",
     "expo-build-properties": "*",
+    "expo-screen-orientation": "*",
+    "expo-linear-gradient": "*",
     "expo-constants": "*",
     "expo-camera": "*",
     "expo-font": "*",

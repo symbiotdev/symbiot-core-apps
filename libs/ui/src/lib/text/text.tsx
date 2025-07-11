@@ -1,50 +1,48 @@
-import { styled, Text as TamaguiText } from 'tamagui';
+import {
+  styled,
+  Text as TamaguiText,
+  TextNonStyleProps,
+  TextStyle,
+} from 'tamagui';
+
+export const defaultTextStyles: TextNonStyleProps & TextStyle = {
+  maxWidth: '100%',
+  allowFontScaling: true,
+  fontSize: 14,
+  userSelect: 'none',
+};
 
 export const LightText = styled(TamaguiText, {
-  maxWidth: '100%',
-  fontSize: 14,
-  allowFontScaling: true,
+  ...defaultTextStyles,
   fontFamily: 'BodyLight',
 }) as typeof TamaguiText;
 
 export const RegularText = styled(TamaguiText, {
-  maxWidth: '100%',
-  fontSize: 14,
-  allowFontScaling: true,
+  ...defaultTextStyles,
   fontFamily: 'BodyRegular',
 }) as typeof TamaguiText;
 
 export const MediumText = styled(TamaguiText, {
-  maxWidth: '100%',
-  fontSize: 14,
-  allowFontScaling: true,
+  ...defaultTextStyles,
   fontFamily: 'BodyMedium',
 }) as typeof TamaguiText;
 
 export const SemiBoldText = styled(TamaguiText, {
-  maxWidth: '100%',
-  fontSize: 14,
-  allowFontScaling: true,
+  ...defaultTextStyles,
   fontFamily: 'BodySemiBold',
 }) as typeof TamaguiText;
 
 export const BoldText = styled(TamaguiText, {
-  maxWidth: '100%',
-  fontSize: 14,
-  allowFontScaling: true,
+  ...defaultTextStyles,
   fontFamily: 'BodySemiBold',
 }) as typeof TamaguiText;
 
 export const ExtraBoldText = styled(TamaguiText, {
-  maxWidth: '100%',
-  fontSize: 14,
-  allowFontScaling: true,
+  ...defaultTextStyles,
   fontFamily: 'BodyExtraBold',
 }) as typeof TamaguiText;
 
 export const BlackText = styled(TamaguiText, {
-  maxWidth: '100%',
-  fontSize: 14,
-  allowFontScaling: true,
+  ...defaultTextStyles,
   fontFamily: 'BodyBlack',
 }) as typeof TamaguiText;

@@ -1,36 +1,32 @@
 import { styled, Text as TamaguiText } from 'tamagui';
+import { defaultTextStyles } from './text';
 
 export const H5 = styled(TamaguiText, {
-  maxWidth: '100%',
+  ...defaultTextStyles,
   fontSize: 12,
-  allowFontScaling: true,
   fontFamily: 'BodyMedium',
 }) as typeof TamaguiText;
 
 export const H4 = styled(TamaguiText, {
-  maxWidth: '100%',
+  ...defaultTextStyles,
   fontSize: 16,
-  allowFontScaling: true,
   fontFamily: 'BodyMedium',
 }) as typeof TamaguiText;
 
 export const H3 = styled(TamaguiText, {
-  maxWidth: '100%',
-  fontSize: 18,
-  allowFontScaling: true,
+  ...defaultTextStyles,
+  fontSize: 20,
   fontFamily: 'BodyMedium',
 }) as typeof TamaguiText;
 
 export const H2 = styled(TamaguiText, {
-  maxWidth: '100%',
-  fontSize: 20,
-  allowFontScaling: true,
+  ...defaultTextStyles,
+  fontSize: 24,
   fontFamily: 'BodySemiBold',
 }) as typeof TamaguiText;
 
 export const H1 = styled(TamaguiText, {
-  maxWidth: '100%',
-  fontSize: 24,
-  allowFontScaling: true,
+  ...defaultTextStyles,
+  fontSize: 28,
   fontFamily: 'BodySemiBold',
 }) as typeof TamaguiText;

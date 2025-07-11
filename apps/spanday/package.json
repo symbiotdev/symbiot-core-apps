@@ -19,6 +19,8 @@
     "@react-native-firebase/auth": "*",
     "@react-native-google-signin/google-signin": "*",
     "@react-native-async-storage/async-storage": "*",
+    "@tamagui/config": "*",
+    "tamagui": "*",
     "axios": "*",
     "socket.io-client": "*",
     "burnt": "*",

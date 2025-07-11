@@ -6,9 +6,9 @@
     "version": "2.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
-    "icon": "./assets/adaptive-icon.png",
+    "icon": "./assets/images/icon/adaptive-icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/icon/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -24,9 +24,9 @@
       "supportsTablet": true,
       "usesAppleSignIn": true,
       "icon": {
-        "dark": "./assets/ios-dark.png",
-        "light": "./assets/ios-light.png",
-        "tinted": "./assets/ios-tinted.png"
+        "dark": "./assets/images/icon/ios-dark.png",
+        "light": "./assets/images/icon/ios-light.png",
+        "tinted": "./assets/images/icon/ios-tinted.png"
       },
       "entitlements": {
         "com.apple.developer.networking.wifi-info": true
@@ -38,9 +38,9 @@
     "android": {
       "package": "com.spanday.pro",
       "versionCode": 12,
-      "icon": "./assets/ios-light.png",
+      "icon": "./assets/images/icon/ios-light.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon/adaptive-icon.png",
         "backgroundColor": "#080726"
       },
       "googleServicesFile": "./google/production/google-services.json",
@@ -52,7 +52,7 @@
       ]
     },
     "web": {
-      "favicon": "./assets/favicon.png",
+      "favicon": "./assets/images/icon/favicon.png",
       "bundler": "metro"
     },
     "plugins": [
@@ -65,12 +65,12 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/splash-icon-dark.png",
+          "image": "./assets/images/icon/splash-icon-dark.png",
           "imageWidth": 150,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "dark": {
-            "image": "./assets/splash-icon-light.png",
+            "image": "./assets/images/icon/splash-icon-light.png",
             "backgroundColor": "#000000"
           }
         }

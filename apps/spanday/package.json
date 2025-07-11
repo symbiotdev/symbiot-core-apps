@@ -18,7 +18,14 @@
     "@react-native-firebase/app": "*",
     "@react-native-firebase/auth": "*",
     "@react-native-google-signin/google-signin": "*",
+    "@react-native-async-storage/async-storage": "*",
+    "axios": "*",
+    "socket.io-client": "*",
+    "burnt": "*",
     "expo": "*",
+    "expo-application": "*",
+    "expo-device": "*",
+    "expo-crypto": "*",
     "expo-blur": "*",
     "expo-build-properties": "*",
     "expo-constants": "*",
@@ -39,7 +46,10 @@
     "react": "*",
     "react-dom": "*",
     "react-native": "*",
+    "react-i18next": "*",
+    "i18next": "*",
     "react-native-gesture-handler": "*",
+    "react-native-keyboard-controller": "*",
     "react-native-reanimated": "*",
     "react-native-safe-area-context": "*",
     "react-native-screens": "*",
@@ -47,6 +57,7 @@
     "react-native-svg-transformer": "*",
     "react-native-legal": "*",
     "react-native-web": "*",
-    "react-native-webview": "*"
+    "react-native-webview": "*",
+    "date-fns": "*"
   }
 }

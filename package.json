@@ -9,7 +9,14 @@
     "ios:symbiot:machine": "NODE_ENV=machine nx run-ios symbiot",
     "ios:symbiot:dev": "NODE_ENV=development nx run-ios symbiot",
     "android:symbiot:machine": "NODE_ENV=machine nx run-android symbiot",
-    "android:symbiot:dev": "NODE_ENV=development nx run-android symbiot"
+    "android:symbiot:dev": "NODE_ENV=development nx run-android symbiot",
+    "//SPANDAY": "--------------------SPANDAY---------------------",
+    "start:spanday:machine": "NODE_ENV=machine nx start spanday --clear",
+    "start:spanday:dev": "NODE_ENV=development nx start spanday --clear",
+    "ios:spanday:machine": "NODE_ENV=machine nx run-ios spanday",
+    "ios:spanday:dev": "NODE_ENV=development nx run-ios spanday",
+    "android:spanday:machine": "NODE_ENV=machine nx run-android spanday",
+    "android:spanday:dev": "NODE_ENV=development nx run-android spanday"
   },
   "private": true,
   "dependencies": {

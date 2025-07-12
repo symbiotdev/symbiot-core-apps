@@ -1,0 +1,9 @@
+{
+  "name": "dance-studio",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/dance-studio/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project dance-studio --web",
+  "targets": {}
+}

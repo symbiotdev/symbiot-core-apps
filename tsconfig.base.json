@@ -16,9 +16,11 @@
     "baseUrl": ".",
     "paths": {
       "@symbiot-core-apps/api": ["libs/api/src/index.ts"],
+      "@symbiot-core-apps/auth": ["libs/auth/src/index.ts"],
       "@symbiot-core-apps/i18n": ["libs/i18n/src/index.ts"],
       "@symbiot-core-apps/onboarding": ["libs/onboarding/src/index.ts"],
       "@symbiot-core-apps/shared": ["libs/shared/src/index.ts"],
+      "@symbiot-core-apps/store": ["libs/store/src/index.ts"],
       "@symbiot-core-apps/ui": ["libs/ui/src/index.ts"]
     }
   },

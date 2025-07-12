@@ -1,9 +1,12 @@
 import { Onboarding, OnboardingSlide } from '@symbiot-core-apps/onboarding';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useOnboardingState } from '@symbiot-core-apps/store';
+import { Redirect } from 'expo-router';
 
 export default () => {
   const { t } = useTranslation();
+  const { finished: onboardingFinished } = useOnboardingState();
 
   const slides: OnboardingSlide[] = useMemo(
     () => [
@@ -34,6 +37,10 @@ export default () => {
     ],
     []
   );
+
+  if (onboardingFinished) {
+    return <Redirect href="auth" />;
+  }
 
   return <Onboarding slides={slides} />;
 };

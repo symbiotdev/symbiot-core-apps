@@ -29,6 +29,7 @@
     "expo-device": "*",
     "expo-crypto": "*",
     "expo-blur": "*",
+    "expo-video": "*",
     "expo-build-properties": "*",
     "expo-screen-orientation": "*",
     "expo-linear-gradient": "*",
@@ -62,6 +63,7 @@
     "react-native-legal": "*",
     "react-native-web": "*",
     "react-native-webview": "*",
+    "zustand": "*",
     "date-fns": "*"
   }
 }

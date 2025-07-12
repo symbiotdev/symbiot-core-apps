@@ -1,5 +1,6 @@
 {
   "expo": {
+    "newArchEnabled": true,
     "name": "Spanday PRO",
     "slug": "spanday-pro",
     "scheme": "spanday-pro",
@@ -120,6 +121,13 @@
           "photosPermission": "Allow $(PRODUCT_NAME) to access your photos to display and manage your media for sharing or editing within the app.",
           "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos to your device after editing or creating new media in the app.",
           "isAccessMediaLocationEnabled": true
+        }
+      ],
+      [
+        "expo-video",
+        {
+          "supportsBackgroundPlayback": true,
+          "supportsPictureInPicture": true
         }
       ]
     ],

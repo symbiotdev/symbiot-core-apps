@@ -1,5 +1,6 @@
 {
   "expo": {
+    "newArchEnabled": true,
     "name": "Symbiot",
     "slug": "symbiot",
     "version": "1.0.0",

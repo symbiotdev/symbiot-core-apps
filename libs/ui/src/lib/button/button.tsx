@@ -8,24 +8,32 @@ export const Button = memo(
     label,
     loading,
     icon,
+    type,
     ...xStackProps
   }: XStackProps & {
     loading?: boolean;
     label?: string;
-    icon?: ReactElement<{ color?: string; size?: string }>;
+    icon?: ReactElement<{ color?: string; size?: number }>;
     color?: ColorTokens;
+    type?: 'outlined';
   }) => {
     const disabled = xStackProps.disabled || loading;
     const color = xStackProps.color || '$color1';
+    const backgroundColor = !type ? '$color' : 'transparent';
+    const borderWidth = type === 'outlined' ? 1 : 0;
+    const borderColor = '$color1'
 
     return (
       <XStack
-        backgroundColor="$color"
+        backgroundColor={backgroundColor}
+        borderWidth={borderWidth}
+        borderColor={borderColor}
         borderRadius="$4"
         justifyContent="center"
         alignItems="center"
         padding="$3"
-        gap="$2"
+        minHeight={44}
+        gap="$3"
         {...xStackProps}
         disabled={disabled}
         cursor={disabled ? 'auto' : 'pointer'}

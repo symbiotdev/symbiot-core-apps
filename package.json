@@ -2,6 +2,7 @@
   "name": "@symbiot-core-apps/monorepo",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "//SYMBIOT": "--------------------SYMBIOT---------------------",
     "start:symbiot:machine": "NODE_ENV=machine nx start symbiot --clear",
@@ -25,7 +26,8 @@
     "android:dance-studio:machine": "NODE_ENV=machine nx run-android dance-studio --device",
     "android:dance-studio:dev": "NODE_ENV=development nx run-android dance-studio --device",
     "//GENERATORS": "--------------------GENERATORS---------------------",
-    "generate": "node tools/scripts/generate.js"
+    "generate": "node tools/scripts/generate.js",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@expo/metro-config": "~0.20.17",
@@ -64,6 +66,7 @@
     "expo-splash-screen": "^0.30.10",
     "expo-status-bar": "~2.2.3",
     "expo-symbols": "~0.4.5",
+    "expo-video": "^2.2.2",
     "expo-web-browser": "~14.2.0",
     "i18next": "^25.3.2",
     "react": "19.0.0",
@@ -81,7 +84,8 @@
     "react-native-web": "~0.20.0",
     "react-native-webview": "13.13.5",
     "socket.io-client": "^4.8.1",
-    "tamagui": "^1.131.3"
+    "tamagui": "^1.131.3",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",
@@ -115,6 +119,7 @@
     "metro-config": "^0.82.5",
     "metro-resolver": "^0.82.5",
     "nx": "21.2.2",
+    "patch-package": "^8.0.0",
     "prettier": "^2.6.2",
     "react-test-renderer": "~19.0.0",
     "ts-jest": "^29.4.0",

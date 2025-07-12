@@ -4,8 +4,8 @@
     "slug": "spanday-pro",
     "scheme": "spanday-pro",
     "version": "2.0.0",
-    "orientation": "portrait",
     "userInterfaceStyle": "automatic",
+    "orientation": "default",
     "icon": "./assets/images/icon/adaptive-icon.png",
     "splash": {
       "image": "./assets/images/icon/splash.png",
@@ -23,6 +23,7 @@
       "googleServicesFile": "./google/production/GoogleService-Info.plist",
       "supportsTablet": true,
       "usesAppleSignIn": true,
+      "requireFullScreen": true,
       "icon": {
         "dark": "./assets/images/icon/ios-dark.png",
         "light": "./assets/images/icon/ios-light.png",
@@ -62,6 +63,12 @@
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
       "@react-native-google-signin/google-signin",
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
+      ],
       [
         "expo-splash-screen",
         {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Appearance } from 'react-native';
 
-type Scheme = 'light' | 'dark';
+export type Scheme = 'light' | 'dark';
 
 const defaultScheme = 'light';
 

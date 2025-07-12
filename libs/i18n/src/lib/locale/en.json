@@ -1,3 +1,49 @@
 {
-
+  "shared": {
+    "next": "Next"
+  },
+  "spanday": {
+    "onboarding": {
+      "slides": {
+        "slide0": {
+          "title": "For service pros",
+          "subtitle": "Work solo or with a team - everything in one place."
+        },
+        "slide1": {
+          "title": "Your schedule, your way",
+          "subtitle": "Create one-on-one or group bookings."
+        },
+        "slide2": {
+          "title": "Clients & payments",
+          "subtitle": "Track attendance and keep payments on point."
+        },
+        "slide3": {
+          "title": "Team on board",
+          "subtitle": "Invite teammates and manage business together."
+        }
+      }
+    }
+  },
+  "dance_studio": {
+    "onboarding": {
+      "slides": {
+        "slide0": {
+          "title": "For those who live to dance",
+          "subtitle": "The all-in-one assistant for dance studios and solo choreographers."
+        },
+        "slide1": {
+          "title": "Stay in control of your schedule",
+          "subtitle": "Easily create and manage private and group classes."
+        },
+        "slide2": {
+          "title": "Track attendance & payments",
+          "subtitle": "Monitor student check-ins and transactions."
+        },
+        "slide3": {
+          "title": "A team that moves in sync",
+          "subtitle": "Invite trainers and manage classes together."
+        }
+      }
+    }
+  }
 }

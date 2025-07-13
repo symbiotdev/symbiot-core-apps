@@ -2,6 +2,16 @@
   "shared": {
     "next": "Next"
   },
+  "auth": {
+    "workspace": {
+      "button": {
+        "continue_with_apple": "Continue with Apple",
+        "continue_with_google": "Continue with Google",
+        "sign_up_with_email": "Sign up with email",
+        "sign_in": "Sign in"
+      }
+    }
+  },
   "spanday": {
     "onboarding": {
       "slides": {
@@ -22,9 +32,13 @@
           "subtitle": "Invite teammates and manage business together."
         }
       }
+    },
+    "auth": {
+      "title": "Be PRO in your niche",
+      "subtitle": "Smart Scheduling for Your Business"
     }
   },
-  "dance_studio": {
+  "dance_hub": {
     "onboarding": {
       "slides": {
         "slide0": {

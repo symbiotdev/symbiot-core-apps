@@ -1,0 +1,9 @@
+{
+  "name": "dance-hub",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/dance-hub/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project dance-hub --web",
+  "targets": {}
+}

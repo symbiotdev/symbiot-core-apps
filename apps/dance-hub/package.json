@@ -1,9 +1,9 @@
 {
-  "name": "dance-studio",
+  "name": "dance-hub",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/dance-studio",
+    "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/dance-hub",
     "android": "expo run:android",
     "ios": "expo run:ios"
   },
@@ -64,5 +64,6 @@
     "react-native-webview": "*",
     "zustand": "*",
     "date-fns": "*"
-  }
+  },
+  "devDependencies": {}
 }

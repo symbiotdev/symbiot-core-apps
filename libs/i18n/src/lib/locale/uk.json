@@ -2,6 +2,16 @@
   "shared": {
     "next": "Далі"
   },
+  "auth": {
+    "workspace": {
+      "button": {
+        "continue_with_apple": "Продовжити з Apple",
+        "continue_with_google": "Продовжити з Google",
+        "sign_up_with_email": "Зареєструватися з email",
+        "sign_in": "Увійти"
+      }
+    }
+  },
   "spanday": {
     "onboarding": {
       "slides": {
@@ -22,9 +32,13 @@
           "subtitle": "Розширюй команду та керуйте бізнесом разом."
         }
       }
+    },
+    "auth": {
+      "title": "Стань PRO у своїй ніші",
+      "subtitle": "Сучасне рішення для вашого бізнесу"
     }
   },
-  "dance_studio": {
+  "dance_hub": {
     "onboarding": {
       "slides": {
         "slide0": {

@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useState } from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import { useTheme, View, XStack } from 'tamagui';
-import { Button, H2, H4 } from '@symbiot-core-apps/ui';
+import { Button, H2, RegularText } from '@symbiot-core-apps/ui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image, ImageSource } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -111,25 +111,19 @@ export const Onboarding = memo(({ slides }: { slides: OnboardingSlide[] }) => {
         </GestureDetector>
       </GestureHandlerRootView>
 
-      <XStack
-        width="100%"
-        padding="$4"
-        gap="$2"
-        marginLeft={left}
-        marginRight={right}
-      >
-        {slides.map((slide, index) => (
-          <View
-            key={slide.id}
-            borderRadius="$4"
-            width="$3"
-            height="$0.5"
-            backgroundColor={index <= activeSlideIndex ? '$color' : '$color8'}
-          />
-        ))}
-      </XStack>
+      <View padding="$4" gap="$5" marginLeft={left} marginRight={right}>
+        <XStack width="100%" gap="$2">
+          {slides.map((slide, index) => (
+            <View
+              key={slide.id}
+              borderRadius="$4"
+              width="$3"
+              height="$0.5"
+              backgroundColor={index <= activeSlideIndex ? '$color' : '$color8'}
+            />
+          ))}
+        </XStack>
 
-      <View padding="$4" marginLeft={left} marginRight={right}>
         <Button label={t('shared.next')} onPress={onNextPress} />
       </View>
     </View>
@@ -171,17 +165,14 @@ const Slide = memo(
         </View>
 
         <View
-          maxWidth={768}
-          width="100%"
-          paddingTop="$4"
+          paddingTop="$2"
+          gap="$1"
           paddingHorizontal="$4"
-          paddingBottom="$2"
-          gap="$2"
           marginTop="auto"
           marginLeft={left}
           marginRight={right}
         >
-          <H4>{slide.title}</H4>
+          <RegularText>{slide.title}</RegularText>
           <H2>{slide.subtitle}</H2>
         </View>
       </Animated.View>

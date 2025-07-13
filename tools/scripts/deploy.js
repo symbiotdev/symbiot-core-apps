@@ -8,26 +8,30 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 (async () => {
-  const app = await select({
-    message: 'Application',
-    choices: [
-      {
-        name: 'DanceHub',
-        value: 'dance-hub',
-      },
-      {
-        name: 'Spanday',
-        value: 'spanday',
-      },
-      {
-        name: 'Symbiot',
-        value: 'symbiot',
-      },
-    ],
-  });
+  const app =
+    process.env['NODE_APP'] ||
+    (await select({
+      message: 'Application',
+      choices: [
+        {
+          name: 'DanceHub',
+          value: 'dance-hub',
+        },
+        {
+          name: 'Spanday',
+          value: 'spanday',
+        },
+        {
+          name: 'Symbiot',
+          value: 'symbiot',
+        },
+      ],
+    }));
+
+  console.log(`Deploying ${app}... 📦⬆️🌐`);
 
   const env = await select({
-    message: 'Mode',
+    message: 'Environment',
     choices: [
       {
         name: 'Development',

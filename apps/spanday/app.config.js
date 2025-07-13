@@ -1,5 +1,5 @@
 export default ({ config }) => {
-  const env = process.env.APP_ENV || 'production';
+  const env = process.env.NODE_ENV || 'production';
   const name = env === 'production' ? 'Spanday PRO' : 'Spanday PRO Dev';
   const bundleId =
     env === 'production' ? 'com.spanday.pro' : 'com.spandaydev.pro';

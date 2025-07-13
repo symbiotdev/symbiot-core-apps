@@ -1,1 +1,1 @@
-export * from './lib/onboarding';
+export * from './lib/components/onboarding';

@@ -34,6 +34,8 @@ export const Button = memo(
         alignItems="center"
         padding="$3"
         minHeight={44}
+        maxWidth={400}
+        width="100%"
         gap="$3"
         {...xStackProps}
         disabled={disabled}

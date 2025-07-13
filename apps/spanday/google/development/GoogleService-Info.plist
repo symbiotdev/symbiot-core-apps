@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>268707580330-734kbc6la5p64dmi3ski8aoa6ch1c6c2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.268707580330-734kbc6la5p64dmi3ski8aoa6ch1c6c2</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCn7lfWxFcalH3C6XmH9h9qoF5Zxt-7dD4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>268707580330</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.spandaydev.pro</string>
+	<key>PROJECT_ID</key>
+	<string>spanday-dev</string>
+	<key>STORAGE_BUCKET</key>
+	<string>spanday-dev.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:268707580330:ios:4984b733881c4c04b903d3</string>
+</dict>
+</plist>

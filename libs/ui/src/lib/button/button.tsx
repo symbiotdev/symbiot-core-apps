@@ -1,5 +1,5 @@
 import { cloneElement, memo, ReactElement } from 'react';
-import { RegularText } from '../text/text';
+import { MediumText } from '../text/text';
 import { ColorTokens, XStack, XStackProps } from 'tamagui';
 import { Spinner } from '../loading/spinner';
 
@@ -18,17 +18,18 @@ export const Button = memo(
     type?: 'outlined';
   }) => {
     const disabled = xStackProps.disabled || loading;
-    const color = xStackProps.color || '$color1';
+    const color =
+      xStackProps.color || (type === 'outlined' ? '$color' : '$color1');
     const backgroundColor = !type ? '$color' : 'transparent';
-    const borderWidth = type === 'outlined' ? 1 : 0;
-    const borderColor = '$color1'
+    const borderWidth = type === 'outlined' ? 1.5 : 0;
+    const borderColor = '$color';
 
     return (
       <XStack
         backgroundColor={backgroundColor}
         borderWidth={borderWidth}
         borderColor={borderColor}
-        borderRadius="$4"
+        borderRadius="$10"
         justifyContent="center"
         alignItems="center"
         padding="$3"
@@ -48,7 +49,7 @@ export const Button = memo(
                 color,
               })}
 
-            {!!label && <RegularText color={color}>{label}</RegularText>}
+            {!!label && <MediumText color={color}>{label}</MediumText>}
           </>
         )}
       </XStack>

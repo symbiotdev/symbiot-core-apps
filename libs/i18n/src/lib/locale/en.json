@@ -116,7 +116,7 @@
         }
       }
     },
-    "verify_sign_up": {
+    "verify_email": {
       "title": "Email Verification",
       "subtitle": "A verification code has been sent to {{email}}.",
       "your_email": "your email",

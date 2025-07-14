@@ -2,7 +2,7 @@ import { ImageSource } from 'expo-image';
 import { useCallback } from 'react';
 import { AuthVerifyView } from './auth-verify-view';
 
-export const VerifySignUp = ({
+export const VerifyForgotPassword = ({
   secret,
   email,
   logoSource,

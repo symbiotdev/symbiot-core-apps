@@ -3,7 +3,7 @@ import { defaultTextStyles } from './text';
 
 export const Error = styled(TamaguiText, {
   ...defaultTextStyles,
-  fontSize: 12,
+  fontSize: 14,
   color: '$error',
 }) as typeof TamaguiText;
 

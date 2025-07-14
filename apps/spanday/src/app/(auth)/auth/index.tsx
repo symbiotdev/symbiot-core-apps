@@ -14,11 +14,11 @@ export default () => {
   return (
     <Auth
       textColor="white"
-      blurhash="|02~GmIo00-p^+E1IU-pt7-oR*E1xu-pIoIo%2t79Zt7-;IoIU%MtRM{WB4-s:?bM{E1%2xuM{Rj%MWBRit7W;Rjs.ozS2-;RkD%xu%MM_RPtRfltRjZRiX8t7jFR*bIofE1s:%MM{M{%2t7IoayD%of-;M{E1%2%2IoR*"
-      title={t('dance_hub.auth.title')}
-      subtitle={t('dance_hub.auth.subtitle')}
-      videoSource={require('../../../assets/video/auth/bg.mp4')}
-      logoSource={require('../../../assets/images/icon/logo.png')}
+      blurhash="|9C6if%M.7tQx]j]xvNFWG.8jX_4RjRiM_a#axRh?v%Nx^x]oztRj]M{RhtAWFtQ%NRibGt6n,fAW.WBkDogoNj]RiM^RiRja$a$WAk8ofa$V[ofxwWXW9WTn%j?axjvait3oHWBV@jbogWAf4j[f4ogo#W9j;j=aiohad"
+      title={t('spanday.auth.title')}
+      subtitle={t('spanday.auth.subtitle')}
+      videoSource={require('../../../../assets/video/auth/bg.mp4')}
+      logoSource={require('../../../../assets/images/icon/logo.png')}
     />
   );
 };

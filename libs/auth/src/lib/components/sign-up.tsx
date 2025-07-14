@@ -76,6 +76,15 @@ export const SignUp = ({ logoSource }: { logoSource: ImageSource }) => {
 
   const onSubmit = useCallback(async (data: AccountSignUpData) => {
     console.log('data', data);
+
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    router.push({
+      pathname: `/sign-up/123/verify`,
+      params: {
+        email: data.email,
+      },
+    });
   }, []);
 
   const openPrivacyPolicy = useCallback(

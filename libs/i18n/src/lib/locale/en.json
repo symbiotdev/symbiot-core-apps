@@ -115,6 +115,21 @@
           }
         }
       }
+    },
+    "verify_sign_up": {
+      "title": "Email Verification",
+      "subtitle": "A verification code has been sent to {{email}}.",
+      "your_email": "your email",
+      "resend": {
+        "message": "Didn't receive the email? Please check spam folder or",
+        "button": {
+          "label": "Resend code"
+        }
+      },
+      "external_link": {
+        "message": "Used an incorrect email?",
+        "link": "Change"
+      }
     }
   },
   "spanday": {

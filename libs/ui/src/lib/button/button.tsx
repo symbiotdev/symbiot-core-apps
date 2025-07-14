@@ -36,11 +36,15 @@ export const Button = memo(
         minHeight={46}
         width="100%"
         gap="$3"
+        cursor="auto"
         pressStyle={{ opacity: 0.9 }}
+        disabledStyle={{
+          cursor: 'auto',
+          opacity: 0.9,
+          backgroundColor: '$disabled'
+        }}
         {...xStackProps}
         disabled={disabled}
-        cursor={disabled ? 'auto' : 'pointer'}
-        opacity={disabled ? 0.9 : 1}
       >
         {loading ? (
           <Spinner color={color} />

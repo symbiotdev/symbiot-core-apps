@@ -13,6 +13,7 @@ import {
   openBrowserAsync,
   WebBrowserPresentationStyle,
 } from 'expo-web-browser';
+import { router } from 'expo-router';
 
 export const SignUp = ({ logoSource }: { logoSource: ImageSource }) => {
   const { t } = useTranslation();
@@ -34,6 +35,12 @@ export const SignUp = ({ logoSource }: { logoSource: ImageSource }) => {
       yup
         .object()
         .shape({
+          firstname: yup
+            .string()
+            .required(t('auth.sign_up.form.firstname.error.required')),
+          lastname: yup
+            .string()
+            .required(t('auth.sign_up.form.lastname.error.required')),
           email: yup
             .string()
             .required(t('auth.sign_up.form.email.error.required'))
@@ -87,14 +94,70 @@ export const SignUp = ({ logoSource }: { logoSource: ImageSource }) => {
     []
   );
 
+  const signIn = useCallback(() => {
+    router.push('/sign-in');
+  }, []);
+
   return (
     <AuthFormView
       title={t('auth.sign_up.title')}
       subtitle={t('auth.sign_up.subtitle')}
       buttonLabel={t('shared.continue')}
       logoSource={logoSource}
+      loading={isSubmitting}
+      disabled={isSubmitting}
+      externalLink={
+        <RegularText textAlign="center">
+          {t('auth.sign_up.external_link.already_have_account')}{' '}
+          <Link disabled={isSubmitting} onPress={signIn}>
+            {t('auth.sign_up.external_link.sign_in')}
+          </Link>
+        </RegularText>
+      }
       onButtonPress={handleSubmit(onSubmit)}
     >
+      <Controller
+        control={control}
+        name="firstname"
+        render={({
+          field: { value, onBlur, onChange },
+          fieldState: { error },
+        }) => (
+          <Input
+            value={value}
+            error={error?.message}
+            enterKeyHint="next"
+            autoCapitalize="sentences"
+            disabled={isSubmitting}
+            label={t('auth.sign_up.form.firstname.label')}
+            placeholder={t('auth.sign_up.form.firstname.placeholder')}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="lastname"
+        render={({
+          field: { value, onBlur, onChange },
+          fieldState: { error },
+        }) => (
+          <Input
+            value={value}
+            error={error?.message}
+            enterKeyHint="next"
+            autoCapitalize="sentences"
+            disabled={isSubmitting}
+            label={t('auth.sign_up.form.lastname.label')}
+            placeholder={t('auth.sign_up.form.lastname.placeholder')}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
+        )}
+      />
+
       <Controller
         control={control}
         name="email"

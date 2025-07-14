@@ -10,6 +10,7 @@ export default () => {
         options={{ headerShown: false, animation: 'none' }}
       />
       <Stack.Screen name="sign-up" />
+      <Stack.Screen name="sign-in" />
     </Stack>
   );
 };

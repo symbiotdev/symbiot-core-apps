@@ -5,7 +5,7 @@ import {
   PageView,
   RegularText,
 } from '@symbiot-core-apps/ui';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, ReactElement } from 'react';
 import { View } from 'tamagui';
 import { Image, ImageSource } from 'expo-image';
 import { StyleSheet } from 'react-native';
@@ -16,6 +16,7 @@ export const AuthFormView = ({
   subtitle,
   buttonLabel,
   logoSource,
+  externalLink,
   error,
   loading,
   disabled,
@@ -25,13 +26,14 @@ export const AuthFormView = ({
   subtitle: string;
   buttonLabel: string;
   logoSource: ImageSource;
+  externalLink?: ReactElement;
   error?: string;
   loading?: boolean;
   disabled?: boolean;
   onButtonPress: () => Promise<void>;
 }>) => {
   return (
-    <PageView scrollable withKeyboard>
+    <PageView scrollable withKeyboard lazy={false}>
       <View
         flex={1}
         gap="$3"
@@ -59,6 +61,8 @@ export const AuthFormView = ({
           label={buttonLabel}
           onPress={onButtonPress}
         />
+
+        {externalLink}
       </View>
     </PageView>
   );

@@ -8,6 +8,7 @@ export const Error = styled(TamaguiText, {
 }) as typeof TamaguiText;
 
 export const Link = styled(TamaguiText, {
+  cursor: 'pointer',
   color: '$link',
 }) as typeof TamaguiText;
 

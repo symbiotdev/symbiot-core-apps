@@ -20,7 +20,25 @@
     "sign_up": {
       "title": "Створити акаунт",
       "subtitle": "Введіть адресу електронної пошти та пароль",
+      "external_link": {
+        "already_have_account": "Уже маєте акаунт?",
+        "sign_in": "Увійти"
+      },
       "form": {
+        "firstname": {
+          "label": "",
+          "placeholder": "Імʼя",
+          "error": {
+            "required": "Імʼя обовʼязкове поле для введення"
+          }
+        },
+        "lastname": {
+          "label": "",
+          "placeholder": "Прізвище",
+          "error": {
+            "required": "Прізвище обовʼязкове поле для введення"
+          }
+        },
         "email": {
           "label": "",
           "placeholder": "Email",
@@ -49,6 +67,33 @@
           "prefix": "I agree to the ",
           "error": {
             "required": "Please agree to hte Privacy Policy and Terms & Conditions to proceed"
+          }
+        }
+      }
+    },
+    "sign_in": {
+      "title": "З поверненням",
+      "subtitle": "Введіть адресу електронної пошти та пароль",
+      "forgot_password_link": "Забули пароль?",
+      "external_link": {
+        "already_have_account": "Немає акаунту?",
+        "sign_up": "Зареєстуватись"
+      },
+      "form": {
+        "email": {
+          "label": "",
+          "placeholder": "Email",
+          "error": {
+            "required": "Email обовʼязкове поле для введення",
+            "invalid_format": "Невалідний формат"
+          }
+        },
+        "password": {
+          "label": "",
+          "placeholder": "Пароль",
+          "error": {
+            "required": "Пароль обовʼязкове поле для введення",
+            "invalid_format": "Пароль повинен містити 8 або більше символів, включаючи принаймні 1 цифру"
           }
         }
       }

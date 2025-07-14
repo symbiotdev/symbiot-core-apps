@@ -20,7 +20,25 @@
     "sign_up": {
       "title": "Create account",
       "subtitle": "Add your email address and password",
+      "external_link": {
+        "already_have_account": "Already have an account?",
+        "sign_in": "Sign in"
+      },
       "form": {
+        "firstname": {
+          "label": "",
+          "placeholder": "First name",
+          "error": {
+            "required": "First name is required"
+          }
+        },
+        "lastname": {
+          "label": "",
+          "placeholder": "Last name",
+          "error": {
+            "required": "Last name is required"
+          }
+        },
         "email": {
           "label": "",
           "placeholder": "Email",
@@ -49,6 +67,33 @@
           "prefix": "Я погоджуюсь з ",
           "error": {
             "required": "Необхідно відтвердити Privacy Policy та Terms & Conditions"
+          }
+        }
+      }
+    },
+    "sign_in": {
+      "title": "Welcome back",
+      "subtitle": "Add your email address and password",
+      "forgot_password_link": "Forgot password?",
+      "external_link": {
+        "already_have_account": "Don't have an account?",
+        "sign_up": "Sign up"
+      },
+      "form": {
+        "email": {
+          "label": "",
+          "placeholder": "Email",
+          "error": {
+            "required": "Email is required",
+            "invalid_format": "Invalid format"
+          }
+        },
+        "password": {
+          "label": "",
+          "placeholder": "Password",
+          "error": {
+            "required": "Password is required",
+            "invalid_format": "Please enter a password with 8 or more characters, including at least 1 number"
           }
         }
       }

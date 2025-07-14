@@ -110,6 +110,6 @@ const PageContent = (props: ViewProps) => {
 
 const styles = StyleSheet.create({
   FullScreen: {
-    flex: 1,
+    flexGrow: 1,
   },
 });

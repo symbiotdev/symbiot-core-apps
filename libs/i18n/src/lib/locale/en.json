@@ -130,6 +130,28 @@
         "message": "Used an incorrect email?",
         "link": "Change"
       }
+    },
+    "reset_password": {
+      "title": "Reset password",
+      "subtitle": "Enter new password",
+      "form": {
+        "password": {
+          "label": "",
+          "placeholder": "Password",
+          "error": {
+            "required": "Password is required",
+            "invalid_format": "Please enter a password with 8 or more characters, including at least 1 number"
+          }
+        },
+        "confirm_password": {
+          "label": "",
+          "placeholder": "Confirm password",
+          "error": {
+            "required": "Confirm password is required",
+            "match": "Passwords do not match"
+          }
+        }
+      }
     }
   },
   "spanday": {

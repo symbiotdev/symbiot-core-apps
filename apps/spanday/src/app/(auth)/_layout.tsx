@@ -11,6 +11,7 @@ export default () => {
       />
       <Stack.Screen name="forgot-password/[secret]/verify" />
       <Stack.Screen name="forgot-password/index" />
+      <Stack.Screen name="reset-password/[secret]/index" />
       <Stack.Screen name="sign-up/[secret]/verify" />
       <Stack.Screen name="sign-up/index" />
       <Stack.Screen name="sign-in/index" />

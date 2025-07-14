@@ -13,3 +13,7 @@ export type AccountSignInData = {
 export type AccountForgotPasswordData = {
   email: string;
 };
+
+export type AccountResetPasswordData = {
+  password: string;
+};

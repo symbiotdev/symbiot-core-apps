@@ -78,6 +78,7 @@ export const PageView = ({
   if (scrollable) {
     return (
       <ScrollView
+        keyboardShouldPersistTaps="handled"
         showsHorizontalScrollIndicator={isWeb}
         showsVerticalScrollIndicator={isWeb}
         contentContainerStyle={styles.FullScreen}

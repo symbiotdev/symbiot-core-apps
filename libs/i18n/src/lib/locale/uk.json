@@ -97,6 +97,24 @@
           }
         }
       }
+    },
+    "forgot_password": {
+      "title": "Забули пароль?",
+      "subtitle": "Введіть адресу електронної вашого акаунту",
+      "external_link": {
+        "already_have_account": "Немає акаунту?",
+        "sign_up": "Зареєстуватись"
+      },
+      "form": {
+        "email": {
+          "label": "",
+          "placeholder": "Email",
+          "error": {
+            "required": "Email обовʼязкове поле для введення",
+            "invalid_format": "Невалідний формат"
+          }
+        }
+      }
     }
   },
   "spanday": {

@@ -117,7 +117,7 @@ export const SignIn = ({ logoSource }: { logoSource: ImageSource }) => {
 
       <Link
         alignSelf="flex-end"
-        disabled={!isSubmitting}
+        disabled={isSubmitting}
         onPress={forgotPassword}
       >
         {t('auth.sign_in.forgot_password_link')}

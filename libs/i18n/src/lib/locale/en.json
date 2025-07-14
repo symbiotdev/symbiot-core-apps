@@ -97,6 +97,24 @@
           }
         }
       }
+    },
+    "forgot_password": {
+      "title": "Forgot password?",
+      "subtitle": "Enter your account's email address",
+      "external_link": {
+        "already_have_account": "Don't have an account?",
+        "sign_up": "Sign up"
+      },
+      "form": {
+        "email": {
+          "label": "",
+          "placeholder": "Email",
+          "error": {
+            "required": "Email is required",
+            "invalid_format": "Invalid format"
+          }
+        }
+      }
     }
   },
   "spanday": {

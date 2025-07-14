@@ -9,3 +9,7 @@ export type AccountSignInData = {
   email: string;
   password: string;
 };
+
+export type AccountForgotPasswordData = {
+  email: string;
+};

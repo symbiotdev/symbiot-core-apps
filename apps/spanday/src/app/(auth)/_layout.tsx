@@ -9,6 +9,7 @@ export default () => {
         name="auth"
         options={{ headerShown: false, animation: 'none' }}
       />
+      <Stack.Screen name="forgot-password" />
       <Stack.Screen name="sign-up" />
       <Stack.Screen name="sign-in" />
     </Stack>

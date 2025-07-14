@@ -1,6 +1,12 @@
 {
   "shared": {
-    "next": "Next"
+    "next": "Next",
+    "continue": "Continue",
+    "and": "and",
+    "docs": {
+      "privacy_policy": "Privacy Policy",
+      "terms_conditions": "Terms & Conditions"
+    }
   },
   "auth": {
     "workspace": {
@@ -9,6 +15,42 @@
         "continue_with_google": "Continue with Google",
         "sign_up_with_email": "Sign up with email",
         "sign_in": "Sign in"
+      }
+    },
+    "sign_up": {
+      "title": "Create account",
+      "subtitle": "Add your email address and password",
+      "form": {
+        "email": {
+          "label": "",
+          "placeholder": "Email",
+          "error": {
+            "required": "Email is required",
+            "invalid_format": "Invalid format"
+          }
+        },
+        "password": {
+          "label": "",
+          "placeholder": "Password",
+          "error": {
+            "required": "Password is required",
+            "invalid_format": "Please enter a password with 8 or more characters, including at least 1 number"
+          }
+        },
+        "confirm_password": {
+          "label": "",
+          "placeholder": "Confirm password",
+          "error": {
+            "required": "Confirm password is required",
+            "match": "Passwords do not match"
+          }
+        },
+        "agreement": {
+          "prefix": "Я погоджуюсь з ",
+          "error": {
+            "required": "Необхідно відтвердити Privacy Policy та Terms & Conditions"
+          }
+        }
       }
     }
   },
@@ -58,6 +100,10 @@
           "subtitle": "Invite trainers and manage classes together."
         }
       }
+    },
+    "auth": {
+      "title": "",
+      "subtitle": ""
     }
   }
 }

@@ -1,6 +1,12 @@
 {
   "shared": {
-    "next": "Далі"
+    "next": "Далі",
+    "continue": "Продовжити",
+    "and": "та",
+    "docs": {
+      "privacy_policy": "Privacy Policy",
+      "terms_conditions": "Terms & Conditions"
+    }
   },
   "auth": {
     "workspace": {
@@ -9,6 +15,42 @@
         "continue_with_google": "Продовжити з Google",
         "sign_up_with_email": "Зареєструватися з email",
         "sign_in": "Увійти"
+      }
+    },
+    "sign_up": {
+      "title": "Створити акаунт",
+      "subtitle": "Введіть адресу електронної пошти та пароль",
+      "form": {
+        "email": {
+          "label": "",
+          "placeholder": "Email",
+          "error": {
+            "required": "Email обовʼязкове поле для введення",
+            "invalid_format": "Невалідний формат"
+          }
+        },
+        "password": {
+          "label": "",
+          "placeholder": "Пароль",
+          "error": {
+            "required": "Пароль обовʼязкове поле для введення",
+            "invalid_format": "Пароль повинен містити 8 або більше символів, включаючи принаймні 1 цифру"
+          }
+        },
+        "confirm_password": {
+          "label": "",
+          "placeholder": "Підтвердження паролю",
+          "error": {
+            "required": "Підтвердження паролю обовʼязкове поле для введення",
+            "match": "Паролі не збігаються"
+          }
+        },
+        "agreement": {
+          "prefix": "I agree to the ",
+          "error": {
+            "required": "Please agree to hte Privacy Policy and Terms & Conditions to proceed"
+          }
+        }
       }
     }
   },
@@ -58,6 +100,10 @@
           "subtitle": "Залучайте тренерів та розом керуйте заняттями."
         }
       }
+    },
+    "auth": {
+      "title": "",
+      "subtitle": ""
     }
   }
 }

@@ -124,7 +124,7 @@ export const Onboarding = memo(({ slides }: { slides: OnboardingSlide[] }) => {
           ))}
         </XStack>
 
-        <Button label={t('shared.next')} onPress={onNextPress} />
+        <Button maxWidth={400} label={t('shared.next')} onPress={onNextPress} />
       </View>
     </View>
   );

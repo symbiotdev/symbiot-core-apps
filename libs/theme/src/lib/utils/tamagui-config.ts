@@ -1,29 +1,91 @@
 import { createFont, createTamagui } from 'tamagui';
 import { defaultConfig } from '@tamagui/config/v4';
-import { animationsCSS } from '@tamagui/config/src/animationsCSS';
+import { createAnimations } from '@tamagui/animations-moti';
 
 type Theme = {
   background: string;
   background1: string;
   color: string;
+  colorPress: string;
   error: string;
+  link: string;
+  placeholder: string;
+  disabled: string;
+  borderColor: string;
+  borderColorHover: string;
+  borderColorFocus: string;
+  outlineColor: string;
 };
 
 const lightTheme: Theme = {
   background: '#F2F2F2',
   background1: '#FFFFFF',
   color: '#000000',
-  error: '#D32F2F'
+  colorPress: '#000000',
+  error: '#C62828',
+  link: '#111111',
+  placeholder: '#999999',
+  disabled: '#999999',
+  borderColor: '#111111',
+  borderColorHover: 'transparent',
+  borderColorFocus: 'transparent',
+  outlineColor: 'transparent',
 };
 
 const darkTheme: Theme = {
   background: '#000000',
   background1: '#1A1A1A',
   color: '#FFFFFF',
-  error: '#D32F2F'
+  colorPress: '#FFFFFF',
+  error: '#FF6B6B',
+  link: '#F5F5F5',
+  placeholder: '#999999',
+  disabled: '#999999',
+  borderColor: '#F5F5F5',
+  borderColorHover: 'transparent',
+  borderColorFocus: 'transparent',
+  outlineColor: 'transparent',
 };
 
-const animations = animationsCSS;
+const animations = createAnimations({
+  '100ms': {
+    type: 'timing',
+    duration: 100,
+  },
+  bouncy: {
+    type: 'spring',
+    damping: 9,
+    mass: 0.9,
+    stiffness: 150,
+  },
+  lazy: {
+    type: 'spring',
+    damping: 18,
+    stiffness: 50,
+  },
+  medium: {
+    damping: 15,
+    stiffness: 120,
+    mass: 1,
+  },
+  slow: {
+    type: 'spring',
+    damping: 15,
+    stiffness: 40,
+  },
+  quick: {
+    type: 'spring',
+    damping: 20,
+    mass: 1.2,
+    stiffness: 250,
+  },
+  tooltip: {
+    type: 'spring',
+    damping: 10,
+    mass: 0.9,
+    stiffness: 100,
+  },
+});
 const fonts = {
   body: createFont({
     ...defaultConfig.fonts.body,

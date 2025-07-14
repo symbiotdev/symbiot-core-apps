@@ -62,6 +62,9 @@
     "react-native-legal": "*",
     "react-native-web": "*",
     "react-native-webview": "*",
+    "react-hook-form": "*",
+    "yup": "*",
+    "@hookform/resolvers": "*",
     "zustand": "*",
     "date-fns": "*"
   },

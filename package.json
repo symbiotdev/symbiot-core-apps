@@ -20,6 +20,7 @@
     "@expo/metro-config": "~0.20.17",
     "@expo/metro-runtime": "~5.0.4",
     "@expo/vector-icons": "^14.1.0",
+    "@hookform/resolvers": "^5.1.1",
     "@react-native-async-storage/async-storage": "^1.24.0",
     "@react-native-firebase/app": "^22.4.0",
     "@react-native-firebase/auth": "^22.4.0",
@@ -58,6 +59,7 @@
     "i18next": "^25.3.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "react-hook-form": "^7.60.0",
     "react-i18next": "^15.6.0",
     "react-native": "0.79.5",
     "react-native-gesture-handler": "~2.24.0",
@@ -72,6 +74,7 @@
     "react-native-webview": "13.13.5",
     "socket.io-client": "^4.8.1",
     "tamagui": "^1.131.3",
+    "yup": "^1.6.1",
     "zustand": "^5.0.6"
   },
   "devDependencies": {

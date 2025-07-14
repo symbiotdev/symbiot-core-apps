@@ -7,5 +7,6 @@ export * from './lib/loading/spinner';
 export * from './lib/text/heading';
 export * from './lib/text/text';
 
+export * from './lib/view/error-view';
 export * from './lib/view/loading-view';
 export * from './lib/view/page-view';

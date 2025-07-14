@@ -19,7 +19,7 @@ export const Button = memo(
   }) => {
     const disabled = xStackProps.disabled || loading;
     const color =
-      xStackProps.color || (type === 'outlined' ? '$color' : '$color1');
+      xStackProps.color || (type === 'outlined' ? '$color' : '$o_color');
     const backgroundColor = !type ? '$color' : 'transparent';
     const borderWidth = type === 'outlined' ? 1.5 : 0;
     const borderColor = '$color';

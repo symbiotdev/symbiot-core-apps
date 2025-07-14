@@ -1,6 +1,5 @@
 import { Stack } from 'expo-router';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const screenOptions = {
   headerBackButtonDisplayMode: 'minimal',
@@ -12,8 +11,6 @@ const screenOptions = {
     backgroundColor: 'transparent',
   },
 } as NativeStackNavigationOptions;
-
-AsyncStorage.clear();
 
 export default () => {
   return (

@@ -95,7 +95,7 @@ export const Onboarding = memo(({ slides }: { slides: OnboardingSlide[] }) => {
     .runOnJS(true);
 
   return (
-    <View flex={1} paddingBottom={bottom}>
+    <View flex={1} paddingBottom={bottom} backgroundColor="$background">
       <GestureHandlerRootView key="symbiot-onboarding">
         <GestureDetector touchAction="pan-x" gesture={panGesture}>
           <XStack flex={1} position="relative" overflow="hidden">
@@ -117,9 +117,9 @@ export const Onboarding = memo(({ slides }: { slides: OnboardingSlide[] }) => {
             <View
               key={slide.id}
               borderRadius="$4"
-              width="$3"
-              height="$0.5"
-              backgroundColor={index <= activeSlideIndex ? '$color' : '$color8'}
+              width="$8"
+              height="$1"
+              backgroundColor={index <= activeSlideIndex ? '$color' : '$background1'}
             />
           ))}
         </XStack>
@@ -159,7 +159,7 @@ const Slide = memo(
         <View flex={1} position="relative">
           <Image source={slide.image} style={styles.Image} />
           <LinearGradient
-            colors={['rgba(0,0,0,0)', theme.color1?.val]}
+            colors={['rgba(0,0,0,0)', theme.o_color?.val]}
             style={styles.LinearGradient}
           />
         </View>

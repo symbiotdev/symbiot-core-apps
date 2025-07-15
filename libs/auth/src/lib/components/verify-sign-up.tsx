@@ -1,15 +1,14 @@
-import { ImageSource } from 'expo-image';
-import { useCallback } from 'react';
+import { ReactElement, useCallback } from 'react';
 import { AuthVerifyView } from './auth-verify-view';
 
 export const VerifySignUp = ({
   secret,
   email,
-  logoSource,
+  logo,
 }: {
   secret: string;
   email?: string;
-  logoSource: ImageSource;
+  logo: ReactElement;
 }) => {
   const onChange = useCallback(async (code: string) => {
     console.log(code);
@@ -20,7 +19,7 @@ export const VerifySignUp = ({
   return (
     <AuthVerifyView
       email={email}
-      logoSource={logoSource}
+      logo={logo}
       onChange={onChange}
       onResend={onResend}
     />

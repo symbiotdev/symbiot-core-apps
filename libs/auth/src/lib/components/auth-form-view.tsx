@@ -7,29 +7,27 @@ import {
 } from '@symbiot-core-apps/ui';
 import { PropsWithChildren, ReactElement } from 'react';
 import { View } from 'tamagui';
-import { Image, ImageSource } from 'expo-image';
-import { StyleSheet } from 'react-native';
 
 export const AuthFormView = ({
   children,
   title,
   subtitle,
   buttonLabel,
-  logoSource,
-  externalLink,
   error,
   loading,
   disabled,
+  logo,
+  externalLink,
   onButtonPress,
 }: PropsWithChildren<{
   title: string;
   subtitle: string;
   buttonLabel: string;
-  logoSource: ImageSource;
-  externalLink?: ReactElement;
   error?: string;
   loading?: boolean;
   disabled?: boolean;
+  logo: ReactElement;
+  externalLink?: ReactElement;
   onButtonPress: () => Promise<void>;
 }>) => {
   return (
@@ -42,11 +40,13 @@ export const AuthFormView = ({
         width="100%"
         marginHorizontal="auto"
       >
-        <View gap="$2" marginVertical="$4" alignItems="center">
-          <Image source={logoSource} style={styles.Image} />
+        <View gap="$5" marginVertical="$5" alignItems="center">
+          {logo}
 
-          <H2 textAlign="center">{title}</H2>
-          <RegularText textAlign="center">{subtitle}</RegularText>
+          <View gap="$1">
+            <H2 textAlign="center">{title}</H2>
+            <RegularText textAlign="center">{subtitle}</RegularText>
+          </View>
         </View>
 
         {children}
@@ -54,7 +54,7 @@ export const AuthFormView = ({
         {!!error && <Error textAlign="center">{error}</Error>}
 
         <Button
-          marginTop="$4"
+          marginTop="$5"
           alignSelf="center"
           disabled={loading || disabled}
           loading={loading}
@@ -67,10 +67,3 @@ export const AuthFormView = ({
     </PageView>
   );
 };
-
-const styles = StyleSheet.create({
-  Image: {
-    width: 100,
-    height: 100,
-  },
-});

@@ -64,9 +64,9 @@
           }
         },
         "agreement": {
-          "prefix": "I agree to the ",
+          "prefix": "Я погоджуюсь з ",
           "error": {
-            "required": "Please agree to hte Privacy Policy and Terms & Conditions to proceed"
+            "required": "Реєстрація вимагає підтвердження"
           }
         }
       }
@@ -202,8 +202,8 @@
       }
     },
     "auth": {
-      "title": "",
-      "subtitle": ""
+      "title": "Твій ритм. Твоя система.",
+      "subtitle": "Платформа для хореографів і танцювальних студій"
     }
   }
 }

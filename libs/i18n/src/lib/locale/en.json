@@ -64,9 +64,9 @@
           }
         },
         "agreement": {
-          "prefix": "Я погоджуюсь з ",
+          "prefix": "I agree to the ",
           "error": {
-            "required": "Необхідно відтвердити Privacy Policy та Terms & Conditions"
+            "required": "Please agree to proceed"
           }
         }
       }
@@ -202,8 +202,8 @@
       }
     },
     "auth": {
-      "title": "",
-      "subtitle": ""
+      "title": "Your rhythm. Your system.",
+      "subtitle": "A flexible platform for dance instructors and studio teams"
     }
   }
 }

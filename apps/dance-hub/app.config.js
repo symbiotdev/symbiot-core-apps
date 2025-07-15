@@ -1,6 +1,6 @@
 export default ({ config }) => {
   const env = process.env.NODE_ENV || 'production';
-  const name = env === 'production' ? 'SymbiHub Dance' : 'SymbiHub Dance Dev';
+  const name = env === 'production' ? 'DanceSHub' : 'DanceSHub';
   const bundleId =
     env === 'production'
       ? 'com.symbiot.dance.hub'

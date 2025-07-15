@@ -1,7 +1,6 @@
 import { SignIn } from '@symbiot-core-apps/auth';
+import { AuthLogo } from '../../../components/auth/auth-logo';
 
 export default () => {
-  return (
-    <SignIn logoSource={require('../../../../assets/images/icon/logo.png')} />
-  );
+  return <SignIn logo={<AuthLogo />} />;
 };

@@ -1,4 +1,3 @@
-import { ImageSource } from 'expo-image';
 import { useTranslation } from 'react-i18next';
 import { AuthFormView } from './auth-form-view';
 import { Controller, useForm } from 'react-hook-form';
@@ -6,11 +5,11 @@ import { AccountSignInData } from '@symbiot-core-apps/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { PasswordPattern } from '@symbiot-core-apps/shared';
-import { useCallback } from 'react';
+import { ReactElement, useCallback } from 'react';
 import { Input, Link, RegularText } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 
-export const SignIn = ({ logoSource }: { logoSource: ImageSource }) => {
+export const SignIn = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
 
   const {
@@ -59,7 +58,7 @@ export const SignIn = ({ logoSource }: { logoSource: ImageSource }) => {
       title={t('auth.sign_in.title')}
       subtitle={t('auth.sign_in.subtitle')}
       buttonLabel={t('shared.continue')}
-      logoSource={logoSource}
+      logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
       externalLink={

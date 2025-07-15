@@ -3,12 +3,13 @@ import { useVideoPlayer, VideoSource, VideoView } from 'expo-video';
 import { Platform, ScrollView, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { useRestoreApp, useSystemScheme } from '@symbiot-core-apps/shared';
-import { useEffect } from 'react';
-import { Image, ImageSource } from 'expo-image';
+import { ReactElement, useCallback, useEffect } from 'react';
+import { Image } from 'expo-image';
 import { H2, H4 } from '@symbiot-core-apps/ui';
 import { SignInButtons } from './sign-in-buttons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import { useFocusEffect } from 'expo-router';
 
 const AnimatedVideo = Animated.createAnimatedComponent(VideoView);
 
@@ -18,14 +19,14 @@ export const Auth = ({
   textColor,
   blurhash,
   videoSource,
-  logoSource,
+  logo,
 }: {
   title: string;
   subtitle: string;
   blurhash: string;
   textColor?: string;
   videoSource: VideoSource;
-  logoSource: ImageSource;
+  logo: ReactElement;
 }) => {
   const { bottom } = useSafeAreaInsets();
   const scheme = useSystemScheme();
@@ -42,6 +43,12 @@ export const Auth = ({
   useRestoreApp(() => {
     player.play();
   });
+
+  useFocusEffect(
+    useCallback(() => {
+      player.play();
+    }, [player])
+  );
 
   return (
     <View flex={1} position="relative">
@@ -69,23 +76,25 @@ export const Auth = ({
           <View
             flex={1}
             alignItems="center"
-            justifyContent="space-between"
+            justifyContent={Platform.OS === 'web' ? 'center' : 'space-between'}
             padding="$4"
-            gap="$4"
+            gap="$10"
             marginBottom={bottom}
           >
             <View />
             <View />
 
-            <View gap="$2" alignItems="center">
-              <Image source={logoSource} style={styles.Image} />
+            <View gap="$5" alignItems="center">
+              {logo}
 
-              <H2 textAlign="center" color={textColor}>
-                {title}
-              </H2>
-              <H4 textAlign="center" color={textColor}>
-                {subtitle}
-              </H4>
+              <View gap="$2" maxWidth={300}>
+                <H2 textAlign="center" color={textColor}>
+                  {title}
+                </H2>
+                <H4 textAlign="center" color={textColor}>
+                  {subtitle}
+                </H4>
+              </View>
             </View>
 
             <SignInButtons />
@@ -110,9 +119,5 @@ const styles = StyleSheet.create({
     zIndex: 1,
     width: '100%',
     height: '100%',
-  },
-  Image: {
-    width: 150,
-    height: 150,
   },
 });

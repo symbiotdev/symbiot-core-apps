@@ -6,8 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
 import { PasswordPattern } from '@symbiot-core-apps/shared';
 import { AuthFormView } from './auth-form-view';
-import { ImageSource } from 'expo-image';
-import { useCallback } from 'react';
+import { ReactElement, useCallback } from 'react';
 import { XStack } from 'tamagui';
 import {
   openBrowserAsync,
@@ -15,7 +14,7 @@ import {
 } from 'expo-web-browser';
 import { router } from 'expo-router';
 
-export const SignUp = ({ logoSource }: { logoSource: ImageSource }) => {
+export const SignUp = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
 
   const {
@@ -112,7 +111,7 @@ export const SignUp = ({ logoSource }: { logoSource: ImageSource }) => {
       title={t('auth.sign_up.title')}
       subtitle={t('auth.sign_up.subtitle')}
       buttonLabel={t('shared.continue')}
-      logoSource={logoSource}
+      logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
       externalLink={

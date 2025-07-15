@@ -1,9 +1,6 @@
 import { ForgotPassword } from '@symbiot-core-apps/auth';
+import { AuthLogo } from '../../../components/auth/auth-logo';
 
 export default () => {
-  return (
-    <ForgotPassword
-      logoSource={require('../../../../assets/images/icon/logo.png')}
-    />
-  );
+  return <ForgotPassword logo={<AuthLogo />} />;
 };

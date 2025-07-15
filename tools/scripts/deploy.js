@@ -102,7 +102,7 @@ const __dirname = path.dirname(__filename);
   }`;
   const submitCommand =
     build === 'store' && `nx submit ${app} -- --profile=${profile}`;
-  const runCommand = `NODE_ENV=${env} && ${buildCommand} ${
+  const runCommand = `NODE_ENV=${env} nx reset && ${buildCommand} ${
     submitCommand ? `&& ${submitCommand}` : ''
   }`.trim();
 

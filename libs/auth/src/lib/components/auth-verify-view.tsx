@@ -1,20 +1,19 @@
-import { ImageSource } from 'expo-image';
 import { InputCode, Link, RegularText } from '@symbiot-core-apps/ui';
 import { AuthFormView } from './auth-form-view';
 import { useTranslation } from 'react-i18next';
-import { useCallback, useEffect, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { router } from 'expo-router';
 
 const verifySecondsLimit = 59;
 
 export const AuthVerifyView = ({
   email,
-  logoSource,
+  logo,
   onResend,
   onChange,
 }: {
   email?: string;
-  logoSource: ImageSource;
+  logo: ReactElement;
   onResend: () => Promise<void>;
   onChange: (code: string) => Promise<void>;
 }) => {
@@ -56,7 +55,7 @@ export const AuthVerifyView = ({
       buttonLabel={`${t('auth.verify_email.resend.button.label')}${
         secondsTo ? ` 00:${('0' + secondsTo).slice(-2)}` : ''
       }`}
-      logoSource={logoSource}
+      logo={logo}
       loading={loading}
       disabled={!!secondsTo || loading || verifying}
       externalLink={

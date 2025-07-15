@@ -2,6 +2,7 @@ import { useOnboardingState } from '@symbiot-core-apps/store';
 import { Redirect } from 'expo-router';
 import { Auth } from '@symbiot-core-apps/auth';
 import { useTranslation } from 'react-i18next';
+import { AuthLogo } from '../../../components/auth/auth-logo';
 
 export default () => {
   const { finished: onboardingFinished } = useOnboardingState();
@@ -18,7 +19,7 @@ export default () => {
       title={t('spanday.auth.title')}
       subtitle={t('spanday.auth.subtitle')}
       videoSource={require('../../../../assets/video/auth/bg.mp4')}
-      logoSource={require('../../../../assets/images/icon/logo.png')}
+      logo={<AuthLogo />}
     />
   );
 };

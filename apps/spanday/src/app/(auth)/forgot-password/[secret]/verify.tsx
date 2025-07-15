@@ -1,5 +1,6 @@
 import { VerifyForgotPassword } from '@symbiot-core-apps/auth';
 import { useLocalSearchParams } from 'expo-router';
+import { AuthLogo } from '../../../../components/auth/auth-logo';
 
 export default () => {
   const { secret, email } = useLocalSearchParams<{
@@ -8,10 +9,6 @@ export default () => {
   }>();
 
   return (
-    <VerifyForgotPassword
-      secret={secret}
-      email={email}
-      logoSource={require('../../../../../assets/images/icon/logo.png')}
-    />
+    <VerifyForgotPassword secret={secret} email={email} logo={<AuthLogo />} />
   );
 };

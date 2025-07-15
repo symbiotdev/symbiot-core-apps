@@ -1,4 +1,3 @@
-import { ImageSource } from 'expo-image';
 import { AuthFormView } from './auth-form-view';
 import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
@@ -6,15 +5,15 @@ import { AccountResetPasswordData } from '@symbiot-core-apps/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { PasswordPattern } from '@symbiot-core-apps/shared';
-import { useCallback } from 'react';
+import { ReactElement, useCallback } from 'react';
 import { Input } from '@symbiot-core-apps/ui';
 
 export const ResetPassword = ({
   secret,
-  logoSource,
+  logo,
 }: {
   secret: string;
-  logoSource: ImageSource;
+  logo: ReactElement;
 }) => {
   const { t } = useTranslation();
 
@@ -40,7 +39,9 @@ export const ResetPassword = ({
             ),
           confirmPassword: yup
             .string()
-            .required(t('auth.reset_password.form.confirm_password.error.required'))
+            .required(
+              t('auth.reset_password.form.confirm_password.error.required')
+            )
             .oneOf(
               [yup.ref('password')],
               t('auth.reset_password.form.confirm_password.error.match')
@@ -61,7 +62,7 @@ export const ResetPassword = ({
       title={t('auth.reset_password.title')}
       subtitle={t('auth.reset_password.subtitle')}
       buttonLabel={t('shared.continue')}
-      logoSource={logoSource}
+      logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
       onButtonPress={handleSubmit(onSubmit)}
@@ -101,7 +102,9 @@ export const ResetPassword = ({
             type="password"
             disabled={isSubmitting}
             label={t('auth.reset_password.form.confirm_password.label')}
-            placeholder={t('auth.reset_password.form.confirm_password.placeholder')}
+            placeholder={t(
+              'auth.reset_password.form.confirm_password.placeholder'
+            )}
             onChange={onChange}
             onBlur={onBlur}
           />

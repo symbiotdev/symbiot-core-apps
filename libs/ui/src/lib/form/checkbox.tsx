@@ -3,6 +3,7 @@ import { ReactElement, useCallback } from 'react';
 import { Icon } from '../icons/icon';
 import { Error } from '../text/custom';
 import { RegularText } from '../text/text';
+import { impactAsync } from 'expo-haptics';
 
 export const Checkbox = ({
   value,
@@ -17,10 +18,14 @@ export const Checkbox = ({
   disabled?: boolean;
   onChange: (value: boolean) => void;
 }) => {
-  const toggle = useCallback(
-    () => !disabled && onChange(!value),
-    [disabled, onChange, value]
-  );
+  const toggle = useCallback(() => {
+    if (disabled) {
+      return;
+    }
+
+    onChange(!value);
+    void impactAsync();
+  }, [disabled, onChange, value]);
 
   return (
     <View gap="$2" flex={1}>

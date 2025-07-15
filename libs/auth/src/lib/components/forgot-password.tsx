@@ -1,4 +1,3 @@
-import { ImageSource } from 'expo-image';
 import { Input, Link, RegularText } from '@symbiot-core-apps/ui';
 import { AuthFormView } from './auth-form-view';
 import { useTranslation } from 'react-i18next';
@@ -6,10 +5,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { AccountForgotPasswordData } from '@symbiot-core-apps/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useCallback } from 'react';
+import { ReactElement, useCallback } from 'react';
 import { router } from 'expo-router';
 
-export const ForgotPassword = ({ logoSource }: { logoSource: ImageSource }) => {
+export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
 
   const {
@@ -46,7 +45,7 @@ export const ForgotPassword = ({ logoSource }: { logoSource: ImageSource }) => {
       title={t('auth.forgot_password.title')}
       subtitle={t('auth.forgot_password.subtitle')}
       buttonLabel={t('shared.continue')}
-      logoSource={logoSource}
+      logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
       externalLink={

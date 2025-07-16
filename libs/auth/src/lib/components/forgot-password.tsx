@@ -2,7 +2,10 @@ import { Input, Link, RegularText } from '@symbiot-core-apps/ui';
 import { AuthFormView } from './auth-form-view';
 import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
-import { AccountForgotPasswordData } from '@symbiot-core-apps/api';
+import {
+  AccountForgotPasswordData,
+  useAccountAuthForgotPassword,
+} from '@symbiot-core-apps/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ReactElement, useCallback } from 'react';
@@ -10,6 +13,7 @@ import { router } from 'expo-router';
 
 export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
+  const { mutateAsync, error } = useAccountAuthForgotPassword();
 
   const {
     control,
@@ -32,9 +36,19 @@ export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
     ),
   });
 
-  const onSubmit = useCallback(async (data: AccountForgotPasswordData) => {
-    console.log('data', data);
-  }, []);
+  const onSubmit = useCallback(
+    async (data: AccountForgotPasswordData) => {
+      const { secret } = await mutateAsync(data);
+
+      router.push({
+        pathname: `/forgot-password/${secret}/verify`,
+        params: {
+          email: data.email,
+        },
+      });
+    },
+    [mutateAsync]
+  );
 
   const signUp = useCallback(() => {
     router.push('/sign-up');
@@ -48,6 +62,7 @@ export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
       logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
+      error={error}
       externalLink={
         <RegularText textAlign="center">
           {t('auth.forgot_password.external_link.already_have_account')}{' '}

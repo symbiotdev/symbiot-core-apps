@@ -1,7 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { AuthFormView } from './auth-form-view';
 import { Controller, useForm } from 'react-hook-form';
-import { AccountSignInData } from '@symbiot-core-apps/api';
+import {
+  AccountSignInData,
+  useAccountAuthSignIn,
+} from '@symbiot-core-apps/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { PasswordPattern } from '@symbiot-core-apps/shared';
@@ -11,6 +14,7 @@ import { router } from 'expo-router';
 
 export const SignIn = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
+  const { mutateAsync, error } = useAccountAuthSignIn();
 
   const {
     control,
@@ -41,9 +45,10 @@ export const SignIn = ({ logo }: { logo: ReactElement }) => {
     ),
   });
 
-  const onSubmit = useCallback(async (data: AccountSignInData) => {
-    console.log('data', data);
-  }, []);
+  const onSubmit = useCallback(
+    (data: AccountSignInData) => mutateAsync(data),
+    [mutateAsync]
+  );
 
   const signUp = useCallback(() => {
     router.push('/sign-up');
@@ -61,6 +66,7 @@ export const SignIn = ({ logo }: { logo: ReactElement }) => {
       logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
+      error={error}
       externalLink={
         <RegularText textAlign="center">
           {t('auth.sign_in.external_link.already_have_account')}{' '}

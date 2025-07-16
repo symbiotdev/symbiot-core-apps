@@ -1,7 +1,10 @@
 import { AuthFormView } from './auth-form-view';
 import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
-import { AccountResetPasswordData } from '@symbiot-core-apps/api';
+import {
+  AccountResetPasswordData,
+  useAccountAuthResetPassword,
+} from '@symbiot-core-apps/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { PasswordPattern } from '@symbiot-core-apps/shared';
@@ -10,12 +13,17 @@ import { Input } from '@symbiot-core-apps/ui';
 
 export const ResetPassword = ({
   secret,
+  email,
+  code,
   logo,
 }: {
   secret: string;
+  email: string;
+  code: string;
   logo: ReactElement;
 }) => {
   const { t } = useTranslation();
+  const { mutateAsync, error } = useAccountAuthResetPassword();
 
   const {
     control,
@@ -51,11 +59,16 @@ export const ResetPassword = ({
     ),
   });
 
-  const onSubmit = useCallback(async (data: AccountResetPasswordData) => {
-    console.log('data', data);
-
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-  }, []);
+  const onSubmit = useCallback(
+    async (data: AccountResetPasswordData) =>
+      mutateAsync({
+        secret,
+        password: data.password,
+        email,
+        code,
+      }),
+    [code, email, mutateAsync, secret]
+  );
 
   return (
     <AuthFormView
@@ -65,6 +78,7 @@ export const ResetPassword = ({
       logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
+      error={error}
       onButtonPress={handleSubmit(onSubmit)}
     >
       <Controller

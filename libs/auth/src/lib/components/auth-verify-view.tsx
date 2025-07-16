@@ -4,28 +4,26 @@ import { useTranslation } from 'react-i18next';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { router } from 'expo-router';
 
-const verifySecondsLimit = 59;
+const verifySecondsLimit = 10;
 
 export const AuthVerifyView = ({
-  email,
   logo,
+  email,
+  error,
+  loading,
   onResend,
   onChange,
 }: {
-  email?: string;
   logo: ReactElement;
+  email?: string;
+  error?: string | null;
+  loading?: boolean;
   onResend: () => Promise<void>;
   onChange: (code: string) => Promise<void>;
 }) => {
   const { t } = useTranslation();
 
   const [secondsTo, setSecondsTo] = useState(verifySecondsLimit);
-
-  const verifying = false;
-  const loading = false;
-  const error = '';
-
-  const onButtonPress = useCallback(async () => {}, []);
 
   const changeEmail = useCallback(() => {
     if (router.canGoBack()) {
@@ -34,6 +32,11 @@ export const AuthVerifyView = ({
       router.replace('/sign-up');
     }
   }, []);
+
+  const resend = useCallback(async () => {
+    await onResend();
+    setSecondsTo(verifySecondsLimit);
+  }, [onResend]);
 
   useEffect(() => {
     if (secondsTo <= 0) {
@@ -57,7 +60,8 @@ export const AuthVerifyView = ({
       }`}
       logo={logo}
       loading={loading}
-      disabled={!!secondsTo || loading || verifying}
+      disabled={!!secondsTo || loading}
+      error={error}
       externalLink={
         <RegularText textAlign="center">
           {t('auth.verify_email.external_link.message')}{' '}
@@ -66,20 +70,9 @@ export const AuthVerifyView = ({
           </Link>
         </RegularText>
       }
-      onButtonPress={onButtonPress}
+      onButtonPress={resend}
     >
-      <InputCode
-        cellCount={6}
-        error={error}
-        disabled={loading}
-        onChange={onChange}
-      />
-
-      {!error && (
-        <RegularText textAlign="center">
-          {t('auth.verify_email.resend.message')}
-        </RegularText>
-      )}
+      <InputCode cellCount={6} disabled={loading} onChange={onChange} />
     </AuthFormView>
   );
 };

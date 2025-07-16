@@ -3,9 +3,18 @@ import { useLocalSearchParams } from 'expo-router';
 import { AuthLogo } from '../../../../components/auth/auth-logo';
 
 export default () => {
-  const { secret } = useLocalSearchParams<{
+  const { secret, email, code } = useLocalSearchParams<{
     secret: string;
+    email: string;
+    code: string;
   }>();
 
-  return <ResetPassword secret={secret} logo={<AuthLogo />} />;
+  return (
+    <ResetPassword
+      secret={secret}
+      email={email}
+      code={code}
+      logo={<AuthLogo />}
+    />
+  );
 };

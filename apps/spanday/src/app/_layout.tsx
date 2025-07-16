@@ -1,9 +1,8 @@
 import { Slot } from 'expo-router';
 import { useCallback, useEffect } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
-import { ApiProvider } from '@symbiot-core-apps/api';
+import { ApiProvider, useAuthTokens } from '@symbiot-core-apps/api';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
-import { useDevId } from '@symbiot-core-apps/shared';
 import { Toaster } from 'burnt/web';
 import { unlockAsync } from 'expo-screen-orientation';
 import { Platform } from 'react-native';
@@ -26,19 +25,18 @@ if (Platform.OS !== 'web') {
 }
 
 export default () => {
-  const devId = useDevId();
   const [fontsLoaded, fontsError] = useFixelFont();
   const { i18n } = useTranslation();
-
-  // const { token } = useAuthState();
+  const { removeTokens } = useAuthTokens();
   // const { clear } = useStoreClear();
+
   const onNoRespond = useCallback(() => {
     alert('noRespond');
   }, []);
 
   const onUnauthorized = useCallback(() => {
-    alert('onUnauthorized');
-  }, []);
+    removeTokens();
+  }, [removeTokens]);
 
   useEffect(() => {
     if (fontsLoaded) {
@@ -47,19 +45,15 @@ export default () => {
   }, [fontsLoaded]);
 
   if (fontsError) {
-    return <ErrorView message="Fonts could not be loaded." />
+    return <ErrorView message="Fonts could not be loaded." />;
   }
 
   return (
-    fontsLoaded &&
-    devId && (
+    fontsLoaded && (
       <KeyboardProvider>
         <I18nextProvider i18n={i18n}>
           <ThemeProvider>
             <ApiProvider
-              devId={devId}
-              authToken={undefined}
-              languageCode={i18n.language}
               onNoRespond={onNoRespond}
               onUnauthorized={onUnauthorized}
             >

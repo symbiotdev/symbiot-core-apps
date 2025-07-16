@@ -1,5 +1,8 @@
 import { Checkbox, Input, Link, RegularText } from '@symbiot-core-apps/ui';
-import { AccountSignUpData } from '@symbiot-core-apps/api';
+import {
+  AccountSignUpData,
+  useAccountAuthSignUp,
+} from '@symbiot-core-apps/api';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,6 +20,8 @@ import { router } from 'expo-router';
 export const SignUp = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
 
+  const { mutateAsync, error } = useAccountAuthSignUp();
+
   const {
     control,
     handleSubmit,
@@ -25,6 +30,8 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
     AccountSignUpData & { confirmPassword: string; agreement: boolean }
   >({
     defaultValues: {
+      firstname: '',
+      lastname: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -73,18 +80,19 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
     ),
   });
 
-  const onSubmit = useCallback(async (data: AccountSignUpData) => {
-    console.log('data', data);
+  const onSubmit = useCallback(
+    async (data: AccountSignUpData) => {
+      const { secret } = await mutateAsync(data);
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    router.push({
-      pathname: `/sign-up/123/verify`,
-      params: {
-        email: data.email,
-      },
-    });
-  }, []);
+      router.push({
+        pathname: `/sign-up/${secret}/verify`,
+        params: {
+          email: data.email,
+        },
+      });
+    },
+    [mutateAsync]
+  );
 
   const openPrivacyPolicy = useCallback(
     () =>
@@ -114,6 +122,7 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
       logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
+      error={error}
       externalLink={
         <RegularText textAlign="center">
           {t('auth.sign_up.external_link.already_have_account')}{' '}

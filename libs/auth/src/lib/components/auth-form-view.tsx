@@ -23,7 +23,7 @@ export const AuthFormView = ({
   title: string;
   subtitle: string;
   buttonLabel: string;
-  error?: string;
+  error?: string | null;
   loading?: boolean;
   disabled?: boolean;
   logo: ReactElement;

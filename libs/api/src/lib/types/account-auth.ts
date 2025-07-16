@@ -5,6 +5,10 @@ export type AccountSignUpData = {
   password: string;
 };
 
+export type AccountAuthSecretResponse = {
+  secret: string;
+};
+
 export type AccountSignInData = {
   email: string;
   password: string;
@@ -16,4 +20,9 @@ export type AccountForgotPasswordData = {
 
 export type AccountResetPasswordData = {
   password: string;
+};
+
+export type AccountAuthTokens = {
+  access: string;
+  refresh: string;
 };

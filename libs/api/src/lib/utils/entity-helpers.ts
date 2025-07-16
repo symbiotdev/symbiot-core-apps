@@ -1,5 +1,8 @@
-import { RenderPaginationList } from '../hooks/use-pagination-list-loader';
-
+export interface RenderPaginationList<E> {
+  items: E[];
+  count: number;
+  canLoadMore: boolean;
+}
 type EntityId = string | number;
 
 export function mapByIdFromListWithEntities<Entity extends { id: EntityId }>(

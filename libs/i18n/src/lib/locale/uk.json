@@ -6,6 +6,9 @@
     "docs": {
       "privacy_policy": "Privacy Policy",
       "terms_conditions": "Terms & Conditions"
+    },
+    "error": {
+      "unknown_error": "Невідома помилка"
     }
   },
   "auth": {

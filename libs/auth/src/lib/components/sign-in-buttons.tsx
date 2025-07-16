@@ -1,0 +1,130 @@
+import { View } from 'tamagui';
+import { AppleAuthButton } from './apple-auth-button';
+import { useCallback, useMemo, useState } from 'react';
+import FirebaseAuth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { GoogleAuthButton } from './google-auth-button';
+import { isAvailableAsync } from 'expo-apple-authentication';
+import { Platform } from 'react-native';
+import { Button, Error, Icon } from '@symbiot-core-apps/ui';
+import { useTranslation } from 'react-i18next';
+import { router } from 'expo-router';
+import { useAccountAuthSignInWithFirebase } from '@symbiot-core-apps/api';
+
+const isGoogleAuthAvailable = Platform.OS !== 'web';
+
+export const SignInButtons = () => {
+  const { t } = useTranslation();
+  const {
+    mutate: appleAuth,
+    error: appleAuthError,
+    isPending: isAppleAuthPending,
+  } = useAccountAuthSignInWithFirebase();
+  const {
+    mutate: googleAuth,
+    error: googleAuthError,
+    isPending: isGoogleAuthPending,
+  } = useAccountAuthSignInWithFirebase();
+
+  const [error, setError] = useState<string>();
+  const [isAppleAuthAvailable, setIsAppleAuthAvailable] = useState(false);
+
+  const isPending = useMemo(
+    () => isAppleAuthPending || isGoogleAuthPending,
+    [isAppleAuthPending, isGoogleAuthPending]
+  );
+
+  const anyError = useMemo(
+    () => error || appleAuthError || googleAuthError,
+    [appleAuthError, error, googleAuthError]
+  );
+
+  const signInWithFirebase = useCallback(
+    async (credential: FirebaseAuthTypes.AuthCredential) => {
+      setError(undefined);
+
+      const { user } = await FirebaseAuth().signInWithCredential(credential);
+
+      if (user) {
+        return user.getIdToken();
+      } else {
+        const errorText = t('shared.error.unknown_error');
+
+        setError(errorText);
+
+        throw errorText;
+      }
+    },
+    [t]
+  );
+
+  const signUp = useCallback(() => {
+    router.push('/sign-up');
+  }, []);
+
+  const signIn = useCallback(() => {
+    router.push('/sign-in');
+  }, []);
+
+  if (Platform.OS === 'ios') {
+    isAvailableAsync().then(setIsAppleAuthAvailable);
+  }
+
+  const onAuthWithApple = useCallback(
+    async (token: string) => {
+      appleAuth({
+        token: await signInWithFirebase(
+          FirebaseAuth.AppleAuthProvider.credential(token)
+        ),
+      });
+    },
+    [appleAuth, signInWithFirebase]
+  );
+  const onAuthWithGoogle = useCallback(
+    async (token: string) =>
+      googleAuth({
+        token: await signInWithFirebase(
+          FirebaseAuth.GoogleAuthProvider.credential(token)
+        ),
+      }),
+    [googleAuth, signInWithFirebase]
+  );
+
+  return (
+    <View gap="$2" width="100%" marginHorizontal="auto" maxWidth={400}>
+      {isAppleAuthAvailable && (
+        <AppleAuthButton
+          pending={isAppleAuthPending}
+          disabled={isPending}
+          onAuth={onAuthWithApple}
+          onError={setError}
+        />
+      )}
+
+      {isGoogleAuthAvailable && (
+        <GoogleAuthButton
+          pending={isGoogleAuthPending}
+          disabled={isPending}
+          onAuth={onAuthWithGoogle}
+          onError={setError}
+        />
+      )}
+
+      <Button
+        disabled={isPending}
+        icon={
+          <Icon.Dynamic name="mail-outline" type="MaterialIcons" size={20} />
+        }
+        label={t('auth.workspace.button.sign_up_with_email')}
+        onPress={signUp}
+      />
+
+      <Button
+        disabled={isPending}
+        label={t('auth.workspace.button.sign_in')}
+        onPress={signIn}
+      />
+
+      {anyError && <Error textAlign="center">{anyError}</Error>}
+    </View>
+  );
+};

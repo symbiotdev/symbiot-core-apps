@@ -7,10 +7,12 @@ import { Button, Icon } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 
 export const AppleAuthButton = ({
+  pending,
   disabled,
   onAuth,
   onError,
 }: {
+  pending: boolean;
   disabled: boolean;
   onAuth: (token: string) => void;
   onError: (error: string) => void;
@@ -46,7 +48,7 @@ export const AppleAuthButton = ({
 
   return (
     <Button
-      loading={loading}
+      loading={loading || pending}
       disabled={disabled}
       icon={
         <Icon.Dynamic

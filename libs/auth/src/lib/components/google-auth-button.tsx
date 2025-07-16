@@ -12,10 +12,12 @@ GoogleSignin.configure({
 });
 
 export const GoogleAuthButton = ({
+  pending,
   disabled,
   onAuth,
   onError,
 }: {
+  pending: boolean;
   disabled: boolean;
   onAuth: (token: string) => void;
   onError: (error: string) => void;
@@ -54,7 +56,7 @@ export const GoogleAuthButton = ({
 
   return (
     <Button
-      loading={loading}
+      loading={loading || pending}
       disabled={disabled}
       icon={<Icon.Dynamic name="google" type="FontAwesome" size={18} />}
       label={t('auth.workspace.button.continue_with_google')}

@@ -8,7 +8,9 @@ import {
 import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
 import { getRequestErrorMessage } from '../utils/request';
-import { useAuthTokens } from '../hooks/use-auth-tokens';
+import { authTokenHeaderKey, useAuthTokens } from '../hooks/use-auth-tokens';
+import { Platform } from 'react-native';
+import { useCallback } from 'react';
 
 export const useAccountAuthSignUp = () =>
   useMutation<AccountAuthSecretResponse, string, AccountSignUpData>({
@@ -168,6 +170,28 @@ export const useAccountAuthResetPassword = () => {
       }
     },
   });
+};
+
+export const useAccountAuthRefreshToken = () => {
+  const { setTokens, tokens } = useAuthTokens();
+
+  return useCallback(async () => {
+    const newTokens = (await axios.post(
+      '/api/account-auth/refresh',
+      {},
+      Platform.OS !== 'web'
+        ? {
+            headers: {
+              [authTokenHeaderKey.refresh]: tokens.refresh,
+            },
+          }
+        : {}
+    )) as AccountAuthTokens;
+
+    setTokens(newTokens);
+
+    return newTokens;
+  }, [setTokens, tokens.refresh]);
 };
 
 export const useAccountAuthSignOut = () => {

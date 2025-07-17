@@ -3,6 +3,7 @@ import io from 'socket.io-client';
 export const socket = io(process.env.EXPO_PUBLIC_API_URL?.split('://')[1], {
   transports: ['websocket'],
   autoConnect: false,
+  secure: true,
   withCredentials: true,
   reconnection: true,
   reconnectionDelay: 1000,

@@ -3,18 +3,19 @@ import axios, {
   Canceler,
   InternalAxiosRequestConfig,
 } from 'axios';
-import {
-  DeviceInfo,
-  DeviceVersion,
-  RequestError,
-} from '@symbiot-core-apps/shared';
+import { DeviceInfo, DeviceVersion } from '@symbiot-core-apps/shared';
+import { Platform } from 'react-native';
+import { RequestError } from './request';
+import { AccountAuthTokens } from '../types/account-auth';
+import { authTokenHeaderKey } from '../hooks/use-auth-tokens';
 
 export type InterceptorParams = {
   devId: string;
-  authToken?: string;
+  accessToken?: string | null;
   languageCode: string;
   onNoRespond: () => void;
   onUnauthorized: () => void;
+  refreshTokens: () => Promise<AccountAuthTokens>;
 };
 
 const cancelableRequests = new Map<string, Canceler>();
@@ -49,6 +50,10 @@ const onRequest = async (
     config.url = `${process.env.EXPO_PUBLIC_API_URL}/api/${requestUrl}`;
   }
 
+  if (Platform.OS === 'web') {
+    config.withCredentials = true;
+  }
+
   if (config.data instanceof FormData) {
     config.headers['Content-Type'] = 'multipart/form-data';
     config.transformRequest = (formData) => formData;
@@ -58,8 +63,12 @@ const onRequest = async (
     config.headers['Content-Type'] = 'application/json';
   }
 
-  if (params.authToken) {
-    config.headers['Authorization'] = `Bearer ${params.authToken}`;
+  if (
+    Platform.OS !== 'web' &&
+    params.accessToken &&
+    !config.headers[authTokenHeaderKey.access]
+  ) {
+    config.headers[authTokenHeaderKey.access] = params.accessToken;
   }
 
   if (!config.headers['Timezone']) {
@@ -67,11 +76,12 @@ const onRequest = async (
       Intl.DateTimeFormat().resolvedOptions().timeZone;
   }
 
-  config.headers['identifier'] = params.devId;
-  config.headers['lang'] = params.languageCode;
-  config.headers['app'] = process.env.EXPO_PUBLIC_APP;
-  config.headers['version'] = DeviceVersion;
-  config.headers['device-info'] = JSON.stringify(DeviceInfo);
+  config.headers['x-identifier'] = params.devId;
+  config.headers['x-lang'] = params.languageCode;
+  config.headers['x-version'] = DeviceVersion;
+  config.headers['x-platform'] = Platform.OS;
+  config.headers['x-type'] = process.env['EXPO_PUBLIC_APP_TYPE'];
+  config.headers['x-device-info'] = JSON.stringify(DeviceInfo);
 
   if (config.headers['cancelable']) {
     const requestKey = getRequestKey(config);
@@ -101,7 +111,7 @@ const onSuccessResponse = (response: AxiosResponse) => {
   return response.data;
 };
 
-const onErrorResponse = (
+const onErrorResponse = async (
   response: {
     data: {
       error?: string;
@@ -111,11 +121,11 @@ const onErrorResponse = (
     status: number;
     statusText?: string;
   },
-  config: InternalAxiosRequestConfig,
+  requestConfig: InternalAxiosRequestConfig & { _retry: boolean },
   params: InterceptorParams
 ) => {
   if (!response) {
-    throw undefined;
+    throw new Error(undefined);
   }
 
   const text =
@@ -125,16 +135,29 @@ const onErrorResponse = (
     '';
   const error: RequestError = { code: response.status, text };
 
-  const requestKey = getRequestKey(config);
+  const requestKey = getRequestKey(requestConfig);
 
   cancelableRequests.delete(requestKey);
 
   if (response.status === 0) {
     params.onNoRespond();
-  }
+  } else if (response.status === 401) {
+    try {
+      const tokens = await params.refreshTokens();
 
-  if (response.status === 401) {
-    params.onUnauthorized();
+      return axios.request({
+        ...requestConfig,
+        headers:
+          Platform.OS !== 'web'
+            ? {
+                ...requestConfig.headers,
+                [authTokenHeaderKey.access]: tokens.access,
+              }
+            : requestConfig.headers,
+      });
+    } catch {
+      params.onUnauthorized();
+    }
   }
 
   throw error;

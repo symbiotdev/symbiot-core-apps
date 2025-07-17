@@ -1,53 +1,99 @@
-import {
-  InterceptorParams,
-  setAxiosInterceptors,
-} from '../utils/axios-interceptors';
+import { setAxiosInterceptors } from '../utils/axios-interceptors';
 import {
   createContext,
   PropsWithChildren,
   useCallback,
   useLayoutEffect,
+  useRef,
   useState,
 } from 'react';
 import socket from '../utils/socket';
+import { authTokenHeaderKey, useAuthTokens } from '../hooks/use-auth-tokens';
+import { useTranslation } from 'react-i18next';
+import { useDevId } from '../hooks/use-dev-id';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '../utils/client';
+import { useAccountAuthRefreshToken } from '../queries/use-account-auth';
+import { Platform } from 'react-native';
 
-export type ApiProviderProps = InterceptorParams & {
-  onConnected?: () => void;
+type SocketState = {
+  connecting: boolean;
+  connected: boolean;
+  connectError: Error | undefined;
 };
 
-const ApiContext = createContext<
-  | {
-      connecting: boolean;
-      connected: boolean;
-      connectError: Error | undefined;
-    }
-  | undefined
->(undefined);
+const ApiContext = createContext<SocketState>({
+  connecting: false,
+  connected: false,
+  connectError: undefined,
+});
 
-export const ApiProvider = (props: PropsWithChildren<ApiProviderProps>) => {
-  const [connecting, setConnecting] = useState(false);
-  const [connected, setConnected] = useState(false);
-  const [connectError, setConnectedError] = useState<Error>();
+export const ApiProvider = ({
+  children,
+  onConnected,
+  onUnauthorized,
+  onNoRespond,
+}: PropsWithChildren<{
+  onNoRespond: () => void;
+  onUnauthorized: () => void;
+  onConnected?: () => void;
+}>) => {
+  const devId = useDevId();
+  const { i18n } = useTranslation();
+  const refreshTokens = useAccountAuthRefreshToken();
+  const { tokens, setTokens } = useAuthTokens();
+
+  const stateRef = useRef<SocketState>({
+    connecting: false,
+    connected: false,
+    connectError: undefined,
+  });
+  const [value, setValue] = useState(stateRef.current);
+
+  const updateState = useCallback((state: Partial<SocketState>) => {
+    stateRef.current = {
+      ...stateRef.current,
+      ...state,
+    };
+
+    setValue((prev) => ({
+      ...prev,
+      ...state,
+    }));
+  }, []);
 
   const disconnectSocket = useCallback(() => {
-    if (connecting) {
-      setConnecting(false);
+    if (stateRef.current.connecting) {
+      updateState({ connecting: false });
     }
 
     socket.disconnect();
     socket.close();
-  }, [connecting]);
+  }, [updateState]);
 
   useLayoutEffect(() => {
-    setAxiosInterceptors(props);
+    if (!devId) {
+      return;
+    }
 
-    if (props.authToken) {
-      setConnecting(true);
+    setAxiosInterceptors({
+      devId,
+      accessToken: tokens.access,
+      languageCode: i18n.language,
+      onUnauthorized,
+      onNoRespond,
+      refreshTokens,
+    });
+
+    if (tokens.access) {
+      updateState({ connecting: true });
 
       socket.disconnect();
       socket.io.opts.query = {
-        token: props.authToken,
-        lang: props.languageCode,
+        ...(Platform.OS !== 'web'
+          ? { [authTokenHeaderKey.refresh]: tokens.refresh }
+          : {}),
+        lang: i18n.language,
       };
       socket.connect();
     } else {
@@ -57,39 +103,52 @@ export const ApiProvider = (props: PropsWithChildren<ApiProviderProps>) => {
     return () => {
       disconnectSocket();
     };
-  }, [props.authToken, props.languageCode]);
+  }, [
+    tokens,
+    i18n.language,
+    devId,
+    disconnectSocket,
+    updateState,
+    onNoRespond,
+    onUnauthorized,
+    setTokens,
+    refreshTokens,
+  ]);
 
   useLayoutEffect(() => {
-    if (connected) {
-      props.onConnected?.();
+    if (value.connected) {
+      onConnected?.();
     }
-  }, [connected, props.onConnected]);
+  }, [value.connected, onConnected]);
 
   useLayoutEffect(() => {
     socket.on('connect', () => {
-      setConnectedError(undefined);
-      setConnected(socket.connected);
-      setConnecting(false);
+      updateState({
+        connecting: false,
+        connected: socket.connected,
+        connectError: undefined,
+      });
     });
     socket.on('disconnect', () => {
-      setConnected(socket.connected);
-      setConnecting(false);
+      updateState({
+        connecting: false,
+        connected: socket.connected,
+      });
     });
     socket.on('connect_error', (reason) => {
-      setConnectedError(reason);
-      setConnecting(false);
+      updateState({
+        connecting: false,
+        connected: socket.connected,
+        connectError: reason,
+      });
     });
-  }, []);
+  }, [updateState]);
 
   return (
-    <ApiContext.Provider
-      value={{
-        connecting,
-        connected,
-        connectError,
-      }}
-    >
-      {props.children}
-    </ApiContext.Provider>
+    <QueryClientProvider client={queryClient}>
+      <ApiContext.Provider value={value}>
+        {devId && children}
+      </ApiContext.Provider>
+    </QueryClientProvider>
   );
 };

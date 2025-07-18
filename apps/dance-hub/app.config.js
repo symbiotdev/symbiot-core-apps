@@ -54,7 +54,7 @@ export default ({ config }) => {
         foregroundImage: './assets/images/icon/adaptive-icon.png',
         backgroundColor: '#080726',
       },
-      googleServicesFile: './google/google-services.json',
+      googleServicesFile: `./google/${env}/google-services.json`,
       permissions: [
         ...(config.android?.permissions || []),
         'android.permission.CAMERA',

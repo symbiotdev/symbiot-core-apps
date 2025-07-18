@@ -15,17 +15,17 @@ const __dirname = path.dirname(__filename);
       choices: [
         {
           name: 'DanceHub',
-          value: 'dance-hub',
+          value: 'dance-hub'
         },
         {
           name: 'Spanday',
-          value: 'spanday',
+          value: 'spanday'
         },
         {
           name: 'Symbiot',
-          value: 'symbiot',
-        },
-      ],
+          value: 'symbiot'
+        }
+      ]
     }));
 
   console.log(`Deploying ${app}... 📦⬆️🌐`);
@@ -35,13 +35,13 @@ const __dirname = path.dirname(__filename);
     choices: [
       {
         name: 'Development',
-        value: 'development',
+        value: 'development'
       },
       {
         name: 'Production',
-        value: 'production',
-      },
-    ],
+        value: 'production'
+      }
+    ]
   });
 
   const build = await select({
@@ -49,25 +49,25 @@ const __dirname = path.dirname(__filename);
     choices: [
       {
         name: 'Local',
-        value: 'machine',
+        value: 'machine'
       },
       {
         name: 'EAS',
-        value: 'eas',
+        value: 'eas'
       },
       {
         name: 'Device',
-        value: 'device',
+        value: 'device'
       },
       ...(env === 'development'
         ? []
         : [
-            {
-              name: 'Store',
-              value: 'store',
-            },
-          ]),
-    ],
+          {
+            name: 'Store',
+            value: 'store'
+          }
+        ])
+    ]
   });
 
   let incrementVersion;
@@ -78,31 +78,31 @@ const __dirname = path.dirname(__filename);
       choices: [
         {
           name: 'Skip',
-          value: '',
+          value: ''
         },
         {
           name: 'Major',
-          value: 'major',
+          value: 'major'
         },
         {
           name: 'Minor',
-          value: 'minor',
+          value: 'minor'
         },
         {
           name: 'Patch',
-          value: 'patch',
-        },
-      ],
+          value: 'patch'
+        }
+      ]
     });
   }
 
   const profile = `${env}_${build}`;
-  const buildCommand = `nx build ${app} -- --profile=${profile} --clear-cache ${
+  const buildCommand = `NODE_ENV=${env} nx build ${app} -- --profile=${profile} --clear-cache ${
     build === 'machine' ? '--local' : ''
   }`;
   const submitCommand =
-    build === 'store' && `nx submit ${app} -- --profile=${profile}`;
-  const runCommand = `NODE_ENV=${env} nx reset && ${buildCommand} ${
+    build === 'store' && `NODE_ENV=${env} nx submit ${app} -- --profile=${profile}`;
+  const runCommand = `nx reset && NODE_ENV=${env} nx run ${app}:prebuild --install=false && ${buildCommand} ${
     submitCommand ? `&& ${submitCommand}` : ''
   }`.trim();
 

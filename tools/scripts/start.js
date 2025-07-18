@@ -44,8 +44,8 @@ import { spawn } from 'child_process';
 
   const runCommand =
     platform !== 'web'
-      ? `nx reset && nx run ${app}:prebuild --install=false --platform=${platform} && nx run ${app}:run-${platform} --device`
-      : `nx reset && nx start ${app} --clear`;
+      ? `nx reset && NODE_ENV=${env} nx run ${app}:prebuild --install=false --platform=${platform} && NODE_ENV=${env} nx run ${app}:run-${platform} --device`
+      : `nx reset && NODE_ENV=${env} nx start ${app} --clear`;
 
-  spawn('sh', ['-c', `NODE_ENV=${env} ${runCommand}`], { stdio: 'inherit' });
+  spawn('sh', ['-c', runCommand], { stdio: 'inherit' });
 })();

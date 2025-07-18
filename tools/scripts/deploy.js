@@ -8,6 +8,20 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 (async () => {
+  const platform = await select({
+    message: 'Platform',
+    choices: [
+      {
+        name: 'IOS',
+        value: 'ios',
+      },
+      {
+        name: 'Android',
+        value: 'android',
+      },
+    ],
+  });
+
   const app =
     process.env['NODE_APP'] ||
     (await select({
@@ -97,7 +111,7 @@ const __dirname = path.dirname(__filename);
   }
 
   const profile = `${env}_${build}`;
-  const buildCommand = `NODE_ENV=${env} nx build ${app} -- --profile=${profile} --clear-cache ${
+  const buildCommand = `NODE_ENV=${env} nx build ${app} -- --profile=${profile} --platform=${platform} --clear-cache ${
     build === 'machine' ? '--local' : ''
   }`;
   const submitCommand =
@@ -105,7 +119,7 @@ const __dirname = path.dirname(__filename);
       ? `&& NODE_ENV=${env} nx submit ${app} -- --profile=${profile}`
       : '';
   const runCommand =
-    `nx reset && NODE_ENV=${env} nx run ${app}:prebuild --install=false && ${buildCommand} ${submitCommand}`.trim();
+    `nx reset && NODE_ENV=${env} nx run ${app}:prebuild --install=false --platform=${platform} && ${buildCommand} ${submitCommand}`.trim();
 
   if (incrementVersion && (build === 'machine' || build === 'store')) {
     increment(app, incrementVersion);

@@ -8,6 +8,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 (async () => {
+  console.log(`Deploying... 📦⬆️`);
+
   const platform = await select({
     message: 'Platform',
     choices: [
@@ -41,8 +43,6 @@ const __dirname = path.dirname(__filename);
         },
       ],
     }));
-
-  console.log(`Deploying ${app}... 📦⬆️🌐`);
 
   const env = await select({
     message: 'Environment',
@@ -105,6 +105,10 @@ const __dirname = path.dirname(__filename);
         {
           name: 'Patch',
           value: 'patch',
+        },
+        {
+          name: 'Bump buildNumber & versionCode',
+          value: 'bump',
         },
       ],
     });

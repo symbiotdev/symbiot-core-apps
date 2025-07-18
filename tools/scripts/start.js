@@ -2,9 +2,27 @@ import { select } from '@inquirer/prompts';
 import { spawn } from 'child_process';
 
 (async () => {
-  const app = process.env['NODE_APP'];
+  console.log(`Starting... 🚀🚀`);
 
-  console.log(`Starting ${app}... 🚀🚀🚀`);
+  const app =
+    process.env['NODE_APP'] ||
+    (await select({
+      message: 'Application',
+      choices: [
+        {
+          name: 'DanceHub',
+          value: 'dance-hub',
+        },
+        {
+          name: 'Spanday',
+          value: 'spanday',
+        },
+        {
+          name: 'Symbiot',
+          value: 'symbiot',
+        },
+      ],
+    }));
 
   const env = await select({
     message: 'Environment',

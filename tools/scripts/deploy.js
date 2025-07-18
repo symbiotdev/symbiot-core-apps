@@ -49,7 +49,7 @@ const __dirname = path.dirname(__filename);
     choices: [
       {
         name: 'Local',
-        value: 'local',
+        value: 'machine',
       },
       {
         name: 'EAS',
@@ -98,7 +98,7 @@ const __dirname = path.dirname(__filename);
 
   const profile = `${env}_${build}`;
   const buildCommand = `nx build ${app} -- --profile=${profile} --clear-cache ${
-    build === 'local' ? '--local' : ''
+    build === 'machine' ? '--local' : ''
   }`;
   const submitCommand =
     build === 'store' && `nx submit ${app} -- --profile=${profile}`;
@@ -106,7 +106,7 @@ const __dirname = path.dirname(__filename);
     submitCommand ? `&& ${submitCommand}` : ''
   }`.trim();
 
-  if (incrementVersion && (build === 'local' || build === 'store')) {
+  if (incrementVersion && (build === 'machine' || build === 'store')) {
     increment(app, incrementVersion);
   }
 

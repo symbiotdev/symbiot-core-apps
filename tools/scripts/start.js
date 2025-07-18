@@ -28,16 +28,16 @@ import { spawn } from 'child_process';
     message: 'Environment',
     choices: [
       {
-        name: 'Machine',
-        value: 'machine',
+        name: 'Local',
+        value: 'loc',
       },
       {
         name: 'Development',
-        value: 'development',
+        value: 'dev',
       },
       {
         name: 'Production',
-        value: 'production',
+        value: 'prod',
       },
     ],
   });

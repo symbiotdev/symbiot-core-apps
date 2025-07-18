@@ -1,8 +1,8 @@
 export default ({ config }) => {
-  const env = process.env.NODE_ENV || 'production';
-  const name = env === 'production' ? 'DanceSHub' : 'DanceSHub';
+  const env = process.env.NODE_ENV || 'prod';
+  const name = env === 'prod' ? 'DanceSHub' : 'DanceSHub';
   const bundleId =
-    env === 'production'
+    env === 'prod'
       ? 'com.symbiot.dance.hub'
       : 'com.symbiot.dance.hub.dev';
 
@@ -25,7 +25,7 @@ export default ({ config }) => {
     ios: {
       ...config.ios,
       bundleIdentifier: bundleId,
-      buildNumber: '1',
+      buildNumber: '2',
       googleServicesFile: `./google/${env}/GoogleService-Info.plist`,
       supportsTablet: true,
       usesAppleSignIn: true,
@@ -47,7 +47,7 @@ export default ({ config }) => {
     android: {
       ...config.android,
       package: bundleId,
-      versionCode: 1,
+      versionCode: 2,
       icon: './assets/images/icon/ios-light.png',
       adaptiveIcon: {
         ...config.android?.adaptiveIcon,

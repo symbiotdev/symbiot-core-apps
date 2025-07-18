@@ -29,11 +29,11 @@ import { spawn } from 'child_process';
     choices: [
       {
         name: 'Development',
-        value: 'development',
+        value: 'dev',
       },
       {
         name: 'Production',
-        value: 'production',
+        value: 'prod',
       },
     ],
   });

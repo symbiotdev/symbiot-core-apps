@@ -49,11 +49,11 @@ const __dirname = path.dirname(__filename);
     choices: [
       {
         name: 'Development',
-        value: 'development',
+        value: 'dev',
       },
       {
         name: 'Production',
-        value: 'production',
+        value: 'prod',
       },
     ],
   });
@@ -63,7 +63,7 @@ const __dirname = path.dirname(__filename);
     choices: [
       {
         name: 'Local',
-        value: 'machine',
+        value: 'loc',
       },
       {
         name: 'EAS',
@@ -73,7 +73,7 @@ const __dirname = path.dirname(__filename);
         name: 'Device',
         value: 'device',
       },
-      ...(env === 'development'
+      ...(env === 'dev'
         ? []
         : [
             {
@@ -86,7 +86,7 @@ const __dirname = path.dirname(__filename);
 
   let incrementVersion;
 
-  if (env === 'production') {
+  if (env === 'prod') {
     incrementVersion = await select({
       message: 'Increment',
       choices: [
@@ -116,7 +116,7 @@ const __dirname = path.dirname(__filename);
 
   const profile = `${env}_${build}`;
   const buildCommand = `NODE_ENV=${env} nx build ${app} -- --profile=${profile} --platform=${platform} --clear-cache ${
-    build === 'machine' ? '--local' : ''
+    build === 'loc' ? '--local' : ''
   }`;
   const submitCommand =
     build === 'store'
@@ -125,7 +125,7 @@ const __dirname = path.dirname(__filename);
   const runCommand =
     `nx reset && NODE_ENV=${env} nx run ${app}:prebuild --install=false --platform=${platform} && ${buildCommand} ${submitCommand}`.trim();
 
-  if (incrementVersion && (build === 'machine' || build === 'store')) {
+  if (incrementVersion && (build === 'loc' || build === 'store')) {
     increment(app, incrementVersion);
   }
 

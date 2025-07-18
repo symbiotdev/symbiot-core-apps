@@ -5,7 +5,7 @@
         "buildType": "app-bundle"
       }
     },
-    "production_local": {
+    "production_machine": {
       "extends": "production",
       "distribution": "store"
     },
@@ -28,7 +28,7 @@
       "developmentClient": true,
       "distribution": "internal"
     },
-    "development_local": {
+    "development_machine": {
       "extends": "development"
     },
     "development_eas": {

@@ -101,11 +101,11 @@ const __dirname = path.dirname(__filename);
     build === 'machine' ? '--local' : ''
   }`;
   const submitCommand =
-    build === 'store' &&
-    `NODE_ENV=${env} nx submit ${app} -- --profile=${profile}`;
-  const runCommand = `nx reset && NODE_ENV=${env} nx run ${app}:prebuild --install=false && ${buildCommand} ${
-    submitCommand ? `&& ${submitCommand}` : ''
-  }`.trim();
+    build === 'store'
+      ? `&& NODE_ENV=${env} nx submit ${app} -- --profile=${profile}`
+      : '';
+  const runCommand =
+    `nx reset && NODE_ENV=${env} nx run ${app}:prebuild --install=false && ${buildCommand} ${submitCommand}`.trim();
 
   if (incrementVersion && (build === 'machine' || build === 'store')) {
     increment(app, incrementVersion);

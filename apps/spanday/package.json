@@ -31,6 +31,7 @@
     "expo-crypto": "*",
     "expo-blur": "*",
     "expo-video": "*",
+    "expo-dev-client": "*",
     "expo-build-properties": "*",
     "expo-screen-orientation": "*",
     "expo-linear-gradient": "*",
@@ -71,5 +72,6 @@
     "@hookform/resolvers": "*",
     "zustand": "*",
     "date-fns": "*"
-  }
+  },
+  "devDependencies": {}
 }

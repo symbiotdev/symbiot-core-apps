@@ -34,6 +34,7 @@
     "expo-linear-gradient": "*",
     "expo-constants": "*",
     "expo-video": "*",
+    "expo-dev-client": "*",
     "expo-camera": "*",
     "expo-font": "*",
     "expo-haptics": "*",

@@ -11,17 +11,17 @@ import { spawn } from 'child_process';
     choices: [
       {
         name: 'Machine',
-        value: 'machine'
+        value: 'machine',
       },
       {
         name: 'Development',
-        value: 'development'
+        value: 'development',
       },
       {
         name: 'Production',
-        value: 'production'
-      }
-    ]
+        value: 'production',
+      },
+    ],
   });
 
   const platform = await select({
@@ -29,17 +29,17 @@ import { spawn } from 'child_process';
     choices: [
       {
         name: 'Web',
-        value: 'web'
+        value: 'web',
       },
       {
         name: 'IOS',
-        value: 'ios'
+        value: 'ios',
       },
       {
         name: 'Android',
-        value: 'android'
-      }
-    ]
+        value: 'android',
+      },
+    ],
   });
 
   const runCommand =
@@ -47,5 +47,5 @@ import { spawn } from 'child_process';
       ? `nx reset && NODE_ENV=${env} nx run ${app}:prebuild --install=false --platform=${platform} && NODE_ENV=${env} nx run ${app}:run-${platform} --device`
       : `nx reset && NODE_ENV=${env} nx start ${app} --clear`;
 
-  spawn('sh', ['-c', runCommand], { stdio: 'inherit' });
+  spawn(runCommand, { stdio: 'inherit', shell: true });
 })();

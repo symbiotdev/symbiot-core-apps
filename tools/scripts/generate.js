@@ -30,11 +30,8 @@ import { spawn } from 'child_process';
 
   const directory = type === 'app' ? 'apps' : 'libs';
 
-  spawn(
-    'sh',
-    ['-c', `nx g ${plugin}:${type} ${name} --directory=${directory}/${name}`],
-    {
-      stdio: 'inherit',
-    }
-  );
+  spawn(`nx g ${plugin}:${type} ${name} --directory=${directory}/${name}`, {
+    stdio: 'inherit',
+    shell: true,
+  });
 })();

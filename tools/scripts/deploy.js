@@ -1,8 +1,8 @@
-import { select } from '@inquirer/prompts';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { spawn } from 'child_process';
+import { select } from '@inquirer/prompts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,17 +15,17 @@ const __dirname = path.dirname(__filename);
       choices: [
         {
           name: 'DanceHub',
-          value: 'dance-hub'
+          value: 'dance-hub',
         },
         {
           name: 'Spanday',
-          value: 'spanday'
+          value: 'spanday',
         },
         {
           name: 'Symbiot',
-          value: 'symbiot'
-        }
-      ]
+          value: 'symbiot',
+        },
+      ],
     }));
 
   console.log(`Deploying ${app}... 📦⬆️🌐`);
@@ -35,13 +35,13 @@ const __dirname = path.dirname(__filename);
     choices: [
       {
         name: 'Development',
-        value: 'development'
+        value: 'development',
       },
       {
         name: 'Production',
-        value: 'production'
-      }
-    ]
+        value: 'production',
+      },
+    ],
   });
 
   const build = await select({
@@ -49,25 +49,25 @@ const __dirname = path.dirname(__filename);
     choices: [
       {
         name: 'Local',
-        value: 'machine'
+        value: 'machine',
       },
       {
         name: 'EAS',
-        value: 'eas'
+        value: 'eas',
       },
       {
         name: 'Device',
-        value: 'device'
+        value: 'device',
       },
       ...(env === 'development'
         ? []
         : [
-          {
-            name: 'Store',
-            value: 'store'
-          }
-        ])
-    ]
+            {
+              name: 'Store',
+              value: 'store',
+            },
+          ]),
+    ],
   });
 
   let incrementVersion;
@@ -78,21 +78,21 @@ const __dirname = path.dirname(__filename);
       choices: [
         {
           name: 'Skip',
-          value: ''
+          value: '',
         },
         {
           name: 'Major',
-          value: 'major'
+          value: 'major',
         },
         {
           name: 'Minor',
-          value: 'minor'
+          value: 'minor',
         },
         {
           name: 'Patch',
-          value: 'patch'
-        }
-      ]
+          value: 'patch',
+        },
+      ],
     });
   }
 
@@ -101,7 +101,8 @@ const __dirname = path.dirname(__filename);
     build === 'machine' ? '--local' : ''
   }`;
   const submitCommand =
-    build === 'store' && `NODE_ENV=${env} nx submit ${app} -- --profile=${profile}`;
+    build === 'store' &&
+    `NODE_ENV=${env} nx submit ${app} -- --profile=${profile}`;
   const runCommand = `nx reset && NODE_ENV=${env} nx run ${app}:prebuild --install=false && ${buildCommand} ${
     submitCommand ? `&& ${submitCommand}` : ''
   }`.trim();
@@ -110,7 +111,7 @@ const __dirname = path.dirname(__filename);
     increment(app, incrementVersion);
   }
 
-  spawn('sh', ['-c', runCommand], { stdio: 'inherit' });
+  spawn(runCommand, { stdio: 'inherit', shell: true });
 })();
 
 const increment = (app, type) => {

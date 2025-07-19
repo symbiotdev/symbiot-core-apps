@@ -25,7 +25,7 @@ export default ({ config }) => {
     ios: {
       ...config.ios,
       bundleIdentifier: bundleId,
-      buildNumber: '2',
+      buildNumber: '4',
       googleServicesFile: `./google/${env}/GoogleService-Info.plist`,
       supportsTablet: true,
       usesAppleSignIn: true,
@@ -47,7 +47,7 @@ export default ({ config }) => {
     android: {
       ...config.android,
       package: bundleId,
-      versionCode: 2,
+      versionCode: 4,
       icon: './assets/images/icon/ios-light.png',
       adaptiveIcon: {
         ...config.android?.adaptiveIcon,

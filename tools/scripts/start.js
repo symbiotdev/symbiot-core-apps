@@ -55,15 +55,24 @@ import { spawn } from 'child_process';
       },
       {
         name: 'Android',
-        value: 'android',
+        value: 'android'
       },
     ],
   });
 
+  const reset = `nx reset && NODE_ENV=${env}`;
+  const buildType =
+    env === 'prod'
+      ? platform === 'ios'
+        ? '--configuration=Release'
+        : '--variant=release'
+      : '';
   const runCommand =
     platform !== 'web'
-      ? `nx reset && NODE_ENV=${env} nx run ${app}:prebuild --install=false --platform=${platform} && NODE_ENV=${env} nx run ${app}:run-${platform} --device`
-      : `nx reset && NODE_ENV=${env} nx start ${app} --clear`;
+      ? `${reset} nx run ${app}:prebuild --platform=${platform} && NODE_ENV=${env} nx run ${app}:run-${platform} --device ${buildType}`
+      : `${reset} nx start ${app} --clear ${
+          env === 'prod' ? '-- --no-dev --minify' : ''
+        }`;
 
   spawn(runCommand, { stdio: 'inherit', shell: true });
 })();

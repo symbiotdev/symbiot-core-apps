@@ -2,8 +2,18 @@
   "shared": {
     "next": "Next",
     "continue": "Continue",
+    "cancel": "Cancel",
     "and": "and",
+    "version": "Version",
+    "language": "Language",
+    "notifications": "Notifications",
+    "help_feedback": "Help & Feedback",
+    "follow_us": "Follow us",
+    "profile": "Profile",
+    "theme": "Theme",
+    "share_app": "Share application",
     "docs": {
+      "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",
       "terms_conditions": "Terms & Conditions"
     },
@@ -154,6 +164,14 @@
             "match": "Passwords do not match"
           }
         }
+      }
+    },
+    "sign_out": {
+      "confirm": {
+        "title": "Press 'Continue' to confirm sign out"
+      },
+      "button": {
+        "label": "Sign out"
       }
     }
   },

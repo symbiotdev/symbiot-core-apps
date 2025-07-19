@@ -18,6 +18,8 @@ export const lightTheme: ThemeConfig = {
   buttonTextColor1: '#7b5aed',
   checkboxColor: '#7b5aed',
   inputBackgroundColor: '#FFFFFF',
+  tabBarActiveTintColor: '#7b5aed',
+  tabBarInactiveTintColor: '#111111',
 };
 
 export const darkTheme: ThemeConfig = {
@@ -38,4 +40,6 @@ export const darkTheme: ThemeConfig = {
   buttonTextColor1: '#7b5aed',
   checkboxColor: '#7b5aed',
   inputBackgroundColor: '#1A1A1A',
+  tabBarActiveTintColor: '#7b5aed',
+  tabBarInactiveTintColor: '#dddddd',
 };

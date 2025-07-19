@@ -6,7 +6,11 @@ export * from './lib/form/input-code';
 
 export * from './lib/icons/icon';
 
+export * from './lib/list/list-item';
+
 export * from './lib/loading/spinner';
+
+export * from './lib/navigation/tabs';
 
 export * from './lib/text/heading';
 export * from './lib/text/text';

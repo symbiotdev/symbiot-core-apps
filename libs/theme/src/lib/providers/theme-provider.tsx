@@ -1,5 +1,5 @@
 import { createContext, PropsWithChildren, useMemo } from 'react';
-import { createTamagui, TamaguiProvider } from 'tamagui';
+import { createTamagui, TamaguiProvider, View } from 'tamagui';
 import {
   animations,
   fonts,
@@ -26,7 +26,7 @@ export const ThemeProvider = ({
   const scheme = useSystemScheme();
   const barStyle = useMemo(
     () => (scheme === 'dark' ? 'light-content' : 'dark-content'),
-    [scheme]
+    [scheme],
   );
 
   const themes = useMemo(
@@ -38,7 +38,7 @@ export const ThemeProvider = ({
             ...obj,
             [`o_${key}`]: darkTheme[key as keyof ThemeConfig],
           }),
-          {}
+          {},
         ),
       },
       dark: {
@@ -48,11 +48,11 @@ export const ThemeProvider = ({
             ...obj,
             [`o_${key}`]: lightTheme[key as keyof ThemeConfig],
           }),
-          {}
+          {},
         ),
       },
     }),
-    [darkTheme, lightTheme]
+    [darkTheme, lightTheme],
   );
 
   const config = useMemo(
@@ -76,7 +76,7 @@ export const ThemeProvider = ({
           onlyAllowShorthands: true,
         },
       }),
-    [themes]
+    [themes],
   );
 
   return (
@@ -114,8 +114,10 @@ const ThemeProviderChildren = ({
   }, [scheme, themes]);
 
   return (
-    <NavigationThemeProvider value={themeProviderValue}>
-      {children}
-    </NavigationThemeProvider>
+    <View flex={1} backgroundColor="$background">
+      <NavigationThemeProvider value={themeProviderValue}>
+        {children}
+      </NavigationThemeProvider>
+    </View>
   );
 };

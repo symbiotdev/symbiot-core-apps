@@ -2,8 +2,18 @@
   "shared": {
     "next": "Далі",
     "continue": "Продовжити",
+    "cancel": "Відміна",
     "and": "та",
+    "version": "Версія",
+    "language": "Мова",
+    "notifications": "Сповіщення",
+    "help_feedback": "Допомога та зворотній звʼязок",
+    "follow_us": "Слідкуйте за нами",
+    "profile": "Профіль",
+    "theme": "Тема",
+    "share_app": "Поділитись додатком",
     "docs": {
+      "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",
       "terms_conditions": "Terms & Conditions"
     },
@@ -154,6 +164,14 @@
             "match": "Паролі не збігаються"
           }
         }
+      }
+    },
+    "sign_out": {
+      "confirm": {
+        "title": "Натисність 'Продовжити', щоб підтвердити вихід"
+      },
+      "button": {
+        "label": "Вихід"
       }
     }
   },

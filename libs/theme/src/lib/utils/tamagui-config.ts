@@ -20,6 +20,8 @@ export type ThemeConfig = {
   checkboxColor: string;
   inputBackgroundColor: string;
   placeholderColor: string;
+  tabBarActiveTintColor: string;
+  tabBarInactiveTintColor: string;
 };
 
 export const animations = createAnimations({

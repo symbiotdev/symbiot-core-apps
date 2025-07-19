@@ -9,7 +9,10 @@ export default () => {
   }
 
   return (
-    <Stack initialRouteName="verifying/index">
+    <Stack
+      initialRouteName="verifying/index"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen
         name="verifying/index"
         options={{

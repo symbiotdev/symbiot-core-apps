@@ -42,6 +42,7 @@
     "expo-image": "*",
     "expo-image-picker": "*",
     "expo-linking": "*",
+    "expo-sharing": "*",
     "expo-media-library": "*",
     "expo-router": "*",
     "expo-splash-screen": "*",

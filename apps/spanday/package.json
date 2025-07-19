@@ -46,6 +46,7 @@
     "expo-router": "*",
     "expo-splash-screen": "*",
     "expo-status-bar": "*",
+    "expo-sharing": "*",
     "expo-symbols": "*",
     "expo-localization": "*",
     "expo-web-browser": "*",

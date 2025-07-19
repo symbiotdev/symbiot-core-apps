@@ -1,5 +1,9 @@
 import { ThemeConfig } from '@symbiot-core-apps/theme';
 
+const primary100 = '#7B5AED';
+const primary60 = '#7B5AED60';
+const primary20 = '#7B5AED20';
+
 export const lightTheme: ThemeConfig = {
   background: '#F2F2F2',
   background1: '#FFFFFF',
@@ -9,37 +13,39 @@ export const lightTheme: ThemeConfig = {
   link: '#777777',
   placeholderColor: '#999999',
   disabled: '#999999',
+  highlighted: primary20,
   borderColor: '#111111',
   borderColorHover: 'transparent',
   borderColorFocus: 'transparent',
   outlineColor: 'transparent',
-  buttonBackground: '#7b5aed',
+  buttonBackground: 'rgba(123,90,237,0.5)',
   buttonTextColor: '#FFFFFF',
-  buttonTextColor1: '#7b5aed',
-  checkboxColor: '#7b5aed',
+  buttonTextColor1: primary100,
+  checkboxColor: primary100,
   inputBackgroundColor: '#FFFFFF',
-  tabBarActiveTintColor: '#7b5aed',
+  tabBarActiveTintColor: primary100,
   tabBarInactiveTintColor: '#111111',
 };
 
 export const darkTheme: ThemeConfig = {
   background: '#000000',
-  background1: '#1A1A1A',
+  background1: '#0F0F0F',
   color: '#FFFFFF',
   colorPress: '#FFFFFF',
   error: '#FF6B6B',
   link: '#777777',
   placeholderColor: '#999999',
   disabled: '#999999',
+  highlighted: primary60,
   borderColor: '#F5F5F5',
   borderColorHover: 'transparent',
   borderColorFocus: 'transparent',
   outlineColor: 'transparent',
-  buttonBackground: '#7b5aed',
+  buttonBackground: primary100,
   buttonTextColor: '#FFFFFF',
-  buttonTextColor1: '#7b5aed',
-  checkboxColor: '#7b5aed',
+  buttonTextColor1: primary100,
+  checkboxColor: primary100,
   inputBackgroundColor: '#1A1A1A',
-  tabBarActiveTintColor: '#7b5aed',
+  tabBarActiveTintColor: primary100,
   tabBarInactiveTintColor: '#dddddd',
 };

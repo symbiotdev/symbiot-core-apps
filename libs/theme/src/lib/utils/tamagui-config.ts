@@ -10,6 +10,7 @@ export type ThemeConfig = {
   error: string;
   link: string;
   disabled: string;
+  highlighted: string;
   borderColor: string;
   borderColorHover: string;
   borderColorFocus: string;

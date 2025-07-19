@@ -9,6 +9,7 @@ export const lightTheme: ThemeConfig = {
   link: '#777777',
   placeholderColor: '#999999',
   disabled: '#999999',
+  highlighted: '#CCCCCC',
   borderColor: '#111111',
   borderColorHover: 'transparent',
   borderColorFocus: 'transparent',
@@ -24,13 +25,14 @@ export const lightTheme: ThemeConfig = {
 
 export const darkTheme: ThemeConfig = {
   background: '#000000',
-  background1: '#1A1A1A',
+  background1: '#0F0F0F',
   color: '#FFFFFF',
   colorPress: '#FFFFFF',
   error: '#FF6B6B',
   link: '#777777',
   placeholderColor: '#999999',
   disabled: '#999999',
+  highlighted: '#9A9A9A',
   borderColor: '#F5F5F5',
   borderColorHover: 'transparent',
   borderColorFocus: 'transparent',

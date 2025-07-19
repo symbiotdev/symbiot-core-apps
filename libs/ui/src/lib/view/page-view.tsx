@@ -9,6 +9,7 @@ import { ScrollView, View, ViewProps } from 'tamagui';
 import { LoadingView } from './loading-view';
 import { useRendered } from '@symbiot-core-apps/shared';
 import { Refresher } from '../loading/refresher';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const isWeb = Platform.OS === 'web';
 
@@ -97,13 +98,18 @@ export const PageView = ({
 };
 
 const PageContent = (props: ViewProps) => {
+  const { top, bottom, left, right } = useSafeAreaInsets();
+
   return (
     <View
       flex={1}
       width="100%"
       maxWidth={1440}
       marginHorizontal="auto"
-      padding="$4"
+      paddingTop={top + 10}
+      paddingBottom={bottom + 10}
+      paddingLeft={left + 10}
+      paddingRight={right + 10}
       {...props}
     />
   );

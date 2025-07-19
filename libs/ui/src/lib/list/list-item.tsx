@@ -8,9 +8,9 @@ export const ListItemGroup = memo((props: ViewProps) => {
       backgroundColor="$background1"
       borderRadius="$10"
       paddingVertical="$2"
-    >
-      {props.children}
-    </View>
+      gap="$1"
+      {...props}
+    />
   );
 });
 

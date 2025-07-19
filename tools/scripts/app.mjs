@@ -110,7 +110,7 @@ export const getStartCommand = (app, env, platform) => {
   }
 };
 
-export const getBuildTo = () => select({
+export const getBuildTo = (env) => select({
   message: 'Build',
   choices: [
     {

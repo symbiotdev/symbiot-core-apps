@@ -19,7 +19,7 @@ import {
   const app = await getApp();
   const env = await getEnv(true);
   const platform = await getPlatform(true);
-  const buildTo = await getBuildTo();
+  const buildTo = await getBuildTo(env);
   const incrementType = await getIncrementType(env);
 
   const profile = getEasProfile(env.split('_')[0], buildTo);

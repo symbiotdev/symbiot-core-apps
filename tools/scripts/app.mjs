@@ -106,7 +106,7 @@ export const getStartCommand = (app, env, platform) => {
   } else {
     const additionalParams = env === 'production' ? '-- --no-dev --minify' : '';
 
-    return `nx reset && nx start ${app} --clear ${additionalParams}`;
+    return `nx reset && NODE_ENV=${env} nx start ${app} --clear ${additionalParams}`;
   }
 };
 

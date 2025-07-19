@@ -198,8 +198,8 @@ export const useAccountAuthSignOut = () => {
   const { removeTokens } = useAuthTokens();
 
   return useMutation({
-    mutationFn: () => {
-      removeTokens();
+    mutationFn: async () => {
+      await removeTokens();
 
       return axios.post('/api/account-auth/sign-out');
     },

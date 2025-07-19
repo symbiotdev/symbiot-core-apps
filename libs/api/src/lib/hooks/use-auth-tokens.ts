@@ -7,14 +7,14 @@ import { JsonSecureStore } from '@symbiot-core-apps/shared';
 
 export type OnboardingState = {
   tokens: AccountAuthTokens;
-  setTokens: (tokens: AccountAuthTokens) => void;
-  removeTokens: () => void;
+  setTokens: (tokens: AccountAuthTokens) => Promise<void>;
+  removeTokens: () => Promise<void>;
 };
 
 export const authTokenHeaderKey = {
   access: 'X-Authorization',
   refresh: 'X-Refresh-Token',
-}
+};
 
 export const useAuthTokens = create<OnboardingState>()(
   persist<OnboardingState>(
@@ -23,16 +23,20 @@ export const useAuthTokens = create<OnboardingState>()(
         access: '',
         refresh: '',
       },
-      setTokens: (tokens) => {
+      setTokens: async (tokens) => {
         set({ tokens });
+
+        return Promise.resolve();
       },
-      removeTokens: () => {
+      removeTokens: async () => {
         set({
           tokens: {
             access: '',
             refresh: '',
           },
         });
+
+        return Promise.resolve();
       },
     }),
     {

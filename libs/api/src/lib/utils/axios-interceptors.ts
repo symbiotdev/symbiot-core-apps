@@ -143,18 +143,9 @@ const onErrorResponse = async (
     params.onNoRespond();
   } else if (response.status === 401) {
     try {
-      const tokens = await params.refreshTokens();
+      await params.refreshTokens();
 
-      return axios.request({
-        ...requestConfig,
-        headers:
-          Platform.OS !== 'web'
-            ? {
-                ...requestConfig.headers,
-                [authTokenHeaderKey.access]: tokens.access,
-              }
-            : requestConfig.headers,
-      });
+      return axios.request(requestConfig);
     } catch {
       params.onUnauthorized();
     }

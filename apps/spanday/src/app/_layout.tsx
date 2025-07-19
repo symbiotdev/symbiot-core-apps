@@ -13,6 +13,7 @@ import {
   setOptions,
 } from 'expo-splash-screen';
 import { ErrorView } from '@symbiot-core-apps/ui';
+import { darkTheme, lightTheme } from '../utils/theme';
 
 void preventAutoHideAsync();
 setOptions({
@@ -52,7 +53,7 @@ export default () => {
     fontsLoaded && (
       <KeyboardProvider>
         <I18nextProvider i18n={i18n}>
-          <ThemeProvider>
+          <ThemeProvider darkTheme={darkTheme} lightTheme={lightTheme}>
             <ApiProvider
               onNoRespond={onNoRespond}
               onUnauthorized={onUnauthorized}

@@ -1,7 +1,15 @@
 import { createContext, PropsWithChildren, useMemo } from 'react';
-import { TamaguiProvider } from 'tamagui';
-import { tamaguiConfig, themes } from '../utils/tamagui-config';
-import { useSystemScheme } from '@symbiot-core-apps/shared';
+import { createTamagui, TamaguiProvider } from 'tamagui';
+import {
+  animations,
+  fonts,
+  radius,
+  size,
+  space,
+  ThemeConfig,
+  zIndex,
+} from '../utils/tamagui-config';
+import { Scheme, useSystemScheme } from '@symbiot-core-apps/shared';
 import {
   DefaultTheme,
   ThemeProvider as NavigationThemeProvider,
@@ -10,24 +18,81 @@ import { StatusBar } from 'react-native';
 
 const Context = createContext({});
 
-export const ThemeProvider = (props: PropsWithChildren) => {
+export const ThemeProvider = ({
+  children,
+  lightTheme,
+  darkTheme,
+}: PropsWithChildren<{ lightTheme: ThemeConfig; darkTheme: ThemeConfig }>) => {
   const scheme = useSystemScheme();
   const barStyle = useMemo(
     () => (scheme === 'dark' ? 'light-content' : 'dark-content'),
     [scheme]
   );
 
+  const themes = useMemo(
+    () => ({
+      light: {
+        ...lightTheme,
+        ...Object.keys(darkTheme).reduce(
+          (obj, key) => ({
+            ...obj,
+            [`o_${key}`]: darkTheme[key as keyof ThemeConfig],
+          }),
+          {}
+        ),
+      },
+      dark: {
+        ...darkTheme,
+        ...Object.keys(lightTheme).reduce(
+          (obj, key) => ({
+            ...obj,
+            [`o_${key}`]: lightTheme[key as keyof ThemeConfig],
+          }),
+          {}
+        ),
+      },
+    }),
+    [darkTheme, lightTheme]
+  );
+
+  const config = useMemo(
+    () =>
+      createTamagui({
+        animations,
+        fonts,
+        themes,
+        tokens: {
+          size,
+          space,
+          zIndex,
+          radius,
+        },
+        settings: {
+          defaultFont: 'body',
+          fastSchemeChange: true,
+          shouldAddPrefersColorThemes: true,
+          allowedStyleValues: 'somewhat-strict-web',
+          themeClassNameOnRoot: true,
+          onlyAllowShorthands: true,
+        },
+      }),
+    [themes]
+  );
+
   return (
     <Context.Provider value={{}}>
       <StatusBar barStyle={barStyle} />
-      <TamaguiProvider config={tamaguiConfig} defaultTheme={scheme}>
-        <ThemeProviderChildren {...props} />
+      <TamaguiProvider config={config} defaultTheme={scheme}>
+        <ThemeProviderChildren children={children} themes={themes} />
       </TamaguiProvider>
     </Context.Provider>
   );
 };
 
-const ThemeProviderChildren = ({ children }: PropsWithChildren) => {
+const ThemeProviderChildren = ({
+  children,
+  themes,
+}: PropsWithChildren<{ themes: Record<Scheme, ThemeConfig> }>) => {
   const scheme = useSystemScheme();
 
   const themeProviderValue = useMemo(() => {
@@ -46,7 +111,8 @@ const ThemeProviderChildren = ({ children }: PropsWithChildren) => {
         primary: color,
       },
     };
-  }, [scheme]);
+  }, [scheme, themes]);
+
   return (
     <NavigationThemeProvider value={themeProviderValue}>
       {children}

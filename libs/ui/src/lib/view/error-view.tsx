@@ -1,6 +1,6 @@
 import { View, ViewProps } from 'tamagui';
 import { useTranslation } from 'react-i18next';
-import { RegularText } from '../text/text';
+import { Error } from '../text/custom';
 
 export const ErrorView = (
   props: ViewProps & {
@@ -17,9 +17,9 @@ export const ErrorView = (
       padding={20}
       {...props}
     >
-      <RegularText textAlign="center" color="$error">
+      <Error textAlign="center">
         {props.message || t('shared.error.general')}
-      </RegularText>
+      </Error>
     </View>
   );
 };

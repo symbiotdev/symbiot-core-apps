@@ -1,7 +1,7 @@
 {
   "expo": {
     "newArchEnabled": true,
-    "name": "DanceSHub",
+    "name": "[Dev] DanceSHub",
     "slug": "symbiot-dance-hub",
     "scheme": "symbiot-dance-hub",
     "version": "1.0.0",
@@ -17,9 +17,9 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "bundleIdentifier": "com.symbiot.dance.hub",
+      "bundleIdentifier": "com.symbiot.dance.hub.dev",
       "buildNumber": "6",
-      "googleServicesFile": "./google/production/GoogleService-Info.plist",
+      "googleServicesFile": "./google/development/GoogleService-Info.plist",
       "supportsTablet": true,
       "usesAppleSignIn": true,
       "requireFullScreen": true,
@@ -36,14 +36,14 @@
       }
     },
     "android": {
-      "package": "com.symbiot.dance.hub",
+      "package": "com.symbiot.dance.hub.dev",
       "versionCode": 6,
       "icon": "./assets/images/icon/ios-light.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon/adaptive-icon.png",
         "backgroundColor": "#080726"
       },
-      "googleServicesFile": "./google/production/google-services.json",
+      "googleServicesFile": "./google/development/google-services.json",
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO",

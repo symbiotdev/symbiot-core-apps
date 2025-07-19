@@ -38,9 +38,8 @@ export const Checkbox = ({
         <View
           disabled={disabled}
           borderWidth={1}
-          borderColor="$borderColor"
+          borderColor="$checkboxColor"
           borderRadius="$3"
-          backgroundColor="$background"
           justifyContent="center"
           alignItems="center"
           width={24}

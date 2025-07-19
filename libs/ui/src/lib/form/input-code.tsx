@@ -40,7 +40,7 @@ export const InputCode = ({
         maxWidth={50}
         height={50}
         borderRadius="$6"
-        backgroundColor="$background1"
+        backgroundColor="$inputBackgroundColor"
         marginVertical={6}
       >
         <RegularText textAlign="center" lineHeight={50} fontSize={18}>

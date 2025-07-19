@@ -19,10 +19,11 @@ export const Button = memo(
   }) => {
     const disabled = xStackProps.disabled || loading;
     const color =
-      xStackProps.color || (type === 'outlined' ? '$color' : '$o_color');
-    const backgroundColor = !type ? '$color' : 'transparent';
+      xStackProps.color ||
+      (type === 'outlined' ? '$buttonTextColor1' : '$buttonTextColor');
+    const backgroundColor = !type ? '$buttonBackground' : 'transparent';
     const borderWidth = type === 'outlined' ? 1.5 : 0;
-    const borderColor = '$color';
+    const borderColor = '$buttonBackground';
 
     return (
       <XStack
@@ -41,7 +42,7 @@ export const Button = memo(
         disabledStyle={{
           cursor: 'auto',
           opacity: 0.9,
-          backgroundColor: '$disabled'
+          backgroundColor: '$disabled',
         }}
         {...xStackProps}
         disabled={disabled}

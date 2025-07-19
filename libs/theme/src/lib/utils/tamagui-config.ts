@@ -1,53 +1,28 @@
-import { createFont, createTamagui } from 'tamagui';
+import { createFont } from 'tamagui';
 import { defaultConfig } from '@tamagui/config/v4';
 import { createAnimations } from '@tamagui/animations-moti';
 
-type Theme = {
+export type ThemeConfig = {
   background: string;
   background1: string;
   color: string;
   colorPress: string;
   error: string;
   link: string;
-  placeholder: string;
   disabled: string;
   borderColor: string;
   borderColorHover: string;
   borderColorFocus: string;
   outlineColor: string;
+  buttonBackground: string;
+  buttonTextColor: string;
+  buttonTextColor1: string;
+  checkboxColor: string;
+  inputBackgroundColor: string;
+  placeholderColor: string;
 };
 
-const lightTheme: Theme = {
-  background: '#F2F2F2',
-  background1: '#FFFFFF',
-  color: '#000000',
-  colorPress: '#000000',
-  error: '#C62828',
-  link: '#777777',
-  placeholder: '#999999',
-  disabled: '#999999',
-  borderColor: '#111111',
-  borderColorHover: 'transparent',
-  borderColorFocus: 'transparent',
-  outlineColor: 'transparent',
-};
-
-const darkTheme: Theme = {
-  background: '#000000',
-  background1: '#1A1A1A',
-  color: '#FFFFFF',
-  colorPress: '#FFFFFF',
-  error: '#FF6B6B',
-  link: '#777777',
-  placeholder: '#999999',
-  disabled: '#999999',
-  borderColor: '#F5F5F5',
-  borderColorHover: 'transparent',
-  borderColorFocus: 'transparent',
-  outlineColor: 'transparent',
-};
-
-const animations = createAnimations({
+export const animations = createAnimations({
   '100ms': {
     type: 'timing',
     duration: 100,
@@ -86,7 +61,7 @@ const animations = createAnimations({
     stiffness: 100,
   },
 });
-const fonts = {
+export const fonts = {
   body: createFont({
     ...defaultConfig.fonts.body,
     family: 'BodyRegular',
@@ -103,29 +78,7 @@ const fonts = {
     },
   }),
 };
-export const themes = {
-  light: {
-    ...lightTheme,
-    ...Object.keys(darkTheme).reduce(
-      (obj, key) => ({
-        ...obj,
-        [`o_${key}`]: darkTheme[key as keyof Theme],
-      }),
-      {}
-    ),
-  },
-  dark: {
-    ...darkTheme,
-    ...Object.keys(lightTheme).reduce(
-      (obj, key) => ({
-        ...obj,
-        [`o_${key}`]: lightTheme[key as keyof Theme],
-      }),
-      {}
-    ),
-  },
-};
-const size = {
+export const size = {
   $true: 20,
   $1: 4,
   $2: 8,
@@ -138,7 +91,7 @@ const size = {
   $9: 36,
   $10: 40,
 };
-const space = {
+export const space = {
   $true: 5,
   $1: 4,
   $2: 8,
@@ -151,10 +104,10 @@ const space = {
   $9: 36,
   $10: 40,
 };
-const zIndex = {
+export const zIndex = {
   $true: 1,
 };
-const radius = {
+export const radius = {
   1: 2,
   2: 4,
   3: 6,
@@ -166,23 +119,3 @@ const radius = {
   9: 18,
   10: 20,
 };
-
-export const tamaguiConfig = createTamagui({
-  animations,
-  fonts,
-  themes,
-  tokens: {
-    size,
-    space,
-    zIndex,
-    radius,
-  },
-  settings: {
-    defaultFont: 'body',
-    fastSchemeChange: true,
-    shouldAddPrefersColorThemes: true,
-    allowedStyleValues: 'somewhat-strict-web',
-    themeClassNameOnRoot: true,
-    onlyAllowShorthands: true,
-  },
-});

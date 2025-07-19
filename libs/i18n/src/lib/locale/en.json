@@ -13,6 +13,8 @@
     "theme": "Theme",
     "share_app": "Share application",
     "subscription": "Subscription",
+    "qr_code": "QR code",
+    "calendar": "Calendar",
     "docs": {
       "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",

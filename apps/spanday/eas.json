@@ -8,6 +8,7 @@
       "env": {
         "EXPO_PUBLIC_APP_VARIANT": "production",
         "EXPO_PUBLIC_APP_ID": "com.spanday.pro",
+        "EXPO_PUBLIC_APPSTORE_ID": "6745966375",
         "EXPO_PUBLIC_APP_NAME": "Spanday PRO",
         "EXPO_PUBLIC_APP_TYPE": "spanday",
         "EXPO_PUBLIC_WEB_CLIENT_ID": "449414175024-mj2oollon6rkfqh23qh8rfr3fklk9iti.apps.googleusercontent.com",

@@ -69,7 +69,7 @@ import { spawn } from 'child_process';
       : '';
   const runCommand =
     platform !== 'web'
-      ? `${reset} nx run ${app}:prebuild --platform=${platform} && NODE_ENV=${env} nx run ${app}:run-${platform} --device ${buildType}`
+      ? `${reset} nx run ${app}:prebuild --platform=${platform} && NODE_ENV=${env} nx run ${app}:run-${platform} -- --device ${buildType}`
       : `${reset} nx start ${app} --clear ${
           env === 'prod' ? '-- --no-dev --minify' : ''
         }`;

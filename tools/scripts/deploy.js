@@ -123,7 +123,7 @@ const __dirname = path.dirname(__filename);
       ? `&& NODE_ENV=${env} nx submit ${app} -- --profile=${profile}`
       : '';
   const runCommand =
-    `nx reset && NODE_ENV=${env} nx run ${app}:prebuild --install=false --platform=${platform} && ${buildCommand} ${submitCommand}`.trim();
+    `nx reset && NODE_ENV=${env} nx run ${app}:prebuild --platform=${platform} && ${buildCommand} ${submitCommand}`.trim();
 
   if (incrementVersion && (build === 'loc' || build === 'store')) {
     increment(app, incrementVersion);

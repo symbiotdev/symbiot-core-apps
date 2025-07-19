@@ -17,6 +17,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "appleTeamId": "8WPTDS74WX",
       "bundleIdentifier": "com.symbiot.dance.hub.dev",
       "buildNumber": "6",
       "googleServicesFile": "./google/development/GoogleService-Info.plist",

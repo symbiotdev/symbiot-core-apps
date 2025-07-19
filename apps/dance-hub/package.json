@@ -2,6 +2,7 @@
   "name": "dance-hub",
   "version": "1.0.0",
   "private": true,
+  "main": "index.js",
   "scripts": {
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/dance-hub",
     "android": "expo run:android",

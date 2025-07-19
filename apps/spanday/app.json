@@ -17,6 +17,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "appleTeamId": "8WPTDS74WX",
       "bundleIdentifier": "com.spandaydev.pro",
       "buildNumber": "13",
       "googleServicesFile": "./google/development/GoogleService-Info.plist",

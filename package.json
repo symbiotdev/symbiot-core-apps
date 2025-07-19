@@ -2,6 +2,7 @@
   "name": "@symbiot-core-apps/monorepo",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "//SYMBIOT": "--------------------SYMBIOT---------------------",
     "start:symbtiot": "NODE_APP=symbiot node tools/scripts/start.js",
@@ -103,6 +104,7 @@
     "@types/react": "~19.0.10",
     "babel-jest": "30.0.4",
     "babel-preset-expo": "~13.0.0",
+    "dotenv": "^17.2.0",
     "eas-cli": "^16.17.0",
     "eslint": "^9.8.0",
     "eslint-config-expo": "~9.2.0",

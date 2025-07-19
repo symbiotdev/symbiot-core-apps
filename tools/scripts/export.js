@@ -1,45 +1,16 @@
-import { select } from '@inquirer/prompts';
 import { spawn } from 'child_process';
+import { getApp, getEnv, getExportCommand, updateAppConfig } from './app.mjs';
 
 (async () => {
   console.log(`Exporting... 🌐⬆️`);
 
-  const app =
-    process.env['NODE_APP'] ||
-    (await select({
-      message: 'Application',
-      choices: [
-        {
-          name: 'DanceHub',
-          value: 'dance-hub',
-        },
-        {
-          name: 'Spanday',
-          value: 'spanday',
-        },
-        {
-          name: 'Symbiot',
-          value: 'symbiot',
-        },
-      ],
-    }));
+  const app = await getApp();
+  const env = await getEnv(true);
 
-  const env = await select({
-    message: 'Environment',
-    choices: [
-      {
-        name: 'Development',
-        value: 'dev',
-      },
-      {
-        name: 'Production',
-        value: 'prod',
-      },
-    ],
+  updateAppConfig(app, env);
+
+  spawn(getExportCommand(app), {
+    stdio: 'inherit',
+    shell: true,
   });
-
-  spawn(
-    `NODE_ENV=${env} nx run ${app}:export --platform=web --clear --skip-nx-cache`,
-    { stdio: 'inherit', shell: true }
-  );
 })();

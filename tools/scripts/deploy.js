@@ -1,168 +1,37 @@
-import fs from 'fs';
-import { fileURLToPath } from 'url';
-import path from 'path';
 import { spawn } from 'child_process';
-import { select } from '@inquirer/prompts';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import {
+  getApp,
+  getBuildCommand,
+  getBuildTo,
+  getEasProfile,
+  getEnv,
+  getIncrementType,
+  getPlatform,
+  getPrebuildCommand,
+  getSubmitCommand,
+  updateAppConfig,
+  updateEasConfig,
+} from './app.mjs';
 
 (async () => {
   console.log(`Deploying... 📦⬆️`);
 
-  const platform = await select({
-    message: 'Platform',
-    choices: [
-      {
-        name: 'IOS',
-        value: 'ios',
-      },
-      {
-        name: 'Android',
-        value: 'android',
-      },
-    ],
+  const app = await getApp();
+  const env = await getEnv(true);
+  const platform = await getPlatform(true);
+  const buildTo = await getBuildTo();
+  const incrementType = await getIncrementType(env);
+
+  const profile = getEasProfile(env.split('_')[0], buildTo);
+  const prebuild = getPrebuildCommand(app, platform);
+  const build = getBuildCommand(app, profile, platform, buildTo);
+  const submit = getSubmitCommand(app, profile, build);
+
+  updateAppConfig(app, env, incrementType);
+  updateEasConfig(app, env, profile);
+
+  spawn(`nx reset && ${prebuild} && ${build} && ${submit}`, {
+    stdio: 'inherit',
+    shell: true,
   });
-
-  const app =
-    process.env['NODE_APP'] ||
-    (await select({
-      message: 'Application',
-      choices: [
-        {
-          name: 'DanceHub',
-          value: 'dance-hub',
-        },
-        {
-          name: 'Spanday',
-          value: 'spanday',
-        },
-        {
-          name: 'Symbiot',
-          value: 'symbiot',
-        },
-      ],
-    }));
-
-  const env = await select({
-    message: 'Environment',
-    choices: [
-      {
-        name: 'Development',
-        value: 'dev',
-      },
-      {
-        name: 'Production',
-        value: 'prod',
-      },
-    ],
-  });
-
-  const build = await select({
-    message: 'Build',
-    choices: [
-      {
-        name: 'Local',
-        value: 'loc',
-      },
-      {
-        name: 'EAS',
-        value: 'eas',
-      },
-      {
-        name: 'Device',
-        value: 'device',
-      },
-      ...(env === 'dev'
-        ? []
-        : [
-            {
-              name: 'Store',
-              value: 'store',
-            },
-          ]),
-    ],
-  });
-
-  let incrementVersion;
-
-  if (env === 'prod') {
-    incrementVersion = await select({
-      message: 'Increment',
-      choices: [
-        {
-          name: 'Skip',
-          value: '',
-        },
-        {
-          name: 'Major',
-          value: 'major',
-        },
-        {
-          name: 'Minor',
-          value: 'minor',
-        },
-        {
-          name: 'Patch',
-          value: 'patch',
-        },
-        {
-          name: 'Bump buildNumber & versionCode',
-          value: 'bump',
-        },
-      ],
-    });
-  }
-
-  const profile = `${env}_${build}`;
-  const buildCommand = `NODE_ENV=${env} nx build ${app} -- --profile=${profile} --platform=${platform} --clear-cache ${
-    build === 'loc' ? '--local' : ''
-  }`;
-  const submitCommand =
-    build === 'store'
-      ? `&& NODE_ENV=${env} nx submit ${app} -- --profile=${profile}`
-      : '';
-  const runCommand =
-    `nx reset && NODE_ENV=${env} nx run ${app}:prebuild --platform=${platform} && ${buildCommand} ${submitCommand}`.trim();
-
-  if (incrementVersion && (build === 'loc' || build === 'store')) {
-    increment(app, incrementVersion);
-  }
-
-  spawn(runCommand, { stdio: 'inherit', shell: true });
 })();
-
-const increment = (app, type) => {
-  const appConfigPath = `${__dirname}/../../apps/${app}/app.config.js`;
-  const appConfig = fs.readFileSync(appConfigPath, 'utf8');
-
-  fs.writeFileSync(
-    appConfigPath,
-    appConfig
-      .replace(
-        /version:\s*'(\d+)\.(\d+)\.(\d+)'/,
-        (match, major, minor, patch) => {
-          if (type === 'major') {
-            major = parseInt(major, 10) + 1;
-          }
-
-          if (type === 'minor') {
-            minor = parseInt(minor, 10) + 1;
-          }
-
-          if (type === 'patch') {
-            patch = parseInt(patch, 10) + 1;
-          }
-
-          return `version: '${major}.${minor}.${patch}'`;
-        }
-      )
-      .replace(/buildNumber:\s*'(\d+)'/, (match, p1) => {
-        return `buildNumber: '${parseInt(p1, 10) + 1}'`;
-      })
-      .replace(/versionCode:\s*(\d+)/, (match, p1) => {
-        return `versionCode: ${parseInt(p1, 10) + 1}`;
-      }),
-    'utf8'
-  );
-};

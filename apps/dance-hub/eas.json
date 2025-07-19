@@ -1,42 +1,54 @@
 {
   "build": {
-    "prod": {
+    "production": {
+      "environment": "production",
       "android": {
         "buildType": "app-bundle"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "production",
+        "EXPO_PUBLIC_APP_ID": "com.symbiot.dance.hub",
+        "EXPO_PUBLIC_APP_NAME": "DanceSHub",
+        "EXPO_PUBLIC_APP_TYPE": "symbiot-dance-hub",
+        "EXPO_PUBLIC_WEB_CLIENT_ID": "866730566175-boconvacojokdvamv6k93o5715jlc795.apps.googleusercontent.com",
+        "EXPO_PUBLIC_API_URL": "https://symbiot-core-dev-35243bd1773b.herokuapp.com",
+        "EXPO_PUBLIC_PRIVACY_POLICY_URL": "https://www.spanday.com/privacy-policy",
+        "EXPO_PUBLIC_TERMS_CONDITIONS_URL": "https://www.spanday.com/terms-of-service"
       }
     },
-    "prod_loc": {
-      "extends": "prod",
+    "production_local": {
+      "extends": "production",
       "distribution": "store"
     },
-    "prod_eas": {
-      "extends": "prod",
+    "production_eas": {
+      "extends": "production",
       "distribution": "internal"
     },
-    "prod_device": {
-      "extends": "prod",
+    "production_device": {
+      "extends": "production",
       "distribution": "internal",
       "android": {
         "buildType": "apk"
       }
     },
-    "prod_store": {
-      "extends": "prod",
+    "production_store": {
+      "extends": "production",
       "distribution": "store"
     },
-    "dev": {
+    "development": {
+      "environment": "development",
       "developmentClient": true,
       "distribution": "internal"
     },
-    "dev_loc": {
-      "extends": "dev"
+    "development_local": {
+      "extends": "development"
     },
-    "dev_eas": {
-      "extends": "dev",
+    "development_eas": {
+      "extends": "development",
       "distribution": "internal"
     },
-    "dev_device": {
-      "extends": "dev",
+    "development_device": {
+      "extends": "development",
       "distribution": "internal",
       "android": {
         "buildType": "apk"
@@ -44,6 +56,6 @@
     }
   },
   "submit": {
-    "prod": {}
+    "production": {}
   }
 }

@@ -31,7 +31,7 @@ export const AuthFormView = ({
   onButtonPress: () => Promise<void>;
 }>) => {
   return (
-    <PageView scrollable withKeyboard lazy={false}>
+    <PageView scrollable withKeyboard withHeaderHeight lazy={false}>
       <View
         flex={1}
         gap="$3"

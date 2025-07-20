@@ -1,40 +1,64 @@
 {
   "project_info": {
-    "project_number": "268707580330",
-    "project_id": "spanday-dev",
-    "storage_bucket": "spanday-dev.firebasestorage.app"
+    "project_number": "449414175024",
+    "project_id": "spanday-app",
+    "storage_bucket": "spanday-app.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:268707580330:android:10e0ff19143142f2b903d3",
+        "mobilesdk_app_id": "1:449414175024:android:780c96f15750dcf6f850f5",
         "android_client_info": {
-          "package_name": "com.spandaydev.admin"
+          "package_name": "com.spanday.pro"
         }
       },
       "oauth_client": [
         {
-          "client_id": "268707580330-5l8uk63beq5ue835fbin01t1qmpfklro.apps.googleusercontent.com",
+          "client_id": "449414175024-482au0p43eha17h8u4idhvascm1n815a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spanday.pro",
+            "certificate_hash": "c5f42756c02c36d75680de859c18099a77b2fb3f"
+          }
+        },
+        {
+          "client_id": "449414175024-llve2nv262jo0nlfhg3cfhre5jsp66nj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spanday.pro",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "449414175024-seaq53h0c8emup55giv90gi98afn50g9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spanday.pro",
+            "certificate_hash": "09103ead21c92099092af70d161d16cdc651abf7"
+          }
+        },
+        {
+          "client_id": "449414175024-mj2oollon6rkfqh23qh8rfr3fklk9iti.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB2WojEWhLuibB6xe0mfQWTO9WIxrhcUbo"
+          "current_key": "AIzaSyDMWlaychQz5SRbofLwr3eMPYeOgsnuNPY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "268707580330-5l8uk63beq5ue835fbin01t1qmpfklro.apps.googleusercontent.com",
+              "client_id": "449414175024-mj2oollon6rkfqh23qh8rfr3fklk9iti.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "268707580330-50j234amn1mo1s28aemnsrhfqpjij4b4.apps.googleusercontent.com",
+              "client_id": "449414175024-0np4fl5ib63mng9s2vmljdohhs4rsl0n.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.spandaydev.app"
+                "bundle_id": "com.spanday.pro.dev"
               }
             }
           ]
@@ -43,70 +67,34 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:268707580330:android:d9803b5f0d0ff9d5b903d3",
+        "mobilesdk_app_id": "1:449414175024:android:d88956aab2f11d2af850f5",
         "android_client_info": {
-          "package_name": "com.spandaydev.app"
+          "package_name": "com.spanday.pro.dev"
         }
       },
       "oauth_client": [
         {
-          "client_id": "268707580330-5l8uk63beq5ue835fbin01t1qmpfklro.apps.googleusercontent.com",
+          "client_id": "449414175024-mj2oollon6rkfqh23qh8rfr3fklk9iti.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB2WojEWhLuibB6xe0mfQWTO9WIxrhcUbo"
+          "current_key": "AIzaSyDMWlaychQz5SRbofLwr3eMPYeOgsnuNPY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "268707580330-5l8uk63beq5ue835fbin01t1qmpfklro.apps.googleusercontent.com",
+              "client_id": "449414175024-mj2oollon6rkfqh23qh8rfr3fklk9iti.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "268707580330-50j234amn1mo1s28aemnsrhfqpjij4b4.apps.googleusercontent.com",
+              "client_id": "449414175024-0np4fl5ib63mng9s2vmljdohhs4rsl0n.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.spandaydev.app"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:268707580330:android:cf3e944067dc852db903d3",
-        "android_client_info": {
-          "package_name": "com.spandaydev.pro"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "268707580330-5l8uk63beq5ue835fbin01t1qmpfklro.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB2WojEWhLuibB6xe0mfQWTO9WIxrhcUbo"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "268707580330-5l8uk63beq5ue835fbin01t1qmpfklro.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "268707580330-50j234amn1mo1s28aemnsrhfqpjij4b4.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.spandaydev.app"
+                "bundle_id": "com.spanday.pro.dev"
               }
             }
           ]

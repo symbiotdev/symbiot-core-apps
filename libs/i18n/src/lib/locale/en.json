@@ -15,6 +15,8 @@
     "subscription": "Subscription",
     "qr_code": "QR code",
     "calendar": "Calendar",
+    "application": "Application",
+    "preferences": "Preferences",
     "docs": {
       "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",
@@ -202,6 +204,14 @@
     "auth": {
       "title": "Be PRO in your niche",
       "subtitle": "Smart Scheduling for Your Business"
+    },
+    "subscription": {
+      "card": {
+        "title": "Pro Tools for Pro Minds",
+        "button": {
+          "label": "PRO"
+        }
+      }
     }
   },
   "dance_hub": {
@@ -228,6 +238,14 @@
     "auth": {
       "title": "Your rhythm. Your system.",
       "subtitle": "A flexible platform for dance instructors and studio teams"
+    },
+    "subscription": {
+      "card": {
+        "title": "Where Moves Meet Mastery",
+        "button": {
+          "label": "Continue"
+        }
+      }
     }
   }
 }

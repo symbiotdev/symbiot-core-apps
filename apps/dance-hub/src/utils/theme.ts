@@ -25,7 +25,7 @@ export const lightTheme: ThemeConfig = {
 
 export const darkTheme: ThemeConfig = {
   background: '#000000',
-  background1: '#0F0F0F',
+  background1: '#191919',
   color: '#FFFFFF',
   colorPress: '#FFFFFF',
   error: '#FF6B6B',

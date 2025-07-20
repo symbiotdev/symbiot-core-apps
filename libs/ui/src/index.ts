@@ -1,5 +1,7 @@
 export * from './lib/button/button';
 
+export * from './lib/card/card';
+
 export * from './lib/form/checkbox';
 export * from './lib/form/input';
 export * from './lib/form/input-code';

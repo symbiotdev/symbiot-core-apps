@@ -11,11 +11,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "splash": {
-      "image": "./assets/images/icon/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
       "appleTeamId": "8WPTDS74WX",
       "bundleIdentifier": "com.symbiot.dance.hub.dev",

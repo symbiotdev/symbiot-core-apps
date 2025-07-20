@@ -30,12 +30,12 @@ export const SignInButtons = () => {
 
   const isPending = useMemo(
     () => isAppleAuthPending || isGoogleAuthPending,
-    [isAppleAuthPending, isGoogleAuthPending]
+    [isAppleAuthPending, isGoogleAuthPending],
   );
 
   const anyError = useMemo(
     () => error || appleAuthError || googleAuthError,
-    [appleAuthError, error, googleAuthError]
+    [appleAuthError, error, googleAuthError],
   );
 
   const signInWithFirebase = useCallback(
@@ -54,7 +54,7 @@ export const SignInButtons = () => {
         throw errorText;
       }
     },
-    [t]
+    [t],
   );
 
   const signUp = useCallback(() => {
@@ -73,20 +73,20 @@ export const SignInButtons = () => {
     async (token: string) => {
       appleAuth({
         token: await signInWithFirebase(
-          FirebaseAuth.AppleAuthProvider.credential(token)
+          FirebaseAuth.AppleAuthProvider.credential(token),
         ),
       });
     },
-    [appleAuth, signInWithFirebase]
+    [appleAuth, signInWithFirebase],
   );
   const onAuthWithGoogle = useCallback(
     async (token: string) =>
       googleAuth({
         token: await signInWithFirebase(
-          FirebaseAuth.GoogleAuthProvider.credential(token)
+          FirebaseAuth.GoogleAuthProvider.credential(token),
         ),
       }),
-    [googleAuth, signInWithFirebase]
+    [googleAuth, signInWithFirebase],
   );
 
   return (

@@ -102,11 +102,11 @@ export const getStartCommand = (app, env, platform) => {
           : '--variant=release'
         : '';
 
-    return `nx reset && ${prebuild} && nx run ${app}:run-${platform} -- --device ${buildType}`;
+    return `nx reset && ${prebuild} && NODE_ENV=${env} nx run ${app}:run-${platform} -- --device ${buildType}`;
   } else {
-    const additionalParams = env === 'production' ? '-- --no-dev --minify' : '';
+    const additionalParams = env === 'production' ? '-- --no-dev --minify --clear' : '-- --clear';
 
-    return `nx reset && NODE_ENV=${env} nx start ${app} --clear ${additionalParams}`;
+    return `nx reset && NODE_ENV=${env} nx start ${app} ${additionalParams}`;
   }
 };
 

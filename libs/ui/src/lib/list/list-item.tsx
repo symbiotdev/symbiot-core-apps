@@ -1,16 +1,24 @@
 import { cloneElement, memo, ReactElement } from 'react';
 import { ColorTokens, View, ViewProps, XStack, XStackProps } from 'tamagui';
 import { RegularText } from '../text/text';
+import { H5 } from '../text/heading';
 
-export const ListItemGroup = memo((props: ViewProps) => {
+export const ListItemGroup = memo((props: ViewProps & { title?: string }) => {
   return (
-    <View
-      backgroundColor="$background1"
-      borderRadius="$10"
-      paddingVertical="$2"
-      gap="$1"
-      {...props}
-    />
+    <View gap="$1">
+      {!!props.title && (
+        <H5 textTransform="uppercase" color="$disabled" marginHorizontal="$3">
+          {props.title}
+        </H5>
+      )}
+      <View
+        backgroundColor="$background1"
+        borderRadius="$10"
+        paddingVertical="$2"
+        gap="$1"
+        {...props}
+      />
+    </View>
   );
 });
 

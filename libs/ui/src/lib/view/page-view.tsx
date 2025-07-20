@@ -59,7 +59,11 @@ export const PageView = ({
           ) : undefined
         }
       >
-        <PageContent {...viewProps} children={children} />
+        <PageContent
+          {...viewProps}
+          withHeaderHeight={withHeaderHeight}
+          children={children}
+        />
       </KeyboardAwareScrollView>
     );
   }
@@ -71,7 +75,11 @@ export const PageView = ({
         style={styles.FullScreen}
         keyboardVerticalOffset={withHeaderHeight ? headerHeight : undefined}
       >
-        <PageContent {...viewProps} children={children} />
+        <PageContent
+          {...viewProps}
+          withHeaderHeight={withHeaderHeight}
+          children={children}
+        />
       </KeyboardAvoidingView>
     );
   }
@@ -89,15 +97,25 @@ export const PageView = ({
           ) : undefined
         }
       >
-        <PageContent {...viewProps} children={children} />
+        <PageContent
+          {...viewProps}
+          withHeaderHeight={withHeaderHeight}
+          children={children}
+        />
       </ScrollView>
     );
   }
 
-  return <PageContent {...viewProps} children={children} />;
+  return (
+    <PageContent
+      {...viewProps}
+      withHeaderHeight={withHeaderHeight}
+      children={children}
+    />
+  );
 };
 
-const PageContent = (props: ViewProps) => {
+const PageContent = (props: ViewProps & { withHeaderHeight?: boolean }) => {
   const { top, bottom, left, right } = useSafeAreaInsets();
 
   return (
@@ -106,10 +124,10 @@ const PageContent = (props: ViewProps) => {
       width="100%"
       maxWidth={1440}
       marginHorizontal="auto"
-      paddingTop={top + 10}
-      paddingBottom={bottom + 10}
-      paddingLeft={left + 10}
-      paddingRight={right + 10}
+      paddingTop={(props.withHeaderHeight ? 0 : top) + 20}
+      paddingBottom={bottom + 20}
+      paddingLeft={left + 20}
+      paddingRight={right + 20}
       {...props}
     />
   );

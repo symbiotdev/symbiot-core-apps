@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>268707580330-734kbc6la5p64dmi3ski8aoa6ch1c6c2.apps.googleusercontent.com</string>
+	<string>449414175024-0np4fl5ib63mng9s2vmljdohhs4rsl0n.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.268707580330-734kbc6la5p64dmi3ski8aoa6ch1c6c2</string>
+	<string>com.googleusercontent.apps.449414175024-0np4fl5ib63mng9s2vmljdohhs4rsl0n</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>449414175024-482au0p43eha17h8u4idhvascm1n815a.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCn7lfWxFcalH3C6XmH9h9qoF5Zxt-7dD4</string>
+	<string>AIzaSyCgFjh3PqSlwNuQkxBwYejTcBL1YnNKI1o</string>
 	<key>GCM_SENDER_ID</key>
-	<string>268707580330</string>
+	<string>449414175024</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.spandaydev.pro</string>
+	<string>com.spanday.pro.dev</string>
 	<key>PROJECT_ID</key>
-	<string>spanday-dev</string>
+	<string>spanday-app</string>
 	<key>STORAGE_BUCKET</key>
-	<string>spanday-dev.firebasestorage.app</string>
+	<string>spanday-app.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:268707580330:ios:4984b733881c4c04b903d3</string>
+	<string>1:449414175024:ios:8896260ba1806d37f850f5</string>
 </dict>
 </plist>

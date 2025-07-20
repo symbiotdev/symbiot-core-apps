@@ -3,7 +3,7 @@ import { AuthFormView } from './auth-form-view';
 import { Controller, useForm } from 'react-hook-form';
 import {
   AccountSignInData,
-  useAccountAuthSignIn,
+  useAccountAuthSignInQuery,
 } from '@symbiot-core-apps/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -14,7 +14,7 @@ import { router } from 'expo-router';
 
 export const SignIn = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
-  const { mutateAsync, error } = useAccountAuthSignIn();
+  const { mutateAsync, error } = useAccountAuthSignInQuery();
 
   const {
     control,

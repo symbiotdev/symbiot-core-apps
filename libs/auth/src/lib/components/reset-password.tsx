@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
 import {
   AccountResetPasswordData,
-  useAccountAuthResetPassword,
+  useAccountAuthResetPasswordQuery,
 } from '@symbiot-core-apps/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -23,7 +23,7 @@ export const ResetPassword = ({
   logo: ReactElement;
 }) => {
   const { t } = useTranslation();
-  const { mutateAsync, error } = useAccountAuthResetPassword();
+  const { mutateAsync, error } = useAccountAuthResetPasswordQuery();
 
   const {
     control,

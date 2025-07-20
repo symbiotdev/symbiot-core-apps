@@ -12,7 +12,7 @@ import { authTokenHeaderKey, useAuthTokens } from '../hooks/use-auth-tokens';
 import { Platform } from 'react-native';
 import { useCallback } from 'react';
 
-export const useAccountAuthSignUp = () =>
+export const useAccountAuthSignUpQuery = () =>
   useMutation<AccountAuthSecretResponse, string, AccountSignUpData>({
     mutationFn: async (data) => {
       try {
@@ -23,7 +23,7 @@ export const useAccountAuthSignUp = () =>
     },
   });
 
-export const useAccountAuthResendSignUpCode = () =>
+export const useAccountAuthResendSignUpCodeQuery = () =>
   useMutation<void, string, { secret: string; email: string }>({
     mutationFn: ({ secret, email }) => {
       try {
@@ -36,7 +36,7 @@ export const useAccountAuthResendSignUpCode = () =>
     },
   });
 
-export const useAccountAuthVerifySignUp = () => {
+export const useAccountAuthVerifySignUpQuery = () => {
   const { setTokens } = useAuthTokens();
 
   return useMutation<void, string, { secret: string; code: string }>({
@@ -46,7 +46,7 @@ export const useAccountAuthVerifySignUp = () => {
           `/api/account-auth/sign-up/${secret}/verify`,
           {
             code,
-          }
+          },
         )) as AccountAuthTokens;
 
         setTokens(tokens);
@@ -59,7 +59,7 @@ export const useAccountAuthVerifySignUp = () => {
   });
 };
 
-export const useAccountAuthSignIn = () => {
+export const useAccountAuthSignInQuery = () => {
   const { setTokens } = useAuthTokens();
 
   return useMutation<void, string, AccountSignInData>({
@@ -67,7 +67,7 @@ export const useAccountAuthSignIn = () => {
       try {
         const tokens = (await axios.post(
           '/api/account-auth/sign-in',
-          data
+          data,
         )) as AccountAuthTokens;
 
         setTokens(tokens);
@@ -80,14 +80,14 @@ export const useAccountAuthSignIn = () => {
   });
 };
 
-export const useAccountAuthSignInWithFirebase = () => {
+export const useAccountAuthSignInWithFirebaseQuery = () => {
   const { setTokens } = useAuthTokens();
 
   return useMutation<void, string, { token: string }>({
     mutationFn: async ({ token }) => {
       try {
         const tokens = (await axios.post(
-          `/api/account-auth/sign-in/firebase/${token}`
+          `/api/account-auth/sign-in/firebase/${token}`,
         )) as AccountAuthTokens;
 
         setTokens(tokens);
@@ -100,7 +100,7 @@ export const useAccountAuthSignInWithFirebase = () => {
   });
 };
 
-export const useAccountAuthForgotPassword = () =>
+export const useAccountAuthForgotPasswordQuery = () =>
   useMutation<AccountAuthSecretResponse, string, AccountForgotPasswordData>({
     mutationFn: async (data) => {
       try {
@@ -111,7 +111,7 @@ export const useAccountAuthForgotPassword = () =>
     },
   });
 
-export const useAccountAuthResendForgotPasswordCode = () =>
+export const useAccountAuthResendForgotPasswordCodeQuery = () =>
   useMutation<void, string, { secret: string; email: string }>({
     mutationFn: ({ secret, email }) => {
       try {
@@ -119,7 +119,7 @@ export const useAccountAuthResendForgotPasswordCode = () =>
           `/api/account-auth/forgot-password/${secret}/resend-code`,
           {
             email,
-          }
+          },
         );
       } catch (error) {
         throw getRequestErrorMessage(error);
@@ -127,7 +127,7 @@ export const useAccountAuthResendForgotPasswordCode = () =>
     },
   });
 
-export const useAccountAuthVerifyForgotPassword = () =>
+export const useAccountAuthVerifyForgotPasswordQuery = () =>
   useMutation<void, string, { secret: string; code: string; email: string }>({
     mutationFn: async ({ secret, code, email }) => {
       try {
@@ -143,7 +143,7 @@ export const useAccountAuthVerifyForgotPassword = () =>
     },
   });
 
-export const useAccountAuthResetPassword = () => {
+export const useAccountAuthResetPasswordQuery = () => {
   const { setTokens } = useAuthTokens();
 
   return useMutation<
@@ -159,7 +159,7 @@ export const useAccountAuthResetPassword = () => {
             code,
             email,
             password,
-          }
+          },
         )) as AccountAuthTokens;
 
         setTokens(tokens);
@@ -172,7 +172,7 @@ export const useAccountAuthResetPassword = () => {
   });
 };
 
-export const useAccountAuthRefreshToken = () => {
+export const useAccountAuthRefreshTokenQuery = () => {
   const { setTokens, tokens } = useAuthTokens();
 
   return useCallback(async () => {
@@ -185,7 +185,7 @@ export const useAccountAuthRefreshToken = () => {
               [authTokenHeaderKey.refresh]: tokens.refresh,
             },
           }
-        : {}
+        : {},
     )) as AccountAuthTokens;
 
     setTokens(newTokens);
@@ -194,7 +194,7 @@ export const useAccountAuthRefreshToken = () => {
   }, [setTokens, tokens.refresh]);
 };
 
-export const useAccountAuthSignOut = () => {
+export const useAccountAuthSignOutQuery = () => {
   const { removeTokens } = useAuthTokens();
 
   return useMutation({

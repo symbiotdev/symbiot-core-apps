@@ -25,6 +25,9 @@ export const lightTheme: ThemeConfig = {
   inputBackgroundColor: '#FFFFFF',
   tabBarActiveTintColor: primary100,
   tabBarInactiveTintColor: '#111111',
+  qrCode: '#191919',
+  qrCodeGradientFrom: primary100,
+  qrCodeGradientTo: primary60,
 };
 
 export const darkTheme: ThemeConfig = {
@@ -48,4 +51,7 @@ export const darkTheme: ThemeConfig = {
   inputBackgroundColor: '#1A1A1A',
   tabBarActiveTintColor: primary100,
   tabBarInactiveTintColor: '#dddddd',
+  qrCode: '#F5F5F5',
+  qrCodeGradientFrom: primary100,
+  qrCodeGradientTo: primary20,
 };

@@ -1,7 +1,7 @@
 import { Checkbox, Input, Link, RegularText } from '@symbiot-core-apps/ui';
 import {
   AccountSignUpData,
-  useAccountAuthSignUp,
+  useAccountAuthSignUpQuery,
 } from '@symbiot-core-apps/api';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -20,7 +20,7 @@ import { router } from 'expo-router';
 export const SignUp = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
 
-  const { mutateAsync, error } = useAccountAuthSignUp();
+  const { mutateAsync, error } = useAccountAuthSignUpQuery();
 
   const {
     control,

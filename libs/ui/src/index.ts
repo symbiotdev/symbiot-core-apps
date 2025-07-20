@@ -12,7 +12,12 @@ export * from './lib/list/list-item';
 
 export * from './lib/loading/spinner';
 
+export * from './lib/media/avatar';
+
 export * from './lib/navigation/tabs';
+
+export * from './lib/qr/qr-code';
+export * from './lib/qr/qr-code-modal-by-trigger';
 
 export * from './lib/text/heading';
 export * from './lib/text/text';

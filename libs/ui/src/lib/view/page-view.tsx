@@ -115,7 +115,10 @@ export const PageView = ({
   );
 };
 
-const PageContent = (props: ViewProps & { withHeaderHeight?: boolean }) => {
+const PageContent = ({
+  withHeaderHeight,
+  ...viewProps
+}: ViewProps & { withHeaderHeight?: boolean }) => {
   const { top, bottom, left, right } = useSafeAreaInsets();
 
   return (
@@ -124,11 +127,11 @@ const PageContent = (props: ViewProps & { withHeaderHeight?: boolean }) => {
       width="100%"
       maxWidth={1440}
       marginHorizontal="auto"
-      paddingTop={(props.withHeaderHeight ? 0 : top) + 20}
+      paddingTop={(withHeaderHeight ? 0 : top) + 20}
       paddingBottom={bottom + 20}
       paddingLeft={left + 20}
       paddingRight={right + 20}
-      {...props}
+      {...viewProps}
     />
   );
 };

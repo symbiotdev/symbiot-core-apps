@@ -20,7 +20,10 @@ export const lightTheme: ThemeConfig = {
   checkboxColor: '#111111',
   inputBackgroundColor: '#FFFFFF',
   tabBarActiveTintColor: '#000000',
-  tabBarInactiveTintColor: '#111111'
+  tabBarInactiveTintColor: '#111111',
+  qrCode: '#191919',
+  qrCodeGradientFrom: '#000000',
+  qrCodeGradientTo: '#191919',
 };
 
 export const darkTheme: ThemeConfig = {
@@ -44,4 +47,7 @@ export const darkTheme: ThemeConfig = {
   inputBackgroundColor: '#1A1A1A',
   tabBarActiveTintColor: '#FFFFFF',
   tabBarInactiveTintColor: '#dddddd',
+  qrCode: '#F5F5F5',
+  qrCodeGradientFrom: '#F5F5F5',
+  qrCodeGradientTo: '#FFFFFF',
 };

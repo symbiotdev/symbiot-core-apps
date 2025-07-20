@@ -1,8 +1,8 @@
 import { ReactElement, useCallback } from 'react';
 import { AuthVerifyView } from './auth-verify-view';
 import {
-  useAccountAuthResendSignUpCode,
-  useAccountAuthVerifySignUp,
+  useAccountAuthResendSignUpCodeQuery,
+  useAccountAuthVerifySignUpQuery,
 } from '@symbiot-core-apps/api';
 
 export const VerifySignUp = ({
@@ -18,12 +18,12 @@ export const VerifySignUp = ({
     mutateAsync: resendCode,
     error: resendCodeError,
     isPending: isCodeResending,
-  } = useAccountAuthResendSignUpCode();
+  } = useAccountAuthResendSignUpCodeQuery();
   const {
     mutateAsync: verify,
     error: verifyError,
     isPending: isVerifying,
-  } = useAccountAuthVerifySignUp();
+  } = useAccountAuthVerifySignUpQuery();
 
   const onChange = useCallback(
     (code: string) =>

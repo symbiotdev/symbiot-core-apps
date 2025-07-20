@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { useDevId } from '../hooks/use-dev-id';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '../utils/client';
-import { useAccountAuthRefreshToken } from '../queries/use-account-auth';
+import { useAccountAuthRefreshTokenQuery } from '../queries/use-account-auth.query';
 import { Platform } from 'react-native';
 
 type SocketState = {
@@ -40,7 +40,7 @@ export const ApiProvider = ({
 }>) => {
   const devId = useDevId();
   const { i18n } = useTranslation();
-  const refreshTokens = useAccountAuthRefreshToken();
+  const refreshTokens = useAccountAuthRefreshTokenQuery();
   const { tokens, setTokens } = useAuthTokens();
 
   const stateRef = useRef<SocketState>({

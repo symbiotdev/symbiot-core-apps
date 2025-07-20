@@ -8,7 +8,7 @@ import { Platform } from 'react-native';
 import { Button, Error, Icon } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
-import { useAccountAuthSignInWithFirebase } from '@symbiot-core-apps/api';
+import { useAccountAuthSignInWithFirebaseQuery } from '@symbiot-core-apps/api';
 
 const isGoogleAuthAvailable = Platform.OS !== 'web';
 
@@ -18,12 +18,12 @@ export const SignInButtons = () => {
     mutate: appleAuth,
     error: appleAuthError,
     isPending: isAppleAuthPending,
-  } = useAccountAuthSignInWithFirebase();
+  } = useAccountAuthSignInWithFirebaseQuery();
   const {
     mutate: googleAuth,
     error: googleAuthError,
     isPending: isGoogleAuthPending,
-  } = useAccountAuthSignInWithFirebase();
+  } = useAccountAuthSignInWithFirebaseQuery();
 
   const [error, setError] = useState<string>();
   const [isAppleAuthAvailable, setIsAppleAuthAvailable] = useState(false);

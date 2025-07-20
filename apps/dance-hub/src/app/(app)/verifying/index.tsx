@@ -1,17 +1,13 @@
-import { H3, Icon } from '@symbiot-core-apps/ui';
-import { View } from 'tamagui';
-import { useAccountAuthSignOut } from '@symbiot-core-apps/api';
+import { LoadingView } from '@symbiot-core-apps/ui';
+import { Redirect } from 'expo-router';
+import { useMe } from '@symbiot-core-apps/store';
 
 export default () => {
-  const { mutate } = useAccountAuthSignOut();
+  const { me } = useMe();
 
-  return (
-    <View flex={1} gap={10} justifyContent="center" alignItems="center">
-      <H3>Exit</H3>
+  if (!me) {
+    return <LoadingView />;
+  }
 
-      <View onPress={() => mutate()}>
-        <Icon.Dynamic type="Ionicons" name="exit" />
-      </View>
-    </View>
-  );
+  return <Redirect href="/home" />;
 };

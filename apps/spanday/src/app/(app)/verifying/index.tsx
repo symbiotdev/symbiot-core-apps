@@ -1,24 +1,13 @@
-import { Button, Icon } from '@symbiot-core-apps/ui';
-import { View } from 'tamagui';
-import { useAccountAuthSignOut } from '@symbiot-core-apps/api';
-import { router } from 'expo-router';
-import { useLayoutEffect } from 'react';
+import { LoadingView } from '@symbiot-core-apps/ui';
+import { Redirect } from 'expo-router';
+import { useMe } from '@symbiot-core-apps/store';
 
 export default () => {
-  const { mutate } = useAccountAuthSignOut();
+  const { me } = useMe();
 
-  useLayoutEffect(() => {
-    router.replace('/home', {});
-  }, []);
+  if (!me) {
+    return <LoadingView />;
+  }
 
-  return (
-    <View flex={1} gap={10} justifyContent="center" alignItems="center">
-      <Button
-        type="outlined"
-        label="Exit"
-        icon={<Icon.Dynamic type="Ionicons" name="exit" />}
-        onPress={() => mutate()}
-      />
-    </View>
-  );
+  return <Redirect href="/home" />;
 };

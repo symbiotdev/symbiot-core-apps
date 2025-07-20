@@ -23,6 +23,9 @@ export type ThemeConfig = {
   placeholderColor: string;
   tabBarActiveTintColor: string;
   tabBarInactiveTintColor: string;
+  qrCode: string;
+  qrCodeGradientFrom: string;
+  qrCodeGradientTo: string;
 };
 
 export const animations = createAnimations({

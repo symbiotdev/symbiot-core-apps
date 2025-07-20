@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
 import {
   AccountForgotPasswordData,
-  useAccountAuthForgotPassword,
+  useAccountAuthForgotPasswordQuery,
 } from '@symbiot-core-apps/api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -13,7 +13,7 @@ import { router } from 'expo-router';
 
 export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
-  const { mutateAsync, error } = useAccountAuthForgotPassword();
+  const { mutateAsync, error } = useAccountAuthForgotPasswordQuery();
 
   const {
     control,

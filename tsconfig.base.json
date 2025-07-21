@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@symbiot-core-apps/api": ["libs/api/src/index.ts"],
+      "@symbiot-core-apps/app": ["libs/app/src/index.ts"],
       "@symbiot-core-apps/auth": ["libs/auth/src/index.ts"],
       "@symbiot-core-apps/i18n": ["libs/i18n/src/index.ts"],
       "@symbiot-core-apps/onboarding": ["libs/onboarding/src/index.ts"],

@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import { defaultPagePadding, PageView, PageViewProps } from './page-view';
+import { defaultPageHorizontalPadding, PageView, PageViewProps } from './page-view';
 
 export const TabsPageView = (props: PageViewProps) => {
   const bottomTabBarHeight = useBottomTabBarHeight();
@@ -10,6 +10,6 @@ export const TabsPageView = (props: PageViewProps) => {
   }
 
   return (
-    <PageView paddingBottom={bottomTabBarHeight + defaultPagePadding} {...props}></PageView>
+    <PageView paddingBottom={bottomTabBarHeight + defaultPageHorizontalPadding} {...props}></PageView>
   );
 };

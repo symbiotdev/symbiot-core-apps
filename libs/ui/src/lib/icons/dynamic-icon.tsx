@@ -74,7 +74,7 @@ export const DynamicIcon = (props: DynamicIconProps) => {
   return (
     <IconComponent
       name={name}
-      size={size || 24}
+      size={size || 20}
       color={color ? theme[color]?.val || color : theme.color?.val}
       style={style}
     />

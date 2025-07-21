@@ -30,6 +30,7 @@ export const ListItem = memo(
     color,
     disabled,
     iconSize,
+    onPress,
     ...xStackProps
   }: XStackProps & {
     label: string;
@@ -45,6 +46,8 @@ export const ListItem = memo(
         paddingVertical="$2"
         paddingHorizontal="$5"
         pressStyle={!disabled && { opacity: 0.8 }}
+        cursor={onPress && !disabled ? 'pointer' : 'auto'}
+        onPress={onPress}
         {...xStackProps}
       >
         {!!icon &&

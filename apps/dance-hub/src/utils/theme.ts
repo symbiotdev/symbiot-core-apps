@@ -24,7 +24,7 @@ export const lightTheme: ThemeConfig = {
   qrCode: '#191919',
   qrCodeGradientFrom: '#000000',
   qrCodeGradientTo: '#191919',
-  calendarLineColor: '#DDDDDD',
+  calendarLineColor: '#E7E7E7',
   calendarTimeColor: '#777777',
 };
 

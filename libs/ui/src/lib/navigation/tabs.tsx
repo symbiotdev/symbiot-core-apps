@@ -2,13 +2,12 @@ import {
   BottomTabBarButtonProps,
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs';
-import { GestureResponderEvent } from 'react-native';
+import { GestureResponderEvent, Platform } from 'react-native';
 import { useCallback, useMemo } from 'react';
 import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import { HeaderOptions, PlatformPressable } from '@react-navigation/elements';
 import { useTheme } from 'tamagui';
-import { BlurView } from 'expo-blur';
-import { useSystemScheme } from '@symbiot-core-apps/shared';
+import { Blur } from '../blur/blur';
 
 export const HapticTabBarButton = (props: BottomTabBarButtonProps) => {
   const onPressIn = useCallback(
@@ -20,7 +19,13 @@ export const HapticTabBarButton = (props: BottomTabBarButtonProps) => {
     [props],
   );
 
-  return <PlatformPressable {...props} onPressIn={onPressIn} />;
+  return (
+    <PlatformPressable
+      {...props}
+      android_ripple={{ color: 'transparent' }}
+      onPressIn={onPressIn}
+    />
+  );
 };
 
 export const defaultTabsScreenCommonOptions: BottomTabNavigationOptions &
@@ -32,27 +37,25 @@ export const defaultTabsScreenCommonOptions: BottomTabNavigationOptions &
 
 export const useTabsScreenOptions = () => {
   const theme = useTheme();
-  const scheme = useSystemScheme();
 
   return useMemo(
     () =>
       ({
         tabBarStyle: {
           borderTopWidth: 0,
-          backgroundColor: 'transparent',
-          position: 'absolute',
+          ...(Platform.OS !== 'android' && {
+            position: 'absolute',
+            backgroundColor: 'transparent',
+          }),
         },
         tabBarActiveTintColor: theme.tabBarActiveTintColor?.val,
         tabBarInactiveTintColor: theme.tabBarInactiveTintColor?.val,
         tabBarButton: HapticTabBarButton,
-        tabBarBackground: () => (
-          <BlurView intensity={30} tint={scheme} style={{ flex: 1 }} />
-        ),
+        tabBarBackground:
+          Platform.OS !== 'android'
+            ? () => <Blur style={{ flex: 1 }} />
+            : undefined,
       }) as BottomTabNavigationOptions,
-    [
-      scheme,
-      theme.tabBarActiveTintColor?.val,
-      theme.tabBarInactiveTintColor?.val,
-    ],
+    [theme.tabBarActiveTintColor?.val, theme.tabBarInactiveTintColor?.val],
   );
 };

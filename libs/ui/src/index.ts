@@ -1,3 +1,5 @@
+export * from './lib/blur/blur';
+
 export * from './lib/button/button';
 
 export * from './lib/calendar/calendar';
@@ -28,3 +30,4 @@ export * from './lib/text/custom';
 export * from './lib/view/error-view';
 export * from './lib/view/loading-view';
 export * from './lib/view/page-view';
+export * from './lib/view/tabs-page-view';

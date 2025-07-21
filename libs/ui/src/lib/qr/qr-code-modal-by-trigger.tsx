@@ -1,11 +1,15 @@
-import { Modal, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import {
+  Modal,
+  Platform,
+  StyleSheet,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import { ReactElement, useCallback, useState } from 'react';
-import { BlurView } from 'expo-blur';
-import { useSystemScheme } from '@symbiot-core-apps/shared';
 import { PageView } from '../view/page-view';
 import { QrCode } from './qr-code';
 import { Card } from '../card/card';
 import { H2 } from '../text/heading';
+import { Blur } from '../blur/blur';
 
 export const QrCodeModalByTrigger = ({
   trigger,
@@ -20,8 +24,6 @@ export const QrCodeModalByTrigger = ({
   qrContent?: ReactElement;
   title?: string;
 }) => {
-  const scheme = useSystemScheme();
-
   const [visible, setVisible] = useState(false);
 
   const onOpen = useCallback(() => setVisible(true), []);
@@ -36,18 +38,14 @@ export const QrCodeModalByTrigger = ({
       <Modal
         transparent
         visible={visible}
-        animationType="slide"
+        animationType={Platform.OS === 'android' ? 'fade' : 'slide'}
         presentationStyle="overFullScreen"
         supportedOrientations={['portrait', 'landscape']}
         onRequestClose={onClose}
       >
-        <BlurView
-          intensity={30}
-          tint={scheme}
-          style={StyleSheet.absoluteFillObject}
-        />
+        <Blur style={StyleSheet.absoluteFillObject} />
 
-        <PageView viewProps={{ onPress: onClose }}>
+        <PageView onPress={onClose}>
           <Card
             margin="auto"
             gap="$3"

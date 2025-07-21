@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Platform, StyleSheet } from 'react-native';
 import {
   KeyboardAvoidingView,
@@ -12,6 +12,18 @@ import { Refresher } from '../loading/refresher';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const isWeb = Platform.OS === 'web';
+export const defaultPagePadding = 20;
+
+export type PageViewProps = ViewProps & {
+  lazy?: boolean;
+  delay?: number;
+  scrollable?: boolean;
+  refreshing?: boolean;
+  withKeyboard?: boolean;
+  withHeaderHeight?: boolean;
+  LoadingElement?: ReactNode;
+  onRefresh?: () => void;
+};
 
 export const PageView = ({
   children,
@@ -24,18 +36,7 @@ export const PageView = ({
   LoadingElement,
   onRefresh,
   ...viewProps
-}: PropsWithChildren<
-  ViewProps & {
-    lazy?: boolean;
-    delay?: number;
-    scrollable?: boolean;
-    refreshing?: boolean;
-    withKeyboard?: boolean;
-    withHeaderHeight?: boolean;
-    LoadingElement?: ReactNode;
-    onRefresh?: () => void;
-  }
->) => {
+}: PageViewProps) => {
   const { rendered } = useRendered({ defaultTrue: lazy === false, delay });
   const headerHeight = useHeaderHeight();
 
@@ -116,8 +117,14 @@ export const PageView = ({
 
 const PageContent = ({
   withHeaderHeight,
+  paddingTop = defaultPagePadding,
+  paddingBottom = defaultPagePadding,
+  paddingLeft = defaultPagePadding,
+  paddingRight = defaultPagePadding,
   ...viewProps
-}: ViewProps & { withHeaderHeight?: boolean }) => {
+}: ViewProps & {
+  withHeaderHeight?: boolean;
+}) => {
   const { top, bottom, left, right } = useSafeAreaInsets();
 
   return (
@@ -126,10 +133,10 @@ const PageContent = ({
       width="100%"
       maxWidth={1440}
       marginHorizontal="auto"
-      paddingTop={(withHeaderHeight ? 0 : top) + 20}
-      paddingBottom={bottom + 20}
-      paddingLeft={left + 20}
-      paddingRight={right + 20}
+      paddingTop={(withHeaderHeight ? 0 : top) + Number(paddingTop)}
+      paddingBottom={bottom + Number(paddingBottom)}
+      paddingLeft={left + Number(paddingLeft)}
+      paddingRight={right + Number(paddingRight)}
       {...viewProps}
     />
   );

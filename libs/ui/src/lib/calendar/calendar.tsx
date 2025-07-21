@@ -5,7 +5,7 @@ import {
 import { Platform } from 'react-native';
 import { useDateLocale } from '@symbiot-core-apps/i18n';
 import { useCallback } from 'react';
-import { useTheme, View } from 'tamagui';
+import { useTheme, View, XStack } from 'tamagui';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { MediumText, RegularText } from '../text/text';
 import { H3 } from '../text/heading';
@@ -37,6 +37,28 @@ export const Calendar = ({
         </RegularText>
         <H3>{DateHelper.format(date, 'dd')}</H3>
       </View>
+    ),
+    [],
+  );
+
+  const renderNowIndicator = useCallback(
+    () => (
+      <XStack
+        position="relative"
+        width="100%"
+        height={1}
+        backgroundColor="$color"
+      >
+        <View
+          position="absolute"
+          left={-2.5}
+          top={-2.5}
+          width={5}
+          height={5}
+          backgroundColor="$color"
+          borderRadius={50}
+        />
+      </XStack>
     ),
     [],
   );
@@ -85,6 +107,7 @@ export const Calendar = ({
       dayHeaderHeight={60}
       renderDayHeader={renderDayHeader}
       renderHeaderSafeArea={renderHeaderSafeArea}
+      renderNowIndicator={renderNowIndicator}
       theme={{
         backgroundColor: theme.background?.val,
         headerSafeAreaBackgroundColor: theme.background?.val,

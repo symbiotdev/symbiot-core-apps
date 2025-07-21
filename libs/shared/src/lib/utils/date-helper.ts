@@ -19,11 +19,13 @@ import { isAfter } from 'date-fns/isAfter';
 import { differenceInYears } from 'date-fns/differenceInYears';
 import { addYears } from 'date-fns/addYears';
 import { getDateLocale } from '@symbiot-core-apps/i18n';
+import { isSameMonth } from 'date-fns/isSameMonth';
 
 const defaultWeekdayStartsOn: Day = 1;
 
 export const DateHelper = {
   isSameDay,
+  isSameMonth,
   isAfter,
   addMinutes,
   addHours,
@@ -48,7 +50,7 @@ export const DateHelper = {
     const end = DateHelper.addMinutes(start, minutes);
 
     return DateHelper.formatDuration(
-      DateHelper.intervalToDuration({ start, end })
+      DateHelper.intervalToDuration({ start, end }),
     );
   },
   startOfWeek: (date: Date, weekStartsOn: Day = defaultWeekdayStartsOn) =>
@@ -78,10 +80,10 @@ export const DateHelper = {
   },
   getCalendarDates: (
     monthDate: Date,
-    weekStartsOn: Day = defaultWeekdayStartsOn
+    weekStartsOn: Day = defaultWeekdayStartsOn,
   ) => {
     const firstDayOfMonth = DateHelper.startOfDay(
-      DateHelper.startOfMonth(monthDate)
+      DateHelper.startOfMonth(monthDate),
     );
     const calendarStart = DateHelper.startOfWeek(firstDayOfMonth, weekStartsOn);
 

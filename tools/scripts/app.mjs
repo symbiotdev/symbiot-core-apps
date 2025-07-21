@@ -146,6 +146,10 @@ export const getIncrementType = (env) =>
         value: '',
       },
       {
+        name: 'Bump buildNumber & versionCode',
+        value: 'bump',
+      },
+      {
         name: 'Major',
         value: 'major',
       },
@@ -156,10 +160,6 @@ export const getIncrementType = (env) =>
       {
         name: 'Patch',
         value: 'patch',
-      },
-      {
-        name: 'Bump buildNumber & versionCode',
-        value: 'bump',
       },
     ],
   });

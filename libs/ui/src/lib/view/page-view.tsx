@@ -21,9 +21,9 @@ export const PageView = ({
   refreshing,
   withKeyboard,
   withHeaderHeight,
-  viewProps,
   LoadingElement,
   onRefresh,
+  ...viewProps
 }: PropsWithChildren<
   ViewProps & {
     lazy?: boolean;
@@ -32,7 +32,6 @@ export const PageView = ({
     refreshing?: boolean;
     withKeyboard?: boolean;
     withHeaderHeight?: boolean;
-    viewProps?: Omit<ViewProps, 'children'>;
     LoadingElement?: ReactNode;
     onRefresh?: () => void;
   }

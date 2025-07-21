@@ -1,5 +1,7 @@
 export * from './lib/button/button';
 
+export * from './lib/calendar/calendar';
+
 export * from './lib/card/card';
 
 export * from './lib/form/checkbox';

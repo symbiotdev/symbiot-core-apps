@@ -71,6 +71,7 @@
     "react-native-confirmation-code-field": "*",
     "yup": "*",
     "@hookform/resolvers": "*",
+    "@symbiot.dev/react-native-timegrid-pro": "*",
     "zustand": "*",
     "react-native-qr-svg": "*",
     "date-fns": "*"

@@ -7,6 +7,8 @@ import { useCallback, useMemo } from 'react';
 import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import { HeaderOptions, PlatformPressable } from '@react-navigation/elements';
 import { useTheme } from 'tamagui';
+import { BlurView } from 'expo-blur';
+import { useSystemScheme } from '@symbiot-core-apps/shared';
 
 export const HapticTabBarButton = (props: BottomTabBarButtonProps) => {
   const onPressIn = useCallback(
@@ -21,28 +23,36 @@ export const HapticTabBarButton = (props: BottomTabBarButtonProps) => {
   return <PlatformPressable {...props} onPressIn={onPressIn} />;
 };
 
-export const defaultTabsScreenOptions: BottomTabNavigationOptions = {
-  tabBarStyle: { borderTopWidth: 0 },
-  tabBarButton: HapticTabBarButton,
-};
-
 export const defaultTabsScreenCommonOptions: BottomTabNavigationOptions &
   HeaderOptions = {
   title: '',
-  headerShadowVisible: false,
+  headerShown: false,
   animation: 'shift',
 };
 
 export const useTabsScreenOptions = () => {
   const theme = useTheme();
+  const scheme = useSystemScheme();
 
   return useMemo(
-    () => ({
-      tabBarButton: HapticTabBarButton,
-      tabBarStyle: { borderTopWidth: 0 },
-      tabBarActiveTintColor: theme.tabBarActiveTintColor?.val,
-      tabBarInactiveTintColor: theme.tabBarInactiveTintColor?.val,
-    }),
-    [theme.tabBarActiveTintColor?.val, theme.tabBarInactiveTintColor?.val],
+    () =>
+      ({
+        tabBarStyle: {
+          borderTopWidth: 0,
+          backgroundColor: 'transparent',
+          position: 'absolute',
+        },
+        tabBarActiveTintColor: theme.tabBarActiveTintColor?.val,
+        tabBarInactiveTintColor: theme.tabBarInactiveTintColor?.val,
+        tabBarButton: HapticTabBarButton,
+        tabBarBackground: () => (
+          <BlurView intensity={30} tint={scheme} style={{ flex: 1 }} />
+        ),
+      }) as BottomTabNavigationOptions,
+    [
+      scheme,
+      theme.tabBarActiveTintColor?.val,
+      theme.tabBarInactiveTintColor?.val,
+    ],
   );
 };

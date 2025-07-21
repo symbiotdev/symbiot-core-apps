@@ -1,11 +1,10 @@
 import { View } from 'tamagui';
 import { useVideoPlayer, VideoSource, VideoView } from 'expo-video';
 import { Platform, ScrollView, StyleSheet } from 'react-native';
-import { BlurView } from 'expo-blur';
-import { useRestoreApp, useSystemScheme } from '@symbiot-core-apps/shared';
+import { useRestoreApp } from '@symbiot-core-apps/shared';
 import { ReactElement, useCallback, useEffect } from 'react';
 import { Image } from 'expo-image';
-import { H2, H4 } from '@symbiot-core-apps/ui';
+import { Blur, H2, H4 } from '@symbiot-core-apps/ui';
 import { SignInButtons } from './sign-in-buttons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, { FadeIn } from 'react-native-reanimated';
@@ -29,7 +28,6 @@ export const Auth = ({
   logo: ReactElement;
 }) => {
   const { bottom } = useSafeAreaInsets();
-  const scheme = useSystemScheme();
   const player = useVideoPlayer(videoSource, (player) => {
     player.muted = true;
     player.loop = true;
@@ -47,7 +45,7 @@ export const Auth = ({
   useFocusEffect(
     useCallback(() => {
       player.play();
-    }, [player])
+    }, [player]),
   );
 
   return (
@@ -58,17 +56,21 @@ export const Auth = ({
         contentFit="cover"
       />
 
-      <AnimatedVideo
-        entering={Platform.OS !== 'web' ? FadeIn.duration(1000) : undefined}
-        player={player}
-        nativeControls={false}
-        contentFit="cover"
-        style={styles.Media}
-      />
+      {Platform.OS !== 'android' && (
+        <>
+          <AnimatedVideo
+            entering={Platform.OS !== 'web' ? FadeIn.duration(1000) : undefined}
+            player={player}
+            nativeControls={false}
+            contentFit="cover"
+            style={styles.Media}
+          />
 
-      <BlurView intensity={30} tint={scheme} style={styles.BlurView} />
+          <Blur style={styles.BlurView} />
+        </>
+      )}
 
-      <View flex={1} zIndex={2}>
+      <View flex={1} zIndex={20}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.ScrollView}
@@ -113,10 +115,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     height: '100%',
+    zIndex: 1,
   },
   BlurView: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 10,
     width: '100%',
     height: '100%',
   },

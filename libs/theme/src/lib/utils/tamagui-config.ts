@@ -28,6 +28,8 @@ export type ThemeConfig = {
   qrCodeGradientTo: string;
   calendarLineColor: string;
   calendarTimeColor: string;
+  calendarTodayColor: string;
+  calendarNowIndicatorColor: string;
 };
 
 export const animations = createAnimations({

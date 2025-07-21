@@ -27,7 +27,7 @@ export const setAxiosInterceptors = (params: InterceptorParams) => {
   axios.interceptors.response.clear();
   axios.interceptors.response.use(
     (response) => onSuccessResponse(response),
-    ({ response, config }) => onErrorResponse(response, config, params)
+    ({ response, config }) => onErrorResponse(response, config, params),
   );
 };
 
@@ -38,7 +38,7 @@ const getRequestKey = (config: InternalAxiosRequestConfig) => {
 
 const onRequest = async (
   config: InternalAxiosRequestConfig,
-  params: InterceptorParams
+  params: InterceptorParams,
 ) => {
   let requestUrl = '';
 
@@ -122,7 +122,7 @@ const onErrorResponse = async (
     statusText?: string;
   },
   requestConfig: InternalAxiosRequestConfig & { _retry: boolean },
-  params: InterceptorParams
+  params: InterceptorParams,
 ) => {
   if (!response) {
     throw new Error(undefined);
@@ -143,9 +143,15 @@ const onErrorResponse = async (
     params.onNoRespond();
   } else if (response.status === 401) {
     try {
-      await params.refreshTokens();
+      const { access } = await params.refreshTokens();
 
-      return axios.request(requestConfig);
+      return axios.request({
+        ...requestConfig,
+        headers: {
+          ...requestConfig.headers,
+          [authTokenHeaderKey.access]: access,
+        },
+      });
     } catch {
       params.onUnauthorized();
     }

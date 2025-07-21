@@ -26,7 +26,6 @@ export type PageViewProps = ViewProps & {
 };
 
 export const PageView = ({
-  children,
   lazy,
   delay,
   scrollable,
@@ -59,11 +58,7 @@ export const PageView = ({
           ) : undefined
         }
       >
-        <PageContent
-          {...viewProps}
-          withHeaderHeight={withHeaderHeight}
-          children={children}
-        />
+        <PageContent {...viewProps} withHeaderHeight={withHeaderHeight} />
       </KeyboardAwareScrollView>
     );
   }
@@ -75,11 +70,7 @@ export const PageView = ({
         style={styles.FullScreen}
         keyboardVerticalOffset={withHeaderHeight ? headerHeight : undefined}
       >
-        <PageContent
-          {...viewProps}
-          withHeaderHeight={withHeaderHeight}
-          children={children}
-        />
+        <PageContent {...viewProps} withHeaderHeight={withHeaderHeight} />
       </KeyboardAvoidingView>
     );
   }
@@ -97,22 +88,12 @@ export const PageView = ({
           ) : undefined
         }
       >
-        <PageContent
-          {...viewProps}
-          withHeaderHeight={withHeaderHeight}
-          children={children}
-        />
+        <PageContent {...viewProps} withHeaderHeight={withHeaderHeight} />
       </ScrollView>
     );
   }
 
-  return (
-    <PageContent
-      {...viewProps}
-      withHeaderHeight={withHeaderHeight}
-      children={children}
-    />
-  );
+  return <PageContent {...viewProps} withHeaderHeight={withHeaderHeight} />;
 };
 
 const PageContent = ({

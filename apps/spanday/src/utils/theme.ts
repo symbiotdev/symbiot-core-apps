@@ -30,6 +30,8 @@ export const lightTheme: ThemeConfig = {
   qrCodeGradientTo: primary60,
   calendarLineColor: '#E7E7E7',
   calendarTimeColor: '#777777',
+  calendarTodayColor: primary100,
+  calendarNowIndicatorColor: primary100,
 };
 
 export const darkTheme: ThemeConfig = {
@@ -58,4 +60,6 @@ export const darkTheme: ThemeConfig = {
   qrCodeGradientTo: primary20,
   calendarLineColor: '#191919',
   calendarTimeColor: '#777777',
+  calendarTodayColor: primary100,
+  calendarNowIndicatorColor: primary100,
 };

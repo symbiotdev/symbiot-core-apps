@@ -2,16 +2,24 @@ import {
   TimeGrid,
   TimeGridActionsProps,
 } from '@symbiot.dev/react-native-timegrid-pro';
-import { Platform } from 'react-native';
+import { Platform, useWindowDimensions } from 'react-native';
 import { useDateLocale } from '@symbiot-core-apps/i18n';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTheme, View, XStack } from 'tamagui';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import {
+  DateHelper,
+  DeviceInfo,
+  useNativeNow,
+  useScreenOrientation,
+  useScreenSize,
+} from '@symbiot-core-apps/shared';
 import { MediumText, RegularText } from '../text/text';
 import { H3 } from '../text/heading';
+import { Orientation } from 'expo-screen-orientation';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { DeviceType } from 'expo-device';
 
 const snappable = Platform.OS !== 'web';
-const numberOfDays = 3;
 
 export const Calendar = ({
   selectedDate,
@@ -24,21 +32,56 @@ export const Calendar = ({
 }) => {
   const locale = useDateLocale();
   const theme = useTheme();
+  const { orientation } = useScreenOrientation();
+  const { left, right } = useSafeAreaInsets();
+  const { width } = useWindowDimensions();
+  const { isSmall } = useScreenSize();
+  const { now } = useNativeNow();
+
+  const paddings = useMemo(
+    () => ({
+      left: orientation === Orientation.LANDSCAPE_LEFT ? 0 : left,
+      right: orientation === Orientation.LANDSCAPE_RIGHT ? 0 : right,
+    }),
+    [left, orientation, right],
+  );
+
+  const adjustedWidth = useMemo(
+    () => width - paddings.left - paddings.right,
+    [paddings.left, paddings.right, width],
+  );
+  const numberOfDays = useMemo(
+    () =>
+      !isSmall &&
+      (DeviceInfo.deviceType === DeviceType.TABLET ||
+        DeviceInfo.deviceType === DeviceType.DESKTOP ||
+        orientation === Orientation.LANDSCAPE_LEFT ||
+        orientation === Orientation.LANDSCAPE_RIGHT)
+        ? 7
+        : 3,
+    [isSmall, orientation],
+  );
 
   const renderDayHeader = useCallback(
-    ({ date }: { date: Date }) => (
-      <View alignItems="center">
-        <RegularText
-          fontSize={12}
-          color="$calendarTimeColor"
-          textTransform="lowercase"
-        >
-          {DateHelper.format(date, 'EEEEEE').replace(/\./g, '')}
-        </RegularText>
-        <H3>{DateHelper.format(date, 'dd')}</H3>
-      </View>
-    ),
-    [],
+    ({ date }: { date: Date }) => {
+      const isToday = DateHelper.isSameDay(now, date);
+
+      return (
+        <View alignItems="center" gap="$1">
+          <RegularText
+            fontSize={12}
+            color={isToday ? '$calendarTodayColor' : '$calendarTimeColor'}
+            textTransform="lowercase"
+          >
+            {DateHelper.format(date, 'EEEEEE').replace(/\./g, '')}
+          </RegularText>
+          <H3 color={isToday ? '$calendarTodayColor' : '$color'}>
+            {DateHelper.format(date, 'dd')}
+          </H3>
+        </View>
+      );
+    },
+    [now],
   );
 
   const renderNowIndicator = useCallback(
@@ -47,7 +90,7 @@ export const Calendar = ({
         position="relative"
         width="100%"
         height={1}
-        backgroundColor="$color"
+        backgroundColor="$calendarNowIndicatorColor"
       >
         <View
           position="absolute"
@@ -55,7 +98,7 @@ export const Calendar = ({
           top={-2.5}
           width={5}
           height={5}
-          backgroundColor="$color"
+          backgroundColor="$calendarNowIndicatorColor"
           borderRadius={50}
         />
       </XStack>
@@ -64,7 +107,7 @@ export const Calendar = ({
   );
 
   const renderHeaderSafeArea = useCallback(() => {
-    const currentYear = new Date().getFullYear();
+    const currentYear = now.getFullYear();
     const selectedDateYear = selectedDate.getFullYear();
     const to = DateHelper.addDays(selectedDate, numberOfDays);
     const format =
@@ -88,36 +131,39 @@ export const Calendar = ({
         {date}
       </MediumText>
     );
-  }, [selectedDate]);
+  }, [now, numberOfDays, selectedDate]);
 
   return (
-    <TimeGrid
-      swipeable
-      scalable
-      draggable
-      hapticable
-      snappable={snappable}
-      gridTopOffset={5}
-      gridBottomOffset={gridBottomOffset + 5}
-      locale={locale}
-      startDate={selectedDate}
-      isAllDayEventsVisible={false}
-      horizontalLineSize={1}
-      numberOfDays={3}
-      dayHeaderHeight={60}
-      renderDayHeader={renderDayHeader}
-      renderHeaderSafeArea={renderHeaderSafeArea}
-      renderNowIndicator={renderNowIndicator}
-      theme={{
-        backgroundColor: theme.background?.val,
-        headerSafeAreaBackgroundColor: theme.background?.val,
-        dayHeaderBackgroundColor: theme.background?.val,
-        verticalLineColor: theme.calendarLineColor?.val,
-        horizontalLineColor: theme.calendarLineColor?.val,
-        timelineBackgroundColor: theme.background?.val,
-        timelineTextColor: theme.calendarTimeColor?.val,
-      }}
-      onChangeDate={onChangeDate}
-    />
+    <View flex={1} paddingLeft={paddings.left} paddingRight={paddings.right}>
+      <TimeGrid
+        swipeable
+        scalable
+        draggable
+        hapticable
+        gridTopOffset={5}
+        snappable={snappable}
+        width={adjustedWidth}
+        gridBottomOffset={gridBottomOffset + 5}
+        locale={locale}
+        startDate={selectedDate}
+        isAllDayEventsVisible={false}
+        horizontalLineSize={1}
+        numberOfDays={numberOfDays}
+        dayHeaderHeight={60}
+        renderDayHeader={renderDayHeader}
+        renderHeaderSafeArea={renderHeaderSafeArea}
+        renderNowIndicator={renderNowIndicator}
+        theme={{
+          backgroundColor: theme.background?.val,
+          headerSafeAreaBackgroundColor: theme.background?.val,
+          dayHeaderBackgroundColor: theme.background?.val,
+          verticalLineColor: theme.calendarLineColor?.val,
+          horizontalLineColor: theme.calendarLineColor?.val,
+          timelineBackgroundColor: theme.background?.val,
+          timelineTextColor: theme.calendarTimeColor?.val,
+        }}
+        onChangeDate={onChangeDate}
+      />
+    </View>
   );
 };

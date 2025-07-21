@@ -26,6 +26,8 @@ export const lightTheme: ThemeConfig = {
   qrCodeGradientTo: '#191919',
   calendarLineColor: '#E7E7E7',
   calendarTimeColor: '#777777',
+  calendarTodayColor: '#191919',
+  calendarNowIndicatorColor: '#000000',
 };
 
 export const darkTheme: ThemeConfig = {
@@ -54,4 +56,6 @@ export const darkTheme: ThemeConfig = {
   qrCodeGradientTo: '#FFFFFF',
   calendarLineColor: '#191919',
   calendarTimeColor: '#777777',
+  calendarTodayColor: '#F2F2F2',
+  calendarNowIndicatorColor: '#FFFFFF'
 };

@@ -2,6 +2,7 @@ export * from './lib/hooks/use-app-state';
 export * from './lib/hooks/use-debounce';
 export * from './lib/hooks/use-native-now';
 export * from './lib/hooks/use-rendered';
+export * from './lib/hooks/use-screen-orientation';
 export * from './lib/hooks/use-screen-size';
 export * from './lib/hooks/use-share-app';
 export * from './lib/hooks/use-system-scheme';

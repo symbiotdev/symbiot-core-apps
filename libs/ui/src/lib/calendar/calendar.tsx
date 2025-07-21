@@ -1,10 +1,11 @@
 import {
   TimeGrid,
   TimeGridActionsProps,
+  TimeGridRef,
 } from '@symbiot.dev/react-native-timegrid-pro';
 import { Platform, useWindowDimensions } from 'react-native';
 import { useDateLocale } from '@symbiot-core-apps/i18n';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { useTheme, View, XStack } from 'tamagui';
 import {
   DateHelper,
@@ -38,6 +39,8 @@ export const Calendar = ({
   const { isSmall } = useScreenSize();
   const { now } = useNativeNow();
 
+  const ref = useRef<TimeGridRef>(null);
+
   const paddings = useMemo(
     () => ({
       left: orientation === Orientation.LANDSCAPE_LEFT ? 0 : left,
@@ -61,6 +64,40 @@ export const Calendar = ({
         : 3,
     [isSmall, orientation],
   );
+
+  const goToday = useCallback(() => {
+    ref.current?.toDatetime(new Date(), {
+      animated: true,
+    });
+  }, []);
+
+  const renderHeaderSafeArea = useCallback(() => {
+    const currentYear = now.getFullYear();
+    const selectedDateYear = selectedDate.getFullYear();
+    const to = DateHelper.addDays(selectedDate, numberOfDays);
+    const isToday = DateHelper.isSameDay(now, selectedDate);
+    const format =
+      `MMM${currentYear !== selectedDateYear || to.getFullYear() !== selectedDateYear ? ' yy' : ''}`.trim();
+    const date = `${DateHelper.format(selectedDate, format)} ${
+      !DateHelper.isSameMonth(selectedDate, to)
+        ? `\n${DateHelper.format(to, format)}`
+        : ''
+    }`
+      .trim()
+      .replace(/\./g, '');
+
+    return (
+      <MediumText
+        fontSize={12}
+        textTransform="uppercase"
+        margin="auto"
+        color={!isToday ? '$calendarTodayColor' : '$calendarTimeColor'}
+        textAlign="center"
+      >
+        {date}
+      </MediumText>
+    );
+  }, [now, numberOfDays, selectedDate]);
 
   const renderDayHeader = useCallback(
     ({ date }: { date: Date }) => {
@@ -106,33 +143,6 @@ export const Calendar = ({
     [],
   );
 
-  const renderHeaderSafeArea = useCallback(() => {
-    const currentYear = now.getFullYear();
-    const selectedDateYear = selectedDate.getFullYear();
-    const to = DateHelper.addDays(selectedDate, numberOfDays);
-    const format =
-      `MMM${currentYear !== selectedDateYear || to.getFullYear() !== selectedDateYear ? ' yy' : ''}`.trim();
-    const date = `${DateHelper.format(selectedDate, format)} ${
-      !DateHelper.isSameMonth(selectedDate, to)
-        ? `\n${DateHelper.format(to, format)}`
-        : ''
-    }`
-      .trim()
-      .replace(/\./g, '');
-
-    return (
-      <MediumText
-        fontSize={12}
-        textTransform="uppercase"
-        margin="auto"
-        color="$calendarTimeColor"
-        textAlign="center"
-      >
-        {date}
-      </MediumText>
-    );
-  }, [now, numberOfDays, selectedDate]);
-
   return (
     <View flex={1} paddingLeft={paddings.left} paddingRight={paddings.right}>
       <TimeGrid
@@ -141,6 +151,7 @@ export const Calendar = ({
         draggable
         hapticable
         gridTopOffset={5}
+        ref={ref}
         snappable={snappable}
         width={adjustedWidth}
         gridBottomOffset={gridBottomOffset + 5}
@@ -163,6 +174,7 @@ export const Calendar = ({
           timelineTextColor: theme.calendarTimeColor?.val,
         }}
         onChangeDate={onChangeDate}
+        onHeaderSafeAreaPress={goToday}
       />
     </View>
   );

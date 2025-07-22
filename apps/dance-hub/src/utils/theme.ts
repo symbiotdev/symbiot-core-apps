@@ -28,6 +28,7 @@ export const lightTheme: ThemeConfig = {
   calendarTimeColor: '#777777',
   calendarTodayColor: '#191919',
   calendarNowIndicatorColor: '#000000',
+  switchSelectedColor: '#191919'
 };
 
 export const darkTheme: ThemeConfig = {
@@ -57,5 +58,6 @@ export const darkTheme: ThemeConfig = {
   calendarLineColor: '#191919',
   calendarTimeColor: '#777777',
   calendarTodayColor: '#F2F2F2',
-  calendarNowIndicatorColor: '#FFFFFF'
+  calendarNowIndicatorColor: '#FFFFFF',
+  switchSelectedColor: '#DDDDDD'
 };

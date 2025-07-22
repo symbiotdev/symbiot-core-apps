@@ -32,6 +32,7 @@ export const lightTheme: ThemeConfig = {
   calendarTimeColor: '#777777',
   calendarTodayColor: primary100,
   calendarNowIndicatorColor: primary100,
+  switchSelectedColor: primary100,
 };
 
 export const darkTheme: ThemeConfig = {
@@ -62,4 +63,5 @@ export const darkTheme: ThemeConfig = {
   calendarTimeColor: '#777777',
   calendarTodayColor: primary100,
   calendarNowIndicatorColor: primary100,
+  switchSelectedColor: primary100,
 };

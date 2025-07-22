@@ -30,6 +30,7 @@ export type ThemeConfig = {
   calendarTimeColor: string;
   calendarTodayColor: string;
   calendarNowIndicatorColor: string;
+  switchSelectedColor: string;
 };
 
 export const animations = createAnimations({

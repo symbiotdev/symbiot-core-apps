@@ -10,13 +10,11 @@
     "help_feedback": "Help & Feedback",
     "follow_us": "Follow us",
     "profile": "Profile",
-    "theme": "Theme",
     "share_app": "Share application",
     "subscription": "Subscription",
     "qr_code": "QR code",
     "calendar": "Calendar",
     "application": "Application",
-    "preferences": "Preferences",
     "email": "Email",
     "docs": {
       "terms_privacy": "Terms & Privacy",
@@ -25,6 +23,32 @@
     },
     "error": {
       "unknown_error": "Unknown error"
+    },
+    "preferences": {
+      "title": "Preferences",
+      "language": {
+        "title": "Language"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "posh_notifications": {
+          "label": "Push notifications"
+        },
+        "sound": {
+          "label": "Sound"
+        }
+      },
+      "appearance": {
+        "title": "Appearance",
+        "theme": {
+          "title": "Theme",
+          "light": "Light",
+          "dark": "Dark",
+          "auto": {
+            "label": "Auto"
+          }
+        }
+      }
     }
   },
   "auth": {

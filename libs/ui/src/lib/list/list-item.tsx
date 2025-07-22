@@ -2,6 +2,7 @@ import { cloneElement, memo, ReactElement } from 'react';
 import { ColorTokens, View, ViewProps, XStack, XStackProps } from 'tamagui';
 import { RegularText } from '../text/text';
 import { H5 } from '../text/heading';
+import { Card } from '../card/card';
 
 export const ListItemGroup = memo((props: ViewProps & { title?: string }) => {
   return (
@@ -11,11 +12,10 @@ export const ListItemGroup = memo((props: ViewProps & { title?: string }) => {
           {props.title}
         </H5>
       )}
-      <View
+      <Card
         backgroundColor="$background1"
-        borderRadius="$10"
         paddingVertical="$2"
-        gap="$1"
+        gap="$2"
         {...props}
       />
     </View>
@@ -44,7 +44,6 @@ export const ListItem = memo(
         alignItems="center"
         gap="$4"
         paddingVertical="$2"
-        paddingHorizontal="$5"
         pressStyle={!disabled && { opacity: 0.8 }}
         cursor={onPress && !disabled ? 'pointer' : 'auto'}
         onPress={onPress}

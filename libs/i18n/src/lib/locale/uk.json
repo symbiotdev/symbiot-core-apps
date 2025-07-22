@@ -6,17 +6,14 @@
     "and": "та",
     "version": "Версія",
     "language": "Мова",
-    "notifications": "Сповіщення",
     "help_feedback": "Допомога та зворотній звʼязок",
     "follow_us": "Слідкуйте за нами",
     "profile": "Профіль",
-    "theme": "Тема",
     "share_app": "Поділитись додатком",
     "subscription": "Підписка",
     "qr_code": "QR код",
     "calendar": "Календар",
     "application": "Додаток",
-    "preferences": "Налаштування",
     "email": "Email",
     "docs": {
       "terms_privacy": "Terms & Privacy",
@@ -25,6 +22,32 @@
     },
     "error": {
       "unknown_error": "Невідома помилка"
+    },
+    "preferences": {
+      "title": "Налаштування",
+      "language": {
+        "title": "Мова"
+      },
+      "notifications": {
+        "title": "Сповіщення",
+        "posh_notifications": {
+          "label": "Push-сповіщення"
+        },
+        "sound": {
+          "label": "Звук"
+        }
+      },
+      "appearance": {
+        "title": "Тема",
+        "theme": {
+          "title": "Тема",
+          "light": "Світла",
+          "dark": "Темна",
+          "auto": {
+            "label": "Авто"
+          }
+        }
+      }
     }
   },
   "auth": {

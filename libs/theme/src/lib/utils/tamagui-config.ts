@@ -1,6 +1,6 @@
 import { createFont } from 'tamagui';
 import { defaultConfig } from '@tamagui/config/v4';
-import { createAnimations } from '@tamagui/animations-moti';
+import { createAnimations } from '@tamagui/animations-react-native'
 
 export type ThemeConfig = {
   background: string;

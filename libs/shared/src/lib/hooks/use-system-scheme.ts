@@ -3,20 +3,21 @@ import { Appearance } from 'react-native';
 
 export type Scheme = 'light' | 'dark';
 
-const defaultScheme = 'light';
+export const schemes: Scheme[] = ['light', 'dark'] as const;
+
+export const defaultSystemScheme = () =>
+  Appearance.getColorScheme() || schemes[0];
 
 export const useSystemScheme = () => {
-  const [systemScheme, setSystemScheme] = useState<Scheme>(
-    Appearance.getColorScheme() || defaultScheme,
-  );
+  const [scheme, setScheme] = useState<Scheme>(defaultSystemScheme());
 
   useEffect(() => {
     const listener = Appearance.addChangeListener(({ colorScheme }) =>
-      setSystemScheme(colorScheme || defaultScheme),
+      setScheme(colorScheme || defaultSystemScheme()),
     );
 
     return () => listener.remove();
   }, []);
 
-  return systemScheme;
+  return scheme;
 };

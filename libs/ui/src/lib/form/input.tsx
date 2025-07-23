@@ -2,10 +2,8 @@ import { InputModeOptions, KeyboardType, TextInputProps } from 'react-native';
 import { forwardRef, Ref, useCallback, useMemo } from 'react';
 import { Input as InputUi, InputProps } from 'tamagui';
 import { FormField } from './form-field';
-import {
-  useDebounceCallback,
-  useSystemScheme,
-} from '@symbiot-core-apps/shared';
+import { useDebounceCallback } from '@symbiot-core-apps/shared';
+import { useScheme } from '@symbiot-core-apps/store';
 
 export type InputValue = string | number | null;
 export type onChangeInput = (value: InputValue) => void;
@@ -53,13 +51,13 @@ export const Input = forwardRef(
       onPress?: () => void;
       onChange?: onChangeInput;
     },
-    ref: Ref<InputUi>
+    ref: Ref<InputUi>,
   ) => {
-    const scheme = useSystemScheme();
+    const { scheme } = useScheme();
 
     const onDebounceChange = useDebounceCallback(
       (value: InputValue) => onChange?.(value),
-      debounce || 0
+      debounce || 0,
     );
 
     const id = useMemo(() => `input_${Math.random().toString(36)}`, []);
@@ -102,7 +100,7 @@ export const Input = forwardRef(
         onChange?.(nextValue);
         onDebounceChange(nextValue);
       },
-      [maxLength, onChange, onDebounceChange, regex, type]
+      [maxLength, onChange, onDebounceChange, regex, type],
     );
 
     return (
@@ -140,5 +138,5 @@ export const Input = forwardRef(
         />
       </FormField>
     );
-  }
+  },
 );

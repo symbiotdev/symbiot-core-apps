@@ -6,7 +6,6 @@
     "and": "and",
     "version": "Version",
     "language": "Language",
-    "notifications": "Notifications",
     "help_feedback": "Help & Feedback",
     "follow_us": "Follow us",
     "profile": "Profile",
@@ -16,6 +15,7 @@
     "calendar": "Calendar",
     "application": "Application",
     "email": "Email",
+    "settings": "Settings",
     "docs": {
       "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",
@@ -32,7 +32,8 @@
       "notifications": {
         "title": "Notifications",
         "posh_notifications": {
-          "label": "Push notifications"
+          "label": "Push notifications",
+          "permissions_denied": "No push notification permissions allowed. Open the app settings and enable it."
         },
         "sound": {
           "label": "Sound"

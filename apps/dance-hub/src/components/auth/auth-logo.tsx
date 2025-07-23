@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import { Image } from 'expo-image';
 import { View } from 'tamagui';
-import { useSystemScheme } from '@symbiot-core-apps/shared';
+import { useScheme } from '@symbiot-core-apps/store';
 
 export const AuthLogo = memo(() => {
-  const scheme = useSystemScheme();
+  const { scheme } = useScheme();
 
   return (
     <View paddingVertical="$5">

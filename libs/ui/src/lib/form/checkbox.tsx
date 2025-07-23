@@ -55,10 +55,10 @@ export const Checkbox = ({
                 animation="quick"
               >
                 <Icon.Dynamic
-                  name="check"
-                  type="Feather"
+                  name="checkmark-outline"
+                  type="Ionicons"
                   size={20}
-                  color={disabled ? '$disabled' : undefined}
+                  color={disabled ? '$disabled' : '$checkboxColor'}
                 />
               </View>
             )}

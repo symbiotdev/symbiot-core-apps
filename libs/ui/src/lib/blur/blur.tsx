@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import { BlurView as ExpoBlurView } from 'expo-blur';
-import { useSystemScheme } from '@symbiot-core-apps/shared';
 import { ViewStyle } from 'react-native';
+import { useScheme } from '@symbiot-core-apps/store';
 
 export const Blur = memo(({ style }: { style?: ViewStyle }) => {
-  const scheme = useSystemScheme();
+  const { scheme } = useScheme();
 
   return (
     <ExpoBlurView

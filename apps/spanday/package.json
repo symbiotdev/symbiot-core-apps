@@ -36,6 +36,7 @@
     "expo-screen-orientation": "*",
     "expo-linear-gradient": "*",
     "expo-constants": "*",
+    "expo-notifications": "*",
     "expo-camera": "*",
     "expo-font": "*",
     "expo-haptics": "*",

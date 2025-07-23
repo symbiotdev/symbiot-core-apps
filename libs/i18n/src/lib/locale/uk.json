@@ -15,6 +15,7 @@
     "calendar": "Календар",
     "application": "Додаток",
     "email": "Email",
+    "settings": "Налаштування",
     "docs": {
       "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",
@@ -31,7 +32,8 @@
       "notifications": {
         "title": "Сповіщення",
         "posh_notifications": {
-          "label": "Push-сповіщення"
+          "label": "Push-сповіщення",
+          "permissions_denied": "Відхилені дозволи на push-сповіщення. Відкрийте налаштування програми та ввімкніть."
         },
         "sound": {
           "label": "Звук"

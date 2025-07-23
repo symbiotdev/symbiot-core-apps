@@ -26,6 +26,7 @@ export const Switch = ({
         disabled={disabled}
         onCheckedChange={onChange}
         backgroundColor={checked ? '$switchSelectedColor' : '$background1'}
+        opacity={disabled ? 0.8 : 1}
         native
         nativeProps={{
           disabled,

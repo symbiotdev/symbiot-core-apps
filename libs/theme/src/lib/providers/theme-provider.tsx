@@ -9,12 +9,13 @@ import {
   ThemeConfig,
   zIndex,
 } from '../utils/tamagui-config';
-import { Scheme, useSystemScheme } from '@symbiot-core-apps/shared';
+import { Scheme } from '@symbiot-core-apps/shared';
 import {
   DefaultTheme,
   ThemeProvider as NavigationThemeProvider,
 } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
+import { useScheme } from '@symbiot-core-apps/store';
 
 const Context = createContext({});
 
@@ -23,7 +24,7 @@ export const ThemeProvider = ({
   lightTheme,
   darkTheme,
 }: PropsWithChildren<{ lightTheme: ThemeConfig; darkTheme: ThemeConfig }>) => {
-  const scheme = useSystemScheme();
+  const { scheme } = useScheme();
   const barStyle = useMemo(
     () => (scheme === 'dark' ? 'light-content' : 'dark-content'),
     [scheme],
@@ -93,7 +94,7 @@ const ThemeProviderChildren = ({
   children,
   themes,
 }: PropsWithChildren<{ themes: Record<Scheme, ThemeConfig> }>) => {
-  const scheme = useSystemScheme();
+  const { scheme } = useScheme();
 
   const themeProviderValue = useMemo(() => {
     const dark = scheme === 'dark';

@@ -16,6 +16,7 @@
     "application": "Додаток",
     "email": "Email",
     "settings": "Налаштування",
+    "its_empty": "Тут порожньо",
     "docs": {
       "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",
@@ -48,6 +49,12 @@
           "auto": {
             "label": "Авто"
           }
+        }
+      },
+      "calendar": {
+        "title": "Календар",
+        "week_starts_on": {
+          "label": "Перший день тижня"
         }
       }
     }

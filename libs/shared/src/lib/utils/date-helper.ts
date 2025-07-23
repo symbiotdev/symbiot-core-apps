@@ -68,12 +68,21 @@ export const DateHelper = {
       locale: getDateLocale(),
     });
   },
-  getWeekdays: (weekStartsOn = defaultWeekdayStartsOn) => {
-    const start = DateHelper.startOfWeek(new Date(), weekStartsOn);
-    const days: string[] = [];
+  getWeekdays: (props?: { formatStr: string; weekStartsOn: Day }) => {
+    const formatStr = props?.formatStr || 'EEEE';
+    const start = DateHelper.startOfWeek(
+      new Date(),
+      props?.weekStartsOn || defaultWeekdayStartsOn,
+    );
+    const days: { value: number; label: string }[] = [];
 
     for (let i = 0; i < 7; i++) {
-      days.push(DateHelper.format(DateHelper.addDays(start, i), 'EEEEEE'));
+      const label = DateHelper.format(DateHelper.addDays(start, i), formatStr);
+
+      days.push({
+        value: i,
+        label: `${label[0].toUpperCase()}${label.slice(1)}`,
+      });
     }
 
     return days;

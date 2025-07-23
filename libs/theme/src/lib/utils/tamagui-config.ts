@@ -34,10 +34,6 @@ export type ThemeConfig = {
 };
 
 export const animations = createAnimations({
-  '100ms': {
-    type: 'timing',
-    duration: 100,
-  },
   bouncy: {
     type: 'spring',
     damping: 9,
@@ -61,8 +57,8 @@ export const animations = createAnimations({
   },
   quick: {
     type: 'spring',
-    damping: 20,
-    mass: 1.2,
+    damping: 100,
+    mass: 1,
     stiffness: 250,
   },
   tooltip: {
@@ -130,3 +126,27 @@ export const radius = {
   9: 18,
   10: 20,
 };
+
+export const media = {
+  xl: { maxWidth: 1650 },
+  lg: { maxWidth: 1280 },
+  md: { maxWidth: 1020 },
+  sm: { maxWidth: 800 },
+  xs: { maxWidth: 660 },
+  xxs: { maxWidth: 390 },
+  gtXs: { minWidth: 660 + 1 },
+  gtSm: { minWidth: 800 + 1 },
+  gtMd: { minWidth: 1020 + 1 },
+  gtLg: { minWidth: 1280 + 1 },
+  gtXl: { minWidth: 1650 + 1 },
+}
+
+export const mediaQueryDefaultActive = {
+  xl: true,
+  lg: true,
+  md: true,
+  sm: true,
+  xs: true,
+  xxs: true,
+}
+

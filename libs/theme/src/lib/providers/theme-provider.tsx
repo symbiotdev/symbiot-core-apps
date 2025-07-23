@@ -3,6 +3,8 @@ import { createTamagui, TamaguiProvider, View } from 'tamagui';
 import {
   animations,
   fonts,
+  media,
+  mediaQueryDefaultActive,
   radius,
   size,
   space,
@@ -62,6 +64,7 @@ export const ThemeProvider = ({
         animations,
         fonts,
         themes,
+        media,
         tokens: {
           size,
           space,
@@ -69,6 +72,7 @@ export const ThemeProvider = ({
           radius,
         },
         settings: {
+          mediaQueryDefaultActive,
           defaultFont: 'body',
           fastSchemeChange: true,
           shouldAddPrefersColorThemes: true,

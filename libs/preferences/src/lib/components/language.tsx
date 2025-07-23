@@ -6,15 +6,13 @@ import {
   ToggleGroup,
 } from '@symbiot-core-apps/ui';
 import { useEffect, useMemo } from 'react';
-import {
-  AppLanguage,
-  appLanguagesOptions,
-  i18n,
-} from '@symbiot-core-apps/i18n';
+import { AppLanguage, appLanguagesOptions } from '@symbiot-core-apps/i18n';
 import { useMeUpdater } from '@symbiot-core-apps/store';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 export const Language = () => {
+  const { i18n } = useTranslation();
   const navigation = useNavigation();
   const { updateAccount$, updating } = useMeUpdater();
 

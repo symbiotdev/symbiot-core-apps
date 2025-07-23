@@ -16,6 +16,7 @@
     "application": "Application",
     "email": "Email",
     "settings": "Settings",
+    "its_empty": "It's empty",
     "docs": {
       "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",
@@ -48,6 +49,12 @@
           "auto": {
             "label": "Auto"
           }
+        }
+      },
+      "calendar": {
+        "title": "Calendar",
+        "week_starts_on": {
+          "label": "Week starts on"
         }
       }
     }

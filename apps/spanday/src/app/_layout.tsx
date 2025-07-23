@@ -1,6 +1,5 @@
 import { Slot } from 'expo-router';
-import { useCallback, useEffect } from 'react';
-import { I18nextProvider, useTranslation } from 'react-i18next';
+import { useCallback, useLayoutEffect } from 'react';
 import { ApiProvider, useAuthTokens } from '@symbiot-core-apps/api';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { Toaster } from 'burnt/web';
@@ -14,6 +13,7 @@ import {
 } from 'expo-splash-screen';
 import { ErrorView } from '@symbiot-core-apps/ui';
 import { darkTheme, lightTheme } from '../utils/theme';
+import { I18nProvider } from '@symbiot-core-apps/i18n';
 
 void preventAutoHideAsync();
 setOptions({
@@ -27,7 +27,6 @@ if (Platform.OS !== 'web') {
 
 export default () => {
   const [fontsLoaded, fontsError] = useFixelFont();
-  const { i18n } = useTranslation();
   const { removeTokens } = useAuthTokens();
   // const { clear } = useStoreClear();
 
@@ -39,12 +38,6 @@ export default () => {
     removeTokens();
   }, [removeTokens]);
 
-  useEffect(() => {
-    if (fontsLoaded) {
-      void hideAsync();
-    }
-  }, [fontsLoaded]);
-
   if (fontsError) {
     return <ErrorView message="Fonts could not be loaded." />;
   }
@@ -52,19 +45,31 @@ export default () => {
   return (
     fontsLoaded && (
       <KeyboardProvider>
-        <I18nextProvider i18n={i18n}>
+        <I18nProvider>
           <ThemeProvider darkTheme={darkTheme} lightTheme={lightTheme}>
             <ApiProvider
               onNoRespond={onNoRespond}
               onUnauthorized={onUnauthorized}
             >
-              <Slot />
-
-              <Toaster position="top-right" />
+              <Body />
             </ApiProvider>
           </ThemeProvider>
-        </I18nextProvider>
+        </I18nProvider>
       </KeyboardProvider>
     )
+  );
+};
+
+const Body = () => {
+  useLayoutEffect(() => {
+    void hideAsync();
+  }, []);
+
+  return (
+    <>
+      <Slot />
+
+      <Toaster position="top-right" />
+    </>
   );
 };

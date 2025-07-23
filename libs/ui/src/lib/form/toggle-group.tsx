@@ -2,6 +2,7 @@ import { View, XStack } from 'tamagui';
 import { ReactElement, useCallback, useMemo } from 'react';
 import { RegularText } from '../text/text';
 import { Icon } from '../icons/icon';
+import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 
 export type ToggleGroupItem = {
   label: string;
@@ -73,6 +74,8 @@ const Item = ({
         onChange?.([item.value]);
       }
     }
+
+    void impactAsync(ImpactFeedbackStyle.Light);
   }, [allowEmpty, item.value, multiselect, onChange, selected, value]);
 
   return (

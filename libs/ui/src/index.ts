@@ -9,6 +9,8 @@ export * from './lib/card/card';
 export * from './lib/form/checkbox';
 export * from './lib/form/input';
 export * from './lib/form/input-code';
+export * from './lib/form/switch';
+export * from './lib/form/toggle-group';
 
 export * from './lib/icons/icon';
 
@@ -18,6 +20,7 @@ export * from './lib/loading/spinner';
 
 export * from './lib/media/avatar';
 
+export * from './lib/navigation/header';
 export * from './lib/navigation/tabs';
 
 export * from './lib/qr/qr-code';

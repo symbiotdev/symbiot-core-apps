@@ -1,3 +1,5 @@
+import { ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
+
 export type RequestError = {
   code: number;
   text: string;
@@ -14,3 +16,19 @@ export const getRequestErrorMessage = (error: unknown) => {
 
   return undefined;
 };
+
+export async function requestWithAlertOnError<T>(
+  request: Promise<T>,
+): Promise<T> {
+  try {
+    return await request;
+  } catch (error) {
+    const text = getRequestErrorMessage(error) || '';
+
+    ShowNativeFailedAlert({
+      text,
+    });
+
+    throw text;
+  }
+}

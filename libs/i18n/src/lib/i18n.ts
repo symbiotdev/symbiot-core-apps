@@ -37,8 +37,8 @@ i18n
 const LANGUAGE_STORE_KEY = 'AppLang';
 
 export const changeAppLanguage = (language: string) => {
-  i18n.changeLanguage(language);
-  AsyncStorage.setItem(LANGUAGE_STORE_KEY, language);
+  void i18n.changeLanguage(language);
+  void  AsyncStorage.setItem(LANGUAGE_STORE_KEY, language);
 };
 
 export const getStoredLanguage = () => {

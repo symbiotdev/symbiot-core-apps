@@ -4,15 +4,16 @@ import {
   KeyboardAvoidingView,
   KeyboardAwareScrollView,
 } from 'react-native-keyboard-controller';
-import { useHeaderHeight } from '@react-navigation/elements';
 import { ScrollView, View, ViewProps } from 'tamagui';
 import { LoadingView } from './loading-view';
 import { useRendered } from '@symbiot-core-apps/shared';
 import { Refresher } from '../loading/refresher';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useScreenHeaderHeight } from '../navigation/header';
 
 const isWeb = Platform.OS === 'web';
-export const defaultPagePadding = 20;
+export const defaultPageHorizontalPadding = 14;
+export const defaultPageVerticalPadding = 14;
 
 export type PageViewProps = ViewProps & {
   lazy?: boolean;
@@ -37,7 +38,7 @@ export const PageView = ({
   ...viewProps
 }: PageViewProps) => {
   const { rendered } = useRendered({ defaultTrue: lazy === false, delay });
-  const headerHeight = useHeaderHeight();
+  const headerHeight = useScreenHeaderHeight();
 
   if (!rendered) {
     return LoadingElement || <LoadingView />;
@@ -58,7 +59,7 @@ export const PageView = ({
           ) : undefined
         }
       >
-        <PageContent {...viewProps} withHeaderHeight={withHeaderHeight} />
+        <PageContent withHeaderHeight={withHeaderHeight} {...viewProps} />
       </KeyboardAwareScrollView>
     );
   }
@@ -70,7 +71,7 @@ export const PageView = ({
         style={styles.FullScreen}
         keyboardVerticalOffset={withHeaderHeight ? headerHeight : undefined}
       >
-        <PageContent {...viewProps} withHeaderHeight={withHeaderHeight} />
+        <PageContent withHeaderHeight={withHeaderHeight} {...viewProps} />
       </KeyboardAvoidingView>
     );
   }
@@ -88,25 +89,26 @@ export const PageView = ({
           ) : undefined
         }
       >
-        <PageContent {...viewProps} withHeaderHeight={withHeaderHeight} />
+        <PageContent withHeaderHeight={withHeaderHeight} {...viewProps} />
       </ScrollView>
     );
   }
 
-  return <PageContent {...viewProps} withHeaderHeight={withHeaderHeight} />;
+  return <PageContent withHeaderHeight={withHeaderHeight} {...viewProps} />;
 };
 
 const PageContent = ({
-  withHeaderHeight,
-  paddingTop = defaultPagePadding,
-  paddingBottom = defaultPagePadding,
-  paddingLeft = defaultPagePadding,
-  paddingRight = defaultPagePadding,
+  withHeaderHeight = false,
+  paddingTop = defaultPageVerticalPadding,
+  paddingBottom = defaultPageVerticalPadding,
+  paddingLeft = defaultPageHorizontalPadding,
+  paddingRight = defaultPageHorizontalPadding,
   ...viewProps
 }: ViewProps & {
   withHeaderHeight?: boolean;
 }) => {
   const { top, bottom, left, right } = useSafeAreaInsets();
+  const headerHeight = useScreenHeaderHeight();
 
   return (
     <View
@@ -114,7 +116,7 @@ const PageContent = ({
       width="100%"
       maxWidth={1440}
       marginHorizontal="auto"
-      paddingTop={(withHeaderHeight ? 0 : top) + Number(paddingTop)}
+      paddingTop={(withHeaderHeight ? headerHeight : top) + Number(paddingTop)}
       paddingBottom={bottom + Number(paddingBottom)}
       paddingLeft={left + Number(paddingLeft)}
       paddingRight={right + Number(paddingRight)}

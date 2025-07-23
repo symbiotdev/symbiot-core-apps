@@ -1,10 +1,14 @@
 export * from './lib/components/api-provider';
 
-export * from './lib/hooks/use-auth-tokens'
+export * from './lib/hooks/use-auth-tokens';
 
-export * from './lib/queries/use-account-auth';
+export * from './lib/queries/use-account.query';
+export * from './lib/queries/use-account-auth.query';
+export * from './lib/queries/use-account-preferences.query';
 
+export * from './lib/types/account';
 export * from './lib/types/account-auth';
+export * from './lib/types/account-preferences';
 
 export * from './lib/utils/entity-helpers';
 export * from './lib/utils/media';

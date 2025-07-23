@@ -7,7 +7,7 @@ import {
   Switch,
 } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
-import { useMe } from '@symbiot-core-apps/store';
+import { useMeUpdater } from '@symbiot-core-apps/store';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -18,7 +18,7 @@ import { Linking, Platform } from 'react-native';
 
 export const Notifications = () => {
   const { t } = useTranslation();
-  const { me, updatePreferences$, updating } = useMe();
+  const { me, updatePreferences$, updating } = useMeUpdater();
   const navigation = useNavigation();
 
   const [permissionsStatus, setPermissionsStatus] =

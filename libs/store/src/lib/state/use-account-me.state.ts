@@ -56,18 +56,8 @@ export const useMe = ({ autoFetch }: { autoFetch?: boolean } = {}) => {
     error: meError,
   } = useAccountMeQuery({ autoFetch });
   const { setMePreferences } = useAccountMeState();
-  const {
-    mutateAsync: updatePreferences,
-    isPending: arePreferencesUpdating,
-    error: updatePreferencesError,
-  } = useUpdateAccountPreferencesQuery();
-  const {
-    mutateAsync: updateAccount,
-    isPending: isAccountUpdating,
-    error: updateAccountError,
-  } = useAccountMeUpdate();
 
-  const handleMe = useCallback(
+  const updateMe = useCallback(
     (account: Account) => {
       changeAppLanguage(account.language);
       setMe(account);
@@ -75,31 +65,7 @@ export const useMe = ({ autoFetch }: { autoFetch?: boolean } = {}) => {
     [setMe],
   );
 
-  const updateAccount$ = useCallback(
-    async (data: UpdateAccountData) => {
-      const initialMe = me;
-
-      try {
-        if (initialMe) {
-          handleMe({
-            ...initialMe,
-            ...data,
-          });
-        }
-
-        const response = await updateAccount(data);
-
-        handleMe(response);
-      } catch {
-        if (initialMe) {
-          handleMe(initialMe);
-        }
-      }
-    },
-    [handleMe, me, updateAccount],
-  );
-
-  const handlePreferences = useCallback(
+  const updateMePreferences = useCallback(
     async (preferences: AccountPreferences) => {
       setScheme(
         schemes.includes(preferences.scheme as Scheme)
@@ -112,13 +78,71 @@ export const useMe = ({ autoFetch }: { autoFetch?: boolean } = {}) => {
     [setMePreferences, setScheme],
   );
 
+  useEffect(() => {
+    if (meResponse) {
+      setMe(meResponse);
+      updateMe(meResponse);
+
+      if (meResponse.preferences) {
+        void updateMePreferences(meResponse.preferences);
+      }
+    }
+  }, [updateMe, updateMePreferences, meResponse, setMe]);
+
+  return {
+    refetchMe$,
+    updateMe,
+    updateMePreferences,
+    me,
+    meError,
+    loading: isMeRefetching,
+  };
+};
+
+export const useMeUpdater = () => {
+  const { me, updateMe, updateMePreferences } = useMe();
+  const {
+    mutateAsync: updatePreferences,
+    isPending: arePreferencesUpdating,
+    error: updatePreferencesError,
+  } = useUpdateAccountPreferencesQuery();
+  const {
+    mutateAsync: updateAccount,
+    isPending: isAccountUpdating,
+    error: updateAccountError,
+  } = useAccountMeUpdate();
+
+  const updateAccount$ = useCallback(
+    async (data: UpdateAccountData) => {
+      const initialMe = me;
+
+      try {
+        if (initialMe) {
+          updateMe({
+            ...initialMe,
+            ...data,
+          });
+        }
+
+        const response = await updateAccount(data);
+
+        updateMe(response);
+      } catch {
+        if (initialMe) {
+          updateMe(initialMe);
+        }
+      }
+    },
+    [updateMe, me, updateAccount],
+  );
+
   const updatePreferences$ = useCallback(
     async (data: Partial<AccountPreferences>) => {
       const initialPreferences = me?.preferences;
 
       try {
         if (initialPreferences) {
-          void handlePreferences({
+          void updateMePreferences({
             ...initialPreferences,
             ...data,
           });
@@ -126,34 +150,20 @@ export const useMe = ({ autoFetch }: { autoFetch?: boolean } = {}) => {
 
         const preferences = await updatePreferences(data);
 
-        await handlePreferences(preferences);
+        await updateMePreferences(preferences);
       } catch {
         if (initialPreferences) {
-          void handlePreferences(initialPreferences);
+          void updateMePreferences(initialPreferences);
         }
       }
     },
-    [handlePreferences, me?.preferences, updatePreferences],
+    [updateMePreferences, me?.preferences, updatePreferences],
   );
 
-  useEffect(() => {
-    if (meResponse) {
-      setMe(meResponse);
-      handleMe(meResponse);
-
-      if (meResponse.preferences) {
-        void handlePreferences(meResponse.preferences);
-      }
-    }
-  }, [handleMe, handlePreferences, meResponse, setMe]);
-
   return {
-    refetchMe$,
+    me,
     updateAccount$,
     updatePreferences$,
-    me,
-    meError,
-    loading: isMeRefetching,
     updating: arePreferencesUpdating || isAccountUpdating,
     updateError: updatePreferencesError || updateAccountError,
   };

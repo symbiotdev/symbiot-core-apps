@@ -8,7 +8,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { useCallback, useEffect, useMemo } from 'react';
-import { useMe } from '@symbiot-core-apps/store';
+import { useMeUpdater } from '@symbiot-core-apps/store';
 import { AccountScheme } from '@symbiot-core-apps/api';
 import { useNavigation } from '@react-navigation/native';
 import { defaultSystemScheme, Scheme } from '@symbiot-core-apps/shared';
@@ -16,7 +16,7 @@ import { defaultSystemScheme, Scheme } from '@symbiot-core-apps/shared';
 export const Appearance = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const { me, updatePreferences$, updating } = useMe();
+  const { me, updatePreferences$, updating } = useMeUpdater();
   const scheme = me?.preferences?.scheme;
 
   const items = useMemo(

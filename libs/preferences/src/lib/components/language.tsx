@@ -11,12 +11,12 @@ import {
   appLanguagesOptions,
   i18n,
 } from '@symbiot-core-apps/i18n';
-import { useMe } from '@symbiot-core-apps/store';
+import { useMeUpdater } from '@symbiot-core-apps/store';
 import { useNavigation } from '@react-navigation/native';
 
 export const Language = () => {
   const navigation = useNavigation();
-  const { updateAccount$, updating } = useMe();
+  const { updateAccount$, updating } = useMeUpdater();
 
   const items = useMemo(
     () =>

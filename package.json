@@ -33,7 +33,7 @@
     "@react-navigation/elements": "^2.5.2",
     "@react-navigation/native": "^7.1.6",
     "@symbiot.dev/react-native-timegrid-pro": "file:symbiot.dev-react-native-timegrid-pro-0.2.5.tgz",
-    "@tamagui/config": "^1.131.3",
+    "@tamagui/config": "1.126.16",
     "@tanstack/react-query": "^5.83.0",
     "axios": "^1.10.0",
     "burnt": "^0.13.0",
@@ -85,7 +85,7 @@
     "react-native-web": "~0.20.0",
     "react-native-webview": "13.13.5",
     "socket.io-client": "^4.8.1",
-    "tamagui": "^1.131.3",
+    "tamagui": "1.126.16",
     "yup": "^1.6.1",
     "zustand": "^5.0.6"
   },

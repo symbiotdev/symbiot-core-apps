@@ -10,23 +10,23 @@ export const H5 = styled(TamaguiText, {
 export const H4 = styled(TamaguiText, {
   ...defaultTextStyles,
   fontSize: 16,
-  fontFamily: 'BodyMedium',
+  fontFamily: 'BodySemiBold',
 }) as typeof TamaguiText;
 
 export const H3 = styled(TamaguiText, {
   ...defaultTextStyles,
   fontSize: 20,
-  fontFamily: 'BodyMedium',
+  fontFamily: 'BodySemiBold',
 }) as typeof TamaguiText;
 
 export const H2 = styled(TamaguiText, {
   ...defaultTextStyles,
   fontSize: 24,
-  fontFamily: 'BodySemiBold',
+  fontFamily: 'BodyBold',
 }) as typeof TamaguiText;
 
 export const H1 = styled(TamaguiText, {
   ...defaultTextStyles,
   fontSize: 28,
-  fontFamily: 'BodySemiBold',
+  fontFamily: 'BodyBold',
 }) as typeof TamaguiText;

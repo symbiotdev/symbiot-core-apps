@@ -4,6 +4,7 @@ export * from './lib/button/button';
 
 export * from './lib/calendar/calendar';
 
+export * from './lib/card/action-card';
 export * from './lib/card/card';
 
 export * from './lib/form/avatar-picker';
@@ -29,7 +30,7 @@ export * from './lib/navigation/tabs';
 export * from './lib/popover/adaptive-popover';
 
 export * from './lib/qr/qr-code';
-export * from './lib/qr/qr-code-modal-by-trigger';
+export * from './lib/qr/qr-code-modal';
 
 export * from './lib/text/heading';
 export * from './lib/text/text';

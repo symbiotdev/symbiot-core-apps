@@ -17,6 +17,7 @@
     "email": "Email",
     "settings": "Settings",
     "its_empty": "It's empty",
+    "or": "or",
     "docs": {
       "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",
@@ -290,11 +291,29 @@
       "title": "Be PRO in your niche",
       "subtitle": "Smart Scheduling for Your Business"
     },
+    "initial_actions": {
+      "message": "Choose an option to get started.",
+      "join_workspace": {
+        "title": "Join a workspace",
+        "subtitle": "Already part of a team? Use a QR code to join your Spanday PRO workspace.",
+        "button": {
+          "label": "Join"
+        }
+      },
+      "create_workspace": {
+        "title": "Create a workspace",
+        "subtitle": "Set up your space, add clients, and manage bookings with ease.",
+        "button": {
+          "label": "Create"
+        }
+      }
+    },
     "subscription": {
       "card": {
-        "title": "Pro Tools for Pro Minds",
+        "title": "Think Bigger. Go Pro.",
+        "subtitle": "Whether you're building, researching, or creating — Pro gives you the edge.",
         "button": {
-          "label": "PRO"
+          "label": "Continue"
         }
       }
     }
@@ -324,9 +343,27 @@
       "title": "Your rhythm. Your system.",
       "subtitle": "A flexible platform for dance instructors and studio teams"
     },
+    "initial_actions": {
+      "message": "Choose an option to get started.",
+      "join_hub": {
+        "title": "Join a dance hub",
+        "subtitle": "Already part of a team? Use a QR code to join your dance hub.",
+        "button": {
+          "label": "Join"
+        }
+      },
+      "create_workspace": {
+        "title": "Create a dance hub",
+        "subtitle": "Set up your space, add students, and manage classes with ease.",
+        "button": {
+          "label": "Create"
+        }
+      }
+    },
     "subscription": {
       "card": {
-        "title": "Where Moves Meet Mastery",
+        "title": "Step Up Your Brand",
+        "subtitle": "Access advanced features that help your brand growth — only with Pro.",
         "button": {
           "label": "Continue"
         }

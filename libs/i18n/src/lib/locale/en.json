@@ -88,10 +88,18 @@
       },
       "account": {
         "firstname": {
-          "label": "First name"
+          "label": "First name",
+          "placeholder": "Enter your first name",
+          "error": {
+            "required": "First name is required"
+          }
         },
         "lastname": {
-          "label": "Last name"
+          "label": "Last name",
+          "placeholder": "Enter your last name",
+          "error": {
+            "required": "Last name is required"
+          }
         },
         "email": {
           "label": "Email"

@@ -83,10 +83,18 @@
       },
       "account": {
         "firstname": {
-          "label": "Імʼя"
+          "label": "Імʼя",
+          "placeholder": "Введіть імʼя",
+          "error": {
+            "required": "Імʼя обовʼязкове для введення"
+          }
         },
         "lastname": {
-          "label": "Прізвище"
+          "label": "Прізвище",
+          "placeholder": "Введіть прізвище",
+          "error": {
+            "required": "Прізвище обовʼязкове для введення"
+          }
         },
         "email": {
           "label": "Email"

@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@symbiot-core-apps/account": ["libs/account/src/index.ts"],
       "@symbiot-core-apps/api": ["libs/api/src/index.ts"],
       "@symbiot-core-apps/app": ["libs/app/src/index.ts"],
       "@symbiot-core-apps/app-preferences": [

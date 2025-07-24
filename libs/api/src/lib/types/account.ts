@@ -22,4 +22,8 @@ export type Account = {
   preferences: AccountPreferences;
 };
 
-export type UpdateAccountData = Pick<Account, 'language'>;
+export type UpdateAccountData = {
+  language?: AppLanguage;
+  firstname?: string;
+  lastname?: string;
+};

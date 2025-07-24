@@ -1,5 +1,5 @@
 import { Popover, XStack } from 'tamagui';
-import { DimensionValue, Keyboard } from 'react-native';
+import { DimensionValue } from 'react-native';
 import { useCallback, useMemo, useRef } from 'react';
 import { AdaptivePopover } from '../popover/adaptive-popover';
 import { FormField } from './form-field';
@@ -91,6 +91,8 @@ export function Select({
     [onChange, value],
   );
 
+  const onPress = useCallback(() => impactAsync(ImpactFeedbackStyle.Light), []);
+
   return (
     <FormField label={label} error={error}>
       <AdaptivePopover
@@ -111,7 +113,7 @@ export function Select({
             alignItems="center"
             opacity={disabled ? 0.8 : 1}
             cursor={!disabled ? 'pointer' : 'auto'}
-            onPress={Keyboard.dismiss}
+            onPress={onPress}
           >
             {!options?.length && optionsLoading ? (
               <>

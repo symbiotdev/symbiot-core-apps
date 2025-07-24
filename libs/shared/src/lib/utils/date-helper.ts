@@ -21,7 +21,7 @@ import { addYears } from 'date-fns/addYears';
 import { getDateLocale } from '@symbiot-core-apps/i18n';
 import { isSameMonth } from 'date-fns/isSameMonth';
 
-const defaultWeekdayStartsOn: Day = 1;
+const defaultWeekdayStartsOn: Day = 0;
 
 export const DateHelper = {
   isSameDay,
@@ -68,11 +68,11 @@ export const DateHelper = {
       locale: getDateLocale(),
     });
   },
-  getWeekdays: (props?: { formatStr: string; weekStartsOn: Day }) => {
-    const formatStr = props?.formatStr || 'EEEE';
+  getWeekdays: (props?: { formatStr?: string; weekStartsOn?: Day }) => {
+    const formatStr = props?.formatStr ?? 'EEEE';
     const start = DateHelper.startOfWeek(
       new Date(),
-      props?.weekStartsOn || defaultWeekdayStartsOn,
+      props?.weekStartsOn ?? defaultWeekdayStartsOn,
     );
     const days: { value: number; label: string }[] = [];
 

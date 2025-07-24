@@ -19,16 +19,19 @@ import { H3 } from '../text/heading';
 import { Orientation } from 'expo-screen-orientation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { DeviceType } from 'expo-device';
+import { Day } from 'date-fns/types';
 
 const snappable = Platform.OS !== 'web';
 
 export const Calendar = ({
   selectedDate,
   gridBottomOffset = 0,
+  weekStartsOn,
   onChangeDate,
 }: {
   selectedDate: Date;
   gridBottomOffset?: number;
+  weekStartsOn?: Day;
   onChangeDate: TimeGridActionsProps['onChangeDate'];
 }) => {
   const locale = useDateLocale();
@@ -154,6 +157,7 @@ export const Calendar = ({
         ref={ref}
         snappable={snappable}
         width={adjustedWidth}
+        weekStartsOn={weekStartsOn}
         gridBottomOffset={gridBottomOffset + 5}
         locale={locale}
         startDate={selectedDate}

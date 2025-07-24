@@ -17,10 +17,12 @@
     "paths": {
       "@symbiot-core-apps/api": ["libs/api/src/index.ts"],
       "@symbiot-core-apps/app": ["libs/app/src/index.ts"],
+      "@symbiot-core-apps/app-preferences": [
+        "libs/app-preferences/src/index.ts"
+      ],
       "@symbiot-core-apps/auth": ["libs/auth/src/index.ts"],
       "@symbiot-core-apps/i18n": ["libs/i18n/src/index.ts"],
       "@symbiot-core-apps/onboarding": ["libs/onboarding/src/index.ts"],
-      "@symbiot-core-apps/preferences": ["libs/preferences/src/index.ts"],
       "@symbiot-core-apps/shared": ["libs/shared/src/index.ts"],
       "@symbiot-core-apps/store": ["libs/store/src/index.ts"],
       "@symbiot-core-apps/theme": ["libs/theme/src/index.ts"],

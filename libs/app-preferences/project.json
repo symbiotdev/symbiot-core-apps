@@ -1,0 +1,9 @@
+{
+  "name": "app-preferences",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/app-preferences/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project app-preferences --web",
+  "targets": {}
+}

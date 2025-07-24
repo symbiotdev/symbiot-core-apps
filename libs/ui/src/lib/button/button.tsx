@@ -38,10 +38,10 @@ export const Button = memo(
         width="100%"
         gap="$3"
         cursor="auto"
-        pressStyle={{ opacity: 0.9 }}
+        pressStyle={{ opacity: 0.8 }}
         disabledStyle={{
           cursor: 'auto',
-          opacity: 0.9,
+          opacity: 0.8,
           backgroundColor: '$disabled',
         }}
         {...xStackProps}

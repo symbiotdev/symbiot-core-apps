@@ -29,7 +29,7 @@ export const Avatar = memo(
         overflow="hidden"
         width={size}
         height={size}
-        backgroundColor={color || '$background'}
+        backgroundColor={url ? undefined : color || '$background'}
         {...viewProps}
       >
         {url ? (
@@ -38,7 +38,7 @@ export const Avatar = memo(
             style={{
               flex: 1,
               width: '100%',
-              backgroundColor: color,
+              backgroundColor: url ? undefined : color,
             }}
             source={url}
             placeholder={{ blurhash }}

@@ -17,6 +17,7 @@ import {
 } from '@expo/vector-icons';
 import { ViewStyle } from 'react-native';
 import { useTheme } from 'tamagui';
+import { loadAsync } from 'expo-font';
 
 export type DynamicIconType =
   | 'AntDesign'
@@ -60,6 +61,16 @@ const iconSet = {
   SimpleLineIcons,
   Zocial,
 };
+
+void loadAsync(
+  Object.values(iconSet).reduce(
+    (obj, { font }) => ({
+      ...obj,
+      ...font,
+    }),
+    {},
+  ),
+);
 
 export const DynamicIcon = (props: DynamicIconProps) => {
   const { type, name, size, color, style } = props;

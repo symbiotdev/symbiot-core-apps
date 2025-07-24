@@ -125,7 +125,7 @@ export const AdaptivePopover = forwardRef(
                 animation="quick"
                 enterStyle={{ opacity: 0 }}
                 exitStyle={{ opacity: 0 }}
-                opacity={0.7}
+                opacity={0.8}
               />
 
               <Popover.Sheet.Frame

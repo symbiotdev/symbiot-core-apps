@@ -68,7 +68,7 @@ export const DatePicker = ({
         disabled={disabled}
         triggerType="child"
         trigger={
-          <InputFieldView {...viewProps} onPress={onPress}>
+          <InputFieldView disabled={disabled} {...viewProps} onPress={onPress}>
             <RegularText
               color={!value ? '$placeholderColor' : '$color'}
               fontSize={14}

@@ -103,7 +103,7 @@ export function Select({
         minWidth={200}
         triggerType="child"
         trigger={
-          <InputFieldView onPress={onPress}>
+          <InputFieldView disabled={disabled} onPress={onPress}>
             {!options?.length && optionsLoading ? (
               <>
                 <Spinner width={16} height={16} />

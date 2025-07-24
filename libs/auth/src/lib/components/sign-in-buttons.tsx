@@ -1,11 +1,10 @@
-import { View } from 'tamagui';
 import { AppleAuthButton } from './apple-auth-button';
 import { useCallback, useMemo, useState } from 'react';
 import FirebaseAuth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { GoogleAuthButton } from './google-auth-button';
 import { isAvailableAsync } from 'expo-apple-authentication';
 import { Platform } from 'react-native';
-import { Button, Error, Icon } from '@symbiot-core-apps/ui';
+import { Button, Error, FormView, Icon } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { useAccountAuthSignInWithFirebaseQuery } from '@symbiot-core-apps/api';
@@ -90,7 +89,7 @@ export const SignInButtons = () => {
   );
 
   return (
-    <View gap="$2" width="100%" marginHorizontal="auto" maxWidth={400}>
+    <FormView>
       {isAppleAuthAvailable && (
         <AppleAuthButton
           pending={isAppleAuthPending}
@@ -125,6 +124,6 @@ export const SignInButtons = () => {
       />
 
       {anyError && <Error textAlign="center">{anyError}</Error>}
-    </View>
+    </FormView>
   );
 };

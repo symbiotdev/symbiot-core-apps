@@ -53,6 +53,8 @@
     "expo-web-browser": "*",
     "expo-apple-authentication": "*",
     "expo-secure-store": "*",
+    "filesize": "*",
+    "mime": "*",
     "react": "*",
     "react-dom": "*",
     "react-native": "*",

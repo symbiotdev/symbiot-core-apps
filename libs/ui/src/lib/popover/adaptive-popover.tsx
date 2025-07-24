@@ -128,11 +128,13 @@ export const AdaptivePopover = forwardRef(
                 exitStyle={{ opacity: 0 }}
                 opacity={0.7}
               />
+
               <Popover.Sheet.Frame
                 borderTopLeftRadius="$10"
                 borderTopRightRadius="$10"
                 borderWidth={1}
                 borderColor="$background"
+                backgroundColor="$background"
               >
                 <Pressable disabled={Platform.OS === 'web'}>
                   <View

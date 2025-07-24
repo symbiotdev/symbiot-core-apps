@@ -34,11 +34,13 @@ export const ListItem = memo(
     ...xStackProps
   }: XStackProps & {
     label: string;
-    icon?: ReactElement<{ color?: string; size?: number }>;
-    iconAfter?: ReactElement<{ color?: string; size?: number }>;
+    icon?: false | ReactElement<{ color?: string; size?: number }>;
+    iconAfter?: false | ReactElement<{ color?: string; size?: number }>;
     iconSize?: number;
     color?: ColorTokens;
   }) => {
+    const adjustedColor = disabled ? '$disabled' : color;
+
     return (
       <XStack
         alignItems="center"
@@ -51,17 +53,17 @@ export const ListItem = memo(
       >
         {!!icon &&
           cloneElement(icon, {
-            color,
+            color: adjustedColor,
             size: iconSize,
           })}
 
-        <RegularText flex={1} numberOfLines={2} color={color}>
+        <RegularText flex={1} numberOfLines={2} color={adjustedColor}>
           {label}
         </RegularText>
 
         {!!iconAfter &&
           cloneElement(iconAfter, {
-            color,
+            color: adjustedColor,
             size: iconSize || 18,
           })}
       </XStack>

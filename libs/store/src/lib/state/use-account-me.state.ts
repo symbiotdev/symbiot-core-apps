@@ -2,7 +2,9 @@ import {
   Account,
   AccountPreferences,
   UpdateAccountData,
+  useAccountMeAvatarUpdate,
   useAccountMeQuery,
+  useAccountMeRemoveAvatar,
   useAccountMeUpdate,
   useUpdateAccountPreferencesQuery,
 } from '@symbiot-core-apps/api';
@@ -13,6 +15,7 @@ import { useCallback, useEffect } from 'react';
 import { Scheme, schemes } from '@symbiot-core-apps/shared';
 import { useScheme } from './use-app-theme.state';
 import { changeAppLanguage } from '@symbiot-core-apps/i18n';
+import { ImagePickerAsset } from 'expo-image-picker';
 
 export type AccountMeState = {
   me?: Account;
@@ -118,6 +121,16 @@ export const useMeUpdater = () => {
     isPending: isAccountUpdating,
     error: updateAccountError,
   } = useAccountMeUpdate();
+  const {
+    mutateAsync: updateAvatar,
+    isPending: isAvatarUpdating,
+    error: updateAvatarError,
+  } = useAccountMeAvatarUpdate();
+  const {
+    mutateAsync: removeAvatar,
+    isPending: isAvatarRemoving,
+    error: removeAvatarError,
+  } = useAccountMeRemoveAvatar();
 
   const updateAccount$ = useCallback(
     async (data: UpdateAccountData) => {
@@ -141,6 +154,16 @@ export const useMeUpdater = () => {
       }
     },
     [updateMe, me, updateAccount],
+  );
+
+  const updateAvatar$ = useCallback(
+    async (image: ImagePickerAsset) => updateMe(await updateAvatar(image)),
+    [updateAvatar, updateMe],
+  );
+
+  const removeAvatar$ = useCallback(
+    async () => updateMe(await removeAvatar()),
+    [removeAvatar, updateMe],
   );
 
   const updatePreferences$ = useCallback(
@@ -170,8 +193,12 @@ export const useMeUpdater = () => {
   return {
     updateAccount$,
     updatePreferences$,
+    updateAvatar$,
+    removeAvatar$,
     me,
     updating: arePreferencesUpdating || isAccountUpdating,
     updateError: updatePreferencesError || updateAccountError,
+    avatarUpdating: isAvatarUpdating || isAvatarRemoving,
+    avatarError: updateAvatarError || removeAvatarError,
   };
 };

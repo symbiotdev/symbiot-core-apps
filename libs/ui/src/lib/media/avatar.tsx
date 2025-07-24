@@ -8,14 +8,18 @@ const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
 export const Avatar = memo(
-  (
-    props: {
-      name: string;
-      size: number;
-      color?: string;
-      url?: ImageSource | string;
-    } & ViewProps,
-  ) => {
+  ({
+    name,
+    size,
+    color,
+    url,
+    ...viewProps
+  }: ViewProps & {
+    name: string;
+    size: number;
+    color?: string;
+    url?: ImageSource | string;
+  }) => {
     return (
       <View
         justifyContent="center"
@@ -23,27 +27,25 @@ export const Avatar = memo(
         position="relative"
         borderRadius={50}
         overflow="hidden"
-        width={props.size}
-        height={props.size}
-        backgroundColor={props.color || '$background'}
-        {...props}
+        width={size}
+        height={size}
+        backgroundColor={color || '$background'}
+        {...viewProps}
       >
-        {!!props.url && (
+        {url ? (
           <Image
             allowDownscaling={false}
             style={{
               flex: 1,
               width: '100%',
-              backgroundColor: props.color,
+              backgroundColor: color,
             }}
-            source={props.url}
+            source={url}
             placeholder={{ blurhash }}
           />
-        )}
-
-        {!props.url && (
-          <SemiBoldText fontSize={props.size / 3}>
-            {shortName(props.name, '2-first-letters')}
+        ) : (
+          <SemiBoldText fontSize={size / 3}>
+            {shortName(name, '2-first-letters')}
           </SemiBoldText>
         )}
       </View>

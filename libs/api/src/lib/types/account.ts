@@ -4,6 +4,8 @@ import { AppLanguage } from '@symbiot-core-apps/i18n';
 export type Account = {
   id: string;
   name: string;
+  firstname: string;
+  lastname: string;
   avatarColor: string;
   avatarUrl: string;
   avatarXsUrl: string;
@@ -20,4 +22,4 @@ export type Account = {
   preferences: AccountPreferences;
 };
 
-export type UpdateAccountData = Pick<Account, 'language'>
+export type UpdateAccountData = Pick<Account, 'language'>;

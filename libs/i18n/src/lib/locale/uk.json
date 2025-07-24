@@ -27,6 +27,30 @@
     },
     "preferences": {
       "title": "Налаштування",
+      "avatar": {
+        "trigger": {
+          "label": "Редагувати"
+        },
+        "action": {
+          "choose_from_gallery": {
+            "label": "Вибрати з галереї",
+            "error": {
+              "permissions_denied": "Відхилені дозволи для відкриття глереї"
+            }
+          },
+          "take_phone": {
+            "label": "Зробити фото",
+            "permissions_denied": "Відхилені дозволи для використання камери"
+          },
+          "delete": {
+            "label": "Видалити зображення",
+            "confirm": {
+              "title": "Видалити зображення?",
+              "message": "Ви хочете видалити цей аватар?"
+            }
+          }
+        }
+      },
       "language": {
         "title": "Мова"
       },
@@ -55,6 +79,17 @@
         "title": "Календар",
         "week_starts_on": {
           "label": "Перший день тижня"
+        }
+      },
+      "account": {
+        "firstname": {
+          "label": "Імʼя"
+        },
+        "lastname": {
+          "label": "Прізвище"
+        },
+        "email": {
+          "label": "Email"
         }
       }
     }

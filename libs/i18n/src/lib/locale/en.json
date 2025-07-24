@@ -23,10 +23,39 @@
       "terms_conditions": "Terms & Conditions"
     },
     "error": {
-      "unknown_error": "Unknown error"
+      "unknown_error": "Unknown error",
+      "validation_error": {
+        "media_size": "The size of uploading file exceeds {{size}}. Please select another and try again."
+      }
     },
     "preferences": {
       "title": "Preferences",
+      "avatar": {
+        "trigger": {
+          "label": "Edit picture"
+        },
+        "action": {
+          "choose_from_gallery": {
+            "label": "Choose from gallery",
+            "error": {
+              "permissions_denied": "Gallery permissions are denied"
+            }
+          },
+          "take_phone": {
+            "label": "Take a photo",
+            "error": {
+              "permission_denied": "Camera permissions denied"
+            }
+          },
+          "delete": {
+            "label": "Delete image",
+            "confirm": {
+              "title": "Delete image?",
+              "message": "Do you want to delete this avatar?"
+            }
+          }
+        }
+      },
       "language": {
         "title": "Language"
       },
@@ -55,6 +84,17 @@
         "title": "Calendar",
         "week_starts_on": {
           "label": "Week starts on"
+        }
+      },
+      "account": {
+        "firstname": {
+          "label": "First name"
+        },
+        "lastname": {
+          "label": "Last name"
+        },
+        "email": {
+          "label": "Email"
         }
       }
     }

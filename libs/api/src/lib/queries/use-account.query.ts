@@ -2,6 +2,11 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Account, UpdateAccountData } from '../types/account';
 import { requestWithAlertOnError } from '../utils/request';
+import { ImagePickerAsset } from 'expo-image-picker';
+import {
+  convertImagePickerAssetsToUploadingFiles,
+  generateFormDataFromUploadingFile,
+} from '../utils/media';
 
 export const useAccountMeQuery = () =>
   useQuery<Account, string>({
@@ -14,3 +19,22 @@ export const useAccountMeUpdate = () =>
     mutationFn: (data) =>
       requestWithAlertOnError(axios.put('/api/account/me', data)),
   });
+
+export const useAccountMeAvatarUpdate = () =>
+  useMutation<Account, string, ImagePickerAsset>({
+    mutationFn: async (image) =>
+      requestWithAlertOnError(
+        axios.put(
+          '/api/account/me/avatar',
+          await generateFormDataFromUploadingFile(
+            convertImagePickerAssetsToUploadingFiles([image])[0],
+            'avatar',
+          ),
+        ),
+      ),
+  });
+
+export const useAccountMeRemoveAvatar = () =>
+  useMutation<Account, string>({
+    mutationFn: () => axios.delete('/api/account/me/avatar'),
+  })

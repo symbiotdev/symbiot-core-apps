@@ -6,6 +6,7 @@ export * from './lib/calendar/calendar';
 
 export * from './lib/card/card';
 
+export * from './lib/form/avatar-picker';
 export * from './lib/form/checkbox';
 export * from './lib/form/input';
 export * from './lib/form/input-code';
@@ -34,6 +35,7 @@ export * from './lib/text/text';
 export * from './lib/text/custom';
 
 export * from './lib/view/error-view';
+export * from './lib/view/form-view';
 export * from './lib/view/loading-view';
 export * from './lib/view/page-view';
 export * from './lib/view/tabs-page-view';

@@ -46,15 +46,9 @@ export const useAccountMeState = create<AccountMeState>()(
   ),
 );
 
-export const useMe = ({ autoFetch }: { autoFetch?: boolean } = {}) => {
+export const useMe = () => {
   const { me, setMe } = useAccountMeState();
   const { setScheme } = useScheme();
-  const {
-    data: meResponse,
-    refetch: refetchMe$,
-    isPending: isMeRefetching,
-    error: meError,
-  } = useAccountMeQuery({ autoFetch });
   const { setMePreferences } = useAccountMeState();
 
   const updateMe = useCallback(
@@ -78,24 +72,37 @@ export const useMe = ({ autoFetch }: { autoFetch?: boolean } = {}) => {
     [setMePreferences, setScheme],
   );
 
+  return {
+    updateMe,
+    updateMePreferences,
+    me,
+  };
+};
+
+export const useMeLoader = () => {
+  const { me, updateMe, updateMePreferences } = useMe();
+  const {
+    data: meResponse,
+    refetch: loadMe$,
+    isPending,
+    error,
+  } = useAccountMeQuery();
+
   useEffect(() => {
     if (meResponse) {
-      setMe(meResponse);
       updateMe(meResponse);
 
       if (meResponse.preferences) {
         void updateMePreferences(meResponse.preferences);
       }
     }
-  }, [updateMe, updateMePreferences, meResponse, setMe]);
+  }, [updateMe, updateMePreferences, meResponse]);
 
   return {
-    refetchMe$,
-    updateMe,
-    updateMePreferences,
+    loadMe$,
     me,
-    meError,
-    loading: isMeRefetching,
+    loading: isPending,
+    loadError: error,
   };
 };
 
@@ -161,9 +168,9 @@ export const useMeUpdater = () => {
   );
 
   return {
-    me,
     updateAccount$,
     updatePreferences$,
+    me,
     updating: arePreferencesUpdating || isAccountUpdating,
     updateError: updatePreferencesError || updateAccountError,
   };

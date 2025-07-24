@@ -56,11 +56,13 @@ export const I18nProvider = ({ children }: PropsWithChildren) => {
   const [loaded, setLoaded] = useState(false);
 
   const init = useCallback(async () => {
-    const language = await getStoredLanguage();
+    try {
+      const language = await getStoredLanguage();
 
-    await i18n.changeLanguage(language || defaultLanguage);
-
-    setLoaded(true);
+      await i18n.changeLanguage(language || defaultLanguage);
+    } finally {
+      setLoaded(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -73,3 +75,5 @@ export const I18nProvider = ({ children }: PropsWithChildren) => {
     </Context.Provider>
   );
 };
+
+export { i18n };

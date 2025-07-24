@@ -3,11 +3,10 @@ import axios from 'axios';
 import { Account, UpdateAccountData } from '../types/account';
 import { requestWithAlertOnError } from '../utils/request';
 
-export const useAccountMeQuery = ({ autoFetch }: { autoFetch?: boolean }) =>
+export const useAccountMeQuery = () =>
   useQuery<Account, string>({
     queryKey: ['account-me'],
     queryFn: () => axios.get('/api/account/me'),
-    enabled: Boolean(autoFetch),
   });
 
 export const useAccountMeUpdate = () =>

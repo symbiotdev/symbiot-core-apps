@@ -17,7 +17,8 @@
         "EXPO_PUBLIC_TERMS_CONDITIONS_URL": "https://www.spanday.com/terms-of-service",
         "EXPO_PUBLIC_X_URL": "https://x.com/spandaypro",
         "EXPO_PUBLIC_INSTAGRAM_URL": "https://www.instagram.com/spandaypro",
-        "EXPO_PUBLIC_LINKEDIN_URL": "https://www.linkedin.com/company/spanday-pro"
+        "EXPO_PUBLIC_LINKEDIN_URL": "https://www.linkedin.com/company/spanday-pro",
+        "EXPO_PUBLIC_SUPPORT_EMAIL": "info@symbiot.dev"
       }
     },
     "production_local": {

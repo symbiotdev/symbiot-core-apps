@@ -164,6 +164,7 @@ export const AvatarPicker = ({
       <AdaptivePopover
         placement="bottom"
         triggerType="child"
+        minWidth={250}
         ref={popoverRef}
         disabled={loading || attaching}
         trigger={

@@ -1,5 +1,6 @@
 import {
   AvatarPicker,
+  DatePicker,
   FormView,
   Input,
   PageView,
@@ -31,10 +32,15 @@ export const AccountPreferences = () => {
     [updateAvatar$],
   );
 
-  const { control } = useForm<{ firstname: string; lastname: string }>({
+  const { control } = useForm<{
+    firstname: string;
+    lastname: string;
+    birthday: Date | null;
+  }>({
     defaultValues: {
       firstname: me?.firstname,
       lastname: me?.lastname,
+      birthday: me?.birthday,
     },
     resolver: yupResolver(
       yup
@@ -46,6 +52,7 @@ export const AccountPreferences = () => {
           lastname: yup
             .string()
             .required(t('shared.preferences.account.lastname.error.required')),
+          birthday: yup.date().nullable().optional().default(null),
         })
         .required(),
     ),
@@ -105,6 +112,29 @@ export const AccountPreferences = () => {
                 )}
                 onChange={onChange}
                 onBlur={() => updateAccount$({ lastname: value })}
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="birthday"
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <DatePicker
+                value={value}
+                error={error?.message}
+                disabled={updating}
+                formatStr={me.preferences?.dateFormat}
+                weekStartsOn={me.preferences?.weekStartsOn}
+                maxDate={new Date()}
+                label={t('shared.preferences.account.birthday.label')}
+                placeholder={t(
+                  'shared.preferences.account.birthday.placeholder',
+                )}
+                onChange={(birthday) => {
+                  onChange(birthday);
+                  void updateAccount$({ birthday });
+                }}
               />
             )}
           />

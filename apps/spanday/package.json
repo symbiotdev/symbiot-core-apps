@@ -70,6 +70,7 @@
     "react-native-legal": "*",
     "react-native-web": "*",
     "react-native-webview": "*",
+    "react-native-ui-datepicker": "*",
     "react-hook-form": "*",
     "react-native-confirmation-code-field": "*",
     "yup": "*",

@@ -71,6 +71,7 @@
     "react-native-web": "*",
     "react-native-webview": "*",
     "react-hook-form": "*",
+    "react-native-ui-datepicker": "*",
     "react-native-confirmation-code-field": "*",
     "yup": "*",
     "@hookform/resolvers": "*",

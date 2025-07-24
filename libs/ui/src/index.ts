@@ -8,6 +8,7 @@ export * from './lib/card/card';
 
 export * from './lib/form/avatar-picker';
 export * from './lib/form/checkbox';
+export * from './lib/form/date-picker';
 export * from './lib/form/input';
 export * from './lib/form/input-code';
 export * from './lib/form/select';

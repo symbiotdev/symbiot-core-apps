@@ -103,6 +103,10 @@
         },
         "email": {
           "label": "Email"
+        },
+        "birthday": {
+          "label": "Date of birth",
+          "placeholder": "Add your birthday"
         }
       }
     }

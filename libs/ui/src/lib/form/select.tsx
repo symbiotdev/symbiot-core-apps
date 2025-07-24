@@ -8,6 +8,7 @@ import { RegularText } from '../text/text';
 import { InitView } from '../view/init-view';
 import { Icon } from '../icons/icon';
 import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
+import { InputFieldView } from '../view/input-field-view';
 
 export type SelectOption = {
   label: string;
@@ -102,19 +103,7 @@ export function Select({
         minWidth={200}
         triggerType="child"
         trigger={
-          <XStack
-            backgroundColor="$background1"
-            width="100%"
-            gap="$5"
-            height={46}
-            borderRadius="$10"
-            paddingHorizontal="$6"
-            borderColor="$borderColor"
-            alignItems="center"
-            opacity={disabled ? 0.8 : 1}
-            cursor={!disabled ? 'pointer' : 'auto'}
-            onPress={onPress}
-          >
+          <InputFieldView onPress={onPress}>
             {!options?.length && optionsLoading ? (
               <>
                 <Spinner width={16} height={16} />
@@ -139,7 +128,7 @@ export function Select({
             {!disabled && (
               <Icon.Dynamic type="Ionicons" name="chevron-down-outline" />
             )}
-          </XStack>
+          </InputFieldView>
         }
       >
         {!options?.length && (

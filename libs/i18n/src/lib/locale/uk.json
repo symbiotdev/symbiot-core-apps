@@ -98,6 +98,10 @@
         },
         "email": {
           "label": "Email"
+        },
+        "birthday": {
+          "label": "Дата народження",
+          "placeholder": "Додайте дату народження"
         }
       }
     }

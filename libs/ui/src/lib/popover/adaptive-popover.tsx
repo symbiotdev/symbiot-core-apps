@@ -49,7 +49,7 @@ export const AdaptivePopover = forwardRef(
     ref: ForwardedRef<Popover>,
   ) => {
     const { height } = useWindowDimensions();
-    const { bottom } = useSafeAreaInsets();
+    const { top, bottom } = useSafeAreaInsets();
 
     const adjustedMaxHeight = useMemo(() => maxHeight || 500, [maxHeight]);
 
@@ -84,7 +84,6 @@ export const AdaptivePopover = forwardRef(
         )}
 
         <Popover.Content
-          elevation={1}
           animation="quick"
           opacity={1}
           y={0}
@@ -113,7 +112,7 @@ export const AdaptivePopover = forwardRef(
         </Popover.Content>
 
         {!ignoreAdaptive && (
-          <Adapt when={'xs' as unknown as AdaptWhen}>
+          <Adapt when={(Platform.OS !== 'web' ? 'md' : 'xs') as unknown as AdaptWhen}>
             <Popover.Sheet
               modal
               dismissOnSnapToBottom
@@ -158,7 +157,7 @@ export const AdaptivePopover = forwardRef(
                     keyboardShouldPersistTaps="handled"
                     keyboardDismissMode="none"
                     showsVerticalScrollIndicator={false}
-                    style={{ maxHeight: height - 200 }}
+                    style={{ maxHeight: height - top - 50 }}
                     paddingBottom={bottom + 20}
                   >
                     <Adapt.Contents />

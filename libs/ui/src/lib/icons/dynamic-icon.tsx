@@ -15,8 +15,8 @@ import {
   SimpleLineIcons,
   Zocial,
 } from '@expo/vector-icons';
-import {ViewStyle} from 'react-native';
-import {useTheme} from "tamagui";
+import { ViewStyle } from 'react-native';
+import { useTheme } from 'tamagui';
 
 export type DynamicIconType =
   | 'AntDesign'
@@ -35,14 +35,13 @@ export type DynamicIconType =
   | 'SimpleLineIcons'
   | 'Zocial';
 
-
 export type DynamicIconProps = {
   type: DynamicIconType;
   name: string;
   size?: number;
   color?: string;
   style?: ViewStyle;
-}
+};
 
 const iconSet = {
   AntDesign,
@@ -63,7 +62,7 @@ const iconSet = {
 };
 
 export const DynamicIcon = (props: DynamicIconProps) => {
-  const {type, name, size, color, style} = props;
+  const { type, name, size, color, style } = props;
   const IconComponent = iconSet[type];
   const theme = useTheme();
 

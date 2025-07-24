@@ -19,6 +19,7 @@ export type Account = {
   email: string;
   lastVisitDate: string;
   lastRateDate: string;
+  birthday: Date;
   preferences: AccountPreferences;
 };
 
@@ -26,4 +27,5 @@ export type UpdateAccountData = {
   language?: AppLanguage;
   firstname?: string;
   lastname?: string;
+  birthday?: Date | null;
 };

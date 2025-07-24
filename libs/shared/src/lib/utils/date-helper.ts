@@ -20,10 +20,12 @@ import { differenceInYears } from 'date-fns/differenceInYears';
 import { addYears } from 'date-fns/addYears';
 import { getDateLocale } from '@symbiot-core-apps/i18n';
 import { isSameMonth } from 'date-fns/isSameMonth';
+import { toDate } from 'date-fns/toDate';
 
 const defaultWeekdayStartsOn: Day = 0;
 
 export const DateHelper = {
+  toDate,
   isSameDay,
   isSameMonth,
   isAfter,

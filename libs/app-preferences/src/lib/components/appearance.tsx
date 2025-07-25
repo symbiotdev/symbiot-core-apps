@@ -1,4 +1,5 @@
 import {
+  FormView,
   Icon,
   ListItemGroup,
   PageView,
@@ -56,28 +57,30 @@ export const Appearance = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <ListItemGroup
-        title={t('shared.preferences.appearance.theme.title')}
-        gap="$4"
-        paddingVertical="$4"
-      >
-        <Switch
-          checked={scheme === 'system'}
-          disabled={updating}
-          label={t('shared.preferences.appearance.theme.auto.label')}
-          onChange={(checked) =>
-            onChange(checked ? 'system' : defaultSystemScheme())
-          }
-        />
-        {scheme !== 'system' && (
-          <ToggleGroup
+      <FormView>
+        <ListItemGroup
+          title={t('shared.preferences.appearance.theme.title')}
+          gap="$4"
+          paddingVertical="$4"
+        >
+          <Switch
+            checked={scheme === 'system'}
             disabled={updating}
-            items={items}
-            value={[scheme]}
-            onChange={(result) => onChange(result[0] as Scheme)}
+            label={t('shared.preferences.appearance.theme.auto.label')}
+            onChange={(checked) =>
+              onChange(checked ? 'system' : defaultSystemScheme())
+            }
           />
-        )}
-      </ListItemGroup>
+          {scheme !== 'system' && (
+            <ToggleGroup
+              disabled={updating}
+              items={items}
+              value={[scheme]}
+              onChange={(result) => onChange(result[0] as Scheme)}
+            />
+          )}
+        </ListItemGroup>
+      </FormView>
     </PageView>
   );
 };

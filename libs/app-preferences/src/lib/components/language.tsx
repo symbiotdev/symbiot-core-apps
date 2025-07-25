@@ -1,5 +1,6 @@
 import {
   Card,
+  FormView,
   PageView,
   RegularText,
   Spinner,
@@ -34,15 +35,17 @@ export const Language = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <Card>
-        <ToggleGroup
-          items={items}
-          value={[i18n.language]}
-          onChange={(result) =>
-            updateAccount$({ language: result[0] as AppLanguage })
-          }
-        />
-      </Card>
+      <FormView>
+        <Card>
+          <ToggleGroup
+            items={items}
+            value={[i18n.language]}
+            onChange={(result) =>
+              updateAccount$({ language: result[0] as AppLanguage })
+            }
+          />
+        </Card>
+      </FormView>
     </PageView>
   );
 };

@@ -85,9 +85,9 @@ export const AccountPreferences = () => {
             name="firstname"
             render={({ field: { value, onChange }, fieldState: { error } }) => (
               <Input
+                autoCapitalize="words"
                 value={value}
                 error={error?.message}
-                disabled={updating}
                 label={t('shared.preferences.account.firstname.label')}
                 placeholder={t(
                   'shared.preferences.account.firstname.placeholder',
@@ -103,9 +103,9 @@ export const AccountPreferences = () => {
             name="lastname"
             render={({ field: { value, onChange }, fieldState: { error } }) => (
               <Input
+                autoCapitalize="words"
                 value={value}
                 error={error?.message}
-                disabled={updating}
                 label={t('shared.preferences.account.lastname.label')}
                 placeholder={t(
                   'shared.preferences.account.lastname.placeholder',
@@ -123,7 +123,6 @@ export const AccountPreferences = () => {
               <DatePicker
                 value={value}
                 error={error?.message}
-                disabled={updating}
                 formatStr={me.preferences?.dateFormat}
                 weekStartsOn={me.preferences?.weekStartsOn}
                 maxDate={new Date()}

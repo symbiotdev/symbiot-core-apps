@@ -6,7 +6,7 @@ export const FormView = (props: ViewProps) => {
       marginHorizontal="auto"
       width="100%"
       gap="$3"
-      maxWidth={512}
+      maxWidth={600}
       {...props}
     />
   );

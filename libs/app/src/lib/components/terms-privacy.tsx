@@ -1,4 +1,10 @@
-import { Icon, ListItem, ListItemGroup, PageView } from '@symbiot-core-apps/ui';
+import {
+  FormView,
+  Icon,
+  ListItem,
+  ListItemGroup,
+  PageView,
+} from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { useCallback } from 'react';
 import {
@@ -33,23 +39,25 @@ export const TermsPrivacy = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <ListItemGroup>
-        <ListItem
-          label={t('shared.docs.terms_conditions')}
-          icon={<Icon.Dynamic type="Ionicons" name="document-text-outline" />}
-          onPress={openTermsConditions}
-        />
-        <ListItem
-          label={t('shared.docs.privacy_policy')}
-          icon={<Icon.Dynamic type="Ionicons" name="document-text-outline" />}
-          onPress={openPrivacyPolicyConditions}
-        />
-        <ListItem
-          label="OOS Notice"
-          icon={<Icon.Dynamic type="Ionicons" name="document-text-outline" />}
-          onPress={openOOS}
-        />
-      </ListItemGroup>
+      <FormView>
+        <ListItemGroup>
+          <ListItem
+            label={t('shared.docs.terms_conditions')}
+            icon={<Icon.Dynamic type="Ionicons" name="document-text-outline" />}
+            onPress={openTermsConditions}
+          />
+          <ListItem
+            label={t('shared.docs.privacy_policy')}
+            icon={<Icon.Dynamic type="Ionicons" name="document-text-outline" />}
+            onPress={openPrivacyPolicyConditions}
+          />
+          <ListItem
+            label="OOS Notice"
+            icon={<Icon.Dynamic type="Ionicons" name="document-text-outline" />}
+            onPress={openOOS}
+          />
+        </ListItemGroup>
+      </FormView>
     </PageView>
   );
 };

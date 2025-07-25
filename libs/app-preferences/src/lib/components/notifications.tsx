@@ -1,5 +1,6 @@
 import {
   Card,
+  FormView,
   Link,
   PageView,
   RegularText,
@@ -48,39 +49,41 @@ export const Notifications = () => {
 
   return (
     <PageView scrollable withHeaderHeight gap="$2">
-      {pushNotificationsDenied && (
-        <Card>
-          <RegularText>
-            {t(
-              'shared.preferences.notifications.posh_notifications.permissions_denied',
-            )}{' '}
-            <Link onPress={Linking.openSettings}>{t('shared.settings')}</Link>
-          </RegularText>
-        </Card>
-      )}
-
-      <Card gap="$5">
-        {Platform.OS !== 'web' && (
-          <Switch
-            label={t(
-              'shared.preferences.notifications.posh_notifications.label',
-            )}
-            checked={
-              pushNotificationsDenied
-                ? false
-                : me?.preferences?.enablePushNotifications
-            }
-            disabled={updating || pushNotificationsDenied}
-            onChange={togglePushNotifications}
-          />
+      <FormView>
+        {pushNotificationsDenied && (
+          <Card>
+            <RegularText>
+              {t(
+                'shared.preferences.notifications.posh_notifications.permissions_denied',
+              )}{' '}
+              <Link onPress={Linking.openSettings}>{t('shared.settings')}</Link>
+            </RegularText>
+          </Card>
         )}
-        <Switch
-          label={t('shared.preferences.notifications.sound.label')}
-          checked={me?.preferences?.enableNotificationSound}
-          disabled={updating}
-          onChange={toggleNotificationSound}
-        />
-      </Card>
+
+        <Card gap="$5">
+          {Platform.OS !== 'web' && (
+            <Switch
+              label={t(
+                'shared.preferences.notifications.posh_notifications.label',
+              )}
+              checked={
+                pushNotificationsDenied
+                  ? false
+                  : me?.preferences?.enablePushNotifications
+              }
+              disabled={updating || pushNotificationsDenied}
+              onChange={togglePushNotifications}
+            />
+          )}
+          <Switch
+            label={t('shared.preferences.notifications.sound.label')}
+            checked={me?.preferences?.enableNotificationSound}
+            disabled={updating}
+            onChange={toggleNotificationSound}
+          />
+        </Card>
+      </FormView>
     </PageView>
   );
 };

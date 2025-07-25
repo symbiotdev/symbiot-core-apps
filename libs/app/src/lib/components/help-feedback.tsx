@@ -1,4 +1,10 @@
-import { Icon, ListItem, ListItemGroup, PageView } from '@symbiot-core-apps/ui';
+import {
+  FormView,
+  Icon,
+  ListItem,
+  ListItemGroup,
+  PageView,
+} from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { useCallback } from 'react';
 import { Linking } from 'react-native';
@@ -13,13 +19,15 @@ export const HelpFeedback = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <ListItemGroup>
-        <ListItem
-          label={t('shared.email')}
-          icon={<Icon.Dynamic type="Ionicons" name="mail-outline" />}
-          onPress={openMail}
-        />
-      </ListItemGroup>
+      <FormView>
+        <ListItemGroup>
+          <ListItem
+            label={t('shared.email')}
+            icon={<Icon.Dynamic type="Ionicons" name="mail-outline" />}
+            onPress={openMail}
+          />
+        </ListItemGroup>
+      </FormView>
     </PageView>
   );
 };

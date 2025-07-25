@@ -132,6 +132,10 @@ export const DatePicker = ({
                 textTransform: 'capitalize',
                 fontFamily: 'BodyRegular',
               },
+              year_selector_label: {
+                ...defaultStyles.year_selector_label,
+                fontFamily: 'BodyRegular',
+              },
               weekday_label: {
                 ...defaultStyles.weekday_label,
                 textTransform: 'lowercase',

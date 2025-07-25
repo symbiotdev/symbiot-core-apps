@@ -1,4 +1,5 @@
 import {
+  FormView,
   onChangeSelect,
   PageView,
   Select,
@@ -31,13 +32,15 @@ export const Calendar = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <Select
-        disabled={updating}
-        label={t('shared.preferences.calendar.week_starts_on.label')}
-        value={me?.preferences?.weekStartsOn}
-        options={weekdaysOptions}
-        onChange={onChangeWeekdayStartsOn as onChangeSelect}
-      />
+      <FormView>
+        <Select
+          disabled={updating}
+          label={t('shared.preferences.calendar.week_starts_on.label')}
+          value={me?.preferences?.weekStartsOn}
+          options={weekdaysOptions}
+          onChange={onChangeWeekdayStartsOn as onChangeSelect}
+        />
+      </FormView>
     </PageView>
   );
 };

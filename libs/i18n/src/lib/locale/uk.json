@@ -83,6 +83,11 @@
         }
       },
       "account": {
+        "context_menu": {
+          "remove_account": {
+            "label": "Видалити профіль"
+          }
+        },
         "firstname": {
           "label": "Імʼя",
           "placeholder": "Введіть імʼя",

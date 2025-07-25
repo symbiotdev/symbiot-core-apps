@@ -28,6 +28,7 @@ export * from './lib/navigation/header';
 export * from './lib/navigation/tabs';
 
 export * from './lib/popover/adaptive-popover';
+export * from './lib/popover/context-menu-popover';
 
 export * from './lib/qr/qr-code';
 export * from './lib/qr/qr-code-modal';

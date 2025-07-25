@@ -5,8 +5,12 @@ import {
   Orientation,
   removeOrientationChangeListener,
 } from 'expo-screen-orientation';
+import { InteractionManager } from 'react-native';
 
-export const useScreenOrientation = () => {
+export const useScreenOrientation = ({
+  onBeforeChange,
+  onChanged,
+}: { onBeforeChange?: () => void; onChanged?: () => void } = {}) => {
   const [orientation, setOrientation] = useState<Orientation>();
 
   useEffect(() => {
@@ -16,6 +20,12 @@ export const useScreenOrientation = () => {
 
     const subscription = addOrientationChangeListener((event) => {
       setOrientation(event.orientationInfo.orientation);
+
+      onBeforeChange?.();
+
+      InteractionManager.runAfterInteractions(() => {
+        onChanged?.();
+      });
     });
 
     void getOrientation();
@@ -23,7 +33,7 @@ export const useScreenOrientation = () => {
     return () => {
       removeOrientationChangeListener(subscription);
     };
-  }, []);
+  }, [onBeforeChange, onChanged]);
 
   return { orientation };
 };

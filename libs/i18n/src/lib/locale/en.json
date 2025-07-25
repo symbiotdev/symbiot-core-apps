@@ -88,6 +88,11 @@
         }
       },
       "account": {
+        "context_menu": {
+          "remove_account": {
+            "label": "Delete profile"
+          }
+        },
         "firstname": {
           "label": "First name",
           "placeholder": "Enter your first name",

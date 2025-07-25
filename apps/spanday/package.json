@@ -21,6 +21,7 @@
     "@react-native-async-storage/async-storage": "*",
     "@tamagui/config": "*",
     "@tanstack/react-query": "*",
+    "@floating-ui/react-native": "*",
     "tamagui": "*",
     "axios": "*",
     "socket.io-client": "*",

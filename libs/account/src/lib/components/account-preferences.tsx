@@ -1,19 +1,22 @@
 import {
   AvatarPicker,
+  ContextMenuItem,
+  ContextMenuPopover,
   DatePicker,
   FormView,
+  Icon,
   Input,
   PageView,
-  Spinner,
 } from '@symbiot-core-apps/ui';
 import { useMeUpdater } from '@symbiot-core-apps/store';
 import { useNavigation } from '@react-navigation/native';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { router } from 'expo-router';
 
 export const AccountPreferences = () => {
   const navigation = useNavigation();
@@ -30,6 +33,20 @@ export const AccountPreferences = () => {
   const onAttach = useCallback(
     (images: ImagePickerAsset[]) => updateAvatar$(images[0]),
     [updateAvatar$],
+  );
+
+  const contextMenuItems: ContextMenuItem[] = useMemo(
+    () => [
+      {
+        label: t(
+          'shared.preferences.account.context_menu.remove_account.label',
+        ),
+        icon: <Icon.Dynamic type="Ionicons" name="trash-outline" />,
+        color: '$error',
+        onPress: () => router.push('/preferences/account/remove')
+      },
+    ],
+    [t],
   );
 
   const { control } = useForm<{
@@ -60,9 +77,15 @@ export const AccountPreferences = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: updating ? () => <Spinner /> : undefined,
+      headerRight: () => (
+        <ContextMenuPopover
+          items={contextMenuItems}
+          loading={updating}
+          disabled={updating}
+        />
+      ),
     });
-  }, [updating, navigation]);
+  }, [updating, navigation, contextMenuItems]);
 
   return (
     me && (

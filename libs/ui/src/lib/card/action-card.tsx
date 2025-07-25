@@ -2,7 +2,7 @@ import { Card } from './card';
 import { ReactElement } from 'react';
 import { H3 } from '../text/heading';
 import { RegularText } from '../text/text';
-import { Button } from '../button/button';
+import { Button, ButtonType } from '../button/button';
 import { ViewProps } from 'tamagui';
 
 export const ActionCard = ({
@@ -10,6 +10,8 @@ export const ActionCard = ({
   subtitle,
   buttonLabel,
   buttonIcon,
+  buttonType,
+  buttonLoading,
   onActionPress,
   ...viewProps
 }: ViewProps & {
@@ -17,6 +19,8 @@ export const ActionCard = ({
   subtitle: string;
   buttonLabel: string;
   buttonIcon: ReactElement<{ color?: string; size?: number }>;
+  buttonType?: ButtonType;
+  buttonLoading?: boolean;
   onActionPress: () => void;
 }) => {
   return (
@@ -27,6 +31,8 @@ export const ActionCard = ({
         marginTop="$2"
         label={buttonLabel}
         icon={buttonIcon}
+        type={buttonType}
+        loading={buttonLoading}
         onPress={onActionPress}
       />
     </Card>

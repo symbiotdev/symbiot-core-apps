@@ -114,6 +114,17 @@
           "label": "Date of birth",
           "placeholder": "Add your birthday"
         }
+      },
+      "remove_account": {
+        "title": "Delete profile",
+        "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
+        "button": {
+          "label": "Delete"
+        },
+        "confirm_dialog": {
+          "title": "Are you sure?",
+          "message": "This action cannot be undone."
+        }
       }
     }
   },

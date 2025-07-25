@@ -37,4 +37,8 @@ export const useAccountMeAvatarUpdate = () =>
 export const useAccountMeRemoveAvatar = () =>
   useMutation<Account, string>({
     mutationFn: () => axios.delete('/api/account/me/avatar'),
-  })
+  });
+
+export const useAccountRemoveMe = () => useMutation({
+  mutationFn: () => axios.delete('/api/account/me'),
+})

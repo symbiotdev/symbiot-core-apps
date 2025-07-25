@@ -3,33 +3,51 @@ import { MediumText } from '../text/text';
 import { ColorTokens, XStack, XStackProps } from 'tamagui';
 import { Spinner } from '../loading/spinner';
 
+export type ButtonType = 'default' | 'outlined' | 'danger';
+
+export const ButtonTheme = {
+  default: {
+    color: '$buttonTextColor',
+    backgroundColor: '$buttonBackground',
+    borderWidth: 0,
+    borderColor: 'transparent',
+  },
+  danger: {
+    color: '$buttonTextColor',
+    backgroundColor: '$error',
+    borderWidth: 0,
+    borderColor: 'transparent',
+  },
+  outlined: {
+    color: '$buttonTextColor1',
+    backgroundColor: 'transparent',
+    borderWidth: 1.5,
+    borderColor: '$buttonBackground',
+  },
+};
+
 export const Button = memo(
   ({
     label,
     loading,
     icon,
-    type,
+    type = 'default',
     ...xStackProps
   }: XStackProps & {
     loading?: boolean;
     label?: string;
     icon?: ReactElement<{ color?: string; size?: number }>;
     color?: ColorTokens;
-    type?: 'outlined';
+    type?: ButtonType;
   }) => {
     const disabled = xStackProps.disabled || loading;
-    const color =
-      xStackProps.color ||
-      (type === 'outlined' ? '$buttonTextColor1' : '$buttonTextColor');
-    const backgroundColor = !type ? '$buttonBackground' : 'transparent';
-    const borderWidth = type === 'outlined' ? 1.5 : 0;
-    const borderColor = '$buttonBackground';
+    const color = xStackProps.color || ButtonTheme[type].color;
 
     return (
       <XStack
-        backgroundColor={backgroundColor}
-        borderWidth={borderWidth}
-        borderColor={borderColor}
+        backgroundColor={ButtonTheme[type].backgroundColor}
+        borderWidth={ButtonTheme[type].borderWidth}
+        borderColor="$buttonBackground"
         borderRadius="$10"
         justifyContent="center"
         alignItems="center"
@@ -61,5 +79,5 @@ export const Button = memo(
         )}
       </XStack>
     );
-  }
+  },
 );

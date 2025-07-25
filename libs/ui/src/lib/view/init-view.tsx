@@ -13,7 +13,7 @@ export const InitView = ({
   noDataEmoji?: string;
   noDataTitle?: string;
   noDataMessage?: string;
-  error?: string;
+  error?: string | null;
 }) => {
   if (loading) {
     return <LoadingView />;

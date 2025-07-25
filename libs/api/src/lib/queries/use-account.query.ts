@@ -11,7 +11,7 @@ import {
 export const useAccountMeQuery = () =>
   useQuery<Account, string>({
     queryKey: ['account-me'],
-    queryFn: () => axios.get('/api/account/me'),
+    queryFn: () => requestWithAlertOnError(axios.get('/api/account/me')),
   });
 
 export const useAccountMeUpdate = () =>
@@ -36,9 +36,11 @@ export const useAccountMeAvatarUpdate = () =>
 
 export const useAccountMeRemoveAvatar = () =>
   useMutation<Account, string>({
-    mutationFn: () => axios.delete('/api/account/me/avatar'),
+    mutationFn: () =>
+      requestWithAlertOnError(axios.delete('/api/account/me/avatar')),
   });
 
-export const useAccountRemoveMe = () => useMutation({
-  mutationFn: () => axios.delete('/api/account/me'),
-})
+export const useAccountRemoveMe = () =>
+  useMutation({
+    mutationFn: () => requestWithAlertOnError(axios.delete('/api/account/me')),
+  });

@@ -73,7 +73,6 @@ export const DatePicker = ({
               color={
                 !value ? '$placeholderColor' : disabled ? '$disabled' : '$color'
               }
-              fontSize={14}
             >
               {value ? DateHelper.format(value, formatStr) : placeholder}
             </RegularText>

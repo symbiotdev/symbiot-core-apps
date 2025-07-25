@@ -17,7 +17,7 @@ import { useScheme } from './use-app-theme.state';
 import { changeAppLanguage } from '@symbiot-core-apps/i18n';
 import { ImagePickerAsset } from 'expo-image-picker';
 
-export type AccountMeState = {
+type AccountMeState = {
   me?: Account;
   setMe: (me: Account) => void;
   setMePreferences: (preferences: AccountPreferences) => void;
@@ -133,27 +133,8 @@ export const useMeUpdater = () => {
   } = useAccountMeRemoveAvatar();
 
   const updateAccount$ = useCallback(
-    async (data: UpdateAccountData) => {
-      const initialMe = me;
-
-      try {
-        if (initialMe) {
-          updateMe({
-            ...initialMe,
-            ...data,
-          });
-        }
-
-        const response = await updateAccount(data);
-
-        updateMe(response);
-      } catch {
-        if (initialMe) {
-          updateMe(initialMe);
-        }
-      }
-    },
-    [updateMe, me, updateAccount],
+    async (data: UpdateAccountData) => updateMe(await updateAccount(data)),
+    [updateMe, updateAccount],
   );
 
   const updateAvatar$ = useCallback(

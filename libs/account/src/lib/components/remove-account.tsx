@@ -2,11 +2,8 @@ import { ActionCard, FormView, Icon, PageView } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { useMe } from '@symbiot-core-apps/store';
 import { useCallback } from 'react';
-import { ConfirmAlert, ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
-import {
-  getRequestErrorMessage,
-  useAccountRemoveMe,
-} from '@symbiot-core-apps/api';
+import { ConfirmAlert } from '@symbiot-core-apps/shared';
+import { useAccountRemoveMe } from '@symbiot-core-apps/api';
 
 export const RemoveAccount = () => {
   const { t } = useTranslation();
@@ -18,15 +15,7 @@ export const RemoveAccount = () => {
       ConfirmAlert({
         title: t('shared.preferences.remove_account.confirm_dialog.title'),
         message: t('shared.preferences.remove_account.confirm_dialog.message'),
-        callback: async () => {
-          try {
-            await mutateAsync();
-          } catch (error) {
-            ShowNativeFailedAlert({
-              text: getRequestErrorMessage(error) || '',
-            });
-          }
-        },
+        callback: mutateAsync,
       }),
     [mutateAsync, t],
   );

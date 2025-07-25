@@ -38,7 +38,7 @@ export function Select({
   noCheckedValue?: string;
   maxWidth?: DimensionValue;
   optionsLoading?: boolean;
-  optionsError?: string;
+  optionsError?: string | null;
   options?: SelectOption[];
   onChange: onChangeSelect;
 }) {
@@ -46,15 +46,16 @@ export function Select({
 
   const formattedValue = useMemo(
     () =>
-      (Array.isArray(value)
-        ? value
-            .map(
-              (valueItem) =>
-                options?.find((option) => option.value === valueItem)?.label,
-            )
-            .filter(Boolean)
-            .join(', ')
-        : options?.find((option) => option.value === value)?.label) ||
+      (value &&
+        (Array.isArray(value)
+          ? value
+              .map(
+                (valueItem) =>
+                  options?.find((option) => option.value === valueItem)?.label,
+              )
+              .filter(Boolean)
+              .join(', ')
+          : options?.find((option) => option.value === value)?.label)) ||
       noCheckedValue,
     [noCheckedValue, options, value],
   );
@@ -116,7 +117,7 @@ export function Select({
                 </RegularText>
               </>
             ) : !formattedValue ? (
-              <RegularText color="$placeholderColor" numberOfLines={1} flex={1}>
+              <RegularText color="$placeholderColor" numberOfLines={1} flex={1} >
                 {placeholder}
               </RegularText>
             ) : (
@@ -129,9 +130,9 @@ export function Select({
               </RegularText>
             )}
 
-            {!disabled && (
-              <Icon.Dynamic type="Ionicons" name="chevron-down-outline" />
-            )}
+            {/*{!disabled && (*/}
+            {/*  <Icon.Dynamic type="Ionicons" name="chevron-down-outline" />*/}
+            {/*)}*/}
           </InputFieldView>
         }
       >

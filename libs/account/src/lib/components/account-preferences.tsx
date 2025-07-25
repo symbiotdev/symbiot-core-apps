@@ -11,10 +11,11 @@ import {
   PageView,
   phoneDefaultValue,
   PhoneInput,
+  Select,
   SOCIAL_LINK,
   SocialLinkInput,
 } from '@symbiot-core-apps/ui';
-import { useMeUpdater } from '@symbiot-core-apps/store';
+import { useGenders, useMeUpdater } from '@symbiot-core-apps/store';
 import { useNavigation } from '@react-navigation/native';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -36,6 +37,11 @@ export const AccountPreferences = () => {
     avatarUpdating,
   } = useMeUpdater();
   const { t } = useTranslation();
+  const {
+    gendersAsOptions,
+    loading: gendersLoading,
+    error: gendersError,
+  } = useGenders();
 
   const onAttach = useCallback(
     (images: ImagePickerAsset[]) => updateAvatar$(images[0]),
@@ -97,6 +103,22 @@ export const AccountPreferences = () => {
           .required(),
       ),
     });
+
+  const { control: genderControl, handleSubmit: genderHandleSubmit } = useForm<{
+    genderId: string | null;
+  }>({
+    defaultValues: {
+      genderId: me?.gender?.id,
+    },
+    resolver: yupResolver(
+      yup
+        .object()
+        .shape({
+          genderId: yup.string().nullable().default(null),
+        })
+        .required(),
+    ),
+  });
 
   const { control: birthdayControl, handleSubmit: birthdayHandleSubmit } =
     useForm<{
@@ -239,6 +261,26 @@ export const AccountPreferences = () => {
                 )}
                 onChange={onChange}
                 onBlur={lastnameHandleSubmit(updateAccount$)}
+              />
+            )}
+          />
+
+          <Controller
+            control={genderControl}
+            name="genderId"
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <Select
+                value={value as string}
+                error={error?.message}
+                optionsLoading={gendersLoading}
+                optionsError={gendersError}
+                options={gendersAsOptions}
+                label={t('shared.preferences.account.gender.label')}
+                placeholder={t('shared.preferences.account.gender.placeholder')}
+                onChange={(gender) => {
+                  onChange(gender);
+                  genderHandleSubmit(updateAccount$)();
+                }}
               />
             )}
           />

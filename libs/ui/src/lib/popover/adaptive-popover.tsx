@@ -112,7 +112,9 @@ export const AdaptivePopover = forwardRef(
         </Popover.Content>
 
         {!ignoreAdaptive && (
-          <Adapt when={(Platform.OS !== 'web' ? 'md' : 'xs') as unknown as AdaptWhen}>
+          <Adapt
+            when={(Platform.OS !== 'web' ? 'md' : 'xs') as unknown as AdaptWhen}
+          >
             <Popover.Sheet
               modal
               dismissOnSnapToBottom
@@ -146,7 +148,11 @@ export const AdaptivePopover = forwardRef(
                   />
 
                   {!!sheetTitle && (
-                    <H3 paddingHorizontal="$5" paddingVertical="$2">
+                    <H3
+                      color="$placeholderColor"
+                      paddingHorizontal="$5"
+                      paddingVertical="$2"
+                    >
                       {sheetTitle}
                     </H3>
                   )}

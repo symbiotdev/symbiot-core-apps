@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCallback, useMemo } from 'react';
 import { Appearance, Platform } from 'react-native';
 
-export type AppSchemeState = {
+type AppSchemeState = {
   scheme?: Scheme;
   setScheme: (scheme: Scheme) => void;
   removeScheme: () => void;

@@ -17,18 +17,26 @@ export const getRequestErrorMessage = (error: unknown) => {
   return undefined;
 };
 
-export async function requestWithAlertOnError<T>(
+export async function requestWithStringError<T>(
   request: Promise<T>,
 ): Promise<T> {
   try {
     return await request;
   } catch (error) {
-    const text = getRequestErrorMessage(error) || '';
+    throw getRequestErrorMessage(error) || '';
+  }
+}
 
+export async function requestWithAlertOnError<T>(
+  request: Promise<T>,
+): Promise<T> {
+  try {
+    return requestWithStringError(request);
+  } catch (error) {
     ShowNativeFailedAlert({
-      text,
+      text: error as string,
     });
 
-    throw text;
+    throw error;
   }
 }

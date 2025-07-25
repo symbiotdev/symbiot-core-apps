@@ -125,6 +125,10 @@
         "instagram": {
           "label": "Instagram",
           "placeholder": "Ваш нікнейм в instagram"
+        },
+        "gender": {
+          "label": "Стать",
+          "placeholder": "Вкажіть Вашу стать"
         }
       },
       "remove_account": {
@@ -339,7 +343,7 @@
     "subscription": {
       "card": {
         "title": "Прокачай свій бренд",
-        "subtitle": "Доступ до розширених функцій, що допомагає твоєму бренду розвиватись швидше — лише з Pro.",
+        "subtitle": "Доступ до розширених функцій, що допомагає твоєму бренду розвиватись швидше - лише з Pro.",
         "button": {
           "label": "Продовжити"
         }
@@ -391,7 +395,7 @@
     "subscription": {
       "card": {
         "title": "Fuel Your Flow",
-        "subtitle": "Access advanced features that help your brand growth — only with Pro.",
+        "subtitle": "Access advanced features that help your brand growth - only with Pro.",
         "button": {
           "label": "Продовжити"
         }

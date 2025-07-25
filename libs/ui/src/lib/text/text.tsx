@@ -8,6 +8,7 @@ import {
 export const defaultTextStyles: TextNonStyleProps & TextStyle = {
   maxWidth: '100%',
   allowFontScaling: true,
+  fontSize: 14,
   userSelect: 'none',
 };
 

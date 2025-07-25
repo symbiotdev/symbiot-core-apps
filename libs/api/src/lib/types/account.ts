@@ -2,6 +2,7 @@ import { AccountPreferences } from './account-preferences';
 import { AppLanguage } from '@symbiot-core-apps/i18n';
 import { Phone } from './phone';
 import { Link } from './link';
+import { Gender } from './gender';
 
 export type Account = {
   id: string;
@@ -25,6 +26,7 @@ export type Account = {
   preferences: AccountPreferences;
   phones: Phone[];
   links: Link[];
+  gender: Gender;
 };
 
 export type UpdateAccountData = {
@@ -34,4 +36,5 @@ export type UpdateAccountData = {
   birthday?: Date | null;
   phones?: Phone[];
   links?: Omit<Link, 'id'>[];
+  genderId?: string | null;
 };

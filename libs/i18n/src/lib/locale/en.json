@@ -125,6 +125,10 @@
         "instagram": {
           "label": "Instagram",
           "placeholder": "Enter your instagram nickname"
+        },
+        "gender": {
+          "label": "Gender",
+          "placeholder": "Select your gender"
         }
       },
       "remove_account": {
@@ -339,7 +343,7 @@
     "subscription": {
       "card": {
         "title": "Think Bigger. Go Pro.",
-        "subtitle": "Whether you're building, researching, or creating — Pro gives you the edge.",
+        "subtitle": "Whether you're building, researching, or creating - Pro gives you the edge.",
         "button": {
           "label": "Continue"
         }
@@ -391,7 +395,7 @@
     "subscription": {
       "card": {
         "title": "Step Up Your Brand",
-        "subtitle": "Access advanced features that help your brand growth — only with Pro.",
+        "subtitle": "Access advanced features that help your brand growth - only with Pro.",
         "button": {
           "label": "Continue"
         }

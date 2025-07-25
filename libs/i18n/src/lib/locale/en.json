@@ -121,6 +121,10 @@
           "error": {
             "invalid": "Invalid phone number"
           }
+        },
+        "instagram": {
+          "label": "Instagram",
+          "placeholder": "Enter your instagram nickname"
         }
       },
       "remove_account": {

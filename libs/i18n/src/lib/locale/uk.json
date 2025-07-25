@@ -25,7 +25,10 @@
       "terms_conditions": "Terms & Conditions"
     },
     "error": {
-      "unknown_error": "Невідома помилка"
+      "unknown_error": "Невідома помилка",
+      "validation_error": {
+        "media_size": "Розмір завантаження файлу перевищує {{size}}. Виберіть інший і повторіть спробу."
+      }
     },
     "preferences": {
       "title": "Налаштування",
@@ -42,7 +45,9 @@
           },
           "take_phone": {
             "label": "Зробити фото",
-            "permissions_denied": "Відхилені дозволи для використання камери"
+            "error": {
+              "permissions_denied": "Відхилені дозволи для використання камери"
+            }
           },
           "delete": {
             "label": "Видалити зображення",
@@ -116,6 +121,10 @@
           "error": {
             "invalid": "Введено некоректний номер телефону"
           }
+        },
+        "instagram": {
+          "label": "Instagram",
+          "placeholder": "Ваш нікнейм в instagram"
         }
       },
       "remove_account": {
@@ -382,6 +391,7 @@
     "subscription": {
       "card": {
         "title": "Fuel Your Flow",
+        "subtitle": "Access advanced features that help your brand growth — only with Pro.",
         "button": {
           "label": "Продовжити"
         }

@@ -17,3 +17,4 @@ export * from './lib/utils/json-secure-store';
 export * from './lib/utils/object';
 export * from './lib/utils/patterns';
 export * from './lib/utils/short-name';
+export * from './lib/utils/url';

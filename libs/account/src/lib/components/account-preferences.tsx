@@ -5,11 +5,14 @@ import {
   DatePicker,
   FormView,
   getPhoneInputSchema,
+  getSocialLinkSchema,
   Icon,
   Input,
   PageView,
   phoneDefaultValue,
   PhoneInput,
+  SOCIAL_LINK,
+  SocialLinkInput,
 } from '@symbiot-core-apps/ui';
 import { useMeUpdater } from '@symbiot-core-apps/store';
 import { useNavigation } from '@react-navigation/native';
@@ -20,7 +23,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { router } from 'expo-router';
-import { Phone } from '@symbiot-core-apps/api';
+import { Link, Phone } from '@symbiot-core-apps/api';
 
 export const AccountPreferences = () => {
   const navigation = useNavigation();
@@ -112,11 +115,12 @@ export const AccountPreferences = () => {
       ),
     });
 
+  const targetPhone = me?.phones?.[0];
   const { control: phoneControl, handleSubmit: phoneHandleSubmit } = useForm<{
     phone: Phone;
   }>({
     defaultValues: {
-      phone: me?.phones?.[0] || phoneDefaultValue,
+      phone: targetPhone || phoneDefaultValue,
     },
     resolver: yupResolver(
       yup
@@ -130,6 +134,26 @@ export const AccountPreferences = () => {
         .required(),
     ),
   });
+
+  const targetInstagramLink = me?.links?.find(
+    (link) => link.url.indexOf(SOCIAL_LINK.instagram.domain) !== -1,
+  );
+  const { control: instagramControl, handleSubmit: instagramHandleSubmit } =
+    useForm<{
+      instagram: Omit<Link, 'id'> | null;
+    }>({
+      defaultValues: {
+        instagram: targetInstagramLink,
+      },
+      resolver: yupResolver(
+        yup
+          .object()
+          .shape({
+            instagram: getSocialLinkSchema('', true),
+          })
+          .required(),
+      ),
+    });
 
   useEffect(() => {
     navigation.setOptions({
@@ -145,11 +169,20 @@ export const AccountPreferences = () => {
 
   const updatePhones = useCallback(
     async ({ phone }: { phone: Phone }) => {
-      if (phone.tel !== me?.phones?.[0]?.tel) {
+      if (phone.tel !== targetPhone?.tel) {
         await updateAccount$({ phones: phone.tel ? [phone] : [] });
       }
     },
-    [me?.phones, updateAccount$],
+    [targetPhone?.tel, updateAccount$],
+  );
+
+  const updateInstagram = useCallback(
+    async ({ instagram }: { instagram: Omit<Link, 'id'> | null }) => {
+      if ((instagram?.url || '') !== (targetInstagramLink?.url || '')) {
+        await updateAccount$({ links: instagram ? [instagram] : [] });
+      }
+    },
+    [targetInstagramLink?.url, updateAccount$],
   );
 
   return (
@@ -244,6 +277,25 @@ export const AccountPreferences = () => {
                 error={error?.message}
                 onChange={onChange}
                 onBlur={phoneHandleSubmit(updatePhones)}
+              />
+            )}
+          />
+
+          <Controller
+            control={instagramControl}
+            name="instagram"
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <SocialLinkInput
+                type="instagram"
+                value={value}
+                label={t('shared.preferences.account.instagram.label')}
+                placeholder={t(
+                  'shared.preferences.account.instagram.placeholder',
+                )}
+                enterKeyHint="next"
+                error={error?.message}
+                onChange={onChange}
+                onBlur={instagramHandleSubmit(updateInstagram)}
               />
             )}
           />

@@ -122,6 +122,7 @@ export const Input = forwardRef(
           editable={!disabled}
           opacity={disabled ? 0.8 : 1}
           enterKeyHint={enterKeyHint}
+          color={disabled ? '$disabled' : '$color'}
           clearTextOnFocus={false}
           maxLength={maxLength || 200} // 200 symbols enough for the regular fields
           textContentType="oneTimeCode" // https://github.com/facebook/react-native/issues/39411

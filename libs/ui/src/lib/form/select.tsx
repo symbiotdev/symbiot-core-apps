@@ -120,7 +120,11 @@ export function Select({
                 {placeholder}
               </RegularText>
             ) : (
-              <RegularText numberOfLines={1} flex={1}>
+              <RegularText
+                flex={1}
+                numberOfLines={1}
+                color={disabled ? '$disabled' : '$color'}
+              >
                 {formattedValue}
               </RegularText>
             )}

@@ -9,6 +9,7 @@ export * from './lib/queries/use-account-preferences.query';
 export * from './lib/types/account';
 export * from './lib/types/account-auth';
 export * from './lib/types/account-preferences';
+export * from './lib/types/phone';
 
 export * from './lib/utils/entity-helpers';
 export * from './lib/utils/media';

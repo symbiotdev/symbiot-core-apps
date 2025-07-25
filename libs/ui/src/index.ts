@@ -12,6 +12,7 @@ export * from './lib/form/checkbox';
 export * from './lib/form/date-picker';
 export * from './lib/form/input';
 export * from './lib/form/input-code';
+export * from './lib/form/phone-input';
 export * from './lib/form/select';
 export * from './lib/form/switch';
 export * from './lib/form/toggle-group';

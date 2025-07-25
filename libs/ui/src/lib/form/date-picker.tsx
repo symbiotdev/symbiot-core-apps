@@ -70,7 +70,9 @@ export const DatePicker = ({
         trigger={
           <InputFieldView disabled={disabled} {...viewProps} onPress={onPress}>
             <RegularText
-              color={!value ? '$placeholderColor' : '$color'}
+              color={
+                !value ? '$placeholderColor' : disabled ? '$disabled' : '$color'
+              }
               fontSize={14}
             >
               {value ? DateHelper.format(value, formatStr) : placeholder}

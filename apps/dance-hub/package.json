@@ -74,6 +74,7 @@
     "react-hook-form": "*",
     "react-native-ui-datepicker": "*",
     "react-native-confirmation-code-field": "*",
+    "react-native-phone-input": "*",
     "yup": "*",
     "@hookform/resolvers": "*",
     "@symbiot.dev/react-native-timegrid-pro": "*",

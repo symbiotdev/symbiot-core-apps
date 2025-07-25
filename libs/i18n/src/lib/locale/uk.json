@@ -18,6 +18,7 @@
     "settings": "Налаштування",
     "its_empty": "Тут порожньо",
     "or": "або",
+    "other": "Other",
     "docs": {
       "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",
@@ -108,6 +109,13 @@
         "birthday": {
           "label": "Дата народження",
           "placeholder": "Додайте дату народження"
+        },
+        "phone": {
+          "label": "Номер телефону",
+          "placeholder": "Вкажіть номер телефону з кодом країни",
+          "error": {
+            "invalid": "Введено некоректний номер телефону"
+          }
         }
       },
       "remove_account": {

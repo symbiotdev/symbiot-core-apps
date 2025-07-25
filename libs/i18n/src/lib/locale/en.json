@@ -18,6 +18,7 @@
     "settings": "Settings",
     "its_empty": "It's empty",
     "or": "or",
+    "other": "Other",
     "docs": {
       "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",
@@ -113,6 +114,13 @@
         "birthday": {
           "label": "Date of birth",
           "placeholder": "Add your birthday"
+        },
+        "phone": {
+          "label": "Phone",
+          "placeholder": "Enter phone number with country code",
+          "error": {
+            "invalid": "Invalid phone number"
+          }
         }
       },
       "remove_account": {

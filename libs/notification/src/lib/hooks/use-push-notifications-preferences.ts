@@ -1,5 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { addNotificationReceivedListener, EventSubscription, setNotificationHandler } from 'expo-notifications';
+import {
+  addNotificationReceivedListener,
+  EventSubscription,
+  setNotificationHandler,
+} from 'expo-notifications';
 import { notificationAsync, NotificationFeedbackType } from 'expo-haptics';
 import { useMe } from '@symbiot-core-apps/store';
 
@@ -8,7 +12,7 @@ export const usePushNotificationsPreferences = () => {
 
   const notificationListener = useRef<EventSubscription>(null);
 
-  useEffect(() => {
+  return useEffect(() => {
     setNotificationHandler({
       handleNotification: async () => ({
         shouldShowBanner: true,
@@ -31,4 +35,4 @@ export const usePushNotificationsPreferences = () => {
     me?.preferences?.enableNotificationSound,
     me?.preferences?.enableNotificationVibration,
   ]);
-}
+};

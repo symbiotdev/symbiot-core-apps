@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Platform } from 'react-native';
 import {
   AndroidImportance,
@@ -10,20 +10,25 @@ import {
 import Constants from 'expo-constants';
 import { ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
 import { useAccountUpdateDeviceQuery } from '@symbiot-core-apps/api';
+import { useMe } from '@symbiot-core-apps/store';
 
 export const usePushNotificationsInitializer = ({
   onPermissionsDenied,
 }: {
   onPermissionsDenied: () => void;
 }) => {
+  const { me } = useMe();
   const { mutateAsync } = useAccountUpdateDeviceQuery();
 
-  return useCallback(async () => {
+  const init = useCallback(async () => {
     if (Platform.OS === 'android') {
       await setNotificationChannelAsync('default', {
         name: 'default',
+        sound: 'notifications-sound.wav',
         importance: AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
+        vibrationPattern: me?.preferences?.enableNotificationVibration
+          ? [0, 250, 0, 250]
+          : [],
       });
     }
 
@@ -56,5 +61,13 @@ export const usePushNotificationsInitializer = ({
         });
       }
     }
-  }, [mutateAsync, onPermissionsDenied]);
+  }, [
+    me?.preferences?.enableNotificationVibration,
+    mutateAsync,
+    onPermissionsDenied,
+  ]);
+
+  return useEffect(() => {
+    void init();
+  }, [init]);
 };

@@ -43,7 +43,22 @@
     "development": {
       "environment": "development",
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "development",
+        "EXPO_PUBLIC_APP_ID": "com.spanday.pro.dev",
+        "EXPO_PUBLIC_APPSTORE_ID": "6745966375",
+        "EXPO_PUBLIC_APP_NAME": "[Dev] Spanday PRO",
+        "EXPO_PUBLIC_APP_TYPE": "spanday",
+        "EXPO_PUBLIC_WEB_CLIENT_ID": "449414175024-mj2oollon6rkfqh23qh8rfr3fklk9iti.apps.googleusercontent.com",
+        "EXPO_PUBLIC_API_URL": "https://symbiot-core-dev-35243bd1773b.herokuapp.com",
+        "EXPO_PUBLIC_PRIVACY_POLICY_URL": "https://www.spanday.com/privacy-policy",
+        "EXPO_PUBLIC_TERMS_CONDITIONS_URL": "https://www.spanday.com/terms-of-service",
+        "EXPO_PUBLIC_X_URL": "https://x.com/spandaypro",
+        "EXPO_PUBLIC_INSTAGRAM_URL": "https://www.instagram.com/spandaypro",
+        "EXPO_PUBLIC_LINKEDIN_URL": "https://www.linkedin.com/company/spanday-pro",
+        "EXPO_PUBLIC_SUPPORT_EMAIL": "info@symbiot.dev"
+      }
     },
     "development_local": {
       "extends": "development"

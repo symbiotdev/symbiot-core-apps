@@ -29,6 +29,7 @@
     "burnt": "*",
     "expo": "*",
     "expo-application": "*",
+    "expo-audio": "*",
     "expo-device": "*",
     "expo-crypto": "*",
     "expo-blur": "*",

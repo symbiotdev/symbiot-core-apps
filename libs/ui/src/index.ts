@@ -39,6 +39,7 @@ export * from './lib/text/heading';
 export * from './lib/text/text';
 export * from './lib/text/custom';
 
+export * from './lib/view/attention-view';
 export * from './lib/view/error-view';
 export * from './lib/view/form-view';
 export * from './lib/view/loading-view';

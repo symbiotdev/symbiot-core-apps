@@ -5,7 +5,7 @@ export enum AppLanguage {
 
 export const supportedLanguages: AppLanguage[] = Object.values(AppLanguage);
 
-export interface LanguageOption {
+export type LanguageOption = {
   code: AppLanguage;
   name: string;
   shortName: string;

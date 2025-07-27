@@ -1,9 +1,22 @@
-export interface RenderPaginationList<E> {
+export type PaginationList<E> = {
   items: E[];
   count: number;
+};
+
+export type RenderPaginationList<E> = PaginationList<E> & {
   canLoadMore: boolean;
-}
+};
+
 type EntityId = string | number;
+
+export function mapPaginationListToRenderPaginationList<E>(
+  list: PaginationList<E>,
+): RenderPaginationList<E> {
+  return {
+    ...list,
+    canLoadMore: list.items.length < list.count,
+  };
+}
 
 export function mapByIdFromListWithEntities<Entity extends { id: EntityId }>(
   byId: Record<EntityId, Entity>,

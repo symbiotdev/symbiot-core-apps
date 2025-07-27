@@ -20,20 +20,27 @@ export const useScreenHeaderHeight = () => {
 };
 
 export const useScreenHeaderOptions = () => {
-  const headerHeight = useScreenHeaderHeight();
-  const { left, right } = useSafeAreaInsets();
+  const { top, left, right } = useSafeAreaInsets();
 
   const header = useCallback(
     (props: NativeStackHeaderProps) => (
-      <Header {...props} height={headerHeight} left={left} right={right} />
+      <Header {...props} top={top} left={left} right={right} />
     ),
-    [headerHeight, left, right],
+    [left, right, top],
   );
 
   return {
-    animation: 'slide_from_right',
     header,
     headerTransparent: true,
+  };
+};
+
+export const useStackScreenHeaderOptions = () => {
+  const headerOptions = useScreenHeaderOptions();
+
+  return {
+    ...headerOptions,
+    animation: 'slide_from_right',
   } as NativeStackNavigationOptions;
 };
 
@@ -41,25 +48,31 @@ export const Header = memo(
   ({
     back,
     navigation,
-    height,
+    top,
     left,
     right,
     options,
   }: NativeStackHeaderProps & {
-    height: number;
+    top: number;
     left: number;
     right: number;
   }) => {
+    const withContent =
+      !!options.headerLeft ||
+      !!back ||
+      !!options.headerRight ||
+      options.headerTitle === 'string';
+
     return (
       <XStack
         alignItems="center"
         justifyContent="space-between"
         gap="$5"
         position="relative"
-        paddingTop={height - headerHeight}
+        paddingTop={top}
         paddingLeft={left + 10}
         paddingRight={right + 10}
-        height={height}
+        height={top + (withContent ? headerHeight : 0)}
       >
         {Platform.OS !== 'android' && (
           <Blur style={StyleSheet.absoluteFillObject} />
@@ -79,10 +92,10 @@ export const Header = memo(
                 onPress={navigation.goBack}
               >
                 <Icon.Dynamic
-                  size={24}
                   type="Ionicons"
                   name="chevron-back-outline"
                   color="$buttonTextColor1"
+                  size={24}
                 />
               </Pressable>
             ))

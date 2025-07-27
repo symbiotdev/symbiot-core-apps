@@ -8,6 +8,9 @@ export enum AccountNotificationType {
 export type AccountNotification = {
   id: string;
   from: Account;
-  to: Account;
-  type: AccountNotificationType
+  type: AccountNotificationType;
+  title: string;
+  subtitle: string;
+  read: boolean;
+  cAt: Date;
 };

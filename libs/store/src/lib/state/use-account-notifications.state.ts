@@ -1,17 +1,12 @@
-import {
-  AccountNotification,
-  mapPaginationListToRenderPaginationList,
-  PaginationList,
-  RenderPaginationList,
-} from '@symbiot-core-apps/api';
+import { AccountNotification, PaginationList } from '@symbiot-core-apps/api';
 import { create } from 'zustand/index';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type AccountNotificationsState = {
-  items?: RenderPaginationList<AccountNotification>;
+  notifications?: PaginationList<AccountNotification>;
   clear: () => void;
-  setItems: (list: PaginationList<AccountNotification>) => void;
+  setNotifications: (list: PaginationList<AccountNotification>) => void;
 };
 
 export const useAccountNotificationsState = create<AccountNotificationsState>()(
@@ -19,12 +14,12 @@ export const useAccountNotificationsState = create<AccountNotificationsState>()(
     (set) => ({
       clear: () => {
         set({
-          items: undefined,
+          notifications: undefined,
         });
       },
-      setItems: (list) => {
+      setNotifications: (notifications) => {
         set({
-          items: mapPaginationListToRenderPaginationList(list),
+          notifications,
         });
       },
     }),

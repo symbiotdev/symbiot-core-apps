@@ -12,7 +12,7 @@ import { create } from 'zustand';
 import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCallback, useEffect } from 'react';
-import { Scheme, schemes, useRestoreApp } from '@symbiot-core-apps/shared';
+import { Scheme, schemes } from '@symbiot-core-apps/shared';
 import { useScheme } from './use-app-theme.state';
 import { changeAppLanguage } from '@symbiot-core-apps/i18n';
 import { ImagePickerAsset } from 'expo-image-picker';
@@ -106,8 +106,6 @@ export const useMeLoader = () => {
       }
     }
   }, [updateMe, updateMePreferences, meResponse]);
-
-  useRestoreApp(useCallback(() => loadMe$(), [loadMe$]));
 
   return {
     loadMe$,

@@ -61,7 +61,7 @@ export const Header = memo(
       !!options.headerLeft ||
       !!back ||
       !!options.headerRight ||
-      options.headerTitle === 'string';
+      typeof options.headerTitle === 'string';
 
     return (
       <XStack

@@ -20,6 +20,7 @@ export * from './lib/form/toggle-group';
 
 export * from './lib/icons/icon';
 
+export * from './lib/list/animated-list';
 export * from './lib/list/list-item';
 
 export * from './lib/loading/spinner';
@@ -40,8 +41,10 @@ export * from './lib/text/text';
 export * from './lib/text/custom';
 
 export * from './lib/view/attention-view';
+export * from './lib/view/empty-view';
 export * from './lib/view/error-view';
 export * from './lib/view/form-view';
+export * from './lib/view/init-view';
 export * from './lib/view/loading-view';
 export * from './lib/view/page-view';
 export * from './lib/view/tabs-page-view';

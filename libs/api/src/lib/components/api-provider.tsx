@@ -72,6 +72,35 @@ export const ApiProvider = ({
   }, [updateState]);
 
   useLayoutEffect(() => {
+    socket.on('connect', () => {
+      updateState({
+        connecting: false,
+        connected: socket.connected,
+        connectError: undefined,
+      });
+    });
+    socket.on('disconnect', () => {
+      updateState({
+        connecting: false,
+        connected: socket.connected,
+      });
+    });
+    socket.on('connect_error', (reason) => {
+      updateState({
+        connecting: false,
+        connected: socket.connected,
+        connectError: reason,
+      });
+    });
+
+    return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+      socket.off('connect_error');
+    }
+  }, [updateState]);
+
+  useLayoutEffect(() => {
     if (!devId) {
       return;
     }
@@ -120,29 +149,6 @@ export const ApiProvider = ({
       onConnected?.();
     }
   }, [value.connected, onConnected]);
-
-  useLayoutEffect(() => {
-    socket.on('connect', () => {
-      updateState({
-        connecting: false,
-        connected: socket.connected,
-        connectError: undefined,
-      });
-    });
-    socket.on('disconnect', () => {
-      updateState({
-        connecting: false,
-        connected: socket.connected,
-      });
-    });
-    socket.on('connect_error', (reason) => {
-      updateState({
-        connecting: false,
-        connected: socket.connected,
-        connectError: reason,
-      });
-    });
-  }, [updateState]);
 
   return (
     <QueryClientProvider client={queryClient}>

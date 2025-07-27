@@ -4,9 +4,11 @@ import { View, ViewProps } from 'tamagui';
 export const AttentionView = ({
   attention,
   children,
+  dotProps,
   ...viewProps
 }: ViewProps & {
   attention: boolean;
+  dotProps?: ViewProps;
 }) => {
   return (
     <View position="relative" {...viewProps}>
@@ -21,6 +23,7 @@ export const AttentionView = ({
           position="absolute"
           right={-2}
           top={-2}
+          {...dotProps}
         />
       )}
     </View>

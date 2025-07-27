@@ -22,6 +22,8 @@ export type PageViewProps = ViewProps & {
   refreshing?: boolean;
   withKeyboard?: boolean;
   withHeaderHeight?: boolean;
+  ignoreTopSafeArea?: boolean;
+  ignoreBottomSafeArea?: boolean;
   LoadingElement?: ReactNode;
   onRefresh?: () => void;
 };
@@ -99,6 +101,8 @@ export const PageView = ({
 
 const PageContent = ({
   withHeaderHeight = false,
+  ignoreTopSafeArea = false,
+  ignoreBottomSafeArea = false,
   paddingTop = defaultPageVerticalPadding,
   paddingBottom = defaultPageVerticalPadding,
   paddingLeft = defaultPageHorizontalPadding,
@@ -106,6 +110,8 @@ const PageContent = ({
   ...viewProps
 }: ViewProps & {
   withHeaderHeight?: boolean;
+  ignoreTopSafeArea?: boolean;
+  ignoreBottomSafeArea?: boolean;
 }) => {
   const { top, bottom, left, right } = useSafeAreaInsets();
   const headerHeight = useScreenHeaderHeight();
@@ -116,8 +122,13 @@ const PageContent = ({
       width="100%"
       maxWidth={1440}
       marginHorizontal="auto"
-      paddingTop={(withHeaderHeight ? headerHeight : top) + Number(paddingTop)}
-      paddingBottom={bottom + Number(paddingBottom)}
+      paddingTop={
+        (withHeaderHeight ? headerHeight : !ignoreTopSafeArea ? top : 0) +
+        Number(paddingTop)
+      }
+      paddingBottom={
+        (!ignoreBottomSafeArea ? bottom : 0) + Number(paddingBottom)
+      }
       paddingLeft={left + Number(paddingLeft)}
       paddingRight={right + Number(paddingRight)}
       {...viewProps}

@@ -11,6 +11,7 @@ import Constants from 'expo-constants';
 import { ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
 import { useAccountUpdateDeviceQuery } from '@symbiot-core-apps/api';
 import { useMe } from '@symbiot-core-apps/store';
+import { isDevice } from 'expo-device';
 
 export const usePushNotificationsInitializer = ({
   onPermissionsDenied,
@@ -21,6 +22,10 @@ export const usePushNotificationsInitializer = ({
   const { mutateAsync } = useAccountUpdateDeviceQuery();
 
   const init = useCallback(async () => {
+    if (!isDevice || Platform.OS === 'web') {
+      return;
+    }
+
     if (Platform.OS === 'android') {
       await setNotificationChannelAsync('default', {
         name: 'default',

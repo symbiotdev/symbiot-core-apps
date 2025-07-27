@@ -72,35 +72,6 @@ export const ApiProvider = ({
   }, [updateState]);
 
   useLayoutEffect(() => {
-    socket.on('connect', () => {
-      updateState({
-        connecting: false,
-        connected: socket.connected,
-        connectError: undefined,
-      });
-    });
-    socket.on('disconnect', () => {
-      updateState({
-        connecting: false,
-        connected: socket.connected,
-      });
-    });
-    socket.on('connect_error', (reason) => {
-      updateState({
-        connecting: false,
-        connected: socket.connected,
-        connectError: reason,
-      });
-    });
-
-    return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('connect_error');
-    }
-  }, [updateState]);
-
-  useLayoutEffect(() => {
     if (!devId) {
       return;
     }
@@ -117,7 +88,6 @@ export const ApiProvider = ({
     if (tokens.access) {
       updateState({ connecting: true });
 
-      socket.disconnect();
       socket.io.opts.query = {
         ...(Platform.OS !== 'web'
           ? { [authTokenHeaderKey.refresh]: tokens.refresh }
@@ -143,6 +113,29 @@ export const ApiProvider = ({
     setTokens,
     refreshTokens,
   ]);
+
+  useLayoutEffect(() => {
+    socket.on('connect', () => {
+      updateState({
+        connecting: false,
+        connected: socket.connected,
+        connectError: undefined,
+      });
+    });
+    socket.on('disconnect', () => {
+      updateState({
+        connecting: false,
+        connected: socket.connected,
+      });
+    });
+    socket.on('connect_error', (reason) => {
+      updateState({
+        connecting: false,
+        connected: socket.connected,
+        connectError: reason,
+      });
+    });
+  }, [updateState]);
 
   useLayoutEffect(() => {
     if (value.connected) {

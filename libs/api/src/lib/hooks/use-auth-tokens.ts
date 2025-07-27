@@ -12,8 +12,8 @@ export type OnboardingState = {
 };
 
 export const authTokenHeaderKey = {
-  access: 'X-Authorization',
-  refresh: 'X-Refresh-Token',
+  access: 'x-authorization',
+  refresh: 'x-refresh-token',
 };
 
 export const useAuthTokens = create<OnboardingState>()(

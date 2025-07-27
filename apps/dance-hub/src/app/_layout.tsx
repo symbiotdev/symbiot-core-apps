@@ -14,7 +14,6 @@ import {
 import { ErrorView } from '@symbiot-core-apps/ui';
 import { darkTheme, lightTheme } from '../utils/theme';
 import { I18nProvider } from '@symbiot-core-apps/i18n';
-import { useStateClear } from '@symbiot-core-apps/store';
 
 void preventAutoHideAsync();
 setOptions({
@@ -29,16 +28,9 @@ if (Platform.OS !== 'web') {
 export default () => {
   const [fontsLoaded, fontsError] = useFixelFont();
   const { removeTokens } = useAuthTokens();
-  const clearState = useStateClear();
-
   const onNoRespond = useCallback(() => {
     alert('noRespond');
   }, []);
-
-  const onUnauthorized = useCallback(() => {
-    removeTokens();
-    clearState();
-  }, [removeTokens, clearState]);
 
   if (fontsError) {
     return <ErrorView message="Fonts could not be loaded." />;
@@ -46,18 +38,15 @@ export default () => {
 
   return (
     fontsLoaded && (
-      <KeyboardProvider>
-        <I18nProvider>
-          <ThemeProvider darkTheme={darkTheme} lightTheme={lightTheme}>
-            <ApiProvider
-              onNoRespond={onNoRespond}
-              onUnauthorized={onUnauthorized}
-            >
+      <ApiProvider onNoRespond={onNoRespond} onUnauthorized={removeTokens}>
+        <KeyboardProvider>
+          <I18nProvider>
+            <ThemeProvider darkTheme={darkTheme} lightTheme={lightTheme}>
               <Body />
-            </ApiProvider>
-          </ThemeProvider>
-        </I18nProvider>
-      </KeyboardProvider>
+            </ThemeProvider>
+          </I18nProvider>
+        </KeyboardProvider>
+      </ApiProvider>
     )
   );
 };

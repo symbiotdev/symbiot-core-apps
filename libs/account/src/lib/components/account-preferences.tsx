@@ -177,21 +177,37 @@ export const AccountPreferences = () => {
       ),
     });
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <ContextMenuPopover
-          items={contextMenuItems}
-          loading={updating}
-          disabled={updating}
-        />
-      ),
-    });
-  }, [updating, navigation, contextMenuItems]);
+  const updateFirstname = useCallback(
+    ({ firstname }: { firstname: string }) =>
+      me?.firstname !== firstname && updateAccount$({ firstname }),
+    [me?.firstname, updateAccount$],
+  );
+
+  const updateLastname = useCallback(
+    ({ lastname }: { lastname: string }) =>
+      me?.lastname !== lastname && updateAccount$({ lastname }),
+    [me?.lastname, updateAccount$],
+  );
+
+  const updateGender = useCallback(
+    ({ genderId }: { genderId: string | null }) =>
+      me?.gender?.id !== genderId && updateAccount$({ genderId }),
+    [me?.gender, updateAccount$],
+  );
+
+  const updateBirthday = useCallback(
+    ({ birthday }: { birthday: Date | null }) =>
+      me?.birthday !== birthday && updateAccount$({ birthday }),
+    [me?.birthday, updateAccount$],
+  );
 
   const updatePhones = useCallback(
     async ({ phone }: { phone: Phone }) => {
-      if (phone.tel !== targetPhone?.tel) {
+      if (
+        ((targetPhone?.tel && !phone.tel) ||
+          (phone.tel && !targetPhone?.tel)) &&
+        phone.tel !== targetPhone?.tel
+      ) {
         await updateAccount$({ phones: phone.tel ? [phone] : [] });
       }
     },
@@ -206,6 +222,18 @@ export const AccountPreferences = () => {
     },
     [targetInstagramLink?.url, updateAccount$],
   );
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <ContextMenuPopover
+          items={contextMenuItems}
+          loading={updating}
+          disabled={updating}
+        />
+      ),
+    });
+  }, [updating, navigation, contextMenuItems]);
 
   return (
     me && (
@@ -235,6 +263,7 @@ export const AccountPreferences = () => {
             render={({ field: { value, onChange }, fieldState: { error } }) => (
               <Input
                 autoCapitalize="words"
+                enterKeyHint="enter"
                 value={value}
                 error={error?.message}
                 label={t('shared.preferences.account.firstname.label')}
@@ -242,7 +271,7 @@ export const AccountPreferences = () => {
                   'shared.preferences.account.firstname.placeholder',
                 )}
                 onChange={onChange}
-                onBlur={firstnameHandleSubmit(updateAccount$)}
+                onBlur={firstnameHandleSubmit(updateFirstname)}
               />
             )}
           />
@@ -253,6 +282,7 @@ export const AccountPreferences = () => {
             render={({ field: { value, onChange }, fieldState: { error } }) => (
               <Input
                 autoCapitalize="words"
+                enterKeyHint="enter"
                 value={value}
                 error={error?.message}
                 label={t('shared.preferences.account.lastname.label')}
@@ -260,7 +290,7 @@ export const AccountPreferences = () => {
                   'shared.preferences.account.lastname.placeholder',
                 )}
                 onChange={onChange}
-                onBlur={lastnameHandleSubmit(updateAccount$)}
+                onBlur={lastnameHandleSubmit(updateLastname)}
               />
             )}
           />
@@ -279,7 +309,7 @@ export const AccountPreferences = () => {
                 placeholder={t('shared.preferences.account.gender.placeholder')}
                 onChange={(gender) => {
                   onChange(gender);
-                  genderHandleSubmit(updateAccount$)();
+                  genderHandleSubmit(updateGender)();
                 }}
               />
             )}
@@ -301,7 +331,7 @@ export const AccountPreferences = () => {
                 )}
                 onChange={(birthday) => {
                   onChange(birthday);
-                  birthdayHandleSubmit(updateAccount$)();
+                  birthdayHandleSubmit(updateBirthday)();
                 }}
               />
             )}
@@ -312,10 +342,10 @@ export const AccountPreferences = () => {
             name="phone"
             render={({ field: { value, onChange }, fieldState: { error } }) => (
               <PhoneInput
+                enterKeyHint="enter"
                 value={value}
                 label={t('shared.preferences.account.phone.label')}
                 placeholder={t('shared.preferences.account.phone.placeholder')}
-                enterKeyHint="next"
                 error={error?.message}
                 onChange={onChange}
                 onBlur={phoneHandleSubmit(updatePhones)}
@@ -329,12 +359,12 @@ export const AccountPreferences = () => {
             render={({ field: { value, onChange }, fieldState: { error } }) => (
               <SocialLinkInput
                 type="instagram"
+                enterKeyHint="enter"
                 value={value}
                 label={t('shared.preferences.account.instagram.label')}
                 placeholder={t(
                   'shared.preferences.account.instagram.placeholder',
                 )}
-                enterKeyHint="next"
                 error={error?.message}
                 onChange={onChange}
                 onBlur={instagramHandleSubmit(updateInstagram)}

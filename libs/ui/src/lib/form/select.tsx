@@ -46,7 +46,8 @@ export function Select({
 
   const formattedValue = useMemo(
     () =>
-      (value &&
+      (value !== undefined &&
+        value !== null &&
         (Array.isArray(value)
           ? value
               .map(
@@ -63,7 +64,7 @@ export function Select({
   const toggleOption = useCallback(
     (optionValue: SelectOption['value']) => {
       let newValue: SelectValue;
-      let hasChanges = false;
+      let hasChanges: boolean;
 
       if (Array.isArray(value)) {
         const targetOption = value.some(
@@ -117,7 +118,7 @@ export function Select({
                 </RegularText>
               </>
             ) : !formattedValue ? (
-              <RegularText color="$placeholderColor" numberOfLines={1} flex={1} >
+              <RegularText color="$placeholderColor" numberOfLines={1} flex={1}>
                 {placeholder}
               </RegularText>
             ) : (

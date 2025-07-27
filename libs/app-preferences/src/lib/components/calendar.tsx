@@ -34,7 +34,6 @@ export const Calendar = () => {
     <PageView scrollable withHeaderHeight>
       <FormView>
         <Select
-          disabled={updating}
           label={t('shared.preferences.calendar.week_starts_on.label')}
           value={me?.preferences?.weekStartsOn}
           options={weekdaysOptions}

@@ -19,6 +19,7 @@
     "@react-native-firebase/auth": "*",
     "@react-native-google-signin/google-signin": "*",
     "@react-native-async-storage/async-storage": "*",
+    "@react-native-picker/picker": "*",
     "@tamagui/config": "*",
     "@tanstack/react-query": "*",
     "@floating-ui/react-native": "*",

@@ -49,7 +49,7 @@ export const AdaptivePopover = forwardRef(
     ref: ForwardedRef<Popover>,
   ) => {
     const { height } = useWindowDimensions();
-    const { top, bottom } = useSafeAreaInsets();
+    const { top, bottom, left, right } = useSafeAreaInsets();
 
     const adjustedMaxHeight = useMemo(() => maxHeight || 500, [maxHeight]);
 
@@ -136,6 +136,8 @@ export const AdaptivePopover = forwardRef(
                 borderWidth={1}
                 borderColor="$background"
                 backgroundColor="$background"
+                paddingLeft={left}
+                paddingRight={right}
               >
                 <Pressable disabled={Platform.OS === 'web'}>
                   <View

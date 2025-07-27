@@ -72,14 +72,13 @@ export const Notifications = () => {
                   ? false
                   : me?.preferences?.enablePushNotifications
               }
-              disabled={updating || pushNotificationsDenied}
+              disabled={pushNotificationsDenied}
               onChange={togglePushNotifications}
             />
           )}
           <Switch
             label={t('shared.preferences.notifications.sound.label')}
             checked={me?.preferences?.enableNotificationSound}
-            disabled={updating}
             onChange={toggleNotificationSound}
           />
         </Card>

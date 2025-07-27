@@ -24,7 +24,7 @@ export const usePushNotificationsInitializer = ({
     if (Platform.OS === 'android') {
       await setNotificationChannelAsync('default', {
         name: 'default',
-        sound: 'notifications-sound.wav',
+        sound: 'new-notification-sound.wav',
         importance: AndroidImportance.MAX,
         vibrationPattern: me?.preferences?.enableNotificationVibration
           ? [0, 250, 0, 250]

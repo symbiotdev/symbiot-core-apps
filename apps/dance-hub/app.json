@@ -124,6 +124,14 @@
           "supportsBackgroundPlayback": true,
           "supportsPictureInPicture": true
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "sounds": [
+            "./assets/audio/new-notification-sound.wav"
+          ]
+        }
       ]
     ],
     "extra": {

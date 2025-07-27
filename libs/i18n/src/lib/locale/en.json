@@ -142,6 +142,9 @@
           "message": "This action cannot be undone."
         }
       }
+    },
+    "notifications": {
+      "title": "Notifications"
     }
   },
   "auth": {

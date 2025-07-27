@@ -9,12 +9,9 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type AccountNotificationsState = {
+  items?: RenderPaginationList<AccountNotification>;
   clear: () => void;
-  items?: RenderPaginationList<AccountNotification>; // don't clean it because after next auth the previous pressed push should be ignored
-  // methods
-  lastPushNotificationIdentifier?: string;
   setItems: (list: PaginationList<AccountNotification>) => void;
-  setLastPushNotificationIdentifier: (id: string) => void;
 };
 
 export const useAccountNotificationsState = create<AccountNotificationsState>()(
@@ -29,9 +26,6 @@ export const useAccountNotificationsState = create<AccountNotificationsState>()(
         set({
           items: mapPaginationListToRenderPaginationList(list),
         });
-      },
-      setLastPushNotificationIdentifier: (lastPushNotificationIdentifier) => {
-        set({ lastPushNotificationIdentifier });
       },
     }),
     {

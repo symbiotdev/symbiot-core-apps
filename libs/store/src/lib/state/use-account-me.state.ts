@@ -19,6 +19,7 @@ import { ImagePickerAsset } from 'expo-image-picker';
 
 type AccountMeState = {
   me?: Account;
+  clear: () => void;
   setMe: (me: Account) => void;
   setMePreferences: (preferences: AccountPreferences) => void;
 };
@@ -27,6 +28,11 @@ export const useAccountMeState = create<AccountMeState>()(
   devtools(
     persist<AccountMeState>(
       (set, get) => ({
+        clear: () => {
+          set({
+            me: undefined,
+          });
+        },
         setMe: (me) => {
           set({ me });
         },

@@ -14,6 +14,7 @@ import {
 import { ErrorView } from '@symbiot-core-apps/ui';
 import { darkTheme, lightTheme } from '../utils/theme';
 import { I18nProvider } from '@symbiot-core-apps/i18n';
+import { useStateClear } from '@symbiot-core-apps/store';
 
 void preventAutoHideAsync();
 setOptions({
@@ -28,7 +29,7 @@ if (Platform.OS !== 'web') {
 export default () => {
   const [fontsLoaded, fontsError] = useFixelFont();
   const { removeTokens } = useAuthTokens();
-  // const { clear } = useStoreClear();
+  const clearState = useStateClear();
 
   const onNoRespond = useCallback(() => {
     alert('noRespond');
@@ -36,7 +37,8 @@ export default () => {
 
   const onUnauthorized = useCallback(() => {
     removeTokens();
-  }, [removeTokens]);
+    clearState();
+  }, [removeTokens, clearState]);
 
   if (fontsError) {
     return <ErrorView message="Fonts could not be loaded." />;

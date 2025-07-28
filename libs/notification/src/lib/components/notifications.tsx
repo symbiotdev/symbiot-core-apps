@@ -98,7 +98,7 @@ export const Notifications = () => {
       paddingRight={4}
       paddingBottom={0}
     >
-      {!notifications ? (
+      {!notifications?.length ? (
         <InitView loading={isLoading} error={error} />
       ) : (
         <AnimatedList

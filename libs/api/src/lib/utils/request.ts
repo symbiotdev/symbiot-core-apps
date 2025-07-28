@@ -31,7 +31,7 @@ export async function requestWithAlertOnError<T>(
   request: Promise<T>,
 ): Promise<T> {
   try {
-    return requestWithStringError(request);
+    return await requestWithStringError(request);
   } catch (error) {
     ShowNativeFailedAlert({
       text: error as string,

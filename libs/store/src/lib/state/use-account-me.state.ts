@@ -1,6 +1,7 @@
 import {
   Account,
   AccountPreferences,
+  AccountStats,
   UpdateAccountData,
   useAccountMeAvatarUpdate,
   useAccountMeQuery,
@@ -21,7 +22,8 @@ type AccountMeState = {
   me?: Account;
   clear: () => void;
   setMe: (me: Account) => void;
-  setMePreferences: (preferences: AccountPreferences) => void;
+  setMePreferences: (preferences: Partial<AccountPreferences>) => void;
+  setMeStats: (stats: Partial<AccountStats>) => void;
 };
 
 export const useAccountMeState = create<AccountMeState>()(
@@ -42,7 +44,23 @@ export const useAccountMeState = create<AccountMeState>()(
           if (me) {
             setMe({
               ...me,
-              preferences,
+              preferences: {
+                ...me.preferences,
+                ...preferences,
+              },
+            });
+          }
+        },
+        setMeStats: (stats) => {
+          const { setMe, me } = get();
+
+          if (me) {
+            setMe({
+              ...me,
+              stats: {
+                ...me.stats,
+                ...stats,
+              },
             });
           }
         },

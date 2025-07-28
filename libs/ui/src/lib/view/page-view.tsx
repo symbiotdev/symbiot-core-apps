@@ -10,6 +10,7 @@ import { useRendered } from '@symbiot-core-apps/shared';
 import { Refresher } from '../loading/refresher';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useScreenHeaderHeight } from '../navigation/header';
+import { ContainerView } from './container-view';
 
 const isWeb = Platform.OS === 'web';
 export const defaultPageHorizontalPadding = 14;
@@ -117,11 +118,8 @@ const PageContent = ({
   const headerHeight = useScreenHeaderHeight();
 
   return (
-    <View
+    <ContainerView
       flex={1}
-      width="100%"
-      maxWidth={1440}
-      marginHorizontal="auto"
       paddingTop={
         (withHeaderHeight ? headerHeight : !ignoreTopSafeArea ? top : 0) +
         Number(paddingTop)

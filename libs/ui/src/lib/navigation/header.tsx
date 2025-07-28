@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Blur } from '../blur/blur';
 import { memo, useCallback, useMemo } from 'react';
 import { H4 } from '../text/heading';
+import { ContainerView } from '../view/container-view';
 
 const headerHeight = 50;
 const headerButtonSize = 36;
@@ -65,9 +66,6 @@ export const Header = memo(
 
     return (
       <XStack
-        alignItems="center"
-        justifyContent="space-between"
-        gap="$5"
         position="relative"
         paddingTop={top}
         paddingLeft={left + 10}
@@ -78,35 +76,42 @@ export const Header = memo(
           <Blur style={StyleSheet.absoluteFillObject} />
         )}
 
-        <SideElement
-          children={
-            options.headerLeft?.({}) ||
-            (!!back && (
-              <Pressable
-                style={({ pressed }) => ({
-                  flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  opacity: pressed ? 0.8 : 1,
-                })}
-                onPress={navigation.goBack}
-              >
-                <Icon.Dynamic
-                  type="Ionicons"
-                  name="chevron-back-outline"
-                  color="$buttonTextColor1"
-                  size={24}
-                />
-              </Pressable>
-            ))
-          }
-        />
+        <ContainerView
+          gap="$5"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <SideElement
+            children={
+              options.headerLeft?.({}) ||
+              (!!back && (
+                <Pressable
+                  style={({ pressed }) => ({
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    opacity: pressed ? 0.8 : 1,
+                  })}
+                  onPress={navigation.goBack}
+                >
+                  <Icon.Dynamic
+                    type="Ionicons"
+                    name="chevron-back-outline"
+                    color="$buttonTextColor1"
+                    size={24}
+                  />
+                </Pressable>
+              ))
+            }
+          />
 
-        {typeof options.headerTitle === 'string' && (
-          <H4 zIndex={1}>{options.headerTitle}</H4>
-        )}
+          {typeof options.headerTitle === 'string' && (
+            <H4 zIndex={1}>{options.headerTitle}</H4>
+          )}
 
-        <SideElement children={options.headerRight?.({})} />
+          <SideElement children={options.headerRight?.({})} />
+        </ContainerView>
       </XStack>
     );
   },

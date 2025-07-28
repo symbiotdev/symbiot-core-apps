@@ -1,13 +1,11 @@
 import React, { ForwardedRef } from 'react';
-import { FlatList, Platform } from 'react-native';
+import { FlatList } from 'react-native';
 import Animated, {
   FlatListPropsWithLayout,
   LinearTransition,
 } from 'react-native-reanimated';
 import { Refresher } from '../loading/refresher';
 import { ListLoadingFooter } from './list-loading-footer';
-
-const showScrollIndicator = Platform.OS === 'web';
 
 export function AnimatedList<T>({
   listRef,
@@ -33,8 +31,8 @@ export function AnimatedList<T>({
       itemLayoutAnimation={ignoreAnimation ? undefined : LinearTransition}
       onEndReachedThreshold={0.3}
       keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={showScrollIndicator}
-      showsHorizontalScrollIndicator={showScrollIndicator}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
       refreshControl={
         typeof refreshing !== 'undefined' ? (
           <Refresher

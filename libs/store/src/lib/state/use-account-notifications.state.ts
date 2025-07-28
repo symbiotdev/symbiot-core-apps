@@ -6,12 +6,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 type AccountNotificationsState = {
   notifications?: PaginationList<AccountNotification>;
   clear: () => void;
+  add: (notification: AccountNotification) => void;
   setNotifications: (list: PaginationList<AccountNotification>) => void;
 };
 
 export const useAccountNotificationsState = create<AccountNotificationsState>()(
   persist<AccountNotificationsState>(
-    (set) => ({
+    (set, get) => ({
       clear: () => {
         set({
           notifications: undefined,
@@ -21,6 +22,23 @@ export const useAccountNotificationsState = create<AccountNotificationsState>()(
         set({
           notifications,
         });
+      },
+      add: (notification) => {
+        const { notifications } = get();
+
+        if (notifications?.items) {
+          set({
+            notifications: notifications?.items
+              ? {
+                  ...notifications,
+                  items: [notification, ...notifications.items],
+                }
+              : {
+                  items: [notification],
+                  count: 1,
+                },
+          });
+        }
       },
     }),
     {

@@ -26,19 +26,17 @@ export const useAccountNotificationsState = create<AccountNotificationsState>()(
       add: (notification) => {
         const { notifications } = get();
 
-        if (notifications?.items) {
-          set({
-            notifications: notifications?.items
-              ? {
-                  ...notifications,
-                  items: [notification, ...notifications.items],
-                }
-              : {
-                  items: [notification],
-                  count: 1,
-                },
-          });
-        }
+        set({
+          notifications: notifications?.items
+            ? {
+                ...notifications,
+                items: [notification, ...notifications.items],
+              }
+            : {
+                items: [notification],
+                count: 1,
+              },
+        });
       },
     }),
     {

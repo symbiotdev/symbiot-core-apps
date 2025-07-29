@@ -29,7 +29,7 @@ export const RemoveAccount = () => {
             name: me?.name,
           })}
           buttonLabel={t('shared.preferences.remove_account.button.label')}
-          buttonIcon={<Icon.Dynamic type="Ionicons" name="trash-outline" />}
+          buttonIcon={<Icon name="TrashBinMinimalistic" />}
           buttonLoading={isPending}
           buttonType="danger"
           onActionPress={onActionPress}

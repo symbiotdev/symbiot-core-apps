@@ -110,9 +110,7 @@ export const SignInButtons = () => {
 
       <Button
         disabled={isPending}
-        icon={
-          <Icon.Dynamic name="mail-outline" type="MaterialIcons" size={20} />
-        }
+        icon={<Icon name="Letter" size={20} />}
         label={t('auth.workspace.button.sign_up_with_email')}
         onPress={signUp}
       />

@@ -54,7 +54,7 @@ export const AccountPreferences = () => {
         label: t(
           'shared.preferences.account.context_menu.remove_account.label',
         ),
-        icon: <Icon.Dynamic type="Ionicons" name="trash-outline" />,
+        icon: <Icon name="TrashBinMinimalistic" />,
         color: '$error',
         onPress: () => router.push('/preferences/account/remove'),
       },

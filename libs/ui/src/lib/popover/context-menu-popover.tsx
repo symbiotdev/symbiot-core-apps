@@ -13,7 +13,6 @@ import {
   View,
   ViewProps,
 } from 'tamagui';
-import { Icon } from '../icons/icon';
 import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import {
   flip,
@@ -27,6 +26,7 @@ import { Blur } from '../blur/blur';
 import { Spinner } from '../loading/spinner';
 import { ListItem } from '../list/list-item';
 import { useScreenOrientation } from '@symbiot-core-apps/shared';
+import { Icon } from '../icons';
 
 export type ContextMenuItem = {
   label: string;
@@ -146,7 +146,7 @@ const Menu = ({
     >
       <Blur style={StyleSheet.absoluteFillObject} />
 
-      <Trigger {...rect} disabled ref={refs.setReference} collapsable={false} />
+      <Trigger {...rect} ref={refs.setReference} collapsable={false} />
 
       <Card
         animation="quick"
@@ -200,11 +200,7 @@ const Trigger = forwardRef(
         {loading ? (
           <Spinner />
         ) : (
-          <Icon.Dynamic
-            type="Ionicons"
-            name="ellipsis-vertical-outline"
-            color="$buttonTextColor1"
-          />
+          <Icon name="MenuDotsCircle" color="$buttonTextColor1" />
         )}
       </View>
     );

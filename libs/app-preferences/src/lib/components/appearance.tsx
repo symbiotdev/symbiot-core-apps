@@ -23,20 +23,12 @@ export const Appearance = () => {
   const items = useMemo(
     () => [
       {
-        icon: (
-          <Icon.Dynamic
-            type="Ionicons"
-            name="sunny-outline"
-            color="$disabled"
-          />
-        ),
+        icon: <Icon name="Sun" />,
         label: t('shared.preferences.appearance.theme.light'),
         value: 'light',
       },
       {
-        icon: (
-          <Icon.Dynamic type="Ionicons" name="moon-outline" color="$disabled" />
-        ),
+        icon: <Icon name="Moon" />,
         label: t('shared.preferences.appearance.theme.dark'),
         value: 'dark',
       },

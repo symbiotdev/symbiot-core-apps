@@ -3,7 +3,7 @@ import {
   signInAsync,
 } from 'expo-apple-authentication';
 import { useCallback, useState } from 'react';
-import { Button, Icon } from '@symbiot-core-apps/ui';
+import { Button, SocialIcon } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 
 export const AppleAuthButton = ({
@@ -50,14 +50,7 @@ export const AppleAuthButton = ({
     <Button
       loading={loading || pending}
       disabled={disabled}
-      icon={
-        <Icon.Dynamic
-          name="apple"
-          type="FontAwesome"
-          size={20}
-          style={{ marginTop: -2 }}
-        />
-      }
+      icon={<SocialIcon name="Apple" size={20} style={{ marginTop: -4 }} />}
       label={t('auth.workspace.button.continue_with_apple')}
       onPress={onPress}
     />

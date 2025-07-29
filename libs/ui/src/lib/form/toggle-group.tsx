@@ -1,8 +1,8 @@
 import { View, XStack } from 'tamagui';
 import { ReactElement, useCallback, useMemo } from 'react';
 import { RegularText } from '../text/text';
-import { Icon } from '../icons/icon';
 import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
+import { Icon } from '../icons';
 
 export type ToggleGroupItem = {
   label: string;
@@ -95,11 +95,7 @@ const Item = ({
       </RegularText>
 
       {selected && (
-        <Icon.Dynamic
-          type="Ionicons"
-          name="checkmark-outline"
-          color={disabled ? '$disabled' : '$checkboxColor'}
-        />
+        <Icon name="Unread" color={disabled ? '$disabled' : '$checkboxColor'} />
       )}
     </XStack>
   );

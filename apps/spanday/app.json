@@ -14,7 +14,7 @@
     "ios": {
       "appleTeamId": "8WPTDS74WX",
       "bundleIdentifier": "com.spanday.pro.dev",
-      "buildNumber": "23",
+      "buildNumber": "24",
       "googleServicesFile": "./google/development/GoogleService-Info.plist",
       "supportsTablet": true,
       "usesAppleSignIn": true,
@@ -33,7 +33,7 @@
     },
     "android": {
       "package": "com.spanday.pro.dev",
-      "versionCode": 23,
+      "versionCode": 24,
       "icon": "./assets/images/icon/ios-light.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon/adaptive-icon.png",

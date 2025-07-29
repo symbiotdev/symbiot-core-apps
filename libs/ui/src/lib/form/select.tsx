@@ -6,9 +6,9 @@ import { FormField } from './form-field';
 import { Spinner } from '../loading/spinner';
 import { RegularText } from '../text/text';
 import { InitView } from '../view/init-view';
-import { Icon } from '../icons/icon';
 import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import { InputFieldView } from '../view/input-field-view';
+import { Icon } from '../icons';
 
 export type SelectOption = {
   label: string;
@@ -130,10 +130,6 @@ export function Select({
                 {formattedValue}
               </RegularText>
             )}
-
-            {/*{!disabled && (*/}
-            {/*  <Icon.Dynamic type="Ionicons" name="chevron-down-outline" />*/}
-            {/*)}*/}
           </InputFieldView>
         }
       >
@@ -157,9 +153,8 @@ export function Select({
             {(Array.isArray(value)
               ? value.some((valueItem) => valueItem === option.value)
               : value === option.value) && (
-              <Icon.Dynamic
-                type="Ionicons"
-                name="checkmark-outline"
+              <Icon
+                name="Unread"
                 color={disabled ? '$disabled' : '$checkboxColor'}
               />
             )}

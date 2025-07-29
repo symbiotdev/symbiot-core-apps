@@ -13,8 +13,8 @@ import { Day } from 'date-fns/types';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
 import { useScheme } from '@symbiot-core-apps/store';
-import { Icon } from '../icons/icon';
 import { InputFieldView } from '../view/input-field-view';
+import { Icon } from '../icons';
 
 export const DatePicker = ({
   value,
@@ -95,12 +95,8 @@ export const DatePicker = ({
             maxDate={maxDate}
             firstDayOfWeek={weekStartsOn}
             components={{
-              IconPrev: (
-                <Icon.Dynamic type="Ionicons" name="chevron-back-outline" />
-              ),
-              IconNext: (
-                <Icon.Dynamic type="Ionicons" name="chevron-forward-outline" />
-              ),
+              IconPrev: <Icon name="ArrowLeft" />,
+              IconNext: <Icon name="ArrowRight" />,
             }}
             styles={{
               ...defaultStyles,

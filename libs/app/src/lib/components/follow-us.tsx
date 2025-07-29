@@ -1,4 +1,10 @@
-import { FormView, Icon, ListItem, ListItemGroup, PageView } from '@symbiot-core-apps/ui';
+import {
+  FormView,
+  ListItem,
+  ListItemGroup,
+  PageView,
+  SocialIcon,
+} from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import {
   openBrowserAsync,
@@ -34,17 +40,17 @@ export const FollowUs = () => {
         <ListItemGroup>
           <ListItem
             label="@symbiothub"
-            icon={<Icon.Dynamic type="FontAwesome6" name="x-twitter" />}
+            icon={<SocialIcon name="X" />}
             onPress={openTwitter}
           />
           <ListItem
             label="@symbiothub"
-            icon={<Icon.Dynamic type="Ionicons" name="logo-instagram" />}
+            icon={<SocialIcon name="Instagram" />}
             onPress={openInstagram}
           />
           <ListItem
             label="@symbiothub"
-            icon={<Icon.Dynamic type="AntDesign" name="linkedin-square" />}
+            icon={<SocialIcon name="LinkedIn" />}
             onPress={openLinkedin}
           />
         </ListItemGroup>

@@ -1,5 +1,4 @@
 import { Platform, Pressable, StyleSheet } from 'react-native';
-import { Icon } from '../icons/icon';
 import { View, ViewProps, XStack } from 'tamagui';
 import {
   NativeStackHeaderProps,
@@ -10,9 +9,10 @@ import { Blur } from '../blur/blur';
 import { memo, useCallback, useMemo } from 'react';
 import { H4 } from '../text/heading';
 import { ContainerView } from '../view/container-view';
+import { Icon } from '../icons';
 
 const headerHeight = 50;
-const headerButtonSize = 36;
+const headerButtonSize = 24;
 
 export const useScreenHeaderHeight = () => {
   const { top } = useSafeAreaInsets();
@@ -95,12 +95,7 @@ export const Header = memo(
                   })}
                   onPress={navigation.goBack}
                 >
-                  <Icon.Dynamic
-                    type="Ionicons"
-                    name="chevron-back-outline"
-                    color="$buttonTextColor1"
-                    size={24}
-                  />
+                  <Icon name="ArrowLeft" color="$buttonTextColor1" size={24} />
                 </Pressable>
               ))
             }

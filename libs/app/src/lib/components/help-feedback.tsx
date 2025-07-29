@@ -23,7 +23,7 @@ export const HelpFeedback = () => {
         <ListItemGroup>
           <ListItem
             label={t('shared.email')}
-            icon={<Icon.Dynamic type="Ionicons" name="mail-outline" />}
+            icon={<Icon name="Letter" />}
             onPress={openMail}
           />
         </ListItemGroup>

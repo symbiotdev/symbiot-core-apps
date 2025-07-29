@@ -1,9 +1,9 @@
 import { AnimatePresence, View, XStack } from 'tamagui';
 import { ReactElement, useCallback } from 'react';
-import { Icon } from '../icons/icon';
 import { Error } from '../text/custom';
 import { RegularText } from '../text/text';
 import { impactAsync } from 'expo-haptics';
+import { Icon } from '../icons';
 
 export const Checkbox = ({
   value,
@@ -54,9 +54,8 @@ export const Checkbox = ({
                 exitStyle={{ scale: 0, opacity: 0 }}
                 animation="quick"
               >
-                <Icon.Dynamic
-                  name="checkmark-outline"
-                  type="Ionicons"
+                <Icon
+                  name="Unread"
                   size={20}
                   color={disabled ? '$disabled' : '$checkboxColor'}
                 />

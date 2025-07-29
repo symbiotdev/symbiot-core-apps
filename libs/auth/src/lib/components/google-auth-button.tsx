@@ -1,4 +1,4 @@
-import { Button, Icon } from '@symbiot-core-apps/ui';
+import { Button, SocialIcon } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { useCallback, useState } from 'react';
 import {
@@ -58,7 +58,7 @@ export const GoogleAuthButton = ({
     <Button
       loading={loading || pending}
       disabled={disabled}
-      icon={<Icon.Dynamic name="google" type="FontAwesome" size={18} />}
+      icon={<SocialIcon name="Google" size={18} />}
       label={t('auth.workspace.button.continue_with_google')}
       onPress={onPress}
     />

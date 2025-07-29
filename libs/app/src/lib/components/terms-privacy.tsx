@@ -43,17 +43,17 @@ export const TermsPrivacy = () => {
         <ListItemGroup>
           <ListItem
             label={t('shared.docs.terms_conditions')}
-            icon={<Icon.Dynamic type="Ionicons" name="document-text-outline" />}
+            icon={<Icon name="FileText" />}
             onPress={openTermsConditions}
           />
           <ListItem
             label={t('shared.docs.privacy_policy')}
-            icon={<Icon.Dynamic type="Ionicons" name="document-text-outline" />}
+            icon={<Icon name="FileText" />}
             onPress={openPrivacyPolicyConditions}
           />
           <ListItem
             label="OOS Notice"
-            icon={<Icon.Dynamic type="Ionicons" name="document-text-outline" />}
+            icon={<Icon name="FileText" />}
             onPress={openOOS}
           />
         </ListItemGroup>

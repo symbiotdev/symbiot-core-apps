@@ -5,7 +5,6 @@ import { ImageSource } from 'expo-image';
 import { Link } from '../text/custom';
 import { useTranslation } from 'react-i18next';
 import { ListItem } from '../list/list-item';
-import { Icon } from '../icons/icon';
 import { Spinner } from '../loading/spinner';
 import { useCallback, useRef, useState } from 'react';
 import {
@@ -21,6 +20,7 @@ import { useCameraPermissions } from 'expo-camera';
 import { ConfirmAlert, ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
 import { filesize } from 'filesize';
 import { Linking, Platform } from 'react-native';
+import { Icon } from '../icons';
 
 export const maxAvatarFileSize = 10485760;
 const pickerOptions: ImagePickerOptions = {
@@ -179,7 +179,7 @@ export const AvatarPicker = ({
       >
         <View paddingVertical="$2" paddingHorizontal="$5" gap="$2">
           <ListItem
-            icon={<Icon.Dynamic type="Ionicons" name="image-outline" />}
+            icon={<Icon name="Gallery" />}
             label={t(
               'shared.preferences.avatar.action.choose_from_gallery.label',
             )}
@@ -194,7 +194,7 @@ export const AvatarPicker = ({
 
           {Platform.OS !== 'web' && (
             <ListItem
-              icon={<Icon.Dynamic type="Ionicons" name="camera-outline" />}
+              icon={<Icon name="Camera" />}
               label={t('shared.preferences.avatar.action.take_phone.label')}
               disabled={cameraPermissions?.status === PermissionStatus.DENIED}
               iconAfter={
@@ -209,7 +209,7 @@ export const AvatarPicker = ({
           {removable && (
             <ListItem
               color="$error"
-              icon={<Icon.Dynamic type="Ionicons" name="trash-outline" />}
+              icon={<Icon name="TrashBinMinimalistic" />}
               label={t('shared.preferences.avatar.action.delete.label')}
               onPress={deleteImage}
             />

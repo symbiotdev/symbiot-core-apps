@@ -5,7 +5,7 @@ import {
 } from '@symbiot.dev/react-native-timegrid-pro';
 import { Platform, useWindowDimensions } from 'react-native';
 import { useDateLocale } from '@symbiot-core-apps/i18n';
-import { useCallback, useMemo, useRef } from 'react';
+import { ReactElement, Ref, useCallback, useMemo } from 'react';
 import { useTheme, View, XStack } from 'tamagui';
 import {
   DateHelper,
@@ -14,24 +14,26 @@ import {
   useScreenOrientation,
   useScreenSize,
 } from '@symbiot-core-apps/shared';
-import { MediumText, RegularText } from '../text/text';
+import { RegularText } from '../text/text';
 import { H3 } from '../text/heading';
 import { Orientation } from 'expo-screen-orientation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { DeviceType } from 'expo-device';
 import { Day } from 'date-fns/types';
 
-const snappable = Platform.OS !== 'web';
-
 export const Calendar = ({
   selectedDate,
+  timeGridRef,
   gridBottomOffset = 0,
   weekStartsOn,
+  renderHeaderSafeArea,
   onChangeDate,
 }: {
   selectedDate: Date;
+  timeGridRef?: Ref<TimeGridRef>;
   gridBottomOffset?: number;
   weekStartsOn?: Day;
+  renderHeaderSafeArea?: () => ReactElement;
   onChangeDate: TimeGridActionsProps['onChangeDate'];
 }) => {
   const locale = useDateLocale();
@@ -42,7 +44,10 @@ export const Calendar = ({
   const { isSmall } = useScreenSize();
   const { now } = useNativeNow();
 
-  const ref = useRef<TimeGridRef>(null);
+  const snappable = useMemo(
+    () => Platform.OS !== 'web' && orientation === Orientation.PORTRAIT_UP,
+    [orientation],
+  );
 
   const paddings = useMemo(
     () => ({
@@ -67,40 +72,6 @@ export const Calendar = ({
         : 3,
     [isSmall, orientation],
   );
-
-  const goToday = useCallback(() => {
-    ref.current?.toDatetime(new Date(), {
-      animated: true,
-    });
-  }, []);
-
-  const renderHeaderSafeArea = useCallback(() => {
-    const currentYear = now.getFullYear();
-    const selectedDateYear = selectedDate.getFullYear();
-    const to = DateHelper.addDays(selectedDate, numberOfDays);
-    const isToday = DateHelper.isSameDay(now, selectedDate);
-    const format =
-      `MMM${currentYear !== selectedDateYear || to.getFullYear() !== selectedDateYear ? ' yy' : ''}`.trim();
-    const date = `${DateHelper.format(selectedDate, format)} ${
-      !DateHelper.isSameMonth(selectedDate, to)
-        ? `\n${DateHelper.format(to, format)}`
-        : ''
-    }`
-      .trim()
-      .replace(/\./g, '');
-
-    return (
-      <MediumText
-        fontSize={12}
-        textTransform="uppercase"
-        margin="auto"
-        color={!isToday ? '$calendarTodayColor' : '$calendarTimeColor'}
-        textAlign="center"
-      >
-        {date}
-      </MediumText>
-    );
-  }, [now, numberOfDays, selectedDate]);
 
   const renderDayHeader = useCallback(
     ({ date }: { date: Date }) => {
@@ -154,7 +125,7 @@ export const Calendar = ({
         draggable
         hapticable
         gridTopOffset={5}
-        ref={ref}
+        ref={timeGridRef}
         snappable={snappable}
         width={adjustedWidth}
         weekStartsOn={weekStartsOn}
@@ -165,8 +136,8 @@ export const Calendar = ({
         horizontalLineSize={1}
         numberOfDays={numberOfDays}
         dayHeaderHeight={60}
-        renderDayHeader={renderDayHeader}
         renderHeaderSafeArea={renderHeaderSafeArea}
+        renderDayHeader={renderDayHeader}
         renderNowIndicator={renderNowIndicator}
         theme={{
           backgroundColor: theme.background?.val,
@@ -178,7 +149,6 @@ export const Calendar = ({
           timelineTextColor: theme.calendarTimeColor?.val,
         }}
         onChangeDate={onChangeDate}
-        onHeaderSafeAreaPress={goToday}
       />
     </View>
   );

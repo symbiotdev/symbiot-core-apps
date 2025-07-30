@@ -22,6 +22,7 @@
     "@tamagui/config": "*",
     "@tanstack/react-query": "*",
     "@floating-ui/react-native": "*",
+    "@symbiot.dev/react-native-heatmap": "*",
     "tamagui": "*",
     "axios": "*",
     "socket.io-client": "*",

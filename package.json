@@ -33,6 +33,7 @@
     "@react-navigation/bottom-tabs": "^7.3.10",
     "@react-navigation/elements": "^2.5.2",
     "@react-navigation/native": "^7.1.6",
+    "@symbiot.dev/react-native-heatmap": "^1.0.0",
     "@symbiot.dev/react-native-timegrid-pro": "file:symbiot.dev-react-native-timegrid-pro-0.2.5.tgz",
     "@tamagui/config": "1.126.16",
     "@tanstack/react-query": "^5.83.0",

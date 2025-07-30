@@ -20,7 +20,7 @@ export const Language = () => {
   const items = useMemo(
     () =>
       appLanguagesOptions.map(({ flag, code, name }) => ({
-        icon: <RegularText lineHeight="100%">{flag}</RegularText>,
+        icon: <RegularText lineHeight="100%" fontSize={28}>{flag}</RegularText>,
         label: name,
         value: code,
       })),

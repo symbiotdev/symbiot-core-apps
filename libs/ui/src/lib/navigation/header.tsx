@@ -11,8 +11,8 @@ import { H4 } from '../text/heading';
 import { ContainerView } from '../view/container-view';
 import { Icon } from '../icons';
 
-const headerHeight = 50;
-const headerButtonSize = 24;
+export const headerHeight = 50;
+export const headerButtonSize = 24;
 
 export const useScreenHeaderHeight = () => {
   const { top } = useSafeAreaInsets();
@@ -115,7 +115,7 @@ export const Header = memo(
 const SideElement = memo((props: ViewProps) => (
   <View
     zIndex={1}
-    width={headerButtonSize}
+    minWidth={headerButtonSize}
     height={headerButtonSize}
     justifyContent="center"
     alignItems="center"

@@ -18,7 +18,11 @@ import { eachDayOfInterval } from 'date-fns/eachDayOfInterval';
 import { isAfter } from 'date-fns/isAfter';
 import { differenceInYears } from 'date-fns/differenceInYears';
 import { addYears } from 'date-fns/addYears';
-import { getDateLocale } from '@symbiot-core-apps/i18n';
+import {
+  AppLanguage,
+  DATE_FNS_SUPPORTED_LANGUAGES,
+  getDateLocale,
+} from '@symbiot-core-apps/i18n';
 import { isSameMonth } from 'date-fns/isSameMonth';
 import { toDate } from 'date-fns/toDate';
 
@@ -59,7 +63,7 @@ export const DateHelper = {
     startOfWeek(date, {
       weekStartsOn,
     }),
-  format: (date: Date, formatStr?: string) => {
+  format: (date: Date, formatStr?: string, lang?: AppLanguage) => {
     if (formatStr === 'p' && getDateLocale().code === 'uk') {
       formatStr = 'HH:mm';
     } else if (!formatStr) {
@@ -67,7 +71,7 @@ export const DateHelper = {
     }
 
     return format(date, formatStr, {
-      locale: getDateLocale(),
+      locale: lang ? DATE_FNS_SUPPORTED_LANGUAGES[lang] : getDateLocale(),
     });
   },
   getWeekdays: (props?: { formatStr?: string; weekStartsOn?: Day }) => {

@@ -1,5 +1,5 @@
-import { spawn } from 'child_process';
 import {
+  addEnvToEasConfig,
   getApp,
   getBuildCommand,
   getBuildTo,
@@ -9,9 +9,10 @@ import {
   getPlatform,
   getPrebuildCommand,
   getSubmitCommand,
-  updateAppConfig,
-  updateEasConfig,
+  mergeAppAssets,
+  removeEnvFromEasConfig,
 } from './app.mjs';
+import { spawn } from 'child_process';
 
 (async () => {
   console.log(`Deploying... 📦⬆️`);
@@ -21,17 +22,19 @@ import {
   const platform = await getPlatform(true);
   const buildTo = await getBuildTo(env);
   const incrementType = await getIncrementType(env);
-
+  const buildApp = 'service-based-business';
   const profile = getEasProfile(env.split('_')[0], buildTo);
-  const prebuild = getPrebuildCommand(app, platform);
-  const build = getBuildCommand(app, profile, platform, buildTo);
-  const submit = getSubmitCommand(app, profile, build);
+  const prebuild = getPrebuildCommand(buildApp, platform);
+  const build = getBuildCommand(buildApp, profile, platform, buildTo);
+  const submit = getSubmitCommand(buildApp, profile, build);
 
-  updateAppConfig(app, env, incrementType);
-  updateEasConfig(app, env, profile);
+  await mergeAppAssets(app, buildApp, env, incrementType);
+  addEnvToEasConfig(buildApp, env, profile);
 
   spawn(`nx reset && ${prebuild} && ${build} && ${submit}`, {
     stdio: 'inherit',
     shell: true,
   });
+
+  removeEnvFromEasConfig(buildApp, profile);
 })();

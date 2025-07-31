@@ -1,11 +1,11 @@
-import { spawn } from 'child_process';
 import {
   getApp,
   getEnv,
   getPlatform,
   getStartCommand,
-  updateAppConfig,
+  mergeAppAssets,
 } from './app.mjs';
+import { spawn } from 'child_process';
 
 (async () => {
   console.log(`Starting... 🚀🚀`);
@@ -13,10 +13,11 @@ import {
   const app = await getApp();
   const env = await getEnv();
   const platform = await getPlatform();
+  const buildApp = 'service-based-business';
 
-  updateAppConfig(app, env);
+  await mergeAppAssets(app, buildApp, env);
 
-  spawn(getStartCommand(app, env, platform), {
+  spawn(getStartCommand(buildApp, env, platform), {
     stdio: 'inherit',
     shell: true,
   });

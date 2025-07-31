@@ -1,8 +1,9 @@
-import { select } from '@inquirer/prompts';
-import fs from 'fs';
-import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
 import path from 'path';
+import dotenv from 'dotenv';
+import { select } from '@inquirer/prompts';
+import { fileURLToPath } from 'url';
+import { copyFiles, createEnvFile } from './utils.mjs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,10 +20,6 @@ export const getApp = async () =>
       {
         name: 'Spanday',
         value: 'spanday',
-      },
-      {
-        name: 'Symbiot',
-        value: 'symbiot',
       },
     ],
   }));
@@ -102,39 +99,41 @@ export const getStartCommand = (app, env, platform) => {
           : '--variant=release'
         : '';
 
-    return `nx reset && ${prebuild} && NODE_ENV=${env} nx run ${app}:run-${platform} -- --device ${buildType}`;
+    return `nx reset && ${prebuild} && nx run ${app}:run-${platform} -- --device ${buildType}`;
   } else {
-    const additionalParams = env === 'production' ? '-- --no-dev --minify --clear' : '-- --clear';
+    const additionalParams =
+      env === 'production' ? '-- --no-dev --minify --clear' : '-- --clear';
 
-    return `nx reset && NODE_ENV=${env} nx start ${app} ${additionalParams}`;
+    return `nx reset && nx start ${app} ${additionalParams}`;
   }
 };
 
-export const getBuildTo = (env) => select({
-  message: 'Build',
-  choices: [
-    {
-      name: 'Local',
-      value: 'local',
-    },
-    {
-      name: 'EAS',
-      value: 'eas',
-    },
-    {
-      name: 'EAS Device',
-      value: 'device',
-    },
-    ...(env === 'development'
-      ? []
-      : [
-        {
-          name: 'Store',
-          value: 'store',
-        },
-      ]),
-  ],
-})
+export const getBuildTo = (env) =>
+  select({
+    message: 'Build',
+    choices: [
+      {
+        name: 'Local',
+        value: 'local',
+      },
+      {
+        name: 'EAS',
+        value: 'eas',
+      },
+      {
+        name: 'EAS Device',
+        value: 'device',
+      },
+      ...(env === 'development'
+        ? []
+        : [
+            {
+              name: 'Store',
+              value: 'store',
+            },
+          ]),
+    ],
+  });
 
 export const getIncrementType = (env) =>
   env === 'production' &&
@@ -166,68 +165,95 @@ export const getIncrementType = (env) =>
 
 export const getEnvConfig = (app, env) =>
   dotenv.parse(
-    fs.readFileSync(`${__dirname}/../../apps/${app}/.env.${env}`, 'utf8')
+    readFileSync(`${__dirname}/../../apps/${app}/.env.${env}`, 'utf8'),
   );
 
-export const updateAppConfig = (app, env, incrementType) => {
-  const appConfigPath = `${__dirname}/../../apps/${app}/app.json`;
-  const appConfig = fs.readFileSync(appConfigPath, 'utf8');
-  const updatedAppConfig = JSON.parse(appConfig);
-  const envConfig = getEnvConfig(app, env);
-
-  updatedAppConfig.expo.name = envConfig['EXPO_PUBLIC_APP_NAME'];
-
-  updatedAppConfig.expo.ios.bundleIdentifier = envConfig['EXPO_PUBLIC_APP_ID'];
-  updatedAppConfig.expo.ios.googleServicesFile = `./google/${envConfig['EXPO_PUBLIC_APP_VARIANT']}/GoogleService-Info.plist`;
-
-  updatedAppConfig.expo.android.package = envConfig['EXPO_PUBLIC_APP_ID'];
-  updatedAppConfig.expo.android.googleServicesFile = `./google/${envConfig['EXPO_PUBLIC_APP_VARIANT']}/google-services.json`;
+export const updateAppJson = async (app, dest, incrementType) => {
+  const appConfigPath = `${__dirname}/../../app-assets/${app}/config/app.json`;
+  const appConfig = JSON.parse(readFileSync(appConfigPath, 'utf8'));
+  const destConfigPath = `${dest}/app.json`;
+  const destConfig = JSON.parse(readFileSync(destConfigPath, 'utf8'));
+  const envConfig = dotenv.parse(readFileSync(`${dest}/.env`, 'utf8'));
 
   if (incrementType) {
-    updatedAppConfig.expo.version = updatedAppConfig.expo.version.replace(
-      /version:\s*'(\d+)\.(\d+)\.(\d+)'/,
-      (match, major, minor, patch) => {
-        if (incrementType === 'major') {
-          major = parseInt(major, 10) + 1;
-        }
+    appConfig.expo.version = appConfig.expo.version
+      .split('.')
+      .map((value, index) =>
+        (incrementType === 'major' && index === 0) ||
+        (incrementType === 'minor' && index === 1) ||
+        (incrementType === 'patch' && index === 2)
+          ? Number(value) + 1
+          : value,
+      )
+      .join('.');
 
-        if (incrementType === 'minor') {
-          minor = parseInt(minor, 10) + 1;
-        }
-
-        if (incrementType === 'patch') {
-          patch = parseInt(patch, 10) + 1;
-        }
-
-        return `version: '${major}.${minor}.${patch}'`;
-      }
+    appConfig.expo.ios.buildNumber = String(
+      Number(appConfig.expo.ios.buildNumber) + 1,
     );
+    appConfig.expo.android.versionCode += 1;
 
-    updatedAppConfig.expo.ios.buildNumber = String(
-      parseInt(updatedAppConfig.expo.ios.buildNumber, 10) + 1
-    );
-    updatedAppConfig.expo.android.versionCode =
-      updatedAppConfig.expo.android.versionCode + 1;
+    writeFileSync(appConfigPath, JSON.stringify(appConfig, null, 2), 'utf8');
   }
 
-  fs.writeFileSync(
-    appConfigPath,
-    JSON.stringify(updatedAppConfig, null, 2),
-    'utf8'
-  );
+  destConfig.expo.name = appConfig.expo.name;
+  destConfig.expo.slug = appConfig.expo.slug;
+  destConfig.expo.scheme = appConfig.expo.scheme;
+  destConfig.expo.version = appConfig.expo.version;
+  destConfig.expo.extra = appConfig.expo.extra;
+  destConfig.expo.ios.bundleIdentifier = envConfig['EXPO_PUBLIC_APP_ID'];
+  destConfig.expo.ios.buildNumber = appConfig.expo.ios.buildNumber;
+  destConfig.expo.android.package = envConfig['EXPO_PUBLIC_APP_ID'];
+  destConfig.expo.android.versionCode = appConfig.expo.android.versionCode;
+
+  writeFileSync(destConfigPath, JSON.stringify(destConfig, null, 2), 'utf8');
 };
 
-export const updateEasConfig = (app, env, profile) => {
-  const envConfig = getEnvConfig(app, env);
+export const mergeAppAssets = async (baseApp, buildApp, env, incrementType) => {
+  const appAssetsPath = `${__dirname}/../../app-assets/${baseApp}`;
+  const appPath = `${__dirname}/../../apps/${buildApp}`;
+
+  await copyFiles(`${appAssetsPath}/assets`, `${appPath}/assets`);
+  console.log(`📁 Assets copied! ➕`);
+  await copyFiles(
+    `${appAssetsPath}/google/${env.split('_')[0]}/`,
+    `${appPath}/google`,
+  );
+  console.log(`📁 Google copied! ➕`);
+  await copyFiles(`${appAssetsPath}/theme`, `${appPath}/src/theme`);
+  console.log(`📁 Theme applied! ➕`);
+  await createEnvFile(`${appAssetsPath}/env/.env.${env}`, `${appPath}/.env`);
+  console.log(`📁 .env created! ➕`);
+  await updateAppJson(baseApp, appPath, incrementType);
+  console.log(`📁 app.json updated! ➕`);
+};
+
+export const addEnvToEasConfig = (app, env, profile) => {
+  const envConfig = dotenv.parse(
+    readFileSync(`${__dirname}/../../apps/${app}/.env`, 'utf8'),
+  );
   const easConfigPath = `${__dirname}/../../apps/${app}/eas.json`;
-  const easConfig = fs.readFileSync(easConfigPath, 'utf8');
+  const easConfig = readFileSync(easConfigPath, 'utf8');
   const updatedEasConfig = JSON.parse(easConfig);
 
   updatedEasConfig['build'][profile.split('_')[0]]['env'] = envConfig;
 
-  fs.writeFileSync(
+  writeFileSync(
     easConfigPath,
     JSON.stringify(updatedEasConfig, null, 2),
-    'utf8'
+    'utf8',
+  );
+};
+
+export const removeEnvFromEasConfig = (app, profile) => {
+  const easConfigPath = `${__dirname}/../../apps/${app}/eas.json`;
+  const easConfig = readFileSync(easConfigPath, 'utf8');
+  const updatedEasConfig = JSON.parse(easConfig);
+
+  delete updatedEasConfig['build'][profile.split('_')[0]]['env'];
+
+  writeFileSync(
+    easConfigPath,
+    JSON.stringify(updatedEasConfig, null, 2),
+    'utf8',
   );
 };

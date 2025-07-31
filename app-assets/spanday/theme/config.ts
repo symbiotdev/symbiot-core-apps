@@ -1,4 +1,3 @@
-
 const primary100 = '#7B5AED';
 const primary60 = '#7B5AED60';
 const primary20 = '#7B5AED20';
@@ -31,7 +30,7 @@ export const lightTheme = {
   calendarTimeColor: '#777777',
   calendarTodayColor: primary100,
   calendarNowIndicatorColor: primary100,
-  switchSelectedColor: primary100,
+  switchSelectedColor: primary100
 };
 
 export const darkTheme = {
@@ -62,5 +61,5 @@ export const darkTheme = {
   calendarTimeColor: '#777777',
   calendarTodayColor: primary100,
   calendarNowIndicatorColor: primary100,
-  switchSelectedColor: primary100,
+  switchSelectedColor: primary100
 };

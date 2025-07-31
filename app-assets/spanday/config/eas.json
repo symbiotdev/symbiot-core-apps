@@ -1,0 +1,17 @@
+{
+  "name": "Spanday PRO",
+  "slug": "spanday-pro",
+  "scheme": "spanday-pro",
+  "version": "2.0.0",
+  "ios": {
+    "buildNumber": "25"
+  },
+  "android": {
+    "versionCode": 25
+  },
+  "extra": {
+    "eas": {
+      "projectId": "745568dc-a1a7-4c08-ac3c-ac87cd97a948"
+    }
+  }
+}

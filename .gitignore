@@ -64,7 +64,9 @@ cache/
 .nx/
 apps/**/.env
 apps/**/.env.*
-assets/**/.env
-assets/**/.env.*
+app-assets/**/.env
+app-assets/**/.env.*
 /apps/**/ios/**
 /apps/**/android/**
+/apps/service-based-business/assets/**
+/apps/service-based-business/google/**

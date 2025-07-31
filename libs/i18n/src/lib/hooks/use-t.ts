@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useCallback } from 'react';
 
-const appNamespace = process.env['EXPO_PUBLIC_APP_NAMESPACE'];
+const appNamespace = process.env['EXPO_PUBLIC_APP_TYPE'];
 
 export const useT = () => {
   const { t, i18n } = useTranslation();

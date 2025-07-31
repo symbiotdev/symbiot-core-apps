@@ -70,3 +70,4 @@ app-assets/**/.env.*
 /apps/**/android/**
 /apps/service-based-business/assets/**
 /apps/service-based-business/google/**
+/apps/service-based-business/src/theme/**

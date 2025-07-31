@@ -89,7 +89,7 @@ export const Auth = ({
             <View gap="$5" alignItems="center">
               {logo}
 
-              <View gap="$2" maxWidth={300}>
+              <View gap="$2" maxWidth={350}>
                 <H2 textAlign="center" color={textColor}>
                   {title}
                 </H2>

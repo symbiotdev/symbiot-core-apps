@@ -44,7 +44,7 @@ export const ShowNativeLoadingAlert = (options?: { title: unknown }) => {
     title:
       typeof options === 'object' && options.title
         ? String(options.title)
-        : i18n.t('shared.loading'),
+        : i18n.t('loading'),
     duration: 60,
     preset: 'spinner',
     shouldDismissByTap: false,

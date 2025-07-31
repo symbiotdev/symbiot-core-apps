@@ -5,16 +5,16 @@ import {
   Select,
   Spinner,
 } from '@symbiot-core-apps/ui';
-import { useTranslation } from 'react-i18next';
 import { useCallback, useEffect, useMemo } from 'react';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { useMeUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { Day } from 'date-fns/types';
+import { useT } from '@symbiot-core-apps/i18n';
 
 export const Calendar = () => {
   const navigation = useNavigation();
-  const { t } = useTranslation();
+  const { t } = useT();
   const { me, updatePreferences$, updating } = useMeUpdater();
 
   const weekdaysOptions = useMemo(() => DateHelper.getWeekdays(), []);
@@ -34,7 +34,7 @@ export const Calendar = () => {
     <PageView scrollable withHeaderHeight>
       <FormView>
         <Select
-          label={t('shared.preferences.calendar.week_starts_on.label')}
+          label={t('preferences.calendar.week_starts_on.label')}
           value={me?.preferences?.weekStartsOn}
           options={weekdaysOptions}
           onChange={onChangeWeekdayStartsOn as onChangeSelect}

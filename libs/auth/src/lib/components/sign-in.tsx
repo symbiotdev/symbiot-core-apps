@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import { AuthFormView } from './auth-form-view';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -11,9 +10,10 @@ import { PasswordPattern } from '@symbiot-core-apps/shared';
 import { ReactElement, useCallback } from 'react';
 import { Input, Link, RegularText } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
+import { useT } from '@symbiot-core-apps/i18n';
 
 export const SignIn = ({ logo }: { logo: ReactElement }) => {
-  const { t } = useTranslation();
+  const { t } = useT();
   const { mutateAsync, error } = useAccountAuthSignInQuery();
 
   const {
@@ -38,16 +38,16 @@ export const SignIn = ({ logo }: { logo: ReactElement }) => {
             .required(t('auth.sign_in.form.password.error.required'))
             .matches(
               PasswordPattern,
-              t('auth.sign_in.form.password.error.invalid_format')
+              t('auth.sign_in.form.password.error.invalid_format'),
             ),
         })
-        .required()
+        .required(),
     ),
   });
 
   const onSubmit = useCallback(
     (data: AccountSignInData) => mutateAsync(data),
-    [mutateAsync]
+    [mutateAsync],
   );
 
   const signUp = useCallback(() => {
@@ -62,7 +62,7 @@ export const SignIn = ({ logo }: { logo: ReactElement }) => {
     <AuthFormView
       title={t('auth.sign_in.title')}
       subtitle={t('auth.sign_in.subtitle')}
-      buttonLabel={t('shared.continue')}
+      buttonLabel={t('continue')}
       logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}

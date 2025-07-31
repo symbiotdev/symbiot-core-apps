@@ -5,14 +5,14 @@ import { GoogleAuthButton } from './google-auth-button';
 import { isAvailableAsync } from 'expo-apple-authentication';
 import { Platform } from 'react-native';
 import { Button, Error, FormView, Icon } from '@symbiot-core-apps/ui';
-import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { useAccountAuthSignInWithFirebaseQuery } from '@symbiot-core-apps/api';
+import { useT } from '@symbiot-core-apps/i18n';
 
 const isGoogleAuthAvailable = Platform.OS !== 'web';
 
 export const SignInButtons = () => {
-  const { t } = useTranslation();
+  const { t } = useT();
   const {
     mutate: appleAuth,
     error: appleAuthError,
@@ -46,7 +46,7 @@ export const SignInButtons = () => {
       if (user) {
         return user.getIdToken();
       } else {
-        const errorText = t('shared.error.unknown_error');
+        const errorText = t('error.unknown_error');
 
         setError(errorText);
 

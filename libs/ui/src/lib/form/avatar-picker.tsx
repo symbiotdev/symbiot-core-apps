@@ -3,7 +3,6 @@ import { Avatar } from '../media/avatar';
 import { Popover, View, ViewProps } from 'tamagui';
 import { ImageSource } from 'expo-image';
 import { Link } from '../text/custom';
-import { useTranslation } from 'react-i18next';
 import { ListItem } from '../list/list-item';
 import { Spinner } from '../loading/spinner';
 import { useCallback, useRef, useState } from 'react';
@@ -21,6 +20,7 @@ import { ConfirmAlert, ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
 import { filesize } from 'filesize';
 import { Linking, Platform } from 'react-native';
 import { Icon } from '../icons';
+import { useT } from '@symbiot-core-apps/i18n';
 
 export const maxAvatarFileSize = 10485760;
 const pickerOptions: ImagePickerOptions = {
@@ -52,7 +52,7 @@ export const AvatarPicker = ({
   onAttach: (images: ImagePickerAsset[]) => void;
   onRemove?: () => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useT();
   const [galleryPermissions, requestGalleryPermissions] =
     useMediaLibraryPermissions();
   const [cameraPermissions, requestCameraPermissions] = useCameraPermissions();
@@ -69,7 +69,7 @@ export const AvatarPicker = ({
     if (galleryPermissions?.status === PermissionStatus.DENIED) {
       ShowNativeFailedAlert({
         text: t(
-          'shared.preferences.avatar.action.choose_from_gallery.error.permissions_denied',
+          'preferences.avatar.action.choose_from_gallery.error.permissions_denied',
         ),
       });
 
@@ -92,7 +92,7 @@ export const AvatarPicker = ({
     if (cameraPermissions?.status === PermissionStatus.DENIED) {
       ShowNativeFailedAlert({
         text: t(
-          'shared.preferences.avatar.action.take_phone.error.permissions_denied',
+          'preferences.avatar.action.take_phone.error.permissions_denied',
         ),
       });
 
@@ -128,7 +128,7 @@ export const AvatarPicker = ({
           )
         ) {
           ShowNativeFailedAlert({
-            text: t('shared.error.validation_error.media_size', {
+            text: t('error.validation_error.media_size', {
               size: filesize(maxAvatarFileSize, {
                 base: 2,
                 standard: 'jedec',
@@ -150,8 +150,8 @@ export const AvatarPicker = ({
     popoverRef.current?.close?.();
 
     ConfirmAlert({
-      title: t('shared.preferences.avatar.action.delete.confirm.title'),
-      message: t('shared.preferences.avatar.action.delete.confirm.message'),
+      title: t('preferences.avatar.action.delete.confirm.title'),
+      message: t('preferences.avatar.action.delete.confirm.message'),
       callback: () => {
         onRemove?.();
       },
@@ -173,7 +173,7 @@ export const AvatarPicker = ({
             <Spinner width={22} height={22} />
           ) : (
             <Link textAlign="center" pressStyle={{ opacity: 0.8 }}>
-              {t('shared.preferences.avatar.trigger.label')}
+              {t('preferences.avatar.trigger.label')}
             </Link>
           )
         }
@@ -181,9 +181,7 @@ export const AvatarPicker = ({
         <View paddingVertical="$2" paddingHorizontal="$5" gap="$2">
           <ListItem
             icon={<Icon name="Gallery" />}
-            label={t(
-              'shared.preferences.avatar.action.choose_from_gallery.label',
-            )}
+            label={t('preferences.avatar.action.choose_from_gallery.label')}
             disabled={galleryPermissions?.status === PermissionStatus.DENIED}
             iconAfter={
               galleryPermissions?.status === PermissionStatus.DENIED && (
@@ -196,7 +194,7 @@ export const AvatarPicker = ({
           {Platform.OS !== 'web' && (
             <ListItem
               icon={<Icon name="Camera" />}
-              label={t('shared.preferences.avatar.action.take_phone.label')}
+              label={t('preferences.avatar.action.take_phone.label')}
               disabled={cameraPermissions?.status === PermissionStatus.DENIED}
               iconAfter={
                 cameraPermissions?.status === PermissionStatus.DENIED && (
@@ -211,7 +209,7 @@ export const AvatarPicker = ({
             <ListItem
               color="$error"
               icon={<Icon name="TrashBinMinimalistic" />}
-              label={t('shared.preferences.avatar.action.delete.label')}
+              label={t('preferences.avatar.action.delete.label')}
               onPress={deleteImage}
             />
           )}
@@ -222,11 +220,11 @@ export const AvatarPicker = ({
 };
 
 const AppSettings = () => {
-  const { t } = useTranslation();
+  const { t } = useT();
 
   return (
     <Link cursor="pointer" onPress={Linking.openSettings}>
-      {t('shared.settings')}
+      {t('settings')}
     </Link>
   );
 };

@@ -4,17 +4,9 @@ import {
   useAccountAuthResendForgotPasswordCodeQuery,
   useAccountAuthVerifyForgotPasswordQuery,
 } from '@symbiot-core-apps/api';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 
-export const VerifyForgotPassword = ({
-  secret,
-  email,
-  logo,
-}: {
-  secret: string;
-  email: string;
-  logo: ReactElement;
-}) => {
+export const VerifyForgotPassword = ({ logo }: { logo: ReactElement }) => {
   const {
     mutateAsync: resendCode,
     error: resendCodeError,
@@ -25,6 +17,10 @@ export const VerifyForgotPassword = ({
     error: verifyError,
     isPending: isVerifying,
   } = useAccountAuthVerifyForgotPasswordQuery();
+  const { secret, email } = useLocalSearchParams<{
+    secret: string;
+    email: string;
+  }>();
 
   const onChange = useCallback(
     async (code: string) => {
@@ -42,7 +38,7 @@ export const VerifyForgotPassword = ({
         },
       });
     },
-    [email, secret, verify]
+    [email, secret, verify],
   );
 
   const onResend = useCallback(
@@ -51,7 +47,7 @@ export const VerifyForgotPassword = ({
         secret,
         email,
       }),
-    [email, resendCode, secret]
+    [email, resendCode, secret],
   );
 
   return (

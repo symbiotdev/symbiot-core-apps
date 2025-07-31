@@ -1,0 +1,9 @@
+{
+  "name": "service-based-business",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/service-based-business/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project service-based-business --web",
+  "targets": {}
+}

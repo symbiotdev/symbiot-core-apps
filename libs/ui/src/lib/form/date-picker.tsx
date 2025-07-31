@@ -10,11 +10,11 @@ import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import { FormField } from './form-field';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { Day } from 'date-fns/types';
-import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
 import { useScheme } from '@symbiot-core-apps/state';
 import { InputFieldView } from '../view/input-field-view';
 import { Icon } from '../icons';
+import { useT } from '@symbiot-core-apps/i18n';
 
 export const DatePicker = ({
   value,
@@ -43,7 +43,7 @@ export const DatePicker = ({
 }) => {
   const theme = useTheme();
   const { scheme } = useScheme();
-  const { i18n } = useTranslation();
+  const { lang } = useT();
   const defaultStyles = useDefaultStyles(scheme);
 
   const ref = useRef<Popover>(null);
@@ -89,7 +89,7 @@ export const DatePicker = ({
             showOutsideDays
             mode="single"
             date={value ?? undefined}
-            locale={i18n.language}
+            locale={lang}
             startDate={startDate}
             minDate={minDate}
             maxDate={maxDate}

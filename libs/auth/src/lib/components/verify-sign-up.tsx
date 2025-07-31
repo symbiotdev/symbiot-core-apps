@@ -4,16 +4,13 @@ import {
   useAccountAuthResendSignUpCodeQuery,
   useAccountAuthVerifySignUpQuery,
 } from '@symbiot-core-apps/api';
+import { useLocalSearchParams } from 'expo-router';
 
-export const VerifySignUp = ({
-  secret,
-  email,
-  logo,
-}: {
-  secret: string;
-  email: string;
-  logo: ReactElement;
-}) => {
+export const VerifySignUp = ({ logo }: { logo: ReactElement }) => {
+  const { secret, email } = useLocalSearchParams<{
+    secret: string;
+    email: string;
+  }>();
   const {
     mutateAsync: resendCode,
     error: resendCodeError,
@@ -31,7 +28,7 @@ export const VerifySignUp = ({
         code,
         secret,
       }),
-    [secret, verify]
+    [secret, verify],
   );
 
   const onResend = useCallback(
@@ -40,7 +37,7 @@ export const VerifySignUp = ({
         secret,
         email,
       }),
-    [email, resendCode, secret]
+    [email, resendCode, secret],
   );
 
   return (

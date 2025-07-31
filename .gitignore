@@ -64,5 +64,7 @@ cache/
 .nx/
 apps/**/.env
 apps/**/.env.*
+assets/**/.env
+assets/**/.env.*
 /apps/**/ios/**
 /apps/**/android/**

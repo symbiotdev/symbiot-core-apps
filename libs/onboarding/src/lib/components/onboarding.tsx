@@ -5,7 +5,6 @@ import { Button, H2, RegularText } from '@symbiot-core-apps/ui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image, ImageSource } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useTranslation } from 'react-i18next';
 import {
   Gesture,
   GestureDetector,
@@ -20,6 +19,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { impactAsync } from 'expo-haptics';
 import { useOnboardingState } from '@symbiot-core-apps/state';
+import { useT } from '@symbiot-core-apps/i18n';
 
 export type OnboardingSlide = {
   id: string;
@@ -30,7 +30,7 @@ export type OnboardingSlide = {
 
 export const Onboarding = memo(({ slides }: { slides: OnboardingSlide[] }) => {
   const { bottom, left, right } = useSafeAreaInsets();
-  const { t } = useTranslation();
+  const { t } = useT();
   const { width } = useWindowDimensions();
   const { finish } = useOnboardingState();
 
@@ -51,7 +51,7 @@ export const Onboarding = memo(({ slides }: { slides: OnboardingSlide[] }) => {
         duration: 200,
       });
     },
-    [activeSlideIndex]
+    [activeSlideIndex],
   );
 
   const onNextPress = useCallback(() => {
@@ -73,9 +73,9 @@ export const Onboarding = memo(({ slides }: { slides: OnboardingSlide[] }) => {
       scrollX$.value = Math.min(
         Math.max(
           scrollX$.value + (100 / width) * e.changeX,
-          100 * -(slides.length - 1)
+          100 * -(slides.length - 1),
         ),
-        0
+        0,
       );
     })
     .onFinalize((e) => {
@@ -119,12 +119,14 @@ export const Onboarding = memo(({ slides }: { slides: OnboardingSlide[] }) => {
               borderRadius="$4"
               width="$8"
               height="$1"
-              backgroundColor={index <= activeSlideIndex ? '$color' : '$background'}
+              backgroundColor={
+                index <= activeSlideIndex ? '$color' : '$background'
+              }
             />
           ))}
         </XStack>
 
-        <Button maxWidth={400} label={t('shared.next')} onPress={onNextPress} />
+        <Button maxWidth={400} label={t('next')} onPress={onNextPress} />
       </View>
     </View>
   );
@@ -151,7 +153,7 @@ const Slide = memo(
           },
         ],
       }),
-      []
+      [],
     );
 
     return (
@@ -177,7 +179,7 @@ const Slide = memo(
         </View>
       </Animated.View>
     );
-  }
+  },
 );
 
 const styles = StyleSheet.create({

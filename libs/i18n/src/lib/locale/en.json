@@ -149,159 +149,159 @@
     "schedule": {
       "all_day": "All-day",
       "weekend": "Weekend"
-    }
-  },
-  "auth": {
-    "workspace": {
-      "button": {
-        "continue_with_apple": "Continue with Apple",
-        "continue_with_google": "Continue with Google",
-        "sign_up_with_email": "Sign up with email",
-        "sign_in": "Sign in"
-      }
     },
-    "sign_up": {
-      "title": "Create account",
-      "subtitle": "Add your email address and password",
-      "external_link": {
-        "already_have_account": "Already have an account?",
-        "sign_in": "Sign in"
-      },
-      "form": {
-        "firstname": {
-          "label": "",
-          "placeholder": "First name",
-          "error": {
-            "required": "First name is required"
-          }
-        },
-        "lastname": {
-          "label": "",
-          "placeholder": "Last name",
-          "error": {
-            "required": "Last name is required"
-          }
-        },
-        "email": {
-          "label": "",
-          "placeholder": "Email",
-          "error": {
-            "required": "Email is required",
-            "invalid_format": "Invalid format"
-          }
-        },
-        "password": {
-          "label": "",
-          "placeholder": "Password",
-          "error": {
-            "required": "Password is required",
-            "invalid_format": "Please enter a password with 8 or more characters, including at least 1 number"
-          }
-        },
-        "confirm_password": {
-          "label": "",
-          "placeholder": "Confirm password",
-          "error": {
-            "required": "Confirm password is required",
-            "match": "Passwords do not match"
-          }
-        },
-        "agreement": {
-          "prefix": "I agree to the ",
-          "error": {
-            "required": "Please agree to proceed"
-          }
-        }
-      }
-    },
-    "sign_in": {
-      "title": "Welcome back",
-      "subtitle": "Add your email address and password",
-      "forgot_password_link": "Forgot password?",
-      "external_link": {
-        "already_have_account": "Don't have an account?",
-        "sign_up": "Sign up"
-      },
-      "form": {
-        "email": {
-          "label": "",
-          "placeholder": "Email",
-          "error": {
-            "required": "Email is required",
-            "invalid_format": "Invalid format"
-          }
-        },
-        "password": {
-          "label": "",
-          "placeholder": "Password",
-          "error": {
-            "required": "Password is required",
-            "invalid_format": "Please enter a password with 8 or more characters, including at least 1 number"
-          }
-        }
-      }
-    },
-    "forgot_password": {
-      "title": "Forgot password?",
-      "subtitle": "Enter your account's email address",
-      "external_link": {
-        "already_have_account": "Don't have an account?",
-        "sign_up": "Sign up"
-      },
-      "form": {
-        "email": {
-          "label": "",
-          "placeholder": "Email",
-          "error": {
-            "required": "Email is required",
-            "invalid_format": "Invalid format"
-          }
-        }
-      }
-    },
-    "verify_email": {
-      "title": "Email Verification",
-      "subtitle": "A verification code has been sent to {{email}}.",
-      "your_email": "your email",
-      "resend": {
-        "message": "Didn't receive the email? Please check spam folder or",
+    "auth": {
+      "workspace": {
         "button": {
-          "label": "Resend code"
+          "continue_with_apple": "Continue with Apple",
+          "continue_with_google": "Continue with Google",
+          "sign_up_with_email": "Sign up with email",
+          "sign_in": "Sign in"
         }
       },
-      "external_link": {
-        "message": "Used an incorrect email?",
-        "link": "Change"
-      }
-    },
-    "reset_password": {
-      "title": "Reset password",
-      "subtitle": "Enter new password",
-      "form": {
-        "password": {
-          "label": "",
-          "placeholder": "Password",
-          "error": {
-            "required": "Password is required",
-            "invalid_format": "Please enter a password with 8 or more characters, including at least 1 number"
+      "sign_up": {
+        "title": "Create account",
+        "subtitle": "Add your email address and password",
+        "external_link": {
+          "already_have_account": "Already have an account?",
+          "sign_in": "Sign in"
+        },
+        "form": {
+          "firstname": {
+            "label": "",
+            "placeholder": "First name",
+            "error": {
+              "required": "First name is required"
+            }
+          },
+          "lastname": {
+            "label": "",
+            "placeholder": "Last name",
+            "error": {
+              "required": "Last name is required"
+            }
+          },
+          "email": {
+            "label": "",
+            "placeholder": "Email",
+            "error": {
+              "required": "Email is required",
+              "invalid_format": "Invalid format"
+            }
+          },
+          "password": {
+            "label": "",
+            "placeholder": "Password",
+            "error": {
+              "required": "Password is required",
+              "invalid_format": "Please enter a password with 8 or more characters, including at least 1 number"
+            }
+          },
+          "confirm_password": {
+            "label": "",
+            "placeholder": "Confirm password",
+            "error": {
+              "required": "Confirm password is required",
+              "match": "Passwords do not match"
+            }
+          },
+          "agreement": {
+            "prefix": "I agree to the ",
+            "error": {
+              "required": "Please agree to proceed"
+            }
+          }
+        }
+      },
+      "sign_in": {
+        "title": "Welcome back",
+        "subtitle": "Add your email address and password",
+        "forgot_password_link": "Forgot password?",
+        "external_link": {
+          "already_have_account": "Don't have an account?",
+          "sign_up": "Sign up"
+        },
+        "form": {
+          "email": {
+            "label": "",
+            "placeholder": "Email",
+            "error": {
+              "required": "Email is required",
+              "invalid_format": "Invalid format"
+            }
+          },
+          "password": {
+            "label": "",
+            "placeholder": "Password",
+            "error": {
+              "required": "Password is required",
+              "invalid_format": "Please enter a password with 8 or more characters, including at least 1 number"
+            }
+          }
+        }
+      },
+      "forgot_password": {
+        "title": "Forgot password?",
+        "subtitle": "Enter your account's email address",
+        "external_link": {
+          "already_have_account": "Don't have an account?",
+          "sign_up": "Sign up"
+        },
+        "form": {
+          "email": {
+            "label": "",
+            "placeholder": "Email",
+            "error": {
+              "required": "Email is required",
+              "invalid_format": "Invalid format"
+            }
+          }
+        }
+      },
+      "verify_email": {
+        "title": "Email Verification",
+        "subtitle": "A verification code has been sent to {{email}}.",
+        "your_email": "your email",
+        "resend": {
+          "message": "Didn't receive the email? Please check spam folder or",
+          "button": {
+            "label": "Resend code"
           }
         },
-        "confirm_password": {
-          "label": "",
-          "placeholder": "Confirm password",
-          "error": {
-            "required": "Confirm password is required",
-            "match": "Passwords do not match"
+        "external_link": {
+          "message": "Used an incorrect email?",
+          "link": "Change"
+        }
+      },
+      "reset_password": {
+        "title": "Reset password",
+        "subtitle": "Enter new password",
+        "form": {
+          "password": {
+            "label": "",
+            "placeholder": "Password",
+            "error": {
+              "required": "Password is required",
+              "invalid_format": "Please enter a password with 8 or more characters, including at least 1 number"
+            }
+          },
+          "confirm_password": {
+            "label": "",
+            "placeholder": "Confirm password",
+            "error": {
+              "required": "Confirm password is required",
+              "match": "Passwords do not match"
+            }
           }
         }
-      }
-    },
-    "sign_out": {
-      "confirm": {
-        "title": "Press 'Continue' to confirm sign out"
       },
-      "button": {
-        "label": "Sign out"
+      "sign_out": {
+        "confirm": {
+          "title": "Press 'Continue' to confirm sign out"
+        },
+        "button": {
+          "label": "Sign out"
+        }
       }
     }
   },
@@ -386,7 +386,7 @@
     "initial_actions": {
       "title": "Take the first step",
       "subtitle": "Select whether you want to create your own dance hub or join the team.",
-      "join_hub": {
+      "join_workspace": {
         "title": "Join a dance hub",
         "subtitle": "Already part of a team? Use a QR code to join your dance hub.",
         "button": {

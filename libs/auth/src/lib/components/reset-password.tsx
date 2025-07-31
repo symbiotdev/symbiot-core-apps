@@ -1,5 +1,4 @@
 import { AuthFormView } from './auth-form-view';
-import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
 import {
   AccountResetPasswordData,
@@ -10,20 +9,17 @@ import * as yup from 'yup';
 import { PasswordPattern } from '@symbiot-core-apps/shared';
 import { ReactElement, useCallback } from 'react';
 import { Input } from '@symbiot-core-apps/ui';
+import { useLocalSearchParams } from 'expo-router';
+import { useT } from '@symbiot-core-apps/i18n';
 
-export const ResetPassword = ({
-  secret,
-  email,
-  code,
-  logo,
-}: {
-  secret: string;
-  email: string;
-  code: string;
-  logo: ReactElement;
-}) => {
-  const { t } = useTranslation();
+export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
+  const { t } = useT();
   const { mutateAsync, error } = useAccountAuthResetPasswordQuery();
+  const { secret, email, code } = useLocalSearchParams<{
+    secret: string;
+    email: string;
+    code: string;
+  }>();
 
   const {
     control,
@@ -43,19 +39,19 @@ export const ResetPassword = ({
             .required(t('auth.reset_password.form.password.error.required'))
             .matches(
               PasswordPattern,
-              t('auth.reset_password.form.password.error.invalid_format')
+              t('auth.reset_password.form.password.error.invalid_format'),
             ),
           confirmPassword: yup
             .string()
             .required(
-              t('auth.reset_password.form.confirm_password.error.required')
+              t('auth.reset_password.form.confirm_password.error.required'),
             )
             .oneOf(
               [yup.ref('password')],
-              t('auth.reset_password.form.confirm_password.error.match')
+              t('auth.reset_password.form.confirm_password.error.match'),
             ),
         })
-        .required()
+        .required(),
     ),
   });
 
@@ -67,14 +63,14 @@ export const ResetPassword = ({
         email,
         code,
       }),
-    [code, email, mutateAsync, secret]
+    [code, email, mutateAsync, secret],
   );
 
   return (
     <AuthFormView
       title={t('auth.reset_password.title')}
       subtitle={t('auth.reset_password.subtitle')}
-      buttonLabel={t('shared.continue')}
+      buttonLabel={t('continue')}
       logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
@@ -117,7 +113,7 @@ export const ResetPassword = ({
             disabled={isSubmitting}
             label={t('auth.reset_password.form.confirm_password.label')}
             placeholder={t(
-              'auth.reset_password.form.confirm_password.placeholder'
+              'auth.reset_password.form.confirm_password.placeholder',
             )}
             onChange={onChange}
             onBlur={onBlur}

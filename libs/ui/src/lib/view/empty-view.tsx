@@ -1,7 +1,7 @@
 import { View, ViewProps } from 'tamagui';
-import { useTranslation } from 'react-i18next';
 import { H2 } from '../text/heading';
 import { RegularText } from '../text/text';
+import { useT } from '@symbiot-core-apps/i18n';
 
 export const EmptyView = (
   props: ViewProps & {
@@ -10,7 +10,7 @@ export const EmptyView = (
     message?: string;
   },
 ) => {
-  const { t } = useTranslation();
+  const { t } = useT();
 
   return (
     <View
@@ -33,7 +33,7 @@ export const EmptyView = (
       )}
 
       <RegularText color="$disabled" textAlign="center" maxWidth={500}>
-        {props.message || t('shared.its_empty')}
+        {props.message || t('its_empty')}
       </RegularText>
 
       {props.children}

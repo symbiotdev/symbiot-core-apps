@@ -5,16 +5,16 @@ import {
   ListItemGroup,
   PageView,
 } from '@symbiot-core-apps/ui';
-import { useTranslation } from 'react-i18next';
 import { useCallback } from 'react';
 import {
   openBrowserAsync,
   WebBrowserPresentationStyle,
 } from 'expo-web-browser';
 import { ReactNativeLegal } from 'react-native-legal';
+import { useT } from '@symbiot-core-apps/i18n';
 
 export const TermsPrivacy = () => {
-  const { t } = useTranslation();
+  const { t } = useT();
 
   const openTermsConditions = useCallback(
     () =>
@@ -42,12 +42,12 @@ export const TermsPrivacy = () => {
       <FormView>
         <ListItemGroup>
           <ListItem
-            label={t('shared.docs.terms_conditions')}
+            label={t('docs.terms_conditions')}
             icon={<Icon name="FileText" />}
             onPress={openTermsConditions}
           />
           <ListItem
-            label={t('shared.docs.privacy_policy')}
+            label={t('docs.privacy_policy')}
             icon={<Icon name="FileText" />}
             onPress={openPrivacyPolicyConditions}
           />

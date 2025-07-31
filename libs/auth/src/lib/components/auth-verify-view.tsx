@@ -1,8 +1,8 @@
 import { InputCode, Link, RegularText } from '@symbiot-core-apps/ui';
 import { AuthFormView } from './auth-form-view';
-import { useTranslation } from 'react-i18next';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { router } from 'expo-router';
+import { useT } from '@symbiot-core-apps/i18n';
 
 const verifySecondsLimit = 10;
 
@@ -21,7 +21,7 @@ export const AuthVerifyView = ({
   onResend: () => Promise<void>;
   onChange: (code: string) => Promise<void>;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useT();
 
   const [secondsTo, setSecondsTo] = useState(verifySecondsLimit);
 

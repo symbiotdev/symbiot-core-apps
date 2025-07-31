@@ -149,159 +149,159 @@
     "schedule": {
       "all_day": "24 год",
       "weekend": "Вихідний"
-    }
-  },
-  "auth": {
-    "workspace": {
-      "button": {
-        "continue_with_apple": "Продовжити з Apple",
-        "continue_with_google": "Продовжити з Google",
-        "sign_up_with_email": "Зареєструватися з email",
-        "sign_in": "Увійти"
-      }
     },
-    "sign_up": {
-      "title": "Створити акаунт",
-      "subtitle": "Введіть адресу електронної пошти та пароль",
-      "external_link": {
-        "already_have_account": "Уже маєте акаунт?",
-        "sign_in": "Увійти"
-      },
-      "form": {
-        "firstname": {
-          "label": "",
-          "placeholder": "Імʼя",
-          "error": {
-            "required": "Імʼя обовʼязкове поле для введення"
-          }
-        },
-        "lastname": {
-          "label": "",
-          "placeholder": "Прізвище",
-          "error": {
-            "required": "Прізвище обовʼязкове поле для введення"
-          }
-        },
-        "email": {
-          "label": "",
-          "placeholder": "Email",
-          "error": {
-            "required": "Email обовʼязкове поле для введення",
-            "invalid_format": "Невалідний формат"
-          }
-        },
-        "password": {
-          "label": "",
-          "placeholder": "Пароль",
-          "error": {
-            "required": "Пароль обовʼязкове поле для введення",
-            "invalid_format": "Пароль повинен містити 8 або більше символів, включаючи принаймні 1 цифру"
-          }
-        },
-        "confirm_password": {
-          "label": "",
-          "placeholder": "Підтвердження паролю",
-          "error": {
-            "required": "Підтвердження паролю обовʼязкове поле для введення",
-            "match": "Паролі не збігаються"
-          }
-        },
-        "agreement": {
-          "prefix": "Я погоджуюсь з ",
-          "error": {
-            "required": "Реєстрація вимагає підтвердження"
-          }
-        }
-      }
-    },
-    "sign_in": {
-      "title": "З поверненням",
-      "subtitle": "Введіть адресу електронної пошти та пароль",
-      "forgot_password_link": "Забули пароль?",
-      "external_link": {
-        "already_have_account": "Немає акаунту?",
-        "sign_up": "Зареєстуватись"
-      },
-      "form": {
-        "email": {
-          "label": "",
-          "placeholder": "Email",
-          "error": {
-            "required": "Email обовʼязкове поле для введення",
-            "invalid_format": "Невалідний формат"
-          }
-        },
-        "password": {
-          "label": "",
-          "placeholder": "Пароль",
-          "error": {
-            "required": "Пароль обовʼязкове поле для введення",
-            "invalid_format": "Пароль повинен містити 8 або більше символів, включаючи принаймні 1 цифру"
-          }
-        }
-      }
-    },
-    "forgot_password": {
-      "title": "Забули пароль?",
-      "subtitle": "Введіть адресу електронної вашого акаунту",
-      "external_link": {
-        "already_have_account": "Немає акаунту?",
-        "sign_up": "Зареєстуватись"
-      },
-      "form": {
-        "email": {
-          "label": "",
-          "placeholder": "Email",
-          "error": {
-            "required": "Email обовʼязкове поле для введення",
-            "invalid_format": "Невалідний формат"
-          }
-        }
-      }
-    },
-    "verify_email": {
-      "title": "Верифікація Email",
-      "subtitle": "Верифікаційний код надіслано на {{email}}.",
-      "your_email": "вказану при реєстрації",
-      "resend": {
-        "message": "Не отримали листа? Перевірте spam або",
+    "auth": {
+      "workspace": {
         "button": {
-          "label": "Відправити повторно"
+          "continue_with_apple": "Продовжити з Apple",
+          "continue_with_google": "Продовжити з Google",
+          "sign_up_with_email": "Зареєструватися з email",
+          "sign_in": "Увійти"
         }
       },
-      "external_link": {
-        "message": "Вказали невірну електронну адресу?",
-        "link": "Змінити"
-      }
-    },
-    "reset_password": {
-      "title": "Скинути пароль",
-      "subtitle": "Введіть новий пароль",
-      "form": {
-        "password": {
-          "label": "",
-          "placeholder": "Пароль",
-          "error": {
-            "required": "Пароль обовʼязкове поле для введення",
-            "invalid_format": "Пароль повинен містити 8 або більше символів, включаючи принаймні 1 цифру"
+      "sign_up": {
+        "title": "Створити акаунт",
+        "subtitle": "Введіть адресу електронної пошти та пароль",
+        "external_link": {
+          "already_have_account": "Уже маєте акаунт?",
+          "sign_in": "Увійти"
+        },
+        "form": {
+          "firstname": {
+            "label": "",
+            "placeholder": "Імʼя",
+            "error": {
+              "required": "Імʼя обовʼязкове поле для введення"
+            }
+          },
+          "lastname": {
+            "label": "",
+            "placeholder": "Прізвище",
+            "error": {
+              "required": "Прізвище обовʼязкове поле для введення"
+            }
+          },
+          "email": {
+            "label": "",
+            "placeholder": "Email",
+            "error": {
+              "required": "Email обовʼязкове поле для введення",
+              "invalid_format": "Невалідний формат"
+            }
+          },
+          "password": {
+            "label": "",
+            "placeholder": "Пароль",
+            "error": {
+              "required": "Пароль обовʼязкове поле для введення",
+              "invalid_format": "Пароль повинен містити 8 або більше символів, включаючи принаймні 1 цифру"
+            }
+          },
+          "confirm_password": {
+            "label": "",
+            "placeholder": "Підтвердження паролю",
+            "error": {
+              "required": "Підтвердження паролю обовʼязкове поле для введення",
+              "match": "Паролі не збігаються"
+            }
+          },
+          "agreement": {
+            "prefix": "Я погоджуюсь з ",
+            "error": {
+              "required": "Реєстрація вимагає підтвердження"
+            }
+          }
+        }
+      },
+      "sign_in": {
+        "title": "З поверненням",
+        "subtitle": "Введіть адресу електронної пошти та пароль",
+        "forgot_password_link": "Забули пароль?",
+        "external_link": {
+          "already_have_account": "Немає акаунту?",
+          "sign_up": "Зареєстуватись"
+        },
+        "form": {
+          "email": {
+            "label": "",
+            "placeholder": "Email",
+            "error": {
+              "required": "Email обовʼязкове поле для введення",
+              "invalid_format": "Невалідний формат"
+            }
+          },
+          "password": {
+            "label": "",
+            "placeholder": "Пароль",
+            "error": {
+              "required": "Пароль обовʼязкове поле для введення",
+              "invalid_format": "Пароль повинен містити 8 або більше символів, включаючи принаймні 1 цифру"
+            }
+          }
+        }
+      },
+      "forgot_password": {
+        "title": "Забули пароль?",
+        "subtitle": "Введіть адресу електронної вашого акаунту",
+        "external_link": {
+          "already_have_account": "Немає акаунту?",
+          "sign_up": "Зареєстуватись"
+        },
+        "form": {
+          "email": {
+            "label": "",
+            "placeholder": "Email",
+            "error": {
+              "required": "Email обовʼязкове поле для введення",
+              "invalid_format": "Невалідний формат"
+            }
+          }
+        }
+      },
+      "verify_email": {
+        "title": "Верифікація Email",
+        "subtitle": "Верифікаційний код надіслано на {{email}}.",
+        "your_email": "вказану при реєстрації",
+        "resend": {
+          "message": "Не отримали листа? Перевірте spam або",
+          "button": {
+            "label": "Відправити повторно"
           }
         },
-        "confirm_password": {
-          "label": "",
-          "placeholder": "Підтвердження паролю",
-          "error": {
-            "required": "Підтвердження паролю обовʼязкове поле для введення",
-            "match": "Паролі не збігаються"
+        "external_link": {
+          "message": "Вказали невірну електронну адресу?",
+          "link": "Змінити"
+        }
+      },
+      "reset_password": {
+        "title": "Скинути пароль",
+        "subtitle": "Введіть новий пароль",
+        "form": {
+          "password": {
+            "label": "",
+            "placeholder": "Пароль",
+            "error": {
+              "required": "Пароль обовʼязкове поле для введення",
+              "invalid_format": "Пароль повинен містити 8 або більше символів, включаючи принаймні 1 цифру"
+            }
+          },
+          "confirm_password": {
+            "label": "",
+            "placeholder": "Підтвердження паролю",
+            "error": {
+              "required": "Підтвердження паролю обовʼязкове поле для введення",
+              "match": "Паролі не збігаються"
+            }
           }
         }
-      }
-    },
-    "sign_out": {
-      "confirm": {
-        "title": "Натисність 'Продовжити', щоб підтвердити вихід"
       },
-      "button": {
-        "label": "Вихід"
+      "sign_out": {
+        "confirm": {
+          "title": "Натисність 'Продовжити', щоб підтвердити вихід"
+        },
+        "button": {
+          "label": "Вихід"
+        }
       }
     }
   },
@@ -386,7 +386,7 @@
     "initial_actions": {
       "title": "Зробіть перший крок",
       "subtitle": "Оберіть створити власний dance hub або приєднатися до команди.",
-      "join_hub": {
+      "join_workspace": {
         "title": "Приєднатися до dance hub",
         "subtitle": "Вже у команді? Покажи свій QR-код, щоб приєднатися до dance hub.",
         "button": {

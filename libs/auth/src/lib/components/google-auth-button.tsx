@@ -1,11 +1,11 @@
 import { Button, SocialIcon } from '@symbiot-core-apps/ui';
-import { useTranslation } from 'react-i18next';
 import { useCallback, useState } from 'react';
 import {
   GoogleSignin,
   isErrorWithCode,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import { useT } from '@symbiot-core-apps/i18n';
 
 GoogleSignin.configure({
   webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
@@ -22,7 +22,7 @@ export const GoogleAuthButton = ({
   onAuth: (token: string) => void;
   onError: (error: string) => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useT();
 
   const [loading, setLoading] = useState(false);
 

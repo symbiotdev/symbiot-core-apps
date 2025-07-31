@@ -6,7 +6,6 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useTranslation } from 'react-i18next';
 import { PasswordPattern } from '@symbiot-core-apps/shared';
 import { AuthFormView } from './auth-form-view';
 import { ReactElement, useCallback } from 'react';
@@ -16,9 +15,10 @@ import {
   WebBrowserPresentationStyle,
 } from 'expo-web-browser';
 import { router } from 'expo-router';
+import { useT } from '@symbiot-core-apps/i18n';
 
 export const SignUp = ({ logo }: { logo: ReactElement }) => {
-  const { t } = useTranslation();
+  const { t } = useT();
 
   const { mutateAsync, error } = useAccountAuthSignUpQuery();
 
@@ -56,14 +56,14 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
             .required(t('auth.sign_up.form.password.error.required'))
             .matches(
               PasswordPattern,
-              t('auth.sign_up.form.password.error.invalid_format')
+              t('auth.sign_up.form.password.error.invalid_format'),
             ),
           confirmPassword: yup
             .string()
             .required(t('auth.sign_up.form.confirm_password.error.required'))
             .oneOf(
               [yup.ref('password')],
-              t('auth.sign_up.form.confirm_password.error.match')
+              t('auth.sign_up.form.confirm_password.error.match'),
             ),
           agreement: yup
             .boolean()
@@ -72,11 +72,11 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
               t('auth.sign_up.form.agreement.error.required'),
               function (value) {
                 return !!value;
-              }
+              },
             )
             .required(),
         })
-        .required()
+        .required(),
     ),
   });
 
@@ -91,7 +91,7 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
         },
       });
     },
-    [mutateAsync]
+    [mutateAsync],
   );
 
   const openPrivacyPolicy = useCallback(
@@ -99,7 +99,7 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
       openBrowserAsync(process.env.EXPO_PUBLIC_PRIVACY_POLICY_URL, {
         presentationStyle: WebBrowserPresentationStyle.PAGE_SHEET,
       }),
-    []
+    [],
   );
 
   const openTermsConditions = useCallback(
@@ -107,7 +107,7 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
       openBrowserAsync(process.env.EXPO_PUBLIC_TERMS_CONDITIONS_URL, {
         presentationStyle: WebBrowserPresentationStyle.PAGE_SHEET,
       }),
-    []
+    [],
   );
 
   const signIn = useCallback(() => {
@@ -118,7 +118,7 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
     <AuthFormView
       title={t('auth.sign_up.title')}
       subtitle={t('auth.sign_up.subtitle')}
-      buttonLabel={t('shared.continue')}
+      buttonLabel={t('continue')}
       logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
@@ -251,11 +251,11 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
                 <RegularText>
                   {t('auth.sign_up.form.agreement.prefix')}
                   <Link onPress={openPrivacyPolicy}>
-                    {t('shared.docs.privacy_policy')}
+                    {t('docs.privacy_policy')}
                   </Link>{' '}
-                  {t('shared.and')}{' '}
+                  {t('and')}{' '}
                   <Link onPress={openTermsConditions}>
-                    {t('shared.docs.terms_conditions')}
+                    {t('docs.terms_conditions')}
                   </Link>
                 </RegularText>
               }

@@ -1,6 +1,5 @@
 import { Input, Link, RegularText } from '@symbiot-core-apps/ui';
 import { AuthFormView } from './auth-form-view';
-import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
 import {
   AccountForgotPasswordData,
@@ -10,9 +9,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ReactElement, useCallback } from 'react';
 import { router } from 'expo-router';
+import { useT } from '@symbiot-core-apps/i18n';
 
 export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
-  const { t } = useTranslation();
+  const { t } = useT();
   const { mutateAsync, error } = useAccountAuthForgotPasswordQuery();
 
   const {
@@ -32,7 +32,7 @@ export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
             .required(t('auth.forgot_password.form.email.error.required'))
             .email(t('auth.forgot_password.form.email.error.invalid_format')),
         })
-        .required()
+        .required(),
     ),
   });
 
@@ -47,7 +47,7 @@ export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
         },
       });
     },
-    [mutateAsync]
+    [mutateAsync],
   );
 
   const signUp = useCallback(() => {
@@ -58,7 +58,7 @@ export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
     <AuthFormView
       title={t('auth.forgot_password.title')}
       subtitle={t('auth.forgot_password.subtitle')}
-      buttonLabel={t('shared.continue')}
+      buttonLabel={t('continue')}
       logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}

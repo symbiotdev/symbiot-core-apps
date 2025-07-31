@@ -1,6 +1,4 @@
 import { SignUp } from '@symbiot-core-apps/auth';
 import { AuthLogo } from '../../../components/auth/auth-logo';
 
-export default () => {
-  return <SignUp logo={<AuthLogo />} />;
-};
+export default () => <SignUp logo={<AuthLogo />} />;

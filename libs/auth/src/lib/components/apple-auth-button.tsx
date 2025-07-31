@@ -4,7 +4,7 @@ import {
 } from 'expo-apple-authentication';
 import { useCallback, useState } from 'react';
 import { Button, SocialIcon } from '@symbiot-core-apps/ui';
-import { useTranslation } from 'react-i18next';
+import { useT } from '@symbiot-core-apps/i18n';
 
 export const AppleAuthButton = ({
   pending,
@@ -17,7 +17,7 @@ export const AppleAuthButton = ({
   onAuth: (token: string) => void;
   onError: (error: string) => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useT();
 
   const [loading, setLoading] = useState(false);
 

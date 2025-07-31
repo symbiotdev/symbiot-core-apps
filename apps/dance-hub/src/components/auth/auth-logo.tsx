@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Image } from 'expo-image';
 import { View } from 'tamagui';
-import { useScheme } from '@symbiot-core-apps/store';
+import { useScheme } from '@symbiot-core-apps/state';
 
 export const AuthLogo = memo(() => {
   const { scheme } = useScheme();

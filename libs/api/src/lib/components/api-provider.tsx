@@ -9,12 +9,12 @@ import {
 } from 'react';
 import socket from '../utils/socket';
 import { authTokenHeaderKey, useAuthTokens } from '../hooks/use-auth-tokens';
-import { useTranslation } from 'react-i18next';
 import { useDevId } from '../hooks/use-dev-id';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '../utils/client';
 import { useAccountAuthRefreshTokenQuery } from '../queries/use-account-auth.query';
 import { Platform } from 'react-native';
+import { useT } from '@symbiot-core-apps/i18n';
 
 type SocketState = {
   connecting: boolean;
@@ -39,7 +39,7 @@ export const ApiProvider = ({
   onConnected?: () => void;
 }>) => {
   const devId = useDevId();
-  const { i18n } = useTranslation();
+  const { lang } = useT();
   const refreshTokens = useAccountAuthRefreshTokenQuery();
   const { tokens, setTokens } = useAuthTokens();
 
@@ -79,7 +79,7 @@ export const ApiProvider = ({
     setAxiosInterceptors({
       devId,
       accessToken: tokens.access,
-      languageCode: i18n.language,
+      languageCode: lang,
       onUnauthorized,
       onNoRespond,
       refreshTokens,
@@ -92,7 +92,7 @@ export const ApiProvider = ({
         ...(Platform.OS !== 'web'
           ? { [authTokenHeaderKey.refresh]: tokens.refresh }
           : {}),
-        lang: i18n.language,
+        lang,
       };
       socket.connect();
     } else {
@@ -104,7 +104,7 @@ export const ApiProvider = ({
     };
   }, [
     tokens,
-    i18n.language,
+    lang,
     devId,
     disconnectSocket,
     updateState,

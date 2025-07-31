@@ -1,18 +1,19 @@
 import { Redirect, Stack } from 'expo-router';
-import { authStackScreenOptions } from '@symbiot-core-apps/auth';
 import { useAuthTokens } from '@symbiot-core-apps/api';
 import { useOnboardingState } from '@symbiot-core-apps/state';
+import { useStackScreenHeaderOptions } from '@symbiot-core-apps/ui';
 
 export default () => {
   const { tokens } = useAuthTokens();
   const { finished: onboardingFinished } = useOnboardingState();
+  const headerScreenOptions = useStackScreenHeaderOptions();
 
   if (tokens.access) {
     return <Redirect href="/verifying" />;
   }
 
   return (
-    <Stack screenOptions={authStackScreenOptions}>
+    <Stack screenOptions={headerScreenOptions}>
       <Stack.Protected guard={!onboardingFinished}>
         <Stack.Screen
           name="onboarding/index"

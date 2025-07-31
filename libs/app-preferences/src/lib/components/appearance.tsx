@@ -9,7 +9,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { useCallback, useEffect, useMemo } from 'react';
-import { useMeUpdater } from '@symbiot-core-apps/store';
+import { useMeUpdater } from '@symbiot-core-apps/state';
 import { AccountScheme } from '@symbiot-core-apps/api';
 import { useNavigation } from '@react-navigation/native';
 import { defaultSystemScheme, Scheme } from '@symbiot-core-apps/shared';

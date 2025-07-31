@@ -12,7 +12,7 @@ import {
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { Platform } from 'react-native';
-import { useMe } from '@symbiot-core-apps/store';
+import { useMe } from '@symbiot-core-apps/state';
 import { useNavigation } from 'expo-router';
 import { DateHelper, useNativeNow } from '@symbiot-core-apps/shared';
 import { useTranslation } from 'react-i18next';

@@ -17,7 +17,7 @@ import {
   ThemeProvider as NavigationThemeProvider,
 } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
-import { useScheme } from '@symbiot-core-apps/store';
+import { useScheme } from '@symbiot-core-apps/state';
 
 const Context = createContext({});
 

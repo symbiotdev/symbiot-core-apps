@@ -5,7 +5,7 @@ import {
   setNotificationHandler,
 } from 'expo-notifications';
 import { notificationAsync, NotificationFeedbackType } from 'expo-haptics';
-import { useMe } from '@symbiot-core-apps/store';
+import { useMe } from '@symbiot-core-apps/state';
 
 export const usePushNotificationsPreferences = () => {
   const { me } = useMe();

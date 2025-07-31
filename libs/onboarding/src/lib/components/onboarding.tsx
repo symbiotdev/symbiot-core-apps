@@ -19,7 +19,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { impactAsync } from 'expo-haptics';
-import { useOnboardingState } from '@symbiot-core-apps/store';
+import { useOnboardingState } from '@symbiot-core-apps/state';
 
 export type OnboardingSlide = {
   id: string;

@@ -9,7 +9,7 @@ import {
   SemiBoldText,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
-import { useAccountNotificationsState, useMe } from '@symbiot-core-apps/store';
+import { useAccountNotificationsState, useMe } from '@symbiot-core-apps/state';
 import { useCallback, useEffect } from 'react';
 import {
   AccountNotification,

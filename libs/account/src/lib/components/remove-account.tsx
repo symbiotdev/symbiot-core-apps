@@ -1,6 +1,6 @@
 import { ActionCard, FormView, Icon, PageView } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
-import { useMe } from '@symbiot-core-apps/store';
+import { useMe } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
 import { useAccountRemoveMe } from '@symbiot-core-apps/api';

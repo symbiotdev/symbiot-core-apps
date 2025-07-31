@@ -15,7 +15,7 @@ import {
   SOCIAL_LINK,
   SocialLinkInput,
 } from '@symbiot-core-apps/ui';
-import { useGenders, useMeUpdater } from '@symbiot-core-apps/store';
+import { useGenders, useMeUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';

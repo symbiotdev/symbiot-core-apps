@@ -9,7 +9,7 @@ import {
   useAccountMeState,
   useAccountNotificationsState,
   useMe,
-} from '@symbiot-core-apps/store';
+} from '@symbiot-core-apps/state';
 import { Platform } from 'react-native';
 import { AudioSource, useAudioPlayer } from 'expo-audio';
 import { ShowNativeSuccessAlert } from '@symbiot-core-apps/shared';

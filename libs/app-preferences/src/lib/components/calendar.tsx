@@ -8,7 +8,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useCallback, useEffect, useMemo } from 'react';
 import { DateHelper } from '@symbiot-core-apps/shared';
-import { useMeUpdater } from '@symbiot-core-apps/store';
+import { useMeUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { Day } from 'date-fns/types';
 

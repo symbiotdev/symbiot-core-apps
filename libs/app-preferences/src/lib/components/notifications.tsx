@@ -8,7 +8,7 @@ import {
   Switch,
 } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
-import { useMeUpdater } from '@symbiot-core-apps/store';
+import { useMeUpdater } from '@symbiot-core-apps/state';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {

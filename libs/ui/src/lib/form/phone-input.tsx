@@ -4,7 +4,7 @@ import { PhoneNumber } from 'react-native-phone-input/dist';
 import * as yup from 'yup';
 import { useCallback, useEffect, useRef } from 'react';
 import PhoneInputUI from 'react-native-phone-input';
-import { useScheme } from '@symbiot-core-apps/store';
+import { useScheme } from '@symbiot-core-apps/state';
 import { useTheme } from 'tamagui';
 import { InputFieldView } from '../view/input-field-view';
 

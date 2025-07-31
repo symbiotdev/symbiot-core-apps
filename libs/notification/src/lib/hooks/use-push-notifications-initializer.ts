@@ -10,7 +10,7 @@ import {
 import Constants from 'expo-constants';
 import { ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
 import { useAccountUpdateDeviceQuery } from '@symbiot-core-apps/api';
-import { useMe } from '@symbiot-core-apps/store';
+import { useMe } from '@symbiot-core-apps/state';
 import { isDevice } from 'expo-device';
 
 export const usePushNotificationsInitializer = ({

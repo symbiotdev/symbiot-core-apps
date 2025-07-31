@@ -12,7 +12,7 @@ import { DateHelper } from '@symbiot-core-apps/shared';
 import { Day } from 'date-fns/types';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
-import { useScheme } from '@symbiot-core-apps/store';
+import { useScheme } from '@symbiot-core-apps/state';
 import { InputFieldView } from '../view/input-field-view';
 import { Icon } from '../icons';
 

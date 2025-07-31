@@ -29,6 +29,7 @@ const pickerOptions: ImagePickerOptions = {
   allowsMultipleSelection: false,
   selectionLimit: 1,
   quality: 1,
+  aspect: [1, 1],
 };
 
 export const AvatarPicker = ({

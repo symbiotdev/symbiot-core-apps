@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persist } from 'zustand/middleware';
+import { createZustandStorage } from '@symbiot-core-apps/storage';
 
 type OnboardingState = {
   finished: boolean;
@@ -15,7 +15,7 @@ export const useOnboardingState = create<OnboardingState>()(
     }),
     {
       name: 'onboarding',
-      storage: createJSONStorage(() => AsyncStorage),
-    }
-  )
+      storage: createZustandStorage(),
+    },
+  ),
 );

@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import * as Application from 'expo-application';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { randomUUID } from 'expo-crypto';
+import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
 
 const DEV_ID_STORE_KEY = 'wid';
 
 const storeNewId = () => {
   const id = randomUUID();
 
-  void AsyncStorage.setItem(DEV_ID_STORE_KEY, id);
+  mmkvGlobalStorage.set(DEV_ID_STORE_KEY, id);
 
   return id;
 };
@@ -25,9 +25,7 @@ export const useDevId = () => {
     } else if (Platform.OS === 'android') {
       setId(Application.getAndroidId() || storeNewId());
     } else {
-      AsyncStorage.getItem(DEV_ID_STORE_KEY).then((id) => {
-        setId(id || storeNewId());
-      });
+      setId(mmkvGlobalStorage.getString(DEV_ID_STORE_KEY) || storeNewId());
     }
   }, []);
 

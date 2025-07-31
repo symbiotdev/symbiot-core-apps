@@ -8,8 +8,8 @@ import {
 import { getLocales } from 'expo-localization';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import i18n from 'i18next';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppLanguage, supportedLanguages } from '../utils/app-language';
+import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
 
 const defaultLanguage =
   getLocales().find(({ languageCode }) =>
@@ -43,13 +43,10 @@ i18n
 
 const LANGUAGE_STORE_KEY = 'x-lang';
 const Context = createContext({});
-const getStoredLanguage = () => {
-  return AsyncStorage.getItem(LANGUAGE_STORE_KEY);
-};
 
 export const changeAppLanguage = (language: string) => {
   void i18n.changeLanguage(language);
-  void AsyncStorage.setItem(LANGUAGE_STORE_KEY, language);
+  mmkvGlobalStorage.set(LANGUAGE_STORE_KEY, language);
 };
 
 export const I18nProvider = ({ children }: PropsWithChildren) => {
@@ -57,7 +54,7 @@ export const I18nProvider = ({ children }: PropsWithChildren) => {
 
   const init = useCallback(async () => {
     try {
-      const language = await getStoredLanguage();
+      const language = mmkvGlobalStorage.getString(LANGUAGE_STORE_KEY);
 
       await i18n.changeLanguage(language || defaultLanguage);
     } finally {

@@ -1,5 +1,5 @@
 import { Alert, Platform } from 'react-native';
-import { i18n } from '@symbiot-core-apps/i18n';
+import i18n from 'i18next';
 
 export const ConfirmAlert = (props: {
   title: string;

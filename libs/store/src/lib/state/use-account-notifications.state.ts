@@ -1,7 +1,7 @@
 import { AccountNotification, PaginationList } from '@symbiot-core-apps/api';
 import { create } from 'zustand/index';
-import { createJSONStorage, persist } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persist } from 'zustand/middleware';
+import { createZustandStorage } from '@symbiot-core-apps/storage';
 
 type AccountNotificationsState = {
   notifications?: PaginationList<AccountNotification>;
@@ -41,7 +41,7 @@ export const useAccountNotificationsState = create<AccountNotificationsState>()(
     }),
     {
       name: 'account-notifications',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createZustandStorage(),
     },
   ),
 );

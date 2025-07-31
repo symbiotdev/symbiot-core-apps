@@ -9,9 +9,9 @@ import {
 import { isDevice } from 'expo-device';
 import { Platform } from 'react-native';
 import { AccountNotification } from '@symbiot-core-apps/api';
-import { createJSONStorage, persist } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persist } from 'zustand/middleware';
 import { create } from 'zustand';
+import { createZustandStorage } from '@symbiot-core-apps/storage';
 
 type LastPushNotificationIdState = {
   id?: string;
@@ -28,7 +28,7 @@ export const useLastPushNotificationIdState =
       }),
       {
         name: 'last-push-notification-id',
-        storage: createJSONStorage(() => AsyncStorage),
+        storage: createZustandStorage(),
       },
     ),
   );

@@ -13,7 +13,6 @@ export * from './lib/utils/burnt';
 export * from './lib/utils/confirm';
 export * from './lib/utils/date-helper';
 export * from './lib/utils/device';
-export * from './lib/utils/json-secure-store';
 export * from './lib/utils/object';
 export * from './lib/utils/patterns';
 export * from './lib/utils/short-name';

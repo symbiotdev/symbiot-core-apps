@@ -1,9 +1,7 @@
-import { Platform } from 'react-native';
 import { AccountAuthTokens } from '../types/account-auth';
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { JsonSecureStore } from '@symbiot-core-apps/shared';
+import { persist } from 'zustand/middleware';
+import { createZustandStorage } from '@symbiot-core-apps/storage';
 
 export type OnboardingState = {
   tokens: AccountAuthTokens;
@@ -41,9 +39,7 @@ export const useAuthTokens = create<OnboardingState>()(
     }),
     {
       name: 'x-tokens',
-      storage: createJSONStorage(() =>
-        Platform.OS === 'web' ? AsyncStorage : JsonSecureStore
-      ),
-    }
-  )
+      storage: createZustandStorage({ secure: true }),
+    },
+  ),
 );

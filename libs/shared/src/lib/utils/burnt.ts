@@ -1,6 +1,6 @@
 import { alert, dismissAllAlerts } from 'burnt';
 import { Keyboard, Platform } from 'react-native';
-import { i18n } from '@symbiot-core-apps/i18n';
+import i18n from 'i18next';
 
 export const ShowNativeSuccessAlert = (options: {
   title: unknown;

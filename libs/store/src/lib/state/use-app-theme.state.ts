@@ -1,9 +1,9 @@
 import { Scheme, useSystemScheme } from '@symbiot-core-apps/shared';
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persist } from 'zustand/middleware';
 import { useCallback, useMemo } from 'react';
 import { Appearance, Platform } from 'react-native';
+import { createZustandStorage } from '@symbiot-core-apps/storage';
 
 type AppSchemeState = {
   scheme?: Scheme;
@@ -19,7 +19,7 @@ export const useAppSchemeState = create<AppSchemeState>()(
     }),
     {
       name: 'app-scheme',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createZustandStorage(),
     },
   ),
 );

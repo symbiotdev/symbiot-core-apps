@@ -10,13 +10,13 @@ import {
   useUpdateAccountPreferencesQuery,
 } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
-import { createJSONStorage, devtools, persist } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { devtools, persist } from 'zustand/middleware';
 import { useCallback, useEffect } from 'react';
 import { Scheme, schemes } from '@symbiot-core-apps/shared';
 import { useScheme } from './use-app-theme.state';
 import { changeAppLanguage } from '@symbiot-core-apps/i18n';
 import { ImagePickerAsset } from 'expo-image-picker';
+import { createZustandStorage } from '@symbiot-core-apps/storage';
 
 type AccountMeState = {
   me?: Account;
@@ -67,7 +67,7 @@ export const useAccountMeState = create<AccountMeState>()(
       }),
       {
         name: 'account-me',
-        storage: createJSONStorage(() => AsyncStorage),
+        storage: createZustandStorage(),
       },
     ),
   ),

@@ -1,8 +1,8 @@
 import { Gender, useGenderQuery } from '@symbiot-core-apps/api';
 import { create } from 'zustand/index';
-import { createJSONStorage, persist } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persist } from 'zustand/middleware';
 import { useEffect, useMemo } from 'react';
+import { createZustandStorage } from '@symbiot-core-apps/storage';
 
 type GenderState = {
   genders?: Gender[];
@@ -16,7 +16,7 @@ export const useGenderState = create<GenderState>()(
     }),
     {
       name: 'genders',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createZustandStorage(),
     },
   ),
 );

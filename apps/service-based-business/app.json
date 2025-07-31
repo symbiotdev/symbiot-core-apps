@@ -1,7 +1,7 @@
 {
   "expo": {
     "newArchEnabled": true,
-    "name": "[Dev] Spanday PRO",
+    "name": "Spanday PRO",
     "slug": "spanday-pro",
     "scheme": "spanday-pro",
     "version": "2.0.0",
@@ -15,7 +15,7 @@
       "appleTeamId": "8WPTDS74WX",
       "bundleIdentifier": "com.spanday.pro.dev",
       "buildNumber": "25",
-      "googleServicesFile": "./google/development/GoogleService-Info.plist",
+      "googleServicesFile": "./google/GoogleService-Info.plist",
       "supportsTablet": true,
       "usesAppleSignIn": true,
       "requireFullScreen": true,
@@ -39,7 +39,7 @@
         "foregroundImage": "./assets/images/icon/adaptive-icon.png",
         "backgroundColor": "#080726"
       },
-      "googleServicesFile": "./google/development/google-services.json",
+      "googleServicesFile": "./google/google-services.json",
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO",

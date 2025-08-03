@@ -123,7 +123,7 @@ export const AdaptivePopover = forwardRef(
               snapPointsMode="fit"
             >
               <Popover.Sheet.Overlay
-                backgroundColor="$background1"
+                backgroundColor="$background"
                 animation="quick"
                 enterStyle={{ opacity: 0 }}
                 exitStyle={{ opacity: 0 }}
@@ -133,9 +133,7 @@ export const AdaptivePopover = forwardRef(
               <Popover.Sheet.Frame
                 borderTopLeftRadius="$10"
                 borderTopRightRadius="$10"
-                borderWidth={1}
-                borderColor="$background"
-                backgroundColor="$background"
+                backgroundColor="$background1"
                 paddingLeft={left}
                 paddingRight={right}
               >
@@ -150,11 +148,7 @@ export const AdaptivePopover = forwardRef(
                   />
 
                   {!!sheetTitle && (
-                    <H3
-                      color="$placeholderColor"
-                      paddingHorizontal="$5"
-                      paddingVertical="$2"
-                    >
+                    <H3 paddingHorizontal="$5" paddingVertical="$2">
                       {sheetTitle}
                     </H3>
                   )}

@@ -168,6 +168,7 @@ export const AvatarPicker = ({
         minWidth={250}
         ref={popoverRef}
         disabled={loading || attaching}
+        sheetTitle={t('preferences.avatar.trigger.label')}
         trigger={
           loading || attaching ? (
             <Spinner width={22} height={22} />

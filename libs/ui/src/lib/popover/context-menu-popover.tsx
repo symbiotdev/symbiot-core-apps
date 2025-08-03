@@ -36,8 +36,6 @@ export type ContextMenuItem = {
   onPress: () => void;
 };
 
-const menuCloseDelay = 150;
-
 export const ContextMenuPopover = ({
   items,
   disabled,
@@ -79,7 +77,7 @@ export const ContextMenuPopover = ({
         ...prev,
         modalVisible: false,
       }));
-    }, menuCloseDelay);
+    }, 150);
   }, []);
 
   return (

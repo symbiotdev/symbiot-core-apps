@@ -20,9 +20,9 @@ import { View, XStack } from 'tamagui';
 import { DateHelper } from '@symbiot-core-apps/shared';
 
 export const Notifications = () => {
-  const { me } = useMe();
+  const { me, updateMeStats } = useMe();
   const headerHeight = useScreenHeaderHeight();
-  const { mutate: readAll } = useAccountNotificationsReadQuery();
+  const { mutateAsync: readAll } = useAccountNotificationsReadQuery();
   const {
     notifications: initialNotificationsState,
     setNotifications: setInitialNotificationsState,
@@ -39,6 +39,19 @@ export const Notifications = () => {
     initialState: initialNotificationsState,
     setInitialState: setInitialNotificationsState,
   });
+
+  const markAllNotificationsAsRead = useCallback(async () => {
+    await readAll();
+
+    if (me?.stats) {
+      updateMeStats({
+        notifications: {
+          ...me.stats.notifications,
+          new: 0,
+        },
+      });
+    }
+  }, [me?.stats, readAll, updateMeStats]);
 
   const renderItem = useCallback(
     ({ item }: { item: AccountNotification }) => {
@@ -86,9 +99,9 @@ export const Notifications = () => {
 
   useEffect(() => {
     return () => {
-      readAll();
+      void markAllNotificationsAsRead();
     };
-  }, [readAll]);
+  }, [markAllNotificationsAsRead]);
 
   return (
     <PageView

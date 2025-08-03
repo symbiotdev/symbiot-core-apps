@@ -74,7 +74,7 @@ export const useAccountMeState = create<AccountMeState>()(
 );
 
 export const useMe = () => {
-  const { me, setMe } = useAccountMeState();
+  const { me, setMe, setMeStats } = useAccountMeState();
   const { setScheme } = useScheme();
   const { setMePreferences } = useAccountMeState();
 
@@ -99,9 +99,16 @@ export const useMe = () => {
     [setMePreferences, setScheme],
   );
 
+  const updateMeStats = useCallback((stats: Partial<AccountStats>) => {
+    if (me?.stats) {
+      setMeStats(stats);
+    }
+  }, [me?.stats, setMeStats]);
+
   return {
     updateMe,
     updateMePreferences,
+    updateMeStats,
     me,
   };
 };

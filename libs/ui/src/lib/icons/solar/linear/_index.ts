@@ -27,8 +27,11 @@ import { MenuDotsCircle } from './MenuDotsCircle';
 import { HomeAdd } from './HomeAdd';
 import { Calendar } from './Calendar';
 import { CalendarMinimalistic } from './CalendarMinimalistic';
+import { AddSquare } from './AddSquare';
+import { Suitcase } from './Suitcase';
 
 export const Map: IconMap = {
+  AddSquare,
   ArrowLeft,
   ArrowRight,
   Bell,
@@ -51,6 +54,7 @@ export const Map: IconMap = {
   QuestionCircle,
   Share,
   ShareCircle,
+  Suitcase,
   Sun,
   TrashBinMinimalistic,
   TuningSquare,

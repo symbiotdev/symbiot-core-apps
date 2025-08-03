@@ -3,6 +3,7 @@ import Collapsible from 'react-native-collapsible';
 import { useCallback, useState } from 'react';
 import { MediumText, RegularText } from '../text/text';
 import { Icon } from '../icons';
+import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 
 type AccordionItem = {
   title: string;
@@ -20,6 +21,7 @@ const Item = ({ item, last }: { item: AccordionItem; last: boolean }) => {
 
   const toggle = useCallback(() => {
     setCollapsed((prev) => !prev);
+    void impactAsync(ImpactFeedbackStyle.Soft);
   }, []);
 
   return (

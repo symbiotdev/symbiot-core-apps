@@ -34,6 +34,7 @@ import { AltArrowUp } from './AltArrowUp';
 import { MagicStick } from './MagicStick';
 import { AddCircle } from './AddCircle';
 import { Widget3 } from './Widget3';
+import { CloseCircle } from './CloseCircle';
 
 export const Map: IconMap = {
   AddCircle,
@@ -46,6 +47,7 @@ export const Map: IconMap = {
   Calendar,
   CalendarMinimalistic,
   Camera,
+  CloseCircle,
   CodeCircle,
   CrownLine,
   FileText,

@@ -4,9 +4,9 @@ import {
   KeyboardAvoidingView,
   KeyboardAwareScrollView,
 } from 'react-native-keyboard-controller';
-import { ScrollView, View, ViewProps } from 'tamagui';
+import { ScrollView, ViewProps } from 'tamagui';
 import { LoadingView } from './loading-view';
-import { useRendered } from '@symbiot-core-apps/shared';
+import { useKeyboard, useRendered } from '@symbiot-core-apps/shared';
 import { Refresher } from '../loading/refresher';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useScreenHeaderHeight } from '../navigation/header';
@@ -116,6 +116,7 @@ const PageContent = ({
 }) => {
   const { top, bottom, left, right } = useSafeAreaInsets();
   const headerHeight = useScreenHeaderHeight();
+  const { currentHeight: keyboardHeight } = useKeyboard();
 
   return (
     <ContainerView
@@ -125,7 +126,8 @@ const PageContent = ({
         Number(paddingTop)
       }
       paddingBottom={
-        (!ignoreBottomSafeArea ? bottom : 0) + Number(paddingBottom)
+        (!ignoreBottomSafeArea && !keyboardHeight ? bottom : 0) +
+        Number(paddingBottom)
       }
       paddingLeft={left + Number(paddingLeft)}
       paddingRight={right + Number(paddingRight)}

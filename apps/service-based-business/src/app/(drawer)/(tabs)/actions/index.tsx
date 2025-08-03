@@ -12,12 +12,19 @@ import {
   TabsPageView,
 } from '@symbiot-core-apps/ui';
 import { View } from 'tamagui';
+import { router } from 'expo-router';
+import { Icons } from '../../../../icons/config';
 
 export default () => {
   const { me } = useMe();
   const { t } = useT();
 
   const [qrCodeVisible, setQrCodeVisible] = useState(false);
+
+  const createBusiness = useCallback(
+    () => router.navigate('/business/create'),
+    [],
+  );
 
   const onOpenQrCodeModal = useCallback(() => setQrCodeVisible(true), []);
   const onCloseQrCodeModal = useCallback(() => setQrCodeVisible(false), []);
@@ -50,8 +57,8 @@ export default () => {
               buttonLabel={t('initial_actions.create_workspace.button.label', {
                 ns: 'app',
               })}
-              buttonIcon={<Icon name="Heart" />}
-              onActionPress={() => alert('create')}
+              buttonIcon={<Icon name={Icons.Workspace} />}
+              onActionPress={createBusiness}
             />
 
             <H4 textAlign="center" textTransform="uppercase">

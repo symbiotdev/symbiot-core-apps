@@ -12,6 +12,7 @@ export type IconName =
   | 'Calendar'
   | 'CalendarMinimalistic'
   | 'Camera'
+  | 'CloseCircle'
   | 'CodeCircle'
   | 'CrownLine'
   | 'FileText'

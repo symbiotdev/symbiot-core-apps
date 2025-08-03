@@ -12,14 +12,14 @@ export const ConfirmAlert = (props: {
     }
   }
 
-  Alert.alert(props.title, '', [
+  Alert.alert(props.title, props.message || '', [
     {
-      text: i18n.t('cancel'),
+      text: i18n.t('shared.cancel'),
       style: 'cancel',
       isPreferred: true,
     },
     {
-      text: i18n.t('continue'),
+      text: i18n.t('shared.continue'),
       onPress: props.callback,
     },
   ]);

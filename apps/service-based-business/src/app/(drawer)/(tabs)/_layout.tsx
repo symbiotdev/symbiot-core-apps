@@ -90,7 +90,7 @@ export default () => {
             options={{
               tabBarIcon: ({ color, size, focused }) => (
                 <Icon
-                  name={Icons.Workspaces}
+                  name={Icons.Workspace}
                   color={color}
                   size={size}
                   type={focused ? 'SolarBold' : undefined}

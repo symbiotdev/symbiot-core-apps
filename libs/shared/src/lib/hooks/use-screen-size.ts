@@ -6,8 +6,8 @@ export const useScreenSize = () => {
 
   return useMemo(
     () => ({
-      isSmall: width < 768,
-      isBig: width >= 768,
+      isSmall: width < 660,
+      isBig: width >= 660,
     }),
     [width],
   );

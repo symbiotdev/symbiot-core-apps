@@ -14,11 +14,13 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { H3 } from '../text/heading';
+import { headerHeight, ModalHeader } from '../navigation/header';
 
 export const AdaptivePopover = forwardRef(
   (
     {
       children,
+      type = 'draggable',
       ignoreAdaptive,
       ignoreScroll,
       disableDrag,
@@ -33,6 +35,7 @@ export const AdaptivePopover = forwardRef(
       onClose,
       ...popoverProps
     }: PopoverProps & {
+      type?: 'draggable' | 'closable';
       ignoreAdaptive?: boolean;
       ignoreScroll?: boolean;
       disableDrag?: boolean;
@@ -134,25 +137,36 @@ export const AdaptivePopover = forwardRef(
                 borderTopLeftRadius="$10"
                 borderTopRightRadius="$10"
                 backgroundColor="$background1"
+                position="relative"
                 paddingLeft={left}
                 paddingRight={right}
               >
-                <Pressable disabled={Platform.OS === 'web'}>
-                  <View
-                    width={50}
-                    height={4}
-                    borderRadius="$10"
-                    backgroundColor="$disabled"
-                    marginVertical={10}
-                    marginHorizontal="auto"
-                  />
+                {type === 'draggable' && (
+                  <Pressable disabled={Platform.OS === 'web'}>
+                    <View
+                      width={50}
+                      height={4}
+                      borderRadius="$10"
+                      backgroundColor="$disabled"
+                      marginVertical={10}
+                      marginHorizontal="auto"
+                    />
 
-                  {!!sheetTitle && (
-                    <H3 paddingHorizontal="$5" paddingVertical="$2">
-                      {sheetTitle}
-                    </H3>
-                  )}
-                </Pressable>
+                    {!!sheetTitle && (
+                      <H3 paddingHorizontal="$5" paddingVertical="$2">
+                        {sheetTitle}
+                      </H3>
+                    )}
+                  </Pressable>
+                )}
+
+                {type === 'closable' && (
+                  <ModalHeader
+                    height={headerHeight}
+                    headerLeft={() => <H3>{sheetTitle}</H3>}
+                    onClose={onClose}
+                  />
+                )}
 
                 {!ignoreScroll ? (
                   <Popover.Sheet.ScrollView

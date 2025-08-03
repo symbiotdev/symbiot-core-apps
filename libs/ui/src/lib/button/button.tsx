@@ -3,7 +3,7 @@ import { MediumText } from '../text/text';
 import { ColorTokens, XStack, XStackProps } from 'tamagui';
 import { Spinner } from '../loading/spinner';
 
-export type ButtonType = 'default' | 'outlined' | 'danger';
+export type ButtonType = 'default' | 'outlined' | 'clear' | 'danger';
 
 export const ButtonTheme = {
   default: {
@@ -12,9 +12,9 @@ export const ButtonTheme = {
     borderWidth: 0,
     borderColor: 'transparent',
   },
-  danger: {
-    color: '$buttonTextColor',
-    backgroundColor: '$error',
+  clear: {
+    color: '$buttonTextColor1',
+    backgroundColor: 'transparent',
     borderWidth: 0,
     borderColor: 'transparent',
   },
@@ -23,6 +23,12 @@ export const ButtonTheme = {
     backgroundColor: 'transparent',
     borderWidth: 1.5,
     borderColor: '$buttonBackground',
+  },
+  danger: {
+    color: '$buttonTextColor',
+    backgroundColor: '$error',
+    borderWidth: 0,
+    borderColor: 'transparent',
   },
 };
 

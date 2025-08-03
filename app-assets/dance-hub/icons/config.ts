@@ -5,6 +5,6 @@ export const Icons: Record<string, IconName> = {
   Notifications: 'Bell',
   Calendar: 'Calendar',
   TabsPlus: 'AddCircle',
-  Workspaces: 'MagicStick',
+  Workspace: 'MagicStick',
   Menu: 'Widget3',
 };

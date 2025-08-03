@@ -11,6 +11,8 @@ export * from './lib/collapsible/accordion';
 
 export * from './lib/form/avatar-picker';
 export * from './lib/form/checkbox';
+export * from './lib/form/country-picker';
+export * from './lib/form/currency-picker';
 export * from './lib/form/date-picker';
 export * from './lib/form/input';
 export * from './lib/form/input-code';
@@ -26,6 +28,7 @@ export * from './lib/icons';
 export * from './lib/list/animated-list';
 export * from './lib/list/list-item';
 
+export * from './lib/loading/progress';
 export * from './lib/loading/spinner';
 
 export * from './lib/media/avatar';

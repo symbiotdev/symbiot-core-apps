@@ -5,11 +5,7 @@ import {
   socket,
   useAccountNotificationQueryState,
 } from '@symbiot-core-apps/api';
-import {
-  useAccountMeState,
-  useAccountNotificationsState,
-  useMe,
-} from '@symbiot-core-apps/state';
+import { useAccountNotificationsState, useMe } from '@symbiot-core-apps/state';
 import { Platform } from 'react-native';
 import { AudioSource, useAudioPlayer } from 'expo-audio';
 import { ShowNativeSuccessAlert } from '@symbiot-core-apps/shared';
@@ -20,18 +16,17 @@ export const useSocketNotifications = ({
   soundSource: AudioSource;
 }) => {
   const soundPlayer = useAudioPlayer(soundSource);
-  const { me } = useMe();
-  const { setMeStats } = useAccountMeState();
+  const { me, updateMeStats } = useMe();
   const { add: addToInitialState } = useAccountNotificationsState();
   const { addToList: addToListQueryState, markAllAsRead } =
     useAccountNotificationQueryState();
 
   const onStatsUpdated = useCallback(
     (notifications: AccountStats['notifications']) =>
-      setMeStats({
+      updateMeStats({
         notifications,
       }),
-    [setMeStats],
+    [updateMeStats],
   );
 
   const onAdded = useCallback(
@@ -61,11 +56,11 @@ export const useSocketNotifications = ({
     (notifications: AccountStats['notifications']) => {
       markAllAsRead();
 
-      setMeStats({
+      updateMeStats({
         notifications,
       });
     },
-    [markAllAsRead, setMeStats],
+    [markAllAsRead, updateMeStats],
   );
 
   return useEffect(() => {

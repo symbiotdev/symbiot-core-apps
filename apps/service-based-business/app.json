@@ -1,10 +1,10 @@
 {
   "expo": {
     "newArchEnabled": true,
-    "name": "Spanday PRO",
-    "slug": "spanday-pro",
-    "scheme": "spanday-pro",
-    "version": "2.0.0",
+    "name": "DanceSHub",
+    "slug": "symbiot-dance-hub",
+    "scheme": "symbiot-dance-hub",
+    "version": "1.0.0",
     "userInterfaceStyle": "automatic",
     "orientation": "default",
     "icon": "./assets/images/icon/adaptive-icon.png",
@@ -13,8 +13,8 @@
     ],
     "ios": {
       "appleTeamId": "8WPTDS74WX",
-      "bundleIdentifier": "com.spanday.pro.dev",
-      "buildNumber": "25",
+      "bundleIdentifier": "com.symbiot.dance.hub.dev",
+      "buildNumber": "7",
       "googleServicesFile": "./google/GoogleService-Info.plist",
       "supportsTablet": true,
       "usesAppleSignIn": true,
@@ -32,8 +32,8 @@
       }
     },
     "android": {
-      "package": "com.spanday.pro.dev",
-      "versionCode": 25,
+      "package": "com.symbiot.dance.hub.dev",
+      "versionCode": 7,
       "icon": "./assets/images/icon/ios-light.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon/adaptive-icon.png",
@@ -136,7 +136,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "745568dc-a1a7-4c08-ac3c-ac87cd97a948"
+        "projectId": "4c63cac6-8e10-436a-bc29-a59552c246e0"
       }
     }
   }

@@ -5,6 +5,7 @@ import {
   useTabsScreenOptions,
 } from '@symbiot-core-apps/ui';
 import { useMe } from '@symbiot-core-apps/state';
+import { PlusActionModal } from '../../../components/tabs/plus-action-modal';
 
 const Notifications = () => {
   const { me } = useMe();
@@ -26,104 +27,92 @@ export default () => {
   const hasBusiness = true;
 
   return (
-    <Tabs screenOptions={screenOptions}>
-      <Tabs.Protected guard={!hasBusiness}>
-        <Tabs.Screen
-          name="actions/index"
-          options={{
-            headerRight: Notifications,
-            tabBarIcon: ({ color, size, focused }) => (
-              <AttentionView attention={!!me?.stats?.notifications?.new}>
+    <>
+      <Tabs screenOptions={screenOptions}>
+        <Tabs.Protected guard={!hasBusiness}>
+          <Tabs.Screen
+            name="actions/index"
+            options={{
+              headerRight: Notifications,
+              tabBarIcon: ({ color, size, focused }) => (
+                <AttentionView attention={!!me?.stats?.notifications?.new}>
+                  <Icon
+                    name="Home"
+                    color={color}
+                    size={size}
+                    type={focused ? 'SolarBold' : undefined}
+                  />
+                </AttentionView>
+              ),
+            }}
+          />
+        </Tabs.Protected>
+
+        <Tabs.Protected guard={hasBusiness}>
+          <Tabs.Screen
+            name="home/index"
+            options={{
+              headerRight: Notifications,
+              tabBarIcon: ({ color, size, focused }) => (
+                <AttentionView attention={!!me?.stats?.notifications?.new}>
+                  <Icon
+                    name="Home"
+                    color={color}
+                    size={size}
+                    type={focused ? 'SolarBold' : undefined}
+                  />
+                </AttentionView>
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="calendar/index"
+            options={{
+              tabBarIcon: ({ color, size, focused }) => (
                 <Icon
-                  name="Home"
+                  name="Calendar"
                   color={color}
                   size={size}
                   type={focused ? 'SolarBold' : undefined}
                 />
-              </AttentionView>
-            ),
-          }}
-        />
-      </Tabs.Protected>
-
-      <Tabs.Protected guard={hasBusiness}>
-        <Tabs.Screen
-          name="home/index"
-          options={{
-            headerRight: Notifications,
-            tabBarIcon: ({ color, size, focused }) => (
-              <AttentionView attention={!!me?.stats?.notifications?.new}>
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="plus/index"
+            options={{
+              tabBarButton: PlusActionModal,
+            }}
+          />
+          <Tabs.Screen
+            name="workspaces/index"
+            options={{
+              tabBarIcon: ({ color, size, focused }) => (
                 <Icon
-                  name="Home"
+                  name="Suitcase"
                   color={color}
                   size={size}
                   type={focused ? 'SolarBold' : undefined}
                 />
-              </AttentionView>
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="calendar/index"
-          options={{
-            tabBarIcon: ({ color, size, focused }) => (
-              <Icon
-                name="Calendar"
-                color={color}
-                size={size}
-                type={focused ? 'SolarBold' : undefined}
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="plus/index"
-          options={{
-            href: null,
-            tabBarIcon: ({ color, size, focused }) => (
-              <Icon
-                name="Heart"
-                color={color}
-                size={size}
-                type={focused ? 'SolarBold' : undefined}
-              />
-            ),
-          }}
-          listeners={{
-            tabPress: (e) => {
-              e.preventDefault();
-              console.log(123);
-            },
-          }}
-        />
-        <Tabs.Screen
-          name="workspaces/index"
-          options={{
-            tabBarIcon: ({ color, size, focused }) => (
-              <Icon
-                name="Heart"
-                color={color}
-                size={size}
-                type={focused ? 'SolarBold' : undefined}
-              />
-            ),
-          }}
-        />
-      </Tabs.Protected>
+              ),
+            }}
+          />
+        </Tabs.Protected>
 
-      <Tabs.Screen
-        name="menu/index"
-        options={{
-          tabBarIcon: ({ color, size, focused }) => (
-            <Icon
-              name="Widget"
-              color={color}
-              size={size}
-              type={focused ? 'SolarBold' : undefined}
-            />
-          ),
-        }}
-      />
-    </Tabs>
+        <Tabs.Screen
+          name="menu/index"
+          options={{
+            tabBarIcon: ({ color, size, focused }) => (
+              <Icon
+                name="Widget"
+                color={color}
+                size={size}
+                type={focused ? 'SolarBold' : undefined}
+              />
+            ),
+          }}
+        />
+      </Tabs>
+    </>
   );
 };

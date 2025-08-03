@@ -31,10 +31,15 @@ import { spawn } from 'child_process';
   await mergeAppAssets(app, buildApp, env, incrementType);
   addEnvToEasConfig(buildApp, env, profile);
 
-  spawn(`nx reset && ${prebuild} && ${build} && ${submit}`, {
-    stdio: 'inherit',
-    shell: true,
-  });
+  const childProcess = spawn(
+    `nx reset && ${prebuild} && ${build} && ${submit}`,
+    {
+      stdio: 'inherit',
+      shell: true,
+    },
+  );
 
-  removeEnvFromEasConfig(buildApp, profile);
+  childProcess.on('close', () => {
+    removeEnvFromEasConfig(buildApp, profile);
+  });
 })();

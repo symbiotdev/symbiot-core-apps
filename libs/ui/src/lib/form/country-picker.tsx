@@ -145,6 +145,7 @@ export const CountryPicker = ({
             </RegularText>
           </InputFieldView>
         }
+        onClose={onClose}
       >
         <AnimatedList
           ignoreAnimation

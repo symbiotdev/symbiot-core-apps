@@ -37,7 +37,7 @@ export const Progress = ({
           animatedStyle,
           {
             borderRadius: 100,
-            backgroundColor: theme.color?.val,
+            backgroundColor: theme.buttonBackground?.val,
             height: '100%',
           },
         ]}

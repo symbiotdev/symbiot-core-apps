@@ -117,6 +117,7 @@ export const CurrencyPicker = ({
             </RegularText>
           </InputFieldView>
         }
+        onClose={onClose}
       >
         <AnimatedList
           ignoreAnimation

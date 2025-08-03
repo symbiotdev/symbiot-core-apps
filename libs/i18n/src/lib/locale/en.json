@@ -6,7 +6,6 @@
     "and": "and",
     "version": "Version",
     "language": "Language",
-    "help_feedback": "Help & Feedback",
     "follow_us": "Follow us",
     "profile": "Profile",
     "share_app": "Share application",
@@ -301,6 +300,16 @@
         },
         "button": {
           "label": "Sign out"
+        }
+      }
+    },
+    "faq": {
+      "title": "Help & Feedback",
+      "contact_us": {
+        "title": "Didn't find what you were looking for?",
+        "subtitle": "If you couldn't find an answer to your question or need further assistance, feel free to contact us.",
+        "button": {
+          "label": "Email"
         }
       }
     }

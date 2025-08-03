@@ -1,0 +1,9 @@
+{
+  "name": "faq",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/faq/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project faq --web",
+  "targets": {}
+}

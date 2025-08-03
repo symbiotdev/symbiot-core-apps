@@ -29,6 +29,7 @@
       "@symbiot-core-apps/business-onboarding": [
         "libs/business-onboarding/src/index.ts"
       ],
+      "@symbiot-core-apps/faq": ["libs/faq/src/index.ts"],
       "@symbiot-core-apps/i18n": ["libs/i18n/src/index.ts"],
       "@symbiot-core-apps/notification": ["libs/notification/src/index.ts"],
       "@symbiot-core-apps/onboarding": ["libs/onboarding/src/index.ts"],

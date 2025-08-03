@@ -3,6 +3,8 @@ import { ReactElement } from 'react';
 
 export type IconName =
   | 'AddSquare'
+  | 'AltArrowDown'
+  | 'AltArrowUp'
   | 'ArrowLeft'
   | 'ArrowRight'
   | 'Bell'

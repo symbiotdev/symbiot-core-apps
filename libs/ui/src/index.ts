@@ -7,6 +7,8 @@ export * from './lib/calendar/calendar';
 export * from './lib/card/action-card';
 export * from './lib/card/card';
 
+export * from './lib/collapsible/accordion';
+
 export * from './lib/form/avatar-picker';
 export * from './lib/form/checkbox';
 export * from './lib/form/date-picker';

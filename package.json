@@ -65,6 +65,7 @@
     "react-hook-form": "^7.60.0",
     "react-i18next": "^15.6.0",
     "react-native": "0.79.5",
+    "react-native-collapsible": "^1.6.2",
     "react-native-confirmation-code-field": "^8.0.1",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-keyboard-controller": "^1.17.5",

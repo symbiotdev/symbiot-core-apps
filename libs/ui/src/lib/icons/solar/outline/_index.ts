@@ -29,9 +29,13 @@ import { Calendar } from './Calendar';
 import { CalendarMinimalistic } from './CalendarMinimalistic';
 import { AddSquare } from './AddSquare';
 import { Suitcase } from './Suitcase';
+import { AltArrowDown } from './AltArrowDown';
+import { AltArrowUp } from './AltArrowUp';
 
 export const Map: IconMap = {
   AddSquare,
+  AltArrowDown,
+  AltArrowUp,
   ArrowLeft,
   ArrowRight,
   Bell,

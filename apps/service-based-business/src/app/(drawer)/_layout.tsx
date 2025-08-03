@@ -38,7 +38,7 @@ export default () => {
             <Stack.Screen
               name="help-feedback/index"
               options={{
-                headerTitle: t('help_feedback'),
+                headerTitle: t('faq.title'),
               }}
             />
             <Stack.Screen

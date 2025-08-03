@@ -1,3 +1,3 @@
-import { HelpFeedback } from '@symbiot-core-apps/app';
+import { Faq } from '@symbiot-core-apps/faq';
 
-export default HelpFeedback;
+export default Faq;

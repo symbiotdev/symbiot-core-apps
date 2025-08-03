@@ -118,7 +118,7 @@ const Content = ({
         onPress={onClose}
       >
         <Icon
-          name="AddSquare"
+          name={Icons.TabsPlus}
           type="SolarBold"
           color="$color"
           size={rectRef.current.width}

@@ -2,6 +2,7 @@ import { SvgProps } from 'react-native-svg';
 import { ReactElement } from 'react';
 
 export type IconName =
+  | 'AddCircle'
   | 'AddSquare'
   | 'AltArrowDown'
   | 'AltArrowUp'

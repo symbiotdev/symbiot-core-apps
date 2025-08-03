@@ -4,7 +4,7 @@ export const Icons: Record<string, IconName> = {
   Home: 'Home',
   Notifications: 'Bell',
   Calendar: 'Calendar',
-  TabsPlus: 'AddSquare',
+  TabsPlus: 'AddCircle',
   Workspaces: 'MagicStick',
   Menu: 'Widget',
 };

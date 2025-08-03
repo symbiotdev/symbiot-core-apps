@@ -32,8 +32,10 @@ import { Suitcase } from './Suitcase';
 import { AltArrowDown } from './AltArrowDown';
 import { AltArrowUp } from './AltArrowUp';
 import { MagicStick } from './MagicStick';
+import { AddCircle } from './AddCircle';
 
 export const Map: IconMap = {
+  AddCircle,
   AddSquare,
   AltArrowDown,
   AltArrowUp,

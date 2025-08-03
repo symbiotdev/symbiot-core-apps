@@ -22,13 +22,6 @@
         "libs/app-preferences/src/index.ts"
       ],
       "@symbiot-core-apps/auth": ["libs/auth/src/index.ts"],
-      "@symbiot-core-apps/business-calendar": [
-        "libs/business-calendar/src/index.ts"
-      ],
-      "@symbiot-core-apps/business-menu": ["libs/business-menu/src/index.ts"],
-      "@symbiot-core-apps/business-onboarding": [
-        "libs/business-onboarding/src/index.ts"
-      ],
       "@symbiot-core-apps/faq": ["libs/faq/src/index.ts"],
       "@symbiot-core-apps/i18n": ["libs/i18n/src/index.ts"],
       "@symbiot-core-apps/notification": ["libs/notification/src/index.ts"],
@@ -36,6 +29,7 @@
       "@symbiot-core-apps/shared": ["libs/shared/src/index.ts"],
       "@symbiot-core-apps/state": ["libs/state/src/index.ts"],
       "@symbiot-core-apps/storage": ["libs/storage/src/index.ts"],
+      "@symbiot-core-apps/survey": ["libs/survey/src/index.ts"],
       "@symbiot-core-apps/theme": ["libs/theme/src/index.ts"],
       "@symbiot-core-apps/ui": ["libs/ui/src/index.ts"]
     }

@@ -25,7 +25,7 @@ const Notifications = () => {
 export default () => {
   const screenOptions = useTabsScreenOptions();
   const { me } = useMe();
-  const hasBusiness = true;
+  const hasBusiness = false;
 
   return (
     <>

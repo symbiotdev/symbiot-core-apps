@@ -76,11 +76,11 @@ const onRequest = async (
       Intl.DateTimeFormat().resolvedOptions().timeZone;
   }
 
+  config.headers['x-app'] = process.env['EXPO_PUBLIC_APP_TYPE'];
   config.headers['x-identifier'] = params.devId;
   config.headers['x-lang'] = params.languageCode;
   config.headers['x-version'] = DeviceVersion;
   config.headers['x-platform'] = Platform.OS;
-  config.headers['x-type'] = process.env['EXPO_PUBLIC_APP_TYPE'];
   config.headers['x-device-info'] = JSON.stringify(DeviceInfo);
 
   if (config.headers['cancelable']) {

@@ -69,7 +69,6 @@ export const TabsMenu = () => {
       <TabsPageView scrollable>
         <FormView>
           <ActionCard
-            marginHorizontal="auto"
             title={t('subscription.card.title', {
               ns: 'app',
             })}
@@ -131,7 +130,7 @@ export const TabsMenu = () => {
               onPress={share}
             />
             <ListItem
-              label={t('help_feedback')}
+              label={t('faq.title')}
               icon={<Icon name="QuestionCircle" />}
               onPress={onHelpFeedbackPress}
             />

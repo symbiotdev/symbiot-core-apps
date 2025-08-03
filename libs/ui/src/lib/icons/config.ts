@@ -35,7 +35,8 @@ export type IconName =
   | 'TuningSquare'
   | 'Unread'
   | 'UserCircle'
-  | 'Widget';
+  | 'Widget'
+  | 'Widget3';
 export type IconMap = Record<IconName, (props: IconProps) => ReactElement>;
 
 export type IconProps = SvgProps & {

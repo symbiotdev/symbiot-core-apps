@@ -33,6 +33,7 @@ import { AltArrowDown } from './AltArrowDown';
 import { AltArrowUp } from './AltArrowUp';
 import { MagicStick } from './MagicStick';
 import { AddCircle } from './AddCircle';
+import { Widget3 } from './Widget3';
 
 export const Map: IconMap = {
   AddCircle,
@@ -69,4 +70,5 @@ export const Map: IconMap = {
   Unread,
   UserCircle,
   Widget,
+  Widget3,
 };

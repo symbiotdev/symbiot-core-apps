@@ -20,6 +20,7 @@ export * from './lib/form/social-link-input';
 export * from './lib/form/switch';
 export * from './lib/form/toggle-group';
 
+export * from './lib/icons/config';
 export * from './lib/icons';
 
 export * from './lib/list/animated-list';

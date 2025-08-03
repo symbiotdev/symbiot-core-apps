@@ -21,6 +21,7 @@ export type IconName =
   | 'HomeAdd'
   | 'Letter'
   | 'Logout2'
+  | 'MagicStick'
   | 'MenuDotsCircle'
   | 'Moon'
   | 'QrCode'

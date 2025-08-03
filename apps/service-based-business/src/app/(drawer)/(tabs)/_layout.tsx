@@ -6,6 +6,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useMe } from '@symbiot-core-apps/state';
 import { PlusActionModal } from '../../../components/tabs/plus-action-modal';
+import { Icons } from '../../../icons/config';
 
 const Notifications = () => {
   const { me } = useMe();
@@ -16,7 +17,7 @@ const Notifications = () => {
       cursor="pointer"
       onPress={() => router.navigate('/notifications')}
     >
-      <Icon name="Bell" color="$buttonTextColor1" size={24} />
+      <Icon name={Icons.Notifications} color="$buttonTextColor1" size={24} />
     </AttentionView>
   );
 };
@@ -37,7 +38,7 @@ export default () => {
               tabBarIcon: ({ color, size, focused }) => (
                 <AttentionView attention={!!me?.stats?.notifications?.new}>
                   <Icon
-                    name="Home"
+                    name={Icons.Home}
                     color={color}
                     size={size}
                     type={focused ? 'SolarBold' : undefined}
@@ -56,7 +57,7 @@ export default () => {
               tabBarIcon: ({ color, size, focused }) => (
                 <AttentionView attention={!!me?.stats?.notifications?.new}>
                   <Icon
-                    name="Home"
+                    name={Icons.Home}
                     color={color}
                     size={size}
                     type={focused ? 'SolarBold' : undefined}
@@ -70,7 +71,7 @@ export default () => {
             options={{
               tabBarIcon: ({ color, size, focused }) => (
                 <Icon
-                  name="Calendar"
+                  name={Icons.Calendar}
                   color={color}
                   size={size}
                   type={focused ? 'SolarBold' : undefined}
@@ -89,7 +90,7 @@ export default () => {
             options={{
               tabBarIcon: ({ color, size, focused }) => (
                 <Icon
-                  name="Suitcase"
+                  name={Icons.Workspaces}
                   color={color}
                   size={size}
                   type={focused ? 'SolarBold' : undefined}
@@ -104,7 +105,7 @@ export default () => {
           options={{
             tabBarIcon: ({ color, size, focused }) => (
               <Icon
-                name="Widget"
+                name={Icons.Menu}
                 color={color}
                 size={size}
                 type={focused ? 'SolarBold' : undefined}

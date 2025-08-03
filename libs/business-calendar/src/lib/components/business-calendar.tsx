@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Avatar,
   Calendar,
-  H2,
+  H3,
   headerButtonSize,
   Icon,
   MediumText,
@@ -41,13 +41,9 @@ export const BusinessCalendar = () => {
   const headerLeft = useCallback(
     () => (
       <XStack>
-        <H2 lineHeight={headerButtonSize} textTransform="capitalize">
-          {DateHelper.format(
-            selectedDate,
-            'LLLL yyyy',
-            lang as AppLanguage,
-          )}
-        </H2>
+        <H3 lineHeight={headerButtonSize} textTransform="capitalize">
+          {DateHelper.format(selectedDate, 'LLLL yyyy', lang as AppLanguage)}
+        </H3>
       </XStack>
     ),
     [lang, selectedDate],
@@ -81,6 +77,7 @@ export const BusinessCalendar = () => {
               bottom={3}
               color="$buttonTextColor1"
               fontSize={10}
+              lineHeight={10}
             >
               {now.getDate()}
             </MediumText>

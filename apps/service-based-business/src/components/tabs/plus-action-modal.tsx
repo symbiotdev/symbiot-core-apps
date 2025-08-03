@@ -12,6 +12,7 @@ import { FormView, H2, Icon } from '@symbiot-core-apps/ui';
 import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import { useScreenOrientation } from '@symbiot-core-apps/shared';
+import { Icons } from '../../icons/config';
 
 export const PlusActionModal = (props: BottomTabBarButtonProps) => {
   const [state, setState] = useState<{
@@ -56,7 +57,7 @@ export const PlusActionModal = (props: BottomTabBarButtonProps) => {
         onPress={openModal}
       >
         <Icon
-          name="AddSquare"
+          name={Icons.TabsPlus}
           type="SolarLinear"
           color="$borderColor"
           size={34}

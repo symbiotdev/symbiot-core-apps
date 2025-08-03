@@ -31,6 +31,7 @@ import { AddSquare } from './AddSquare';
 import { Suitcase } from './Suitcase';
 import { AltArrowDown } from './AltArrowDown';
 import { AltArrowUp } from './AltArrowUp';
+import { MagicStick } from './MagicStick';
 
 export const Map: IconMap = {
   AddSquare,
@@ -52,6 +53,7 @@ export const Map: IconMap = {
   HomeAdd,
   Letter,
   Logout2,
+  MagicStick,
   MenuDotsCircle,
   Moon,
   QrCode,

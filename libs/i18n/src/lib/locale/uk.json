@@ -1,6 +1,7 @@
 {
   "shared": {
     "next": "Далі",
+    "skip": "Пропустити",
     "continue": "Продовжити",
     "cancel": "Відміна",
     "and": "та",
@@ -18,6 +19,8 @@
     "its_empty": "Тут порожньо",
     "or": "або",
     "other": "Other",
+    "country": "Країна",
+    "currency": "Валюта",
     "docs": {
       "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",
@@ -310,6 +313,14 @@
         "subtitle": "Якщо ви не знайшли відповіді на своє запитання або потребуєте зворотного зв’язку, будь ласка, зв’яжіться з нами.",
         "button": {
           "label": "Email"
+        }
+      }
+    },
+    "business": {
+      "create": {
+        "discard": {
+          "title": "Відхилити створення?",
+          "message": "Ви впевнені, що хочете повернутися та відхилити?"
         }
       }
     }

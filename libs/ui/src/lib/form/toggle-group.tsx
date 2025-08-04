@@ -1,8 +1,9 @@
-import { View, XStack } from 'tamagui';
+import { AnimatePresence, View, XStack } from 'tamagui';
 import { ReactElement, useCallback, useMemo } from 'react';
 import { RegularText } from '../text/text';
 import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import { Icon } from '../icons';
+import { InitView } from '../view/init-view';
 
 export type ToggleGroupItem = {
   label: string;
@@ -10,24 +11,32 @@ export type ToggleGroupItem = {
   icon?: ReactElement;
 };
 
+export type ToggleGroupValue = unknown | unknown[];
+
 export const ToggleGroup = ({
   items,
   value,
   multiselect,
   allowEmpty,
+  loading,
   disabled,
+  error,
   onChange,
 }: {
-  items: ToggleGroupItem[];
-  value: unknown[];
+  items?: ToggleGroupItem[];
+  value: ToggleGroupValue;
   multiselect?: boolean;
   allowEmpty?: boolean;
+  loading?: boolean;
   disabled?: boolean;
-  onChange?: (value: unknown[]) => void;
+  error?: string;
+  onChange?: (value: ToggleGroupValue) => void;
 }) => {
-  return (
+  return !items?.length ? (
+    <InitView loading={loading} error={error} />
+  ) : (
     <View gap="$4">
-      {items.map((item, index) => (
+      {items?.map((item, index) => (
         <Item
           key={index}
           item={item}
@@ -51,27 +60,32 @@ const Item = ({
   onChange,
 }: {
   item: ToggleGroupItem;
-  value: unknown[];
+  value: ToggleGroupValue;
   multiselect?: boolean;
   allowEmpty?: boolean;
   disabled?: boolean;
-  onChange?: (value: unknown[]) => void;
+  onChange?: (value: ToggleGroupValue) => void;
 }) => {
   const selected = useMemo(
-    () => value.includes(item.value),
-    [item.value, value],
+    () =>
+      multiselect && Array.isArray(value)
+        ? value.includes(item.value)
+        : value === item.value,
+    [item.value, multiselect, value],
   );
 
   const onPress = useCallback(() => {
-    if (selected && value.length === 1 && !allowEmpty) {
-      return;
-    } else if (selected) {
-      onChange?.(value.filter((itemValue) => itemValue !== item.value));
+    if (multiselect && Array.isArray(value)) {
+      if (selected && value.length === 1 && !allowEmpty) {
+        return;
+      } else if (selected) {
+        onChange?.(value.filter((itemValue) => itemValue !== item.value));
+      }
     } else {
-      if (multiselect) {
-        onChange?.([...value, item.value]);
+      if (!allowEmpty) {
+        onChange?.(item.value);
       } else {
-        onChange?.([item.value]);
+        onChange?.(item.value === value ? null : item.value);
       }
     }
 
@@ -90,13 +104,30 @@ const Item = ({
     >
       {item.icon}
 
-      <RegularText flex={1} color={disabled ? '$disabled' : '$color'}>
+      <RegularText
+        flex={1}
+        lineHeight={24}
+        color={disabled ? '$disabled' : '$color'}
+      >
         {item.label}
       </RegularText>
 
-      {selected && (
-        <Icon name="Unread" color={disabled ? '$disabled' : '$checkboxColor'} />
-      )}
+      <AnimatePresence>
+        {selected && (
+          <View
+            animation="quick"
+            enterStyle={{ scale: 0, opacity: 0 }}
+            exitStyle={{ scale: 0, opacity: 0 }}
+            scale={1}
+            opacity={1}
+          >
+            <Icon
+              name="Unread"
+              color={disabled ? '$disabled' : '$checkboxColor'}
+            />
+          </View>
+        )}
+      </AnimatePresence>
     </XStack>
   );
 };

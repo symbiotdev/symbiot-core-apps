@@ -46,9 +46,9 @@ export const Language = () => {
         <Card>
           <ToggleGroup
             items={items}
-            value={[lang]}
+            value={lang}
             onChange={(result) =>
-              updateAccount$({ language: result[0] as AppLanguage })
+              updateAccount$({ language: result as AppLanguage })
             }
           />
         </Card>

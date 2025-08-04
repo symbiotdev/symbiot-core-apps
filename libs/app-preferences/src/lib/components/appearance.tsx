@@ -6,12 +6,13 @@ import {
   Spinner,
   Switch,
   ToggleGroup,
+  ToggleGroupValue,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useMeUpdater } from '@symbiot-core-apps/state';
 import { AccountScheme } from '@symbiot-core-apps/api';
 import { useNavigation } from '@react-navigation/native';
-import { defaultSystemScheme, Scheme } from '@symbiot-core-apps/shared';
+import { defaultSystemScheme } from '@symbiot-core-apps/shared';
 import { useT } from '@symbiot-core-apps/i18n';
 
 export const Appearance = () => {
@@ -67,8 +68,8 @@ export const Appearance = () => {
             <ToggleGroup
               disabled={updating}
               items={items}
-              value={[scheme]}
-              onChange={(result) => onChange(result[0] as Scheme)}
+              value={scheme}
+              onChange={onChange as (value: ToggleGroupValue) => void}
             />
           )}
         </ListItemGroup>

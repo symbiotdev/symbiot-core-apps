@@ -170,13 +170,23 @@ export const AvatarPicker = ({
         disabled={loading || attaching}
         sheetTitle={t('preferences.avatar.trigger.label')}
         trigger={
-          loading || attaching ? (
-            <Spinner width={22} height={22} />
-          ) : (
-            <Link textAlign="center" pressStyle={{ opacity: 0.8 }}>
-              {t('preferences.avatar.trigger.label')}
-            </Link>
-          )
+          <View
+            position="absolute"
+            bottom={0}
+            right={0}
+            backgroundColor="$buttonBackground"
+            borderRadius="100%"
+            width={30}
+            height={30}
+            justifyContent="center"
+            alignItems="center"
+          >
+            {loading || attaching ? (
+              <Spinner width={22} height={22} color="$buttonTextColor" />
+            ) : (
+              <Icon name="Pen" color="$buttonTextColor" size={16} />
+            )}
+          </View>
         }
       >
         <View gap="$2">

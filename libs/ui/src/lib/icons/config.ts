@@ -26,6 +26,7 @@ export type IconName =
   | 'MagicStick'
   | 'MenuDotsCircle'
   | 'Moon'
+  | 'Pen'
   | 'QrCode'
   | 'QuestionCircle'
   | 'Share'

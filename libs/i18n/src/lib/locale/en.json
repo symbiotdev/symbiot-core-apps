@@ -36,7 +36,7 @@
       "title": "Preferences",
       "avatar": {
         "trigger": {
-          "label": "Edit picture"
+          "label": "Edit avatar"
         },
         "action": {
           "choose_from_gallery": {
@@ -376,6 +376,84 @@
           "label": "Upgrade now"
         }
       }
+    },
+    "business": {
+      "create": {
+        "intro": {
+          "title": "Upgrade your business management today",
+          "subtitle": "Provide a few details to optimize your app experience and take control of your business. It's quick and easy.",
+          "button": {
+            "label": "Let's go"
+          }
+        },
+        "steps": {
+          "name": {
+            "title": "Name",
+            "subtitle": "Enter your business name so clients can easily recognize you.",
+            "form": {
+              "name": {
+                "placeholder": "Spanday PRO",
+                "error": {
+                  "max_length": "Max possible length is {{max}} symbols",
+                  "required": "Business name is required"
+                }
+              }
+            }
+          },
+          "avatar": {
+            "title": "Business Logo",
+            "subtitle": "Upload your logo to make your business stand out and look professional."
+          },
+          "country": {
+            "title": "Country",
+            "subtitle": "Add your country so clients know where your business is located.",
+            "form": {
+              "country": {
+                "placeholder": "United States",
+                "error": {
+                  "required": "Country is required"
+                }
+              }
+            }
+          },
+          "currency": {
+            "title": "Currency",
+            "subtitle": "Select your preferred currency for clear and easy payments.",
+            "form": {
+              "currency": {
+                "placeholder": "USD",
+                "error": {
+                  "required": "Currency is required"
+                }
+              }
+            }
+          },
+          "referral_source": {
+            "title": "Where You Heard About Us?",
+            "subtitle": "Let us know how you found Spanday PRO - so we can better support your business journey.",
+            "form": {
+              "external_source": {
+                "placeholder": "Type here",
+                "error": {
+                  "required": "This field must be filled in"
+                }
+              }
+            }
+          },
+          "competitor_source": {
+            "title": "Previously Used Service",
+            "subtitle": "Share the service you previously used so we can improve your workspace experience.",
+            "form": {
+              "external_source": {
+                "placeholder": "Type here",
+                "error": {
+                  "required": "This field must be filled in"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "symbiot-dance-hub": {
@@ -427,6 +505,84 @@
         "subtitle": "Attract more students, offer diverse classes, and grow your team with confidence.",
         "button": {
           "label": "Upgrade now"
+        }
+      }
+    },
+    "business": {
+      "create": {
+        "intro": {
+          "title": "Upgrade your brand management today",
+          "subtitle": "Provide a few details to optimize your app experience and take control of your brand. It's quick and easy.",
+          "button": {
+            "label": "Let's go"
+          }
+        },
+        "steps": {
+          "name": {
+            "title": "Name",
+            "subtitle": "Provide your brand name for clear identification within the app.",
+            "form": {
+              "name": {
+                "placeholder": "RT Dance Studio",
+                "error": {
+                  "max_length": "Max possible length is {{max}} symbols",
+                  "required": "Brand name is required"
+                }
+              }
+            }
+          },
+          "avatar": {
+            "title": "Brand Logo",
+            "subtitle": "Upload your logo to make your brand stand out and look professional."
+          },
+          "country": {
+            "title": "Country",
+            "subtitle": "Add your country so students know where your dance hub is located.",
+            "form": {
+              "country": {
+                "placeholder": "United States",
+                "error": {
+                  "required": "Country is required"
+                }
+              }
+            }
+          },
+          "currency": {
+            "title": "Currency",
+            "subtitle": "Select your preferred currency for clear and easy payments.",
+            "form": {
+              "currency": {
+                "placeholder": "USD",
+                "error": {
+                  "required": "Currency is required"
+                }
+              }
+            }
+          },
+          "referral_source": {
+            "title": "Where You Heard About Us?",
+            "subtitle": "Let us know how you found DanceHub - so we can better support your dance journey.",
+            "form": {
+              "external_source": {
+                "placeholder": "Enter your variant",
+                "error": {
+                  "required": "Type here"
+                }
+              }
+            }
+          },
+          "competitor_source": {
+            "title": "Previously Used Service",
+            "subtitle": "Share the service you previously used so we can improve your dance hub experience.",
+            "form": {
+              "external_source": {
+                "placeholder": "Enter your variant",
+                "error": {
+                  "required": "Type here"
+                }
+              }
+            }
+          }
         }
       }
     }

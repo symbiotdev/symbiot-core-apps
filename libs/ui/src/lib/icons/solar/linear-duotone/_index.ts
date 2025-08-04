@@ -35,6 +35,7 @@ import { MagicStick } from './MagicStick';
 import { AddCircle } from './AddCircle';
 import { Widget3 } from './Widget3';
 import { CloseCircle } from './CloseCircle';
+import { Pen } from './Pen';
 
 export const Map: IconMap = {
   AddCircle,
@@ -61,6 +62,7 @@ export const Map: IconMap = {
   MagicStick,
   MenuDotsCircle,
   Moon,
+  Pen,
   QrCode,
   QuestionCircle,
   Share,

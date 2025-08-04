@@ -18,7 +18,7 @@ export default () => {
   return (
     <StateProvider>
       <NotificationsProvider
-        soundSource={require('../../../assets/audio/new-notification-sound.wav')}
+        soundSource={require('../../../assets/audio/new_notification_sound.wav')}
         onPressNotification={() => alert('push notification pressed')}
       >
         <Stack screenOptions={headerScreenOptions}>
@@ -27,6 +27,12 @@ export default () => {
               name="(tabs)"
               options={{
                 headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="business/create"
+              options={{
+                gestureEnabled: false,
               }}
             />
             <Stack.Screen

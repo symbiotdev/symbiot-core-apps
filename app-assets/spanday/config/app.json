@@ -5,10 +5,10 @@
     "scheme": "spanday-pro",
     "version": "2.0.0",
     "ios": {
-      "buildNumber": "26"
+      "buildNumber": "27"
     },
     "android": {
-      "versionCode": 26
+      "versionCode": 27
     },
     "extra": {
       "eas": {

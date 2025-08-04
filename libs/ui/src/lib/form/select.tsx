@@ -141,7 +141,6 @@ export function Select({
           <XStack
             key={i}
             gap="$5"
-            paddingHorizontal="$5"
             paddingVertical="$3"
             alignItems="center"
             justifyContent="space-between"

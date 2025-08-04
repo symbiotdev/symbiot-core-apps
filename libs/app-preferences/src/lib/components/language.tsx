@@ -24,7 +24,7 @@ export const Language = () => {
     () =>
       appLanguagesOptions.map(({ flag, code, name }) => ({
         icon: (
-          <RegularText lineHeight="100%" fontSize={28}>
+          <RegularText fontSize={28}>
             {flag}
           </RegularText>
         ),

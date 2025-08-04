@@ -28,6 +28,8 @@ import { toDate } from 'date-fns/toDate';
 
 const defaultWeekdayStartsOn: Day = 0;
 
+export type Weekday = Day;
+
 export const DateHelper = {
   toDate,
   isSameDay,
@@ -129,4 +131,12 @@ export const DateHelper = {
         value: minutes,
       };
     }),
+  get24HoursInFormattedTime: (interval = 15) => {
+    const start = DateHelper.startOfDay(new Date());
+
+    return Array.from({ length: (24 * 60) / interval }).map((_, i) => ({
+      label: DateHelper.format(DateHelper.addMinutes(start, i * interval), 'p'),
+      value: i * interval,
+    }));
+  },
 };

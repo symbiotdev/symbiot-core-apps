@@ -25,13 +25,13 @@ export const Switch = ({
         checked={checked}
         disabled={disabled}
         onCheckedChange={onChange}
-        backgroundColor={checked ? '$switchSelectedColor' : '$background1'}
+        backgroundColor={checked ? '$switchSelectedColor' : '$background'}
         opacity={disabled ? 0.8 : 1}
         native
         nativeProps={{
           disabled,
           trackColor: {
-            false: theme.background1?.val,
+            false: theme.background?.val,
             true: theme.switchSelectedColor?.val,
           },
         }}

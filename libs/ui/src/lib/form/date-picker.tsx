@@ -8,8 +8,7 @@ import { Popover, useTheme, View, ViewProps } from 'tamagui';
 import { RegularText } from '../text/text';
 import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import { FormField } from './form-field';
-import { DateHelper } from '@symbiot-core-apps/shared';
-import { Day } from 'date-fns/types';
+import { DateHelper, Weekday } from '@symbiot-core-apps/shared';
 import { Platform } from 'react-native';
 import { useScheme } from '@symbiot-core-apps/state';
 import { InputFieldView } from '../view/input-field-view';
@@ -35,7 +34,7 @@ export const DatePicker = ({
   error?: string;
   placeholder?: string;
   formatStr?: string;
-  weekStartsOn?: Day;
+  weekStartsOn?: Weekday;
   startDate?: Date;
   minDate?: Date;
   maxDate?: Date;
@@ -81,8 +80,6 @@ export const DatePicker = ({
       >
         <View
           maxWidth={Platform.OS === 'web' ? 350 : undefined}
-          paddingVertical={Platform.OS === 'web' ? '$5' : undefined}
-          paddingHorizontal="$5"
           marginHorizontal="auto"
         >
           <DateTimePicker

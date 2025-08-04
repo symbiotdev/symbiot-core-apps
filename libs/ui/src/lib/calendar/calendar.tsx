@@ -13,13 +13,13 @@ import {
   useNativeNow,
   useScreenOrientation,
   useScreenSize,
+  Weekday,
 } from '@symbiot-core-apps/shared';
 import { RegularText } from '../text/text';
 import { H3 } from '../text/heading';
 import { Orientation } from 'expo-screen-orientation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { DeviceType } from 'expo-device';
-import { Day } from 'date-fns/types';
 
 export const Calendar = ({
   selectedDate,
@@ -32,7 +32,7 @@ export const Calendar = ({
   selectedDate: Date;
   timeGridRef?: Ref<TimeGridRef>;
   gridBottomOffset?: number;
-  weekStartsOn?: Day;
+  weekStartsOn?: Weekday;
   renderHeaderSafeArea?: () => ReactElement;
   onChangeDate: TimeGridActionsProps['onChangeDate'];
 }) => {

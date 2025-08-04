@@ -129,7 +129,7 @@
         "expo-notifications",
         {
           "sounds": [
-            "./assets/audio/new-notification-sound.wav"
+            "./assets/audio/new_notification_sound.wav"
           ]
         }
       ]

@@ -1,4 +1,4 @@
-import { FAQ, useAccountAppFaqQuery } from '@symbiot-core-apps/api';
+import { FAQ, useAccountFaqQuery } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
@@ -24,7 +24,7 @@ export const useFaqState = create<FaqState>()(
 );
 
 export const useFaq = () => {
-  const { data, isPending, error } = useAccountAppFaqQuery();
+  const { data, isPending, error } = useAccountFaqQuery();
   const { faq, setFAQ } = useFaqState();
 
   const sortedFaq = useMemo(() => faq?.sort((a, b) => b.rate - a.rate), [faq]);

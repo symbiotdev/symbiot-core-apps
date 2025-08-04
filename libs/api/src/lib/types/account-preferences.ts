@@ -1,5 +1,4 @@
-import { Day } from 'date-fns';
-import { Scheme, schemes } from '@symbiot-core-apps/shared';
+import { Scheme, schemes, Weekday } from '@symbiot-core-apps/shared';
 
 export type AccountScheme = Scheme | 'system';
 
@@ -10,6 +9,6 @@ export type AccountPreferences = {
   enablePushNotifications: boolean;
   enableNotificationSound: boolean;
   enableNotificationVibration: boolean;
-  weekStartsOn: Day;
+  weekStartsOn: Weekday;
   dateFormat: string;
 };

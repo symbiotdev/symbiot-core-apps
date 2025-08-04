@@ -11,10 +11,10 @@ import { H4 } from '../text/heading';
 import { ContainerView } from '../view/container-view';
 import { Icon } from '../icons';
 import { IconName } from '../icons/config';
-import { defaultPageHorizontalPadding } from '../view/page-view';
 
 export const headerHeight = 50;
 export const headerButtonSize = 24;
+export const headerHorizontalPadding = 14;
 
 export const useScreenHeaderHeight = () => {
   const { top } = useSafeAreaInsets();
@@ -103,8 +103,8 @@ export const ScreenHeader = memo(
       <XStack
         position="relative"
         paddingTop={top}
-        paddingLeft={left + defaultPageHorizontalPadding}
-        paddingRight={right + defaultPageHorizontalPadding}
+        paddingLeft={left + headerHorizontalPadding}
+        paddingRight={right + headerHorizontalPadding}
         height={top + (withContent ? headerHeight : 0)}
       >
         {Platform.OS !== 'android' && (
@@ -169,8 +169,8 @@ export const ModalHeader = memo(
         left={0}
         width="100%"
         height={height || screenHeaderHeight}
-        paddingLeft={left + defaultPageHorizontalPadding}
-        paddingRight={right + defaultPageHorizontalPadding}
+        paddingLeft={left + headerHorizontalPadding}
+        paddingRight={right + headerHorizontalPadding}
       >
         {Platform.OS !== 'android' && (
           <Blur style={StyleSheet.absoluteFillObject} />

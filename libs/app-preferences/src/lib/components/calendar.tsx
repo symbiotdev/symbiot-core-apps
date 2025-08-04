@@ -6,10 +6,9 @@ import {
   Spinner,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { DateHelper, Weekday } from '@symbiot-core-apps/shared';
 import { useMeUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
-import { Day } from 'date-fns/types';
 import { useT } from '@symbiot-core-apps/i18n';
 
 export const Calendar = () => {
@@ -20,7 +19,7 @@ export const Calendar = () => {
   const weekdaysOptions = useMemo(() => DateHelper.getWeekdays(), []);
 
   const onChangeWeekdayStartsOn = useCallback(
-    (weekStartsOn: Day) => updatePreferences$({ weekStartsOn }),
+    (weekStartsOn: Weekday) => updatePreferences$({ weekStartsOn }),
     [updatePreferences$],
   );
 

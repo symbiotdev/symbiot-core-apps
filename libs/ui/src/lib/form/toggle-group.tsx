@@ -6,8 +6,9 @@ import { Icon } from '../icons';
 import { InitView } from '../view/init-view';
 
 export type ToggleGroupItem = {
-  label: string;
   value: unknown;
+  label: string;
+  description?: string;
   icon?: ReactElement;
 };
 
@@ -23,8 +24,8 @@ export const ToggleGroup = ({
   error,
   onChange,
 }: {
-  items?: ToggleGroupItem[];
   value: ToggleGroupValue;
+  items?: ToggleGroupItem[];
   multiselect?: boolean;
   allowEmpty?: boolean;
   loading?: boolean;
@@ -104,13 +105,19 @@ const Item = ({
     >
       {item.icon}
 
-      <RegularText
-        flex={1}
-        lineHeight={24}
-        color={disabled ? '$disabled' : '$color'}
-      >
-        {item.label}
-      </RegularText>
+      <View flex={1} gap="$1" minHeight={24} justifyContent="center">
+        <RegularText
+          color={disabled ? '$disabled' : '$color'}
+        >
+          {item.label}
+        </RegularText>
+
+        {item.description && (
+          <RegularText fontSize={12} color="$placeholderColor">
+            {item.description}
+          </RegularText>
+        )}
+      </View>
 
       <AnimatePresence>
         {selected && (

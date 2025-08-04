@@ -4,8 +4,16 @@ import {
   ReactElement,
   useCallback,
   useMemo,
+  useRef,
 } from 'react';
-import { Adapt, AdaptWhen, Popover, PopoverProps, View } from 'tamagui';
+import {
+  Adapt,
+  AdaptWhen,
+  Popover,
+  PopoverProps,
+  ScrollView,
+  View,
+} from 'tamagui';
 import {
   Keyboard,
   Platform,
@@ -14,17 +22,21 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { H3 } from '../text/heading';
-import { headerHeight, ModalHeader } from '../navigation/header';
+import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
+import { useRendered, useScreenSize } from '@symbiot-core-apps/shared';
+
+export const adaptivePopoverSheetPadding = 24;
 
 export const AdaptivePopover = forwardRef(
   (
     {
       children,
-      type = 'draggable',
-      ignoreAdaptive,
-      ignoreScroll,
       disableDrag,
       disabled,
+      ignoreAdaptive,
+      ignoreScroll,
+      ignoreScrollTopOnClose,
+      ignoreHapticOnOpen,
       sheetTitle,
       triggerType,
       minWidth,
@@ -35,11 +47,12 @@ export const AdaptivePopover = forwardRef(
       onClose,
       ...popoverProps
     }: PopoverProps & {
-      type?: 'draggable' | 'closable';
-      ignoreAdaptive?: boolean;
-      ignoreScroll?: boolean;
       disableDrag?: boolean;
       disabled?: boolean;
+      ignoreAdaptive?: boolean;
+      ignoreScroll?: boolean;
+      ignoreScrollTopOnClose?: boolean;
+      ignoreHapticOnOpen?: boolean;
       sheetTitle?: string;
       triggerType?: 'child' | 'manual';
       minWidth?: number;
@@ -51,17 +64,48 @@ export const AdaptivePopover = forwardRef(
     },
     ref: ForwardedRef<Popover>,
   ) => {
+    const { isSmall } = useScreenSize();
+    const { rendered } = useRendered({ delay: 500 });
     const { height } = useWindowDimensions();
     const { top, bottom, left, right } = useSafeAreaInsets();
 
-    const adjustedMaxHeight = useMemo(() => maxHeight || 500, [maxHeight]);
+    const popoverListRef = useRef<ScrollView>(null);
+    const sheetListRef = useRef<ScrollView>(null);
+
+    const adjustedMaxHeight = useMemo(
+      () => Math.min(maxHeight || 500, height - top - 50),
+      [height, maxHeight, top],
+    );
 
     const onOpenChange = useCallback(
       (opened: boolean) => {
         Keyboard.dismiss();
-        setTimeout(() => (opened ? onOpen?.() : onClose?.()), 200);
+
+        if (opened && !ignoreHapticOnOpen) {
+          void impactAsync(ImpactFeedbackStyle.Light);
+        }
+
+        setTimeout(() => {
+          if (opened) {
+            onOpen?.();
+          } else {
+            onClose?.();
+
+            if (!ignoreScrollTopOnClose) {
+              sheetListRef.current?.scrollTo({
+                y: 0,
+                animated: false,
+              });
+
+              popoverListRef.current?.scrollTo({
+                y: 0,
+                animated: false,
+              });
+            }
+          }
+        }, 200);
       },
-      [onOpen, onClose],
+      [onOpen, ignoreHapticOnOpen, onClose, ignoreScrollTopOnClose],
     );
 
     return (
@@ -86,35 +130,42 @@ export const AdaptivePopover = forwardRef(
           </Popover.Trigger>
         )}
 
-        <Popover.Content
-          animation="quick"
-          opacity={1}
-          y={0}
-          enterStyle={{ opacity: 0, y: -10 }}
-          exitStyle={{ opacity: 0, y: -10 }}
-          backgroundColor="$background1"
-          borderRadius="$10"
-          maxHeight={adjustedMaxHeight}
-          width={maxWidth}
-          minWidth={minWidth}
-          padding={0}
-          zIndex={100_000}
-        >
-          {!ignoreScroll ? (
-            <Popover.ScrollView
-              keyboardShouldPersistTaps="handled"
-              keyboardDismissMode="none"
-              showsVerticalScrollIndicator={false}
-              style={{ maxHeight: adjustedMaxHeight, width: '100%' }}
-            >
-              {children}
-            </Popover.ScrollView>
-          ) : (
-            children
-          )}
-        </Popover.Content>
+        {rendered && (
+          <Popover.Content
+            animation={!isSmall ? 'quick' : undefined}
+            enterStyle={{ opacity: 0, y: -10 }}
+            exitStyle={{ opacity: 0, y: -10 }}
+            opacity={1}
+            y={0}
+            backgroundColor="$background1"
+            borderRadius="$10"
+            maxHeight={adjustedMaxHeight}
+            width={maxWidth}
+            minWidth={minWidth}
+            padding={0}
+            zIndex={100_000}
+          >
+            {!ignoreScroll ? (
+              <Popover.ScrollView
+                ref={popoverListRef}
+                keyboardShouldPersistTaps="handled"
+                keyboardDismissMode="none"
+                showsVerticalScrollIndicator={false}
+                style={{ maxHeight: adjustedMaxHeight, width: '100%' }}
+                contentContainerStyle={{
+                  paddingVertical: 12,
+                  paddingHorizontal: 24,
+                }}
+              >
+                {children}
+              </Popover.ScrollView>
+            ) : (
+              children
+            )}
+          </Popover.Content>
+        )}
 
-        {!ignoreAdaptive && (
+        {!ignoreAdaptive && rendered && (
           <Adapt
             when={(Platform.OS !== 'web' ? 'md' : 'xs') as unknown as AdaptWhen}
           >
@@ -141,40 +192,37 @@ export const AdaptivePopover = forwardRef(
                 paddingLeft={left}
                 paddingRight={right}
               >
-                {type === 'draggable' && (
-                  <Pressable disabled={Platform.OS === 'web'}>
-                    <View
-                      width={50}
-                      height={4}
-                      borderRadius="$10"
-                      backgroundColor="$disabled"
-                      marginVertical={10}
-                      marginHorizontal="auto"
-                    />
-
-                    {!!sheetTitle && (
-                      <H3 paddingHorizontal="$5" paddingVertical="$2">
-                        {sheetTitle}
-                      </H3>
-                    )}
-                  </Pressable>
-                )}
-
-                {type === 'closable' && (
-                  <ModalHeader
-                    height={headerHeight}
-                    headerLeft={() => <H3>{sheetTitle}</H3>}
-                    onClose={onClose}
+                <Pressable disabled={Platform.OS === 'web'}>
+                  <View
+                    width={50}
+                    height={4}
+                    borderRadius="$10"
+                    backgroundColor="$disabled"
+                    marginVertical={10}
+                    marginHorizontal="auto"
                   />
-                )}
+
+                  {!!sheetTitle && (
+                    <H3 paddingHorizontal={24} paddingBottom={24 / 2}>
+                      {sheetTitle}
+                    </H3>
+                  )}
+                </Pressable>
 
                 {!ignoreScroll ? (
                   <Popover.Sheet.ScrollView
+                    ref={sheetListRef}
                     keyboardShouldPersistTaps="handled"
                     keyboardDismissMode="none"
                     showsVerticalScrollIndicator={false}
-                    style={{ maxHeight: height - top - 50 }}
-                    paddingBottom={bottom + 20}
+                    style={{ maxHeight: adjustedMaxHeight }}
+                    contentContainerStyle={{
+                      paddingTop: sheetTitle
+                        ? 0
+                        : adaptivePopoverSheetPadding / 2,
+                      paddingBottom: bottom + adaptivePopoverSheetPadding,
+                      paddingHorizontal: adaptivePopoverSheetPadding,
+                    }}
                   >
                     <Adapt.Contents />
                   </Popover.Sheet.ScrollView>

@@ -3,7 +3,7 @@ export * from './lib/components/api-provider';
 export * from './lib/hooks/use-auth-tokens';
 
 export * from './lib/queries/use-account.query';
-export * from './lib/queries/use-account-app-faq.query';
+export * from './lib/queries/use-account-faq.query';
 export * from './lib/queries/use-account-auth.query';
 export * from './lib/queries/use-account-competitor-source.query';
 export * from './lib/queries/use-account-device.query';

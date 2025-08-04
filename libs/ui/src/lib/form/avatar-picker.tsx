@@ -179,7 +179,7 @@ export const AvatarPicker = ({
           )
         }
       >
-        <View paddingVertical="$2" paddingHorizontal="$5" gap="$2">
+        <View gap="$2">
           <ListItem
             icon={<Icon name="Gallery" />}
             label={t('preferences.avatar.action.choose_from_gallery.label')}

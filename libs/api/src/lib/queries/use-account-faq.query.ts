@@ -3,8 +3,8 @@ import axios from 'axios';
 import { requestWithStringError } from '../utils/request';
 import { FAQ } from '../types/faq';
 
-export const useAccountAppFaqQuery = () =>
+export const useAccountFaqQuery = () =>
   useQuery<FAQ[], string>({
-    queryKey: ['account-app-faq'],
-    queryFn: () => requestWithStringError(axios.get('/api/account-app-faq')),
+    queryKey: ['account-faq'],
+    queryFn: () => requestWithStringError(axios.get('/api/account-faq')),
   });

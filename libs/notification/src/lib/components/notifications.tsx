@@ -103,7 +103,7 @@ export const Notifications = ({
         </FormView>
       );
     },
-    [me?.preferences?.dateFormat],
+    [me?.preferences?.dateFormat, onPressNotification],
   );
 
   useEffect(() => {

@@ -80,7 +80,7 @@ export const getPrebuildCommand = (app, platform) =>
 
 export const getBuildCommand = (app, profile, platform, buildTo) =>
   `nx run ${app}:build -- --profile=${profile} --platform=${platform} --clear-cache ${
-    buildTo === 'local' ? '--local' : ''
+    buildTo.indexOf('local') !== -1 ? '--local' : ''
   }`;
 
 export const getSubmitCommand = (app, profile, buildTo) =>
@@ -115,6 +115,10 @@ export const getBuildTo = (env) =>
       {
         name: 'Local',
         value: 'local',
+      },
+      {
+        name: 'Local Device',
+        value: 'device_local',
       },
       {
         name: 'EAS',

@@ -21,6 +21,9 @@
         "buildType": "apk"
       }
     },
+    "production_device_local": {
+      "extends": "production_device"
+    },
     "production_store": {
       "extends": "production",
       "distribution": "store"

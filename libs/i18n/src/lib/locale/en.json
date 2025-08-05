@@ -380,8 +380,8 @@
     "business": {
       "create": {
         "intro": {
-          "title": "Upgrade your business management today",
-          "subtitle": "Provide a few details to optimize your app experience and take control of your business. It's quick and easy.",
+          "title": "Build a strong business",
+          "subtitle": "Just a few details to set up your workspace, attract more clients, and manage your business with ease.",
           "button": {
             "label": "Let's go"
           }
@@ -483,16 +483,16 @@
     },
     "initial_actions": {
       "title": "Take the first step",
-      "subtitle": "Select whether you want to create your own dance hub or join the team.",
+      "subtitle": "Select whether you want to create your own brand or join the team.",
       "join_workspace": {
-        "title": "Join a dance hub",
-        "subtitle": "Already part of a team? Use a QR code to join your dance hub.",
+        "title": "Join a team",
+        "subtitle": "Already part of a team? Use a QR code to join your team.",
         "button": {
           "label": "Join"
         }
       },
       "create_workspace": {
-        "title": "Create a dance hub",
+        "title": "Create a brand",
         "subtitle": "Set up your space, add students, and manage classes with ease.",
         "button": {
           "label": "Create"
@@ -511,8 +511,8 @@
     "business": {
       "create": {
         "intro": {
-          "title": "Upgrade your brand management today",
-          "subtitle": "Provide a few details to optimize your app experience and take control of your brand. It's quick and easy.",
+          "title": "Build a strong dance brand",
+          "subtitle": "Just a few details to set up your brand, grow your student base, and manage every class effortlessly.",
           "button": {
             "label": "Let's go"
           }
@@ -537,7 +537,7 @@
           },
           "country": {
             "title": "Country",
-            "subtitle": "Add your country so students know where your dance hub is located.",
+            "subtitle": "Add your country so students know where your brand is located.",
             "form": {
               "country": {
                 "placeholder": "United States",
@@ -573,7 +573,7 @@
           },
           "competitor_source": {
             "title": "Previously Used Service",
-            "subtitle": "Share the service you previously used so we can improve your dance hub experience.",
+            "subtitle": "Share the service you previously used so we can improve your brand experience.",
             "form": {
               "external_source": {
                 "placeholder": "Enter your variant",

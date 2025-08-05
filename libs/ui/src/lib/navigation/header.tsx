@@ -43,7 +43,7 @@ export const useStackScreenHeaderOptions = () => {
 
   return {
     ...headerOptions,
-    animation: 'slide_from_right',
+    animation: 'ios_from_right',
   } as NativeStackNavigationOptions;
 };
 
@@ -79,6 +79,14 @@ export const HeaderButton = ({
   </Pressable>
 );
 
+const HeaderBackground = memo(() =>
+  Platform.OS !== 'android' ? (
+    <Blur style={StyleSheet.absoluteFillObject} />
+  ) : (
+    <View style={StyleSheet.absoluteFillObject} backgroundColor="$background" />
+  ),
+);
+
 export const ScreenHeader = memo(
   ({
     back,
@@ -107,9 +115,7 @@ export const ScreenHeader = memo(
         paddingRight={right + headerHorizontalPadding}
         height={top + (withContent ? headerHeight : 0)}
       >
-        {Platform.OS !== 'android' && (
-          <Blur style={StyleSheet.absoluteFillObject} />
-        )}
+        <HeaderBackground />
 
         <ContainerView
           gap="$5"
@@ -172,9 +178,7 @@ export const ModalHeader = memo(
         paddingLeft={left + headerHorizontalPadding}
         paddingRight={right + headerHorizontalPadding}
       >
-        {Platform.OS !== 'android' && (
-          <Blur style={StyleSheet.absoluteFillObject} />
-        )}
+        <HeaderBackground />
 
         <ContainerView
           gap="$5"

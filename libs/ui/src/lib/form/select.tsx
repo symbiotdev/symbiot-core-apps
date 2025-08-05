@@ -6,7 +6,7 @@ import { FormField } from './form-field';
 import { Spinner } from '../loading/spinner';
 import { RegularText } from '../text/text';
 import { InitView } from '../view/init-view';
-import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
+import { selectionAsync } from 'expo-haptics';
 import { InputFieldView } from '../view/input-field-view';
 import { Icon } from '../icons';
 
@@ -88,13 +88,11 @@ export function Select({
 
       if (hasChanges) {
         onChange(newValue);
-        void impactAsync(ImpactFeedbackStyle.Light);
+        void selectionAsync();
       }
     },
     [onChange, value],
   );
-
-  const onPress = useCallback(() => impactAsync(ImpactFeedbackStyle.Light), []);
 
   return (
     <FormField label={label} error={error}>
@@ -105,7 +103,7 @@ export function Select({
         minWidth={200}
         triggerType="child"
         trigger={
-          <InputFieldView disabled={disabled} onPress={onPress}>
+          <InputFieldView disabled={disabled}>
             {!options?.length && optionsLoading ? (
               <>
                 <Spinner width={16} height={16} />

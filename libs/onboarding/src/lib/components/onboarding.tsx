@@ -17,7 +17,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { impactAsync } from 'expo-haptics';
+import { selectionAsync } from 'expo-haptics';
 import { useOnboardingState } from '@symbiot-core-apps/state';
 import { useT } from '@symbiot-core-apps/i18n';
 
@@ -42,7 +42,7 @@ export const Onboarding = memo(({ slides }: { slides: OnboardingSlide[] }) => {
   const moveSlides = useCallback(
     (nextIndex: number) => {
       if (nextIndex !== activeSlideIndex) {
-        void impactAsync();
+        void selectionAsync();
       }
 
       setActiveSlideIndex(nextIndex);

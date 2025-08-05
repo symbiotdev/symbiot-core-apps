@@ -1,7 +1,7 @@
 import { AnimatePresence, View, XStack } from 'tamagui';
 import { ReactElement, useCallback, useMemo } from 'react';
 import { RegularText } from '../text/text';
-import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
+import { selectionAsync } from 'expo-haptics';
 import { Icon } from '../icons';
 import { InitView } from '../view/init-view';
 
@@ -90,7 +90,7 @@ const Item = ({
       }
     }
 
-    void impactAsync(ImpactFeedbackStyle.Light);
+    void selectionAsync();
   }, [allowEmpty, item.value, multiselect, onChange, selected, value]);
 
   return (
@@ -106,9 +106,7 @@ const Item = ({
       {item.icon}
 
       <View flex={1} gap="$1" minHeight={24} justifyContent="center">
-        <RegularText
-          color={disabled ? '$disabled' : '$color'}
-        >
+        <RegularText color={disabled ? '$disabled' : '$color'}>
           {item.label}
         </RegularText>
 

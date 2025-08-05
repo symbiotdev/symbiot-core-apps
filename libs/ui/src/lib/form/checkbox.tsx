@@ -2,7 +2,7 @@ import { AnimatePresence, View, XStack } from 'tamagui';
 import { ReactElement, useCallback } from 'react';
 import { Error } from '../text/custom';
 import { RegularText } from '../text/text';
-import { impactAsync } from 'expo-haptics';
+import { selectionAsync } from 'expo-haptics';
 import { Icon } from '../icons';
 
 export const Checkbox = ({
@@ -24,7 +24,7 @@ export const Checkbox = ({
     }
 
     onChange(!value);
-    void impactAsync();
+    void selectionAsync();
   }, [disabled, onChange, value]);
 
   return (

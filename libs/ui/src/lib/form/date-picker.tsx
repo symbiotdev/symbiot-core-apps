@@ -6,7 +6,7 @@ import DateTimePicker, {
 import { AdaptivePopover } from '../popover/adaptive-popover';
 import { Popover, useTheme, View, ViewProps } from 'tamagui';
 import { RegularText } from '../text/text';
-import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
+import { selectionAsync } from 'expo-haptics';
 import { FormField } from './form-field';
 import { DateHelper, Weekday } from '@symbiot-core-apps/shared';
 import { Platform } from 'react-native';
@@ -47,15 +47,13 @@ export const DatePicker = ({
 
   const ref = useRef<Popover>(null);
 
-  const onPress = useCallback(() => impactAsync(ImpactFeedbackStyle.Light), []);
-
   const onChangeDate = useCallback(
     ({ date }: { date: DateType }) => {
       ref.current?.close();
 
       onChange?.(DateHelper.toDate(date as Date));
 
-      void impactAsync(ImpactFeedbackStyle.Light);
+      void selectionAsync();
     },
     [onChange],
   );
@@ -67,7 +65,7 @@ export const DatePicker = ({
         disabled={disabled}
         triggerType="child"
         trigger={
-          <InputFieldView disabled={disabled} {...viewProps} onPress={onPress}>
+          <InputFieldView disabled={disabled} {...viewProps}>
             <RegularText
               color={
                 !value ? '$placeholderColor' : disabled ? '$disabled' : '$color'

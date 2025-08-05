@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { AnimatePresence, ScrollView, View } from 'tamagui';
 import { FormView, H2, Icon } from '@symbiot-core-apps/ui';
-import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
+import { selectionAsync } from 'expo-haptics';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import { useScreenOrientation } from '@symbiot-core-apps/shared';
 import { Icons } from '../../icons/config';
@@ -27,15 +27,20 @@ export const PlusActionModal = (props: BottomTabBarButtonProps) => {
       setState((prev) => ({
         ...prev,
         modalVisible: true,
-        rect: { x: pageX, y: pageY, width, height },
+        rect: {
+          x: pageX,
+          y: pageY,
+          width,
+          height,
+        },
       }));
 
-      void impactAsync(ImpactFeedbackStyle.Light);
+      void selectionAsync();
     });
   }, []);
 
   const closeModal = useCallback(() => {
-    void impactAsync(ImpactFeedbackStyle.Light);
+    void selectionAsync();
 
     setState((prev) => ({
       ...prev,
@@ -67,7 +72,6 @@ export const PlusActionModal = (props: BottomTabBarButtonProps) => {
       <Modal
         transparent
         visible={state.modalVisible}
-        statusBarTranslucent
         animationType="none"
         presentationStyle="overFullScreen"
         supportedOrientations={['portrait', 'landscape']}

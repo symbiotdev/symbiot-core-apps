@@ -10,6 +10,7 @@ import { QrCode } from './qr-code';
 import { Card } from '../card/card';
 import { H2 } from '../text/heading';
 import { Blur } from '../blur/blur';
+import { selectionAsync } from 'expo-haptics';
 
 export const QrCodeModalWithTrigger = ({
   trigger,
@@ -27,7 +28,10 @@ export const QrCodeModalWithTrigger = ({
   const [visible, setVisible] = useState(false);
 
   const onOpen = useCallback(() => setVisible(true), []);
-  const onClose = useCallback(() => setVisible(false), []);
+  const onClose = useCallback(() => {
+    void selectionAsync();
+    setVisible(false);
+  }, []);
 
   return (
     <>

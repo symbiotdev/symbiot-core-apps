@@ -6,13 +6,18 @@ import {
 } from 'react-native-keyboard-controller';
 import { ScrollView, ViewProps } from 'tamagui';
 import { LoadingView } from './loading-view';
-import { useKeyboard, useRendered } from '@symbiot-core-apps/shared';
+import {
+  isDeviceSlow,
+  useKeyboard,
+  useRendered,
+} from '@symbiot-core-apps/shared';
 import { Refresher } from '../loading/refresher';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useScreenHeaderHeight } from '../navigation/header';
 import { ContainerView } from './container-view';
 
 const isWeb = Platform.OS === 'web';
+const defaultDelay = isDeviceSlow() ? 300 : 0;
 export const defaultPageHorizontalPadding = 14;
 export const defaultPageVerticalPadding = 14;
 
@@ -40,7 +45,10 @@ export const PageView = ({
   onRefresh,
   ...viewProps
 }: PageViewProps) => {
-  const { rendered } = useRendered({ defaultTrue: lazy === false, delay });
+  const { rendered } = useRendered({
+    defaultTrue: lazy === false,
+    delay: delay || defaultDelay,
+  });
   const headerHeight = useScreenHeaderHeight();
 
   if (!rendered) {

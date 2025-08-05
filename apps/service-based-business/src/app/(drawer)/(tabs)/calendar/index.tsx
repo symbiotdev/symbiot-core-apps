@@ -15,7 +15,7 @@ import {
   RegularText,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
-import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
+import { selectionAsync } from 'expo-haptics';
 import { View, XStack } from 'tamagui';
 import { Platform } from 'react-native';
 
@@ -35,7 +35,7 @@ export default () => {
       animated: true,
     });
 
-    void impactAsync(ImpactFeedbackStyle.Light);
+    void selectionAsync();
   }, []);
 
   const headerLeft = useCallback(

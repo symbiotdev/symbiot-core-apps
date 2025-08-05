@@ -2,6 +2,7 @@ import { cloneElement, memo, ReactElement } from 'react';
 import { MediumText } from '../text/text';
 import { ColorTokens, XStack, XStackProps } from 'tamagui';
 import { Spinner } from '../loading/spinner';
+import { selectionAsync } from 'expo-haptics';
 
 export type ButtonType = 'default' | 'outlined' | 'clear' | 'danger';
 
@@ -38,6 +39,7 @@ export const Button = memo(
     loading,
     icon,
     type = 'default',
+    onPress,
     ...xStackProps
   }: XStackProps & {
     loading?: boolean;
@@ -70,6 +72,10 @@ export const Button = memo(
         }}
         {...xStackProps}
         disabled={disabled}
+        onPress={(e) => {
+          onPress?.(e);
+          void selectionAsync();
+        }}
       >
         {loading ? (
           <Spinner color={color} />

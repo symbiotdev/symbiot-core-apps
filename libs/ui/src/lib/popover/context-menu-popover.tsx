@@ -4,6 +4,7 @@ import {
   LayoutRectangle,
   Modal,
   Platform,
+  StatusBar,
   StyleSheet,
 } from 'react-native';
 import {
@@ -13,7 +14,7 @@ import {
   View,
   ViewProps,
 } from 'tamagui';
-import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
+import { selectionAsync } from 'expo-haptics';
 import {
   flip,
   offset,
@@ -60,10 +61,15 @@ export const ContextMenuPopover = ({
         ...prev,
         modalVisible: true,
         menuVisible: true,
-        rect: { x: pageX - x, y: pageY - y, width, height },
+        rect: {
+          x: pageX,
+          y: pageY,
+          width,
+          height,
+        },
       }));
 
-      void impactAsync(ImpactFeedbackStyle.Light);
+      void selectionAsync();
     });
   }, []);
   const closeMenu = useCallback(() => {
@@ -91,7 +97,6 @@ export const ContextMenuPopover = ({
       <Modal
         visible={state.modalVisible}
         transparent
-        statusBarTranslucent
         animationType="none"
         presentationStyle="overFullScreen"
         supportedOrientations={['portrait', 'landscape']}
@@ -153,7 +158,7 @@ const Menu = ({
         enterStyle={{ opacity: 0, y: 10 }}
         exitStyle={{ opacity: 0, y: 10 }}
         position={strategy as 'absolute'}
-        top={y - 5}
+        top={y - 5 - (StatusBar.currentHeight || 0)}
         left={x - 5}
         paddingVertical="$2"
         collapsable={false}
@@ -166,7 +171,7 @@ const Menu = ({
             onPress={() => {
               onClose();
               item.onPress();
-              void impactAsync(ImpactFeedbackStyle.Light);
+              void selectionAsync();
             }}
           />
         ))}

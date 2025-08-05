@@ -41,7 +41,7 @@ export default () => {
       <>
         <TabsPageView withHeaderHeight scrollable gap="$5" alignItems="center">
           <FormView gap="$6">
-            <View gap="$3">
+            <View gap="$2">
               <H2>
                 {t('initial_actions.title', {
                   ns: 'app',
@@ -58,7 +58,7 @@ export default () => {
               title={t('initial_actions.create_workspace.title', {
                 ns: 'app',
               })}
-              subtitle={t('initial_actions.create_workspace.title', {
+              subtitle={t('initial_actions.create_workspace.subtitle', {
                 ns: 'app',
               })}
               buttonLabel={t('initial_actions.create_workspace.button.label', {

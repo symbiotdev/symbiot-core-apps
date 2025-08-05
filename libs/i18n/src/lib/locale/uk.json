@@ -21,6 +21,7 @@
     "other": "Other",
     "country": "Країна",
     "currency": "Валюта",
+    "greeting_firstname": "\uD83D\uDC4B Привіт, {{firstname}}",
     "docs": {
       "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",

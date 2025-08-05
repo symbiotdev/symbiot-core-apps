@@ -1,13 +1,29 @@
 import { router, Tabs } from 'expo-router';
 import {
   AttentionView,
+  H3,
   HeaderButton,
+  headerButtonSize,
   Icon,
   useTabsScreenOptions,
 } from '@symbiot-core-apps/ui';
 import { useMe } from '@symbiot-core-apps/state';
 import { PlusActionModal } from '../../../components/tabs/plus-action-modal';
 import { Icons } from '../../../icons/config';
+import { useT } from '@symbiot-core-apps/i18n';
+
+const HelloHeaderLeft = () => {
+  const { t } = useT();
+  const { me } = useMe();
+
+  return me && me.firstname !== 'Account' ? (
+    <H3 lineHeight={headerButtonSize} numberOfLines={1}>
+      {t('greeting_firstname', {
+        firstname: me.firstname,
+      })}
+    </H3>
+  ) : undefined;
+};
 
 const NotificationsHeaderButton = () => {
   const { me } = useMe();
@@ -33,6 +49,7 @@ export default () => {
           <Tabs.Screen
             name="actions/index"
             options={{
+              headerLeft: HelloHeaderLeft,
               headerRight: NotificationsHeaderButton,
               tabBarIcon: ({ color, size, focused }) => (
                 <AttentionView attention={!!me?.stats?.notifications?.new}>
@@ -52,6 +69,7 @@ export default () => {
           <Tabs.Screen
             name="home/index"
             options={{
+              headerLeft: HelloHeaderLeft,
               headerRight: NotificationsHeaderButton,
               tabBarIcon: ({ color, size, focused }) => (
                 <AttentionView attention={!!me?.stats?.notifications?.new}>

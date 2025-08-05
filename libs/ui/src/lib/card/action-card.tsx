@@ -24,7 +24,7 @@ export const ActionCard = ({
   onActionPress: () => void;
 }) => {
   return (
-    <Card gap="$3" width="100%" {...viewProps}>
+    <Card gap="$2" width="100%" {...viewProps}>
       <H3>{title}</H3>
       <RegularText>{subtitle}</RegularText>
       <Button

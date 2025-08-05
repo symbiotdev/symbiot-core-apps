@@ -1,5 +1,5 @@
-import { AnimatePresence, View, XStack } from 'tamagui';
-import { ReactElement, useCallback, useMemo } from 'react';
+import { View, XStack } from 'tamagui';
+import { memo, ReactElement } from 'react';
 import { RegularText } from '../text/text';
 import { Icon } from '../icons';
 import { InitView } from '../view/init-view';
@@ -34,8 +34,8 @@ export const ToggleGroup = ({
   disabled?: boolean;
   error?: string;
   onChange?: (value: ToggleGroupValue) => void;
-}) => {
-  return !items?.length ? (
+}) =>
+  !items?.length ? (
     <InitView loading={loading} error={error} />
   ) : (
     <View gap="$4">
@@ -53,101 +53,81 @@ export const ToggleGroup = ({
       ))}
     </View>
   );
-};
 
-const Item = ({
-  item,
-  value,
-  disabled,
-  multiselect,
-  ignoreHaptic,
-  allowEmpty,
-  onChange,
-}: {
-  item: ToggleGroupItem;
-  value: ToggleGroupValue;
-  multiselect?: boolean;
-  ignoreHaptic?: boolean;
-  allowEmpty?: boolean;
-  disabled?: boolean;
-  onChange?: (value: ToggleGroupValue) => void;
-}) => {
-  const selected = useMemo(
-    () =>
+const Item = memo(
+  ({
+    item,
+    value,
+    disabled,
+    multiselect,
+    ignoreHaptic,
+    allowEmpty,
+    onChange,
+  }: {
+    item: ToggleGroupItem;
+    value: ToggleGroupValue;
+    multiselect?: boolean;
+    ignoreHaptic?: boolean;
+    allowEmpty?: boolean;
+    disabled?: boolean;
+    onChange?: (value: ToggleGroupValue) => void;
+  }) => {
+    const selected =
       multiselect && Array.isArray(value)
         ? value.includes(item.value)
-        : value === item.value,
-    [item.value, multiselect, value],
-  );
+        : value === item.value;
 
-  const onPress = useCallback(() => {
-    if (multiselect && Array.isArray(value)) {
-      if (selected && value.length === 1 && !allowEmpty) {
-        return;
-      } else if (selected) {
-        onChange?.(value.filter((itemValue) => itemValue !== item.value));
-      }
-    } else {
-      if (!allowEmpty) {
-        onChange?.(item.value);
+    const onPress = () => {
+      if (multiselect && Array.isArray(value)) {
+        if (selected && value.length === 1 && !allowEmpty) {
+          return;
+        } else if (selected) {
+          onChange?.(value.filter((itemValue) => itemValue !== item.value));
+        }
       } else {
-        onChange?.(item.value === value ? null : item.value);
+        if (!allowEmpty) {
+          onChange?.(item.value);
+        } else {
+          onChange?.(item.value === value ? null : item.value);
+        }
       }
-    }
 
-    if (!ignoreHaptic) {
-      emitHaptic();
-    }
-  }, [
-    allowEmpty,
-    ignoreHaptic,
-    item.value,
-    multiselect,
-    onChange,
-    selected,
-    value,
-  ]);
+      if (!ignoreHaptic) {
+        emitHaptic();
+      }
+    };
 
-  return (
-    <XStack
-      gap="$4"
-      alignItems="center"
-      disabled={disabled}
-      cursor={!disabled && onChange ? 'pointer' : 'default'}
-      disabledStyle={{ opacity: 0.8 }}
-      pressStyle={!disabled && { opacity: 0.8 }}
-      onPress={onPress}
-    >
-      {item.icon}
+    return (
+      <XStack
+        gap="$4"
+        alignItems="center"
+        disabled={disabled}
+        cursor={!disabled && onChange ? 'pointer' : 'default'}
+        disabledStyle={{ opacity: 0.8 }}
+        pressStyle={!disabled && { opacity: 0.8 }}
+        onPress={onPress}
+      >
+        {item.icon}
 
-      <View flex={1} gap="$1" minHeight={24} justifyContent="center">
-        <RegularText color={disabled ? '$disabled' : '$color'}>
-          {item.label}
-        </RegularText>
-
-        {item.description && (
-          <RegularText fontSize={12} color="$placeholderColor">
-            {item.description}
+        <View flex={1} gap="$1" minHeight={24} justifyContent="center">
+          <RegularText color={disabled ? '$disabled' : '$color'}>
+            {item.label}
           </RegularText>
-        )}
-      </View>
 
-      <AnimatePresence>
+          {item.description && (
+            <RegularText fontSize={12} color="$placeholderColor">
+              {item.description}
+            </RegularText>
+          )}
+        </View>
+
         {selected && (
-          <View
-            animation="quick"
-            enterStyle={{ scale: 0, opacity: 0 }}
-            exitStyle={{ scale: 0, opacity: 0 }}
-            scale={1}
-            opacity={1}
-          >
-            <Icon
-              name="Unread"
-              color={disabled ? '$disabled' : '$checkboxColor'}
-            />
-          </View>
+          <Icon
+            name="Unread"
+            color={disabled ? '$disabled' : '$checkboxColor'}
+          />
         )}
-      </AnimatePresence>
-    </XStack>
-  );
-};
+      </XStack>
+    );
+  },
+);

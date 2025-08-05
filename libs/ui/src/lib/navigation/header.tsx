@@ -52,6 +52,7 @@ export const useStackScreenHeaderOptions = () => {
 const SideElement = memo((props: ViewProps) => (
   <View
     zIndex={1}
+    maxWidth="80%"
     minWidth={headerButtonSize}
     height={headerButtonSize}
     justifyContent="center"

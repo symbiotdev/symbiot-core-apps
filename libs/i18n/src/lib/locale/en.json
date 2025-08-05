@@ -21,6 +21,7 @@
     "other": "Other",
     "country": "Country",
     "currency": "Currency",
+    "greeting_firstname": "\uD83D\uDC4B Hello, {{firstname}}",
     "docs": {
       "terms_privacy": "Terms & Privacy",
       "privacy_policy": "Privacy Policy",

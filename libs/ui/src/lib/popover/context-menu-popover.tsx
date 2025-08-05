@@ -36,6 +36,8 @@ export type ContextMenuItem = {
   onPress: () => void;
 };
 
+const actionDelay = 250;
+
 export const ContextMenuPopover = ({
   items,
   disabled,
@@ -82,7 +84,7 @@ export const ContextMenuPopover = ({
         ...prev,
         modalVisible: false,
       }));
-    }, 150);
+    }, actionDelay);
   }, []);
 
   return (
@@ -169,8 +171,7 @@ const Menu = ({
             minWidth={200}
             onPress={() => {
               onClose();
-              item.onPress();
-              emitHaptic();
+              setTimeout(item.onPress, actionDelay);
             }}
           />
         ))}

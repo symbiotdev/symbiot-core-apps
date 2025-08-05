@@ -4,6 +4,7 @@ import { NotificationsProvider } from '@symbiot-core-apps/notification';
 import { StateProvider, useMeLoader } from '@symbiot-core-apps/state';
 import { useAuthTokens } from '@symbiot-core-apps/api';
 import { useT } from '@symbiot-core-apps/i18n';
+import { onPressNotification } from '../../utils/notification';
 
 export default () => {
   const { t } = useT();
@@ -19,7 +20,7 @@ export default () => {
     <StateProvider>
       <NotificationsProvider
         soundSource={require('../../../assets/audio/new_notification_sound.wav')}
-        onPressNotification={() => alert('push notification pressed')}
+        onPressNotification={onPressNotification}
       >
         <Stack screenOptions={headerScreenOptions}>
           <Stack.Protected guard={!!me}>

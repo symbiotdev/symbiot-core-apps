@@ -13,15 +13,17 @@ import { useAccountNotificationsState, useMe } from '@symbiot-core-apps/state';
 import { useCallback, useEffect } from 'react';
 import {
   AccountNotification,
-  AccountNotificationType,
   useAccountNotificationLoader,
   useAccountNotificationsReadQuery,
 } from '@symbiot-core-apps/api';
 import { View, XStack } from 'tamagui';
 import { DateHelper } from '@symbiot-core-apps/shared';
-import { router } from 'expo-router';
 
-export const Notifications = () => {
+export const Notifications = ({
+  onPressNotification,
+}: {
+  onPressNotification: (notification: AccountNotification) => void;
+}) => {
   const { me, updateMeStats } = useMe();
   const headerHeight = useScreenHeaderHeight();
   const { mutateAsync: readAll } = useAccountNotificationsReadQuery();
@@ -55,16 +57,6 @@ export const Notifications = () => {
     }
   }, [me?.stats, readAll, updateMeStats]);
 
-  const onPress = useCallback((notification: AccountNotification) => {
-    if (notification.type === AccountNotificationType.welcome) {
-      router.canGoBack() ? router.back() : router.navigate('/');
-    } else {
-      if (process.env.EXPO_PUBLIC_APP_MODE !== 'production') {
-        alert('Handle it');
-      }
-    }
-  }, []);
-
   const renderItem = useCallback(
     ({ item }: { item: AccountNotification }) => {
       return (
@@ -75,7 +67,7 @@ export const Notifications = () => {
           gap="$4"
           flexDirection="row"
           pressStyle={{ opacity: 0.8 }}
-          onPress={() => onPress(item)}
+          onPress={() => onPressNotification(item)}
         >
           <Avatar
             name={item.from.name}

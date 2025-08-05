@@ -22,8 +22,11 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { H3 } from '../text/heading';
-import { selectionAsync } from 'expo-haptics';
-import { useRendered, useScreenSize } from '@symbiot-core-apps/shared';
+import {
+  emitHaptic,
+  useRendered,
+  useScreenSize,
+} from '@symbiot-core-apps/shared';
 
 export const adaptivePopoverSheetPadding = 24;
 
@@ -82,7 +85,7 @@ export const AdaptivePopover = forwardRef(
         Keyboard.dismiss();
 
         if (opened && !ignoreHapticOnOpen) {
-          void selectionAsync();
+          emitHaptic();
         }
 
         setTimeout(() => {

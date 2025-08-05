@@ -1,8 +1,10 @@
-import { cloneElement, memo, ReactElement } from 'react';
+import { cloneElement, memo, ReactElement, useCallback } from 'react';
 import { ColorTokens, View, ViewProps, XStack, XStackProps } from 'tamagui';
 import { RegularText } from '../text/text';
 import { H5 } from '../text/heading';
 import { Card } from '../card/card';
+import { emitHaptic } from '@symbiot-core-apps/shared';
+import { GestureResponderEvent } from 'react-native';
 
 export const ListItemGroup = memo((props: ViewProps & { title?: string }) => {
   return (
@@ -41,6 +43,16 @@ export const ListItem = memo(
   }) => {
     const adjustedColor = disabled ? '$disabled' : color;
 
+    const onXStackPress = useCallback(
+      (e: GestureResponderEvent) => {
+        if (onPress) {
+          onPress?.(e);
+          emitHaptic();
+        }
+      },
+      [onPress],
+    );
+
     return (
       <XStack
         alignItems="center"
@@ -48,7 +60,7 @@ export const ListItem = memo(
         paddingVertical="$2"
         pressStyle={!disabled && { opacity: 0.8 }}
         cursor={onPress && !disabled ? 'pointer' : 'auto'}
-        onPress={onPress}
+        onPress={onXStackPress}
         {...xStackProps}
       >
         {!!icon &&

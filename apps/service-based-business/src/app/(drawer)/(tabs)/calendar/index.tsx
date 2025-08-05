@@ -2,7 +2,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { TimeGridRef } from '@symbiot.dev/react-native-timegrid-pro';
 import { useNavigation } from 'expo-router';
 import { useMe } from '@symbiot-core-apps/state';
-import { DateHelper, useNativeNow } from '@symbiot-core-apps/shared';
+import {
+  DateHelper,
+  emitHaptic,
+  useNativeNow,
+} from '@symbiot-core-apps/shared';
 import { AppLanguage, useT } from '@symbiot-core-apps/i18n';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import {
@@ -15,7 +19,6 @@ import {
   RegularText,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
-import { selectionAsync } from 'expo-haptics';
 import { View, XStack } from 'tamagui';
 import { Platform } from 'react-native';
 
@@ -35,7 +38,7 @@ export default () => {
       animated: true,
     });
 
-    void selectionAsync();
+    emitHaptic();
   }, []);
 
   const headerLeft = useCallback(

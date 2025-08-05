@@ -4,17 +4,17 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { GestureResponderEvent, Platform } from 'react-native';
 import { useCallback, useMemo } from 'react';
-import { selectionAsync } from 'expo-haptics';
 import { HeaderOptions, PlatformPressable } from '@react-navigation/elements';
 import { useTheme } from 'tamagui';
 import { Blur } from '../blur/blur';
 import { useScreenHeaderOptions } from './header';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
+import { emitHaptic } from '@symbiot-core-apps/shared';
 
 export const HapticTabBarButton = (props: BottomTabBarButtonProps) => {
   const onPressIn = useCallback(
     (e: GestureResponderEvent) => {
-      void selectionAsync();
+      emitHaptic();
 
       props.onPressIn?.(e);
     },

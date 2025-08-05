@@ -15,6 +15,7 @@ export * from './lib/utils/confirm';
 export * from './lib/utils/currency';
 export * from './lib/utils/date-helper';
 export * from './lib/utils/device';
+export * from './lib/utils/haptic';
 export * from './lib/utils/object';
 export * from './lib/utils/patterns';
 export * from './lib/utils/performance';

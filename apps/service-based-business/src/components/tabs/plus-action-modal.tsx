@@ -9,9 +9,8 @@ import {
 } from 'react-native';
 import { AnimatePresence, ScrollView, View } from 'tamagui';
 import { FormView, H2, Icon } from '@symbiot-core-apps/ui';
-import { selectionAsync } from 'expo-haptics';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
-import { useScreenOrientation } from '@symbiot-core-apps/shared';
+import { emitHaptic, useScreenOrientation } from '@symbiot-core-apps/shared';
 import { Icons } from '../../icons/config';
 
 export const PlusActionModal = (props: BottomTabBarButtonProps) => {
@@ -35,12 +34,12 @@ export const PlusActionModal = (props: BottomTabBarButtonProps) => {
         },
       }));
 
-      void selectionAsync();
+      emitHaptic();
     });
   }, []);
 
   const closeModal = useCallback(() => {
-    void selectionAsync();
+    emitHaptic();
 
     setState((prev) => ({
       ...prev,

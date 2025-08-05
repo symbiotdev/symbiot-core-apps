@@ -3,8 +3,8 @@ import Collapsible from 'react-native-collapsible';
 import { memo, useCallback, useState } from 'react';
 import { MediumText, RegularText } from '../text/text';
 import { Icon } from '../icons';
-import { selectionAsync } from 'expo-haptics';
 import { Card } from '../card/card';
+import { emitHaptic } from '@symbiot-core-apps/shared';
 
 type AccordionItem = {
   title: string;
@@ -43,7 +43,7 @@ const Item = memo(
 
     const toggle = useCallback(() => {
       setCollapsed((prev) => !prev);
-      void selectionAsync();
+      emitHaptic();
     }, []);
 
     return (

@@ -6,9 +6,8 @@ import DateTimePicker, {
 import { AdaptivePopover } from '../popover/adaptive-popover';
 import { Popover, useTheme, View, ViewProps } from 'tamagui';
 import { RegularText } from '../text/text';
-import { selectionAsync } from 'expo-haptics';
 import { FormField } from './form-field';
-import { DateHelper, Weekday } from '@symbiot-core-apps/shared';
+import { DateHelper, emitHaptic, Weekday } from '@symbiot-core-apps/shared';
 import { Platform } from 'react-native';
 import { useScheme } from '@symbiot-core-apps/state';
 import { InputFieldView } from '../view/input-field-view';
@@ -53,7 +52,7 @@ export const DatePicker = ({
 
       onChange?.(DateHelper.toDate(date as Date));
 
-      void selectionAsync();
+      emitHaptic();
     },
     [onChange],
   );

@@ -1,9 +1,9 @@
 import { AnimatePresence, View, XStack } from 'tamagui';
 import { ReactElement, useCallback, useMemo } from 'react';
 import { RegularText } from '../text/text';
-import { selectionAsync } from 'expo-haptics';
 import { Icon } from '../icons';
 import { InitView } from '../view/init-view';
+import { emitHaptic } from '@symbiot-core-apps/shared';
 
 export type ToggleGroupItem = {
   value: unknown;
@@ -90,7 +90,7 @@ const Item = ({
       }
     }
 
-    void selectionAsync();
+    emitHaptic();
   }, [allowEmpty, item.value, multiselect, onChange, selected, value]);
 
   return (

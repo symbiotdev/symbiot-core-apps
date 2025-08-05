@@ -2,7 +2,7 @@ import { cloneElement, memo, ReactElement } from 'react';
 import { MediumText } from '../text/text';
 import { ColorTokens, XStack, XStackProps } from 'tamagui';
 import { Spinner } from '../loading/spinner';
-import { selectionAsync } from 'expo-haptics';
+import { emitHaptic } from '@symbiot-core-apps/shared';
 
 export type ButtonType = 'default' | 'outlined' | 'clear' | 'danger';
 
@@ -74,7 +74,7 @@ export const Button = memo(
         disabled={disabled}
         onPress={(e) => {
           onPress?.(e);
-          void selectionAsync();
+          emitHaptic();
         }}
       >
         {loading ? (

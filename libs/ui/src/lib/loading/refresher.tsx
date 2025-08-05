@@ -1,10 +1,10 @@
-import { selectionAsync } from 'expo-haptics';
 import { Platform, RefreshControl, RefreshControlProps } from 'react-native';
+import { emitHaptic } from '@symbiot-core-apps/shared';
 
 export const Refresher = (props: RefreshControlProps) => {
   const { onRefresh } = props;
   const refresh = () => {
-    selectionAsync();
+    emitHaptic();
 
     onRefresh?.();
   };

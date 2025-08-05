@@ -2,8 +2,8 @@ import { AnimatePresence, View, XStack } from 'tamagui';
 import { ReactElement, useCallback } from 'react';
 import { Error } from '../text/custom';
 import { RegularText } from '../text/text';
-import { selectionAsync } from 'expo-haptics';
 import { Icon } from '../icons';
+import { emitHaptic } from '@symbiot-core-apps/shared';
 
 export const Checkbox = ({
   value,
@@ -24,7 +24,7 @@ export const Checkbox = ({
     }
 
     onChange(!value);
-    void selectionAsync();
+    emitHaptic();
   }, [disabled, onChange, value]);
 
   return (

@@ -14,7 +14,6 @@ import {
   View,
   ViewProps,
 } from 'tamagui';
-import { selectionAsync } from 'expo-haptics';
 import {
   flip,
   offset,
@@ -26,7 +25,7 @@ import { Card } from '../card/card';
 import { Blur } from '../blur/blur';
 import { Spinner } from '../loading/spinner';
 import { ListItem } from '../list/list-item';
-import { useScreenOrientation } from '@symbiot-core-apps/shared';
+import { emitHaptic, useScreenOrientation } from '@symbiot-core-apps/shared';
 import { Icon } from '../icons';
 
 export type ContextMenuItem = {
@@ -69,7 +68,7 @@ export const ContextMenuPopover = ({
         },
       }));
 
-      void selectionAsync();
+      emitHaptic();
     });
   }, []);
   const closeMenu = useCallback(() => {
@@ -171,7 +170,7 @@ const Menu = ({
             onPress={() => {
               onClose();
               item.onPress();
-              void selectionAsync();
+              emitHaptic();
             }}
           />
         ))}

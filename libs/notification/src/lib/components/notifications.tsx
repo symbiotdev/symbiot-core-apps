@@ -17,7 +17,7 @@ import {
   useAccountNotificationsReadQuery,
 } from '@symbiot-core-apps/api';
 import { View, XStack } from 'tamagui';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { DateHelper, emitHaptic } from '@symbiot-core-apps/shared';
 
 export const Notifications = ({
   onPressNotification,
@@ -67,7 +67,10 @@ export const Notifications = ({
           gap="$4"
           flexDirection="row"
           pressStyle={{ opacity: 0.8 }}
-          onPress={() => onPressNotification(item)}
+          onPress={() => {
+            emitHaptic();
+            onPressNotification(item);
+          }}
         >
           <Avatar
             name={item.from.name}

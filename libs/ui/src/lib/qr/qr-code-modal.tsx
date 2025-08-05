@@ -10,7 +10,7 @@ import { QrCode } from './qr-code';
 import { Card } from '../card/card';
 import { H2 } from '../text/heading';
 import { Blur } from '../blur/blur';
-import { selectionAsync } from 'expo-haptics';
+import { emitHaptic } from '@symbiot-core-apps/shared';
 
 export const QrCodeModalWithTrigger = ({
   trigger,
@@ -27,9 +27,12 @@ export const QrCodeModalWithTrigger = ({
 }) => {
   const [visible, setVisible] = useState(false);
 
-  const onOpen = useCallback(() => setVisible(true), []);
+  const onOpen = useCallback(() => {
+    emitHaptic();
+    setVisible(true);
+  }, []);
   const onClose = useCallback(() => {
-    void selectionAsync();
+    emitHaptic();
     setVisible(false);
   }, []);
 

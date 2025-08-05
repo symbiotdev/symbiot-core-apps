@@ -21,6 +21,7 @@ export * from './lib/form/select';
 export * from './lib/form/social-link-input';
 export * from './lib/form/switch';
 export * from './lib/form/toggle-group';
+export * from './lib/form/weekdays-schedule';
 
 export * from './lib/icons/config';
 export * from './lib/icons';

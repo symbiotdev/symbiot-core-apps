@@ -159,8 +159,30 @@ export const AvatarPicker = ({
   }, [onRemove, t]);
 
   return (
-    <View alignItems="center" gap="$2" {...viewProps} width={size}>
+    <View
+      alignItems="center"
+      gap="$2"
+      position="relative"
+      {...viewProps}
+      width={size}
+    >
       <Avatar url={url} name={name} size={size} color={color} />
+
+      {(loading || attaching) && (
+        <View
+          position="absolute"
+          backgroundColor="$color"
+          opacity={0.5}
+          zIndex={1}
+          width="100%"
+          height="100%"
+          borderRadius="100%"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Spinner color="$buttonTextColor" />
+        </View>
+      )}
 
       <AdaptivePopover
         placement="bottom"
@@ -170,23 +192,25 @@ export const AvatarPicker = ({
         disabled={loading || attaching}
         sheetTitle={t('preferences.avatar.trigger.label')}
         trigger={
-          <View
-            position="absolute"
-            bottom={0}
-            right={0}
-            backgroundColor="$buttonBackground"
-            borderRadius="100%"
-            width={30}
-            height={30}
-            justifyContent="center"
-            alignItems="center"
-          >
-            {loading || attaching ? (
-              <Spinner width={22} height={22} color="$buttonTextColor" />
-            ) : (
-              <Icon name="Pen" color="$buttonTextColor" size={16} />
-            )}
-          </View>
+          !loading && !attaching ? (
+            <View
+              position="absolute"
+              bottom={0}
+              right={0}
+              backgroundColor="$buttonBackground"
+              borderRadius="100%"
+              width={size / 4}
+              height={size / 4}
+              justifyContent="center"
+              alignItems="center"
+              cursor="pointer"
+              pressStyle={{ opacity: 0.8 }}
+            >
+              <Icon name="Pen" color="$buttonTextColor" size={size / 7} />
+            </View>
+          ) : (
+            <View position="absolute" />
+          )
         }
       >
         <View gap="$2">

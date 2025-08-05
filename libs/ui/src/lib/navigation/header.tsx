@@ -149,7 +149,9 @@ export const ScreenHeader = memo(
           />
 
           {typeof options.headerTitle === 'string' && (
-            <H4 zIndex={1}>{options.headerTitle}</H4>
+            <H4 zIndex={1} lineHeight={headerButtonSize}>
+              {options.headerTitle}
+            </H4>
           )}
 
           {typeof options.headerTitle === 'function' &&

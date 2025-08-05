@@ -4,11 +4,13 @@ import {
   TextNonStyleProps,
   TextStyle,
 } from 'tamagui';
+import { Platform } from 'react-native';
 
 export const defaultTextStyles: TextNonStyleProps & TextStyle = {
   maxWidth: '100%',
   allowFontScaling: true,
   fontSize: 14,
+  lineHeight: Platform.OS === 'web' ? 14 : undefined,
   userSelect: 'none',
 };
 

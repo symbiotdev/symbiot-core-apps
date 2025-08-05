@@ -13,11 +13,13 @@ import { useAccountNotificationsState, useMe } from '@symbiot-core-apps/state';
 import { useCallback, useEffect } from 'react';
 import {
   AccountNotification,
+  AccountNotificationType,
   useAccountNotificationLoader,
   useAccountNotificationsReadQuery,
 } from '@symbiot-core-apps/api';
 import { View, XStack } from 'tamagui';
 import { DateHelper } from '@symbiot-core-apps/shared';
+import { router } from 'expo-router';
 
 export const Notifications = () => {
   const { me, updateMeStats } = useMe();
@@ -53,6 +55,16 @@ export const Notifications = () => {
     }
   }, [me?.stats, readAll, updateMeStats]);
 
+  const onPress = useCallback((notification: AccountNotification) => {
+    if (notification.type === AccountNotificationType.welcome) {
+      router.canGoBack() ? router.back() : router.navigate('/');
+    } else {
+      if (process.env.EXPO_PUBLIC_APP_MODE !== 'production') {
+        alert('Handle it');
+      }
+    }
+  }, []);
+
   const renderItem = useCallback(
     ({ item }: { item: AccountNotification }) => {
       return (
@@ -62,6 +74,8 @@ export const Notifications = () => {
           padding="$4"
           gap="$4"
           flexDirection="row"
+          pressStyle={{ opacity: 0.8 }}
+          onPress={() => onPress(item)}
         >
           <Avatar
             name={item.from.name}
@@ -104,13 +118,7 @@ export const Notifications = () => {
   }, [markAllNotificationsAsRead]);
 
   return (
-    <PageView
-      ignoreTopSafeArea
-      ignoreBottomSafeArea
-      paddingLeft={4}
-      paddingRight={4}
-      paddingBottom={0}
-    >
+    <PageView ignoreTopSafeArea ignoreBottomSafeArea paddingBottom={0}>
       {!notifications?.length ? (
         <InitView loading={isLoading} error={error} />
       ) : (

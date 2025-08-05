@@ -14,6 +14,7 @@ import {
 import { View } from 'tamagui';
 import { router } from 'expo-router';
 import { Icons } from '../../../../icons/config';
+import { emitHaptic } from '@symbiot-core-apps/shared';
 
 export default () => {
   const { me } = useMe();
@@ -26,8 +27,14 @@ export default () => {
     [],
   );
 
-  const onOpenQrCodeModal = useCallback(() => setQrCodeVisible(true), []);
-  const onCloseQrCodeModal = useCallback(() => setQrCodeVisible(false), []);
+  const onOpenQrCodeModal = useCallback(() => {
+    emitHaptic();
+    setQrCodeVisible(true);
+  }, []);
+  const onCloseQrCodeModal = useCallback(() => {
+    emitHaptic();
+    setQrCodeVisible(false);
+  }, []);
 
   return (
     me && (

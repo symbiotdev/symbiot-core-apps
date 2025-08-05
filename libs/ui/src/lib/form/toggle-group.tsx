@@ -18,6 +18,7 @@ export const ToggleGroup = ({
   items,
   value,
   multiselect,
+  ignoreHaptic,
   allowEmpty,
   loading,
   disabled,
@@ -27,6 +28,7 @@ export const ToggleGroup = ({
   value: ToggleGroupValue;
   items?: ToggleGroupItem[];
   multiselect?: boolean;
+  ignoreHaptic?: boolean;
   allowEmpty?: boolean;
   loading?: boolean;
   disabled?: boolean;
@@ -43,6 +45,7 @@ export const ToggleGroup = ({
           item={item}
           value={value}
           multiselect={multiselect}
+          ignoreHaptic={ignoreHaptic}
           allowEmpty={allowEmpty}
           disabled={disabled}
           onChange={onChange}
@@ -57,12 +60,14 @@ const Item = ({
   value,
   disabled,
   multiselect,
+  ignoreHaptic,
   allowEmpty,
   onChange,
 }: {
   item: ToggleGroupItem;
   value: ToggleGroupValue;
   multiselect?: boolean;
+  ignoreHaptic?: boolean;
   allowEmpty?: boolean;
   disabled?: boolean;
   onChange?: (value: ToggleGroupValue) => void;
@@ -90,8 +95,18 @@ const Item = ({
       }
     }
 
-    emitHaptic();
-  }, [allowEmpty, item.value, multiselect, onChange, selected, value]);
+    if (!ignoreHaptic) {
+      emitHaptic();
+    }
+  }, [
+    allowEmpty,
+    ignoreHaptic,
+    item.value,
+    multiselect,
+    onChange,
+    selected,
+    value,
+  ]);
 
   return (
     <XStack

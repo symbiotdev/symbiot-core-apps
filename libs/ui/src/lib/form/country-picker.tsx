@@ -81,6 +81,7 @@ export const CountryPicker = ({
         }
       >
         <ToggleGroup
+          ignoreHaptic
           value={value}
           items={data}
           onChange={onToggleGroupChange}

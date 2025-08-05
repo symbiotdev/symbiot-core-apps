@@ -73,6 +73,7 @@ export const CurrencyPicker = ({
         }
       >
         <ToggleGroup
+          ignoreHaptic
           value={value}
           items={data}
           onChange={onToggleGroupChange}

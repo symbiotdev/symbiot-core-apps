@@ -7,7 +7,7 @@ import {
 
 export const emitHaptic = () => {
   if (Platform.OS === 'android') {
-    void performAndroidHapticsAsync(AndroidHaptics.Keyboard_Tap);
+    void performAndroidHapticsAsync(AndroidHaptics.Virtual_Key);
   } else {
     void selectionAsync();
   }

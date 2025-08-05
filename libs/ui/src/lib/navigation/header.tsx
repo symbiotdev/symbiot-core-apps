@@ -11,6 +11,8 @@ import { H4 } from '../text/heading';
 import { ContainerView } from '../view/container-view';
 import { Icon } from '../icons';
 import { IconName } from '../icons/config';
+import { emitHaptic } from '@symbiot-core-apps/shared';
+import { AttentionView } from '../view/attention-view';
 
 export const headerHeight = 50;
 export const headerButtonSize = 24;
@@ -58,25 +60,34 @@ const SideElement = memo((props: ViewProps) => (
   />
 ));
 
-export const HeaderButton = ({
-  iconName,
-  onPress,
-}: {
-  iconName: IconName;
-  onPress?: () => void;
-}) => (
-  <Pressable
-    style={({ pressed }) => ({
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      opacity: pressed ? 0.8 : 1,
-      outlineWidth: 0,
-    })}
-    onPress={onPress}
-  >
-    <Icon name={iconName} color="$buttonTextColor1" size={24} />
-  </Pressable>
+export const HeaderButton = memo(
+  ({
+    attention,
+    iconName,
+    onPress,
+  }: {
+    attention?: boolean;
+    iconName: IconName;
+    onPress?: () => void;
+  }) => (
+    <AttentionView attention={Boolean(attention)}>
+      <Pressable
+        style={({ pressed }) => ({
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          opacity: pressed ? 0.8 : 1,
+          outlineWidth: 0,
+        })}
+        onPress={() => {
+          onPress?.();
+          emitHaptic();
+        }}
+      >
+        <Icon name={iconName} color="$buttonTextColor1" size={24} />
+      </Pressable>
+    </AttentionView>
+  ),
 );
 
 const HeaderBackground = memo(() =>

@@ -8,7 +8,6 @@ import { RegularText } from '../text/text';
 import { InitView } from '../view/init-view';
 import { InputFieldView } from '../view/input-field-view';
 import { Icon } from '../icons';
-import { emitHaptic } from '@symbiot-core-apps/shared';
 
 export type SelectOption = {
   label: string;
@@ -88,7 +87,6 @@ export function Select({
 
       if (hasChanges) {
         onChange(newValue);
-        emitHaptic();
       }
     },
     [onChange, value],

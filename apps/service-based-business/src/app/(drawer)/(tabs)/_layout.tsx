@@ -1,6 +1,7 @@
 import { router, Tabs } from 'expo-router';
 import {
   AttentionView,
+  HeaderButton,
   Icon,
   useTabsScreenOptions,
 } from '@symbiot-core-apps/ui';
@@ -8,17 +9,15 @@ import { useMe } from '@symbiot-core-apps/state';
 import { PlusActionModal } from '../../../components/tabs/plus-action-modal';
 import { Icons } from '../../../icons/config';
 
-const Notifications = () => {
+const NotificationsHeaderButton = () => {
   const { me } = useMe();
 
   return (
-    <AttentionView
+    <HeaderButton
       attention={!!me?.stats?.notifications?.new}
-      cursor="pointer"
+      iconName={Icons.Notifications}
       onPress={() => router.navigate('/notifications')}
-    >
-      <Icon name={Icons.Notifications} color="$buttonTextColor1" size={24} />
-    </AttentionView>
+    />
   );
 };
 
@@ -34,7 +33,7 @@ export default () => {
           <Tabs.Screen
             name="actions/index"
             options={{
-              headerRight: Notifications,
+              headerRight: NotificationsHeaderButton,
               tabBarIcon: ({ color, size, focused }) => (
                 <AttentionView attention={!!me?.stats?.notifications?.new}>
                   <Icon
@@ -53,7 +52,7 @@ export default () => {
           <Tabs.Screen
             name="home/index"
             options={{
-              headerRight: Notifications,
+              headerRight: NotificationsHeaderButton,
               tabBarIcon: ({ color, size, focused }) => (
                 <AttentionView attention={!!me?.stats?.notifications?.new}>
                   <Icon

@@ -40,6 +40,7 @@ export const AdaptivePopover = forwardRef(
       ignoreScroll,
       ignoreScrollTopOnClose,
       ignoreHapticOnOpen,
+      ignoreHapticOnClose,
       sheetTitle,
       triggerType,
       minWidth,
@@ -56,6 +57,7 @@ export const AdaptivePopover = forwardRef(
       ignoreScroll?: boolean;
       ignoreScrollTopOnClose?: boolean;
       ignoreHapticOnOpen?: boolean;
+      ignoreHapticOnClose?: boolean;
       sheetTitle?: string;
       triggerType?: 'child' | 'manual';
       minWidth?: number;
@@ -84,7 +86,10 @@ export const AdaptivePopover = forwardRef(
       (opened: boolean) => {
         Keyboard.dismiss();
 
-        if (opened && !ignoreHapticOnOpen) {
+        if (
+          (opened && !ignoreHapticOnOpen) ||
+          (!opened && !ignoreHapticOnClose)
+        ) {
           emitHaptic();
         }
 

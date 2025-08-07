@@ -1,6 +1,9 @@
-import { AdaptivePopover } from '../popover/adaptive-popover';
+import {
+  AdaptivePopover,
+  AdaptivePopoverRef,
+} from '../popover/adaptive-popover';
 import { Avatar } from '../media/avatar';
-import { Popover, View, ViewProps } from 'tamagui';
+import { View, ViewProps } from 'tamagui';
 import { ImageSource } from 'expo-image';
 import { Link } from '../text/custom';
 import { ListItem } from '../list/list-item';
@@ -59,7 +62,7 @@ export const AvatarPicker = ({
 
   const [attaching, setAttaching] = useState(false);
 
-  const popoverRef = useRef<Popover>(null);
+  const popoverRef = useRef<AdaptivePopoverRef>(null);
 
   const pickImageFromGallery = useCallback(async () => {
     if (!galleryPermissions?.granted) {

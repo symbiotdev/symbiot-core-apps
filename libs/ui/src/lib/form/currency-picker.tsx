@@ -2,8 +2,10 @@ import { useCallback, useMemo, useRef } from 'react';
 import { InputFieldView } from '../view/input-field-view';
 import { FormField } from './form-field';
 import { RegularText } from '../text/text';
-import { Popover } from 'tamagui';
-import { AdaptivePopover } from '../popover/adaptive-popover';
+import {
+  AdaptivePopover,
+  AdaptivePopoverRef,
+} from '../popover/adaptive-popover';
 import { useT } from '@symbiot-core-apps/i18n';
 import { currencySymbol } from '@symbiot-core-apps/shared';
 import { ToggleGroup, ToggleGroupValue } from './toggle-group';
@@ -25,7 +27,7 @@ export const CurrencyPicker = ({
 }) => {
   const { t } = useT();
 
-  const popoverRef = useRef<Popover>(null);
+  const popoverRef = useRef<AdaptivePopoverRef>(null);
 
   const data = useMemo(
     () =>

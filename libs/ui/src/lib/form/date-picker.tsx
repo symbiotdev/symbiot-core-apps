@@ -3,8 +3,11 @@ import DateTimePicker, {
   DateType,
   useDefaultStyles,
 } from 'react-native-ui-datepicker';
-import { AdaptivePopover } from '../popover/adaptive-popover';
-import { Popover, useTheme, View, ViewProps } from 'tamagui';
+import {
+  AdaptivePopover,
+  AdaptivePopoverRef,
+} from '../popover/adaptive-popover';
+import { useTheme, View, ViewProps } from 'tamagui';
 import { RegularText } from '../text/text';
 import { FormField } from './form-field';
 import { DateHelper, emitHaptic, Weekday } from '@symbiot-core-apps/shared';
@@ -44,11 +47,11 @@ export const DatePicker = ({
   const { lang } = useT();
   const defaultStyles = useDefaultStyles(scheme);
 
-  const ref = useRef<Popover>(null);
+  const popoverRef = useRef<AdaptivePopoverRef>(null);
 
   const onChangeDate = useCallback(
     ({ date }: { date: DateType }) => {
-      ref.current?.close();
+      popoverRef.current?.close();
 
       onChange?.(DateHelper.toDate(date as Date));
 
@@ -60,7 +63,7 @@ export const DatePicker = ({
   return (
     <FormField label={label} error={error}>
       <AdaptivePopover
-        ref={ref}
+        ref={popoverRef}
         disabled={disabled}
         triggerType="child"
         trigger={

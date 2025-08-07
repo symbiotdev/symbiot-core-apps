@@ -3,8 +3,10 @@ import { InputFieldView } from '../view/input-field-view';
 import { FormField } from './form-field';
 import { countries, TCountryCode } from 'countries-list';
 import { RegularText } from '../text/text';
-import { Popover } from 'tamagui';
-import { AdaptivePopover } from '../popover/adaptive-popover';
+import {
+  AdaptivePopover,
+  AdaptivePopoverRef,
+} from '../popover/adaptive-popover';
 import { useT } from '@symbiot-core-apps/i18n';
 import { ToggleGroup, ToggleGroupValue } from './toggle-group';
 
@@ -33,7 +35,7 @@ export const CountryPicker = ({
 }) => {
   const { t } = useT();
 
-  const popoverRef = useRef<Popover>(null);
+  const popoverRef = useRef<AdaptivePopoverRef>(null);
 
   const data = useMemo(
     () =>

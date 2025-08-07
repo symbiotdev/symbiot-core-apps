@@ -3,8 +3,10 @@ import {
   forwardRef,
   ReactElement,
   useCallback,
+  useImperativeHandle,
   useMemo,
   useRef,
+  useState,
 } from 'react';
 import {
   Adapt,
@@ -31,6 +33,12 @@ const adaptiveMediaSize = (
   Platform.OS !== 'web' ? 'md' : 'xs'
 ) as keyof AdaptWhen;
 
+export type AdaptivePopoverRef = {
+  open: () => void;
+  close: () => void;
+  scrollTo: (y: number, animated?: boolean) => void;
+};
+
 export const AdaptivePopover = forwardRef(
   (
     {
@@ -52,7 +60,7 @@ export const AdaptivePopover = forwardRef(
       onOpen,
       onClose,
       ...popoverProps
-    }: PopoverProps & {
+    }: Omit<PopoverProps, 'open' | 'onOpenChange'> & {
       disableDrag?: boolean;
       disabled?: boolean;
       ignoreAdaptive?: boolean;
@@ -70,7 +78,7 @@ export const AdaptivePopover = forwardRef(
       onOpen?: () => void;
       onClose?: () => void;
     },
-    ref: ForwardedRef<Popover>,
+    ref: ForwardedRef<AdaptivePopoverRef>,
   ) => {
     const { media } = useScreenSize();
     const { height } = useWindowDimensions();
@@ -79,41 +87,62 @@ export const AdaptivePopover = forwardRef(
     const popoverListRef = useRef<ScrollView>(null);
     const sheetListRef = useRef<ScrollView>(null);
 
+    const [opened, setOpened] = useState(false);
+
     const adjustedMaxHeight = useMemo(
       () => Math.min(maxHeight || 500, height - top - 50),
       [height, maxHeight, top],
     );
 
+    const open = useCallback(() => setOpened(true), []);
+    const close = useCallback(() => setOpened(false), []);
+    const scrollTo = useCallback((y: number, animated?: boolean) => {
+      popoverListRef.current?.scrollTo({ y, animated: !!animated });
+      sheetListRef.current?.scrollTo({ y, animated: !!animated });
+    }, []);
+
     const onOpenChange = useCallback(
       (opened: boolean) => {
-        Keyboard.dismiss();
+        const isKeyboardVisible = Keyboard.isVisible();
+        const delay = 200;
 
-        if (
-          (opened && !ignoreHapticOnOpen) ||
-          (!opened && !ignoreHapticOnClose)
-        ) {
-          emitHaptic();
+        if (isKeyboardVisible) {
+          Keyboard.dismiss();
         }
 
-        setTimeout(() => {
-          if (opened) {
-            onOpen?.();
-          } else {
-            onClose?.();
+        setTimeout(
+          () => {
+            setOpened(opened);
 
-            if (!ignoreScrollTopOnClose) {
-              sheetListRef.current?.scrollTo({
-                y: 0,
-                animated: false,
-              });
-
-              popoverListRef.current?.scrollTo({
-                y: 0,
-                animated: false,
-              });
+            if (
+              (opened && !ignoreHapticOnOpen) ||
+              (!opened && !ignoreHapticOnClose)
+            ) {
+              emitHaptic();
             }
-          }
-        }, 200);
+
+            setTimeout(() => {
+              if (opened) {
+                onOpen?.();
+              } else {
+                onClose?.();
+
+                if (!ignoreScrollTopOnClose) {
+                  sheetListRef.current?.scrollTo({
+                    y: 0,
+                    animated: false,
+                  });
+
+                  popoverListRef.current?.scrollTo({
+                    y: 0,
+                    animated: false,
+                  });
+                }
+              }
+            }, delay);
+          },
+          isKeyboardVisible ? delay : 0,
+        );
       },
       [
         ignoreHapticOnOpen,
@@ -124,16 +153,22 @@ export const AdaptivePopover = forwardRef(
       ],
     );
 
+    useImperativeHandle(ref, () => ({
+      open,
+      close,
+      scrollTo,
+    }));
+
     return (
       <Popover
-        ref={ref}
         stayInFrame
         allowFlip
         resize
         placement="bottom-start"
         offset={5}
-        onOpenChange={onOpenChange}
         {...popoverProps}
+        open={opened}
+        onOpenChange={onOpenChange}
       >
         {triggerType === 'manual' || disabled ? (
           trigger
@@ -178,7 +213,10 @@ export const AdaptivePopover = forwardRef(
               keyboardShouldPersistTaps="handled"
               keyboardDismissMode="none"
               showsVerticalScrollIndicator={false}
-              style={{ maxHeight: adjustedMaxHeight, width: '100%' }}
+              style={{
+                maxHeight: adjustedMaxHeight,
+                width: '100%',
+              }}
               contentContainerStyle={{
                 paddingTop: topFixedContent ? 0 : popoverHalfPadding,
                 paddingBottom: popoverHalfPadding,

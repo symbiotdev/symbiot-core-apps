@@ -1,7 +1,10 @@
-import { Popover, XStack } from 'tamagui';
+import { XStack } from 'tamagui';
 import { DimensionValue } from 'react-native';
 import { useCallback, useMemo, useRef } from 'react';
-import { AdaptivePopover } from '../popover/adaptive-popover';
+import {
+  AdaptivePopover,
+  AdaptivePopoverRef,
+} from '../popover/adaptive-popover';
 import { FormField } from './form-field';
 import { Spinner } from '../loading/spinner';
 import { RegularText } from '../text/text';
@@ -41,7 +44,7 @@ export function Select({
   options?: SelectOption[];
   onChange: onChangeSelect;
 }) {
-  const ref = useRef<Popover>(null);
+  const popoverRef = useRef<AdaptivePopoverRef>(null);
 
   const formattedValue = useMemo(
     () =>
@@ -82,7 +85,7 @@ export function Select({
 
         hasChanges = newValue !== value;
 
-        ref.current?.close();
+        popoverRef.current?.close();
       }
 
       if (hasChanges) {
@@ -95,7 +98,7 @@ export function Select({
   return (
     <FormField label={label} error={error}>
       <AdaptivePopover
-        ref={ref}
+        ref={popoverRef}
         disabled={disabled}
         sheetTitle={label}
         minWidth={200}

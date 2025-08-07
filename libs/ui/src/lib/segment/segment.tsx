@@ -2,7 +2,7 @@ import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { View, XStack, XStackProps } from 'tamagui';
 import { MediumText, SemiBoldText } from '../text/text';
 import { emitHaptic } from '@symbiot-core-apps/shared';
-import { FlatList } from 'react-native';
+import { FlatList, LayoutChangeEvent } from 'react-native';
 
 export type SegmentItem = {
   placeholder?: string;
@@ -80,6 +80,10 @@ export const Segment = memo(
       [disabled, items.length, onChange, value, width],
     );
 
+    const onLayout = useCallback((e: LayoutChangeEvent) => {
+      setWidth(e.nativeEvent.layout.width);
+    }, []);
+
     useEffect(() => {
       if (flatListRef.current) {
         scrollToIndex(activeIndex);
@@ -96,6 +100,7 @@ export const Segment = memo(
         overflow="hidden"
         disabled={disabled}
         disabledStyle={{ opacity: 0.8 }}
+        onLayout={onLayout}
         {...xStackProps}
       >
         <FlatList
@@ -109,7 +114,6 @@ export const Segment = memo(
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ padding }}
-          onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
         />
       </XStack>
     );

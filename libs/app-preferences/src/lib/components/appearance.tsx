@@ -6,7 +6,7 @@ import {
   Spinner,
   Switch,
   ToggleGroup,
-  ToggleGroupValue,
+  ToggleOnChange,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useMeUpdater } from '@symbiot-core-apps/state';
@@ -69,7 +69,7 @@ export const Appearance = () => {
               disabled={updating}
               items={items}
               value={scheme}
-              onChange={onChange as (value: ToggleGroupValue) => void}
+              onChange={onChange as ToggleOnChange}
             />
           )}
         </ListItemGroup>

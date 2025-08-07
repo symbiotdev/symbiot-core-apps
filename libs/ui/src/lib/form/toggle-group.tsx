@@ -15,6 +15,7 @@ export type ToggleGroupItem = {
 };
 
 export type ToggleGroupValue = unknown | unknown[];
+export type ToggleOnChange = (value: ToggleGroupValue) => void;
 
 export const toggleItemMinHeight = 24;
 export const toggleGap = 12;
@@ -27,12 +28,13 @@ export const ToggleGroup = ({
   allowEmpty,
   loading,
   disabled,
-  lazy,
+  renderDelay,
   noDataIcon,
   noDataTitle,
   noDataMessage,
   error,
   onChange,
+  onRendered,
 }: {
   value: ToggleGroupValue;
   items?: ToggleGroupItem[];
@@ -41,12 +43,13 @@ export const ToggleGroup = ({
   allowEmpty?: boolean;
   loading?: boolean;
   disabled?: boolean;
-  lazy?: boolean;
+  renderDelay?: number;
   noDataIcon?: IconName;
   noDataTitle?: string;
   noDataMessage?: string;
   error?: string;
-  onChange?: (value: ToggleGroupValue) => void;
+  onChange?: ToggleOnChange;
+  onRendered?: () => void;
 }) =>
   !items?.length ? (
     <InitView
@@ -57,7 +60,12 @@ export const ToggleGroup = ({
       noDataMessage={noDataMessage}
     />
   ) : (
-    <ContainerView gap={toggleGap} lazy={Boolean(lazy)}>
+    <ContainerView
+      gap={toggleGap}
+      lazy={Boolean(renderDelay)}
+      delay={renderDelay}
+      onRendered={onRendered}
+    >
       {items?.map((item, index) => (
         <Item
           key={index}
@@ -89,7 +97,7 @@ const Item = memo(
     ignoreHaptic?: boolean;
     allowEmpty?: boolean;
     disabled?: boolean;
-    onChange?: (value: ToggleGroupValue) => void;
+    onChange?: ToggleOnChange;
   }) => {
     const selected =
       multiselect && Array.isArray(value)

@@ -16,7 +16,7 @@ import {
   ScrollView,
   View,
 } from 'tamagui';
-import { Keyboard, Platform, useWindowDimensions } from 'react-native';
+import { Keyboard, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { H3 } from '../text/heading';
 import {
@@ -29,9 +29,7 @@ import { ContainerView } from '../view/container-view';
 export const popoverPadding = 24;
 export const popoverHalfPadding = 12;
 
-const adaptiveMediaSize = (
-  Platform.OS !== 'web' ? 'md' : 'xs'
-) as keyof AdaptWhen;
+const adaptiveMediaSize = 'md' as keyof AdaptWhen;
 
 export type AdaptivePopoverRef = {
   open: () => void;

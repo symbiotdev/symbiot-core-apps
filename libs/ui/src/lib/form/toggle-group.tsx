@@ -1,4 +1,4 @@
-import { View, XStack } from 'tamagui';
+import { View, XStack, XStackProps } from 'tamagui';
 import { memo, ReactElement } from 'react';
 import { RegularText } from '../text/text';
 import { Icon } from '../icons';
@@ -33,6 +33,7 @@ export const ToggleGroup = ({
   noDataTitle,
   noDataMessage,
   error,
+  itemProps,
   onChange,
   onRendered,
 }: {
@@ -48,6 +49,7 @@ export const ToggleGroup = ({
   noDataTitle?: string;
   noDataMessage?: string;
   error?: string;
+  itemProps?: XStackProps;
   onChange?: ToggleOnChange;
   onRendered?: () => void;
 }) =>
@@ -76,6 +78,7 @@ export const ToggleGroup = ({
           allowEmpty={allowEmpty}
           disabled={disabled}
           onChange={onChange}
+          {...itemProps}
         />
       ))}
     </ContainerView>
@@ -90,7 +93,8 @@ const Item = memo(
     ignoreHaptic,
     allowEmpty,
     onChange,
-  }: {
+    ...xStackProps
+  }: XStackProps & {
     item: ToggleGroupItem;
     value: ToggleGroupValue;
     multiselect?: boolean;
@@ -133,6 +137,7 @@ const Item = memo(
         disabledStyle={{ opacity: 0.8 }}
         pressStyle={!disabled && { opacity: 0.8 }}
         onPress={onPress}
+        {...xStackProps}
       >
         {item.icon}
 

@@ -22,8 +22,8 @@ export default () => {
 
   const [qrCodeVisible, setQrCodeVisible] = useState(false);
 
-  const createBusiness = useCallback(
-    () => router.navigate('/business/create'),
+  const createBrand = useCallback(
+    () => router.navigate('/brand/create'),
     [],
   );
 
@@ -65,7 +65,7 @@ export default () => {
                 ns: 'app',
               })}
               buttonIcon={<Icon name={Icons.Workspace} />}
-              onActionPress={createBusiness}
+              onActionPress={createBrand}
             />
 
             <H4 textAlign="center" textTransform="uppercase">

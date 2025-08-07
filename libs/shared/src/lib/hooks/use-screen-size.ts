@@ -18,8 +18,8 @@ export const useScreenSize = () => {
   const media = useMemo(
     () =>
       (Object.keys(SCREEN_MEDIA_SIZE) as ScreenMediaSize[])
-        .sort((key1, key2) => SCREEN_MEDIA_SIZE[key2] - SCREEN_MEDIA_SIZE[key1])
-        .find((key) => SCREEN_MEDIA_SIZE[key] <= width) as ScreenMediaSize,
+        .sort((key1, key2) => SCREEN_MEDIA_SIZE[key1] - SCREEN_MEDIA_SIZE[key2])
+        .find((key) => SCREEN_MEDIA_SIZE[key] >= width) as ScreenMediaSize,
     [width],
   );
 

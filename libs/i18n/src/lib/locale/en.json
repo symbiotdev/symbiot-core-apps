@@ -317,7 +317,7 @@
         }
       }
     },
-    "business": {
+    "brand": {
       "create": {
         "discard": {
           "title": "Discard creation?",
@@ -378,7 +378,7 @@
         }
       }
     },
-    "business": {
+    "brand": {
       "create": {
         "intro": {
           "title": "Build a strong business",
@@ -509,7 +509,7 @@
         }
       }
     },
-    "business": {
+    "brand": {
       "create": {
         "intro": {
           "title": "Build a strong dance brand",

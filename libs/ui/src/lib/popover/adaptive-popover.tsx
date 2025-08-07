@@ -160,7 +160,7 @@ export const AdaptivePopover = forwardRef(
           padding={0}
           zIndex={100_000}
         >
-          {SCREEN_MEDIA_SIZE[adaptiveMediaSize] <= SCREEN_MEDIA_SIZE[media] &&
+          {SCREEN_MEDIA_SIZE[media] > SCREEN_MEDIA_SIZE[adaptiveMediaSize] &&
             !!topFixedContent && (
               <View
                 width="100%"

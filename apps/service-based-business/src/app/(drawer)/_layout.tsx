@@ -31,7 +31,7 @@ export default () => {
               }}
             />
             <Stack.Screen
-              name="business/create"
+              name="brand/create"
               options={{
                 gestureEnabled: false,
               }}

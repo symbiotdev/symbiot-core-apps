@@ -40,12 +40,12 @@ const NotificationsHeaderButton = () => {
 export default () => {
   const screenOptions = useTabsScreenOptions();
   const { me } = useMe();
-  const hasBusiness = false;
+  const hasBrand = false;
 
   return (
     <>
       <Tabs screenOptions={screenOptions}>
-        <Tabs.Protected guard={!hasBusiness}>
+        <Tabs.Protected guard={!hasBrand}>
           <Tabs.Screen
             name="actions/index"
             options={{
@@ -65,7 +65,7 @@ export default () => {
           />
         </Tabs.Protected>
 
-        <Tabs.Protected guard={hasBusiness}>
+        <Tabs.Protected guard={hasBrand}>
           <Tabs.Screen
             name="home/index"
             options={{

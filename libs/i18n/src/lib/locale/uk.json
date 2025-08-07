@@ -317,7 +317,7 @@
         }
       }
     },
-    "business": {
+    "brand": {
       "create": {
         "discard": {
           "title": "Відхилити створення?",
@@ -378,7 +378,7 @@
         }
       }
     },
-    "business": {
+    "brand": {
       "create": {
         "intro": {
           "title": "Створіть потужний бізнес",
@@ -509,7 +509,7 @@
         }
       }
     },
-    "business": {
+    "brand": {
       "create": {
         "intro": {
           "title": "Створіть потужний бренд",

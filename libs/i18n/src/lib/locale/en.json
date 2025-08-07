@@ -151,7 +151,7 @@
     },
     "schedule": {
       "all_day": "All-day",
-      "weekend": "Weekend"
+      "day_off": "Day off"
     },
     "auth": {
       "workspace": {

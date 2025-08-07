@@ -4,6 +4,8 @@ import { RegularText } from '../text/text';
 import { Icon } from '../icons';
 import { InitView } from '../view/init-view';
 import { emitHaptic } from '@symbiot-core-apps/shared';
+import { IconName } from '../icons/config';
+import { ContainerView } from '../view/container-view';
 
 export type ToggleGroupItem = {
   value: unknown;
@@ -14,6 +16,9 @@ export type ToggleGroupItem = {
 
 export type ToggleGroupValue = unknown | unknown[];
 
+export const toggleItemMinHeight = 24;
+export const toggleGap = 12;
+
 export const ToggleGroup = ({
   items,
   value,
@@ -22,6 +27,10 @@ export const ToggleGroup = ({
   allowEmpty,
   loading,
   disabled,
+  lazy,
+  noDataIcon,
+  noDataTitle,
+  noDataMessage,
   error,
   onChange,
 }: {
@@ -32,13 +41,23 @@ export const ToggleGroup = ({
   allowEmpty?: boolean;
   loading?: boolean;
   disabled?: boolean;
+  lazy?: boolean;
+  noDataIcon?: IconName;
+  noDataTitle?: string;
+  noDataMessage?: string;
   error?: string;
   onChange?: (value: ToggleGroupValue) => void;
 }) =>
   !items?.length ? (
-    <InitView loading={loading} error={error} />
+    <InitView
+      loading={loading}
+      error={error}
+      noDataIcon={noDataIcon}
+      noDataTitle={noDataTitle}
+      noDataMessage={noDataMessage}
+    />
   ) : (
-    <View gap="$4">
+    <ContainerView gap={toggleGap} lazy={Boolean(lazy)}>
       {items?.map((item, index) => (
         <Item
           key={index}
@@ -51,7 +70,7 @@ export const ToggleGroup = ({
           onChange={onChange}
         />
       ))}
-    </View>
+    </ContainerView>
   );
 
 const Item = memo(
@@ -109,7 +128,12 @@ const Item = memo(
       >
         {item.icon}
 
-        <View flex={1} gap="$1" minHeight={24} justifyContent="center">
+        <View
+          flex={1}
+          gap="$1"
+          minHeight={toggleItemMinHeight}
+          justifyContent="center"
+        >
           <RegularText color={disabled ? '$disabled' : '$color'}>
             {item.label}
           </RegularText>

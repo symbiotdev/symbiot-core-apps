@@ -2,10 +2,12 @@ import { View, ViewProps } from 'tamagui';
 import { H2 } from '../text/heading';
 import { RegularText } from '../text/text';
 import { useT } from '@symbiot-core-apps/i18n';
+import { IconName } from '../icons/config';
+import { Icon } from '../icons';
 
 export const EmptyView = (
   props: ViewProps & {
-    emoji?: string;
+    iconName?: IconName;
     title?: string;
     message?: string;
   },
@@ -20,19 +22,20 @@ export const EmptyView = (
       padding={20}
       {...props}
     >
-      {!!props.emoji && (
-        <RegularText textAlign="center" fontSize={40}>
-          {props.emoji}
-        </RegularText>
-      )}
+      {!!props.iconName && <Icon name={props.iconName} size={40} />}
 
       {!!props.title && (
-        <H2 textAlign="center" marginVertical={10}>
+        <H2 textAlign="center" marginTop={10}>
           {props.title}
         </H2>
       )}
 
-      <RegularText color="$disabled" textAlign="center" maxWidth={500}>
+      <RegularText
+        color="$disabled"
+        textAlign="center"
+        maxWidth={500}
+        marginTop={10}
+      >
         {props.message || t('its_empty')}
       </RegularText>
 

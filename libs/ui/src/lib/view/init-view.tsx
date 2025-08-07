@@ -1,16 +1,17 @@
 import { LoadingView } from './loading-view';
 import { ErrorView } from './error-view';
 import { EmptyView } from './empty-view';
+import { IconName } from '../icons/config';
 
 export const InitView = ({
   loading,
-  noDataEmoji,
+  noDataIcon,
   noDataTitle,
   noDataMessage,
   error,
 }: {
   loading?: boolean;
-  noDataEmoji?: string;
+  noDataIcon?: IconName;
   noDataTitle?: string;
   noDataMessage?: string;
   error?: string | null;
@@ -25,7 +26,7 @@ export const InitView = ({
 
   return (
     <EmptyView
-      emoji={noDataEmoji}
+      iconName={noDataIcon}
       title={noDataTitle}
       message={noDataMessage}
     />

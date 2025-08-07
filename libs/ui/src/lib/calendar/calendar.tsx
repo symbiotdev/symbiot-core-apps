@@ -41,7 +41,7 @@ export const Calendar = ({
   const { orientation } = useScreenOrientation();
   const { left, right } = useSafeAreaInsets();
   const { width } = useWindowDimensions();
-  const { isSmall } = useScreenSize();
+  const { media } = useScreenSize();
   const { now } = useNativeNow();
 
   const snappable = useMemo(
@@ -63,14 +63,14 @@ export const Calendar = ({
   );
   const numberOfDays = useMemo(
     () =>
-      !isSmall &&
+      media === 'xs' &&
       (DeviceInfo.deviceType === DeviceType.TABLET ||
         DeviceInfo.deviceType === DeviceType.DESKTOP ||
         orientation === Orientation.LANDSCAPE_LEFT ||
         orientation === Orientation.LANDSCAPE_RIGHT)
         ? 7
         : 3,
-    [isSmall, orientation],
+    [media, orientation],
   );
 
   const renderDayHeader = useCallback(

@@ -130,6 +130,7 @@ export const ScreenHeader = memo(
         <HeaderBackground />
 
         <ContainerView
+          lazy={false}
           gap="$5"
           flexDirection="row"
           alignItems="center"
@@ -195,6 +196,7 @@ export const ModalHeader = memo(
         <HeaderBackground />
 
         <ContainerView
+          lazy={false}
           gap="$5"
           flexDirection="row"
           alignItems="center"

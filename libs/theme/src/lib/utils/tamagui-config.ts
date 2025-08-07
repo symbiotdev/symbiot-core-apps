@@ -1,6 +1,7 @@
 import { createFont } from 'tamagui';
 import { defaultConfig } from '@tamagui/config/v4';
-import { createAnimations } from '@tamagui/animations-react-native'
+import { createAnimations } from '@tamagui/animations-react-native';
+import { SCREEN_MEDIA_SIZE } from '@symbiot-core-apps/shared';
 
 export type ThemeConfig = {
   background: string;
@@ -134,18 +135,18 @@ export const radius = {
 };
 
 export const media = {
-  xl: { maxWidth: 1650 },
-  lg: { maxWidth: 1280 },
-  md: { maxWidth: 1020 },
-  sm: { maxWidth: 800 },
-  xs: { maxWidth: 660 },
-  xxs: { maxWidth: 390 },
-  gtXs: { minWidth: 660 + 1 },
-  gtSm: { minWidth: 800 + 1 },
-  gtMd: { minWidth: 1020 + 1 },
-  gtLg: { minWidth: 1280 + 1 },
-  gtXl: { minWidth: 1650 + 1 },
-}
+  xl: { maxWidth: SCREEN_MEDIA_SIZE.xl },
+  lg: { maxWidth: SCREEN_MEDIA_SIZE.lg },
+  md: { maxWidth: SCREEN_MEDIA_SIZE.md },
+  sm: { maxWidth: SCREEN_MEDIA_SIZE.sm },
+  xs: { maxWidth: SCREEN_MEDIA_SIZE.xs },
+  xxs: { maxWidth: SCREEN_MEDIA_SIZE.xxs },
+  gtXs: { minWidth: SCREEN_MEDIA_SIZE.xs + 1 },
+  gtSm: { minWidth: SCREEN_MEDIA_SIZE.sm + 1 },
+  gtMd: { minWidth: SCREEN_MEDIA_SIZE.md + 1 },
+  gtLg: { minWidth: SCREEN_MEDIA_SIZE.lg + 1 },
+  gtXl: { minWidth: SCREEN_MEDIA_SIZE.xl + 1 },
+};
 
 export const mediaQueryDefaultActive = {
   xl: true,
@@ -154,5 +155,4 @@ export const mediaQueryDefaultActive = {
   sm: true,
   xs: true,
   xxs: true,
-}
-
+};

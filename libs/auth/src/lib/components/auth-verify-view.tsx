@@ -4,7 +4,7 @@ import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import { useT } from '@symbiot-core-apps/i18n';
 
-const verifySecondsLimit = 10;
+const verifySecondsLimit = 60;
 
 export const AuthVerifyView = ({
   logo,

@@ -14,21 +14,22 @@ import {
   ScrollView,
   View,
 } from 'tamagui';
-import {
-  Keyboard,
-  Platform,
-  Pressable,
-  useWindowDimensions,
-} from 'react-native';
+import { Keyboard, Platform, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { H3 } from '../text/heading';
 import {
   emitHaptic,
-  useRendered,
+  SCREEN_MEDIA_SIZE,
   useScreenSize,
 } from '@symbiot-core-apps/shared';
+import { ContainerView } from '../view/container-view';
 
-export const adaptivePopoverSheetPadding = 24;
+export const popoverPadding = 24;
+export const popoverHalfPadding = 12;
+
+const adaptiveMediaSize = (
+  Platform.OS !== 'web' ? 'md' : 'xs'
+) as keyof AdaptWhen;
 
 export const AdaptivePopover = forwardRef(
   (
@@ -47,6 +48,7 @@ export const AdaptivePopover = forwardRef(
       maxWidth,
       maxHeight,
       trigger,
+      topFixedContent,
       onOpen,
       onClose,
       ...popoverProps
@@ -63,14 +65,14 @@ export const AdaptivePopover = forwardRef(
       minWidth?: number;
       maxWidth?: number;
       maxHeight?: number;
-      trigger: ReactElement;
+      trigger?: ReactElement;
+      topFixedContent?: ReactElement;
       onOpen?: () => void;
       onClose?: () => void;
     },
     ref: ForwardedRef<Popover>,
   ) => {
-    const { isSmall } = useScreenSize();
-    const { rendered } = useRendered({ delay: 500 });
+    const { media } = useScreenSize();
     const { height } = useWindowDimensions();
     const { top, bottom, left, right } = useSafeAreaInsets();
 
@@ -113,7 +115,13 @@ export const AdaptivePopover = forwardRef(
           }
         }, 200);
       },
-      [onOpen, ignoreHapticOnOpen, onClose, ignoreScrollTopOnClose],
+      [
+        ignoreHapticOnOpen,
+        ignoreHapticOnClose,
+        onOpen,
+        onClose,
+        ignoreScrollTopOnClose,
+      ],
     );
 
     return (
@@ -138,45 +146,54 @@ export const AdaptivePopover = forwardRef(
           </Popover.Trigger>
         )}
 
-        {rendered && (
-          <Popover.Content
-            animation={!isSmall ? 'quick' : undefined}
-            enterStyle={{ opacity: 0, y: -10 }}
-            exitStyle={{ opacity: 0, y: -10 }}
-            opacity={1}
-            y={0}
-            backgroundColor="$background1"
-            borderRadius="$10"
-            maxHeight={adjustedMaxHeight}
-            width={maxWidth}
-            minWidth={minWidth}
-            padding={0}
-            zIndex={100_000}
-          >
-            {!ignoreScroll ? (
-              <Popover.ScrollView
-                ref={popoverListRef}
-                keyboardShouldPersistTaps="handled"
-                keyboardDismissMode="none"
-                showsVerticalScrollIndicator={false}
-                style={{ maxHeight: adjustedMaxHeight, width: '100%' }}
-                contentContainerStyle={{
-                  paddingVertical: 12,
-                  paddingHorizontal: 24,
-                }}
+        <Popover.Content
+          animation="quick"
+          enterStyle={{ opacity: 0, y: -10 }}
+          exitStyle={{ opacity: 0, y: -10 }}
+          opacity={1}
+          y={0}
+          backgroundColor="$background1"
+          borderRadius="$10"
+          maxHeight={adjustedMaxHeight}
+          width={maxWidth}
+          minWidth={minWidth}
+          padding={0}
+          zIndex={100_000}
+        >
+          {SCREEN_MEDIA_SIZE[adaptiveMediaSize] <= SCREEN_MEDIA_SIZE[media] &&
+            !!topFixedContent && (
+              <View
+                width="100%"
+                paddingHorizontal={popoverPadding}
+                paddingTop={popoverPadding}
+                paddingBottom={popoverHalfPadding}
               >
-                {children}
-              </Popover.ScrollView>
-            ) : (
-              children
+                {topFixedContent}
+              </View>
             )}
-          </Popover.Content>
-        )}
 
-        {!ignoreAdaptive && rendered && (
-          <Adapt
-            when={(Platform.OS !== 'web' ? 'md' : 'xs') as unknown as AdaptWhen}
-          >
+          {!ignoreScroll ? (
+            <Popover.ScrollView
+              ref={popoverListRef}
+              keyboardShouldPersistTaps="handled"
+              keyboardDismissMode="none"
+              showsVerticalScrollIndicator={false}
+              style={{ maxHeight: adjustedMaxHeight, width: '100%' }}
+              contentContainerStyle={{
+                paddingTop: topFixedContent ? 0 : popoverHalfPadding,
+                paddingBottom: popoverHalfPadding,
+                paddingHorizontal: popoverPadding,
+              }}
+            >
+              <ContainerView children={children} />
+            </Popover.ScrollView>
+          ) : (
+            <ContainerView children={children} />
+          )}
+        </Popover.Content>
+
+        {!ignoreAdaptive && (
+          <Adapt when={adaptiveMediaSize}>
             <Popover.Sheet
               modal
               dismissOnSnapToBottom
@@ -200,22 +217,34 @@ export const AdaptivePopover = forwardRef(
                 paddingLeft={left}
                 paddingRight={right}
               >
-                <Pressable disabled={Platform.OS === 'web'}>
-                  <View
-                    width={50}
-                    height={4}
-                    borderRadius="$10"
-                    backgroundColor="$disabled"
-                    marginVertical={10}
-                    marginHorizontal="auto"
-                  />
+                <View
+                  width={50}
+                  height={4}
+                  borderRadius="$10"
+                  cursor="pointer"
+                  backgroundColor="$disabled"
+                  marginVertical={popoverHalfPadding}
+                  marginHorizontal="auto"
+                />
 
-                  {!!sheetTitle && (
-                    <H3 paddingHorizontal={24} paddingBottom={24 / 2}>
-                      {sheetTitle}
-                    </H3>
-                  )}
-                </Pressable>
+                {!!sheetTitle && (
+                  <H3
+                    paddingHorizontal={popoverPadding}
+                    paddingBottom={popoverHalfPadding}
+                  >
+                    {sheetTitle}
+                  </H3>
+                )}
+
+                {!!topFixedContent && (
+                  <View
+                    width="100%"
+                    paddingHorizontal={popoverPadding}
+                    paddingBottom={popoverHalfPadding}
+                  >
+                    {topFixedContent}
+                  </View>
+                )}
 
                 {!ignoreScroll ? (
                   <Popover.Sheet.ScrollView
@@ -225,11 +254,10 @@ export const AdaptivePopover = forwardRef(
                     showsVerticalScrollIndicator={false}
                     style={{ maxHeight: adjustedMaxHeight }}
                     contentContainerStyle={{
-                      paddingTop: sheetTitle
-                        ? 0
-                        : adaptivePopoverSheetPadding / 2,
-                      paddingBottom: bottom + adaptivePopoverSheetPadding,
-                      paddingHorizontal: adaptivePopoverSheetPadding,
+                      paddingTop:
+                        sheetTitle || topFixedContent ? 0 : popoverHalfPadding,
+                      paddingBottom: bottom + popoverPadding,
+                      paddingHorizontal: popoverPadding,
                     }}
                   >
                     <Adapt.Contents />

@@ -1,59 +1,38 @@
-import { ReactNode } from 'react';
 import { Platform, StyleSheet } from 'react-native';
 import {
   KeyboardAvoidingView,
   KeyboardAwareScrollView,
 } from 'react-native-keyboard-controller';
-import { ScrollView, ViewProps } from 'tamagui';
-import { LoadingView } from './loading-view';
-import {
-  isDeviceSlow,
-  useKeyboard,
-  useRendered,
-} from '@symbiot-core-apps/shared';
+import { ScrollView } from 'tamagui';
+import { useKeyboard } from '@symbiot-core-apps/shared';
 import { Refresher } from '../loading/refresher';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useScreenHeaderHeight } from '../navigation/header';
-import { ContainerView } from './container-view';
+import { ContainerView, ContainerViewProps } from './container-view';
 
 const isWeb = Platform.OS === 'web';
-const defaultDelay = isDeviceSlow() ? 300 : 0;
 export const defaultPageHorizontalPadding = 14;
 export const defaultPageVerticalPadding = 14;
 
-export type PageViewProps = ViewProps & {
-  lazy?: boolean;
-  delay?: number;
+export type PageViewProps = ContainerViewProps & {
   scrollable?: boolean;
   refreshing?: boolean;
   withKeyboard?: boolean;
   withHeaderHeight?: boolean;
   ignoreTopSafeArea?: boolean;
   ignoreBottomSafeArea?: boolean;
-  LoadingElement?: ReactNode;
   onRefresh?: () => void;
 };
 
 export const PageView = ({
-  lazy,
-  delay,
   scrollable,
   refreshing,
   withKeyboard,
   withHeaderHeight,
-  LoadingElement,
   onRefresh,
   ...viewProps
 }: PageViewProps) => {
-  const { rendered } = useRendered({
-    defaultTrue: lazy === false,
-    delay: delay || defaultDelay,
-  });
   const headerHeight = useScreenHeaderHeight();
-
-  if (!rendered) {
-    return LoadingElement || <LoadingView />;
-  }
 
   if (scrollable && withKeyboard) {
     return (
@@ -117,7 +96,7 @@ const PageContent = ({
   paddingLeft = defaultPageHorizontalPadding,
   paddingRight = defaultPageHorizontalPadding,
   ...viewProps
-}: ViewProps & {
+}: ContainerViewProps & {
   withHeaderHeight?: boolean;
   ignoreTopSafeArea?: boolean;
   ignoreBottomSafeArea?: boolean;

@@ -56,6 +56,7 @@ export const InputCode = ({
       <CodeField
         ref={ref}
         {...codeFieldProps}
+        autoFocus
         value={value}
         rootStyle={styles.CodeFieldRoot}
         readOnly={disabled}

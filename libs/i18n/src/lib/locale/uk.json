@@ -151,7 +151,9 @@
     },
     "schedule": {
       "all_day": "24 год",
-      "day_off": "Вихідний"
+      "day_off": "Вихідний",
+      "start": "Від",
+      "end": "До"
     },
     "auth": {
       "workspace": {

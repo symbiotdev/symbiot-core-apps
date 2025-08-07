@@ -100,7 +100,6 @@ export const Segment = memo(
         overflow="hidden"
         disabled={disabled}
         disabledStyle={{ opacity: 0.8 }}
-        onLayout={onLayout}
         {...xStackProps}
       >
         <FlatList
@@ -114,6 +113,7 @@ export const Segment = memo(
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ padding }}
+          onLayout={onLayout}
         />
       </XStack>
     );

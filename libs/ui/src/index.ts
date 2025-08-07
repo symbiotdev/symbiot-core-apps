@@ -17,6 +17,7 @@ export * from './lib/form/date-picker';
 export * from './lib/form/input';
 export * from './lib/form/input-code';
 export * from './lib/form/phone-input';
+export * from './lib/form/picker';
 export * from './lib/form/select';
 export * from './lib/form/social-link-input';
 export * from './lib/form/switch';

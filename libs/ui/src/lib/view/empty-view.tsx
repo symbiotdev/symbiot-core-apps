@@ -22,7 +22,9 @@ export const EmptyView = (
       padding={20}
       {...props}
     >
-      {!!props.iconName && <Icon name={props.iconName} size={40} />}
+      {!!props.iconName && (
+        <Icon name={props.iconName} size={40} color="$placeholderColor" />
+      )}
 
       {!!props.title && (
         <H2 textAlign="center" marginTop={10}>
@@ -31,7 +33,7 @@ export const EmptyView = (
       )}
 
       <RegularText
-        color="$disabled"
+        color="$placeholderColor"
         textAlign="center"
         maxWidth={500}
         marginTop={10}

@@ -235,6 +235,7 @@ export const AdaptivePopover = forwardRef(
             <Popover.Sheet
               modal
               dismissOnSnapToBottom
+              dismissOnOverlayPress={!disabled}
               disableDrag={disableDrag}
               animation="quick"
               snapPointsMode="fit"
@@ -255,15 +256,17 @@ export const AdaptivePopover = forwardRef(
                 paddingLeft={left}
                 paddingRight={right}
               >
-                <View
-                  width={50}
-                  height={4}
-                  borderRadius="$10"
-                  cursor="pointer"
-                  backgroundColor="$disabled"
-                  marginVertical={popoverHalfPadding}
-                  marginHorizontal="auto"
-                />
+                {!disableDrag && (
+                  <View
+                    width={50}
+                    height={4}
+                    borderRadius="$10"
+                    cursor="pointer"
+                    backgroundColor="$disabled"
+                    marginVertical={popoverHalfPadding}
+                    marginHorizontal="auto"
+                  />
+                )}
 
                 {!!sheetTitle && (
                   <H3

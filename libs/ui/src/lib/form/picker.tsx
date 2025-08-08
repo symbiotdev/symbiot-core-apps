@@ -101,6 +101,7 @@ export const Picker = ({
       options={adjustedOptions}
       disabled={disabled}
       lazy={lazy}
+      ignoreScrollTopOnChange={!moveSelectedToTop}
       onChange={onValueChange as PickerOnChange}
     />
   );
@@ -110,6 +111,7 @@ const CustomPicker = ({
   value,
   options,
   disabled,
+  ignoreScrollTopOnChange,
   lazy,
   onChange,
 }: {
@@ -147,7 +149,13 @@ const CustomPicker = ({
           cursor={!disabled ? 'pointer' : 'default'}
           disabledStyle={{ opacity: 0.8 }}
           pressStyle={!disabled && { opacity: 0.8 }}
-          onPress={() => onChange(item.value as string)}
+          onPress={() => {
+            onChange(item.value as string);
+
+            if (!ignoreScrollTopOnChange) {
+              scrollToIndex(0);
+            }
+          }}
         >
           {item.icon}
 
@@ -177,7 +185,7 @@ const CustomPicker = ({
         </XStack>
       );
     },
-    [disabled, onChange, value],
+    [disabled, ignoreScrollTopOnChange, scrollToIndex, onChange, value],
   );
 
   useEffect(() => {

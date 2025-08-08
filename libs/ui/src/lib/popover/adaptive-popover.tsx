@@ -16,12 +16,13 @@ import {
   ScrollView,
   View,
 } from 'tamagui';
-import { Keyboard, useWindowDimensions } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { H3 } from '../text/heading';
+import { H4 } from '../text/heading';
 import {
   emitHaptic,
   SCREEN_MEDIA_SIZE,
+  useKeyboardDismisser,
   useScreenSize,
 } from '@symbiot-core-apps/shared';
 import { ContainerView } from '../view/container-view';
@@ -99,56 +100,48 @@ export const AdaptivePopover = forwardRef(
       sheetListRef.current?.scrollTo({ y, animated: !!animated });
     }, []);
 
-    const onOpenChange = useCallback(
-      (opened: boolean) => {
-        const isKeyboardVisible = Keyboard.isVisible();
-        const delay = 200;
+    const onOpenChange = useKeyboardDismisser(
+      useCallback(
+        (opened: boolean) => {
+          const delay = 200;
 
-        if (isKeyboardVisible) {
-          Keyboard.dismiss();
-        }
+          setOpened(opened);
 
-        setTimeout(
-          () => {
-            setOpened(opened);
+          if (
+            (opened && !ignoreHapticOnOpen) ||
+            (!opened && !ignoreHapticOnClose)
+          ) {
+            emitHaptic();
+          }
 
-            if (
-              (opened && !ignoreHapticOnOpen) ||
-              (!opened && !ignoreHapticOnClose)
-            ) {
-              emitHaptic();
-            }
+          setTimeout(() => {
+            if (opened) {
+              onOpen?.();
+            } else {
+              onClose?.();
 
-            setTimeout(() => {
-              if (opened) {
-                onOpen?.();
-              } else {
-                onClose?.();
+              if (!ignoreScrollTopOnClose) {
+                sheetListRef.current?.scrollTo({
+                  y: 0,
+                  animated: false,
+                });
 
-                if (!ignoreScrollTopOnClose) {
-                  sheetListRef.current?.scrollTo({
-                    y: 0,
-                    animated: false,
-                  });
-
-                  popoverListRef.current?.scrollTo({
-                    y: 0,
-                    animated: false,
-                  });
-                }
+                popoverListRef.current?.scrollTo({
+                  y: 0,
+                  animated: false,
+                });
               }
-            }, delay);
-          },
-          isKeyboardVisible ? delay : 0,
-        );
-      },
-      [
-        ignoreHapticOnOpen,
-        ignoreHapticOnClose,
-        onOpen,
-        onClose,
-        ignoreScrollTopOnClose,
-      ],
+            }
+          }, delay);
+        },
+        [
+          ignoreHapticOnOpen,
+          ignoreHapticOnClose,
+          onOpen,
+          onClose,
+          ignoreScrollTopOnClose,
+        ],
+      ),
     );
 
     useImperativeHandle(ref, () => ({
@@ -267,12 +260,13 @@ export const AdaptivePopover = forwardRef(
                 )}
 
                 {!!sheetTitle && (
-                  <H3
+                  <H4
+                    textAlign="center"
                     paddingHorizontal={popoverPadding}
                     paddingBottom={popoverHalfPadding}
                   >
                     {sheetTitle}
-                  </H3>
+                  </H4>
                 )}
 
                 {!!topFixedContent && (

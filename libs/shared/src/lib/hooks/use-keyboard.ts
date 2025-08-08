@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   Keyboard,
   KeyboardEventName,
@@ -63,3 +63,25 @@ export const useKeyboard = () => {
     currentHeight,
   };
 };
+
+export function useKeyboardDismisser<
+  T extends (...args: Parameters<T>) => void,
+>(callback: T): (...args: Parameters<T>) => void {
+  return useCallback(
+    (...args: Parameters<T>) => {
+      const isKeyboardVisible = Keyboard.isVisible?.(); // Optional chaining in case it's custom
+
+      if (isKeyboardVisible) {
+        Keyboard.dismiss();
+      }
+
+      setTimeout(
+        () => {
+          callback(...args);
+        },
+        isKeyboardVisible ? 200 : 0,
+      );
+    },
+    [callback],
+  );
+}

@@ -1,14 +1,7 @@
-import { useCallback, useMemo, useRef } from 'react';
-import { InputFieldView } from '../view/input-field-view';
-import { FormField } from './form-field';
 import { countries, TCountryCode } from 'countries-list';
 import { RegularText } from '../text/text';
-import {
-  AdaptivePopover,
-  AdaptivePopoverRef,
-} from '../popover/adaptive-popover';
-import { useT } from '@symbiot-core-apps/i18n';
-import { ToggleGroup, ToggleGroupValue } from './toggle-group';
+import { SelectPicker } from './select-picker';
+import { PickerOnChange } from './picker';
 
 const getCountryEmoji = (code: string) => {
   return String.fromCodePoint(
@@ -18,9 +11,17 @@ const getCountryEmoji = (code: string) => {
   );
 };
 
+const options = (Object.keys(countries) as TCountryCode[]).map((code) => ({
+  label: countries[code].native,
+  description: countries[code].name,
+  value: code,
+  icon: <RegularText fontSize={34}>{getCountryEmoji(code)}</RegularText>,
+}));
+
 export const CountryPicker = ({
   value,
   label,
+  sheetLabel,
   error,
   placeholder,
   disabled,
@@ -28,67 +29,22 @@ export const CountryPicker = ({
 }: {
   value?: TCountryCode;
   label?: string;
+  sheetLabel?: string;
   error?: string;
   placeholder?: string;
   disabled?: boolean;
   onChange: (code: string) => void;
-}) => {
-  const { t } = useT();
-
-  const popoverRef = useRef<AdaptivePopoverRef>(null);
-
-  const data = useMemo(
-    () =>
-      (Object.keys(countries) as TCountryCode[])
-        .map((code) => ({
-          label: countries[code].native,
-          description: countries[code].name,
-          value: code,
-          icon: (
-            <RegularText fontSize={34}>{getCountryEmoji(code)}</RegularText>
-          ),
-        }))
-        .sort((a, b) => (a.value === value ? -1 : b.value === value ? 1 : 0)),
-    [value],
-  );
-
-  const onToggleGroupChange = useCallback(
-    (code: ToggleGroupValue) => {
-      onChange(code as string);
-      popoverRef.current?.close();
-    },
-    [onChange],
-  );
-
-  return (
-    <FormField label={label} error={error}>
-      <AdaptivePopover
-        ref={popoverRef}
-        disabled={disabled}
-        minWidth={200}
-        maxHeight={400}
-        sheetTitle={t('country')}
-        triggerType="child"
-        trigger={
-          <InputFieldView disabled={disabled}>
-            <RegularText
-              flex={1}
-              color={
-                disabled ? '$disabled' : !value ? '$placeholderColor' : '$color'
-              }
-            >
-              {value ? countries[value]?.native : placeholder}
-            </RegularText>
-          </InputFieldView>
-        }
-      >
-        <ToggleGroup
-          ignoreHaptic
-          value={value}
-          items={data}
-          onChange={onToggleGroupChange}
-        />
-      </AdaptivePopover>
-    </FormField>
-  );
-};
+}) => (
+  <SelectPicker
+    lazy
+    moveSelectedToTop
+    sheetLabel={sheetLabel}
+    label={label}
+    value={value}
+    error={error}
+    placeholder={placeholder}
+    disabled={disabled}
+    options={options}
+    onChange={onChange as PickerOnChange}
+  />
+);

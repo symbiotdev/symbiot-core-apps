@@ -16,6 +16,7 @@ import { useScheme } from '@symbiot-core-apps/state';
 import { InputFieldView } from '../view/input-field-view';
 import { Icon } from '../icons';
 import { useT } from '@symbiot-core-apps/i18n';
+import RNDatepicker from 'react-native-date-picker';
 
 export const DatePicker = ({
   value,
@@ -66,6 +67,7 @@ export const DatePicker = ({
         ref={popoverRef}
         disabled={disabled}
         triggerType="child"
+        sheetTitle={label}
         trigger={
           <InputFieldView disabled={disabled} {...viewProps}>
             <RegularText
@@ -82,94 +84,106 @@ export const DatePicker = ({
           maxWidth={Platform.OS === 'web' ? 350 : undefined}
           marginHorizontal="auto"
         >
-          <DateTimePicker
-            showOutsideDays
-            mode="single"
-            date={value ?? undefined}
-            locale={lang}
-            startDate={startDate}
-            minDate={minDate}
-            maxDate={maxDate}
-            firstDayOfWeek={weekStartsOn}
-            components={{
-              IconPrev: <Icon name="ArrowLeft" />,
-              IconNext: <Icon name="ArrowRight" />,
-            }}
-            styles={{
-              ...defaultStyles,
-              selected: {
-                ...defaultStyles.selected,
-                backgroundColor: theme.buttonBackground?.val,
-              },
-              selected_label: {
-                ...defaultStyles.selected_label,
-                color: theme.$buttonTextColor?.val,
-              },
-              selected_month: {
-                ...defaultStyles.selected_month,
-                backgroundColor: theme.buttonBackground?.val,
-              },
-              selected_month_label: {
-                ...defaultStyles.selected_month_label,
-                color: theme.$buttonTextColor?.val,
-              },
-              selected_year: {
-                ...defaultStyles.selected_year,
-                backgroundColor: theme.buttonBackground?.val,
-              },
-              selected_year_label: {
-                ...defaultStyles.selected_year_label,
-                color: theme.$buttonTextColor?.val,
-              },
-              month_selector_label: {
-                ...defaultStyles.month_selector_label,
-                textTransform: 'capitalize',
-                fontFamily: 'BodyRegular',
-              },
-              year_selector_label: {
-                ...defaultStyles.year_selector_label,
-                fontFamily: 'BodyRegular',
-              },
-              weekday_label: {
-                ...defaultStyles.weekday_label,
-                textTransform: 'lowercase',
-                fontFamily: 'BodyRegular',
-              },
-              day_cell: {
-                ...defaultStyles.day_cell,
-                alignSelf: 'center',
-                width: 45,
-                height: 45,
-              },
-              day: {
-                ...defaultStyles.day,
-                borderRadius: 50,
-              },
-              day_label: {
-                ...defaultStyles.day_label,
-                fontFamily: 'BodyRegular',
-              },
-              month_label: {
-                ...defaultStyles.month_label,
-                fontFamily: 'BodyRegular',
-              },
-              year_label: {
-                ...defaultStyles.year_label,
-                fontFamily: 'BodyRegular',
-              },
-              year: {
-                ...defaultStyles.year,
-                borderRadius: 20,
-                borderWidth: 0,
-              },
-              month: {
-                ...defaultStyles.month,
-                borderRadius: 20,
-                borderWidth: 0,
-              },
-            }}
-            onChange={onChangeDate}
-          />
+          {Platform.OS === 'ios' ? (
+            <RNDatepicker
+              date={new Date(value || Date.now())}
+              mode="date"
+              locale={lang}
+              minimumDate={minDate}
+              maximumDate={maxDate}
+              theme={scheme}
+              onDateChange={onChange}
+            />
+          ) : (
+            <DateTimePicker
+              showOutsideDays
+              mode="single"
+              date={value ?? undefined}
+              locale={lang}
+              startDate={startDate}
+              minDate={minDate}
+              maxDate={maxDate}
+              firstDayOfWeek={weekStartsOn}
+              components={{
+                IconPrev: <Icon name="ArrowLeft" />,
+                IconNext: <Icon name="ArrowRight" />,
+              }}
+              styles={{
+                ...defaultStyles,
+                selected: {
+                  ...defaultStyles.selected,
+                  backgroundColor: theme.buttonBackground?.val,
+                },
+                selected_label: {
+                  ...defaultStyles.selected_label,
+                  color: theme.$buttonTextColor?.val,
+                },
+                selected_month: {
+                  ...defaultStyles.selected_month,
+                  backgroundColor: theme.buttonBackground?.val,
+                },
+                selected_month_label: {
+                  ...defaultStyles.selected_month_label,
+                  color: theme.$buttonTextColor?.val,
+                },
+                selected_year: {
+                  ...defaultStyles.selected_year,
+                  backgroundColor: theme.buttonBackground?.val,
+                },
+                selected_year_label: {
+                  ...defaultStyles.selected_year_label,
+                  color: theme.$buttonTextColor?.val,
+                },
+                month_selector_label: {
+                  ...defaultStyles.month_selector_label,
+                  textTransform: 'capitalize',
+                  fontFamily: 'BodyRegular',
+                },
+                year_selector_label: {
+                  ...defaultStyles.year_selector_label,
+                  fontFamily: 'BodyRegular',
+                },
+                weekday_label: {
+                  ...defaultStyles.weekday_label,
+                  textTransform: 'lowercase',
+                  fontFamily: 'BodyRegular',
+                },
+                day_cell: {
+                  ...defaultStyles.day_cell,
+                  alignSelf: 'center',
+                  width: 45,
+                  height: 45,
+                },
+                day: {
+                  ...defaultStyles.day,
+                  borderRadius: 50,
+                },
+                day_label: {
+                  ...defaultStyles.day_label,
+                  fontFamily: 'BodyRegular',
+                },
+                month_label: {
+                  ...defaultStyles.month_label,
+                  fontFamily: 'BodyRegular',
+                },
+                year_label: {
+                  ...defaultStyles.year_label,
+                  fontFamily: 'BodyRegular',
+                },
+                year: {
+                  ...defaultStyles.year,
+                  borderRadius: 20,
+                  borderWidth: 0,
+                },
+                month: {
+                  ...defaultStyles.month,
+                  borderRadius: 20,
+                  borderWidth: 0,
+                },
+              }}
+              onChange={onChangeDate}
+            />
+          )}
         </View>
       </AdaptivePopover>
     </FormField>

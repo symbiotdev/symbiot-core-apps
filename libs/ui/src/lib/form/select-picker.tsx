@@ -1,5 +1,4 @@
-import { XStack } from 'tamagui';
-import { DimensionValue } from 'react-native';
+import { DimensionValue, Platform } from 'react-native';
 import { useCallback, useMemo, useRef } from 'react';
 import {
   AdaptivePopover,
@@ -8,41 +7,38 @@ import {
 import { FormField } from './form-field';
 import { Spinner } from '../loading/spinner';
 import { RegularText } from '../text/text';
-import { InitView } from '../view/init-view';
 import { InputFieldView } from '../view/input-field-view';
-import { Icon } from '../icons';
+import { Picker, PickerItem, PickerOnChange } from './picker';
 
-export type SelectOption = {
-  label: string;
-  value: string | number | undefined;
-};
-
-export type SelectValue = SelectOption['value'] | SelectOption['value'][];
-export type onChangeSelect = (value: SelectValue) => void;
-
-export function Select({
+export function SelectPicker({
   value,
   label,
+  sheetLabel,
   error,
   placeholder,
   disabled,
+  lazy,
+  moveSelectedToTop,
   noCheckedValue,
   optionsLoading,
   optionsError,
   options,
   onChange,
 }: {
-  value: SelectValue;
+  value: unknown;
   label?: string;
+  sheetLabel?: string;
   error?: string;
   placeholder?: string;
   disabled?: boolean;
+  lazy?: boolean;
+  moveSelectedToTop?: boolean;
   noCheckedValue?: string;
   maxWidth?: DimensionValue;
   optionsLoading?: boolean;
   optionsError?: string | null;
-  options?: SelectOption[];
-  onChange: onChangeSelect;
+  options?: PickerItem[];
+  onChange: PickerOnChange;
 }) {
   const popoverRef = useRef<AdaptivePopoverRef>(null);
 
@@ -63,44 +59,24 @@ export function Select({
     [noCheckedValue, options, value],
   );
 
-  const toggleOption = useCallback(
-    (optionValue: SelectOption['value']) => {
-      let newValue: SelectValue;
-      let hasChanges: boolean;
+  const onChangeValue = useCallback(
+    (value: unknown) => {
+      onChange?.(value);
 
-      if (Array.isArray(value)) {
-        const targetOption = value.some(
-          (valueItem: SelectOption['value']) => valueItem === optionValue,
-        );
-
-        newValue = targetOption
-          ? value.filter(
-              (valueItem: SelectOption['value']) => valueItem !== optionValue,
-            )
-          : [...value, optionValue];
-
-        hasChanges = true;
-      } else {
-        newValue = optionValue;
-
-        hasChanges = newValue !== value;
-
+      if (Platform.OS !== 'ios') {
         popoverRef.current?.close();
       }
-
-      if (hasChanges) {
-        onChange(newValue);
-      }
     },
-    [onChange, value],
+    [onChange],
   );
 
   return (
     <FormField label={label} error={error}>
       <AdaptivePopover
+        ignoreScroll
         ref={popoverRef}
         disabled={disabled}
-        sheetTitle={label}
+        sheetTitle={sheetLabel}
         minWidth={200}
         triggerType="child"
         trigger={
@@ -132,32 +108,16 @@ export function Select({
           </InputFieldView>
         }
       >
-        {!options?.length && (
-          <InitView loading={optionsLoading} error={optionsError} />
-        )}
-
-        {options?.map((option, i) => (
-          <XStack
-            key={i}
-            gap="$5"
-            paddingVertical="$3"
-            alignItems="center"
-            justifyContent="space-between"
-            cursor="pointer"
-            onPress={() => toggleOption(option.value)}
-          >
-            <RegularText>{option.label}</RegularText>
-
-            {(Array.isArray(value)
-              ? value.some((valueItem) => valueItem === option.value)
-              : value === option.value) && (
-              <Icon
-                name="Unread"
-                color={disabled ? '$disabled' : '$checkboxColor'}
-              />
-            )}
-          </XStack>
-        ))}
+        <Picker
+          value={value}
+          options={options}
+          optionsLoading={optionsLoading}
+          optionsError={optionsError}
+          disabled={disabled}
+          lazy={lazy}
+          moveSelectedToTop={moveSelectedToTop}
+          onChange={onChangeValue}
+        />
       </AdaptivePopover>
     </FormField>
   );

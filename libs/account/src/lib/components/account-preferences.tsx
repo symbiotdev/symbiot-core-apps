@@ -11,7 +11,7 @@ import {
   PageView,
   phoneDefaultValue,
   PhoneInput,
-  Select,
+  SelectPicker,
   SOCIAL_LINK,
   SocialLinkInput,
 } from '@symbiot-core-apps/ui';
@@ -25,6 +25,7 @@ import * as yup from 'yup';
 import { router } from 'expo-router';
 import { Link, Phone } from '@symbiot-core-apps/api';
 import { useT } from '@symbiot-core-apps/i18n';
+import { DateHelper } from '@symbiot-core-apps/shared';
 
 export const AccountPreferences = () => {
   const navigation = useNavigation();
@@ -289,13 +290,14 @@ export const AccountPreferences = () => {
             control={genderControl}
             name="genderId"
             render={({ field: { value, onChange }, fieldState: { error } }) => (
-              <Select
+              <SelectPicker
                 value={value as string}
                 error={error?.message}
                 optionsLoading={gendersLoading}
                 optionsError={gendersError}
                 options={gendersAsOptions}
                 label={t('preferences.account.gender.label')}
+                sheetLabel={t('preferences.account.gender.label')}
                 placeholder={t('preferences.account.gender.placeholder')}
                 onChange={(gender) => {
                   onChange(gender);
@@ -314,6 +316,7 @@ export const AccountPreferences = () => {
                 error={error?.message}
                 formatStr={me.preferences?.dateFormat}
                 weekStartsOn={me.preferences?.weekStartsOn}
+                minDate={DateHelper.addYears(new Date(), -100)}
                 maxDate={new Date()}
                 label={t('preferences.account.birthday.label')}
                 placeholder={t('preferences.account.birthday.placeholder')}

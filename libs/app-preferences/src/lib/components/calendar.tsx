@@ -1,8 +1,8 @@
 import {
   FormView,
-  onChangeSelect,
   PageView,
-  Select,
+  PickerOnChange,
+  SelectPicker,
   Spinner,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
@@ -32,11 +32,12 @@ export const Calendar = () => {
   return (
     <PageView scrollable withHeaderHeight>
       <FormView>
-        <Select
+        <SelectPicker
           label={t('preferences.calendar.week_starts_on.label')}
+          sheetLabel={t('preferences.calendar.week_starts_on.label')}
           value={me?.preferences?.weekStartsOn}
           options={weekdaysOptions}
-          onChange={onChangeWeekdayStartsOn as onChangeSelect}
+          onChange={onChangeWeekdayStartsOn as PickerOnChange}
         />
       </FormView>
     </PageView>

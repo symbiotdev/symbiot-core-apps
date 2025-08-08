@@ -1,27 +1,17 @@
 import { View, XStack } from 'tamagui';
 import { DateHelper, Weekday } from '@symbiot-core-apps/shared';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import * as yup from 'yup';
 import { MediumText, RegularText } from '../text/text';
 import { InputFieldView } from '../view/input-field-view';
-import {
-  AdaptivePopover,
-  AdaptivePopoverRef,
-  popoverPadding,
-} from '../popover/adaptive-popover';
-import {
-  toggleGap,
-  ToggleGroup,
-  toggleItemMinHeight,
-  ToggleOnChange,
-} from './toggle-group';
-import { H3 } from '../text/heading';
+import { AdaptivePopover, popoverPadding } from '../popover/adaptive-popover';
+import { ToggleOnChange } from './toggle-group';
+import { H4 } from '../text/heading';
 import { Switch } from './switch';
 import { Segment } from '../segment/segment';
 import { useT } from '@symbiot-core-apps/i18n';
 import { EmptyView } from '../view/empty-view';
 import { Picker } from './picker';
-import { Platform } from 'react-native';
 
 export type WeekdaySchedule = {
   day: Weekday;
@@ -108,8 +98,6 @@ const WeekdayScheduleElement = ({
 }) => {
   const { t } = useT();
 
-  const popoverRef = useRef<AdaptivePopoverRef>(null);
-
   const [activeSegment, setActiveSegment] = useState<string>('start');
 
   const endMinutes = useMemo(
@@ -173,26 +161,6 @@ const WeekdayScheduleElement = ({
     [onChange, value, weekday.value],
   );
 
-  const scrollTo = useCallback((minutes: MinutesOptions, value?: number) => {
-    popoverRef.current?.scrollTo(
-      !value
-        ? 0
-        : minutes.findIndex((minuteItem) => minuteItem.value === value) *
-            (toggleItemMinHeight + toggleGap) -
-            100,
-    );
-  }, []);
-
-  const scrollStartToActiveTime = useCallback(
-    () => scrollTo(minutes, value?.start),
-    [scrollTo, minutes, value?.start],
-  );
-
-  const scrollEndToActiveTime = useCallback(
-    () => scrollTo(endMinutes, value?.end),
-    [scrollTo, endMinutes, value?.end],
-  );
-
   const onChangeStartValue = useCallback(
     (start: number) =>
       onChange({
@@ -223,14 +191,12 @@ const WeekdayScheduleElement = ({
 
   return (
     <AdaptivePopover
-      ignoreScrollTopOnClose
+      ignoreScroll
       key={`weekday${weekday.value}`}
-      ref={popoverRef}
       triggerType="child"
       placement="bottom"
       maxHeight={300}
       minWidth={250}
-      ignoreScroll={Platform.OS === 'ios'}
       trigger={
         <InputFieldView justifyContent="space-between" disabled={disabled}>
           <RegularText>{weekday.label}</RegularText>
@@ -248,7 +214,7 @@ const WeekdayScheduleElement = ({
             justifyContent="space-between"
             gap="$5"
           >
-            <H3>{weekday.label}</H3>
+            <H4>{weekday.label}</H4>
             <Switch checked={!isDayOff} onChange={toggleDayOff} />
           </XStack>
 
@@ -266,20 +232,22 @@ const WeekdayScheduleElement = ({
       {!isDayOff ? (
         <>
           {activeSegment === 'start' && (
-            <MinutesPicker
+            <Picker
+              lazy
               value={value?.start}
-              minutes={minutes}
-              onChange={onChangeStartValue}
-              onRendered={scrollStartToActiveTime}
+              options={minutes}
+              paddingHorizontal={popoverPadding}
+              onChange={onChangeStartValue as ToggleOnChange}
             />
           )}
 
           {activeSegment === 'end' && (
-            <MinutesPicker
+            <Picker
+              lazy
               value={value?.end}
-              minutes={endMinutes}
-              onChange={onChangeEndValue}
-              onRendered={scrollEndToActiveTime}
+              options={endMinutes}
+              paddingHorizontal={popoverPadding}
+              onChange={onChangeEndValue as ToggleOnChange}
             />
           )}
         </>
@@ -291,34 +259,5 @@ const WeekdayScheduleElement = ({
         />
       )}
     </AdaptivePopover>
-  );
-};
-
-const MinutesPicker = ({
-  value,
-  minutes,
-  onChange,
-  onRendered,
-}: {
-  value?: number;
-  minutes: MinutesOptions;
-  onChange: (value: number) => void;
-  onRendered?: () => void;
-}) => {
-  return Platform.OS === 'ios' ? (
-    <Picker
-      value={value}
-      options={minutes}
-      paddingHorizontal={popoverPadding}
-      onChange={onChange as ToggleOnChange}
-    />
-  ) : (
-    <ToggleGroup
-      renderDelay={250}
-      value={value}
-      items={minutes}
-      onRendered={onRendered}
-      onChange={onChange as ToggleOnChange}
-    />
   );
 };

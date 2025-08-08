@@ -65,6 +65,7 @@
     "react-native-keyboard-controller": "*",
     "react-native-reanimated": "*",
     "react-native-safe-area-context": "*",
+    "react-native-date-picker": "*",
     "react-native-screens": "*",
     "react-native-svg": "*",
     "react-native-svg-transformer": "*",

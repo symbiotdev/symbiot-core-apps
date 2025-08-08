@@ -85,37 +85,16 @@ export const DateHelper = {
     const days: { value: number; label: string }[] = [];
 
     for (let i = 0; i < 7; i++) {
-      const label = DateHelper.format(DateHelper.addDays(start, i), formatStr);
+      const date = DateHelper.addDays(start, i);
+      const label = DateHelper.format(date, formatStr);
 
       days.push({
-        value: i,
+        value: date.getDay(),
         label: `${label[0].toUpperCase()}${label.slice(1)}`,
       });
     }
 
     return days;
-  },
-  getCalendarDates: (
-    monthDate: Date,
-    weekStartsOn: Day = defaultWeekdayStartsOn,
-  ) => {
-    const firstDayOfMonth = DateHelper.startOfDay(
-      DateHelper.startOfMonth(monthDate),
-    );
-    const calendarStart = DateHelper.startOfWeek(firstDayOfMonth, weekStartsOn);
-
-    const totalDays = 42;
-    const dates: Date[][] = [];
-
-    for (let i = 0; i < totalDays; i++) {
-      if (i % 7 === 0) {
-        dates.push([]);
-      }
-
-      dates[dates.length - 1].push(DateHelper.addDays(calendarStart, i));
-    }
-
-    return dates;
   },
   get24Hours: () =>
     Array.from({ length: 24 }).map((_, i) => ({

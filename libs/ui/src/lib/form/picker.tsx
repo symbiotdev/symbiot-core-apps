@@ -14,7 +14,7 @@ import { RegularText } from '../text/text';
 import { Icon } from '../icons';
 import { toggleItemMinHeight } from './toggle-group';
 import { defaultPageHorizontalPadding } from '../view/page-view';
-import { useRendered } from '@symbiot-core-apps/shared';
+import { emitHaptic, useRendered } from '@symbiot-core-apps/shared';
 import { LoadingView } from '../view/loading-view';
 
 export type PickerItem = {
@@ -151,6 +151,8 @@ const CustomPicker = ({
           pressStyle={!disabled && { opacity: 0.8 }}
           onPress={() => {
             onChange(item.value as string);
+
+            emitHaptic();
 
             if (!ignoreScrollTopOnChange) {
               scrollToIndex(0);

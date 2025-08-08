@@ -79,7 +79,7 @@ export function useKeyboardDismisser<
         () => {
           callback(...args);
         },
-        isKeyboardVisible ? 200 : 0,
+        isKeyboardVisible ? (Platform.OS === 'ios' ? 300 : 200) : 0,
       );
     },
     [callback],

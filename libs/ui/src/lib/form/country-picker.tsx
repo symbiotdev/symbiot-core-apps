@@ -2,21 +2,20 @@ import { countries, TCountryCode } from 'countries-list';
 import { RegularText } from '../text/text';
 import { SelectPicker } from './select-picker';
 import { PickerOnChange } from './picker';
+import { Platform } from 'react-native';
+import { getCountryEmoji } from '@symbiot-core-apps/shared';
 
-const getCountryEmoji = (code: string) => {
-  return String.fromCodePoint(
-    ...[...code.toUpperCase()].map(
-      (char) => 0x1f1e6 + char.charCodeAt(0) - 'A'.charCodeAt(0),
-    ),
-  );
-};
+const options = (Object.keys(countries) as TCountryCode[]).map((value) => {
+  const flag = getCountryEmoji(value);
 
-const options = (Object.keys(countries) as TCountryCode[]).map((code) => ({
-  label: countries[code].native,
-  description: countries[code].name,
-  value: code,
-  icon: <RegularText fontSize={34}>{getCountryEmoji(code)}</RegularText>,
-}));
+  return {
+    value,
+    label:
+      `${Platform.OS === 'ios' ? flag : ''} ${countries[value].native}`.trim(),
+    description: countries[value].name,
+    icon: <RegularText fontSize={34}>{flag}</RegularText>,
+  };
+});
 
 export const CountryPicker = ({
   value,

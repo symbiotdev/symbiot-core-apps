@@ -5,15 +5,15 @@ import {
   DatePicker,
   FormView,
   getPhoneInputSchema,
-  getSocialLinkSchema,
+  getAppLinkSchema,
   Icon,
   Input,
   PageView,
   phoneDefaultValue,
   PhoneInput,
   SelectPicker,
-  SOCIAL_LINK,
-  SocialLinkInput,
+  APP_LINK,
+  AppLinkInput,
 } from '@symbiot-core-apps/ui';
 import { useGenders, useMeUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
@@ -153,7 +153,7 @@ export const AccountPreferences = () => {
   });
 
   const targetInstagramLink = me?.links?.find(
-    (link) => link.url.indexOf(SOCIAL_LINK.instagram.domain) !== -1,
+    (link) => link.url.indexOf(APP_LINK.instagram.domain) !== -1,
   );
   const { control: instagramControl, handleSubmit: instagramHandleSubmit } =
     useForm<{
@@ -166,7 +166,7 @@ export const AccountPreferences = () => {
         yup
           .object()
           .shape({
-            instagram: getSocialLinkSchema('', true),
+            instagram: getAppLinkSchema('', true),
           })
           .required(),
       ),
@@ -348,7 +348,7 @@ export const AccountPreferences = () => {
             control={instagramControl}
             name="instagram"
             render={({ field: { value, onChange }, fieldState: { error } }) => (
-              <SocialLinkInput
+              <AppLinkInput
                 type="instagram"
                 enterKeyHint="enter"
                 value={value}

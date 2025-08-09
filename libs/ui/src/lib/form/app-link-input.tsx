@@ -11,7 +11,7 @@ type Link = {
   iconType: string;
 };
 
-export const SOCIAL_LINK = {
+export const APP_LINK = {
   instagram: {
     domain: 'https://www.instagram.com/',
     getNicknameFromUrl: (input: string) => {
@@ -34,7 +34,7 @@ export const SOCIAL_LINK = {
   },
 };
 
-export const getSocialLinkSchema = (error: string, optional = false) =>
+export const getAppLinkSchema = (error: string, optional = false) =>
   yup
     .object()
     .shape({
@@ -55,7 +55,7 @@ export const getSocialLinkSchema = (error: string, optional = false) =>
     })
     .nullable();
 
-export const SocialLinkInput = ({
+export const AppLinkInput = ({
   type,
   label,
   placeholder,
@@ -78,7 +78,7 @@ export const SocialLinkInput = ({
 }) => {
   const inputValue = useMemo(() => {
     if (value && type === 'instagram') {
-      return SOCIAL_LINK.instagram.getNicknameFromUrl(value.url);
+      return APP_LINK.instagram.getNicknameFromUrl(value.url);
     }
 
     return value?.url || '';
@@ -91,14 +91,14 @@ export const SocialLinkInput = ({
       } else if (type === 'instagram') {
         const srtValue = String(value);
         const nickname = isValidURL(srtValue)
-          ? SOCIAL_LINK.instagram.getNicknameFromUrl(srtValue)
+          ? APP_LINK.instagram.getNicknameFromUrl(srtValue)
           : value;
 
         onChange({
           title: 'Instagram',
-          url: `${SOCIAL_LINK.instagram.domain}${nickname}`,
-          iconType: 'Ionicons',
-          iconName: 'logo-instagram',
+          url: `${APP_LINK.instagram.domain}${nickname}`,
+          iconType: 'SocialIcon',
+          iconName: 'Instagram',
         });
       }
     },

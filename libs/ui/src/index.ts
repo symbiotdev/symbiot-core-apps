@@ -19,7 +19,7 @@ export * from './lib/form/input-code';
 export * from './lib/form/phone-input';
 export * from './lib/form/picker';
 export * from './lib/form/select-picker';
-export * from './lib/form/social-link-input';
+export * from './lib/form/app-link-input';
 export * from './lib/form/switch';
 export * from './lib/form/toggle-group';
 export * from './lib/form/weekdays-schedule';

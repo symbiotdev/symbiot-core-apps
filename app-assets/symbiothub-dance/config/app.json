@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "DanceHub",
+    "slug": "symbiothub-dance",
+    "scheme": "symbiothub-dance",
+    "version": "1.0.0",
+    "ios": {
+      "buildNumber": "1"
+    },
+    "android": {
+      "versionCode": 1
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b841fca1-e505-482e-8cd0-d320359028a0"
+      }
+    }
+  }
+}

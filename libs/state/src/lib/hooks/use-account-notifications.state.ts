@@ -40,7 +40,7 @@ export const useAccountNotificationsState = create<AccountNotificationsState>()(
       },
     }),
     {
-      name: 'account-notifications',
+      name: 'symbiot-account-notifications',
       storage: createZustandStorage(),
     },
   ),

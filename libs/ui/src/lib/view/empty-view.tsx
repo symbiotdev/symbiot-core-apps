@@ -27,7 +27,7 @@ export const EmptyView = (
       )}
 
       {!!props.title && (
-        <H2 textAlign="center" marginTop={10}>
+        <H2 textAlign="center" marginTop={props.iconName ? 10 : undefined}>
           {props.title}
         </H2>
       )}
@@ -36,7 +36,7 @@ export const EmptyView = (
         color="$placeholderColor"
         textAlign="center"
         maxWidth={500}
-        marginTop={10}
+        marginTop={props.iconName || props.title ? 10 : undefined}
       >
         {props.message || t('its_empty')}
       </RegularText>

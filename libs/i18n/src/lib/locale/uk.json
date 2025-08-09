@@ -326,7 +326,7 @@
           "message": "Ви впевнені, що хочете повернутися та відхилити?"
         }
       }
-    },
+    }
   },
   "spanday": {
     "onboarding": {
@@ -459,7 +459,7 @@
       }
     }
   },
-  "symbiot-dance-hub": {
+  "symbiothub-dance": {
     "onboarding": {
       "slides": {
         "slide0": {

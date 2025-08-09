@@ -14,8 +14,8 @@ export const getApp = async () =>
     message: 'Application',
     choices: [
       {
-        name: 'DanceHub',
-        value: 'dance-hub',
+        name: 'DanceHub by Symbiot',
+        value: 'symbiothub-dance',
       },
       {
         name: 'Spanday',

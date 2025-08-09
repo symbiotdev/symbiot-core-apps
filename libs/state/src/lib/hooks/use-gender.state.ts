@@ -15,7 +15,7 @@ export const useGenderState = create<GenderState>()(
       setGenders: (genders) => set({ genders }),
     }),
     {
-      name: 'genders',
+      name: 'symbiot-genders',
       storage: createZustandStorage(),
     },
   ),

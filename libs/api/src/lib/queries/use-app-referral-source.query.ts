@@ -3,9 +3,9 @@ import axios from 'axios';
 import { ExternalSource } from '../types/external-source';
 import { requestWithStringError } from '../utils/request';
 
-export const useAccountReferralSource = () =>
+export const useAppReferralSource = () =>
   useQuery<ExternalSource[], string>({
-    queryKey: ['account-referral-source'],
+    queryKey: ['app-referral-source'],
     queryFn: () =>
-      requestWithStringError(axios.get('/api/account-referral-source')),
+      requestWithStringError(axios.get('/api/app-referral-source')),
   });

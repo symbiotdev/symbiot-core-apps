@@ -14,7 +14,7 @@ export const useOnboardingState = create<OnboardingState>()(
       finish: () => set({ finished: true }),
     }),
     {
-      name: 'onboarding',
+      name: 'symbiot-onboarding',
       storage: createZustandStorage(),
     },
   ),

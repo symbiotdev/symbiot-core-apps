@@ -66,7 +66,7 @@ export const useAccountMeState = create<AccountMeState>()(
         },
       }),
       {
-        name: 'account-me',
+        name: 'symbiot-account-me',
         storage: createZustandStorage(),
       },
     ),

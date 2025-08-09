@@ -27,7 +27,7 @@ export const useLastPushNotificationIdState =
         },
       }),
       {
-        name: 'last-push-notification-id',
+        name: 'symbiot-last-push-notification-id',
         storage: createZustandStorage(),
       },
     ),

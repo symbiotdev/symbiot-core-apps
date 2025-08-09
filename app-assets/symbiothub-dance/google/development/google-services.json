@@ -1,0 +1,84 @@
+{
+  "project_info": {
+    "project_number": "767164872646",
+    "project_id": "symbiothub-dance",
+    "storage_bucket": "symbiothub-dance.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767164872646:android:2783a4ea078b19bed9a4c7",
+        "android_client_info": {
+          "package_name": "com.symbiothub.dance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "767164872646-nb48arj2rf65jr6dak674o55omnjpr05.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4aDum-VYQLmJR6uhg9gmtyKZiN1wEv5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "767164872646-nb48arj2rf65jr6dak674o55omnjpr05.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "767164872646-mchsomd43tl9qvhrj5i41m8pv0l1l75n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.symbiothub.dance",
+                "app_store_id": "6749790850"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767164872646:android:8ae7e07ea6e1ac6cd9a4c7",
+        "android_client_info": {
+          "package_name": "com.symbiothub.dance.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "767164872646-nb48arj2rf65jr6dak674o55omnjpr05.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4aDum-VYQLmJR6uhg9gmtyKZiN1wEv5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "767164872646-nb48arj2rf65jr6dak674o55omnjpr05.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "767164872646-mchsomd43tl9qvhrj5i41m8pv0l1l75n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.symbiothub.dance",
+                "app_store_id": "6749790850"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -18,7 +18,7 @@ export const useAppSchemeState = create<AppSchemeState>()(
       removeScheme: () => set({ scheme: undefined }),
     }),
     {
-      name: 'app-scheme',
+      name: 'symbiot-app-scheme',
       storage: createZustandStorage(),
     },
   ),

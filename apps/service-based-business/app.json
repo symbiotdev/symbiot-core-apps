@@ -1,9 +1,9 @@
 {
   "expo": {
     "newArchEnabled": true,
-    "name": "DanceSHub",
-    "slug": "symbiot-dance-hub",
-    "scheme": "symbiot-dance-hub",
+    "name": "DanceHub",
+    "slug": "symbiothub-dance",
+    "scheme": "symbiothub-dance",
     "version": "1.0.0",
     "userInterfaceStyle": "automatic",
     "orientation": "default",
@@ -13,8 +13,8 @@
     ],
     "ios": {
       "appleTeamId": "8WPTDS74WX",
-      "bundleIdentifier": "com.symbiot.dance.hub.dev",
-      "buildNumber": "12",
+      "bundleIdentifier": "com.symbiothub.dance",
+      "buildNumber": "1",
       "googleServicesFile": "./google/GoogleService-Info.plist",
       "supportsTablet": true,
       "usesAppleSignIn": true,
@@ -32,8 +32,8 @@
       }
     },
     "android": {
-      "package": "com.symbiot.dance.hub.dev",
-      "versionCode": 12,
+      "package": "com.symbiothub.dance",
+      "versionCode": 1,
       "icon": "./assets/images/icon/ios-light.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon/adaptive-icon.png",
@@ -136,7 +136,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "4c63cac6-8e10-436a-bc29-a59552c246e0"
+        "projectId": "b841fca1-e505-482e-8cd0-d320359028a0"
       }
     }
   }

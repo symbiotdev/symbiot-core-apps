@@ -3,16 +3,19 @@ export * from './lib/components/api-provider';
 export * from './lib/hooks/use-auth-tokens';
 
 export * from './lib/queries/use-account.query';
-export * from './lib/queries/use-account-faq.query';
 export * from './lib/queries/use-account-auth.query';
-export * from './lib/queries/use-account-competitor-source.query';
 export * from './lib/queries/use-account-device.query';
 export * from './lib/queries/use-account-notification.query';
 export * from './lib/queries/use-account-preferences.query';
 
+export * from './lib/queries/use-app-competitor-source.query';
+export * from './lib/queries/use-app-faq.query';
+
+export * from './lib/queries/use-brand-industry.query';
+
 export * from './lib/queries/use-gender.query';
 
-export * from './lib/queries/use-account-referral-source.query';
+export * from './lib/queries/use-app-referral-source.query';
 
 export * from './lib/types/account';
 export * from './lib/types/account-auth';
@@ -20,6 +23,10 @@ export * from './lib/types/account-device';
 export * from './lib/types/account-notification';
 export * from './lib/types/account-preferences';
 export * from './lib/types/account-stats';
+
+export * from './lib/types/brand-industry';
+
+
 export * from './lib/types/faq';
 export * from './lib/types/gender';
 export * from './lib/types/link';

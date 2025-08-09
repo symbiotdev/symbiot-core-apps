@@ -36,6 +36,7 @@ import { AddCircle } from './AddCircle';
 import { Widget3 } from './Widget3';
 import { CloseCircle } from './CloseCircle';
 import { Pen } from './Pen';
+import { PaperclipRounded } from './PaperclipRounded';
 
 export const Map: IconMap = {
   AddCircle,
@@ -62,6 +63,7 @@ export const Map: IconMap = {
   MagicStick,
   MenuDotsCircle,
   Moon,
+  PaperclipRounded,
   Pen,
   QrCode,
   QuestionCircle,

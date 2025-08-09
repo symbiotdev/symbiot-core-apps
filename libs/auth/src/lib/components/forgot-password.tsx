@@ -83,7 +83,7 @@ export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
           <Input
             value={value}
             error={error?.message}
-            enterKeyHint="next"
+            enterKeyHint="done"
             type="email"
             keyboardType="email-address"
             disabled={isSubmitting}

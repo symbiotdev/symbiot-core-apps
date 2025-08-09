@@ -87,7 +87,7 @@ export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
           <Input
             value={value}
             error={error?.message}
-            enterKeyHint="next"
+            enterKeyHint="done"
             type="password"
             disabled={isSubmitting}
             label={t('auth.reset_password.form.password.label')}

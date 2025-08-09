@@ -1,19 +1,19 @@
 import {
+  APP_LINK,
+  AppLinkInput,
   AvatarPicker,
   ContextMenuItem,
   ContextMenuPopover,
   DatePicker,
   FormView,
-  getPhoneInputSchema,
   getAppLinkSchema,
+  getPhoneInputSchema,
   Icon,
   Input,
   PageView,
   phoneDefaultValue,
   PhoneInput,
   SelectPicker,
-  APP_LINK,
-  AppLinkInput,
 } from '@symbiot-core-apps/ui';
 import { useGenders, useMeUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
@@ -166,7 +166,7 @@ export const AccountPreferences = () => {
         yup
           .object()
           .shape({
-            instagram: getAppLinkSchema('', true),
+            instagram: getAppLinkSchema('', true).nullable(),
           })
           .required(),
       ),
@@ -258,7 +258,7 @@ export const AccountPreferences = () => {
             render={({ field: { value, onChange }, fieldState: { error } }) => (
               <Input
                 autoCapitalize="words"
-                enterKeyHint="enter"
+                enterKeyHint="done"
                 value={value}
                 error={error?.message}
                 label={t('preferences.account.firstname.label')}
@@ -275,7 +275,7 @@ export const AccountPreferences = () => {
             render={({ field: { value, onChange }, fieldState: { error } }) => (
               <Input
                 autoCapitalize="words"
-                enterKeyHint="enter"
+                enterKeyHint="done"
                 value={value}
                 error={error?.message}
                 label={t('preferences.account.lastname.label')}
@@ -333,7 +333,7 @@ export const AccountPreferences = () => {
             name="phone"
             render={({ field: { value, onChange }, fieldState: { error } }) => (
               <PhoneInput
-                enterKeyHint="enter"
+                enterKeyHint="done"
                 value={value}
                 label={t('preferences.account.phone.label')}
                 placeholder={t('preferences.account.phone.placeholder')}
@@ -350,7 +350,7 @@ export const AccountPreferences = () => {
             render={({ field: { value, onChange }, fieldState: { error } }) => (
               <AppLinkInput
                 type="instagram"
-                enterKeyHint="enter"
+                enterKeyHint="done"
                 value={value}
                 label={t('preferences.account.instagram.label')}
                 placeholder={t('preferences.account.instagram.placeholder')}

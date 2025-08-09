@@ -4,7 +4,7 @@ import { useCallback, useMemo } from 'react';
 import { isValidURL } from '@symbiot-core-apps/shared';
 import { TextInputProps } from 'react-native';
 
-type Link = {
+export type LinkItem = {
   title: string;
   url: string;
   iconName: string;
@@ -32,7 +32,24 @@ export const APP_LINK = {
       }
     },
   },
+  website: {
+    getDomain: (input: string) => {
+      try {
+        if (!input.startsWith('http')) {
+          input = 'https://' + input;
+        }
+
+        const url = new URL(input);
+
+        return url.hostname;
+      } catch {
+        return '';
+      }
+    },
+  },
 };
+
+export type AppLinkType = keyof typeof APP_LINK;
 
 export const getAppLinkSchema = (error: string, optional = false) =>
   yup
@@ -50,10 +67,10 @@ export const getAppLinkSchema = (error: string, optional = false) =>
           !!link.title &&
           !!link.url &&
           !!link.iconName &&
-          !!link.iconType)
+          !!link.iconType &&
+          isValidURL(link.url))
       );
-    })
-    .nullable();
+    });
 
 export const AppLinkInput = ({
   type,
@@ -66,22 +83,24 @@ export const AppLinkInput = ({
   onChange,
   onBlur,
 }: {
-  type: 'instagram';
-  value?: Link | null;
+  type: AppLinkType;
+  value?: LinkItem | null;
   label?: string;
   placeholder?: string;
   error?: string;
   enterKeyHint?: TextInputProps['enterKeyHint'];
   autoCapitalize?: TextInputProps['autoCapitalize'];
-  onChange: (link: Link | null) => void;
+  onChange: (link: LinkItem | null) => void;
   onBlur?: () => void;
 }) => {
   const inputValue = useMemo(() => {
     if (value && type === 'instagram') {
       return APP_LINK.instagram.getNicknameFromUrl(value.url);
+    } else if (value && type === 'website') {
+      return APP_LINK.website.getDomain(value.url);
+    } else {
+      return value?.url || '';
     }
-
-    return value?.url || '';
   }, [type, value]);
 
   const onInputChange = useCallback(
@@ -100,6 +119,17 @@ export const AppLinkInput = ({
           iconType: 'SocialIcon',
           iconName: 'Instagram',
         });
+      } else if (type === 'website') {
+        const srtValue = String(value);
+
+        onChange({
+          title: 'Website',
+          url: `https://${APP_LINK.website.getDomain(srtValue)}`,
+          iconType: 'Icon',
+          iconName: 'PaperclipRounded',
+        });
+      } else {
+        onChange(null);
       }
     },
     [onChange, type],

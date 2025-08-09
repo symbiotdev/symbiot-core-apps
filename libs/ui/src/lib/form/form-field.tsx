@@ -1,6 +1,7 @@
 import { LabelProps, TextProps, View } from 'tamagui';
 import { PropsWithChildren } from 'react';
 import { Error, Label } from '../text/custom';
+import { Platform } from 'react-native';
 
 export const FormField = ({
   label,
@@ -21,7 +22,12 @@ export const FormField = ({
   return (
     <View width="100%" gap="$2">
       {!!label && (
-        <Label paddingHorizontal="$3" htmlFor={htmlFor} {...labelProps}>
+        <Label
+          paddingHorizontal="$3"
+          htmlFor={htmlFor}
+          {...labelProps}
+          pointerEvents={Platform.OS === 'web' ? 'auto' : 'none'}
+        >
           {label}
           {required ? '*' : ''}
         </Label>

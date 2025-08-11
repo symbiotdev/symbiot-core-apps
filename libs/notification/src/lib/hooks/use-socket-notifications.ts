@@ -1,7 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import {
   AccountNotification,
-  AccountStats,
   socket,
   useAccountNotificationQueryState,
 } from '@symbiot-core-apps/api';
@@ -16,18 +15,10 @@ export const useSocketNotifications = ({
   soundSource: AudioSource;
 }) => {
   const soundPlayer = useAudioPlayer(soundSource);
-  const { me, updateMeStats } = useMe();
+  const { me, setMeStats } = useMe();
   const { add: addToInitialState } = useAccountNotificationsState();
   const { addToList: addToListQueryState, markAllAsRead } =
     useAccountNotificationQueryState();
-
-  const onStatsUpdated = useCallback(
-    (notifications: AccountStats['notifications']) =>
-      updateMeStats({
-        notifications,
-      }),
-    [updateMeStats],
-  );
 
   const onAdded = useCallback(
     (notification: AccountNotification) => {
@@ -52,30 +43,23 @@ export const useSocketNotifications = ({
     ],
   );
 
-  const onReadAll = useCallback(
-    (notifications: AccountStats['notifications']) => {
-      markAllAsRead();
-
-      updateMeStats({
-        notifications,
-      });
-    },
-    [markAllAsRead, updateMeStats],
-  );
+  const onReadAll = useCallback(() => {
+    markAllAsRead();
+    setMeStats({
+      newNotifications: 0,
+    });
+  }, [setMeStats, markAllAsRead]);
 
   return useEffect(() => {
     socket.on('account_notification_added', onAdded);
-    socket.on('account_notification_stats_updated', onStatsUpdated);
     socket.on('account_notifications_read', onReadAll);
 
     return () => {
-      [
-        'account_notification_added',
-        'account_notification_stats_updated',
-        'account_notifications_read',
-      ].forEach((event) => {
-        socket.off(event);
-      });
+      ['account_notification_added', 'account_notifications_read'].forEach(
+        (event) => {
+          socket.off(event);
+        },
+      );
     };
-  }, [onAdded, onStatsUpdated, onReadAll]);
+  }, [onAdded, onReadAll]);
 };

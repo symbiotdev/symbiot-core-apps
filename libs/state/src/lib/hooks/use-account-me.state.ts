@@ -1,7 +1,6 @@
 import {
   Account,
   AccountPreferences,
-  AccountStats,
   UpdateAccountData,
   useAccountMeAvatarUpdate,
   useAccountMeQuery,
@@ -18,21 +17,28 @@ import { changeAppLanguage } from '@symbiot-core-apps/i18n';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 
+type AccountMeStats = {
+  newNotifications?: number;
+};
+
 type AccountMeState = {
   me?: Account;
+  stats: AccountMeStats;
   clear: () => void;
   setMe: (me: Account) => void;
   setMePreferences: (preferences: Partial<AccountPreferences>) => void;
-  setMeStats: (stats: Partial<AccountStats>) => void;
+  setMeStats: (stats: AccountMeStats) => void;
 };
 
 export const useAccountMeState = create<AccountMeState>()(
   devtools(
     persist<AccountMeState>(
       (set, get) => ({
+        stats: {},
         clear: () => {
           set({
             me: undefined,
+            stats: {},
           });
         },
         setMe: (me) => {
@@ -51,18 +57,15 @@ export const useAccountMeState = create<AccountMeState>()(
             });
           }
         },
-        setMeStats: (stats) => {
-          const { setMe, me } = get();
+        setMeStats: (newStats) => {
+          const { stats } = get();
 
-          if (me) {
-            setMe({
-              ...me,
-              stats: {
-                ...me.stats,
-                ...stats,
-              },
-            });
-          }
+          set({
+            stats: {
+              ...stats,
+              ...newStats,
+            },
+          });
         },
       }),
       {
@@ -74,7 +77,7 @@ export const useAccountMeState = create<AccountMeState>()(
 );
 
 export const useMe = () => {
-  const { me, setMe, setMeStats } = useAccountMeState();
+  const { me, stats, setMe, setMeStats } = useAccountMeState();
   const { setScheme } = useScheme();
   const { setMePreferences } = useAccountMeState();
 
@@ -99,17 +102,12 @@ export const useMe = () => {
     [setMePreferences, setScheme],
   );
 
-  const updateMeStats = useCallback((stats: Partial<AccountStats>) => {
-    if (me?.stats) {
-      setMeStats(stats);
-    }
-  }, [me?.stats, setMeStats]);
-
   return {
     updateMe,
     updateMePreferences,
-    updateMeStats,
     me,
+    stats,
+    setMeStats,
   };
 };
 
@@ -141,7 +139,7 @@ export const useMeLoader = () => {
 };
 
 export const useMeUpdater = () => {
-  const { me, updateMe, updateMePreferences } = useMe();
+  const { me, updateMe, setMeStats, updateMePreferences } = useMe();
   const {
     mutateAsync: updatePreferences,
     isPending: arePreferencesUpdating,
@@ -208,6 +206,7 @@ export const useMeUpdater = () => {
     updateAvatar$,
     removeAvatar$,
     me,
+    setMeStats,
     updating: arePreferencesUpdating || isAccountUpdating,
     updateError: updatePreferencesError || updateAccountError,
     avatarUpdating: isAvatarUpdating || isAvatarRemoving,

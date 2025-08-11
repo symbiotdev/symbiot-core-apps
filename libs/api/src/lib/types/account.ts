@@ -3,7 +3,6 @@ import { AppLanguage } from '@symbiot-core-apps/i18n';
 import { Phone } from './phone';
 import { Link } from './link';
 import { Gender } from './gender';
-import { AccountStats } from './account-stats';
 
 export type Account = {
   id: string;
@@ -28,7 +27,6 @@ export type Account = {
   phones: Phone[];
   links: Link[];
   gender: Gender;
-  stats: AccountStats;
 };
 
 export type UpdateAccountData = {

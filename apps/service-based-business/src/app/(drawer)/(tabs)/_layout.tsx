@@ -11,6 +11,8 @@ import { useMe } from '@symbiot-core-apps/state';
 import { PlusActionModal } from '../../../components/tabs/plus-action-modal';
 import { Icons } from '../../../icons/config';
 import { useT } from '@symbiot-core-apps/i18n';
+import { useAccountCountNewNotifications } from '@symbiot-core-apps/api';
+import { useEffect } from 'react';
 
 const HelloHeaderLeft = () => {
   const { t } = useT();
@@ -26,11 +28,11 @@ const HelloHeaderLeft = () => {
 };
 
 const NotificationsHeaderButton = () => {
-  const { me } = useMe();
+  const { stats } = useMe();
 
   return (
     <HeaderButton
-      attention={!!me?.stats?.notifications?.new}
+      attention={!!stats.newNotifications}
       iconName={Icons.Notifications}
       onPress={() => router.navigate('/notifications')}
     />
@@ -39,8 +41,17 @@ const NotificationsHeaderButton = () => {
 
 export default () => {
   const screenOptions = useTabsScreenOptions();
-  const { me } = useMe();
+  const { data: countNewNotifications } = useAccountCountNewNotifications();
+  const { stats, setMeStats } = useMe();
   const hasBrand = false;
+
+  useEffect(() => {
+    if (countNewNotifications) {
+      setMeStats({
+        newNotifications: countNewNotifications.count,
+      });
+    }
+  }, [countNewNotifications]);
 
   return (
     <>
@@ -52,7 +63,7 @@ export default () => {
               headerLeft: HelloHeaderLeft,
               headerRight: NotificationsHeaderButton,
               tabBarIcon: ({ color, size, focused }) => (
-                <AttentionView attention={!!me?.stats?.notifications?.new}>
+                <AttentionView attention={!!stats.newNotifications}>
                   <Icon
                     name={Icons.Home}
                     color={color}
@@ -72,7 +83,7 @@ export default () => {
               headerLeft: HelloHeaderLeft,
               headerRight: NotificationsHeaderButton,
               tabBarIcon: ({ color, size, focused }) => (
-                <AttentionView attention={!!me?.stats?.notifications?.new}>
+                <AttentionView attention={!!stats.newNotifications}>
                   <Icon
                     name={Icons.Home}
                     color={color}

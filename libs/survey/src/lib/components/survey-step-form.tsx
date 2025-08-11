@@ -205,13 +205,17 @@ export function SurveyStepForm<V>({
             ) : (
               <Button
                 disabled={!isValid}
-                label={t('add')}
+                label={t('finish')}
                 onPress={handleSubmit(finish as SubmitHandler<unknown>)}
               />
             )}
 
             {step.skippable && (
-              <Button type="clear" label={t('skip')} onPress={onSkip} />
+              <Button
+                type="clear"
+                label={t('skip')}
+                onPress={step.nextId ? onSkip : onFinish}
+              />
             )}
           </View>
         </FormView>

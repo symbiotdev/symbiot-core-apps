@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { AccountNotification } from '../types/account-notification';
 import {
@@ -12,6 +12,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { queryClient } from '../utils/client';
 
 enum NotificationQueryKey {
+  countNew = 'account-notification-count-new',
   getList = 'account-notification',
 }
 
@@ -90,6 +91,13 @@ export const useAccountNotificationQueryState = () => {
     markAllAsRead,
   };
 };
+
+export const useAccountCountNewNotifications = () =>
+  useQuery<{ count: number }, void>({
+    queryKey: [NotificationQueryKey.countNew],
+    queryFn: () =>
+      requestWithStringError(axios.get('/api/account-notification/new/count')),
+  });
 
 export const useAccountNotificationLoader = ({
   initialState,

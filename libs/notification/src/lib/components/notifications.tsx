@@ -24,7 +24,7 @@ export const Notifications = ({
 }: {
   onPressNotification: (notification: AccountNotification) => void;
 }) => {
-  const { me, updateMeStats } = useMe();
+  const { me, setMeStats } = useMe();
   const headerHeight = useScreenHeaderHeight();
   const { mutateAsync: readAll } = useAccountNotificationsReadQuery();
   const {
@@ -47,15 +47,10 @@ export const Notifications = ({
   const markAllNotificationsAsRead = useCallback(async () => {
     await readAll();
 
-    if (me?.stats) {
-      updateMeStats({
-        notifications: {
-          ...me.stats.notifications,
-          new: 0,
-        },
-      });
-    }
-  }, [me?.stats, readAll, updateMeStats]);
+    setMeStats({
+      newNotifications: 0,
+    });
+  }, [setMeStats, readAll]);
 
   const renderItem = useCallback(
     ({ item }: { item: AccountNotification }) => {

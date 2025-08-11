@@ -3,10 +3,7 @@ import axios from 'axios';
 import { Account, UpdateAccountData } from '../types/account';
 import { requestWithAlertOnError } from '../utils/request';
 import { ImagePickerAsset } from 'expo-image-picker';
-import {
-  convertImagePickerAssetsToUploadingFiles,
-  generateFormDataFromUploadingFile,
-} from '../utils/media';
+import { generateFormData } from '../utils/media';
 
 export const useAccountMeQuery = () =>
   useQuery<Account, string>({
@@ -22,14 +19,13 @@ export const useAccountMeUpdate = () =>
 
 export const useAccountMeAvatarUpdate = () =>
   useMutation<Account, string, ImagePickerAsset>({
-    mutationFn: async (image) =>
+    mutationFn: async (avatar) =>
       requestWithAlertOnError(
         axios.put(
           '/api/account/me/avatar',
-          await generateFormDataFromUploadingFile(
-            convertImagePickerAssetsToUploadingFiles([image])[0],
+          await generateFormData<{ avatar: ImagePickerAsset }>({ avatar }, [
             'avatar',
-          ),
+          ]),
         ),
       ),
   });

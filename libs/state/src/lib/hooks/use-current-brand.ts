@@ -16,7 +16,7 @@ type CurrentBrandState = {
   brand?: Brand;
   brands?: Brand[];
   clear: () => void;
-  setBrand: (brand: Brand) => void;
+  setBrand: (brand?: Brand) => void;
   setBrands: (brands: Brand[]) => void;
 };
 

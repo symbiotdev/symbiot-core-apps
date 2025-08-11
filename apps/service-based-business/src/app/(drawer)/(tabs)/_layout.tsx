@@ -7,12 +7,15 @@ import {
   Icon,
   useTabsScreenOptions,
 } from '@symbiot-core-apps/ui';
-import { useCurrentAccount } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccount,
+  useCurrentBrandState,
+} from '@symbiot-core-apps/state';
 import { PlusActionModal } from '../../../components/tabs/plus-action-modal';
 import { Icons } from '../../../icons/config';
 import { useT } from '@symbiot-core-apps/i18n';
 import { useAccountCountNewNotifications } from '@symbiot-core-apps/api';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 const HelloHeaderLeft = () => {
   const { t } = useT();
@@ -43,7 +46,12 @@ export default () => {
   const screenOptions = useTabsScreenOptions();
   const { data: countNewNotifications } = useAccountCountNewNotifications();
   const { stats, setMeStats } = useCurrentAccount();
-  const hasBrand = false;
+  const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
+
+  const hasBrand = useMemo(
+    () => !!currentBrand || !!currentBrands?.length,
+    [currentBrand, currentBrands?.length],
+  );
 
   useEffect(() => {
     if (countNewNotifications) {

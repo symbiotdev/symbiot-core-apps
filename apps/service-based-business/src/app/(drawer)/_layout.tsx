@@ -1,16 +1,66 @@
 import { Redirect, Stack } from 'expo-router';
 import { useStackScreenHeaderOptions } from '@symbiot-core-apps/ui';
 import { NotificationsProvider } from '@symbiot-core-apps/notification';
-import { StateProvider, useMeLoader } from '@symbiot-core-apps/state';
-import { useAuthTokens } from '@symbiot-core-apps/api';
+import {
+  StateProvider,
+  useCurrentAccount,
+  useCurrentBrandState,
+} from '@symbiot-core-apps/state';
+import {
+  useAccountMeQuery,
+  useAuthTokens,
+  useCurrentBrandQuery,
+} from '@symbiot-core-apps/api';
 import { useT } from '@symbiot-core-apps/i18n';
 import { onPressNotification } from '../../utils/notification';
+import { useEffect, useMemo } from 'react';
 
 export default () => {
   const { t } = useT();
-  const { me } = useMeLoader();
-  const { tokens } = useAuthTokens();
   const headerScreenOptions = useStackScreenHeaderOptions();
+  const { me, updateMe, updateMePreferences } = useCurrentAccount();
+  const { tokens, setTokens } = useAuthTokens();
+  const {
+    brand: currentBrand,
+    brands: currentBrands,
+    setBrand: setCurrentBrand,
+    setBrands: setCurrentBrands,
+  } = useCurrentBrandState();
+  const { data: meResponse } = useAccountMeQuery({
+    enabled: !!tokens.access,
+  });
+  const { data: currentBrandResponse } = useCurrentBrandQuery({
+    enabled: !!tokens.access,
+  });
+
+  const loaded = useMemo(
+    () => !!me && !!(currentBrand || currentBrands),
+    [me, currentBrand, currentBrands],
+  );
+
+  useEffect(() => {
+    if (meResponse) {
+      updateMe(meResponse);
+
+      if (meResponse.preferences) {
+        void updateMePreferences(meResponse.preferences);
+      }
+    }
+  }, [meResponse, updateMe, updateMePreferences]);
+
+  useEffect(() => {
+    if (currentBrandResponse) {
+      setCurrentBrand(currentBrandResponse.brand);
+
+      if (currentBrandResponse.brands) {
+        setCurrentBrands(currentBrandResponse.brands);
+      }
+
+      if (currentBrandResponse.tokens) {
+        setTokens(currentBrandResponse.tokens);
+      }
+    }
+  }, [currentBrandResponse, setCurrentBrand, setCurrentBrands, setTokens]);
 
   if (!tokens.access) {
     return <Redirect href="/onboarding" />;
@@ -23,7 +73,11 @@ export default () => {
         onPressNotification={onPressNotification}
       >
         <Stack screenOptions={headerScreenOptions}>
-          <Stack.Protected guard={!!me}>
+          <Stack.Protected guard={!loaded}>
+            <Stack.Screen name="verifying/index" />
+          </Stack.Protected>
+
+          <Stack.Protected guard={loaded}>
             <Stack.Screen
               name="(tabs)"
               options={{
@@ -91,10 +145,6 @@ export default () => {
                 headerTitle: t('docs.terms_privacy'),
               }}
             />
-          </Stack.Protected>
-
-          <Stack.Protected guard={!me}>
-            <Stack.Screen name="verifying/index" />
           </Stack.Protected>
         </Stack>
       </NotificationsProvider>

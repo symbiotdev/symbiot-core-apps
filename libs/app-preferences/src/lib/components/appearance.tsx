@@ -9,7 +9,7 @@ import {
   ToggleOnChange,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
-import { useMeUpdater } from '@symbiot-core-apps/state';
+import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { AccountScheme } from '@symbiot-core-apps/api';
 import { useNavigation } from '@react-navigation/native';
 import { defaultSystemScheme } from '@symbiot-core-apps/shared';
@@ -18,7 +18,7 @@ import { useT } from '@symbiot-core-apps/i18n';
 export const Appearance = () => {
   const navigation = useNavigation();
   const { t } = useT();
-  const { me, updatePreferences$, updating } = useMeUpdater();
+  const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
   const scheme = me?.preferences?.scheme;
 
   const items = useMemo(

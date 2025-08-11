@@ -7,14 +7,14 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
 import { DateHelper, Weekday } from '@symbiot-core-apps/shared';
-import { useMeUpdater } from '@symbiot-core-apps/state';
+import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { useT } from '@symbiot-core-apps/i18n';
 
 export const Calendar = () => {
   const navigation = useNavigation();
   const { t } = useT();
-  const { me, updatePreferences$, updating } = useMeUpdater();
+  const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
 
   const weekdaysOptions = useMemo(() => DateHelper.getWeekdays(), []);
 

@@ -10,22 +10,21 @@ export * from './lib/queries/use-account-preferences.query';
 
 export * from './lib/queries/use-app-competitor-source.query';
 export * from './lib/queries/use-app-faq.query';
+export * from './lib/queries/use-app-referral-source.query';
 
+export * from './lib/queries/use-brand.query';
 export * from './lib/queries/use-brand-industry.query';
 
 export * from './lib/queries/use-gender.query';
-
-export * from './lib/queries/use-app-referral-source.query';
 
 export * from './lib/types/account';
 export * from './lib/types/account-auth';
 export * from './lib/types/account-device';
 export * from './lib/types/account-notification';
 export * from './lib/types/account-preferences';
-export * from './lib/types/account-stats';
 
+export * from './lib/types/brand';
 export * from './lib/types/brand-industry';
-
 
 export * from './lib/types/faq';
 export * from './lib/types/gender';

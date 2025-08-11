@@ -21,6 +21,8 @@
     "other": "Other",
     "country": "Country",
     "currency": "Currency",
+    "finish": "Finish",
+    "add": "Add",
     "greeting_firstname": "\uD83D\uDC4B Hello, {{firstname}}",
     "docs": {
       "terms_privacy": "Terms & Privacy",
@@ -395,7 +397,7 @@
             "subtitle": "Enter your business name so clients can easily recognize you.",
             "form": {
               "name": {
-                "placeholder": "Spanday PRO",
+                "placeholder": "Example: Spanday PRO",
                 "error": {
                   "max_length": "Max possible length is {{max}} symbols",
                   "required": "Business name is required"
@@ -451,6 +453,36 @@
                 "placeholder": "Type here",
                 "error": {
                   "required": "This field must be filled in"
+                }
+              }
+            }
+          },
+          "industry": {
+            "title": "Industry",
+            "subtitle": "Choose your industry to customize features for your business."
+          },
+          "website": {
+            "title": "Website",
+            "subtitle": "Add a website link to showcase your business professionally and share all the details clients need.",
+            "form": {
+              "link": {
+                "placeholder": "Example: mybrand.com",
+                "error": {
+                  "validation": "Provide valid domain address",
+                  "required": "Provide valid domain address"
+                }
+              }
+            }
+          },
+          "promo_code": {
+            "title": "Promo Code",
+            "subtitle": "Have a promo code? Apply it now to enjoy exclusive benefits from a Spanday PRO partner.",
+            "form": {
+              "code": {
+                "placeholder": "Example: SYMBIOT_50",
+                "error": {
+                  "max_length": "Max possible length is {{max}} symbols",
+                  "required": "Enter known code"
                 }
               }
             }
@@ -526,7 +558,7 @@
             "subtitle": "Provide your brand name for clear identification within the app.",
             "form": {
               "name": {
-                "placeholder": "RT Dance Studio",
+                "placeholder": "Example: RT Dance",
                 "error": {
                   "max_length": "Max possible length is {{max}} symbols",
                   "required": "Brand name is required"
@@ -582,6 +614,36 @@
                 "placeholder": "Enter your variant",
                 "error": {
                   "required": "Type here"
+                }
+              }
+            }
+          },
+          "industry": {
+            "title": "Industry",
+            "subtitle": "Choose your industry to customize features for your brand."
+          },
+          "website": {
+            "title": "Website",
+            "subtitle": "Add a website link to showcase your brand professionally and share all the details students need.",
+            "form": {
+              "link": {
+                "placeholder": "Example: mybrand.com",
+                "error": {
+                  "validation": "Provide valid domain address",
+                  "required": "Provide valid domain address"
+                }
+              }
+            }
+          },
+          "promo_code": {
+            "title": "Promo Code",
+            "subtitle": "Have a promo code? Apply it now to enjoy exclusive benefits from a DanceHub partner.",
+            "form": {
+              "code": {
+                "placeholder": "Example: SYMBIOT_50",
+                "error": {
+                  "max_length": "Max possible length is {{max}} symbols",
+                  "required": "Enter known code"
                 }
               }
             }

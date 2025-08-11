@@ -7,7 +7,7 @@ import {
   Spinner,
   Switch,
 } from '@symbiot-core-apps/ui';
-import { useMeUpdater } from '@symbiot-core-apps/state';
+import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -19,7 +19,7 @@ import { useT } from '@symbiot-core-apps/i18n';
 
 export const Notifications = () => {
   const { t } = useT();
-  const { me, updatePreferences$, updating } = useMeUpdater();
+  const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
   const navigation = useNavigation();
 
   const [permissionsStatus, setPermissionsStatus] =

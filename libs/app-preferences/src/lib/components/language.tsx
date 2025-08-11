@@ -12,13 +12,13 @@ import {
   appLanguagesOptions,
   useT,
 } from '@symbiot-core-apps/i18n';
-import { useMeUpdater } from '@symbiot-core-apps/state';
+import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 
 export const Language = () => {
   const { lang } = useT();
   const navigation = useNavigation();
-  const { updateAccount$, updating } = useMeUpdater();
+  const { updateAccount$, updating } = useCurrentAccountUpdater();
 
   const items = useMemo(
     () =>

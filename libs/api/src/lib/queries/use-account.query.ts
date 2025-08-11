@@ -5,9 +5,14 @@ import { requestWithAlertOnError } from '../utils/request';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { generateFormData } from '../utils/media';
 
-export const useAccountMeQuery = () =>
+export enum AccountQueryKey {
+  me = 'account-me',
+}
+
+export const useAccountMeQuery = ({ enabled }: { enabled: boolean }) =>
   useQuery<Account, string>({
-    queryKey: ['account-me'],
+    enabled,
+    queryKey: [AccountQueryKey.me],
     queryFn: () => requestWithAlertOnError(axios.get('/api/account/me')),
   });
 

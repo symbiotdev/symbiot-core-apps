@@ -11,7 +11,7 @@ import { getNextPageParam } from '../utils/query';
 import { useCallback, useEffect, useMemo } from 'react';
 import { queryClient } from '../utils/client';
 
-enum NotificationQueryKey {
+export enum NotificationQueryKey {
   countNew = 'account-notification-count-new',
   getList = 'account-notification',
 }

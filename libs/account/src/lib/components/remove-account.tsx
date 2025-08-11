@@ -1,5 +1,5 @@
 import { ActionCard, FormView, Icon, PageView } from '@symbiot-core-apps/ui';
-import { useMe } from '@symbiot-core-apps/state';
+import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
 import { useAccountRemoveMe } from '@symbiot-core-apps/api';
@@ -7,7 +7,7 @@ import { useT } from '@symbiot-core-apps/i18n';
 
 export const RemoveAccount = () => {
   const { t } = useT();
-  const { me } = useMe();
+  const { me } = useCurrentAccount();
   const { mutateAsync, isPending } = useAccountRemoveMe();
 
   const onActionPress = useCallback(

@@ -5,10 +5,10 @@ import {
   setNotificationHandler,
 } from 'expo-notifications';
 import { notificationAsync, NotificationFeedbackType } from 'expo-haptics';
-import { useMe } from '@symbiot-core-apps/state';
+import { useCurrentAccount } from '@symbiot-core-apps/state';
 
 export const usePushNotificationsPreferences = () => {
-  const { me } = useMe();
+  const { me } = useCurrentAccount();
 
   const notificationListener = useRef<EventSubscription>(null);
 

@@ -1,4 +1,4 @@
-import { useMe } from '@symbiot-core-apps/state';
+import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { useT } from '@symbiot-core-apps/i18n';
 import { useCallback, useState } from 'react';
 import {
@@ -17,7 +17,7 @@ import { Icons } from '../../../../icons/config';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 
 export default () => {
-  const { me } = useMe();
+  const { me } = useCurrentAccount();
   const { t } = useT();
 
   const [qrCodeVisible, setQrCodeVisible] = useState(false);

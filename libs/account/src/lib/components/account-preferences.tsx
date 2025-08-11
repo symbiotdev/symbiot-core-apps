@@ -15,7 +15,7 @@ import {
   PhoneInput,
   SelectPicker,
 } from '@symbiot-core-apps/ui';
-import { useGenders, useMeUpdater } from '@symbiot-core-apps/state';
+import { useGenders, useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { useCallback, useEffect, useMemo } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
@@ -36,7 +36,7 @@ export const AccountPreferences = () => {
     removeAvatar$,
     updating,
     avatarUpdating,
-  } = useMeUpdater();
+  } = useCurrentAccountUpdater();
   const { t } = useT();
   const {
     gendersAsOptions,

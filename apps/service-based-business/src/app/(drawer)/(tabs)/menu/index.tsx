@@ -4,7 +4,7 @@ import {
   useShareApp,
 } from '@symbiot-core-apps/shared';
 import { useT } from '@symbiot-core-apps/i18n';
-import { useMe } from '@symbiot-core-apps/state';
+import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { useAccountAuthSignOutQuery } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
 import { router } from 'expo-router';
@@ -23,7 +23,7 @@ import { Platform } from 'react-native';
 export default () => {
   const share = useShareApp();
   const { t } = useT();
-  const { me } = useMe();
+  const { me } = useCurrentAccount();
   const { mutate: signOut } = useAccountAuthSignOutQuery();
 
   const onAccountPress = useCallback(

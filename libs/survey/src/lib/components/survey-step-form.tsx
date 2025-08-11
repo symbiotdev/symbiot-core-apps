@@ -24,7 +24,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useT } from '@symbiot-core-apps/i18n';
 import { TCountryCode } from 'countries-list';
-import { useMe } from '@symbiot-core-apps/state';
+import { useCurrentAccount } from '@symbiot-core-apps/state';
 
 export function SurveyStepForm<V>({
   value: formValue,
@@ -42,7 +42,7 @@ export function SurveyStepForm<V>({
   onSkip: () => void;
 }) {
   const { t } = useT();
-  const { me } = useMe();
+  const { me } = useCurrentAccount();
 
   const formSchema = useMemo(
     () =>

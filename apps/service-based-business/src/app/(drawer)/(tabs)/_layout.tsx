@@ -7,7 +7,7 @@ import {
   Icon,
   useTabsScreenOptions,
 } from '@symbiot-core-apps/ui';
-import { useMe } from '@symbiot-core-apps/state';
+import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { PlusActionModal } from '../../../components/tabs/plus-action-modal';
 import { Icons } from '../../../icons/config';
 import { useT } from '@symbiot-core-apps/i18n';
@@ -16,7 +16,7 @@ import { useEffect } from 'react';
 
 const HelloHeaderLeft = () => {
   const { t } = useT();
-  const { me } = useMe();
+  const { me } = useCurrentAccount();
 
   return me && me.firstname !== 'Account' ? (
     <H3 lineHeight={headerButtonSize} numberOfLines={1}>
@@ -28,7 +28,7 @@ const HelloHeaderLeft = () => {
 };
 
 const NotificationsHeaderButton = () => {
-  const { stats } = useMe();
+  const { stats } = useCurrentAccount();
 
   return (
     <HeaderButton
@@ -42,7 +42,7 @@ const NotificationsHeaderButton = () => {
 export default () => {
   const screenOptions = useTabsScreenOptions();
   const { data: countNewNotifications } = useAccountCountNewNotifications();
-  const { stats, setMeStats } = useMe();
+  const { stats, setMeStats } = useCurrentAccount();
   const hasBrand = false;
 
   useEffect(() => {

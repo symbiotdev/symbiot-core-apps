@@ -3,47 +3,43 @@ import {
   AccountPreferences,
   UpdateAccountData,
   useAccountMeAvatarUpdate,
-  useAccountMeQuery,
   useAccountMeRemoveAvatar,
   useAccountMeUpdate,
   useUpdateAccountPreferencesQuery,
 } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { Scheme, schemes } from '@symbiot-core-apps/shared';
 import { useScheme } from './use-app-theme.state';
 import { changeAppLanguage } from '@symbiot-core-apps/i18n';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 
-type AccountMeStats = {
+type AccountStats = {
   newNotifications?: number;
 };
 
-type AccountMeState = {
+type CurrentAccountState = {
   me?: Account;
-  stats: AccountMeStats;
+  stats: AccountStats;
   clear: () => void;
   setMe: (me: Account) => void;
   setMePreferences: (preferences: Partial<AccountPreferences>) => void;
-  setMeStats: (stats: AccountMeStats) => void;
+  setMeStats: (stats: AccountStats) => void;
 };
 
-export const useAccountMeState = create<AccountMeState>()(
+export const useCurrentAccountState = create<CurrentAccountState>()(
   devtools(
-    persist<AccountMeState>(
+    persist<CurrentAccountState>(
       (set, get) => ({
         stats: {},
-        clear: () => {
+        clear: () =>
           set({
             me: undefined,
             stats: {},
-          });
-        },
-        setMe: (me) => {
-          set({ me });
-        },
+          }),
+        setMe: (me) => set({ me }),
         setMePreferences: (preferences) => {
           const { setMe, me } = get();
 
@@ -69,35 +65,40 @@ export const useAccountMeState = create<AccountMeState>()(
         },
       }),
       {
-        name: 'symbiot-account-me',
+        name: 'symbiot-current-account',
         storage: createZustandStorage(),
       },
     ),
   ),
 );
 
-export const useMe = () => {
-  const { me, stats, setMe, setMeStats } = useAccountMeState();
+export const useCurrentAccount = () => {
+  const { me, stats, setMe, setMeStats } = useCurrentAccountState();
   const { setScheme } = useScheme();
-  const { setMePreferences } = useAccountMeState();
+  const { setMePreferences } = useCurrentAccountState();
 
   const updateMe = useCallback(
     (account: Account) => {
-      changeAppLanguage(account.language);
       setMe(account);
+
+      if (account.language) {
+        changeAppLanguage(account.language);
+      }
     },
     [setMe],
   );
 
   const updateMePreferences = useCallback(
     async (preferences: AccountPreferences) => {
-      setScheme(
-        schemes.includes(preferences.scheme as Scheme)
-          ? (preferences.scheme as Scheme)
-          : undefined,
-      );
-
       setMePreferences(preferences);
+
+      if (preferences.scheme) {
+        setScheme(
+          schemes.includes(preferences.scheme as Scheme)
+            ? (preferences.scheme as Scheme)
+            : undefined,
+        );
+      }
     },
     [setMePreferences, setScheme],
   );
@@ -111,35 +112,8 @@ export const useMe = () => {
   };
 };
 
-export const useMeLoader = () => {
-  const { me, updateMe, updateMePreferences } = useMe();
-  const {
-    data: meResponse,
-    refetch: loadMe$,
-    isPending,
-    error,
-  } = useAccountMeQuery();
-
-  useEffect(() => {
-    if (meResponse) {
-      updateMe(meResponse);
-
-      if (meResponse.preferences) {
-        void updateMePreferences(meResponse.preferences);
-      }
-    }
-  }, [updateMe, updateMePreferences, meResponse]);
-
-  return {
-    loadMe$,
-    me,
-    loading: isPending,
-    loadError: error,
-  };
-};
-
-export const useMeUpdater = () => {
-  const { me, updateMe, setMeStats, updateMePreferences } = useMe();
+export const useCurrentAccountUpdater = () => {
+  const { me, updateMe, setMeStats, updateMePreferences } = useCurrentAccount();
   const {
     mutateAsync: updatePreferences,
     isPending: arePreferencesUpdating,

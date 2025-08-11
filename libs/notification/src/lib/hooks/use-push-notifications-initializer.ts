@@ -10,7 +10,7 @@ import {
 import Constants from 'expo-constants';
 import { ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
 import { useAccountUpdateDeviceQuery } from '@symbiot-core-apps/api';
-import { useMe } from '@symbiot-core-apps/state';
+import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { isDevice } from 'expo-device';
 
 export const usePushNotificationsInitializer = ({
@@ -18,7 +18,7 @@ export const usePushNotificationsInitializer = ({
 }: {
   onPermissionsDenied: () => void;
 }) => {
-  const { me } = useMe();
+  const { me } = useCurrentAccount();
   const { mutateAsync } = useAccountUpdateDeviceQuery();
 
   const init = useCallback(async () => {

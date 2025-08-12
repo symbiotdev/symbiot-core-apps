@@ -2,7 +2,6 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Account, UpdateAccountData } from '../types/account';
 import { requestWithAlertOnError } from '../utils/request';
-import { ImagePickerAsset } from 'expo-image-picker';
 import { generateFormData } from '../utils/media';
 
 export enum AccountQueryKey {
@@ -18,19 +17,11 @@ export const useAccountMeQuery = ({ enabled }: { enabled: boolean }) =>
 
 export const useAccountMeUpdate = () =>
   useMutation<Account, string, UpdateAccountData>({
-    mutationFn: (data) =>
-      requestWithAlertOnError(axios.put('/api/account/me', data)),
-  });
-
-export const useAccountMeAvatarUpdate = () =>
-  useMutation<Account, string, ImagePickerAsset>({
-    mutationFn: async (avatar) =>
+    mutationFn: async (data) =>
       requestWithAlertOnError(
         axios.put(
-          '/api/account/me/avatar',
-          await generateFormData<{ avatar: ImagePickerAsset }>({ avatar }, [
-            'avatar',
-          ]),
+          '/api/account/me',
+          await generateFormData<UpdateAccountData>(data, ['avatar']),
         ),
       ),
   });

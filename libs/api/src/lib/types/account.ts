@@ -3,6 +3,7 @@ import { AppLanguage } from '@symbiot-core-apps/i18n';
 import { Phone } from './phone';
 import { Link } from './link';
 import { Gender } from './gender';
+import { ImagePickerAsset } from 'expo-image-picker';
 
 export type Account = {
   id: string;
@@ -37,4 +38,5 @@ export type UpdateAccountData = {
   phones?: Phone[];
   links?: Omit<Link, 'id'>[];
   genderId?: string | null;
+  avatar?: ImagePickerAsset;
 };

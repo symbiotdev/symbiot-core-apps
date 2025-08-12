@@ -2,7 +2,6 @@ import {
   Account,
   AccountPreferences,
   UpdateAccountData,
-  useAccountMeAvatarUpdate,
   useAccountMeRemoveAvatar,
   useAccountMeUpdate,
   useUpdateAccountPreferencesQuery,
@@ -128,7 +127,7 @@ export const useCurrentAccountUpdater = () => {
     mutateAsync: updateAvatar,
     isPending: isAvatarUpdating,
     error: updateAvatarError,
-  } = useAccountMeAvatarUpdate();
+  } = useAccountMeUpdate();
   const {
     mutateAsync: removeAvatar,
     isPending: isAvatarRemoving,
@@ -141,7 +140,8 @@ export const useCurrentAccountUpdater = () => {
   );
 
   const updateAvatar$ = useCallback(
-    async (image: ImagePickerAsset) => updateMe(await updateAvatar(image)),
+    async (avatar: ImagePickerAsset) =>
+      updateMe(await updateAvatar({ avatar })),
     [updateAvatar, updateMe],
   );
 

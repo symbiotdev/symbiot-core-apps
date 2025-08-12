@@ -19,6 +19,7 @@ export function Survey<V extends object>({
   introTitle,
   introSubtitle,
   introActionLabel,
+  ignoreLeaveConfirmation,
   loading,
   onFinish: onEmitFinish,
 }: {
@@ -28,6 +29,7 @@ export function Survey<V extends object>({
   introActionLabel: string;
   introIconName: IconName;
   loading?: boolean;
+  ignoreLeaveConfirmation?: boolean;
   onFinish: (value: V) => void;
 }) {
   const { t } = useT();
@@ -78,7 +80,7 @@ export function Survey<V extends object>({
 
   const onLeave = useCallback(
     (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
-      if (!currentStepId) return;
+      if (!currentStepId || ignoreLeaveConfirmation) return;
 
       e.preventDefault();
 
@@ -88,7 +90,7 @@ export function Survey<V extends object>({
         callback: () => navigation.dispatch(e.data.action),
       });
     },
-    [currentStepId, t, navigation],
+    [currentStepId, ignoreLeaveConfirmation, t, navigation],
   );
 
   const onChange = useCallback(

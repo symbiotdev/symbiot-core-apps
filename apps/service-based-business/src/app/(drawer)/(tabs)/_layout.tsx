@@ -15,7 +15,7 @@ import { PlusActionModal } from '../../../components/tabs/plus-action-modal';
 import { Icons } from '../../../icons/config';
 import { useT } from '@symbiot-core-apps/i18n';
 import { useCountNewNotifications } from '@symbiot-core-apps/api';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
 const HelloHeaderLeft = () => {
   const { t } = useT();
@@ -46,12 +46,7 @@ export default () => {
   const screenOptions = useTabsScreenOptions();
   const { data: countNewNotifications } = useCountNewNotifications();
   const { stats, setMeStats } = useCurrentAccount();
-  const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
-
-  const hasBrand = useMemo(
-    () => !!currentBrand || !!currentBrands?.length,
-    [currentBrand, currentBrands?.length],
-  );
+  const { brand: currentBrand } = useCurrentBrandState();
 
   useEffect(() => {
     if (countNewNotifications) {
@@ -64,7 +59,7 @@ export default () => {
   return (
     <>
       <Tabs screenOptions={screenOptions}>
-        <Tabs.Protected guard={!hasBrand}>
+        <Tabs.Protected guard={!currentBrand}>
           <Tabs.Screen
             name="actions/index"
             options={{
@@ -84,7 +79,7 @@ export default () => {
           />
         </Tabs.Protected>
 
-        <Tabs.Protected guard={hasBrand}>
+        <Tabs.Protected guard={!!currentBrand}>
           <Tabs.Screen
             name="home/index"
             options={{

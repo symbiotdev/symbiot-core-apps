@@ -1,16 +1,7 @@
-import {
-  AccountAuthTokens,
-  Brand,
-  BrandQueryKey,
-  NotificationQueryKey,
-  queryClient,
-  useAuthTokens,
-} from '@symbiot-core-apps/api';
+import { Brand } from '@symbiot-core-apps/api';
 import { create } from 'zustand/index';
 import { devtools, persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
-import { useCallback } from 'react';
-import { useNotificationsState } from './use-notifications.state';
 
 type CurrentBrandState = {
   brand?: Brand;
@@ -40,38 +31,3 @@ export const useCurrentBrandState = create<CurrentBrandState>()(
     ),
   ),
 );
-
-export const useCurrentBrandSwitcher = () => {
-  const { clear: clearNotifications } = useNotificationsState();
-  const { setTokens } = useAuthTokens();
-
-  return useCallback(
-    async (tokens: AccountAuthTokens) => {
-      setTokens(tokens);
-      clearNotifications();
-
-      await new Promise<void>((resolve) => {
-        setTimeout(async () => {
-          try {
-            await Promise.all([
-              queryClient.refetchQueries({
-                queryKey: [BrandQueryKey.current],
-              }),
-              queryClient.refetchQueries({
-                queryKey: [NotificationQueryKey.countNew],
-              }),
-              queryClient.resetQueries({
-                queryKey: [NotificationQueryKey.getList],
-              }),
-            ]);
-          } finally {
-            resolve();
-          }
-        }, 500);
-      });
-
-      return;
-    },
-    [clearNotifications, setTokens],
-  );
-};

@@ -14,6 +14,7 @@ import {
 import { useT } from '@symbiot-core-apps/i18n';
 import { onPressNotification } from '../../utils/notification';
 import { useEffect, useMemo } from 'react';
+import { useBrandAuthState } from '@symbiot-core-apps/brand';
 
 export default () => {
   const { t } = useT();
@@ -32,6 +33,7 @@ export default () => {
   const { data: currentBrandResponse } = useCurrentBrandQuery({
     enabled: !!tokens.access,
   });
+  const { processing: authProcessing } = useBrandAuthState();
 
   const loaded = useMemo(
     () => !!me && !!(currentBrand || currentBrands),
@@ -73,78 +75,88 @@ export default () => {
         onPressNotification={onPressNotification}
       >
         <Stack screenOptions={headerScreenOptions}>
-          <Stack.Protected guard={!loaded}>
-            <Stack.Screen name="verifying/index" />
+          <Stack.Protected guard={authProcessing}>
+            <Stack.Screen name="brand/auth" />
           </Stack.Protected>
 
-          <Stack.Protected guard={loaded}>
-            <Stack.Screen
-              name="(tabs)"
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="brand/create"
-              options={{
-                gestureEnabled: false,
-              }}
-            />
-            <Stack.Screen
-              name="follow-us/index"
-              options={{
-                headerTitle: t('follow_us'),
-              }}
-            />
-            <Stack.Screen
-              name="help-feedback/index"
-              options={{
-                headerTitle: t('faq.title'),
-              }}
-            />
-            <Stack.Screen
-              name="notifications/index"
-              options={{
-                headerTitle: t('notifications.title'),
-              }}
-            />
-            <Stack.Screen
-              name="preferences/account/index"
-              options={{
-                headerTitle: t('profile'),
-              }}
-            />
-            <Stack.Screen name="preferences/account/remove" />
-            <Stack.Screen
-              name="preferences/appearance/index"
-              options={{
-                headerTitle: t('preferences.appearance.title'),
-              }}
-            />
-            <Stack.Screen
-              name="preferences/calendar/index"
-              options={{
-                headerTitle: t('preferences.calendar.title'),
-              }}
-            />
-            <Stack.Screen
-              name="preferences/language/index"
-              options={{
-                headerTitle: t('preferences.language.title'),
-              }}
-            />
-            <Stack.Screen
-              name="preferences/notifications/index"
-              options={{
-                headerTitle: t('preferences.notifications.title'),
-              }}
-            />
-            <Stack.Screen
-              name="terms-privacy/index"
-              options={{
-                headerTitle: t('docs.terms_privacy'),
-              }}
-            />
+          <Stack.Protected guard={!authProcessing}>
+            <Stack.Protected guard={!loaded}>
+              <Stack.Screen name="verifying/index" />
+            </Stack.Protected>
+
+            <Stack.Protected guard={loaded}>
+              <Stack.Screen
+                name="(tabs)"
+                options={{
+                  headerShown: false,
+                }}
+              />
+
+              <Stack.Protected guard={!!currentBrands && !currentBrands.length}>
+                <Stack.Screen
+                  name="brand/create"
+                  options={{
+                    gestureEnabled: false,
+                  }}
+                />
+              </Stack.Protected>
+
+              <Stack.Screen
+                name="follow-us/index"
+                options={{
+                  headerTitle: t('follow_us'),
+                }}
+              />
+              <Stack.Screen
+                name="help-feedback/index"
+                options={{
+                  headerTitle: t('faq.title'),
+                }}
+              />
+              <Stack.Screen
+                name="notifications/index"
+                options={{
+                  headerTitle: t('notifications.title'),
+                }}
+              />
+              <Stack.Screen
+                name="preferences/account/index"
+                options={{
+                  headerTitle: t('profile'),
+                }}
+              />
+              <Stack.Screen name="preferences/account/remove" />
+              <Stack.Screen
+                name="preferences/appearance/index"
+                options={{
+                  headerTitle: t('preferences.appearance.title'),
+                }}
+              />
+              <Stack.Screen
+                name="preferences/calendar/index"
+                options={{
+                  headerTitle: t('preferences.calendar.title'),
+                }}
+              />
+              <Stack.Screen
+                name="preferences/language/index"
+                options={{
+                  headerTitle: t('preferences.language.title'),
+                }}
+              />
+              <Stack.Screen
+                name="preferences/notifications/index"
+                options={{
+                  headerTitle: t('preferences.notifications.title'),
+                }}
+              />
+              <Stack.Screen
+                name="terms-privacy/index"
+                options={{
+                  headerTitle: t('docs.terms_privacy'),
+                }}
+              />
+            </Stack.Protected>
           </Stack.Protected>
         </Stack>
       </NotificationsProvider>

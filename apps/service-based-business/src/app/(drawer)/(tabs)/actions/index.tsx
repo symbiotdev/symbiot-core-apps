@@ -1,4 +1,7 @@
-import { useCurrentAccount } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccount,
+  useCurrentBrandState,
+} from '@symbiot-core-apps/state';
 import { useT } from '@symbiot-core-apps/i18n';
 import { useCallback, useState } from 'react';
 import {
@@ -15,17 +18,16 @@ import { View } from 'tamagui';
 import { router } from 'expo-router';
 import { Icons } from '../../../../icons/config';
 import { emitHaptic } from '@symbiot-core-apps/shared';
+import { MyBrandsSelectionList } from '@symbiot-core-apps/brand';
 
 export default () => {
   const { me } = useCurrentAccount();
   const { t } = useT();
+  const { brands: currentBrands } = useCurrentBrandState();
 
   const [qrCodeVisible, setQrCodeVisible] = useState(false);
 
-  const createBrand = useCallback(
-    () => router.navigate('/brand/create'),
-    [],
-  );
+  const createBrand = useCallback(() => router.navigate('/brand/create'), []);
 
   const onOpenQrCodeModal = useCallback(() => {
     emitHaptic();
@@ -37,9 +39,11 @@ export default () => {
   }, []);
 
   return (
-    me && (
-      <>
-        <TabsPageView withHeaderHeight scrollable gap="$5" alignItems="center">
+    <>
+      <TabsPageView withHeaderHeight scrollable gap="$5" alignItems="center">
+        {currentBrands?.length ? (
+          <MyBrandsSelectionList />
+        ) : (
           <FormView gap="$6">
             <View gap="$2">
               <H2>
@@ -86,15 +90,17 @@ export default () => {
               onActionPress={onOpenQrCodeModal}
             />
           </FormView>
-        </TabsPageView>
+        )}
+      </TabsPageView>
 
+      {me && (
         <QrCodeModal
           visible={qrCodeVisible}
           qrValue={me.id}
           qrContent={<RegularText fontSize={30}>🤩</RegularText>}
           onClose={onCloseQrCodeModal}
         />
-      </>
-    )
+      )}
+    </>
   );
 };

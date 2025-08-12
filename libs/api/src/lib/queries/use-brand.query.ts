@@ -23,15 +23,19 @@ export const useCurrentBrandQuery = ({ enabled }: { enabled: boolean }) =>
     queryFn: () => requestWithAlertOnError(axios.get('/api/brand/current')),
   });
 
+export const useBrandAuthQuery = () =>
+  useMutation<{ brand: Brand; tokens: AccountAuthTokens }, string, string>({
+    mutationFn: (id: string) =>
+      requestWithAlertOnError(axios.post(`/api/brand/auth/${id}`)),
+  });
+
 export const useBrandCreateQuery = () =>
-  useMutation<{ brand: Brand; tokens: AccountAuthTokens }, string, CreateBrand>(
-    {
-      mutationFn: async (data) =>
-        requestWithAlertOnError(
-          axios.post(
-            '/api/brand',
-            await generateFormData<CreateBrand>(data, ['avatar']),
-          ),
+  useMutation<Brand, string, CreateBrand>({
+    mutationFn: async (data) =>
+      requestWithAlertOnError(
+        axios.post(
+          '/api/brand',
+          await generateFormData<CreateBrand>(data, ['avatar']),
         ),
-    },
-  );
+      ),
+  });

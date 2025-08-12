@@ -35,6 +35,7 @@ export * from './lib/loading/spinner';
 
 export * from './lib/media/avatar';
 
+export * from './lib/navigation/drawer';
 export * from './lib/navigation/header';
 export * from './lib/navigation/tabs';
 

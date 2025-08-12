@@ -24,8 +24,12 @@ export const MyBrandsSelectionList = () => {
           pressStyle={{ opacity: 0.8 }}
           onPress={() => {
             emitHaptic();
-            void switchBrand({ id: brand.id });
-            router.replace('/brand/auth');
+
+            switchBrand({ id: brand.id }).finally(() => {
+              router.replace('/');
+            });
+
+            router.replace('/');
           }}
         >
           <Avatar

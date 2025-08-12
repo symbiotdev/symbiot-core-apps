@@ -39,7 +39,7 @@ export const useTabsScreenOptions = () => {
       ({
         ...headerOptions,
         title: '',
-        animation: 'shift',
+        animation: Platform.OS === 'web' ? 'fade' : 'shift',
         tabBarStyle: {
           borderTopWidth: 0,
           ...(Platform.OS !== 'android' && {

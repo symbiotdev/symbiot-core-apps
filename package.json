@@ -19,6 +19,7 @@
     "@react-native-google-signin/google-signin": "^15.0.0",
     "@react-native-picker/picker": "^2.11.1",
     "@react-navigation/bottom-tabs": "^7.3.10",
+    "@react-navigation/drawer": "^7.5.7",
     "@react-navigation/elements": "^2.5.2",
     "@react-navigation/native": "^7.1.6",
     "@symbiot.dev/react-native-heatmap": "^1.0.0",

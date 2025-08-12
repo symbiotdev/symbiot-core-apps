@@ -10,7 +10,7 @@ import { getApp, getEnv, getExportCommand, mergeAppAssets } from './app.mjs';
 
   await mergeAppAssets(app, buildApp, env);
 
-  spawn(getExportCommand(app), {
+  spawn(getExportCommand(buildApp), {
     stdio: 'inherit',
     shell: true,
   });

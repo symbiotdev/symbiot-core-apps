@@ -9,7 +9,7 @@ export default () => {
   const headerScreenOptions = useStackScreenHeaderOptions();
 
   if (tokens.access) {
-    return <Redirect href="/verifying" />;
+    return <Redirect href="/home" />;
   }
 
   return (

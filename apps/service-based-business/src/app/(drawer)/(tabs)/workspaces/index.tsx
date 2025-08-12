@@ -1,9 +1,26 @@
-import { H2, PageView } from '@symbiot-core-apps/ui';
+import { Avatar, H2, TabsPageView } from '@symbiot-core-apps/ui';
+import { View } from 'tamagui';
+import { useCurrentBrandState } from '@symbiot-core-apps/state';
 
 export default () => {
+  const { brand } = useCurrentBrandState();
+
   return (
-    <PageView>
-      <H2 margin="auto">Workspaces</H2>
-    </PageView>
+    <TabsPageView>
+      {!!brand && (
+        <View margin="auto" alignItems="center" gap="$2">
+          <Avatar
+            name={brand.name}
+            size={80}
+            url={brand.avatarXsUrl}
+            color={brand.avatarColor}
+          />
+
+          <H2 numberOfLines={1} flex={1} textAlign="center">
+            {brand.name}
+          </H2>
+        </View>
+      )}
+    </TabsPageView>
   );
 };

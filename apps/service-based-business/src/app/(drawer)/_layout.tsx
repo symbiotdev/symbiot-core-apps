@@ -76,12 +76,18 @@ export default () => {
       >
         <Stack screenOptions={headerScreenOptions}>
           <Stack.Protected guard={authProcessing}>
-            <Stack.Screen name="brand/auth" />
+            <Stack.Screen
+              name="brand/auth"
+              options={{ headerShown: false, gestureEnabled: false }}
+            />
           </Stack.Protected>
 
           <Stack.Protected guard={!authProcessing}>
             <Stack.Protected guard={!loaded}>
-              <Stack.Screen name="verifying/index" />
+              <Stack.Screen
+                name="verifying/index"
+                options={{ headerShown: false, gestureEnabled: false }}
+              />
             </Stack.Protected>
 
             <Stack.Protected guard={loaded}>

@@ -37,6 +37,7 @@ import { Widget3 } from './Widget3';
 import { CloseCircle } from './CloseCircle';
 import { Pen } from './Pen';
 import { PaperclipRounded } from './PaperclipRounded';
+import { Login } from './Login';
 
 export const Map: IconMap = {
   AddCircle,
@@ -59,6 +60,7 @@ export const Map: IconMap = {
   Home,
   HomeAdd,
   Letter,
+  Login,
   Logout2,
   MagicStick,
   MenuDotsCircle,

@@ -63,6 +63,7 @@ export const Notifications = ({
           borderRadius="$10"
           padding="$4"
           gap="$4"
+          cursor="pointer"
           flexDirection="row"
           pressStyle={{ opacity: 0.8 }}
           onPress={() => {

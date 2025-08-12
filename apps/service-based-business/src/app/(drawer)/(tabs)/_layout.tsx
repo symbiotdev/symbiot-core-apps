@@ -1,4 +1,4 @@
-import { router, Tabs } from 'expo-router';
+import { Redirect, router, Tabs } from 'expo-router';
 import {
   AttentionView,
   H3,
@@ -47,6 +47,7 @@ export default () => {
   const { data: countNewNotifications } = useCountNewNotifications();
   const { stats, setMeStats } = useCurrentAccount();
   const { brand: currentBrand } = useCurrentBrandState();
+  const { me } = useCurrentAccount();
 
   useEffect(() => {
     if (countNewNotifications) {
@@ -55,6 +56,10 @@ export default () => {
       });
     }
   }, [countNewNotifications]);
+
+  if (!me) {
+    return <Redirect href="/verifying" />;
+  }
 
   return (
     <>
@@ -68,7 +73,7 @@ export default () => {
               tabBarIcon: ({ color, size, focused }) => (
                 <AttentionView attention={!!stats.newNotifications}>
                   <Icon
-                    name={Icons.Home}
+                    name={Icons.Workspace}
                     color={color}
                     size={size}
                     type={focused ? 'SolarBold' : undefined}

@@ -12,6 +12,7 @@
     "@react-navigation/bottom-tabs": "*",
     "@react-navigation/elements": "*",
     "@react-navigation/native": "*",
+    "@react-navigation/drawer": "*",
     "@react-native-firebase/app": "*",
     "@react-native-firebase/auth": "*",
     "@react-native-google-signin/google-signin": "*",

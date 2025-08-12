@@ -1,5 +1,4 @@
-import { Redirect, Stack } from 'expo-router';
-import { useStackScreenHeaderOptions } from '@symbiot-core-apps/ui';
+import { Redirect } from 'expo-router';
 import { NotificationsProvider } from '@symbiot-core-apps/notification';
 import {
   StateProvider,
@@ -11,34 +10,35 @@ import {
   useAuthTokens,
   useCurrentBrandQuery,
 } from '@symbiot-core-apps/api';
-import { useT } from '@symbiot-core-apps/i18n';
 import { onPressNotification } from '../../utils/notification';
-import { useEffect, useMemo } from 'react';
-import { useBrandAuthState } from '@symbiot-core-apps/brand';
+import { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Drawer } from 'expo-router/drawer';
+import { DrawerMenu } from '../../components/drawer/menu';
+import { useWindowDimensions } from 'react-native';
+import { useInitializing } from '../../hooks/use-initializing';
+import { useDrawer, useDrawerState } from '@symbiot-core-apps/ui';
 
 export default () => {
-  const { t } = useT();
-  const headerScreenOptions = useStackScreenHeaderOptions();
-  const { me, updateMe, updateMePreferences } = useCurrentAccount();
   const { tokens, setTokens } = useAuthTokens();
-  const {
-    brand: currentBrand,
-    brands: currentBrands,
-    setBrand: setCurrentBrand,
-    setBrands: setCurrentBrands,
-  } = useCurrentBrandState();
+  const { compressed } = useDrawerState();
+  const { setBrand: setCurrentBrand, setBrands: setCurrentBrands } =
+    useCurrentBrandState();
+  const initializing = useInitializing();
+  const { width } = useWindowDimensions();
+  const { updateMe, updateMePreferences } = useCurrentAccount();
   const { data: meResponse } = useAccountMeQuery({
     enabled: !!tokens.access,
   });
   const { data: currentBrandResponse } = useCurrentBrandQuery({
     enabled: !!tokens.access,
   });
-  const { processing: authProcessing } = useBrandAuthState();
-
-  const loaded = useMemo(
-    () => !!me && !!(currentBrand || currentBrands),
-    [me, currentBrand, currentBrands],
-  );
+  const {
+    headerShown,
+    available: drawerAvailable,
+    type: drawerType,
+    permanent: drawerPermanent,
+  } = useDrawer();
 
   useEffect(() => {
     if (meResponse) {
@@ -74,97 +74,39 @@ export default () => {
         soundSource={require('../../../assets/audio/new_notification_sound.wav')}
         onPressNotification={onPressNotification}
       >
-        <Stack screenOptions={headerScreenOptions}>
-          <Stack.Protected guard={authProcessing}>
-            <Stack.Screen
-              name="brand/auth"
-              options={{ headerShown: false, gestureEnabled: false }}
-            />
-          </Stack.Protected>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Drawer
+            drawerContent={DrawerMenu}
+            screenOptions={{
+              drawerType,
+              headerShadowVisible: false,
+              swipeEnabled: false,
+              headerShown,
+              drawerStyle: {
+                display: !drawerAvailable || initializing ? 'none' : undefined,
+                width:
+                  compressed && drawerPermanent
+                    ? 100
+                    : Math.min(width - 100, 250),
+                borderRightWidth: 0,
+                // eslint-disable-next-line
+                // @ts-ignore
+                transition: '0.25s',
+              },
+            }}
+          >
+            <Drawer.Protected guard={!initializing}>
+              <Drawer.Screen name="(stack)" />
+            </Drawer.Protected>
 
-          <Stack.Protected guard={!authProcessing}>
-            <Stack.Protected guard={!loaded}>
-              <Stack.Screen
-                name="verifying/index"
-                options={{ headerShown: false, gestureEnabled: false }}
+            <Drawer.Protected guard={initializing}>
+              <Drawer.Screen
+                name="initializing/index"
+                options={{ headerShown: false }}
               />
-            </Stack.Protected>
-
-            <Stack.Protected guard={loaded}>
-              <Stack.Screen
-                name="(tabs)"
-                options={{
-                  headerShown: false,
-                }}
-              />
-
-              <Stack.Protected guard={!!currentBrands && !currentBrands.length}>
-                <Stack.Screen
-                  name="brand/create"
-                  options={{
-                    gestureEnabled: false,
-                  }}
-                />
-              </Stack.Protected>
-
-              <Stack.Screen
-                name="follow-us/index"
-                options={{
-                  headerTitle: t('follow_us'),
-                }}
-              />
-              <Stack.Screen
-                name="help-feedback/index"
-                options={{
-                  headerTitle: t('faq.title'),
-                }}
-              />
-              <Stack.Screen
-                name="notifications/index"
-                options={{
-                  headerTitle: t('notifications.title'),
-                }}
-              />
-              <Stack.Screen
-                name="preferences/account/index"
-                options={{
-                  headerTitle: t('profile'),
-                }}
-              />
-              <Stack.Screen name="preferences/account/remove" />
-              <Stack.Screen
-                name="preferences/appearance/index"
-                options={{
-                  headerTitle: t('preferences.appearance.title'),
-                }}
-              />
-              <Stack.Screen
-                name="preferences/calendar/index"
-                options={{
-                  headerTitle: t('preferences.calendar.title'),
-                }}
-              />
-              <Stack.Screen
-                name="preferences/language/index"
-                options={{
-                  headerTitle: t('preferences.language.title'),
-                }}
-              />
-              <Stack.Screen
-                name="preferences/notifications/index"
-                options={{
-                  headerTitle: t('preferences.notifications.title'),
-                }}
-              />
-              <Stack.Screen
-                name="terms-privacy/index"
-                options={{
-                  headerTitle: t('docs.terms_privacy'),
-                }}
-              />
-            </Stack.Protected>
-          </Stack.Protected>
-        </Stack>
+            </Drawer.Protected>
+          </Drawer>
+        </GestureHandlerRootView>
       </NotificationsProvider>
     </StateProvider>
   );

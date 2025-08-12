@@ -1,16 +1,12 @@
 import { Slot } from 'expo-router';
-import { useCallback, useLayoutEffect } from 'react';
+import { useCallback } from 'react';
 import { ApiProvider, useAuthTokens } from '@symbiot-core-apps/api';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { Toaster } from 'burnt/web';
 import { unlockAsync } from 'expo-screen-orientation';
 import { Platform } from 'react-native';
 import { ThemeProvider, useFixelFont } from '@symbiot-core-apps/theme';
-import {
-  hideAsync,
-  preventAutoHideAsync,
-  setOptions,
-} from 'expo-splash-screen';
+import { preventAutoHideAsync, setOptions } from 'expo-splash-screen';
 import { ErrorView } from '@symbiot-core-apps/ui';
 import { darkTheme, lightTheme } from '../theme/config';
 import { I18nProvider } from '@symbiot-core-apps/i18n';
@@ -42,25 +38,12 @@ export default () => {
         <KeyboardProvider>
           <I18nProvider>
             <ThemeProvider darkTheme={darkTheme} lightTheme={lightTheme}>
-              <Body />
+              <Slot />
+              <Toaster position="top-right" />
             </ThemeProvider>
           </I18nProvider>
         </KeyboardProvider>
       </ApiProvider>
     )
-  );
-};
-
-const Body = () => {
-  useLayoutEffect(() => {
-    void hideAsync();
-  }, []);
-
-  return (
-    <>
-      <Slot />
-
-      <Toaster position="top-right" />
-    </>
   );
 };

@@ -1,4 +1,4 @@
-export * from './lib/hooks/use-account-notifications.state';
+export * from './lib/hooks/use-notifications.state';
 export * from './lib/hooks/use-app-theme.state';
 
 export * from './lib/hooks/use-current-account.state';

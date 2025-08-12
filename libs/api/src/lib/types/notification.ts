@@ -1,14 +1,14 @@
 import { Account } from './account';
 
-export enum AccountNotificationType {
+export enum NotificationType {
   welcome = 'welcome',
   reminder = 'reminder',
 }
 
-export type AccountNotification = {
+export type Notification = {
   id: string;
   from: Account;
-  type: AccountNotificationType;
+  type: NotificationType;
   title: string;
   subtitle: string;
   read: boolean;

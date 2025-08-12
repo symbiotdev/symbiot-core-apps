@@ -14,7 +14,7 @@ import {
 import { PlusActionModal } from '../../../components/tabs/plus-action-modal';
 import { Icons } from '../../../icons/config';
 import { useT } from '@symbiot-core-apps/i18n';
-import { useAccountCountNewNotifications } from '@symbiot-core-apps/api';
+import { useCountNewNotifications } from '@symbiot-core-apps/api';
 import { useEffect, useMemo } from 'react';
 
 const HelloHeaderLeft = () => {
@@ -44,7 +44,7 @@ const NotificationsHeaderButton = () => {
 
 export default () => {
   const screenOptions = useTabsScreenOptions();
-  const { data: countNewNotifications } = useAccountCountNewNotifications();
+  const { data: countNewNotifications } = useCountNewNotifications();
   const { stats, setMeStats } = useCurrentAccount();
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
 

@@ -1,28 +1,26 @@
-import { AccountNotification, PaginationList } from '@symbiot-core-apps/api';
+import { Notification, PaginationList } from '@symbiot-core-apps/api';
 import { create } from 'zustand/index';
 import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 
-type AccountNotificationsState = {
-  notifications?: PaginationList<AccountNotification>;
+type NotificationsState = {
+  notifications?: PaginationList<Notification>;
   clear: () => void;
-  add: (notification: AccountNotification) => void;
-  setNotifications: (list: PaginationList<AccountNotification>) => void;
+  add: (notification: Notification) => void;
+  setNotifications: (list: PaginationList<Notification>) => void;
 };
 
-export const useAccountNotificationsState = create<AccountNotificationsState>()(
-  persist<AccountNotificationsState>(
+export const useNotificationsState = create<NotificationsState>()(
+  persist<NotificationsState>(
     (set, get) => ({
-      clear: () => {
+      clear: () =>
         set({
           notifications: undefined,
-        });
-      },
-      setNotifications: (notifications) => {
+        }),
+      setNotifications: (notifications) =>
         set({
           notifications,
-        });
-      },
+        }),
       add: (notification) => {
         const { notifications } = get();
 
@@ -40,7 +38,7 @@ export const useAccountNotificationsState = create<AccountNotificationsState>()(
       },
     }),
     {
-      name: 'symbiot-account-notifications',
+      name: 'symbiot-notifications',
       storage: createZustandStorage(),
     },
   ),

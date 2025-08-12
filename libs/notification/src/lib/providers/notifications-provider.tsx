@@ -1,5 +1,5 @@
 import { createContext, PropsWithChildren, useCallback } from 'react';
-import { AccountNotification } from '@symbiot-core-apps/api';
+import { Notification } from '@symbiot-core-apps/api';
 import { usePushNotificationsObserver } from '../hooks/use-push-notifications-observer';
 import { usePushNotificationsInitializer } from '../hooks/use-push-notifications-initializer';
 import { usePushNotificationsPreferences } from '../hooks/use-push-notifications-preferences';
@@ -14,7 +14,7 @@ export const NotificationsProvider = ({
   onPressNotification,
 }: PropsWithChildren<{
   soundSource: AudioSource;
-  onPressNotification: (notification: AccountNotification) => void;
+  onPressNotification: (notification: Notification) => void;
 }>) => {
   const onPermissionsDenied = useCallback(() => {
     // todo

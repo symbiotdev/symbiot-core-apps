@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { AccountNotification } from '../types/account-notification';
+import { Notification } from '../types/notification';
 import {
   requestWithAlertOnError,
   requestWithStringError,
@@ -12,23 +12,23 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { queryClient } from '../utils/client';
 
 export enum NotificationQueryKey {
-  countNew = 'account-notification-count-new',
-  getList = 'account-notification',
+  countNew = 'notifications-count-new',
+  getList = 'notifications-list',
 }
 
-export const useAccountNotificationQueryState = () => {
+export const useNotificationQueryState = () => {
   const getListState = useCallback(
     () =>
       queryClient.getQueryData<
-        InfiniteData<PaginationList<AccountNotification>>
+        InfiniteData<PaginationList<Notification>>
       >([NotificationQueryKey.getList]),
     [],
   );
 
   const setListState = useCallback(
-    (data: InfiniteData<PaginationList<AccountNotification>> | undefined) =>
+    (data: InfiniteData<PaginationList<Notification>> | undefined) =>
       queryClient.setQueryData<
-        InfiniteData<PaginationList<AccountNotification>>
+        InfiniteData<PaginationList<Notification>>
       >([NotificationQueryKey.getList], data),
     [],
   );
@@ -36,7 +36,7 @@ export const useAccountNotificationQueryState = () => {
   const clearListCache = useCallback(
     () =>
       queryClient.setQueryData<
-        InfiniteData<PaginationList<AccountNotification>>
+        InfiniteData<PaginationList<Notification>>
       >(
         [NotificationQueryKey.getList],
         (data) =>
@@ -48,8 +48,8 @@ export const useAccountNotificationQueryState = () => {
     [],
   );
 
-  const addToList = useCallback((notification: AccountNotification) => {
-    queryClient.setQueryData<InfiniteData<PaginationList<AccountNotification>>>(
+  const addToList = useCallback((notification: Notification) => {
+    queryClient.setQueryData<InfiniteData<PaginationList<Notification>>>(
       [NotificationQueryKey.getList],
       (data) =>
         data && {
@@ -67,7 +67,7 @@ export const useAccountNotificationQueryState = () => {
   }, []);
 
   const markAllAsRead = useCallback(() => {
-    queryClient.setQueryData<InfiniteData<PaginationList<AccountNotification>>>(
+    queryClient.setQueryData<InfiniteData<PaginationList<Notification>>>(
       [NotificationQueryKey.getList],
       (data) =>
         data && {
@@ -92,28 +92,28 @@ export const useAccountNotificationQueryState = () => {
   };
 };
 
-export const useAccountCountNewNotifications = () =>
+export const useCountNewNotifications = () =>
   useQuery<{ count: number }, void>({
     queryKey: [NotificationQueryKey.countNew],
     queryFn: () =>
-      requestWithStringError(axios.get('/api/account-notification/new/count')),
+      requestWithStringError(axios.get('/api/notification/new/count')),
   });
 
-export const useAccountNotificationLoader = ({
+export const useNotificationLoader = ({
   initialState,
   setInitialState,
 }: {
-  initialState?: PaginationList<AccountNotification>;
-  setInitialState?: (state: PaginationList<AccountNotification>) => void;
+  initialState?: PaginationList<Notification>;
+  setInitialState?: (state: PaginationList<Notification>) => void;
 } = {}) => {
-  const { clearListCache } = useAccountNotificationQueryState();
+  const { clearListCache } = useNotificationQueryState();
 
   const query = useInfiniteQuery<
-    PaginationList<AccountNotification>,
+    PaginationList<Notification>,
     string,
-    InfiniteData<PaginationList<AccountNotification>>,
+    InfiniteData<PaginationList<Notification>>,
     QueryKey,
-    AccountNotification | undefined
+    Notification | undefined
   >({
     getNextPageParam,
     refetchOnMount: false,
@@ -121,7 +121,7 @@ export const useAccountNotificationLoader = ({
     queryKey: [NotificationQueryKey.getList],
     queryFn: ({ pageParam }) =>
       requestWithStringError(
-        axios.get('/api/account-notification', {
+        axios.get('/api/notification', {
           params: pageParam && {
             after: {
               id: pageParam.id,
@@ -164,9 +164,9 @@ export const useAccountNotificationLoader = ({
   };
 };
 
-export const useAccountNotificationsReadQuery = () => {
+export const useNotificationsReadQuery = () => {
   const { markAllAsRead, getListState, setListState } =
-    useAccountNotificationQueryState();
+    useNotificationQueryState();
 
   return useMutation({
     mutationFn: async () => {
@@ -174,7 +174,7 @@ export const useAccountNotificationsReadQuery = () => {
 
       try {
         await requestWithAlertOnError(
-          axios.put('/api/account-notification/read'),
+          axios.put('/api/notification/read'),
         );
 
         markAllAsRead();

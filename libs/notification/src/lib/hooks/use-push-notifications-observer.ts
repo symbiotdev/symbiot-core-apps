@@ -8,7 +8,7 @@ import {
 } from 'expo-notifications';
 import { isDevice } from 'expo-device';
 import { Platform } from 'react-native';
-import { AccountNotification } from '@symbiot-core-apps/api';
+import { Notification } from '@symbiot-core-apps/api';
 import { persist } from 'zustand/middleware';
 import { create } from 'zustand';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
@@ -54,7 +54,7 @@ const determineNextResponse = (
 export const usePushNotificationsObserver = ({
   onPressNotification,
 }: {
-  onPressNotification?: (notification: AccountNotification) => void;
+  onPressNotification?: (notification: Notification) => void;
 } = {}) => {
   const {
     id: lastPushNotificationIdentifier,
@@ -78,7 +78,7 @@ export const usePushNotificationsObserver = ({
           return;
         }
 
-        onPressNotification?.(request.content.data as AccountNotification);
+        onPressNotification?.(request.content.data as Notification);
         setLastPushNotificationIdentifier(identifier);
       }
     },

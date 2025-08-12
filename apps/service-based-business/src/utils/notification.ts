@@ -1,15 +1,15 @@
 import {
-  AccountNotification,
-  AccountNotificationType,
+  Notification,
+  NotificationType,
 } from '@symbiot-core-apps/api';
 import { router } from 'expo-router';
 
-export const onPressNotification = (notification: AccountNotification) => {
+export const onPressNotification = (notification: Notification) => {
   if (!notification?.type) {
     return;
   }
 
-  if (notification.type === AccountNotificationType.welcome) {
+  if (notification.type === NotificationType.welcome) {
     if (router.canGoBack()) {
       router.back();
     } else {

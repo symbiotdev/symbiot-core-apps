@@ -9,12 +9,15 @@ import {
   SemiBoldText,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
-import { useAccountNotificationsState, useCurrentAccount } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccount,
+  useNotificationsState,
+} from '@symbiot-core-apps/state';
 import { useCallback, useEffect } from 'react';
 import {
-  AccountNotification,
-  useAccountNotificationLoader,
-  useAccountNotificationsReadQuery,
+  Notification,
+  useNotificationLoader,
+  useNotificationsReadQuery,
 } from '@symbiot-core-apps/api';
 import { View, XStack } from 'tamagui';
 import { DateHelper, emitHaptic } from '@symbiot-core-apps/shared';
@@ -22,15 +25,15 @@ import { DateHelper, emitHaptic } from '@symbiot-core-apps/shared';
 export const Notifications = ({
   onPressNotification,
 }: {
-  onPressNotification: (notification: AccountNotification) => void;
+  onPressNotification: (notification: Notification) => void;
 }) => {
   const { me, setMeStats } = useCurrentAccount();
   const headerHeight = useScreenHeaderHeight();
-  const { mutateAsync: readAll } = useAccountNotificationsReadQuery();
+  const { mutateAsync: readAll } = useNotificationsReadQuery();
   const {
     notifications: initialNotificationsState,
     setNotifications: setInitialNotificationsState,
-  } = useAccountNotificationsState();
+  } = useNotificationsState();
   const {
     notifications,
     isFetchingNextPage,
@@ -39,7 +42,7 @@ export const Notifications = ({
     error,
     onRefresh,
     onEndReached,
-  } = useAccountNotificationLoader({
+  } = useNotificationLoader({
     initialState: initialNotificationsState,
     setInitialState: setInitialNotificationsState,
   });
@@ -53,7 +56,7 @@ export const Notifications = ({
   }, [setMeStats, readAll]);
 
   const renderItem = useCallback(
-    ({ item }: { item: AccountNotification }) => {
+    ({ item }: { item: Notification }) => {
       return (
         <FormView
           backgroundColor="$background1"

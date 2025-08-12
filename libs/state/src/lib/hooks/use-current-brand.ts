@@ -10,7 +10,7 @@ import { create } from 'zustand/index';
 import { devtools, persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 import { useCallback } from 'react';
-import { useAccountNotificationsState } from './use-account-notifications.state';
+import { useNotificationsState } from './use-notifications.state';
 
 type CurrentBrandState = {
   brand?: Brand;
@@ -42,7 +42,7 @@ export const useCurrentBrandState = create<CurrentBrandState>()(
 );
 
 export const useCurrentBrandSwitcher = () => {
-  const { clear: clearNotifications } = useAccountNotificationsState();
+  const { clear: clearNotifications } = useNotificationsState();
   const { setTokens } = useAuthTokens();
 
   return useCallback(

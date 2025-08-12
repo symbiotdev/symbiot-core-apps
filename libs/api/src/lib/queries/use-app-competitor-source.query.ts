@@ -3,9 +3,13 @@ import axios from 'axios';
 import { ExternalSource } from '../types/external-source';
 import { requestWithStringError } from '../utils/request';
 
+export enum AppCompetitorSourceKey {
+  sources = 'app-competitor-source',
+}
+
 export const useAppCompetitorSource = () =>
   useQuery<ExternalSource[], string>({
-    queryKey: ['app-competitor-source'],
+    queryKey: [AppCompetitorSourceKey.sources],
     queryFn: () =>
       requestWithStringError(axios.get('/api/app-competitor-source')),
   });

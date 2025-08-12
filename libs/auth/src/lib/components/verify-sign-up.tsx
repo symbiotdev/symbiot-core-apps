@@ -1,5 +1,5 @@
 import { ReactElement, useCallback } from 'react';
-import { AuthVerifyView } from './auth-verify-view';
+import { authCodeLength, AuthVerifyView } from './auth-verify-view';
 import {
   useAccountAuthResendSignUpCodeQuery,
   useAccountAuthVerifySignUpQuery,
@@ -24,6 +24,7 @@ export const VerifySignUp = ({ logo }: { logo: ReactElement }) => {
 
   const onChange = useCallback(
     (code: string) =>
+      code.length === authCodeLength &&
       verify({
         code,
         secret,

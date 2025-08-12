@@ -1,4 +1,5 @@
 import { Account } from './account';
+import { Brand } from './brand';
 
 export enum NotificationType {
   welcome = 'welcome',
@@ -7,8 +8,9 @@ export enum NotificationType {
 
 export type Notification = {
   id: string;
-  from: Account;
   type: NotificationType;
+  from: Account;
+  brand?: Brand;
   title: string;
   subtitle: string;
   read: boolean;

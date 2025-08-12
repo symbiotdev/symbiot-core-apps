@@ -4,7 +4,8 @@ import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import { useT } from '@symbiot-core-apps/i18n';
 
-const verifySecondsLimit = 60;
+export const authCodeLength = 6;
+export const verifySecondsLimit = 60;
 
 export const AuthVerifyView = ({
   logo,
@@ -19,7 +20,7 @@ export const AuthVerifyView = ({
   error?: string | null;
   loading?: boolean;
   onResend: () => Promise<void>;
-  onChange: (code: string) => Promise<void>;
+  onChange: (code: string) => false | Promise<void>;
 }) => {
   const { t } = useT();
 
@@ -72,7 +73,11 @@ export const AuthVerifyView = ({
       }
       onButtonPress={resend}
     >
-      <InputCode cellCount={6} disabled={loading} onChange={onChange} />
+      <InputCode
+        cellCount={authCodeLength}
+        disabled={loading}
+        onChange={onChange}
+      />
     </AuthFormView>
   );
 };

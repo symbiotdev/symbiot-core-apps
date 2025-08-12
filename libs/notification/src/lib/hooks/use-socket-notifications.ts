@@ -6,6 +6,7 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   useCurrentAccount,
+  useCurrentBrandState,
   useNotificationsState,
 } from '@symbiot-core-apps/state';
 import { Platform } from 'react-native';
@@ -19,15 +20,13 @@ export const useSocketNotifications = ({
 }) => {
   const soundPlayer = useAudioPlayer(soundSource);
   const { me, setMeStats } = useCurrentAccount();
+  const { brand: currentBrand } = useCurrentBrandState();
   const { add: addToInitialState } = useNotificationsState();
   const { addToList: addToListQueryState, markAllAsRead } =
     useNotificationQueryState();
 
   const onAdded = useCallback(
     (notification: Notification) => {
-      addToInitialState(notification);
-      addToListQueryState(notification);
-
       if (Platform.OS === 'web' && !!me?.preferences?.enableNotificationSound) {
         soundPlayer.play();
 
@@ -37,11 +36,23 @@ export const useSocketNotifications = ({
           duration: 5,
         });
       }
+
+      if (currentBrand?.id !== notification.brand?.id) {
+        return;
+      }
+
+      addToInitialState(notification);
+      addToListQueryState(notification);
+      setMeStats({
+        newNotifications: 1,
+      });
     },
     [
+      currentBrand?.id,
       me?.preferences?.enableNotificationSound,
       addToInitialState,
       addToListQueryState,
+      setMeStats,
       soundPlayer,
     ],
   );

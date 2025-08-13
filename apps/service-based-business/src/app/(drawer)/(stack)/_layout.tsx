@@ -11,11 +11,11 @@ import { useCountNewNotifications } from '@symbiot-core-apps/api';
 
 export default () => {
   const { t } = useT();
-  const screenOptions = useStackScreenHeaderOptions();
-  const { visible: drawerVisible } = useDrawer();
   const { brands: currentBrands } = useCurrentBrandState();
   const { setMeStats } = useCurrentAccount();
+  const { visible: drawerVisible } = useDrawer();
   const { data: countNewNotifications } = useCountNewNotifications();
+  const screenOptions = useStackScreenHeaderOptions();
 
   const nestedScreenAnimation = useMemo(
     () => (drawerVisible ? 'none' : screenOptions.animation),

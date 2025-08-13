@@ -44,9 +44,9 @@ const NotificationsHeaderButton = () => {
 
 export default () => {
   const { brand: currentBrand } = useCurrentBrandState();
-  const screenOptions = useTabsScreenOptions();
-  const { visible: drawerVisible } = useDrawer();
   const { stats } = useCurrentAccount();
+  const { visible: drawerVisible } = useDrawer();
+  const screenOptions = useTabsScreenOptions();
 
   return (
     <Tabs

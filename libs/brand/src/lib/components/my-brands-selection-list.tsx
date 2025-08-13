@@ -25,9 +25,7 @@ export const MyBrandsSelectionList = () => {
           onPress={() => {
             emitHaptic();
 
-            switchBrand({ id: brand.id }).finally(() => {
-              router.replace('/');
-            });
+            void switchBrand({ id: brand.id });
 
             router.replace('/');
           }}

@@ -151,7 +151,6 @@ const Content = ({
           maxWidth={Math.min(600, width) - 40}
         >
           <ScrollView>
-            <H2>Brands</H2>
           </ScrollView>
         </FormView>
       </View>

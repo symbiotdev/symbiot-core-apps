@@ -80,7 +80,7 @@ export default () => {
               title={t('initial_actions.join_workspace.title', {
                 ns: 'app',
               })}
-              subtitle={t('initial_actions.join_workspace.title', {
+              subtitle={t('initial_actions.join_workspace.subtitle', {
                 ns: 'app',
               })}
               buttonLabel={t('initial_actions.join_workspace.button.label', {

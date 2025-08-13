@@ -19,12 +19,14 @@ const Map = {
   SolarOutline,
 } as const;
 
+export const defaultIconSize = 24;
+
 export const Icon = memo(
   ({
     name,
     scalable,
     color,
-    size = 24,
+    size = defaultIconSize,
     type = 'SolarLinear',
     style,
   }: {

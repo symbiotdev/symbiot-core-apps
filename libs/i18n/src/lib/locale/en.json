@@ -331,6 +331,40 @@
     }
   },
   "spanday": {
+    "navigation": {
+      "drawer": {
+        "notifications": {
+          "label": "Notifications"
+        },
+        "actions": {
+          "label": "Take action"
+        },
+        "home": {
+          "label": "Home"
+        },
+        "calendar": {
+          "label": "Calendar"
+        },
+        "brands": {
+          "label": "Business profile"
+        },
+        "share": {
+          "label": "Share application"
+        },
+        "faq": {
+          "label": "Help & Feedback"
+        },
+        "terms_privacy": {
+          "label": "Terms & Privacy"
+        },
+        "follow_us": {
+          "label": "Follow us"
+        },
+        "preferences": {
+          "label": "Preferences"
+        }
+      }
+    },
     "onboarding": {
       "slides": {
         "slide0": {
@@ -492,6 +526,40 @@
     }
   },
   "symbiothub-dance": {
+    "navigation": {
+      "drawer": {
+        "notifications": {
+          "label": "Notifications"
+        },
+        "actions": {
+          "label": "Take action"
+        },
+        "home": {
+          "label": "Home"
+        },
+        "calendar": {
+          "label": "Calendar"
+        },
+        "brands": {
+          "label": "Brand profile"
+        },
+        "share": {
+          "label": "Share application"
+        },
+        "faq": {
+          "label": "Help & Feedback"
+        },
+        "terms_privacy": {
+          "label": "Terms & Privacy"
+        },
+        "follow_us": {
+          "label": "Follow us"
+        },
+        "preferences": {
+          "label": "Preferences"
+        }
+      }
+    },
     "onboarding": {
       "slides": {
         "slide0": {

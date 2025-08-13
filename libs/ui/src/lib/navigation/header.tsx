@@ -85,7 +85,7 @@ export const HeaderButton = memo(
           emitHaptic();
         }}
       >
-        <Icon name={iconName} color="$buttonTextColor1" size={24} />
+        <Icon name={iconName} color="$buttonTextColor1" />
       </Pressable>
     </AttentionView>
   ),

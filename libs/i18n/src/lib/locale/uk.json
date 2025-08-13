@@ -331,6 +331,40 @@
     }
   },
   "spanday": {
+    "navigation": {
+      "drawer": {
+        "notifications": {
+          "label": "Сповіщення"
+        },
+        "actions": {
+          "label": "Виконайте дію"
+        },
+        "home": {
+          "label": "Головна"
+        },
+        "calendar": {
+          "label": "Календар"
+        },
+        "brands": {
+          "label": "Бізнес-профіль"
+        },
+        "share": {
+          "label": "Поділитись"
+        },
+        "faq": {
+          "label": "Питання & відповіді"
+        },
+        "terms_privacy": {
+          "label": "Terms & Privacy"
+        },
+        "follow_us": {
+          "label": "Слідкуйте за нами"
+        },
+        "preferences": {
+          "label": "Налаштування"
+        }
+      }
+    },
     "onboarding": {
       "slides": {
         "slide0": {
@@ -492,6 +526,40 @@
     }
   },
   "symbiothub-dance": {
+    "navigation": {
+      "drawer": {
+        "notifications": {
+          "label": "Сповіщення"
+        },
+        "actions": {
+          "label": "Виконайте дію"
+        },
+        "home": {
+          "label": "Головна"
+        },
+        "calendar": {
+          "label": "Календар"
+        },
+        "brands": {
+          "label": "Бренд-профіль"
+        },
+        "share": {
+          "label": "Поділитись"
+        },
+        "faq": {
+          "label": "Питання & відповіді"
+        },
+        "terms_privacy": {
+          "label": "Terms & Privacy"
+        },
+        "follow_us": {
+          "label": "Слідкуйте за нами"
+        },
+        "preferences": {
+          "label": "Налаштування"
+        }
+      }
+    },
     "onboarding": {
       "slides": {
         "slide0": {

@@ -3,9 +3,9 @@ import {
   TimeGridActionsProps,
   TimeGridRef,
 } from '@symbiot.dev/react-native-timegrid-pro';
-import { Platform, useWindowDimensions } from 'react-native';
+import { LayoutChangeEvent, Platform } from 'react-native';
 import { useDateLocale } from '@symbiot-core-apps/i18n';
-import { ReactElement, Ref, useCallback, useMemo } from 'react';
+import { ReactElement, Ref, useCallback, useMemo, useState } from 'react';
 import { useTheme, View, XStack } from 'tamagui';
 import {
   DateHelper,
@@ -40,9 +40,10 @@ export const Calendar = ({
   const theme = useTheme();
   const { orientation } = useScreenOrientation();
   const { left, right } = useSafeAreaInsets();
-  const { width } = useWindowDimensions();
   const { media } = useScreenSize();
   const { now } = useNativeNow();
+
+  const [width, setWidth] = useState(0);
 
   const snappable = useMemo(
     () => Platform.OS !== 'web' && orientation === Orientation.PORTRAIT_UP,
@@ -63,7 +64,7 @@ export const Calendar = ({
   );
   const numberOfDays = useMemo(
     () =>
-      media === 'xs' &&
+      ['sm', 'md', 'lg', 'xl'].includes(media) &&
       (DeviceInfo.deviceType === DeviceType.TABLET ||
         DeviceInfo.deviceType === DeviceType.DESKTOP ||
         orientation === Orientation.LANDSCAPE_LEFT ||
@@ -117,39 +118,52 @@ export const Calendar = ({
     [],
   );
 
+  const onLayout = useCallback(
+    (e: LayoutChangeEvent) => setWidth(e.nativeEvent.layout.width),
+    [],
+  );
+
   return (
-    <View flex={1} paddingLeft={paddings.left} paddingRight={paddings.right}>
-      <TimeGrid
-        swipeable
-        scalable
-        draggable
-        hapticable
-        gridTopOffset={5}
-        ref={timeGridRef}
-        snappable={snappable}
-        width={adjustedWidth}
-        weekStartsOn={weekStartsOn}
-        gridBottomOffset={gridBottomOffset + 5}
-        locale={locale}
-        startDate={selectedDate}
-        isAllDayEventsVisible={false}
-        horizontalLineSize={1}
-        numberOfDays={numberOfDays}
-        dayHeaderHeight={60}
-        renderHeaderSafeArea={renderHeaderSafeArea}
-        renderDayHeader={renderDayHeader}
-        renderNowIndicator={renderNowIndicator}
-        theme={{
-          backgroundColor: theme.background?.val,
-          headerSafeAreaBackgroundColor: theme.background?.val,
-          dayHeaderBackgroundColor: theme.background?.val,
-          verticalLineColor: theme.calendarLineColor?.val,
-          horizontalLineColor: theme.calendarLineColor?.val,
-          timelineBackgroundColor: theme.background?.val,
-          timelineTextColor: theme.calendarTimeColor?.val,
-        }}
-        onChangeDate={onChangeDate}
-      />
+    <View
+      flex={1}
+      width="100%"
+      paddingLeft={paddings.left}
+      paddingRight={paddings.right}
+      onLayout={onLayout}
+    >
+      {!!width && (
+        <TimeGrid
+          swipeable
+          scalable
+          draggable
+          hapticable
+          gridTopOffset={5}
+          ref={timeGridRef}
+          snappable={snappable}
+          width={adjustedWidth}
+          weekStartsOn={weekStartsOn}
+          gridBottomOffset={gridBottomOffset + 5}
+          locale={locale}
+          startDate={selectedDate}
+          isAllDayEventsVisible={false}
+          horizontalLineSize={1}
+          numberOfDays={numberOfDays}
+          dayHeaderHeight={60}
+          renderHeaderSafeArea={renderHeaderSafeArea}
+          renderDayHeader={renderDayHeader}
+          renderNowIndicator={renderNowIndicator}
+          theme={{
+            backgroundColor: theme.background?.val,
+            headerSafeAreaBackgroundColor: theme.background?.val,
+            dayHeaderBackgroundColor: theme.background?.val,
+            verticalLineColor: theme.calendarLineColor?.val,
+            horizontalLineColor: theme.calendarLineColor?.val,
+            timelineBackgroundColor: theme.background?.val,
+            timelineTextColor: theme.calendarTimeColor?.val,
+          }}
+          onChangeDate={onChangeDate}
+        />
+      )}
     </View>
   );
 };

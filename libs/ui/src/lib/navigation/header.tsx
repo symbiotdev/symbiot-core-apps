@@ -13,7 +13,6 @@ import { Icon } from '../icons';
 import { IconName } from '../icons/config';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { AttentionView } from '../view/attention-view';
-import { useDrawer } from './drawer';
 
 export const headerHeight = 50;
 export const headerButtonSize = 24;
@@ -21,12 +20,8 @@ export const headerHorizontalPadding = 14;
 
 export const useScreenHeaderHeight = () => {
   const { top } = useSafeAreaInsets();
-  const { headerShown: drawerHeaderShown } = useDrawer();
 
-  return useMemo(
-    () => (drawerHeaderShown ? 0 : top + headerHeight),
-    [drawerHeaderShown, top],
-  );
+  return useMemo(() => top + headerHeight, [top]);
 };
 
 export const useScreenHeaderOptions = () => {

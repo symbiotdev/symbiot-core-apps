@@ -31,12 +31,12 @@ export const useDrawer = () => {
 
   return useMemo(() => {
     const permanent = ['lg', 'xl'].includes(media);
-    const available = Platform.OS === 'web' || permanent;
+    const visible = Platform.OS === 'web' || permanent;
 
     return {
-      available,
+      visible,
       permanent,
-      headerShown: available && !permanent,
+      headerShown: visible && !permanent,
       type: (permanent
         ? 'permanent'
         : 'front') as DrawerNavigationOptions['drawerType'],

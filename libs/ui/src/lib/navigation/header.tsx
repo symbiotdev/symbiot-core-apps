@@ -124,8 +124,8 @@ export const ScreenHeader = memo(
           borderBottomColor="$background1"
         />
 
-        <ContainerView
-          lazy={false}
+        <XStack
+          flex={1}
           gap="$5"
           flexDirection="row"
           alignItems="center"
@@ -154,7 +154,7 @@ export const ScreenHeader = memo(
             options.headerTitle({ children: '' })}
 
           <SideElement children={options.headerRight?.({})} />
-        </ContainerView>
+        </XStack>
       </XStack>
     );
   },
@@ -193,10 +193,8 @@ export const ModalHeader = memo(
           borderBottomColor="$background1"
         />
 
-        <ContainerView
-          lazy={false}
+        <XStack
           gap="$5"
-          flexDirection="row"
           alignItems="center"
           justifyContent="space-between"
           marginTop="auto"
@@ -217,7 +215,7 @@ export const ModalHeader = memo(
               )
             }
           />
-        </ContainerView>
+        </XStack>
       </XStack>
     );
   },

@@ -176,10 +176,17 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
         </XStack>
       )}
 
-      <ScrollView contentContainerStyle={{ flex: 1, gap: 10 }}>
+      <ScrollView
+        style={{ marginTop: defaultPageVerticalPadding }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          flex: 1,
+          gap: 10,
+          paddingTop: defaultPageVerticalPadding,
+        }}
+      >
         {me && (
           <ListItem
-            marginTop={24}
             numberOfLines={1}
             justifyContent="center"
             paddingHorizontal={

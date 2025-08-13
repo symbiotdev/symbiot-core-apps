@@ -17,7 +17,6 @@ import { Drawer } from 'expo-router/drawer';
 import { DrawerMenu, drawerMenuMaxWidth } from '../../components/drawer/menu';
 import { useInitializing } from '../../hooks/use-initializing';
 import { NavigationBackground, useDrawer } from '@symbiot-core-apps/ui';
-import { View } from 'tamagui';
 
 export default () => {
   const { tokens, setTokens } = useAuthTokens();
@@ -72,42 +71,40 @@ export default () => {
         soundSource={require('../../../assets/audio/new_notification_sound.wav')}
         onPressNotification={onPressNotification}
       >
-        <View flex={1} maxWidth={1600} width="100%" marginHorizontal="auto">
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <Drawer
-              drawerContent={DrawerMenu}
-              screenOptions={{
-                drawerType,
-                headerShadowVisible: false,
-                swipeEnabled: false,
-                headerShown,
-                headerBackground: () => <NavigationBackground />,
-                drawerStyle: {
-                  width: drawerPermanent ? 'auto' : drawerMenuMaxWidth,
-                  overflow: 'hidden',
-                  display: !drawerVisible || initializing ? 'none' : undefined,
-                  borderRightWidth: 0,
-                },
-              }}
-            >
-              <Drawer.Protected guard={!initializing}>
-                <Drawer.Screen
-                  name="(stack)"
-                  options={{
-                    headerTitle: '',
-                  }}
-                />
-              </Drawer.Protected>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Drawer
+            drawerContent={DrawerMenu}
+            screenOptions={{
+              drawerType,
+              headerShadowVisible: false,
+              swipeEnabled: false,
+              headerShown,
+              headerBackground: () => <NavigationBackground />,
+              drawerStyle: {
+                width: drawerPermanent ? 'auto' : drawerMenuMaxWidth,
+                overflow: 'hidden',
+                display: !drawerVisible || initializing ? 'none' : undefined,
+                borderRightWidth: 0,
+              },
+            }}
+          >
+            <Drawer.Protected guard={!initializing}>
+              <Drawer.Screen
+                name="(stack)"
+                options={{
+                  headerTitle: '',
+                }}
+              />
+            </Drawer.Protected>
 
-              <Drawer.Protected guard={initializing}>
-                <Drawer.Screen
-                  name="initializing/index"
-                  options={{ headerShown: false }}
-                />
-              </Drawer.Protected>
-            </Drawer>
-          </GestureHandlerRootView>
-        </View>
+            <Drawer.Protected guard={initializing}>
+              <Drawer.Screen
+                name="initializing/index"
+                options={{ headerShown: false }}
+              />
+            </Drawer.Protected>
+          </Drawer>
+        </GestureHandlerRootView>
       </NotificationsProvider>
     </StateProvider>
   );

@@ -15,7 +15,7 @@ import {
   PhoneInput,
   SelectPicker,
 } from '@symbiot-core-apps/ui';
-import { useGenders, useCurrentAccountUpdater } from '@symbiot-core-apps/state';
+import { useCurrentAccountUpdater, useGenders } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { useCallback, useEffect, useMemo } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
@@ -192,15 +192,16 @@ export const AccountPreferences = () => {
 
   const updateBirthday = useCallback(
     ({ birthday }: { birthday: Date | null }) =>
-      me?.birthday !== birthday && updateAccount$({ birthday }),
+      me?.birthday !== birthday &&
+      updateAccount$({ birthday: birthday?.toISOString() }),
     [me?.birthday, updateAccount$],
   );
 
   const updatePhones = useCallback(
     async ({ phone }: { phone: Phone }) => {
       if (
-        ((targetPhone?.tel && !phone.tel) ||
-          (phone.tel && !targetPhone?.tel)) &&
+        (targetPhone?.tel && !phone.tel) ||
+        (phone.tel && !targetPhone?.tel) ||
         phone.tel !== targetPhone?.tel
       ) {
         await updateAccount$({ phones: phone.tel ? [phone] : [] });

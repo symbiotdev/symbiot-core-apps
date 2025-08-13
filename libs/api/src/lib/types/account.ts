@@ -34,7 +34,7 @@ export type UpdateAccountData = {
   language?: AppLanguage;
   firstname?: string;
   lastname?: string;
-  birthday?: Date | null;
+  birthday?: string | null;
   phones?: Phone[];
   links?: Omit<Link, 'id'>[];
   genderId?: string | null;

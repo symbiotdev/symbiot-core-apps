@@ -55,7 +55,7 @@ export async function generateFormData<D extends object>(
             );
           });
         } else {
-          formData.append(key as string, value as never);
+          formData.append(key as string, value as string);
         }
       }
     }),

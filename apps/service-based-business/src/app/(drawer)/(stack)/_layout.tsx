@@ -40,6 +40,7 @@ export default () => {
         name="(tabs)"
         options={{
           animation: nestedScreenAnimation,
+          headerShown: false,
         }}
       />
 
@@ -58,7 +59,6 @@ export default () => {
         options={{
           headerTitle: t('follow_us'),
           animation: nestedScreenAnimation,
-          headerShown: !drawerVisible,
         }}
       />
       <Stack.Screen
@@ -66,7 +66,6 @@ export default () => {
         options={{
           headerTitle: t('faq.title'),
           animation: nestedScreenAnimation,
-          headerShown: !drawerVisible,
         }}
       />
       <Stack.Screen
@@ -74,7 +73,6 @@ export default () => {
         options={{
           headerTitle: t('notifications.title'),
           animation: nestedScreenAnimation,
-          headerShown: !drawerVisible,
         }}
       />
       <Stack.Screen
@@ -82,7 +80,6 @@ export default () => {
         options={{
           headerTitle: t('docs.terms_privacy'),
           animation: nestedScreenAnimation,
-          headerShown: !drawerVisible,
         }}
       />
       <Stack.Screen

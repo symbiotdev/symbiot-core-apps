@@ -119,7 +119,10 @@ export const ScreenHeader = memo(
         paddingRight={right + headerHorizontalPadding}
         height={top + (withContent ? headerHeight : 0)}
       >
-        <NavigationBackground />
+        <NavigationBackground
+          borderBottomWidth={1}
+          borderBottomColor="$background1"
+        />
 
         <ContainerView
           lazy={false}
@@ -185,7 +188,10 @@ export const ModalHeader = memo(
         paddingLeft={left + headerHorizontalPadding}
         paddingRight={right + headerHorizontalPadding}
       >
-        <NavigationBackground />
+        <NavigationBackground
+          borderBottomWidth={1}
+          borderBottomColor="$background1"
+        />
 
         <ContainerView
           lazy={false}

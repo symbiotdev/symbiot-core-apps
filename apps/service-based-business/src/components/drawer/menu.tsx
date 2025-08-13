@@ -124,10 +124,10 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
     toggleCompressed();
   }, [toggleCompressed]);
 
-  const openProfile = useCallback(
-    () => router.replace('/preferences/account'),
-    [],
-  );
+  const openProfile = useCallback(() => {
+    props.navigation.dispatch(DrawerActions.closeDrawer());
+    router.replace('/preferences/account');
+  }, [props.navigation]);
 
   return (
     <Animated.View
@@ -141,7 +141,10 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
         },
       ]}
     >
-      <NavigationBackground />
+      <NavigationBackground
+        borderRightWidth={1}
+        borderRightColor="$background1"
+      />
 
       {permanent && (
         <XStack

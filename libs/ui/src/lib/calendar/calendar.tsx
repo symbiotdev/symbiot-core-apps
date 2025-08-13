@@ -157,11 +157,11 @@ export const Calendar = ({
             headerSafeAreaBackgroundColor:
               Platform.OS === 'android'
                 ? theme.background1?.val
-                : `${theme.background1?.val}70`,
+                : `${theme.background1?.val}40`,
             dayHeaderBackgroundColor:
               Platform.OS === 'android'
                 ? theme.background1?.val
-                : `${theme.background1?.val}70`,
+                : `${theme.background1?.val}40`,
             verticalLineColor: theme.calendarLineColor?.val,
             horizontalLineColor: theme.calendarLineColor?.val,
             timelineBackgroundColor: theme.background?.val,

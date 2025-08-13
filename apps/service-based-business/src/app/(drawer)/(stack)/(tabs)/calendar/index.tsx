@@ -43,11 +43,9 @@ export default () => {
 
   const headerLeft = useCallback(
     () => (
-      <XStack>
-        <H3 lineHeight={headerButtonSize} textTransform="capitalize">
-          {DateHelper.format(selectedDate, 'LLLL yyyy', lang as AppLanguage)}
-        </H3>
-      </XStack>
+      <H3 lineHeight={headerButtonSize} textTransform="capitalize">
+        {DateHelper.format(selectedDate, 'LLLL yyyy', lang as AppLanguage)}
+      </H3>
     ),
     [lang, selectedDate],
   );
@@ -106,7 +104,7 @@ export default () => {
   }, [headerLeft, headerRight, navigation]);
 
   return (
-    <View flex={1} paddingTop={headerHeight} alignItems="center">
+    <View flex={1} marginTop={headerHeight} alignItems="center">
       <Calendar
         timeGridRef={timeGridRef}
         selectedDate={selectedDate}

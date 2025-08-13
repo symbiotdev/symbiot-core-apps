@@ -16,7 +16,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
 import { DrawerMenu, drawerMenuMaxWidth } from '../../components/drawer/menu';
 import { useInitializing } from '../../hooks/use-initializing';
-import { useDrawer } from '@symbiot-core-apps/ui';
+import { NavigationBackground, useDrawer } from '@symbiot-core-apps/ui';
 import { View } from 'tamagui';
 
 export default () => {
@@ -81,6 +81,7 @@ export default () => {
                 headerShadowVisible: false,
                 swipeEnabled: false,
                 headerShown,
+                headerBackground: () => <NavigationBackground />,
                 drawerStyle: {
                   width: drawerPermanent ? 'auto' : drawerMenuMaxWidth,
                   overflow: 'hidden',
@@ -90,7 +91,12 @@ export default () => {
               }}
             >
               <Drawer.Protected guard={!initializing}>
-                <Drawer.Screen name="(stack)" />
+                <Drawer.Screen
+                  name="(stack)"
+                  options={{
+                    headerTitle: '',
+                  }}
+                />
               </Drawer.Protected>
 
               <Drawer.Protected guard={initializing}>

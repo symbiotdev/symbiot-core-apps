@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Image } from 'expo-image';
 import { useScheme } from '@symbiot-core-apps/state';
 
-export const AuthLogo = memo(() => {
+export const AdaptiveLogo = memo(({ size = 100 }: { size?: number }) => {
   const { scheme } = useScheme();
 
   return (
@@ -12,7 +12,8 @@ export const AuthLogo = memo(() => {
           ? require('../../../assets/images/icon/logo-light.png')
           : require('../../../assets/images/icon/logo-dark.png')
       }
-      style={{ width: 150, height: 90, resizeMode: 'contain' }}
+      contentFit="contain"
+      style={{ width: size, height: size }}
     />
   );
 });

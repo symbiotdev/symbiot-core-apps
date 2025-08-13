@@ -14,18 +14,15 @@ import { onPressNotification } from '../../utils/notification';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
-import { DrawerMenu } from '../../components/drawer/menu';
-import { useWindowDimensions } from 'react-native';
+import { DrawerMenu, drawerMenuMaxWidth } from '../../components/drawer/menu';
 import { useInitializing } from '../../hooks/use-initializing';
-import { useDrawer, useDrawerState } from '@symbiot-core-apps/ui';
+import { useDrawer } from '@symbiot-core-apps/ui';
 
 export default () => {
   const { tokens, setTokens } = useAuthTokens();
-  const { compressed } = useDrawerState();
   const { setBrand: setCurrentBrand, setBrands: setCurrentBrands } =
     useCurrentBrandState();
   const initializing = useInitializing();
-  const { width } = useWindowDimensions();
   const { updateMe, updateMePreferences } = useCurrentAccount();
   const { data: meResponse } = useAccountMeQuery({
     enabled: !!tokens.access,
@@ -83,15 +80,10 @@ export default () => {
               swipeEnabled: false,
               headerShown,
               drawerStyle: {
+                width: drawerPermanent ? 'auto' : drawerMenuMaxWidth,
+                overflow: 'hidden',
                 display: !drawerVisible || initializing ? 'none' : undefined,
-                width:
-                  compressed && drawerPermanent
-                    ? 100
-                    : Math.min(width - 100, 250),
                 borderRightWidth: 0,
-                // eslint-disable-next-line
-                // @ts-ignore
-                transition: '0.25s',
               },
             }}
           >

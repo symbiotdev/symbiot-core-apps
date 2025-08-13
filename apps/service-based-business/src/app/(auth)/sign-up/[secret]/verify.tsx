@@ -1,4 +1,4 @@
 import { VerifySignUp } from '@symbiot-core-apps/auth';
-import { AuthLogo } from '../../../../components/auth/auth-logo';
+import { AdaptiveLogo } from '../../../../components/auth/adaptive-logo';
 
-export default () => <VerifySignUp logo={<AuthLogo />} />;
+export default () => <VerifySignUp logo={<AdaptiveLogo />} />;

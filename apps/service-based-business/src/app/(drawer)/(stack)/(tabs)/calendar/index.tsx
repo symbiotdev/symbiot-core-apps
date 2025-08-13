@@ -15,8 +15,10 @@ import {
   H3,
   headerButtonSize,
   Icon,
+  LoadingView,
   MediumText,
   RegularText,
+  useDrawerState,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { View, XStack } from 'tamagui';
@@ -30,6 +32,7 @@ export default () => {
   const { lang, t } = useT();
   const bottomTabBarHeight = useBottomTabBarHeight();
   const headerHeight = useScreenHeaderHeight();
+  const { resizing: drawerResizing } = useDrawerState();
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -104,6 +107,10 @@ export default () => {
       headerRight,
     });
   }, [headerLeft, headerRight, navigation]);
+
+  if (drawerResizing) {
+    return <LoadingView />;
+  }
 
   return (
     <View flex={1} paddingTop={headerHeight} alignItems="center">

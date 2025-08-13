@@ -1,5 +1,5 @@
 import { Auth } from '@symbiot-core-apps/auth';
-import { AuthLogo } from '../../../components/auth/auth-logo';
+import { AdaptiveLogo } from '../../../components/auth/adaptive-logo';
 import { useT } from '@symbiot-core-apps/i18n';
 
 export default () => {
@@ -12,7 +12,7 @@ export default () => {
       title={t('auth.title', { ns: 'app' })}
       subtitle={t('auth.subtitle', { ns: 'app' })}
       videoSource={require('../../../../assets/video/auth/bg.mp4')}
-      logo={<AuthLogo />}
+      logo={<AdaptiveLogo />}
     />
   );
 };

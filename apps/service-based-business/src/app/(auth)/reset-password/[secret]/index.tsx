@@ -1,4 +1,4 @@
 import { ResetPassword } from '@symbiot-core-apps/auth';
-import { AuthLogo } from '../../../../components/auth/auth-logo';
+import { AdaptiveLogo } from '../../../../components/auth/adaptive-logo';
 
-export default () => <ResetPassword logo={<AuthLogo />} />;
+export default () => <ResetPassword logo={<AdaptiveLogo />} />;

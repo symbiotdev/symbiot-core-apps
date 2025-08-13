@@ -13,8 +13,6 @@ import {
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useT } from '@symbiot-core-apps/i18n';
-import { useCountNewNotifications } from '@symbiot-core-apps/api';
-import { useEffect } from 'react';
 import { PlusActionModal } from '../../../../components/tabs/plus-action-modal';
 import { Icons } from '../../../../icons/config';
 import { ViewStyle } from 'react-native';
@@ -47,17 +45,8 @@ const NotificationsHeaderButton = () => {
 export default () => {
   const { brand: currentBrand } = useCurrentBrandState();
   const screenOptions = useTabsScreenOptions();
-  const { data: countNewNotifications } = useCountNewNotifications();
-  const { stats, setMeStats } = useCurrentAccount();
   const { visible: drawerVisible } = useDrawer();
-
-  useEffect(() => {
-    if (countNewNotifications) {
-      setMeStats({
-        newNotifications: countNewNotifications.count,
-      });
-    }
-  }, [countNewNotifications]);
+  const { stats } = useCurrentAccount();
 
   return (
     <Tabs

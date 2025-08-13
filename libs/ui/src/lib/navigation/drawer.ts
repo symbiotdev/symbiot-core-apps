@@ -8,22 +8,14 @@ import { createZustandStorage } from '@symbiot-core-apps/storage';
 
 type DrawerState = {
   compressed: boolean;
-  resizing: boolean;
   toggleCompressed: () => void;
 };
-
-export const drawerAnimationDuration = 250;
 
 export const useDrawerState = create<DrawerState>()(
   persist<DrawerState>(
     (set, get) => ({
       compressed: false,
-      resizing: false,
-      toggleCompressed: () => {
-        set({ compressed: !get().compressed, resizing: true });
-
-        setTimeout(() => set({ resizing: false }), drawerAnimationDuration + 1);
-      },
+      toggleCompressed: () => set({ compressed: !get().compressed }),
     }),
     {
       name: 'symbiot-drawer',

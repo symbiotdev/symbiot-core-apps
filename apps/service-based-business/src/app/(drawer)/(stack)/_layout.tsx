@@ -1,18 +1,24 @@
 import { Stack } from 'expo-router';
 import { useDrawer, useStackScreenHeaderOptions } from '@symbiot-core-apps/ui';
-import { useCurrentBrandState } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccount,
+  useCurrentBrandState,
+} from '@symbiot-core-apps/state';
 import { useT } from '@symbiot-core-apps/i18n';
 import { useEffect, useMemo } from 'react';
 import { hideAsync } from 'expo-splash-screen';
+import { useCountNewNotifications } from '@symbiot-core-apps/api';
 
 export default () => {
   const { t } = useT();
-  const headerScreenOptions = useStackScreenHeaderOptions();
+  const screenOptions = useStackScreenHeaderOptions();
   const { visible: drawerVisible } = useDrawer();
   const { brands: currentBrands } = useCurrentBrandState();
+  const { setMeStats } = useCurrentAccount();
+  const { data: countNewNotifications } = useCountNewNotifications();
 
   const nestedScreenAnimation = useMemo(
-    () => (drawerVisible ? 'none' : headerScreenOptions.animation),
+    () => (drawerVisible ? 'none' : screenOptions.animation),
     [drawerVisible],
   );
 
@@ -20,8 +26,16 @@ export default () => {
     void hideAsync();
   }, []);
 
+  useEffect(() => {
+    if (countNewNotifications) {
+      setMeStats({
+        newNotifications: countNewNotifications.count,
+      });
+    }
+  }, [countNewNotifications]);
+
   return (
-    <Stack screenOptions={headerScreenOptions}>
+    <Stack screenOptions={screenOptions}>
       <Stack.Screen
         name="(tabs)"
         options={{ animation: nestedScreenAnimation }}
@@ -32,7 +46,7 @@ export default () => {
           name="brand/create"
           options={{
             gestureEnabled: false,
-            animation: nestedScreenAnimation
+            animation: nestedScreenAnimation,
           }}
         />
       </Stack.Protected>

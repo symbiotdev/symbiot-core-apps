@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { SurveyStep } from '../types/survey-step';
 import { View } from 'tamagui';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
-import { useWindowDimensions } from 'react-native';
+import { LayoutChangeEvent } from 'react-native';
 import { SurveyStepForm } from './survey-step-form';
 import { useKeyboardDismisser } from '@symbiot-core-apps/shared';
 
@@ -21,11 +21,17 @@ export function SurveyStepsFlow<V>({
   onFinish: () => void;
   onSkip: () => void;
 }) {
-  const { width } = useWindowDimensions();
   const carouselRef = useRef<ICarouselInstance>(null);
+
+  const [width, setWidth] = useState(0);
 
   const onStepFormChange = useKeyboardDismisser(
     useCallback(onChange, [onChange]),
+  );
+
+  const onLayout = useCallback(
+    (e: LayoutChangeEvent) => setWidth(e.nativeEvent.layout.width),
+    [],
   );
 
   useEffect(() => {
@@ -49,32 +55,35 @@ export function SurveyStepsFlow<V>({
       exitStyle={{ opacity: 0 }}
       id="survey-steps-flow"
       dataSet={{ kind: 'basic-layouts', name: 'normal' }}
+      onLayout={onLayout}
     >
-      <Carousel
-        enabled={false}
-        loop={false}
-        ref={carouselRef}
-        width={width}
-        data={steps}
-        modeConfig={{
-          snapDirection: 'left',
-          stackInterval: 100,
-        }}
-        containerStyle={{
-          flexGrow: 1,
-        }}
-        renderItem={({ item, index }) => (
-          <SurveyStepForm
-            key={index}
-            currentStepId={currentStepId}
-            value={value}
-            step={item}
-            onChange={onStepFormChange}
-            onFinish={onFinish}
-            onSkip={onSkip}
-          />
-        )}
-      />
+      {!!width && (
+        <Carousel
+          enabled={false}
+          loop={false}
+          ref={carouselRef}
+          width={width}
+          data={steps}
+          modeConfig={{
+            snapDirection: 'left',
+            stackInterval: 100,
+          }}
+          containerStyle={{
+            flexGrow: 1,
+          }}
+          renderItem={({ item, index }) => (
+            <SurveyStepForm
+              key={index}
+              currentStepId={currentStepId}
+              value={value}
+              step={item}
+              onChange={onStepFormChange}
+              onFinish={onFinish}
+              onSkip={onSkip}
+            />
+          )}
+        />
+      )}
     </View>
   );
 }

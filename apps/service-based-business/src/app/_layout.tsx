@@ -10,7 +10,6 @@ import { preventAutoHideAsync, setOptions } from 'expo-splash-screen';
 import { ErrorView } from '@symbiot-core-apps/ui';
 import { darkTheme, lightTheme } from '../theme/config';
 import { I18nProvider } from '@symbiot-core-apps/i18n';
-import { View } from 'tamagui';
 
 void preventAutoHideAsync();
 setOptions({
@@ -39,14 +38,7 @@ export default () => {
         <KeyboardProvider>
           <I18nProvider>
             <ThemeProvider darkTheme={darkTheme} lightTheme={lightTheme}>
-              <View
-                flex={1}
-                maxWidth={1600}
-                width="100%"
-                marginHorizontal="auto"
-              >
-                <Slot />
-              </View>
+              <Slot />
               <Toaster position="top-right" />
             </ThemeProvider>
           </I18nProvider>

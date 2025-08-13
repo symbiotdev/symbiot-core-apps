@@ -36,6 +36,12 @@
     "development_local": {
       "extends": "development"
     },
+    "development_device_local": {
+      "extends": "development",
+      "android": {
+        "buildType": "apk"
+      }
+    },
     "development_eas": {
       "extends": "development",
       "distribution": "internal"

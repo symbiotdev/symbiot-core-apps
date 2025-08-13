@@ -38,7 +38,9 @@ export default () => {
     <Stack screenOptions={screenOptions}>
       <Stack.Screen
         name="(tabs)"
-        options={{ animation: nestedScreenAnimation }}
+        options={{
+          animation: nestedScreenAnimation,
+        }}
       />
 
       <Stack.Protected guard={!!currentBrands && !currentBrands.length}>
@@ -55,12 +57,16 @@ export default () => {
         name="follow-us/index"
         options={{
           headerTitle: t('follow_us'),
+          animation: nestedScreenAnimation,
+          headerShown: !drawerVisible,
         }}
       />
       <Stack.Screen
         name="help-feedback/index"
         options={{
           headerTitle: t('faq.title'),
+          animation: nestedScreenAnimation,
+          headerShown: !drawerVisible,
         }}
       />
       <Stack.Screen
@@ -68,12 +74,22 @@ export default () => {
         options={{
           headerTitle: t('notifications.title'),
           animation: nestedScreenAnimation,
+          headerShown: !drawerVisible,
+        }}
+      />
+      <Stack.Screen
+        name="terms-privacy/index"
+        options={{
+          headerTitle: t('docs.terms_privacy'),
+          animation: nestedScreenAnimation,
+          headerShown: !drawerVisible,
         }}
       />
       <Stack.Screen
         name="preferences/account/index"
         options={{
           headerTitle: t('profile'),
+          animation: nestedScreenAnimation,
         }}
       />
       <Stack.Screen name="preferences/account/remove" />
@@ -99,12 +115,6 @@ export default () => {
         name="preferences/notifications/index"
         options={{
           headerTitle: t('preferences.notifications.title'),
-        }}
-      />
-      <Stack.Screen
-        name="terms-privacy/index"
-        options={{
-          headerTitle: t('docs.terms_privacy'),
         }}
       />
     </Stack>

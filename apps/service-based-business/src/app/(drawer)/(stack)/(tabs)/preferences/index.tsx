@@ -17,6 +17,7 @@ import {
   QrCodeModalWithTrigger,
   RegularText,
   TabsPageView,
+  useDrawer,
 } from '@symbiot-core-apps/ui';
 import { Platform } from 'react-native';
 
@@ -25,6 +26,7 @@ export default () => {
   const { t } = useT();
   const { me } = useCurrentAccount();
   const { mutate: signOut } = useAccountAuthSignOutQuery();
+  const { visible: drawerVisible } = useDrawer();
 
   const onAccountPress = useCallback(
     () => router.push('/preferences/account'),
@@ -84,23 +86,29 @@ export default () => {
             }}
           />
 
-          <ListItemGroup title={t('profile')}>
-            <ListItem
-              label={me.name}
-              icon={<Icon name="UserCircle" />}
-              onPress={onAccountPress}
-            />
+          <ListItemGroup title={!drawerVisible ? '' : t('profile')}>
+            {!drawerVisible && (
+              <ListItem
+                label={me.name}
+                icon={<Icon name="UserCircle" />}
+                onPress={onAccountPress}
+              />
+            )}
 
             <QrCodeModalWithTrigger
               trigger={
-                <ListItem label={t('qr_code')} icon={<Icon name="QrCode" />} />
+                <ListItem
+                  cursor="pointer"
+                  label={t('qr_code')}
+                  icon={<Icon name="QrCode" />}
+                />
               }
               qrValue={me.id}
               qrContent={<RegularText fontSize={30}>🤩</RegularText>}
             />
           </ListItemGroup>
 
-          <ListItemGroup title={t('preferences.title')}>
+          <ListItemGroup title={!drawerVisible ? '' : t('preferences.title')}>
             <ListItem
               label={t('preferences.notifications.title')}
               icon={<Icon name="Bell" />}
@@ -123,28 +131,30 @@ export default () => {
             />
           </ListItemGroup>
 
-          <ListItemGroup title={t('application')}>
-            <ListItem
-              label={t('share_app')}
-              icon={<Icon name="Share" />}
-              onPress={share}
-            />
-            <ListItem
-              label={t('faq.title')}
-              icon={<Icon name="QuestionCircle" />}
-              onPress={onHelpFeedbackPress}
-            />
-            <ListItem
-              label={t('docs.terms_privacy')}
-              icon={<Icon name="FileText" />}
-              onPress={onTermsPrivacyPress}
-            />
-            <ListItem
-              label={t('follow_us')}
-              icon={<Icon name="ShareCircle" />}
-              onPress={onFollowUsPress}
-            />
-          </ListItemGroup>
+          {!drawerVisible && (
+            <ListItemGroup title={t('application')}>
+              <ListItem
+                label={t('share_app')}
+                icon={<Icon name="Share" />}
+                onPress={share}
+              />
+              <ListItem
+                label={t('faq.title')}
+                icon={<Icon name="QuestionCircle" />}
+                onPress={onHelpFeedbackPress}
+              />
+              <ListItem
+                label={t('docs.terms_privacy')}
+                icon={<Icon name="FileText" />}
+                onPress={onTermsPrivacyPress}
+              />
+              <ListItem
+                label={t('follow_us')}
+                icon={<Icon name="ShareCircle" />}
+                onPress={onFollowUsPress}
+              />
+            </ListItemGroup>
+          )}
 
           <ListItemGroup title={t('other')}>
             <ListItem

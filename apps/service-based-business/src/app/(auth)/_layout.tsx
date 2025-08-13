@@ -1,6 +1,9 @@
 import { Redirect, Stack } from 'expo-router';
 import { useAuthTokens } from '@symbiot-core-apps/api';
-import { useOnboardingState } from '@symbiot-core-apps/state';
+import {
+  useCurrentBrandState,
+  useOnboardingState,
+} from '@symbiot-core-apps/state';
 import { useStackScreenHeaderOptions } from '@symbiot-core-apps/ui';
 import { Platform } from 'react-native';
 import { useLayoutEffect } from 'react';
@@ -9,6 +12,7 @@ import { hideAsync } from 'expo-splash-screen';
 export default () => {
   const { tokens } = useAuthTokens();
   const { finished: onboardingFinished } = useOnboardingState();
+  const { brand: currentBrand } = useCurrentBrandState();
   const headerScreenOptions = useStackScreenHeaderOptions();
 
   useLayoutEffect(() => {
@@ -18,7 +22,7 @@ export default () => {
   }, [tokens.access]);
 
   if (tokens.access) {
-    return <Redirect href="/home" />;
+    return <Redirect href={currentBrand ? '/home' : '/actions'} />;
   }
 
   return (

@@ -117,7 +117,7 @@ export default () => {
           }}
         />
         <Tabs.Screen
-          name="workspaces/index"
+          name="brands/index"
           options={{
             tabBarIcon: ({ color, size, focused }) => (
               <Icon
@@ -132,11 +132,11 @@ export default () => {
       </Tabs.Protected>
 
       <Tabs.Screen
-        name="menu/index"
+        name="preferences/index"
         options={{
           tabBarIcon: ({ color, size, focused }) => (
             <Icon
-              name={Icons.Menu}
+              name={Icons.Preferences}
               color={color}
               size={size}
               type={focused ? 'SolarBold' : undefined}

@@ -32,6 +32,7 @@ export const ListItem = memo(
     color,
     disabled,
     iconSize,
+    numberOfLines = 2,
     onPress,
     ...xStackProps
   }: XStackProps & {
@@ -39,6 +40,7 @@ export const ListItem = memo(
     icon?: false | ReactElement<{ color?: string; size?: number }>;
     iconAfter?: false | ReactElement<{ color?: string; size?: number }>;
     iconSize?: number;
+    numberOfLines?: number;
     color?: ColorTokens;
   }) => {
     const adjustedColor = disabled ? '$disabled' : color;
@@ -69,9 +71,15 @@ export const ListItem = memo(
             size: iconSize,
           })}
 
-        <RegularText flex={1} numberOfLines={2} color={adjustedColor}>
-          {label}
-        </RegularText>
+        {!!label && (
+          <RegularText
+            flex={1}
+            numberOfLines={numberOfLines}
+            color={adjustedColor}
+          >
+            {label}
+          </RegularText>
+        )}
 
         {!!iconAfter &&
           cloneElement(iconAfter, {

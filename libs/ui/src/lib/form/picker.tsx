@@ -143,9 +143,11 @@ const CustomPicker = ({
         <XStack
           gap="$4"
           alignItems="center"
-          paddingVertical={4}
+          paddingVertical={10}
           paddingHorizontal={defaultPageHorizontalPadding}
           disabled={disabled}
+          backgroundColor={value === item.value ? '$background' : undefined}
+          borderRadius="$10"
           cursor={!disabled ? 'pointer' : 'default'}
           disabledStyle={{ opacity: 0.8 }}
           pressStyle={!disabled && { opacity: 0.8 }}
@@ -209,6 +211,9 @@ const CustomPicker = ({
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       style={{ maxHeight: 300 }}
+      contentContainerStyle={{
+        paddingHorizontal: defaultPageHorizontalPadding,
+      }}
       renderItem={renderItem}
       onScrollToIndexFailed={(info) =>
         setTimeout(() => scrollToIndex(info.index))

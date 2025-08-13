@@ -10,6 +10,7 @@ import {
   useCurrentBrandState,
   useNotificationsState,
 } from '@symbiot-core-apps/state';
+import { router } from 'expo-router';
 
 type BrandAuthState = {
   processing: boolean;
@@ -55,6 +56,8 @@ export const useAuthBrand = () => {
             }
           }, 500);
         });
+
+        router.replace('/');
       } finally {
         setProcessing(false);
       }

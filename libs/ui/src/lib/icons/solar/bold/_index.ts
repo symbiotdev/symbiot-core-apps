@@ -40,6 +40,8 @@ import { Login } from './Login';
 import { AltArrowLeft } from './AltArrowLeft';
 import { AltArrowRight } from './AltArrowRight';
 import { IconMap } from '../../config';
+import { Maximize } from './Maximize';
+import { Minimize } from './Minimize';
 
 export const Map: IconMap = {
   AddCircle,
@@ -67,7 +69,9 @@ export const Map: IconMap = {
   Login,
   Logout2,
   MagicStick,
+  Maximize,
   MenuDotsCircle,
+  Minimize,
   Moon,
   PaperclipRounded,
   Pen,

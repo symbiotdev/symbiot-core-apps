@@ -38,6 +38,7 @@ export * from './lib/media/avatar';
 export * from './lib/navigation/drawer';
 export * from './lib/navigation/header';
 export * from './lib/navigation/tabs';
+export * from './lib/navigation/background';
 
 export * from './lib/popover/adaptive-popover';
 export * from './lib/popover/context-menu-popover';

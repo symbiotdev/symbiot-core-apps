@@ -25,9 +25,9 @@ export const MyBrandsSelectionList = () => {
           onPress={() => {
             emitHaptic();
 
-            void switchBrand({ id: brand.id });
-
             router.replace('/');
+
+            void switchBrand({ id: brand.id });
           }}
         >
           <Avatar

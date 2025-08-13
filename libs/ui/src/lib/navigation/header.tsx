@@ -1,11 +1,10 @@
-import { Platform, Pressable, StyleSheet } from 'react-native';
+import { Pressable } from 'react-native';
 import { View, ViewProps, XStack } from 'tamagui';
 import {
   NativeStackHeaderProps,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Blur } from '../blur/blur';
 import { memo, ReactElement, useCallback, useMemo } from 'react';
 import { H4 } from '../text/heading';
 import { ContainerView } from '../view/container-view';
@@ -13,6 +12,7 @@ import { Icon } from '../icons';
 import { IconName } from '../icons/config';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { AttentionView } from '../view/attention-view';
+import { NavigationBackground } from './background';
 
 export const headerHeight = 50;
 export const headerButtonSize = 24;
@@ -91,14 +91,6 @@ export const HeaderButton = memo(
   ),
 );
 
-const HeaderBackground = memo(() =>
-  Platform.OS !== 'android' ? (
-    <Blur style={StyleSheet.absoluteFillObject} />
-  ) : (
-    <View style={StyleSheet.absoluteFillObject} backgroundColor="$background" />
-  ),
-);
-
 export const ScreenHeader = memo(
   ({
     back,
@@ -127,7 +119,7 @@ export const ScreenHeader = memo(
         paddingRight={right + headerHorizontalPadding}
         height={top + (withContent ? headerHeight : 0)}
       >
-        <HeaderBackground />
+        <NavigationBackground />
 
         <ContainerView
           lazy={false}
@@ -193,7 +185,7 @@ export const ModalHeader = memo(
         paddingLeft={left + headerHorizontalPadding}
         paddingRight={right + headerHorizontalPadding}
       >
-        <HeaderBackground />
+        <NavigationBackground />
 
         <ContainerView
           lazy={false}

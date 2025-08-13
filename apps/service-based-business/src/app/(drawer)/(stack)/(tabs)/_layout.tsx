@@ -90,7 +90,7 @@ export default () => {
                 <Icon
                   name={Icons.Home}
                   color={color}
-                  size={size}
+                  size={Math.max(size, 20)}
                   type={focused ? 'SolarBold' : undefined}
                 />
               </AttentionView>
@@ -104,7 +104,7 @@ export default () => {
               <Icon
                 name={Icons.Calendar}
                 color={color}
-                size={size}
+                size={Math.max(size, 20)}
                 type={focused ? 'SolarBold' : undefined}
               />
             ),
@@ -123,7 +123,7 @@ export default () => {
               <Icon
                 name={Icons.Workspace}
                 color={color}
-                size={size}
+                size={Math.max(size, 20)}
                 type={focused ? 'SolarBold' : undefined}
               />
             ),
@@ -138,7 +138,7 @@ export default () => {
             <Icon
               name={Icons.Preferences}
               color={color}
-              size={size}
+              size={Math.max(size, 20)}
               type={focused ? 'SolarBold' : undefined}
             />
           ),

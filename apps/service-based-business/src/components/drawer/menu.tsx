@@ -1,4 +1,4 @@
-import { ScrollView, View, ViewStyle, XStack, XStackProps } from 'tamagui';
+import { ScrollView, View, ViewStyle, XStackProps } from 'tamagui';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import {
   AttentionView,
@@ -15,7 +15,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { router, usePathname } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { memo, useCallback } from 'react';
+import { memo, ReactElement, useCallback } from 'react';
 import { DrawerActions } from '@react-navigation/native';
 import { emitHaptic, useShareApp } from '@symbiot-core-apps/shared';
 import Animated, {
@@ -29,15 +29,14 @@ import {
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useT } from '@symbiot-core-apps/i18n';
-import { AdaptiveLogo } from '../auth/adaptive-logo';
 
 export const drawerMenuMaxWidth = 250;
-export const drawerMenuMinWidth = 80;
+export const drawerMenuMinWidth = 68;
 
 const MenuItem = memo(
   ({
     navigation,
-    iconName,
+    icon,
     label,
     route,
     attention,
@@ -45,7 +44,7 @@ const MenuItem = memo(
     ...xStackProps
   }: XStackProps & {
     navigation: DrawerNavigationHelpers;
-    iconName: IconName;
+    icon: IconName | ReactElement;
     label: string;
     route: string;
     attention?: boolean;
@@ -69,7 +68,6 @@ const MenuItem = memo(
 
     return (
       <ListItem
-        justifyContent="center"
         borderRadius="$10"
         numberOfLines={1}
         paddingHorizontal={defaultPageHorizontalPadding}
@@ -78,7 +76,7 @@ const MenuItem = memo(
         label={!permanent || !compressed ? label : ''}
         icon={
           <AttentionView attention={Boolean(attention)}>
-            <Icon name={iconName} />
+            {typeof icon === 'string' ? <Icon name={icon} /> : icon}
           </AttentionView>
         }
         onPress={onPress}
@@ -101,7 +99,6 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
   const { t } = useT();
   const { permanent } = useDrawer();
   const { stats } = useCurrentAccount();
-  const { me } = useCurrentAccount();
   const share = useShareApp();
   const { top, bottom, left } = useSafeAreaInsets();
   const { compressed, toggleCompressed } = useDrawerState();
@@ -124,11 +121,6 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
     toggleCompressed();
   }, [toggleCompressed]);
 
-  const openProfile = useCallback(() => {
-    props.navigation.dispatch(DrawerActions.closeDrawer());
-    router.replace('/preferences/account');
-  }, [props.navigation]);
-
   return (
     <Animated.View
       style={[
@@ -147,33 +139,24 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
       />
 
       {permanent && (
-        <XStack
-          justifyContent="space-between"
-          alignItems="center"
-          paddingRight={defaultPageHorizontalPadding}
-          paddingLeft={
+        <View
+          marginLeft={
             defaultPageHorizontalPadding + defaultPageHorizontalPadding / 2
           }
+          cursor="pointer"
+          width={defaultIconSize}
+          height={defaultIconSize}
+          justifyContent="center"
+          alignItems="center"
+          pressStyle={{ opacity: 0.8 }}
+          onPress={toggleDrawerCompression}
         >
-          {!compressed && <AdaptiveLogo size={defaultIconSize} />}
-
-          <View
-            margin={compressed ? 'auto' : undefined}
-            cursor="pointer"
-            width={defaultIconSize}
-            height={defaultIconSize}
-            justifyContent="center"
-            alignItems="center"
-            pressStyle={{ opacity: 0.8 }}
-            onPress={toggleDrawerCompression}
-          >
-            <Icon
-              name={compressed ? 'Maximize' : 'Minimize'}
-              size={18}
-              color="$buttonTextColor1"
-            />
-          </View>
-        </XStack>
+          <Icon
+            name={compressed ? 'Maximize' : 'Minimize'}
+            size={18}
+            color="$buttonTextColor1"
+          />
+        </View>
       )}
 
       <ScrollView
@@ -185,25 +168,21 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
           paddingTop: defaultPageVerticalPadding,
         }}
       >
-        {me && (
-          <ListItem
-            numberOfLines={1}
-            justifyContent="center"
-            paddingHorizontal={
-              defaultPageHorizontalPadding + defaultPageHorizontalPadding / 2
-            }
+        {currentBrand && (
+          <MenuItem
+            navigation={props.navigation}
+            route="/brands"
+            label={currentBrand.name}
             icon={
               <View>
                 <Avatar
-                  name={me.name}
                   size={defaultIconSize}
-                  color={me.avatarColor}
-                  url={me.avatarXsUrl}
+                  name={currentBrand.name}
+                  color={currentBrand.avatarColor}
+                  url={currentBrand.avatarXsUrl}
                 />
               </View>
             }
-            label={!permanent || !compressed ? me.name : ''}
-            onPress={openProfile}
           />
         )}
 
@@ -211,42 +190,35 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
 
         <MenuItem
           navigation={props.navigation}
-          iconName={Icons.Notifications}
-          label={t('navigation.drawer.notifications.label', { ns: 'app' })}
           route="/notifications"
+          label={t('navigation.drawer.notifications.label', { ns: 'app' })}
           attention={!!stats.newNotifications}
+          icon={Icons.Notifications}
         />
 
         {!currentBrand ? (
           <MenuItem
             initial
-            navigation={props.navigation}
-            iconName={Icons.Workspace}
-            label={t('navigation.drawer.actions.label', { ns: 'app' })}
             route="/actions"
+            navigation={props.navigation}
+            label={t('navigation.drawer.actions.label', { ns: 'app' })}
+            icon={Icons.Workspace}
           />
         ) : (
           <>
             <MenuItem
               initial
-              navigation={props.navigation}
-              iconName={Icons.Home}
-              label={t('navigation.drawer.home.label', { ns: 'app' })}
               route="/home"
+              navigation={props.navigation}
+              label={t('navigation.drawer.home.label', { ns: 'app' })}
+              icon={Icons.Home}
             />
 
             <MenuItem
-              navigation={props.navigation}
-              iconName={Icons.Calendar}
-              label={t('navigation.drawer.calendar.label', { ns: 'app' })}
               route="/calendar"
-            />
-
-            <MenuItem
               navigation={props.navigation}
-              iconName={Icons.Workspace}
-              label={t('navigation.drawer.brands.label', { ns: 'app' })}
-              route="/brands"
+              label={t('navigation.drawer.calendar.label', { ns: 'app' })}
+              icon={Icons.Calendar}
             />
           </>
         )}
@@ -255,7 +227,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
 
         <MenuItem
           navigation={props.navigation}
-          iconName="Share"
+          icon="Share"
           label={t('navigation.drawer.share.label', { ns: 'app' })}
           route=""
           onPress={share}
@@ -263,21 +235,21 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
 
         <MenuItem
           navigation={props.navigation}
-          iconName="FileText"
+          icon="FileText"
           label={t('navigation.drawer.terms_privacy.label', { ns: 'app' })}
           route="/terms-privacy"
         />
 
         <MenuItem
           navigation={props.navigation}
-          iconName="QuestionCircle"
+          icon="QuestionCircle"
           label={t('navigation.drawer.faq.label', { ns: 'app' })}
           route="/help-feedback"
         />
 
         <MenuItem
           navigation={props.navigation}
-          iconName="ShareCircle"
+          icon="ShareCircle"
           label={t('navigation.drawer.follow_us.label', { ns: 'app' })}
           route="/follow-us"
         />
@@ -286,7 +258,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
 
         <MenuItem
           navigation={props.navigation}
-          iconName={Icons.Preferences}
+          icon={Icons.Preferences}
           label={t('navigation.drawer.preferences.label', { ns: 'app' })}
           route="/preferences"
         />

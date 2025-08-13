@@ -87,13 +87,11 @@ export default () => {
           />
 
           <ListItemGroup title={!drawerVisible ? '' : t('profile')}>
-            {!drawerVisible && (
-              <ListItem
-                label={me.name}
-                icon={<Icon name="UserCircle" />}
-                onPress={onAccountPress}
-              />
-            )}
+            <ListItem
+              label={me.name}
+              icon={<Icon name="UserCircle" />}
+              onPress={onAccountPress}
+            />
 
             <QrCodeModalWithTrigger
               trigger={

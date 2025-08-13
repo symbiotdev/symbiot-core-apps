@@ -35,7 +35,7 @@ export default () => {
   });
   const {
     headerShown,
-    available: drawerAvailable,
+    visible: drawerVisible,
     type: drawerType,
     permanent: drawerPermanent,
   } = useDrawer();
@@ -83,7 +83,7 @@ export default () => {
               swipeEnabled: false,
               headerShown,
               drawerStyle: {
-                display: !drawerAvailable || initializing ? 'none' : undefined,
+                display: !drawerVisible || initializing ? 'none' : undefined,
                 width:
                   compressed && drawerPermanent
                     ? 100

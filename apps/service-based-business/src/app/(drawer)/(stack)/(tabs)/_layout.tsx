@@ -49,7 +49,7 @@ export default () => {
   const screenOptions = useTabsScreenOptions();
   const { data: countNewNotifications } = useCountNewNotifications();
   const { stats, setMeStats } = useCurrentAccount();
-  const { available: drawerAvailable } = useDrawer();
+  const { visible: drawerVisible } = useDrawer();
 
   useEffect(() => {
     if (countNewNotifications) {
@@ -63,11 +63,10 @@ export default () => {
     <Tabs
       screenOptions={{
         ...screenOptions,
-        headerShown: false,
-        animation: drawerAvailable ? 'none' : screenOptions.animation,
+        animation: drawerVisible ? 'none' : screenOptions.animation,
         tabBarStyle: {
           ...(screenOptions.tabBarStyle as ViewStyle),
-          display: drawerAvailable ? 'none' : undefined,
+          display: drawerVisible ? 'none' : undefined,
         },
       }}
     >
@@ -75,8 +74,8 @@ export default () => {
         <Tabs.Screen
           name="actions/index"
           options={{
-            headerLeft: HelloHeaderLeft,
-            headerRight: NotificationsHeaderButton,
+            headerLeft: !drawerVisible ? HelloHeaderLeft : undefined,
+            headerRight: !drawerVisible ? NotificationsHeaderButton : undefined,
             tabBarIcon: ({ color, size, focused }) => (
               <AttentionView attention={!!stats.newNotifications}>
                 <Icon
@@ -95,8 +94,8 @@ export default () => {
         <Tabs.Screen
           name="home/index"
           options={{
-            headerLeft: HelloHeaderLeft,
-            headerRight: NotificationsHeaderButton,
+            headerLeft: !drawerVisible ? HelloHeaderLeft : undefined,
+            headerRight: !drawerVisible ? NotificationsHeaderButton : undefined,
             tabBarIcon: ({ color, size, focused }) => (
               <AttentionView attention={!!stats.newNotifications}>
                 <Icon

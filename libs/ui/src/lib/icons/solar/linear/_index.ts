@@ -1,4 +1,3 @@
-import { IconMap } from '../../config';
 import { Heart } from './Heart';
 import { Home } from './Home';
 import { Widget } from './Widget';
@@ -38,11 +37,16 @@ import { CloseCircle } from './CloseCircle';
 import { Pen } from './Pen';
 import { PaperclipRounded } from './PaperclipRounded';
 import { Login } from './Login';
+import { AltArrowLeft } from './AltArrowLeft';
+import { AltArrowRight } from './AltArrowRight';
+import { IconMap } from '../../config';
 
 export const Map: IconMap = {
   AddCircle,
   AddSquare,
   AltArrowDown,
+  AltArrowLeft,
+  AltArrowRight,
   AltArrowUp,
   ArrowLeft,
   ArrowRight,

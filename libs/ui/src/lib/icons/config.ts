@@ -1,10 +1,12 @@
-import { SvgProps } from 'react-native-svg';
 import { ReactElement } from 'react';
+import { IconProps } from './icon-props';
 
 export type IconName =
   | 'AddCircle'
   | 'AddSquare'
   | 'AltArrowDown'
+  | 'AltArrowLeft'
+  | 'AltArrowRight'
   | 'AltArrowUp'
   | 'ArrowLeft'
   | 'ArrowRight'
@@ -42,7 +44,3 @@ export type IconName =
   | 'Widget'
   | 'Widget3';
 export type IconMap = Record<IconName, (props: IconProps) => ReactElement>;
-
-export type IconProps = SvgProps & {
-  secondColor?: string;
-};

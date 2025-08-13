@@ -1,7 +1,7 @@
-import type { SvgProps } from 'react-native-svg';
 import Svg, { Path } from 'react-native-svg';
+import { IconProps } from '../../icon-props';
 
-export const AltArrowDown = (props: SvgProps) => (
+export const AltArrowDown = (props: IconProps) => (
   <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" {...props}>
     <Path
       d="M8.30273 12.4044L11.6296 15.8351C11.8428 16.0549 12.1573 16.0549 12.3704 15.8351L18.8001 9.20467C19.2013 8.79094 18.9581 8 18.4297 8H12.7071L8.30273 12.4044Z"

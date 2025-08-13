@@ -1,5 +1,5 @@
 import Svg, { Circle, Path } from 'react-native-svg';
-import { IconProps } from '../../config';
+import { IconProps } from '../../icon-props';
 
 export const AddCircle = (props: IconProps) => (
   <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" {...props}>

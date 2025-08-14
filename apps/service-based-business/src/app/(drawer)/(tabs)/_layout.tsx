@@ -4,7 +4,7 @@ import {
   AttentionView,
   defaultIconSize,
   Icon,
-  RegularText,
+  LightText,
   useDrawer,
   useTabsScreenOptions,
 } from '@symbiot-core-apps/ui';
@@ -83,16 +83,16 @@ export default () => {
             tabBarButton: PlusActionAdaptiveModal,
             tabBarIcon: ({ color, size }) => (
               <View
-                height={size + 14}
+                height={size + 16}
                 width={50}
                 backgroundColor="$highlighted"
                 justifyContent="center"
                 alignItems="center"
-                borderRadius="$4"
+                borderRadius="$8"
               >
-                <RegularText color={color} fontSize={size * 1.4}>
+                <LightText color={color} fontSize={size * 1.4}>
                   +
-                </RegularText>
+                </LightText>
               </View>
             ),
           }}

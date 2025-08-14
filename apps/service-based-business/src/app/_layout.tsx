@@ -7,7 +7,6 @@ import { unlockAsync } from 'expo-screen-orientation';
 import { Platform } from 'react-native';
 import { ThemeProvider, useFixelFont } from '@symbiot-core-apps/theme';
 import { preventAutoHideAsync, setOptions } from 'expo-splash-screen';
-import { ErrorView } from '@symbiot-core-apps/ui';
 import { darkTheme, lightTheme } from '../theme/config';
 import { I18nProvider } from '@symbiot-core-apps/i18n';
 
@@ -22,15 +21,11 @@ if (Platform.OS !== 'web') {
 }
 
 export default () => {
-  const [fontsLoaded, fontsError] = useFixelFont();
+  const [fontsLoaded] = useFixelFont();
   const { removeTokens } = useAuthTokens();
   const onNoRespond = useCallback(() => {
     alert('noRespond');
   }, []);
-
-  if (fontsError) {
-    return <ErrorView message="Fonts could not be loaded." />;
-  }
 
   return (
     fontsLoaded && (

@@ -17,6 +17,7 @@ import { Drawer } from 'expo-router/drawer';
 import { DrawerMenu, drawerMenuMaxWidth } from '../../components/drawer/menu';
 import { useInitializing } from '../../hooks/use-initializing';
 import { NavigationBackground, useDrawer } from '@symbiot-core-apps/ui';
+import { hideAsync } from 'expo-splash-screen';
 
 export default () => {
   const { tokens, setTokens } = useAuthTokens();
@@ -61,6 +62,12 @@ export default () => {
     }
   }, [currentBrandResponse, setCurrentBrand, setCurrentBrands, setTokens]);
 
+  useEffect(() => {
+    if (!initializing) {
+      void hideAsync();
+    }
+  }, [initializing]);
+
   if (!tokens.access) {
     return <Redirect href="/onboarding" />;
   }
@@ -79,18 +86,18 @@ export default () => {
               headerShadowVisible: false,
               swipeEnabled: false,
               headerShown,
-              headerBackground: () => <NavigationBackground />,
               drawerStyle: {
                 width: drawerPermanent ? 'auto' : drawerMenuMaxWidth,
                 overflow: 'hidden',
                 display: !drawerVisible || initializing ? 'none' : undefined,
                 borderRightWidth: 0,
               },
+              headerBackground: () => <NavigationBackground />,
             }}
           >
             <Drawer.Protected guard={!initializing}>
               <Drawer.Screen
-                name="(stack)"
+                name="(tabs)"
                 options={{
                   headerTitle: '',
                 }}

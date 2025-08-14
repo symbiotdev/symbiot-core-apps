@@ -6,8 +6,6 @@ import {
 } from '@symbiot-core-apps/state';
 import { useStackScreenHeaderOptions } from '@symbiot-core-apps/ui';
 import { Platform } from 'react-native';
-import { useLayoutEffect } from 'react';
-import { hideAsync } from 'expo-splash-screen';
 
 export default () => {
   const { tokens } = useAuthTokens();
@@ -15,14 +13,8 @@ export default () => {
   const { brand: currentBrand } = useCurrentBrandState();
   const headerScreenOptions = useStackScreenHeaderOptions();
 
-  useLayoutEffect(() => {
-    if (!tokens.access) {
-      void hideAsync();
-    }
-  }, [tokens.access]);
-
   if (tokens.access) {
-    return <Redirect href={currentBrand ? '/home' : '/actions'} />;
+    return <Redirect href={currentBrand ? '/home' : '/brand'} />;
   }
 
   return (

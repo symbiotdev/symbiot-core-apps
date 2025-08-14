@@ -22,32 +22,32 @@ export default () => {
   const { visible: drawerVisible } = useDrawer();
 
   const onAccountPress = useCallback(
-    () => router.push('/preferences/account'),
+    () => router.push('/app/preferences/account'),
     [],
   );
   const onAppearancePress = useCallback(
-    () => router.push('/preferences/appearance'),
+    () => router.push('/app/preferences/appearance'),
     [],
   );
   const onCalendarPress = useCallback(
-    () => router.push('/preferences/calendar'),
+    () => router.push('/app/preferences/calendar'),
     [],
   );
   const onLanguagePress = useCallback(
-    () => router.push('/preferences/language'),
+    () => router.push('/app/preferences/language'),
     [],
   );
   const onNotificationsPress = useCallback(
-    () => router.push('/preferences/notifications'),
+    () => router.push('/app/preferences/notifications'),
     [],
   );
   const onTermsPrivacyPress = useCallback(
-    () => router.push('/terms-privacy'),
+    () => router.push('/app/terms-privacy'),
     [],
   );
-  const onFollowUsPress = useCallback(() => router.push('/follow-us'), []);
+  const onFollowUsPress = useCallback(() => router.push('/app/follow-us'), []);
   const onHelpFeedbackPress = useCallback(
-    () => router.push('/help-feedback'),
+    () => router.push('/app/help-feedback'),
     [],
   );
 

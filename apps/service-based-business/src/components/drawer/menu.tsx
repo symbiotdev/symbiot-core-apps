@@ -16,7 +16,6 @@ import {
 import { router, usePathname } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { memo, ReactElement, useCallback } from 'react';
-import { DrawerActions } from '@react-navigation/native';
 import { emitHaptic, useShareApp } from '@symbiot-core-apps/shared';
 import Animated, {
   useAnimatedStyle,
@@ -57,7 +56,7 @@ const MenuItem = memo(
     const focused = pathname === route || (pathname === '/' && initial);
 
     const onPress = useCallback(() => {
-      navigation.dispatch(DrawerActions.closeDrawer());
+      navigation.closeDrawer();
 
       if (router.canDismiss()) {
         router.dismissAll();
@@ -199,7 +198,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
         {!currentBrand ? (
           <MenuItem
             initial
-            route="/actions"
+            route="/brand"
             navigation={props.navigation}
             label={t('navigation.drawer.actions.label', { ns: 'app' })}
             icon={Icons.Workspace}

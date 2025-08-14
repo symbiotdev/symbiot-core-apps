@@ -16,7 +16,7 @@ export default () => {
             color={brand.avatarColor}
           />
 
-          <H2 numberOfLines={1} flex={1} textAlign="center">
+          <H2 numberOfLines={1} textAlign="center">
             {brand.name}
           </H2>
         </View>

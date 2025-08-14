@@ -42,6 +42,9 @@ import { AltArrowRight } from './AltArrowRight';
 import { IconMap } from '../../config';
 import { Maximize } from './Maximize';
 import { Minimize } from './Minimize';
+import { Code } from './Code';
+import { SettingsMinimalistic } from './SettingsMinimalistic';
+import { Rocket } from './Rocket';
 
 export const Map: IconMap = {
   AddCircle,
@@ -57,6 +60,7 @@ export const Map: IconMap = {
   CalendarMinimalistic,
   Camera,
   CloseCircle,
+  Code,
   CodeCircle,
   CrownLine,
   FileText,
@@ -77,6 +81,8 @@ export const Map: IconMap = {
   Pen,
   QrCode,
   QuestionCircle,
+  Rocket,
+  SettingsMinimalistic,
   Share,
   ShareCircle,
   Suitcase,

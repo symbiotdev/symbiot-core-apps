@@ -5,6 +5,7 @@ import {
   HeaderButton,
   headerButtonSize,
   Icon,
+  RegularText,
   useDrawer,
   useTabsScreenOptions,
 } from '@symbiot-core-apps/ui';
@@ -15,7 +16,11 @@ import {
 import { useT } from '@symbiot-core-apps/i18n';
 import { PlusActionModal } from '../../../../components/tabs/plus-action-modal';
 import { Icons } from '../../../../icons/config';
-import { ViewStyle } from 'react-native';
+import { Platform, ViewStyle } from 'react-native';
+import { XStack } from 'tamagui';
+import { ConfirmAlert, DeviceVersion } from '@symbiot-core-apps/shared';
+import { useCallback } from 'react';
+import { useAccountAuthSignOutQuery } from '@symbiot-core-apps/api';
 
 const HelloHeaderLeft = () => {
   const { t } = useT();
@@ -38,6 +43,46 @@ const NotificationsHeaderButton = () => {
       attention={!!stats.newNotifications}
       iconName={Icons.Notifications}
       onPress={() => router.navigate('/notifications')}
+    />
+  );
+};
+
+const MoreHeaderLeft = () => {
+  const { t } = useT();
+
+  return (
+    Platform.OS !== 'web' && (
+      <XStack gap="$2" alignItems="center">
+        <Icon name="Code" color="$placeholderColor" />
+        <RegularText color="$placeholderColor">
+          {t('version')}: {DeviceVersion}
+        </RegularText>
+      </XStack>
+    )
+  );
+};
+
+const MoreHeaderRight = () => {
+  const { t } = useT();
+  const { mutate: signOut } = useAccountAuthSignOutQuery();
+
+  const onSignOutPress = useCallback(
+    () =>
+      ConfirmAlert({
+        title: t('auth.sign_out.confirm.title'),
+        callback: signOut,
+      }),
+    [signOut, t],
+  );
+
+  return <HeaderButton iconName="Logout2" onPress={onSignOutPress} />;
+};
+
+const BrandingHeaderRight = () => {
+  return (
+    <HeaderButton
+      iconName="SettingsMinimalistic"
+      onPress={() => alert('Configure brand')}
     />
   );
 };
@@ -117,8 +162,9 @@ export default () => {
           }}
         />
         <Tabs.Screen
-          name="brands/index"
+          name="branding/index"
           options={{
+            headerRight: BrandingHeaderRight,
             tabBarIcon: ({ color, size, focused }) => (
               <Icon
                 name={Icons.Workspace}
@@ -134,6 +180,8 @@ export default () => {
       <Tabs.Screen
         name="more/index"
         options={{
+          headerLeft: MoreHeaderLeft,
+          headerRight: MoreHeaderRight,
           tabBarIcon: ({ color, size, focused }) => (
             <Icon
               name={Icons.More}

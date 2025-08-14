@@ -21,7 +21,9 @@ export const useAccountMeUpdate = () =>
       requestWithAlertOnError(
         axios.put(
           '/api/account/me',
-          await generateFormData<UpdateAccountData>(data, ['avatar']),
+          await (data.avatar
+            ? generateFormData<UpdateAccountData>(data, ['avatar'])
+            : data),
         ),
       ),
   });

@@ -1,11 +1,6 @@
-import {
-  ConfirmAlert,
-  DeviceVersion,
-  useShareApp,
-} from '@symbiot-core-apps/shared';
+import { useShareApp } from '@symbiot-core-apps/shared';
 import { useT } from '@symbiot-core-apps/i18n';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
-import { useAccountAuthSignOutQuery } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
 import { router } from 'expo-router';
 import {
@@ -19,13 +14,11 @@ import {
   TabsPageView,
   useDrawer,
 } from '@symbiot-core-apps/ui';
-import { Platform } from 'react-native';
 
 export default () => {
   const share = useShareApp();
   const { t } = useT();
   const { me } = useCurrentAccount();
-  const { mutate: signOut } = useAccountAuthSignOutQuery();
   const { visible: drawerVisible } = useDrawer();
 
   const onAccountPress = useCallback(
@@ -57,18 +50,10 @@ export default () => {
     () => router.push('/help-feedback'),
     [],
   );
-  const onSignOutPress = useCallback(
-    () =>
-      ConfirmAlert({
-        title: t('auth.sign_out.confirm.title'),
-        callback: signOut,
-      }),
-    [signOut, t],
-  );
 
   return (
     me && (
-      <TabsPageView scrollable>
+      <TabsPageView scrollable withHeaderHeight>
         <FormView>
           <ActionCard
             title={t('subscription.card.title', {
@@ -80,7 +65,7 @@ export default () => {
             buttonLabel={t('subscription.card.button.label', {
               ns: 'app',
             })}
-            buttonIcon={<Icon name="CrownLine" />}
+            buttonIcon={<Icon name="Rocket" />}
             onActionPress={() => {
               alert('get pro');
             }}
@@ -152,25 +137,6 @@ export default () => {
                 onPress={onFollowUsPress}
               />
             </ListItemGroup>
-          )}
-
-          <ListItemGroup title={t('other')}>
-            <ListItem
-              label={t('auth.sign_out.button.label')}
-              icon={<Icon name="Logout2" />}
-              onPress={onSignOutPress}
-            />
-          </ListItemGroup>
-
-          {Platform.OS !== 'web' && (
-            <ListItem
-              disabled
-              paddingHorizontal="$4"
-              color="$disabled"
-              label={t('version')}
-              icon={<Icon name="CodeCircle" />}
-              iconAfter={<RegularText>{DeviceVersion}</RegularText>}
-            />
           )}
         </FormView>
       </TabsPageView>

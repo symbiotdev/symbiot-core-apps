@@ -171,7 +171,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
         {currentBrand && (
           <MenuItem
             navigation={props.navigation}
-            route="/brands"
+            route="/branding"
             label={currentBrand.name}
             icon={
               <View>

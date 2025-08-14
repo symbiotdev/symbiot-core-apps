@@ -86,7 +86,6 @@ export default () => {
         name="preferences/account/index"
         options={{
           headerTitle: t('profile'),
-          animation: nestedScreenAnimation,
         }}
       />
       <Stack.Screen name="preferences/account/remove" />

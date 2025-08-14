@@ -106,13 +106,6 @@ export default () => {
         }}
       />
       <Stack.Screen
-        name="(stack)/notifications/index"
-        options={{
-          headerTitle: t('notifications.title'),
-          animation: nestedScreenAnimation,
-        }}
-      />
-      <Stack.Screen
         name="(stack)/preferences/account/index"
         options={{
           headerTitle: t('profile'),

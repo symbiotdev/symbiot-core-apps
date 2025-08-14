@@ -23,10 +23,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Icons } from '../../icons/config';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
-import {
-  useCurrentAccount,
-  useCurrentBrandState,
-} from '@symbiot-core-apps/state';
+import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { useT } from '@symbiot-core-apps/i18n';
 
 export const drawerMenuMaxWidth = 250;
@@ -58,12 +55,10 @@ const MenuItem = memo(
     const onPress = useCallback(() => {
       navigation.closeDrawer();
 
-      if (router.canDismiss()) {
-        router.dismissAll();
+      if (!focused) {
+        router.replace(route);
       }
-
-      router.replace(route);
-    }, [route]);
+    }, [focused, route]);
 
     return (
       <ListItem
@@ -97,7 +92,6 @@ const Br = memo((props: ViewStyle) => (
 export const DrawerMenu = (props: DrawerContentComponentProps) => {
   const { t } = useT();
   const { permanent } = useDrawer();
-  const { stats } = useCurrentAccount();
   const share = useShareApp();
   const { top, bottom, left } = useSafeAreaInsets();
   const { compressed, toggleCompressed } = useDrawerState();
@@ -164,36 +158,29 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
         contentContainerStyle={{
           flex: 1,
           gap: 10,
-          paddingTop: defaultPageVerticalPadding,
         }}
       >
         {currentBrand && (
-          <MenuItem
-            navigation={props.navigation}
-            route="/brand"
-            label={currentBrand.name}
-            icon={
-              <View>
-                <Avatar
-                  size={defaultIconSize}
-                  name={currentBrand.name}
-                  color={currentBrand.avatarColor}
-                  url={currentBrand.avatarXsUrl}
-                />
-              </View>
-            }
-          />
+          <>
+            <MenuItem
+              navigation={props.navigation}
+              route="/brand"
+              label={currentBrand.name}
+              icon={
+                <View marginHorizontal={-5}>
+                  <Avatar
+                    size={defaultIconSize + 10}
+                    name={currentBrand.name}
+                    color={currentBrand.avatarColor}
+                    url={currentBrand.avatarXsUrl}
+                  />
+                </View>
+              }
+            />
+
+            <Br />
+          </>
         )}
-
-        <MenuItem
-          navigation={props.navigation}
-          route="/notifications/all"
-          label={t('navigation.drawer.notifications.label', { ns: 'app' })}
-          attention={!!stats.newNotifications}
-          icon={Icons.Notifications}
-        />
-
-        <Br />
 
         {!currentBrand ? (
           <MenuItem

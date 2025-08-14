@@ -130,8 +130,6 @@ export default () => {
           ),
         }}
       />
-
-      <Tabs.Screen name="notifications" options={{ href: null }} />
     </Tabs>
   );
 };

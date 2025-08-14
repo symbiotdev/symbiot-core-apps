@@ -54,13 +54,14 @@ const InitialActionHeaderRight = () => {
     <HeaderButton
       attention={!!stats.newNotifications}
       iconName={Icons.Notifications}
-      onPress={() => router.navigate('/notifications/all')}
+      onPress={() => router.navigate('/brand/notifications')}
     />
   );
 };
 
 export default () => {
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
+  const { t } = useT();
   const { visible: drawerVisible } = useDrawer();
   const screenOptions = useStackScreenHeaderOptions();
 
@@ -101,6 +102,13 @@ export default () => {
           }}
         />
       </Stack.Protected>
+
+      <Stack.Screen
+        name="(stack)/notifications/index"
+        options={{
+          headerTitle: t('notifications.title'),
+        }}
+      />
     </Stack>
   );
 };

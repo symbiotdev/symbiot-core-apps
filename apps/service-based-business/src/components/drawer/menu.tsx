@@ -186,8 +186,6 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
           />
         )}
 
-        <Br />
-
         <MenuItem
           navigation={props.navigation}
           route="/notifications"
@@ -195,6 +193,8 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
           attention={!!stats.newNotifications}
           icon={Icons.Notifications}
         />
+
+        <Br />
 
         {!currentBrand ? (
           <MenuItem

@@ -14,7 +14,7 @@ type DrawerState = {
 export const useDrawerState = create<DrawerState>()(
   persist<DrawerState>(
     (set, get) => ({
-      compressed: false,
+      compressed: true,
       toggleCompressed: () => set({ compressed: !get().compressed }),
     }),
     {

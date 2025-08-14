@@ -68,6 +68,3 @@ app-assets/**/.env
 app-assets/**/.env.*
 /apps/**/ios/**
 /apps/**/android/**
-/apps/service-based-business/assets/**
-/apps/service-based-business/google/**
-/apps/service-based-business/src/theme/**

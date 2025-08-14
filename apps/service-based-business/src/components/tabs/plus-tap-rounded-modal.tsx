@@ -12,7 +12,7 @@ import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import { emitHaptic, useScreenOrientation } from '@symbiot-core-apps/shared';
 import { Icons } from '../../icons/config';
 
-export const PlusActionModal = (props: BottomTabBarButtonProps) => {
+export const PlusTapRoundedModal = (props: BottomTabBarButtonProps) => {
   const [state, setState] = useState<{
     modalVisible: boolean;
     rect?: LayoutRectangle;
@@ -55,7 +55,7 @@ export const PlusActionModal = (props: BottomTabBarButtonProps) => {
 
   return (
     <>
-      <HapticTabBarButton style={props.style} onPressIn={openModal}>
+      <HapticTabBarButton onPressIn={openModal}>
         {props.children}
       </HapticTabBarButton>
 

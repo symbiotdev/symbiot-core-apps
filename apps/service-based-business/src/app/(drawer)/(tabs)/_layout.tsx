@@ -4,6 +4,7 @@ import {
   AttentionView,
   defaultIconSize,
   Icon,
+  RegularText,
   useDrawer,
   useTabsScreenOptions,
 } from '@symbiot-core-apps/ui';
@@ -11,10 +12,11 @@ import {
   useCurrentAccount,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { PlusActionModal } from '../../../components/tabs/plus-action-modal';
 import { Icons } from '../../../icons/config';
 import React, { useEffect } from 'react';
 import { useCountNewNotifications } from '@symbiot-core-apps/api';
+import { PlusActionAdaptiveModal } from '../../../components/tabs/plus-action-adaptive-modal';
+import { View } from 'tamagui';
 
 export default () => {
   const { brand: currentBrand } = useCurrentBrandState();
@@ -78,14 +80,20 @@ export default () => {
         <Tabs.Screen
           name="plus"
           options={{
-            tabBarButton: PlusActionModal,
-            tabBarIcon: ({ color, size, focused }) => (
-              <Icon
-                name={Icons.TabsPlus}
-                color={color}
-                size={Math.min(size, defaultIconSize)}
-                type={focused ? 'SolarBold' : undefined}
-              />
+            tabBarButton: PlusActionAdaptiveModal,
+            tabBarIcon: ({ color, size }) => (
+              <View
+                height={size + 6}
+                width={40}
+                backgroundColor="$highlighted"
+                justifyContent="center"
+                alignItems="center"
+                borderRadius="$4"
+              >
+                <RegularText color={color} fontSize={size}>
+                  +
+                </RegularText>
+              </View>
             ),
           }}
         />

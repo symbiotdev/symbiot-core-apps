@@ -30,7 +30,7 @@ const IndexHeaderRight = () => {
     <HeaderButton
       attention={!!stats.newNotifications}
       iconName={Icons.Notifications}
-      onPress={() => router.navigate('/app/notifications')}
+      onPress={() => router.navigate('/notifications/all')}
     />
   );
 };

@@ -1,4 +1,5 @@
 import {
+  headerBackButtonIconName,
   HeaderButton,
   IconName,
   LoadingView,
@@ -112,7 +113,10 @@ export function Survey<V extends object>({
     navigation.setOptions({
       headerLeft: () =>
         !loading && (
-          <HeaderButton iconName="ArrowLeft" onPress={goToPrevStep} />
+          <HeaderButton
+            iconName={headerBackButtonIconName}
+            onPress={goToPrevStep}
+          />
         ),
       headerTitle: () =>
         !loading && !!progress && <Progress value={progress} maxWidth={150} />,

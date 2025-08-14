@@ -187,7 +187,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
 
         <MenuItem
           navigation={props.navigation}
-          route="/app/notifications"
+          route="/notifications/all"
           label={t('navigation.drawer.notifications.label', { ns: 'app' })}
           attention={!!stats.newNotifications}
           icon={Icons.Notifications}

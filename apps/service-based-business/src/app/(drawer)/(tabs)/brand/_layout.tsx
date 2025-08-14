@@ -54,7 +54,7 @@ const InitialActionHeaderRight = () => {
     <HeaderButton
       attention={!!stats.newNotifications}
       iconName={Icons.Notifications}
-      onPress={() => router.navigate('/app/notifications')}
+      onPress={() => router.navigate('/notifications/all')}
     />
   );
 };
@@ -68,7 +68,7 @@ export default () => {
     <Stack screenOptions={screenOptions}>
       <Stack.Protected guard={!currentBrand}>
         <Stack.Screen
-          name="initial-action/index"
+          name="initial-action"
           options={{
             headerLeft: !drawerVisible ? InitialActionHeaderLeft : undefined,
             headerRight: !drawerVisible ? InitialActionHeaderRight : undefined,
@@ -77,7 +77,7 @@ export default () => {
 
         <Stack.Protected guard={!!currentBrands && !currentBrands.length}>
           <Stack.Screen
-            name="create/index"
+            name="(stack)/create/index"
             options={{
               gestureEnabled: false,
             }}
@@ -95,7 +95,7 @@ export default () => {
         />
 
         <Stack.Screen
-          name="location/create/index"
+          name="(stack)/location/create/index"
           options={{
             gestureEnabled: false,
           }}

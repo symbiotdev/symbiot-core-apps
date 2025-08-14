@@ -7,7 +7,6 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { memo, ReactElement, useCallback, useMemo } from 'react';
 import { H4 } from '../text/heading';
-import { ContainerView } from '../view/container-view';
 import { Icon } from '../icons';
 import { IconName } from '../icons/config';
 import { emitHaptic } from '@symbiot-core-apps/shared';
@@ -17,6 +16,7 @@ import { NavigationBackground } from './background';
 export const headerHeight = 50;
 export const headerButtonSize = 24;
 export const headerHorizontalPadding = 14;
+export const headerBackButtonIconName = 'ArrowLeft';
 
 export const useScreenHeaderHeight = () => {
   const { top } = useSafeAreaInsets();
@@ -137,7 +137,7 @@ export const ScreenHeader = memo(
                 ? options.headerLeft({})
                 : !!back && (
                     <HeaderButton
-                      iconName="ArrowLeft"
+                      iconName={headerBackButtonIconName}
                       onPress={navigation.goBack}
                     />
                   )

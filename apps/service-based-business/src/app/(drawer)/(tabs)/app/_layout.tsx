@@ -85,35 +85,35 @@ export default () => {
         }}
       />
       <Stack.Screen
-        name="help-feedback/index"
+        name="(stack)/help-feedback/index"
         options={{
           headerTitle: t('faq.title'),
           animation: nestedScreenAnimation,
         }}
       />
       <Stack.Screen
-        name="terms-privacy/index"
+        name="(stack)/terms-privacy/index"
         options={{
           headerTitle: t('docs.terms_privacy'),
           animation: nestedScreenAnimation,
         }}
       />
       <Stack.Screen
-        name="follow-us/index"
+        name="(stack)/follow-us/index"
         options={{
           headerTitle: t('follow_us'),
           animation: nestedScreenAnimation,
         }}
       />
       <Stack.Screen
-        name="notifications/index"
+        name="(stack)/notifications/index"
         options={{
           headerTitle: t('notifications.title'),
           animation: nestedScreenAnimation,
         }}
       />
       <Stack.Screen
-        name="preferences/account/index"
+        name="(stack)/preferences/account/index"
         options={{
           headerTitle: t('profile'),
           headerRight: AccountPreferencesHeaderRight,
@@ -121,25 +121,25 @@ export default () => {
       />
       <Stack.Screen name="preferences/account/remove" />
       <Stack.Screen
-        name="preferences/appearance/index"
+        name="(stack)/preferences/appearance/index"
         options={{
           headerTitle: t('preferences.appearance.title'),
         }}
       />
       <Stack.Screen
-        name="preferences/calendar/index"
+        name="(stack)/preferences/calendar/index"
         options={{
           headerTitle: t('preferences.calendar.title'),
         }}
       />
       <Stack.Screen
-        name="preferences/language/index"
+        name="(stack)/preferences/language/index"
         options={{
           headerTitle: t('preferences.language.title'),
         }}
       />
       <Stack.Screen
-        name="preferences/notifications/index"
+        name="(stack)/preferences/notifications/index"
         options={{
           headerTitle: t('preferences.notifications.title'),
         }}

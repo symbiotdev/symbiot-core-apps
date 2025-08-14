@@ -18,8 +18,8 @@ import { useCountNewNotifications } from '@symbiot-core-apps/api';
 
 export default () => {
   const { brand: currentBrand } = useCurrentBrandState();
-  const { stats, setMeStats } = useCurrentAccount();
   const segments = useSegments();
+  const { stats, setMeStats } = useCurrentAccount();
   const { visible: drawerVisible } = useDrawer();
   const screenOptions = useTabsScreenOptions();
   const { data: countNewNotifications } = useCountNewNotifications();
@@ -41,7 +41,7 @@ export default () => {
       }}
       tabBar={(props) =>
         !drawerVisible && (
-          <AnimatedTabBar {...props} hidden={segments.length > 3} />
+          <AnimatedTabBar {...props} hidden={segments.includes('(stack)')} />
         )
       }
     >
@@ -122,6 +122,8 @@ export default () => {
           ),
         }}
       />
+
+      <Tabs.Screen name="notifications" options={{ href: null }} />
     </Tabs>
   );
 };

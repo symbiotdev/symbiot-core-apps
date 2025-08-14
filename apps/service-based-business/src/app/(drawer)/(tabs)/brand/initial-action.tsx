@@ -16,7 +16,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { View } from 'tamagui';
 import { router } from 'expo-router';
-import { Icons } from '../../../../../icons/config';
+import { Icons } from '../../../../icons/config';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { MyBrandsSelectionList } from '@symbiot-core-apps/brand';
 

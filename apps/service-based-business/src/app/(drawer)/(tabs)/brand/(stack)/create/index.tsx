@@ -1,7 +1,7 @@
 import { Survey, SurveyStep } from '@symbiot-core-apps/survey';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import * as yup from 'yup';
-import { Icons } from '../../../../../icons/config';
+import { Icons } from '../../../../../../icons/config';
 import { getAppLinkSchema } from '@symbiot-core-apps/ui';
 import {
   Link,

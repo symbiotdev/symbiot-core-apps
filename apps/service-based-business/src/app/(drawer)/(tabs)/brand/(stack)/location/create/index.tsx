@@ -5,7 +5,7 @@ import {
   getWeekdayScheduleScheme,
   WeekdaySchedule,
 } from '@symbiot-core-apps/ui';
-import { Icons } from '../../../../../../icons/config';
+import { Icons } from '../../../../../../../icons/config';
 import { useT } from '@symbiot-core-apps/i18n';
 import { countries, TCountryCode } from 'countries-list';
 import { countryToCurrency } from '@symbiot-core-apps/shared';

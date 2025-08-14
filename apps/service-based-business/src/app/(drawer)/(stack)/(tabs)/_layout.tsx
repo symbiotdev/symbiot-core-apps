@@ -87,6 +87,18 @@ const BrandingHeaderRight = () => {
   );
 };
 
+const BrandingHeaderLeft = () => {
+  const { brand } = useCurrentBrandState();
+
+  return (
+    brand && (
+      <H3 lineHeight={headerButtonSize} numberOfLines={1}>
+        {brand.name}
+      </H3>
+    )
+  );
+};
+
 export default () => {
   const { brand: currentBrand } = useCurrentBrandState();
   const { stats } = useCurrentAccount();
@@ -164,6 +176,7 @@ export default () => {
         <Tabs.Screen
           name="branding/index"
           options={{
+            headerLeft: BrandingHeaderLeft,
             headerRight: BrandingHeaderRight,
             tabBarIcon: ({ color, size, focused }) => (
               <Icon

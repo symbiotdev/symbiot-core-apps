@@ -132,11 +132,11 @@ export default () => {
       </Tabs.Protected>
 
       <Tabs.Screen
-        name="preferences/index"
+        name="more/index"
         options={{
           tabBarIcon: ({ color, size, focused }) => (
             <Icon
-              name={Icons.Preferences}
+              name={Icons.More}
               color={color}
               size={Math.max(size, 20)}
               type={focused ? 'SolarBold' : undefined}

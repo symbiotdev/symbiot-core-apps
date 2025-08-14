@@ -86,7 +86,7 @@ export default () => {
             }}
           />
 
-          <ListItemGroup title={!drawerVisible ? '' : t('profile')}>
+          <ListItemGroup title={t('profile')}>
             <ListItem
               label={me.name}
               icon={<Icon name="UserCircle" />}
@@ -106,7 +106,7 @@ export default () => {
             />
           </ListItemGroup>
 
-          <ListItemGroup title={!drawerVisible ? '' : t('preferences.title')}>
+          <ListItemGroup title={t('preferences.title')}>
             <ListItem
               label={t('preferences.notifications.title')}
               icon={<Icon name="Bell" />}

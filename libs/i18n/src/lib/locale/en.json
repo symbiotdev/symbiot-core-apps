@@ -360,8 +360,8 @@
         "follow_us": {
           "label": "Follow us"
         },
-        "preferences": {
-          "label": "Preferences"
+        "more": {
+          "label": "More"
         }
       }
     },
@@ -555,8 +555,8 @@
         "follow_us": {
           "label": "Follow us"
         },
-        "preferences": {
-          "label": "Preferences"
+        "more": {
+          "label": "More"
         }
       }
     },

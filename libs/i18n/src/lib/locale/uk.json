@@ -360,8 +360,8 @@
         "follow_us": {
           "label": "Слідкуйте за нами"
         },
-        "preferences": {
-          "label": "Налаштування"
+        "more": {
+          "label": "Ще"
         }
       }
     },
@@ -555,8 +555,8 @@
         "follow_us": {
           "label": "Слідкуйте за нами"
         },
-        "preferences": {
-          "label": "Налаштування"
+        "more": {
+          "label": "Ще"
         }
       }
     },

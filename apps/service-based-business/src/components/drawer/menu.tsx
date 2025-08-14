@@ -258,9 +258,9 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
 
         <MenuItem
           navigation={props.navigation}
-          icon={Icons.Preferences}
-          label={t('navigation.drawer.preferences.label', { ns: 'app' })}
-          route="/preferences"
+          icon={Icons.More}
+          label={t('navigation.drawer.more.label', { ns: 'app' })}
+          route="/more"
         />
       </ScrollView>
     </Animated.View>

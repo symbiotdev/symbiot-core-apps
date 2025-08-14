@@ -165,7 +165,7 @@ export const AdaptivePopover = forwardRef(
           trigger
         ) : (
           <Popover.Trigger
-            asChild={triggerType === 'child'}
+            asChild
             disabled={disabled}
           >
             {trigger}

@@ -6,5 +6,5 @@ export const Icons: Record<string, IconName> = {
   Calendar: 'Calendar',
   TabsPlus: 'AddSquare',
   Workspace: 'Suitcase',
-  Preferences: 'Widget',
+  More: 'Widget',
 };

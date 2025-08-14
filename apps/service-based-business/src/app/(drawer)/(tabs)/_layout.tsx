@@ -83,14 +83,18 @@ export default () => {
             tabBarButton: PlusActionAdaptiveModal,
             tabBarIcon: ({ color, size }) => (
               <View
-                height={size + 16}
+                height={size + 18}
                 width={50}
                 backgroundColor="$highlighted"
                 justifyContent="center"
                 alignItems="center"
                 borderRadius="$8"
               >
-                <LightText color={color} fontSize={size * 1.4}>
+                <LightText
+                  color={color}
+                  fontSize={size * 1.4}
+                  lineHeight={size * 1.4}
+                >
                   +
                 </LightText>
               </View>

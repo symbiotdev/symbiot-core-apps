@@ -159,7 +159,7 @@ export const Calendar = ({
             verticalLineColor: theme.calendarLineColor?.val,
             horizontalLineColor: theme.calendarLineColor?.val,
             timelineBackgroundColor: theme.background?.val,
-            timelineTextColor: theme.calendarTimeColor?.val,
+            timelineTextColor: theme.color?.val,
           }}
           onChangeDate={onChangeDate}
         />

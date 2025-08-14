@@ -11,14 +11,12 @@ export function SurveyStepsFlow<V>({
   currentStepId,
   steps,
   onChange,
-  onFinish,
   onSkip,
 }: {
   value: V;
   currentStepId: string;
   steps: SurveyStep<V>[];
   onChange: (value: V) => void;
-  onFinish: () => void;
   onSkip: () => void;
 }) {
   const carouselRef = useRef<ICarouselInstance>(null);
@@ -78,7 +76,6 @@ export function SurveyStepsFlow<V>({
               value={value}
               step={item}
               onChange={onStepFormChange}
-              onFinish={onFinish}
               onSkip={onSkip}
             />
           )}

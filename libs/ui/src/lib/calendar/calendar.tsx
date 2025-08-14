@@ -154,14 +154,8 @@ export const Calendar = ({
           renderNowIndicator={renderNowIndicator}
           theme={{
             backgroundColor: theme.background?.val,
-            headerSafeAreaBackgroundColor:
-              Platform.OS === 'android'
-                ? theme.background1?.val
-                : `${theme.background1?.val}40`,
-            dayHeaderBackgroundColor:
-              Platform.OS === 'android'
-                ? theme.background1?.val
-                : `${theme.background1?.val}40`,
+            headerSafeAreaBackgroundColor: theme.background?.val,
+            dayHeaderBackgroundColor: theme.background?.val,
             verticalLineColor: theme.calendarLineColor?.val,
             horizontalLineColor: theme.calendarLineColor?.val,
             timelineBackgroundColor: theme.background?.val,

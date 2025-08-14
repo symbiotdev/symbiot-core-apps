@@ -6,7 +6,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { SurveyIntro } from './survey-intro';
 import { SurveyStep } from '../types/survey-step';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SurveyStepsFlow } from './survey-steps-flow';
 import { ConfirmAlert, useKeyboardDismisser } from '@symbiot-core-apps/shared';
 import { router, useNavigation } from 'expo-router';
@@ -35,8 +35,9 @@ export function Survey<V extends object>({
   const { t } = useT();
   const navigation = useNavigation();
 
+  const valueRef = useRef<V>({} as V);
+
   const [currentStepId, setCurrentStepId] = useState<string>();
-  const [value, setValue] = useState<V>({} as V);
 
   const progress = useMemo(
     () =>
@@ -74,8 +75,10 @@ export function Survey<V extends object>({
 
       if (nextStep) {
         setCurrentStepId(nextStep.id);
+      } else {
+        onEmitFinish(valueRef.current);
       }
-    }, [currentStepId, setCurrentStepId, steps]),
+    }, [currentStepId, onEmitFinish, steps]),
   );
 
   const onLeave = useCallback(
@@ -95,19 +98,14 @@ export function Survey<V extends object>({
 
   const onChange = useCallback(
     (value: V) => {
-      setValue((prev) => ({
-        ...prev,
+      valueRef.current = {
+        ...valueRef.current,
         ...value,
-      }));
+      };
 
       goToNextStep();
     },
     [goToNextStep],
-  );
-
-  const onFinish = useCallback(
-    () => onEmitFinish(value),
-    [onEmitFinish, value],
   );
 
   useEffect(() => {
@@ -149,9 +147,8 @@ export function Survey<V extends object>({
         <SurveyStepsFlow
           currentStepId={currentStepId}
           steps={steps}
-          value={value}
+          value={valueRef.current}
           onChange={onChange}
-          onFinish={onFinish}
           onSkip={goToNextStep}
         />
       )}

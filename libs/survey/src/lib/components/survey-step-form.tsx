@@ -1,6 +1,6 @@
 import { View } from 'tamagui';
 import { SurveyStep } from '../types/survey-step';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import * as yup from 'yup';
 import { ObjectShape } from 'yup';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
@@ -31,14 +31,12 @@ export function SurveyStepForm<V>({
   currentStepId,
   step,
   onChange,
-  onFinish,
   onSkip,
 }: {
   currentStepId: string;
   value: V;
   step: SurveyStep<V>;
   onChange: (value: V) => void;
-  onFinish: () => void;
   onSkip: () => void;
 }) {
   const { t } = useT();
@@ -75,14 +73,6 @@ export function SurveyStepForm<V>({
       {},
     ),
   });
-
-  const finish = useCallback(
-    (value: V) => {
-      onChange(value);
-      onFinish();
-    },
-    [onChange, onFinish],
-  );
 
   return (
     currentStepId === step.id && (
@@ -196,26 +186,14 @@ export function SurveyStepForm<V>({
             ))}
 
           <View marginTop="auto">
-            {step.nextId ? (
-              <Button
-                disabled={!isValid}
-                label={t('next')}
-                onPress={handleSubmit(onChange as SubmitHandler<unknown>)}
-              />
-            ) : (
-              <Button
-                disabled={!isValid}
-                label={t('finish')}
-                onPress={handleSubmit(finish as SubmitHandler<unknown>)}
-              />
-            )}
+            <Button
+              disabled={!isValid}
+              label={t(step.nextId ? 'next' : 'finish')}
+              onPress={handleSubmit(onChange as SubmitHandler<unknown>)}
+            />
 
             {step.skippable && (
-              <Button
-                type="clear"
-                label={t('skip')}
-                onPress={step.nextId ? onSkip : onFinish}
-              />
+              <Button type="clear" label={t('skip')} onPress={onSkip} />
             )}
           </View>
         </FormView>

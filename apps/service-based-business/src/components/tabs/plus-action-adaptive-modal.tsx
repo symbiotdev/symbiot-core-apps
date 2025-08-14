@@ -6,6 +6,7 @@ export const PlusActionAdaptiveModal = (props: BottomTabBarButtonProps) => {
   return (
     <AdaptivePopover
       triggerType="child"
+      ignoreHapticOnOpen
       trigger={<HapticTabBarButton style={props.style} children={props.children} />}
     ></AdaptivePopover>
   );

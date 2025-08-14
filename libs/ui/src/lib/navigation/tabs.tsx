@@ -1,5 +1,7 @@
 import {
+  BottomTabBar,
   BottomTabBarButtonProps,
+  BottomTabBarProps,
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs';
 import { GestureResponderEvent, Platform } from 'react-native';
@@ -10,6 +12,10 @@ import { useScreenHeaderOptions } from './header';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { NavigationBackground } from './background';
+import Animated, {
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 
 export const HapticTabBarButton = (props: BottomTabBarButtonProps) => {
   const onPressIn = useCallback(
@@ -28,6 +34,32 @@ export const HapticTabBarButton = (props: BottomTabBarButtonProps) => {
       android_ripple={{ color: null }}
       onPressIn={onPressIn}
     />
+  );
+};
+
+export const AnimatedTabBar = ({
+  hidden,
+  ...tabBarProps
+}: BottomTabBarProps & {
+  hidden: boolean;
+}) => {
+  const animatedStyle = useAnimatedStyle(
+    () => ({
+      transform: [
+        {
+          translateY: withTiming(hidden ? 250 : 0, {
+            duration: 500,
+          }),
+        },
+      ],
+    }),
+    [hidden],
+  );
+
+  return (
+    <Animated.View style={animatedStyle}>
+      <BottomTabBar {...tabBarProps} />
+    </Animated.View>
   );
 };
 

@@ -171,7 +171,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
         {currentBrand && (
           <MenuItem
             navigation={props.navigation}
-            route="/branding"
+            route="/brand"
             label={currentBrand.name}
             icon={
               <View>
@@ -188,7 +188,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
 
         <MenuItem
           navigation={props.navigation}
-          route="/notifications"
+          route="/app/notifications"
           label={t('navigation.drawer.notifications.label', { ns: 'app' })}
           attention={!!stats.newNotifications}
           icon={Icons.Notifications}
@@ -237,21 +237,21 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
           navigation={props.navigation}
           icon="FileText"
           label={t('navigation.drawer.terms_privacy.label', { ns: 'app' })}
-          route="/terms-privacy"
+          route="/app/terms-privacy"
         />
 
         <MenuItem
           navigation={props.navigation}
           icon="QuestionCircle"
           label={t('navigation.drawer.faq.label', { ns: 'app' })}
-          route="/help-feedback"
+          route="/app/help-feedback"
         />
 
         <MenuItem
           navigation={props.navigation}
           icon="ShareCircle"
           label={t('navigation.drawer.follow_us.label', { ns: 'app' })}
-          route="/follow-us"
+          route="/app/follow-us"
         />
 
         <Br />
@@ -260,7 +260,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
           navigation={props.navigation}
           icon={Icons.More}
           label={t('navigation.drawer.more.label', { ns: 'app' })}
-          route="/more"
+          route="/app"
         />
       </ScrollView>
     </Animated.View>

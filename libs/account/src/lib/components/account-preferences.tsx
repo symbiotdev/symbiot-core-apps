@@ -2,13 +2,10 @@ import {
   APP_LINK,
   AppLinkInput,
   AvatarPicker,
-  ContextMenuItem,
-  ContextMenuPopover,
   DatePicker,
   FormView,
   getAppLinkSchema,
   getPhoneInputSchema,
-  Icon,
   Input,
   PageView,
   phoneDefaultValue,
@@ -16,27 +13,18 @@ import {
   SelectPicker,
 } from '@symbiot-core-apps/ui';
 import { useCurrentAccountUpdater, useGenders } from '@symbiot-core-apps/state';
-import { useNavigation } from '@react-navigation/native';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { router } from 'expo-router';
 import { Link, Phone } from '@symbiot-core-apps/api';
 import { useT } from '@symbiot-core-apps/i18n';
 import { DateHelper } from '@symbiot-core-apps/shared';
 
 export const AccountPreferences = () => {
-  const navigation = useNavigation();
-  const {
-    me,
-    updateAccount$,
-    updateAvatar$,
-    removeAvatar$,
-    updating,
-    avatarUpdating,
-  } = useCurrentAccountUpdater();
+  const { me, updateAccount$, updateAvatar$, removeAvatar$, avatarUpdating } =
+    useCurrentAccountUpdater();
   const { t } = useT();
   const {
     gendersAsOptions,
@@ -47,18 +35,6 @@ export const AccountPreferences = () => {
   const onAttach = useCallback(
     (images: ImagePickerAsset[]) => updateAvatar$(images[0]),
     [updateAvatar$],
-  );
-
-  const contextMenuItems: ContextMenuItem[] = useMemo(
-    () => [
-      {
-        label: t('preferences.account.context_menu.remove_account.label'),
-        icon: <Icon name="TrashBinMinimalistic" />,
-        color: '$error',
-        onPress: () => router.push('/preferences/account/remove'),
-      },
-    ],
-    [t],
   );
 
   const { control: firstnameControl, handleSubmit: firstnameHandleSubmit } =
@@ -218,18 +194,6 @@ export const AccountPreferences = () => {
     },
     [targetInstagramLink?.url, updateAccount$],
   );
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <ContextMenuPopover
-          items={contextMenuItems}
-          loading={updating}
-          disabled={updating}
-        />
-      ),
-    });
-  }, [updating, navigation, contextMenuItems]);
 
   return (
     me && (

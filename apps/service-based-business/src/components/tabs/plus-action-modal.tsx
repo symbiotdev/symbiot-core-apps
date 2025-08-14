@@ -3,12 +3,11 @@ import {
   GestureResponderEvent,
   LayoutRectangle,
   Modal,
-  Pressable,
   StyleSheet,
   useWindowDimensions,
 } from 'react-native';
 import { AnimatePresence, ScrollView, View } from 'tamagui';
-import { FormView, H2, Icon } from '@symbiot-core-apps/ui';
+import { FormView, HapticTabBarButton, Icon } from '@symbiot-core-apps/ui';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import { emitHaptic, useScreenOrientation } from '@symbiot-core-apps/shared';
 import { Icons } from '../../icons/config';
@@ -56,17 +55,9 @@ export const PlusActionModal = (props: BottomTabBarButtonProps) => {
 
   return (
     <>
-      <Pressable
-        style={{ marginHorizontal: 'auto', marginTop: 4 }}
-        onPress={openModal}
-      >
-        <Icon
-          name={Icons.TabsPlus}
-          type="SolarLinear"
-          color="$borderColor"
-          size={34}
-        />
-      </Pressable>
+      <HapticTabBarButton style={props.style} onPressIn={openModal}>
+        {props.children}
+      </HapticTabBarButton>
 
       <Modal
         transparent
@@ -150,8 +141,7 @@ const Content = ({
           alignSelf="center"
           maxWidth={Math.min(600, width) - 40}
         >
-          <ScrollView>
-          </ScrollView>
+          <ScrollView></ScrollView>
         </FormView>
       </View>
     </>

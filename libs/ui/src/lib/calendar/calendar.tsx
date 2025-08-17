@@ -15,8 +15,7 @@ import {
   useScreenSize,
   Weekday,
 } from '@symbiot-core-apps/shared';
-import { RegularText } from '../text/text';
-import { H3 } from '../text/heading';
+import { BoldText, RegularText } from '../text/text';
 import { Orientation } from 'expo-screen-orientation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { DeviceType } from 'expo-device';
@@ -82,14 +81,22 @@ export const Calendar = ({
         <View alignItems="center" gap="$1">
           <RegularText
             fontSize={12}
-            color={isToday ? '$calendarTodayColor' : '$calendarTimeColor'}
+            color={isToday ? '$color' : '$calendarTimeColor'}
             textTransform="lowercase"
           >
             {DateHelper.format(date, 'EEEEEE').replace(/\./g, '')}
           </RegularText>
-          <H3 color={isToday ? '$calendarTodayColor' : '$color'}>
+
+          <BoldText
+            color={isToday ? '$calendarTodayColor' : '$calendarTimeColor'}
+            paddingHorizontal={6}
+            paddingVertical={3}
+            fontSize={18}
+            borderRadius="$4"
+            backgroundColor={isToday ? '$background' : undefined}
+          >
             {DateHelper.format(date, 'dd')}
-          </H3>
+          </BoldText>
         </View>
       );
     },
@@ -138,30 +145,33 @@ export const Calendar = ({
           scalable
           draggable
           hapticable
-          gridTopOffset={5}
           ref={timeGridRef}
           snappable={snappable}
           width={adjustedWidth}
           weekStartsOn={weekStartsOn}
-          gridBottomOffset={gridBottomOffset + 5}
+          gridBottomOffset={gridBottomOffset}
           locale={locale}
           startDate={selectedDate}
           isAllDayEventsVisible={false}
           horizontalLineSize={1}
+          minScale={1}
+          scale={1.4}
+          maxScale={3}
           numberOfDays={numberOfDays}
           dayHeaderHeight={60}
           renderHeaderSafeArea={renderHeaderSafeArea}
           renderDayHeader={renderDayHeader}
           renderNowIndicator={renderNowIndicator}
           theme={{
-            headerSafeAreaBackgroundColor: theme.background1?.val,
-            dayHeaderBackgroundColor: theme.background1?.val,
+            headerSafeAreaBackgroundColor: theme.calendarBackgroundColor?.val,
+            dayHeaderBackgroundColor: theme.calendarBackgroundColor?.val,
             backgroundColor: theme.calendarBackgroundColor?.val,
+            timelineBackgroundColor: theme.calendarBackgroundColor?.val,
             verticalLineColor: theme.calendarLineColor?.val,
             horizontalLineColor: theme.calendarLineColor?.val,
-            timelineBackgroundColor: theme.background1?.val,
-            timelineTextColor: theme.color?.val,
+            timelineTextColor: theme.calendarTimeColor?.val,
           }}
+          unavailableTime={[{ from: 0, to: 540 }, {from: 1080, to: 1440}]}
           onChangeDate={onChangeDate}
         />
       )}

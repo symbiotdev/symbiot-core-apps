@@ -53,7 +53,9 @@ export default () => {
   const renderHeaderSafeArea = useCallback(() => {
     return (
       <View flex={1} justifyContent="center" alignItems="center" gap="$1">
-        <RegularText fontSize={10}>{t('schedule.all_day')}</RegularText>
+        <RegularText color="$calendarTimeColor" fontSize={10}>
+          {t('schedule.all_day')}
+        </RegularText>
         {/*<RegularText fontSize={10}>09:00</RegularText>*/}
         {/*<RegularText fontSize={10}>18:00</RegularText>*/}
       </View>

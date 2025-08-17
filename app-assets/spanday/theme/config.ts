@@ -27,8 +27,8 @@ export const lightTheme = {
   qrCodeGradientFrom: primary100,
   qrCodeGradientTo: primary60,
   calendarBackgroundColor: '#FAFAFA',
-  calendarLineColor: '#E7E7E7',
-  calendarTimeColor: '#777777',
+  calendarLineColor: '#EFEFEF',
+  calendarTimeColor: '#191919',
   calendarTodayColor: primary100,
   calendarNowIndicatorColor: primary100,
   switchSelectedColor: primary100
@@ -58,9 +58,9 @@ export const darkTheme = {
   qrCode: '#F5F5F5',
   qrCodeGradientFrom: primary100,
   qrCodeGradientTo: primary20,
-  calendarBackgroundColor: '#111111',
-  calendarLineColor: '#191919',
-  calendarTimeColor: '#777777',
+  calendarBackgroundColor: '#0F0F0F',
+  calendarLineColor: '#1A1A1A',
+  calendarTimeColor: '#DDDDDD',
   calendarTodayColor: primary100,
   calendarNowIndicatorColor: primary100,
   switchSelectedColor: primary100

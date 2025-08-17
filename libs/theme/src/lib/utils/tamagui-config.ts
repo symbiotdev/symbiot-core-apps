@@ -27,6 +27,7 @@ export type ThemeConfig = {
   qrCode: string;
   qrCodeGradientFrom: string;
   qrCodeGradientTo: string;
+  calendarBackgroundColor: string;
   calendarLineColor: string;
   calendarTimeColor: string;
   calendarTodayColor: string;

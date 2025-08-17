@@ -126,6 +126,7 @@ export const Calendar = ({
   return (
     <View
       flex={1}
+      backgroundColor="$background1"
       width="100%"
       paddingLeft={paddings.left}
       paddingRight={paddings.right}
@@ -153,12 +154,12 @@ export const Calendar = ({
           renderDayHeader={renderDayHeader}
           renderNowIndicator={renderNowIndicator}
           theme={{
-            backgroundColor: theme.background?.val,
-            headerSafeAreaBackgroundColor: theme.background?.val,
-            dayHeaderBackgroundColor: theme.background?.val,
+            headerSafeAreaBackgroundColor: theme.background1?.val,
+            dayHeaderBackgroundColor: theme.background1?.val,
+            backgroundColor: theme.calendarBackgroundColor?.val,
             verticalLineColor: theme.calendarLineColor?.val,
             horizontalLineColor: theme.calendarLineColor?.val,
-            timelineBackgroundColor: theme.background?.val,
+            timelineBackgroundColor: theme.background1?.val,
             timelineTextColor: theme.color?.val,
           }}
           onChangeDate={onChangeDate}

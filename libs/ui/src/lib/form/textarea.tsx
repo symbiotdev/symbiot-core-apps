@@ -25,7 +25,7 @@ export const Textarea = forwardRef(
       countCharacters,
       debounce,
       maxLength,
-      maxHeight = 300,
+      maxHeight = 220,
       height = Platform.OS === 'web' ? 46 * 2 : undefined,
       cursorAlwaysOn,
       enterKeyHint,
@@ -136,7 +136,8 @@ export const Textarea = forwardRef(
           placeholder={placeholder}
           placeholderTextColor="$placeholderColor"
           editable={!disabled && !isScrolling}
-          minHeight={46}
+          // minHeight={46}
+          minHeight={maxHeight} // temp to prevent jumps
           maxHeight={maxHeight}
           height={height}
           opacity={disabled ? 0.8 : 1}

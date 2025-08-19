@@ -59,6 +59,13 @@ const InitialActionHeaderRight = () => {
   );
 };
 
+const LocationsHeaderRight = () => (
+  <HeaderButton
+    iconName="AddCircle"
+    onPress={() => router.navigate('/brand/location/create')}
+  />
+);
+
 export default () => {
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
   const { t } = useT();
@@ -121,6 +128,14 @@ export default () => {
         name="(stack)/menu/information/preferences"
         options={{
           headerTitle: t('brand.information.title', { ns: 'app' }),
+        }}
+      />
+
+      <Stack.Screen
+        name="(stack)/menu/locations/index"
+        options={{
+          headerTitle: t('brand.locations.title', { ns: 'app' }),
+          headerRight: LocationsHeaderRight,
         }}
       />
     </Stack>

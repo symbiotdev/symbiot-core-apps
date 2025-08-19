@@ -87,9 +87,7 @@ export const BrandPreferences = () => {
       ),
     });
 
-  const targetInstagramLink = brand?.links?.find(
-    APP_LINK.instagram.isValidUrl,
-  );
+  const targetInstagramLink = brand?.links?.find(APP_LINK.instagram.isValidUrl);
   const { control: instagramControl, handleSubmit: instagramHandleSubmit } =
     useForm<{
       instagram: Omit<Link, 'id'> | null;
@@ -219,32 +217,6 @@ export const BrandPreferences = () => {
           />
 
           <Controller
-            control={birthdayControl}
-            name="birthday"
-            render={({ field: { value, onChange }, fieldState: { error } }) => (
-              <DatePicker
-                value={value}
-                error={error?.message}
-                formatStr={me.preferences?.dateFormat}
-                weekStartsOn={me.preferences?.weekStartsOn}
-                minDate={DateHelper.addYears(new Date(), -500)}
-                maxDate={new Date()}
-                label={t('brand.information.preferences.form.birthday.label', {
-                  ns: 'app',
-                })}
-                placeholder={t(
-                  'brand.information.preferences.form.birthday.placeholder',
-                  { ns: 'app' },
-                )}
-                onChange={(birthday) => {
-                  onChange(birthday);
-                  birthdayHandleSubmit(updateBirthday)();
-                }}
-              />
-            )}
-          />
-
-          <Controller
             control={websiteControl}
             name="website"
             render={({ field: { value, onChange }, fieldState: { error } }) => (
@@ -284,6 +256,32 @@ export const BrandPreferences = () => {
                 error={error?.message}
                 onChange={onChange}
                 onBlur={instagramHandleSubmit(updateInstagram)}
+              />
+            )}
+          />
+
+          <Controller
+            control={birthdayControl}
+            name="birthday"
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <DatePicker
+                value={value}
+                error={error?.message}
+                formatStr={me.preferences?.dateFormat}
+                weekStartsOn={me.preferences?.weekStartsOn}
+                minDate={DateHelper.addYears(new Date(), -500)}
+                maxDate={new Date()}
+                label={t('brand.information.preferences.form.birthday.label', {
+                  ns: 'app',
+                })}
+                placeholder={t(
+                  'brand.information.preferences.form.birthday.placeholder',
+                  { ns: 'app' },
+                )}
+                onChange={(birthday) => {
+                  onChange(birthday);
+                  birthdayHandleSubmit(updateBirthday)();
+                }}
               />
             )}
           />

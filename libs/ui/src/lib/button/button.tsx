@@ -60,6 +60,7 @@ export const Button = memo(
         justifyContent="center"
         alignItems="center"
         padding="$3"
+        paddingHorizontal="$6"
         minHeight={46}
         width="100%"
         gap="$3"

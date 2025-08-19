@@ -48,7 +48,7 @@ export const ToggleGroup = ({
   noDataIcon?: IconName;
   noDataTitle?: string;
   noDataMessage?: string;
-  error?: string;
+  error?: string | null;
   itemProps?: XStackProps;
   onChange?: ToggleOnChange;
   onRendered?: () => void;

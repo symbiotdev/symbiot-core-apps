@@ -24,24 +24,16 @@ export const EmptyView = ({
       justifyContent="center"
       alignItems="center"
       padding={20}
+      gap="$5"
       {...viewProps}
     >
       {!!iconName && (
         <Icon name={iconName} size={40} color="$placeholderColor" />
       )}
 
-      {!!title && (
-        <H2 textAlign="center" marginTop={iconName ? 10 : undefined}>
-          {title}
-        </H2>
-      )}
+      {!!title && <H2 textAlign="center">{title}</H2>}
 
-      <RegularText
-        color="$placeholderColor"
-        textAlign="center"
-        maxWidth={500}
-        marginTop={iconName || title ? 10 : undefined}
-      >
+      <RegularText color="$placeholderColor" textAlign="center" maxWidth={500}>
         {message || t('its_empty')}
       </RegularText>
 

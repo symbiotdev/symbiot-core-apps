@@ -121,9 +121,9 @@ export default () => {
                     optionsLoading: brandIndustriesLoading,
                     options: brandIndustries
                       ?.sort((a, b) => b.rate - a.rate)
-                      ?.map((source) => ({
-                        label: source.name,
-                        value: source.id,
+                      ?.map((industry) => ({
+                        label: industry.name,
+                        value: industry.id,
                       })),
                   },
                 },

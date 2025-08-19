@@ -29,6 +29,7 @@ export type IconName =
   | 'Letter'
   | 'Logout2'
   | 'MagicStick'
+  | 'MapPointWave'
   | 'Maximize'
   | 'MenuDotsCircle'
   | 'Minimize'

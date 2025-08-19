@@ -46,6 +46,7 @@ import { Code } from './Code';
 import { SettingsMinimalistic } from './SettingsMinimalistic';
 import { Rocket } from './Rocket';
 import { InfoCircle } from './InfoCircle';
+import { MapPointWave } from './MapPointWave';
 
 export const Map: IconMap = {
   AddCircle,
@@ -75,6 +76,7 @@ export const Map: IconMap = {
   Login,
   Logout2,
   MagicStick,
+  MapPointWave,
   Maximize,
   MenuDotsCircle,
   Minimize,

@@ -130,6 +130,10 @@ const CustomPicker = ({
   const flatListRef = useRef<FlatList>(null);
 
   const scrollToIndex = useCallback((index: number) => {
+    if (index < 0) {
+      return;
+    }
+
     flatListRef.current?.scrollToIndex({
       index,
       animated: false,

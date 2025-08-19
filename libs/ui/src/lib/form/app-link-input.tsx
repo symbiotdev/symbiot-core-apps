@@ -14,6 +14,8 @@ export type LinkItem = {
 export const APP_LINK = {
   instagram: {
     domain: 'https://www.instagram.com/',
+    isValidUrl: (link: LinkItem) =>
+      link.url.indexOf(APP_LINK.instagram.domain) !== -1,
     getNicknameFromUrl: (input: string) => {
       try {
         if (!input.startsWith('http')) {
@@ -33,6 +35,8 @@ export const APP_LINK = {
     },
   },
   website: {
+    isValidLink: (link: LinkItem) =>
+      ![APP_LINK.instagram.domain].some((url) => link.url.indexOf(url) !== -1),
     getDomain: (input: string) => {
       try {
         if (!input.startsWith('http')) {

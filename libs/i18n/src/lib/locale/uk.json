@@ -538,6 +538,13 @@
               "label": "Дата заснування",
               "placeholder": "Вкажіть дату заснування"
             },
+            "website": {
+              "placeholder": "Приклад: mybrand.com",
+              "error": {
+                "validation": "Вкажіть валідну адресу",
+                "required": "Вкажіть валідну адресу"
+              }
+            },
             "instagram": {
               "label": "Instagram",
               "placeholder": "Вкажіть instagram ніктейм бізнесу"
@@ -758,6 +765,13 @@
             "birthday": {
               "label": "Дата заснування",
               "placeholder": "Вкажіть дату заснування"
+            },
+            "website": {
+              "placeholder": "Приклад: mybrand.com",
+              "error": {
+                "validation": "Вкажіть валідну адресу",
+                "required": "Вкажіть валідну адресу"
+              }
             },
             "instagram": {
               "label": "Instagram",

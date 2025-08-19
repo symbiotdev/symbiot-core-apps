@@ -538,6 +538,14 @@
               "label": "Date of foundation",
               "placeholder": "Indicate the date of foundation"
             },
+            "website": {
+              "label": "Website",
+              "placeholder": "Example: mybrand.com",
+              "error": {
+                "validation": "Provide valid domain address",
+                "required": "Provide valid domain address"
+              }
+            },
             "instagram": {
               "label": "Instagram",
               "placeholder": "Enter business's instagram nickname"
@@ -758,6 +766,14 @@
             "birthday": {
               "label": "Date of foundation",
               "placeholder": "Indicate the date of foundation"
+            },
+            "website": {
+              "label": "Website",
+              "placeholder": "Example: mybrand.com",
+              "error": {
+                "validation": "Provide valid domain address",
+                "required": "Provide valid domain address"
+              }
             },
             "instagram": {
               "label": "Instagram",

@@ -65,8 +65,30 @@ export const BrandPreferences = () => {
       ),
     });
 
+  const targetWebsiteLink = brand?.links?.find(APP_LINK.website.isValidLink);
+  const { control: websiteControl, handleSubmit: websiteHandleSubmit } =
+    useForm<{
+      website: Omit<Link, 'id'> | null;
+    }>({
+      defaultValues: {
+        website: targetWebsiteLink,
+      },
+      resolver: yupResolver(
+        yup
+          .object()
+          .shape({
+            website: getAppLinkSchema(
+              t('brand.information.preferences.form.website.error.validation', {
+                ns: 'app',
+              }),
+            ).nullable(),
+          })
+          .required(),
+      ),
+    });
+
   const targetInstagramLink = brand?.links?.find(
-    (link) => link.url.indexOf(APP_LINK.instagram.domain) !== -1,
+    APP_LINK.instagram.isValidUrl,
   );
   const { control: instagramControl, handleSubmit: instagramHandleSubmit } =
     useForm<{
@@ -125,13 +147,38 @@ export const BrandPreferences = () => {
     [me?.birthday, updateBrand$],
   );
 
+  const updateWebsite = useCallback(
+    async ({ website }: { website: Omit<Link, 'id'> | null }) => {
+      if ((website?.url || '') !== (targetWebsiteLink?.url || '')) {
+        brand &&
+          (await updateBrand$({
+            links: [
+              ...brand.links.filter(
+                (link) => !APP_LINK.website.isValidLink(link),
+              ),
+              ...(website ? [website] : []),
+            ],
+          }));
+      }
+    },
+    [brand, targetWebsiteLink?.url, updateBrand$],
+  );
+
   const updateInstagram = useCallback(
     async ({ instagram }: { instagram: Omit<Link, 'id'> | null }) => {
       if ((instagram?.url || '') !== (targetInstagramLink?.url || '')) {
-        await updateBrand$({ links: instagram ? [instagram] : [] });
+        brand &&
+          (await updateBrand$({
+            links: [
+              ...brand.links.filter(
+                (link) => !APP_LINK.instagram.isValidUrl(link),
+              ),
+              ...(instagram ? [instagram] : []),
+            ],
+          }));
       }
     },
-    [targetInstagramLink?.url, updateBrand$],
+    [brand, targetInstagramLink?.url, updateBrand$],
   );
 
   return (
@@ -193,6 +240,28 @@ export const BrandPreferences = () => {
                   onChange(birthday);
                   birthdayHandleSubmit(updateBirthday)();
                 }}
+              />
+            )}
+          />
+
+          <Controller
+            control={websiteControl}
+            name="website"
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <AppLinkInput
+                type="website"
+                enterKeyHint="done"
+                value={value}
+                label={t('brand.information.preferences.form.website.label', {
+                  ns: 'app',
+                })}
+                placeholder={t(
+                  'brand.information.preferences.form.website.placeholder',
+                  { ns: 'app' },
+                )}
+                error={error?.message}
+                onChange={onChange}
+                onBlur={websiteHandleSubmit(updateWebsite)}
               />
             )}
           />

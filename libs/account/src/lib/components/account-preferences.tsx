@@ -128,9 +128,7 @@ export const AccountPreferences = () => {
     ),
   });
 
-  const targetInstagramLink = me?.links?.find(
-    (link) => link.url.indexOf(APP_LINK.instagram.domain) !== -1,
-  );
+  const targetInstagramLink = me?.links?.find(APP_LINK.instagram.isValidUrl);
   const { control: instagramControl, handleSubmit: instagramHandleSubmit } =
     useForm<{
       instagram: Omit<Link, 'id'> | null;

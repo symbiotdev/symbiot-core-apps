@@ -29,7 +29,7 @@ const IndexHeaderRight = () => {
   return (
     <HeaderButton
       iconName="SettingsMinimalistic"
-      onPress={() => alert('Configure brand')}
+      onPress={() => router.push('/brand/menu')}
     />
   );
 };
@@ -107,6 +107,20 @@ export default () => {
         name="(stack)/notifications/index"
         options={{
           headerTitle: t('notifications.title'),
+        }}
+      />
+
+      <Stack.Screen
+        name="(stack)/menu/index"
+        options={{
+          headerTitle: currentBrand?.name,
+        }}
+      />
+
+      <Stack.Screen
+        name="(stack)/menu/information/preferences"
+        options={{
+          headerTitle: t('brand.information.title', { ns: 'app' }),
         }}
       />
     </Stack>

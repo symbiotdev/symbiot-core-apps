@@ -7,6 +7,27 @@ import { useScheme } from '@symbiot-core-apps/state';
 
 export type InputValue = string | number | null;
 export type onChangeInput = (value: InputValue) => void;
+export type InputCursorPosition = 'start' | 'end' | number;
+
+export const useInputSelection = (
+  cursorAlwaysOn?: InputCursorPosition,
+  value?: InputValue,
+) => {
+  return useMemo(() => {
+    if (cursorAlwaysOn === undefined) {
+      return undefined;
+    }
+    if (typeof cursorAlwaysOn === 'number') {
+      return { start: cursorAlwaysOn, end: cursorAlwaysOn };
+    } else if (cursorAlwaysOn === 'start') {
+      return { start: 0, end: 0 };
+    } else {
+      const str = String(value);
+
+      return { start: str.length, end: str.length };
+    }
+  }, [cursorAlwaysOn, value]);
+};
 
 export const Input = forwardRef(
   (
@@ -41,7 +62,7 @@ export const Input = forwardRef(
       autoFocus?: boolean;
       debounce?: number;
       maxLength?: number;
-      cursorAlwaysOn?: 'start' | 'end' | number;
+      cursorAlwaysOn?: InputCursorPosition;
       regex?: RegExp;
       inputProps?: InputProps;
       enterKeyHint?: TextInputProps['enterKeyHint'];
@@ -55,6 +76,7 @@ export const Input = forwardRef(
   ) => {
     const { scheme } = useScheme();
 
+    const selection = useInputSelection(cursorAlwaysOn, value);
     const onDebounceChange = useDebounceCallback(
       (value: InputValue) => onChange?.(value),
       debounce || 0,
@@ -63,21 +85,6 @@ export const Input = forwardRef(
     const id = useMemo(() => `input_${Math.random().toString(36)}`, []);
 
     const secureTextEntry = useMemo(() => type === 'password', [type]);
-
-    const selection = useMemo(() => {
-      if (cursorAlwaysOn === undefined) {
-        return undefined;
-      }
-      if (typeof cursorAlwaysOn === 'number') {
-        return { start: cursorAlwaysOn, end: cursorAlwaysOn };
-      } else if (cursorAlwaysOn === 'start') {
-        return { start: 0, end: 0 };
-      } else {
-        const str = String(value);
-
-        return { start: str.length, end: str.length };
-      }
-    }, [cursorAlwaysOn, value]);
 
     const onChangeText = useCallback(
       (text: string) => {
@@ -114,7 +121,7 @@ export const Input = forwardRef(
           borderWidth={0}
           height={46}
           borderRadius="$10"
-          paddingHorizontal="$6"
+          paddingHorizontal="$4"
           placeholder={placeholder}
           placeholderTextColor="$placeholderColor"
           inputMode={type as InputModeOptions}

@@ -45,6 +45,7 @@ import { Minimize } from './Minimize';
 import { Code } from './Code';
 import { SettingsMinimalistic } from './SettingsMinimalistic';
 import { Rocket } from './Rocket';
+import { InfoCircle } from './InfoCircle';
 
 export const Map: IconMap = {
   AddCircle,
@@ -69,6 +70,7 @@ export const Map: IconMap = {
   Heart,
   Home,
   HomeAdd,
+  InfoCircle,
   Letter,
   Login,
   Logout2,

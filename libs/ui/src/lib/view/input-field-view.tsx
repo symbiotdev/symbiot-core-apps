@@ -8,7 +8,7 @@ export const InputFieldView = (props: XStackProps) => {
       gap="$5"
       height={46}
       borderRadius="$10"
-      paddingHorizontal="$6"
+      paddingHorizontal="$4"
       borderColor="$borderColor"
       alignItems="center"
       opacity={props.disabled ? 0.8 : 1}

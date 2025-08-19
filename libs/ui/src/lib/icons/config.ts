@@ -24,6 +24,7 @@ export type IconName =
   | 'Heart'
   | 'Home'
   | 'HomeAdd'
+  | 'InfoCircle'
   | 'Login'
   | 'Letter'
   | 'Logout2'

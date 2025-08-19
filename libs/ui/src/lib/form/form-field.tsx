@@ -23,7 +23,7 @@ export const FormField = ({
     <View width="100%" gap="$2">
       {!!label && (
         <Label
-          paddingHorizontal="$3"
+          paddingHorizontal="$4"
           htmlFor={htmlFor}
           {...labelProps}
           pointerEvents={Platform.OS === 'web' ? 'auto' : 'none'}
@@ -36,7 +36,7 @@ export const FormField = ({
       {children}
 
       {!!error && (
-        <Error paddingHorizontal="$3" {...errorProps}>
+        <Error paddingHorizontal="$4" {...errorProps}>
           {error}
         </Error>
       )}

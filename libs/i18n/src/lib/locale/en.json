@@ -522,6 +522,32 @@
             }
           }
         }
+      },
+      "information": {
+        "title": "Business information",
+        "preferences": {
+          "form": {
+            "name": {
+              "label": "Business name",
+              "placeholder": "Example: Symbiot Development",
+              "error": {
+                "required": "Business name is required"
+              }
+            },
+            "birthday": {
+              "label": "Date of foundation",
+              "placeholder": "Indicate the date of foundation"
+            },
+            "instagram": {
+              "label": "Instagram",
+              "placeholder": "Enter business's instagram nickname"
+            },
+            "about": {
+              "label": "About",
+              "placeholder": "Provide useful information about the business"
+            }
+          }
+        }
       }
     }
   },
@@ -714,6 +740,32 @@
                   "required": "Enter known code"
                 }
               }
+            }
+          }
+        }
+      },
+      "information": {
+        "title": "Brand information",
+        "preferences": {
+          "form": {
+            "name": {
+              "label": "Brand name",
+              "placeholder": "Example: RT Dance",
+              "error": {
+                "required": "Brand name is required"
+              }
+            },
+            "birthday": {
+              "label": "Date of foundation",
+              "placeholder": "Indicate the date of foundation"
+            },
+            "instagram": {
+              "label": "Instagram",
+              "placeholder": "Enter brand's instagram nickname"
+            },
+            "about": {
+              "label": "About",
+              "placeholder": "Provide useful information about the brand"
             }
           }
         }

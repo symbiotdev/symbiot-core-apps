@@ -1,7 +1,13 @@
-import { Brand } from '@symbiot-core-apps/api';
+import {
+  Brand,
+  UpdateBrandData,
+  useCurrentBrandUpdate,
+} from '@symbiot-core-apps/api';
 import { create } from 'zustand/index';
 import { devtools, persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
+import { useCallback } from 'react';
+import { ImagePickerAsset } from 'expo-image-picker';
 
 type CurrentBrandState = {
   brand?: Brand;
@@ -31,3 +37,38 @@ export const useCurrentBrandState = create<CurrentBrandState>()(
     ),
   ),
 );
+
+export const useCurrentBrandUpdater = () => {
+  const { brand, setBrand } = useCurrentBrandState();
+  const {
+    mutateAsync: updateBrand,
+    isPending: isBrandUpdating,
+    error: updateBrandError,
+  } = useCurrentBrandUpdate();
+  const {
+    mutateAsync: updateAvatar,
+    isPending: isAvatarUpdating,
+    error: updateAvatarError,
+  } = useCurrentBrandUpdate();
+
+  const updateBrand$ = useCallback(
+    async (data: UpdateBrandData) => setBrand(await updateBrand(data)),
+    [setBrand, updateBrand],
+  );
+
+  const updateAvatar$ = useCallback(
+    async (avatar: ImagePickerAsset) =>
+      setBrand(await updateAvatar({ avatar })),
+    [updateAvatar, setBrand],
+  );
+
+  return {
+    updateBrand$,
+    updateAvatar$,
+    brand,
+    updating: isBrandUpdating,
+    updateError: updateBrandError,
+    avatarUpdating: isAvatarUpdating,
+    avatarError: updateAvatarError,
+  };
+};

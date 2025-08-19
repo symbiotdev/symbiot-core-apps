@@ -522,6 +522,32 @@
             }
           }
         }
+      },
+      "information": {
+        "title": "Інформація про бізнес",
+        "preferences": {
+          "form": {
+            "name": {
+              "label": "Назва бізнесу",
+              "placeholder": "Приклад: Symbiot Development",
+              "error": {
+                "required": "Назва обовʼязкова до заповення"
+              }
+            },
+            "birthday": {
+              "label": "Дата заснування",
+              "placeholder": "Вкажіть дату заснування"
+            },
+            "instagram": {
+              "label": "Instagram",
+              "placeholder": "Вкажіть instagram ніктейм бізнесу"
+            },
+            "about": {
+              "label": "Про бізнес",
+              "placeholder": "Надайте корисну інформацію про бізнес"
+            }
+          }
+        }
       }
     }
   },
@@ -714,6 +740,32 @@
                   "required": "Введіть відомий промокод"
                 }
               }
+            }
+          }
+        }
+      },
+      "information": {
+        "title": "Інформація про бренд",
+        "preferences": {
+          "form": {
+            "name": {
+              "label": "Назва бренду",
+              "placeholder": "Приклад: RT Dance",
+              "error": {
+                "required": "Назва обовʼязкова до заповення"
+              }
+            },
+            "birthday": {
+              "label": "Дата заснування",
+              "placeholder": "Вкажіть дату заснування"
+            },
+            "instagram": {
+              "label": "Instagram",
+              "placeholder": "Вкажіть instagram бнедну"
+            },
+            "about": {
+              "label": "Про бренд",
+              "placeholder": "Надайте корисну інформацію про бренд"
             }
           }
         }

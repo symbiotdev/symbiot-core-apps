@@ -9,7 +9,10 @@ export type Brand = {
   avatarColor: string;
   avatarUrl: string;
   avatarXsUrl: string;
+  about: string;
+  birthday: Date;
   owner: Account;
+  links: Link[];
   industries: BrandIndustry[];
 };
 
@@ -24,3 +27,11 @@ export type CreateBrand = {
   customCompetitorSource?: string;
   links?: Omit<Link, 'id'>[];
 };
+
+export type UpdateBrandData = {
+  avatar?: ImagePickerAsset;
+  links?: Omit<Link, 'id'>[];
+  birthday?: string | null;
+  name?: string;
+  about?: string;
+}

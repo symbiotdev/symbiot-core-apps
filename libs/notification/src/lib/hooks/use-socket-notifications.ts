@@ -3,6 +3,7 @@ import {
   Notification,
   socket,
   useNotificationQueryState,
+  WebsocketAction,
 } from '@symbiot-core-apps/api';
 import {
   useCurrentAccount,
@@ -65,13 +66,14 @@ export const useSocketNotifications = ({
   }, [setMeStats, markAllAsRead]);
 
   return useEffect(() => {
-    socket.on('notification_added', onAdded);
-    socket.on('notifications_read', onReadAll);
+    socket.on(WebsocketAction.notificationAdded, onAdded);
+    socket.on(WebsocketAction.notificationsRead, onReadAll);
 
     return () => {
-      ['notification_added', 'notifications_read'].forEach((event) =>
-        socket.off(event),
-      );
+      [
+        WebsocketAction.notificationAdded,
+        WebsocketAction.notificationsRead,
+      ].forEach((event) => socket.off(event));
     };
   }, [onAdded, onReadAll]);
 };

@@ -54,7 +54,6 @@
     },
     "plugins": [
       "react-native-legal",
-      "expo-localization",
       "expo-apple-authentication",
       "@react-native-firebase/app",
       "@react-native-firebase/auth",

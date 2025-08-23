@@ -18,8 +18,11 @@ import { DrawerMenu, drawerMenuMaxWidth } from '../../components/drawer/menu';
 import { useInitializing } from '../../hooks/use-initializing';
 import { NavigationBackground, useDrawer } from '@symbiot-core-apps/ui';
 import { hideAsync } from 'expo-splash-screen';
+import { changeAppLanguage } from '@symbiot-core-apps/i18n';
+import { useApp } from '@symbiot-core-apps/app';
 
 export default () => {
+  const { languages } = useApp();
   const { tokens, setTokens } = useAuthTokens();
   const { setBrand: setCurrentBrand, setBrands: setCurrentBrands } =
     useCurrentBrandState();
@@ -42,11 +45,18 @@ export default () => {
     if (meResponse) {
       updateMe(meResponse);
 
+      if (
+        meResponse.language &&
+        languages.some(({ code }) => code === meResponse.language)
+      ) {
+        changeAppLanguage(meResponse.language);
+      }
+
       if (meResponse.preferences) {
         void updateMePreferences(meResponse.preferences);
       }
     }
-  }, [meResponse, updateMe, updateMePreferences]);
+  }, [meResponse, updateMe, updateMePreferences, languages]);
 
   useEffect(() => {
     if (currentBrandResponse) {

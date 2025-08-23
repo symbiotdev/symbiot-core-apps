@@ -1,14 +1,24 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { requestWithAlertOnError } from '../utils/request';
+import { requestWithStringError } from '../utils/request';
 import { AppConfig } from '../types/app-config';
+import { AppTranslations } from '../types/app-translations';
 
 export enum AppQueryKey {
   config = 'app-config',
+  translations = 'app-translations',
 }
 
 export const useAppConfigQuery = () =>
-  useQuery<AppConfig, string>({
+  useQuery<AppConfig>({
+    enabled: false,
     queryKey: [AppQueryKey.config],
-    queryFn: () => requestWithAlertOnError(axios.get('/api/app/config')),
+    queryFn: () => requestWithStringError(axios.get('/api/app/config')),
+  });
+
+export const useAppTranslationsQuery = () =>
+  useQuery<AppTranslations>({
+    enabled: false,
+    queryKey: [AppQueryKey.translations],
+    queryFn: () => requestWithStringError(axios.get('/api/app/translations')),
   });

@@ -19,7 +19,6 @@ import { isAfter } from 'date-fns/isAfter';
 import { differenceInYears } from 'date-fns/differenceInYears';
 import { addYears } from 'date-fns/addYears';
 import {
-  AppLanguage,
   DATE_FNS_SUPPORTED_LANGUAGES,
   getDateLocale,
 } from '@symbiot-core-apps/i18n';
@@ -65,7 +64,7 @@ export const DateHelper = {
     startOfWeek(date, {
       weekStartsOn,
     }),
-  format: (date: Date, formatStr?: string, lang?: AppLanguage) => {
+  format: (date: Date, formatStr?: string, lang?: string) => {
     if (formatStr === 'p' && getDateLocale().code === 'uk') {
       formatStr = 'HH:mm';
     } else if (!formatStr) {

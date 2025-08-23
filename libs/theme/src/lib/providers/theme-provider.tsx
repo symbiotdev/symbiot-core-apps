@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useMemo } from 'react';
+import { PropsWithChildren, useMemo } from 'react';
 import { createTamagui, TamaguiProvider, View } from 'tamagui';
 import {
   animations,
@@ -17,8 +17,6 @@ import {
 import { StatusBar } from 'react-native';
 import { useScheme } from '@symbiot-core-apps/state';
 import { AppConfig, ThemeConfig } from '@symbiot-core-apps/api';
-
-const Context = createContext({});
 
 export const ThemeProvider = ({
   children,
@@ -97,7 +95,7 @@ export const ThemeProvider = ({
   );
 
   return (
-    <Context.Provider value={{}}>
+    <>
       <StatusBar barStyle={barStyle} />
       <TamaguiProvider config={tamaguiConfig} defaultTheme={scheme}>
         <View flex={1} backgroundColor="$background">
@@ -106,6 +104,6 @@ export const ThemeProvider = ({
           </NavigationThemeProvider>
         </View>
       </TamaguiProvider>
-    </Context.Provider>
+    </>
   );
 };

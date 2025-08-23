@@ -1,6 +1,5 @@
 import { setAxiosInterceptors } from '../utils/axios-interceptors';
 import {
-  createContext,
   PropsWithChildren,
   useCallback,
   useLayoutEffect,
@@ -21,8 +20,6 @@ type SocketState = {
   connected: boolean;
   connectError: Error | undefined;
 };
-
-const ApiContext = createContext({});
 
 export const ApiProvider = ({
   children,
@@ -141,7 +138,7 @@ export const ApiProvider = ({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ApiContext.Provider value={{}}>{devId && children}</ApiContext.Provider>
+      {devId && children}
     </QueryClientProvider>
   );
 };

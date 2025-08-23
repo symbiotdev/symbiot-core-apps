@@ -1,9 +1,4 @@
-import {
-  createContext,
-  PropsWithChildren,
-  useCallback,
-  useEffect,
-} from 'react';
+import { PropsWithChildren, useCallback, useEffect } from 'react';
 import {
   Account,
   Brand,
@@ -15,8 +10,6 @@ import { useCurrentAccountState } from '../hooks/use-current-account.state';
 import { useNotificationsState } from '../hooks/use-notifications.state';
 import { useFaqState } from '../hooks/use-faq.state';
 import { useCurrentBrandState } from '../hooks/use-current-brand';
-
-const Context = createContext({});
 
 export const StateProvider = ({ children }: PropsWithChildren) => {
   const { setMe, clear: clearCurrentAccountState } = useCurrentAccountState();
@@ -58,5 +51,5 @@ export const StateProvider = ({ children }: PropsWithChildren) => {
     onMeUpdated,
   ]);
 
-  return <Context.Provider value={{}}>{children}</Context.Provider>;
+  return children;
 };

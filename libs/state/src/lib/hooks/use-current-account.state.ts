@@ -11,7 +11,6 @@ import { devtools, persist } from 'zustand/middleware';
 import { useCallback } from 'react';
 import { Scheme, schemes } from '@symbiot-core-apps/shared';
 import { useScheme } from './use-app-theme.state';
-import { changeAppLanguage } from '@symbiot-core-apps/i18n';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 
@@ -76,17 +75,6 @@ export const useCurrentAccount = () => {
   const { setScheme } = useScheme();
   const { setMePreferences } = useCurrentAccountState();
 
-  const updateMe = useCallback(
-    (account: Account) => {
-      setMe(account);
-
-      if (account.language) {
-        changeAppLanguage(account.language);
-      }
-    },
-    [setMe],
-  );
-
   const updateMePreferences = useCallback(
     async (preferences: AccountPreferences) => {
       setMePreferences(preferences);
@@ -103,7 +91,7 @@ export const useCurrentAccount = () => {
   );
 
   return {
-    updateMe,
+    updateMe: setMe,
     updateMePreferences,
     me,
     stats,

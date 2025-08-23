@@ -7,31 +7,25 @@ import {
   ToggleGroup,
 } from '@symbiot-core-apps/ui';
 import { useEffect, useMemo } from 'react';
-import {
-  AppLanguage,
-  appLanguagesOptions,
-  useT,
-} from '@symbiot-core-apps/i18n';
+import { changeAppLanguage, useT } from '@symbiot-core-apps/i18n';
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
+import { useApp } from '@symbiot-core-apps/app';
 
 export const Language = () => {
   const { lang } = useT();
+  const { languages } = useApp();
   const navigation = useNavigation();
   const { updateAccount$, updating } = useCurrentAccountUpdater();
 
   const items = useMemo(
     () =>
-      appLanguagesOptions.map(({ flag, code, name }) => ({
-        icon: (
-          <RegularText fontSize={28}>
-            {flag}
-          </RegularText>
-        ),
+      languages.map(({ flag, code, name }) => ({
+        icon: <RegularText fontSize={28}>{flag}</RegularText>,
         label: name,
         value: code,
       })),
-    [],
+    [languages],
   );
 
   useEffect(() => {
@@ -47,9 +41,10 @@ export const Language = () => {
           <ToggleGroup
             items={items}
             value={lang}
-            onChange={(result) =>
-              updateAccount$({ language: result as AppLanguage })
-            }
+            onChange={async (language) => {
+              await updateAccount$({ language: language as string });
+              changeAppLanguage(language as string);
+            }}
           />
         </Card>
       </FormView>

@@ -14,10 +14,12 @@ import {
   TabsPageView,
   useDrawer,
 } from '@symbiot-core-apps/ui';
+import { useApp } from '@symbiot-core-apps/app';
 
 export default () => {
   const share = useShareApp();
   const { t } = useT();
+  const { languages } = useApp();
   const { me } = useCurrentAccount();
   const { visible: drawerVisible } = useDrawer();
 
@@ -102,11 +104,15 @@ export default () => {
               icon={<Icon name="TuningSquare" />}
               onPress={onAppearancePress}
             />
-            <ListItem
-              label={t('preferences.language.title')}
-              icon={<Icon name="Global" />}
-              onPress={onLanguagePress}
-            />
+
+            {languages?.length > 1 && (
+              <ListItem
+                label={t('preferences.language.title')}
+                icon={<Icon name="Global" />}
+                onPress={onLanguagePress}
+              />
+            )}
+
             <ListItem
               label={t('calendar')}
               icon={<Icon name="Calendar" />}

@@ -7,7 +7,7 @@ import {
   emitHaptic,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
-import { AppLanguage, useT } from '@symbiot-core-apps/i18n';
+import { useT } from '@symbiot-core-apps/i18n';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import {
   Avatar,
@@ -44,7 +44,7 @@ export default () => {
   const headerLeft = useCallback(
     () => (
       <H3 lineHeight={headerButtonSize} textTransform="capitalize">
-        {DateHelper.format(selectedDate, 'LLLL yyyy', lang as AppLanguage)}
+        {DateHelper.format(selectedDate, 'LLLL yyyy', lang)}
       </H3>
     ),
     [lang, selectedDate],

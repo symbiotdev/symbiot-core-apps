@@ -1,5 +1,4 @@
 import { AccountPreferences } from './account-preferences';
-import { AppLanguage } from '@symbiot-core-apps/i18n';
 import { Phone } from './phone';
 import { Link } from './link';
 import { Gender } from './gender';
@@ -14,7 +13,7 @@ export type Account = {
   avatarUrl: string;
   avatarXsUrl: string;
   timezone: string;
-  language: AppLanguage;
+  language: string;
   test: boolean;
   hidden: boolean;
   blocked: boolean;
@@ -31,7 +30,7 @@ export type Account = {
 };
 
 export type UpdateAccountData = {
-  language?: AppLanguage;
+  language?: string;
   firstname?: string;
   lastname?: string;
   birthday?: string | null;

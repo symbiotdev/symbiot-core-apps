@@ -21,10 +21,10 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { Icons } from '../../icons/config';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { useT } from '@symbiot-core-apps/i18n';
+import { useApp } from '@symbiot-core-apps/app';
 
 export const drawerMenuMaxWidth = 250;
 export const drawerMenuMinWidth = 68;
@@ -91,8 +91,9 @@ const Br = memo((props: ViewStyle) => (
 
 export const DrawerMenu = (props: DrawerContentComponentProps) => {
   const { t } = useT();
-  const { permanent } = useDrawer();
+  const { icons } = useApp();
   const share = useShareApp();
+  const { permanent } = useDrawer();
   const { top, bottom, left } = useSafeAreaInsets();
   const { compressed, toggleCompressed } = useDrawerState();
   const { brand: currentBrand } = useCurrentBrandState();
@@ -188,7 +189,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
             route="/brand"
             navigation={props.navigation}
             label={t('navigation.drawer.actions.label', { ns: 'app' })}
-            icon={Icons.Workspace}
+            icon={icons.Workspace}
           />
         ) : (
           <>
@@ -197,14 +198,14 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
               route="/home"
               navigation={props.navigation}
               label={t('navigation.drawer.home.label', { ns: 'app' })}
-              icon={Icons.Home}
+              icon={icons.Home}
             />
 
             <MenuItem
               route="/calendar"
               navigation={props.navigation}
               label={t('navigation.drawer.calendar.label', { ns: 'app' })}
-              icon={Icons.Calendar}
+              icon={icons.Calendar}
             />
           </>
         )}
@@ -244,7 +245,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
 
         <MenuItem
           navigation={props.navigation}
-          icon={Icons.More}
+          icon={icons.More}
           label={t('navigation.drawer.more.label', { ns: 'app' })}
           route="/app"
         />

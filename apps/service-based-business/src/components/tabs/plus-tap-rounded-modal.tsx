@@ -10,7 +10,7 @@ import { AnimatePresence, ScrollView, View } from 'tamagui';
 import { FormView, HapticTabBarButton, Icon } from '@symbiot-core-apps/ui';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import { emitHaptic, useScreenOrientation } from '@symbiot-core-apps/shared';
-import { Icons } from '../../icons/config';
+import { useApp } from '@symbiot-core-apps/app';
 
 export const PlusTapRoundedModal = (props: BottomTabBarButtonProps) => {
   const [state, setState] = useState<{
@@ -82,6 +82,7 @@ const Content = ({
   rect: LayoutRectangle;
   onClose: () => void;
 }) => {
+  const { icons } = useApp();
   const { height, width } = useWindowDimensions();
   const rectRef = useRef(rect);
 
@@ -112,7 +113,7 @@ const Content = ({
         onPress={onClose}
       >
         <Icon
-          name={Icons.TabsPlus}
+          name={icons.TabsPlus}
           type="SolarBold"
           color="$color"
           size={rectRef.current.width}

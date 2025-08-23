@@ -8,6 +8,7 @@ export * from './lib/queries/use-account-device.query';
 export * from './lib/queries/use-notification.query';
 export * from './lib/queries/use-account-preferences.query';
 
+export * from './lib/queries/use-app.query';
 export * from './lib/queries/use-app-competitor-source.query';
 export * from './lib/queries/use-app-faq.query';
 export * from './lib/queries/use-app-referral-source.query';
@@ -23,6 +24,7 @@ export * from './lib/types/account-device';
 export * from './lib/types/notification';
 export * from './lib/types/account-preferences';
 
+export * from './lib/types/app-config';
 export * from './lib/types/brand';
 export * from './lib/types/brand-industry';
 

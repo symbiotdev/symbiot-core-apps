@@ -16,13 +16,14 @@ import {
 } from '@symbiot-core-apps/ui';
 import { View } from 'tamagui';
 import { router } from 'expo-router';
-import { Icons } from '../../../../icons/config';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { MyBrandsSelectionList } from '@symbiot-core-apps/brand';
+import { useApp } from '@symbiot-core-apps/app';
 
 export default () => {
-  const { me } = useCurrentAccount();
   const { t } = useT();
+  const { icons } = useApp();
+  const { me } = useCurrentAccount();
   const { brands: currentBrands } = useCurrentBrandState();
 
   const [qrCodeVisible, setQrCodeVisible] = useState(false);
@@ -68,7 +69,7 @@ export default () => {
               buttonLabel={t('initial_actions.create_workspace.button.label', {
                 ns: 'app',
               })}
-              buttonIcon={<Icon name={Icons.Workspace} />}
+              buttonIcon={<Icon name={icons.Workspace} />}
               onActionPress={createBrand}
             />
 

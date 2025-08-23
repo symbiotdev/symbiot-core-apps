@@ -22,11 +22,7 @@ type SocketState = {
   connectError: Error | undefined;
 };
 
-const ApiContext = createContext<SocketState>({
-  connecting: false,
-  connected: false,
-  connectError: undefined,
-});
+const ApiContext = createContext({});
 
 export const ApiProvider = ({
   children,
@@ -145,9 +141,7 @@ export const ApiProvider = ({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ApiContext.Provider value={value}>
-        {devId && children}
-      </ApiContext.Provider>
+      <ApiContext.Provider value={{}}>{devId && children}</ApiContext.Provider>
     </QueryClientProvider>
   );
 };

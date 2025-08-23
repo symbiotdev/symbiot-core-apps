@@ -11,7 +11,7 @@ import {
   useCurrentAccount,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { Icons } from '../../../../icons/config';
+import { useApp } from '@symbiot-core-apps/app';
 
 const IndexHeaderLeft = () => {
   const { brand } = useCurrentBrandState();
@@ -49,11 +49,12 @@ const InitialActionHeaderLeft = () => {
 
 const InitialActionHeaderRight = () => {
   const { stats } = useCurrentAccount();
+  const { icons } = useApp();
 
   return (
     <HeaderButton
       attention={!!stats.newNotifications}
-      iconName={Icons.Notifications}
+      iconName={icons.Notifications}
       onPress={() => router.navigate('/brand/notifications')}
     />
   );

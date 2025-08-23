@@ -223,10 +223,6 @@ export const mergeAppAssets = async (baseApp, buildApp, env, incrementType) => {
     `${appPath}/google`,
   );
   console.log(`📁 Google copied! ➕`);
-  await copyFiles(`${appAssetsPath}/theme`, `${appPath}/src/theme`);
-  console.log(`📁 Theme applied! ➕`);
-  await copyFiles(`${appAssetsPath}/icons`, `${appPath}/src/icons`);
-  console.log(`📁 Icons applied! ➕`);
   await createEnvFile(`${appAssetsPath}/env/.env.${env}`, `${appPath}/.env`);
   console.log(`📁 .env created! ➕`);
   await updateAppJson(baseApp, appPath, incrementType);

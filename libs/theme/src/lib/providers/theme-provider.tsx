@@ -8,62 +8,52 @@ import {
   radius,
   size,
   space,
-  ThemeConfig,
   zIndex,
 } from '../utils/tamagui-config';
-import { Scheme } from '@symbiot-core-apps/shared';
 import {
   DefaultTheme,
   ThemeProvider as NavigationThemeProvider,
 } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import { useScheme } from '@symbiot-core-apps/state';
+import { AppConfig, ThemeConfig } from '@symbiot-core-apps/api';
 
 const Context = createContext({});
 
 export const ThemeProvider = ({
   children,
-  lightTheme,
-  darkTheme,
-}: PropsWithChildren<{ lightTheme: ThemeConfig; darkTheme: ThemeConfig }>) => {
+  theme,
+}: PropsWithChildren<{ theme: AppConfig['theme'] }>) => {
   const { scheme } = useScheme();
+
   const barStyle = useMemo(
     () => (scheme === 'dark' ? 'light-content' : 'dark-content'),
     [scheme],
   );
 
-  const themes = useMemo(
-    () => ({
-      light: {
-        ...lightTheme,
-        ...Object.keys(darkTheme).reduce(
-          (obj, key) => ({
-            ...obj,
-            [`o_${key}`]: darkTheme[key as keyof ThemeConfig],
-          }),
-          {},
-        ),
-      },
-      dark: {
-        ...darkTheme,
-        ...Object.keys(lightTheme).reduce(
-          (obj, key) => ({
-            ...obj,
-            [`o_${key}`]: lightTheme[key as keyof ThemeConfig],
-          }),
-          {},
-        ),
-      },
-    }),
-    [darkTheme, lightTheme],
-  );
+  const navigationConfig = useMemo(() => {
+    const dark = scheme === 'dark';
+    const background = theme[scheme].background;
+    const color = theme[scheme].color;
 
-  const config = useMemo(
+    return {
+      ...DefaultTheme,
+      dark,
+      colors: {
+        ...DefaultTheme.colors,
+        background,
+        card: background,
+        text: color,
+        primary: color,
+      },
+    };
+  }, [scheme, theme]);
+
+  const tamaguiConfig = useMemo(
     () =>
       createTamagui({
         animations,
         fonts,
-        themes,
         media,
         tokens: {
           size,
@@ -80,49 +70,42 @@ export const ThemeProvider = ({
           themeClassNameOnRoot: true,
           onlyAllowShorthands: true,
         },
+        themes: {
+          light: {
+            ...theme.light,
+            ...Object.keys(theme.dark).reduce(
+              (obj, key) => ({
+                ...obj,
+                [`o_${key}`]: theme.dark[key as keyof ThemeConfig],
+              }),
+              {},
+            ),
+          },
+          dark: {
+            ...theme.dark,
+            ...Object.keys(theme.light).reduce(
+              (obj, key) => ({
+                ...obj,
+                [`o_${key}`]: theme.light[key as keyof ThemeConfig],
+              }),
+              {},
+            ),
+          },
+        },
       }),
-    [themes],
+    [theme],
   );
 
   return (
     <Context.Provider value={{}}>
       <StatusBar barStyle={barStyle} />
-      <TamaguiProvider config={config} defaultTheme={scheme}>
-        <ThemeProviderChildren children={children} themes={themes} />
+      <TamaguiProvider config={tamaguiConfig} defaultTheme={scheme}>
+        <View flex={1} backgroundColor="$background">
+          <NavigationThemeProvider value={navigationConfig}>
+            {children}
+          </NavigationThemeProvider>
+        </View>
       </TamaguiProvider>
     </Context.Provider>
-  );
-};
-
-const ThemeProviderChildren = ({
-  children,
-  themes,
-}: PropsWithChildren<{ themes: Record<Scheme, ThemeConfig> }>) => {
-  const { scheme } = useScheme();
-
-  const themeProviderValue = useMemo(() => {
-    const dark = scheme === 'dark';
-    const background = themes[scheme].background;
-    const color = themes[scheme].color;
-
-    return {
-      ...DefaultTheme,
-      dark,
-      colors: {
-        ...DefaultTheme.colors,
-        background,
-        card: background,
-        text: color,
-        primary: color,
-      },
-    };
-  }, [scheme, themes]);
-
-  return (
-    <View flex={1} backgroundColor="$background">
-      <NavigationThemeProvider value={themeProviderValue}>
-        {children}
-      </NavigationThemeProvider>
-    </View>
   );
 };

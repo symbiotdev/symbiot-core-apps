@@ -1,7 +1,6 @@
 import { Survey, SurveyStep } from '@symbiot-core-apps/survey';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import * as yup from 'yup';
-import { Icons } from '../../../../../../icons/config';
 import { getAppLinkSchema } from '@symbiot-core-apps/ui';
 import {
   Link,
@@ -14,6 +13,7 @@ import { useT } from '@symbiot-core-apps/i18n';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { useAuthBrand } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
+import { useApp } from '@symbiot-core-apps/app';
 
 const nameMaxLength = 256;
 const codeMaxLength = 64;
@@ -38,6 +38,7 @@ const isIndustriesEditable = Boolean(
 
 export default () => {
   const { t } = useT();
+  const { icons } = useApp();
   const switchBrand = useAuthBrand();
   const { data: referralSources, isPending: referralSourcesLoading } =
     useAppReferralSource();
@@ -370,7 +371,7 @@ export default () => {
     <TypedSurvey
       loading={creating}
       steps={steps}
-      introIconName={Icons.Workspace}
+      introIconName={icons.Workspace}
       introTitle={t('brand.create.intro.title', {
         ns: 'app',
       })}

@@ -12,13 +12,14 @@ import {
   useCurrentAccount,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { Icons } from '../../../icons/config';
 import React, { useEffect } from 'react';
 import { useCountNewNotifications } from '@symbiot-core-apps/api';
 import { PlusActionAdaptiveModal } from '../../../components/tabs/plus-action-adaptive-modal';
 import { View } from 'tamagui';
+import { useApp } from '@symbiot-core-apps/app';
 
 export default () => {
+  const { icons } = useApp();
   const { brand: currentBrand } = useCurrentBrandState();
   const segments = useSegments();
   const { stats, setMeStats } = useCurrentAccount();
@@ -54,7 +55,7 @@ export default () => {
             tabBarIcon: ({ color, size, focused }) => (
               <AttentionView attention={!!stats.newNotifications}>
                 <Icon
-                  name={Icons.Home}
+                  name={icons.Home}
                   color={color}
                   size={Math.min(size, defaultIconSize)}
                   type={focused ? 'SolarBold' : undefined}
@@ -69,7 +70,7 @@ export default () => {
           options={{
             tabBarIcon: ({ color, size, focused }) => (
               <Icon
-                name={Icons.Calendar}
+                name={icons.Calendar}
                 color={color}
                 size={Math.min(size, defaultIconSize)}
                 type={focused ? 'SolarBold' : undefined}
@@ -111,7 +112,7 @@ export default () => {
               attention={!currentBrand && !!stats.newNotifications}
             >
               <Icon
-                name={Icons.Workspace}
+                name={icons.Workspace}
                 color={color}
                 size={size}
                 type={focused ? 'SolarBold' : undefined}
@@ -126,7 +127,7 @@ export default () => {
         options={{
           tabBarIcon: ({ color, size, focused }) => (
             <Icon
-              name={Icons.More}
+              name={icons.More}
               color={color}
               size={Math.min(size, defaultIconSize)}
               type={focused ? 'SolarBold' : undefined}

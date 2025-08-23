@@ -7,7 +7,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useT } from '@symbiot-core-apps/i18n';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
-import { Icons } from '../../../../icons/config';
+import { useApp } from '@symbiot-core-apps/app';
 
 const IndexHeaderLeft = () => {
   const { t } = useT();
@@ -25,12 +25,13 @@ const IndexHeaderLeft = () => {
 };
 
 const IndexHeaderRight = () => {
+  const { icons } = useApp();
   const { stats } = useCurrentAccount();
 
   return (
     <HeaderButton
       attention={!!stats.newNotifications}
-      iconName={Icons.Notifications}
+      iconName={icons.Notifications}
       onPress={() => router.navigate('/home/notifications')}
     />
   );

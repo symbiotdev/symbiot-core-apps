@@ -5,18 +5,18 @@ import {
   headerButtonSize,
   useStackScreenHeaderOptions,
 } from '@symbiot-core-apps/ui';
-import { useT } from '@symbiot-core-apps/i18n';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { useApp } from '@symbiot-core-apps/app';
+import { useTranslation } from 'react-i18next';
 
 const IndexHeaderLeft = () => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const { me } = useCurrentAccount();
 
   return (
     me && (
       <H3 lineHeight={headerButtonSize} numberOfLines={1}>
-        {t('greeting_firstname', {
+        {t('shared.greeting_firstname', {
           firstname: me.firstname,
         })}
       </H3>
@@ -38,7 +38,7 @@ const IndexHeaderRight = () => {
 };
 
 export default () => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const screenOptions = useStackScreenHeaderOptions();
 
   return (
@@ -54,7 +54,7 @@ export default () => {
       <Stack.Screen
         name="(stack)/notifications/index"
         options={{
-          headerTitle: t('notifications.title'),
+          headerTitle: t('shared.notifications.title'),
         }}
       />
     </Stack>

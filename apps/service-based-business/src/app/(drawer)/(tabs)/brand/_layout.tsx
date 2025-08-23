@@ -1,4 +1,3 @@
-import { useT } from '@symbiot-core-apps/i18n';
 import {
   H3,
   HeaderButton,
@@ -12,6 +11,7 @@ import {
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useApp } from '@symbiot-core-apps/app';
+import { useTranslation } from 'react-i18next';
 
 const IndexHeaderLeft = () => {
   const { brand } = useCurrentBrandState();
@@ -35,12 +35,12 @@ const IndexHeaderRight = () => {
 };
 
 const InitialActionHeaderLeft = () => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const { me } = useCurrentAccount();
 
   return me && me.firstname !== 'Account' ? (
     <H3 lineHeight={headerButtonSize} numberOfLines={1}>
-      {t('greeting_firstname', {
+      {t('shared.greeting_firstname', {
         firstname: me.firstname,
       })}
     </H3>
@@ -69,7 +69,7 @@ const LocationsHeaderRight = () => (
 
 export default () => {
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
-  const { t } = useT();
+  const { t } = useTranslation();
   const { visible: drawerVisible } = useDrawer();
   const screenOptions = useStackScreenHeaderOptions();
 
@@ -114,7 +114,7 @@ export default () => {
       <Stack.Screen
         name="(stack)/notifications/index"
         options={{
-          headerTitle: t('notifications.title'),
+          headerTitle: t('shared.notifications.title'),
         }}
       />
 
@@ -128,14 +128,14 @@ export default () => {
       <Stack.Screen
         name="(stack)/menu/information/preferences"
         options={{
-          headerTitle: t('brand.information.title', { ns: 'app' }),
+          headerTitle: t('brand.information.title'),
         }}
       />
 
       <Stack.Screen
         name="(stack)/menu/locations/index"
         options={{
-          headerTitle: t('brand.locations.title', { ns: 'app' }),
+          headerTitle: t('brand.locations.title'),
           headerRight: LocationsHeaderRight,
         }}
       />

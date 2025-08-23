@@ -8,11 +8,11 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import { Linking } from 'react-native';
-import { useT } from '@symbiot-core-apps/i18n';
 import { useFaq } from '@symbiot-core-apps/state';
+import { useTranslation } from 'react-i18next';
 
 export const Faq = () => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const { sortedFaq } = useFaq();
 
   const openMail = useCallback(
@@ -29,9 +29,9 @@ export const Faq = () => {
           <Accordion items={sortedFaq} />
 
           <ActionCard
-            title={t('faq.contact_us.title')}
-            subtitle={t('faq.contact_us.subtitle')}
-            buttonLabel={t('faq.contact_us.button.label')}
+            title={t('shared.faq.contact_us.title')}
+            subtitle={t('shared.faq.contact_us.subtitle')}
+            buttonLabel={t('shared.faq.contact_us.button.label')}
             buttonIcon={<Icon name="Letter" />}
             onActionPress={openMail}
           />

@@ -18,8 +18,8 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useOnboardingState } from '@symbiot-core-apps/state';
-import { useT } from '@symbiot-core-apps/i18n';
 import { emitHaptic } from '@symbiot-core-apps/shared';
+import { useTranslation } from 'react-i18next';
 
 export type OnboardingSlide = {
   id: string;
@@ -30,7 +30,7 @@ export type OnboardingSlide = {
 
 export const Onboarding = memo(({ slides }: { slides: OnboardingSlide[] }) => {
   const { bottom, left, right } = useSafeAreaInsets();
-  const { t } = useT();
+  const { t } = useTranslation();
   const { width } = useWindowDimensions();
   const { finish } = useOnboardingState();
 
@@ -126,7 +126,7 @@ export const Onboarding = memo(({ slides }: { slides: OnboardingSlide[] }) => {
           ))}
         </XStack>
 
-        <Button maxWidth={400} label={t('next')} onPress={onNextPress} />
+        <Button maxWidth={400} label={t('shared.next')} onPress={onNextPress} />
       </View>
     </View>
   );

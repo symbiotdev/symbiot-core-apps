@@ -11,10 +11,10 @@ import {
   WebBrowserPresentationStyle,
 } from 'expo-web-browser';
 import { ReactNativeLegal } from 'react-native-legal';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const TermsPrivacy = () => {
-  const { t } = useT();
+  const { t } = useTranslation();
 
   const openTermsConditions = useCallback(
     () =>
@@ -42,12 +42,12 @@ export const TermsPrivacy = () => {
       <FormView>
         <ListItemGroup>
           <ListItem
-            label={t('docs.terms_conditions')}
+            label={t('shared.docs.terms_conditions')}
             icon={<Icon name="FileText" />}
             onPress={openTermsConditions}
           />
           <ListItem
-            label={t('docs.privacy_policy')}
+            label={t('shared.docs.privacy_policy')}
             icon={<Icon name="FileText" />}
             onPress={openPrivacyPolicyConditions}
           />

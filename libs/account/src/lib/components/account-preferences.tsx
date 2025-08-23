@@ -19,13 +19,13 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Link, Phone } from '@symbiot-core-apps/api';
-import { useT } from '@symbiot-core-apps/i18n';
 import { DateHelper } from '@symbiot-core-apps/shared';
+import { useTranslation } from 'react-i18next';
 
 export const AccountPreferences = () => {
   const { me, updateAccount$, updateAvatar$, removeAvatar$, avatarUpdating } =
     useCurrentAccountUpdater();
-  const { t } = useT();
+  const { t } = useTranslation();
   const {
     gendersAsOptions,
     loading: gendersLoading,
@@ -50,7 +50,9 @@ export const AccountPreferences = () => {
           .shape({
             firstname: yup
               .string()
-              .required(t('preferences.account.firstname.error.required')),
+              .required(
+                t('shared.preferences.account.firstname.error.required'),
+              ),
           })
           .required(),
       ),
@@ -69,7 +71,9 @@ export const AccountPreferences = () => {
           .shape({
             lastname: yup
               .string()
-              .required(t('preferences.account.lastname.error.required')),
+              .required(
+                t('shared.preferences.account.lastname.error.required'),
+              ),
           })
           .required(),
       ),
@@ -120,7 +124,7 @@ export const AccountPreferences = () => {
         .object()
         .shape({
           phone: getPhoneInputSchema(
-            t('preferences.account.phone.error.invalid'),
+            t('shared.preferences.account.phone.error.invalid'),
             true,
           ),
         })
@@ -212,7 +216,7 @@ export const AccountPreferences = () => {
           <Input
             disabled
             value={me.email}
-            label={t('preferences.account.email.label')}
+            label={t('shared.preferences.account.email.label')}
           />
 
           <Controller
@@ -224,8 +228,10 @@ export const AccountPreferences = () => {
                 enterKeyHint="done"
                 value={value}
                 error={error?.message}
-                label={t('preferences.account.firstname.label')}
-                placeholder={t('preferences.account.firstname.placeholder')}
+                label={t('shared.preferences.account.firstname.label')}
+                placeholder={t(
+                  'shared.preferences.account.firstname.placeholder',
+                )}
                 onChange={onChange}
                 onBlur={firstnameHandleSubmit(updateFirstname)}
               />
@@ -241,8 +247,10 @@ export const AccountPreferences = () => {
                 enterKeyHint="done"
                 value={value}
                 error={error?.message}
-                label={t('preferences.account.lastname.label')}
-                placeholder={t('preferences.account.lastname.placeholder')}
+                label={t('shared.preferences.account.lastname.label')}
+                placeholder={t(
+                  'shared.preferences.account.lastname.placeholder',
+                )}
                 onChange={onChange}
                 onBlur={lastnameHandleSubmit(updateLastname)}
               />
@@ -259,9 +267,9 @@ export const AccountPreferences = () => {
                 optionsLoading={gendersLoading}
                 optionsError={gendersError}
                 options={gendersAsOptions}
-                label={t('preferences.account.gender.label')}
-                sheetLabel={t('preferences.account.gender.label')}
-                placeholder={t('preferences.account.gender.placeholder')}
+                label={t('shared.preferences.account.gender.label')}
+                sheetLabel={t('shared.preferences.account.gender.label')}
+                placeholder={t('shared.preferences.account.gender.placeholder')}
                 onChange={(gender) => {
                   onChange(gender);
                   genderHandleSubmit(updateGender)();
@@ -281,8 +289,10 @@ export const AccountPreferences = () => {
                 weekStartsOn={me.preferences?.weekStartsOn}
                 minDate={DateHelper.addYears(new Date(), -100)}
                 maxDate={new Date()}
-                label={t('preferences.account.birthday.label')}
-                placeholder={t('preferences.account.birthday.placeholder')}
+                label={t('shared.preferences.account.birthday.label')}
+                placeholder={t(
+                  'shared.preferences.account.birthday.placeholder',
+                )}
                 onChange={(birthday) => {
                   onChange(birthday);
                   birthdayHandleSubmit(updateBirthday)();
@@ -298,8 +308,8 @@ export const AccountPreferences = () => {
               <PhoneInput
                 enterKeyHint="done"
                 value={value}
-                label={t('preferences.account.phone.label')}
-                placeholder={t('preferences.account.phone.placeholder')}
+                label={t('shared.preferences.account.phone.label')}
+                placeholder={t('shared.preferences.account.phone.placeholder')}
                 error={error?.message}
                 onChange={onChange}
                 onBlur={phoneHandleSubmit(updatePhones)}
@@ -315,8 +325,10 @@ export const AccountPreferences = () => {
                 type="instagram"
                 enterKeyHint="done"
                 value={value}
-                label={t('preferences.account.instagram.label')}
-                placeholder={t('preferences.account.instagram.placeholder')}
+                label={t('shared.preferences.account.instagram.label')}
+                placeholder={t(
+                  'shared.preferences.account.instagram.placeholder',
+                )}
                 error={error?.message}
                 onChange={onChange}
                 onBlur={instagramHandleSubmit(updateInstagram)}

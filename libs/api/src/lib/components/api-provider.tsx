@@ -13,7 +13,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '../utils/client';
 import { useAccountAuthRefreshTokenQuery } from '../queries/use-account-auth.query';
 import { Platform } from 'react-native';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 type SocketState = {
   connecting: boolean;
@@ -32,7 +32,7 @@ export const ApiProvider = ({
   onConnected?: () => void;
 }>) => {
   const devId = useDevId();
-  const { lang } = useT();
+  const { i18n } = useTranslation();
   const refreshTokens = useAccountAuthRefreshTokenQuery();
   const { tokens, setTokens } = useAuthTokens();
 
@@ -72,7 +72,7 @@ export const ApiProvider = ({
     setAxiosInterceptors({
       devId,
       accessToken: tokens.access,
-      languageCode: lang,
+      languageCode: i18n.language,
       onUnauthorized,
       onNoRespond,
       refreshTokens,
@@ -85,7 +85,7 @@ export const ApiProvider = ({
         ...(Platform.OS !== 'web'
           ? { [authTokenHeaderKey.refresh]: tokens.refresh }
           : {}),
-        lang,
+        lang: i18n.language,
       };
       socket.connect();
     } else {
@@ -97,7 +97,7 @@ export const ApiProvider = ({
     };
   }, [
     tokens,
-    lang,
+    i18n.language,
     devId,
     disconnectSocket,
     updateState,

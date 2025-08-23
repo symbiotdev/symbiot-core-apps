@@ -9,10 +9,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ReactElement, useCallback } from 'react';
 import { router } from 'expo-router';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const { mutateAsync, error } = useAccountAuthForgotPasswordQuery();
 
   const {
@@ -29,8 +29,12 @@ export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
         .shape({
           email: yup
             .string()
-            .required(t('auth.forgot_password.form.email.error.required'))
-            .email(t('auth.forgot_password.form.email.error.invalid_format')),
+            .required(
+              t('shared.auth.forgot_password.form.email.error.required'),
+            )
+            .email(
+              t('shared.auth.forgot_password.form.email.error.invalid_format'),
+            ),
         })
         .required(),
     ),
@@ -56,18 +60,18 @@ export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
 
   return (
     <AuthFormView
-      title={t('auth.forgot_password.title')}
-      subtitle={t('auth.forgot_password.subtitle')}
-      buttonLabel={t('continue')}
+      title={t('shared.auth.forgot_password.title')}
+      subtitle={t('shared.auth.forgot_password.subtitle')}
+      buttonLabel={t('shared.continue')}
       logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
       error={error}
       externalLink={
         <RegularText textAlign="center">
-          {t('auth.forgot_password.external_link.already_have_account')}{' '}
+          {t('shared.auth.forgot_password.external_link.already_have_account')}{' '}
           <Link disabled={isSubmitting} onPress={signUp}>
-            {t('auth.forgot_password.external_link.sign_up')}
+            {t('shared.auth.forgot_password.external_link.sign_up')}
           </Link>
         </RegularText>
       }
@@ -87,8 +91,10 @@ export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
             type="email"
             keyboardType="email-address"
             disabled={isSubmitting}
-            label={t('auth.forgot_password.form.email.label')}
-            placeholder={t('auth.forgot_password.form.email.placeholder')}
+            label={t('shared.auth.forgot_password.form.email.label')}
+            placeholder={t(
+              'shared.auth.forgot_password.form.email.placeholder',
+            )}
             onChange={onChange}
             onBlur={onBlur}
           />

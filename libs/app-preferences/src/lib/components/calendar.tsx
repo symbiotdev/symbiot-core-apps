@@ -9,11 +9,11 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { DateHelper, Weekday } from '@symbiot-core-apps/shared';
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const Calendar = () => {
   const navigation = useNavigation();
-  const { t } = useT();
+  const { t } = useTranslation();
   const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
 
   const weekdaysOptions = useMemo(() => DateHelper.getWeekdays(), []);
@@ -33,8 +33,8 @@ export const Calendar = () => {
     <PageView scrollable withHeaderHeight>
       <FormView>
         <SelectPicker
-          label={t('preferences.calendar.week_starts_on.label')}
-          sheetLabel={t('preferences.calendar.week_starts_on.label')}
+          label={t('shared.preferences.calendar.week_starts_on.label')}
+          sheetLabel={t('shared.preferences.calendar.week_starts_on.label')}
           value={me?.preferences?.weekStartsOn}
           options={weekdaysOptions}
           onChange={onChangeWeekdayStartsOn as PickerOnChange}

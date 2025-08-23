@@ -23,8 +23,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
-import { useT } from '@symbiot-core-apps/i18n';
 import { useApp } from '@symbiot-core-apps/app';
+import { useTranslation } from 'react-i18next';
 
 export const drawerMenuMaxWidth = 250;
 export const drawerMenuMinWidth = 68;
@@ -90,7 +90,7 @@ const Br = memo((props: ViewStyle) => (
 ));
 
 export const DrawerMenu = (props: DrawerContentComponentProps) => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const { icons } = useApp();
   const share = useShareApp();
   const { permanent } = useDrawer();
@@ -188,7 +188,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
             initial
             route="/brand"
             navigation={props.navigation}
-            label={t('navigation.drawer.actions.label', { ns: 'app' })}
+            label={t('navigation.drawer.actions.label')}
             icon={icons.Workspace}
           />
         ) : (
@@ -197,14 +197,14 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
               initial
               route="/home"
               navigation={props.navigation}
-              label={t('navigation.drawer.home.label', { ns: 'app' })}
+              label={t('navigation.drawer.home.label')}
               icon={icons.Home}
             />
 
             <MenuItem
               route="/calendar"
               navigation={props.navigation}
-              label={t('navigation.drawer.calendar.label', { ns: 'app' })}
+              label={t('navigation.drawer.calendar.label')}
               icon={icons.Calendar}
             />
           </>
@@ -215,7 +215,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
         <MenuItem
           navigation={props.navigation}
           icon="Share"
-          label={t('navigation.drawer.share.label', { ns: 'app' })}
+          label={t('navigation.drawer.share.label')}
           route=""
           onPress={share}
         />
@@ -223,21 +223,21 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
         <MenuItem
           navigation={props.navigation}
           icon="FileText"
-          label={t('navigation.drawer.terms_privacy.label', { ns: 'app' })}
+          label={t('navigation.drawer.terms_privacy.label')}
           route="/app/terms-privacy"
         />
 
         <MenuItem
           navigation={props.navigation}
           icon="QuestionCircle"
-          label={t('navigation.drawer.faq.label', { ns: 'app' })}
+          label={t('navigation.drawer.faq.label')}
           route="/app/help-feedback"
         />
 
         <MenuItem
           navigation={props.navigation}
           icon="ShareCircle"
-          label={t('navigation.drawer.follow_us.label', { ns: 'app' })}
+          label={t('navigation.drawer.follow_us.label')}
           route="/app/follow-us"
         />
 
@@ -246,7 +246,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
         <MenuItem
           navigation={props.navigation}
           icon={icons.More}
-          label={t('navigation.drawer.more.label', { ns: 'app' })}
+          label={t('navigation.drawer.more.label')}
           route="/app"
         />
       </ScrollView>

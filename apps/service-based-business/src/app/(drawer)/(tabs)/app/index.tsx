@@ -1,5 +1,4 @@
 import { useShareApp } from '@symbiot-core-apps/shared';
-import { useT } from '@symbiot-core-apps/i18n';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
 import { router } from 'expo-router';
@@ -15,10 +14,11 @@ import {
   useDrawer,
 } from '@symbiot-core-apps/ui';
 import { useApp } from '@symbiot-core-apps/app';
+import { useTranslation } from 'react-i18next';
 
 export default () => {
   const share = useShareApp();
-  const { t } = useT();
+  const { t } = useTranslation();
   const { languages } = useApp();
   const { me } = useCurrentAccount();
   const { visible: drawerVisible } = useDrawer();
@@ -58,22 +58,16 @@ export default () => {
       <TabsPageView scrollable withHeaderHeight>
         <FormView>
           <ActionCard
-            title={t('subscription.card.title', {
-              ns: 'app',
-            })}
-            subtitle={t('subscription.card.subtitle', {
-              ns: 'app',
-            })}
-            buttonLabel={t('subscription.card.button.label', {
-              ns: 'app',
-            })}
+            title={t('subscription.card.title')}
+            subtitle={t('subscription.card.subtitle')}
+            buttonLabel={t('subscription.card.button.label')}
             buttonIcon={<Icon name="Rocket" />}
             onActionPress={() => {
               alert('get pro');
             }}
           />
 
-          <ListItemGroup title={t('profile')}>
+          <ListItemGroup title={t('shared.profile')}>
             <ListItem
               label={me.name}
               icon={<Icon name="UserCircle" />}
@@ -84,7 +78,7 @@ export default () => {
               trigger={
                 <ListItem
                   cursor="pointer"
-                  label={t('qr_code')}
+                  label={t('shared.qr_code')}
                   icon={<Icon name="QrCode" />}
                 />
               }
@@ -93,52 +87,52 @@ export default () => {
             />
           </ListItemGroup>
 
-          <ListItemGroup title={t('preferences.title')}>
+          <ListItemGroup title={t('shared.preferences.title')}>
             <ListItem
-              label={t('preferences.notifications.title')}
+              label={t('shared.preferences.notifications.title')}
               icon={<Icon name="Bell" />}
               onPress={onNotificationsPress}
             />
             <ListItem
-              label={t('preferences.appearance.title')}
+              label={t('shared.preferences.appearance.title')}
               icon={<Icon name="TuningSquare" />}
               onPress={onAppearancePress}
             />
 
             {languages?.length > 1 && (
               <ListItem
-                label={t('preferences.language.title')}
+                label={t('shared.preferences.language.title')}
                 icon={<Icon name="Global" />}
                 onPress={onLanguagePress}
               />
             )}
 
             <ListItem
-              label={t('calendar')}
+              label={t('shared.calendar')}
               icon={<Icon name="Calendar" />}
               onPress={onCalendarPress}
             />
           </ListItemGroup>
 
           {!drawerVisible && (
-            <ListItemGroup title={t('application')}>
+            <ListItemGroup title={t('shared.application')}>
               <ListItem
-                label={t('share_app')}
+                label={t('shared.share_app')}
                 icon={<Icon name="Share" />}
                 onPress={share}
               />
               <ListItem
-                label={t('faq.title')}
+                label={t('shared.faq.title')}
                 icon={<Icon name="QuestionCircle" />}
                 onPress={onHelpFeedbackPress}
               />
               <ListItem
-                label={t('docs.terms_privacy')}
+                label={t('shared.docs.terms_privacy')}
                 icon={<Icon name="FileText" />}
                 onPress={onTermsPrivacyPress}
               />
               <ListItem
-                label={t('follow_us')}
+                label={t('shared.follow_us')}
                 icon={<Icon name="ShareCircle" />}
                 onPress={onFollowUsPress}
               />

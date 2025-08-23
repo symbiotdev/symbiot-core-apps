@@ -2,7 +2,7 @@ import { InputCode, Link, RegularText } from '@symbiot-core-apps/ui';
 import { AuthFormView } from './auth-form-view';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { router } from 'expo-router';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const authCodeLength = 6;
 export const verifySecondsLimit = 60;
@@ -22,7 +22,7 @@ export const AuthVerifyView = ({
   onResend: () => Promise<void>;
   onChange: (code: string) => false | Promise<void>;
 }) => {
-  const { t } = useT();
+  const { t } = useTranslation();
 
   const [secondsTo, setSecondsTo] = useState(verifySecondsLimit);
 
@@ -52,11 +52,11 @@ export const AuthVerifyView = ({
 
   return (
     <AuthFormView
-      title={t('auth.verify_email.title')}
-      subtitle={t('auth.verify_email.subtitle', {
-        email: email || t('auth.verify_email.your_email'),
+      title={t('shared.auth.verify_email.title')}
+      subtitle={t('shared.auth.verify_email.subtitle', {
+        email: email || t('shared.auth.verify_email.your_email'),
       })}
-      buttonLabel={`${t('auth.verify_email.resend.button.label')}${
+      buttonLabel={`${t('shared.auth.verify_email.resend.button.label')}${
         secondsTo ? ` 00:${('0' + secondsTo).slice(-2)}` : ''
       }`}
       logo={logo}
@@ -65,9 +65,9 @@ export const AuthVerifyView = ({
       error={error}
       externalLink={
         <RegularText textAlign="center">
-          {t('auth.verify_email.external_link.message')}{' '}
+          {t('shared.auth.verify_email.external_link.message')}{' '}
           <Link disabled={loading} onPress={changeEmail}>
-            {t('auth.verify_email.external_link.link')}
+            {t('shared.auth.verify_email.external_link.link')}
           </Link>
         </RegularText>
       }

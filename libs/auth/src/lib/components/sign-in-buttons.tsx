@@ -7,12 +7,12 @@ import { Platform } from 'react-native';
 import { Button, Error, FormView, Icon } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useAccountAuthSignInWithFirebaseQuery } from '@symbiot-core-apps/api';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 const isGoogleAuthAvailable = Platform.OS !== 'web';
 
 export const SignInButtons = () => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const {
     mutate: appleAuth,
     error: appleAuthError,
@@ -46,7 +46,7 @@ export const SignInButtons = () => {
       if (user) {
         return user.getIdToken();
       } else {
-        const errorText = t('error.unknown_error');
+        const errorText = t('shared.error.unknown_error');
 
         setError(errorText);
 
@@ -111,13 +111,13 @@ export const SignInButtons = () => {
       <Button
         disabled={isPending}
         icon={<Icon name="Letter" size={20} />}
-        label={t('auth.workspace.button.sign_up_with_email')}
+        label={t('shared.auth.workspace.button.sign_up_with_email')}
         onPress={signUp}
       />
 
       <Button
         disabled={isPending}
-        label={t('auth.workspace.button.sign_in')}
+        label={t('shared.auth.workspace.button.sign_in')}
         onPress={signIn}
       />
 

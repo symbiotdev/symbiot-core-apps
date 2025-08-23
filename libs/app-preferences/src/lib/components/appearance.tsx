@@ -13,11 +13,11 @@ import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { AccountScheme } from '@symbiot-core-apps/api';
 import { useNavigation } from '@react-navigation/native';
 import { defaultSystemScheme } from '@symbiot-core-apps/shared';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const Appearance = () => {
   const navigation = useNavigation();
-  const { t } = useT();
+  const { t } = useTranslation();
   const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
   const scheme = me?.preferences?.scheme;
 
@@ -25,12 +25,12 @@ export const Appearance = () => {
     () => [
       {
         icon: <Icon name="Sun" />,
-        label: t('preferences.appearance.theme.light'),
+        label: t('shared.preferences.appearance.theme.light'),
         value: 'light',
       },
       {
         icon: <Icon name="Moon" />,
-        label: t('preferences.appearance.theme.dark'),
+        label: t('shared.preferences.appearance.theme.dark'),
         value: 'dark',
       },
     ],
@@ -52,14 +52,14 @@ export const Appearance = () => {
     <PageView scrollable withHeaderHeight>
       <FormView>
         <ListItemGroup
-          title={t('preferences.appearance.theme.title')}
+          title={t('shared.preferences.appearance.theme.title')}
           gap="$4"
           paddingVertical="$4"
         >
           <Switch
             checked={scheme === 'system'}
             disabled={updating}
-            label={t('preferences.appearance.theme.auto.label')}
+            label={t('shared.preferences.appearance.theme.auto.label')}
             onChange={(checked) =>
               onChange(checked ? 'system' : defaultSystemScheme())
             }

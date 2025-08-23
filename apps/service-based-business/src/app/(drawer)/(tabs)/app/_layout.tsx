@@ -1,5 +1,4 @@
 import { router, Stack } from 'expo-router';
-import { useT } from '@symbiot-core-apps/i18n';
 import { Platform } from 'react-native';
 import { XStack } from 'tamagui';
 import {
@@ -14,16 +13,17 @@ import {
 import { ConfirmAlert, DeviceVersion } from '@symbiot-core-apps/shared';
 import { useAccountAuthSignOutQuery } from '@symbiot-core-apps/api';
 import { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const IndexHeaderLeft = () => {
-  const { t } = useT();
+  const { t } = useTranslation();
 
   return (
     Platform.OS !== 'web' && (
       <XStack gap="$2" alignItems="center">
         <Icon name="Code" color="$placeholderColor" />
         <RegularText color="$placeholderColor">
-          {t('version')}: {DeviceVersion}
+          {t('shared.version')}: {DeviceVersion}
         </RegularText>
       </XStack>
     )
@@ -31,13 +31,13 @@ const IndexHeaderLeft = () => {
 };
 
 const IndexHeaderRight = () => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const { mutate: signOut } = useAccountAuthSignOutQuery();
 
   const onSignOutPress = useCallback(
     () =>
       ConfirmAlert({
-        title: t('auth.sign_out.confirm.title'),
+        title: t('shared.auth.sign_out.confirm.title'),
         callback: signOut,
       }),
     [signOut, t],
@@ -47,12 +47,14 @@ const IndexHeaderRight = () => {
 };
 
 const AccountPreferencesHeaderRight = () => {
-  const { t } = useT();
+  const { t } = useTranslation();
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [
       {
-        label: t('preferences.account.context_menu.remove_account.label'),
+        label: t(
+          'shared.preferences.account.context_menu.remove_account.label',
+        ),
         icon: <Icon name="TrashBinMinimalistic" />,
         color: '$error',
         onPress: () => router.push('app/preferences/account/remove'),
@@ -65,7 +67,7 @@ const AccountPreferencesHeaderRight = () => {
 };
 
 export default () => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const screenOptions = useStackScreenHeaderOptions();
   const { visible: drawerVisible } = useDrawer();
 
@@ -87,28 +89,28 @@ export default () => {
       <Stack.Screen
         name="(stack)/help-feedback/index"
         options={{
-          headerTitle: t('faq.title'),
+          headerTitle: t('shared.faq.title'),
           animation: nestedScreenAnimation,
         }}
       />
       <Stack.Screen
         name="(stack)/terms-privacy/index"
         options={{
-          headerTitle: t('docs.terms_privacy'),
+          headerTitle: t('shared.docs.terms_privacy'),
           animation: nestedScreenAnimation,
         }}
       />
       <Stack.Screen
         name="(stack)/follow-us/index"
         options={{
-          headerTitle: t('follow_us'),
+          headerTitle: t('shared.follow_us'),
           animation: nestedScreenAnimation,
         }}
       />
       <Stack.Screen
         name="(stack)/preferences/account/index"
         options={{
-          headerTitle: t('profile'),
+          headerTitle: t('shared.profile'),
           headerRight: AccountPreferencesHeaderRight,
         }}
       />
@@ -116,25 +118,25 @@ export default () => {
       <Stack.Screen
         name="(stack)/preferences/appearance/index"
         options={{
-          headerTitle: t('preferences.appearance.title'),
+          headerTitle: t('shared.preferences.appearance.title'),
         }}
       />
       <Stack.Screen
         name="(stack)/preferences/calendar/index"
         options={{
-          headerTitle: t('preferences.calendar.title'),
+          headerTitle: t('shared.preferences.calendar.title'),
         }}
       />
       <Stack.Screen
         name="(stack)/preferences/language/index"
         options={{
-          headerTitle: t('preferences.language.title'),
+          headerTitle: t('shared.preferences.language.title'),
         }}
       />
       <Stack.Screen
         name="(stack)/preferences/notifications/index"
         options={{
-          headerTitle: t('preferences.notifications.title'),
+          headerTitle: t('shared.preferences.notifications.title'),
         }}
       />
     </Stack>

@@ -22,9 +22,9 @@ import {
   WeekdaySchedule,
   WeekdaysSchedule,
 } from '@symbiot-core-apps/ui';
-import { useT } from '@symbiot-core-apps/i18n';
 import { TCountryCode } from 'countries-list';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
+import { useTranslation } from 'react-i18next';
 
 export function SurveyStepForm<V>({
   value: formValue,
@@ -39,7 +39,7 @@ export function SurveyStepForm<V>({
   onChange: (value: V) => void;
   onSkip: () => void;
 }) {
-  const { t } = useT();
+  const { t } = useTranslation();
   const { me } = useCurrentAccount();
 
   const formSchema = useMemo(
@@ -188,12 +188,12 @@ export function SurveyStepForm<V>({
           <View marginTop="auto">
             <Button
               disabled={!isValid}
-              label={t(step.nextId ? 'next' : 'finish')}
+              label={t(step.nextId ? 'shared.next' : 'shared.finish')}
               onPress={handleSubmit(onChange as SubmitHandler<unknown>)}
             />
 
             {step.skippable && (
-              <Button type="clear" label={t('skip')} onPress={onSkip} />
+              <Button type="clear" label={t('shared.skip')} onPress={onSkip} />
             )}
           </View>
         </FormView>

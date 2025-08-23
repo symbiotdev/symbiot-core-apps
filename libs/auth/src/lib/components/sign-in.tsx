@@ -10,10 +10,10 @@ import { PasswordPattern } from '@symbiot-core-apps/shared';
 import { ReactElement, useCallback } from 'react';
 import { Input, Link, RegularText } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const SignIn = ({ logo }: { logo: ReactElement }) => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const { mutateAsync, error } = useAccountAuthSignInQuery();
 
   const {
@@ -31,14 +31,14 @@ export const SignIn = ({ logo }: { logo: ReactElement }) => {
         .shape({
           email: yup
             .string()
-            .required(t('auth.sign_in.form.email.error.required'))
-            .email(t('auth.sign_in.form.email.error.invalid_format')),
+            .required(t('shared.auth.sign_in.form.email.error.required'))
+            .email(t('shared.auth.sign_in.form.email.error.invalid_format')),
           password: yup
             .string()
-            .required(t('auth.sign_in.form.password.error.required'))
+            .required(t('shared.auth.sign_in.form.password.error.required'))
             .matches(
               PasswordPattern,
-              t('auth.sign_in.form.password.error.invalid_format'),
+              t('shared.auth.sign_in.form.password.error.invalid_format'),
             ),
         })
         .required(),
@@ -60,18 +60,18 @@ export const SignIn = ({ logo }: { logo: ReactElement }) => {
 
   return (
     <AuthFormView
-      title={t('auth.sign_in.title')}
-      subtitle={t('auth.sign_in.subtitle')}
-      buttonLabel={t('continue')}
+      title={t('shared.auth.sign_in.title')}
+      subtitle={t('shared.auth.sign_in.subtitle')}
+      buttonLabel={t('shared.continue')}
       logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
       error={error}
       externalLink={
         <RegularText textAlign="center">
-          {t('auth.sign_in.external_link.already_have_account')}{' '}
+          {t('shared.auth.sign_in.external_link.already_have_account')}{' '}
           <Link disabled={isSubmitting} onPress={signUp}>
-            {t('auth.sign_in.external_link.sign_up')}
+            {t('shared.auth.sign_in.external_link.sign_up')}
           </Link>
         </RegularText>
       }
@@ -91,8 +91,8 @@ export const SignIn = ({ logo }: { logo: ReactElement }) => {
             type="email"
             keyboardType="email-address"
             disabled={isSubmitting}
-            label={t('auth.sign_in.form.email.label')}
-            placeholder={t('auth.sign_in.form.email.placeholder')}
+            label={t('shared.auth.sign_in.form.email.label')}
+            placeholder={t('shared.auth.sign_in.form.email.placeholder')}
             onChange={onChange}
             onBlur={onBlur}
           />
@@ -112,8 +112,8 @@ export const SignIn = ({ logo }: { logo: ReactElement }) => {
             enterKeyHint="next"
             type="password"
             disabled={isSubmitting}
-            label={t('auth.sign_in.form.password.label')}
-            placeholder={t('auth.sign_in.form.password.placeholder')}
+            label={t('shared.auth.sign_in.form.password.label')}
+            placeholder={t('shared.auth.sign_in.form.password.placeholder')}
             onChange={onChange}
             onBlur={onBlur}
           />
@@ -125,7 +125,7 @@ export const SignIn = ({ logo }: { logo: ReactElement }) => {
         disabled={isSubmitting}
         onPress={forgotPassword}
       >
-        {t('auth.sign_in.forgot_password_link')}
+        {t('shared.auth.sign_in.forgot_password_link')}
       </Link>
     </AuthFormView>
   );

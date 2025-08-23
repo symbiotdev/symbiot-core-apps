@@ -10,10 +10,10 @@ import { PasswordPattern } from '@symbiot-core-apps/shared';
 import { ReactElement, useCallback } from 'react';
 import { Input } from '@symbiot-core-apps/ui';
 import { useLocalSearchParams } from 'expo-router';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const { mutateAsync, error } = useAccountAuthResetPasswordQuery();
   const { secret, email, code } = useLocalSearchParams<{
     secret: string;
@@ -36,19 +36,25 @@ export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
         .shape({
           password: yup
             .string()
-            .required(t('auth.reset_password.form.password.error.required'))
+            .required(
+              t('shared.auth.reset_password.form.password.error.required'),
+            )
             .matches(
               PasswordPattern,
-              t('auth.reset_password.form.password.error.invalid_format'),
+              t(
+                'shared.auth.reset_password.form.password.error.invalid_format',
+              ),
             ),
           confirmPassword: yup
             .string()
             .required(
-              t('auth.reset_password.form.confirm_password.error.required'),
+              t(
+                'shared.auth.reset_password.form.confirm_password.error.required',
+              ),
             )
             .oneOf(
               [yup.ref('password')],
-              t('auth.reset_password.form.confirm_password.error.match'),
+              t('shared.auth.reset_password.form.confirm_password.error.match'),
             ),
         })
         .required(),
@@ -68,9 +74,9 @@ export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
 
   return (
     <AuthFormView
-      title={t('auth.reset_password.title')}
-      subtitle={t('auth.reset_password.subtitle')}
-      buttonLabel={t('continue')}
+      title={t('shared.auth.reset_password.title')}
+      subtitle={t('shared.auth.reset_password.subtitle')}
+      buttonLabel={t('shared.continue')}
       logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
@@ -90,8 +96,10 @@ export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
             enterKeyHint="done"
             type="password"
             disabled={isSubmitting}
-            label={t('auth.reset_password.form.password.label')}
-            placeholder={t('auth.reset_password.form.password.placeholder')}
+            label={t('shared.auth.reset_password.form.password.label')}
+            placeholder={t(
+              'shared.auth.reset_password.form.password.placeholder',
+            )}
             onChange={onChange}
             onBlur={onBlur}
           />
@@ -111,9 +119,9 @@ export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
             enterKeyHint="done"
             type="password"
             disabled={isSubmitting}
-            label={t('auth.reset_password.form.confirm_password.label')}
+            label={t('shared.auth.reset_password.form.confirm_password.label')}
             placeholder={t(
-              'auth.reset_password.form.confirm_password.placeholder',
+              'shared.auth.reset_password.form.confirm_password.placeholder',
             )}
             onChange={onChange}
             onBlur={onBlur}

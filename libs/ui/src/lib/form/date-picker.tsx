@@ -15,8 +15,8 @@ import { Platform } from 'react-native';
 import { useScheme } from '@symbiot-core-apps/state';
 import { InputFieldView } from '../view/input-field-view';
 import { Icon } from '../icons';
-import { useT } from '@symbiot-core-apps/i18n';
 import RNDatepicker from 'react-native-date-picker';
+import { useTranslation } from 'react-i18next';
 
 export const DatePicker = ({
   value,
@@ -45,7 +45,7 @@ export const DatePicker = ({
 }) => {
   const theme = useTheme();
   const { scheme } = useScheme();
-  const { lang } = useT();
+  const { i18n } = useTranslation();
   const defaultStyles = useDefaultStyles(scheme);
 
   const popoverRef = useRef<AdaptivePopoverRef>(null);
@@ -88,7 +88,7 @@ export const DatePicker = ({
             <RNDatepicker
               date={new Date(value || Date.now())}
               mode="date"
-              locale={lang}
+              locale={i18n.language}
               minimumDate={minDate}
               maximumDate={maxDate}
               theme={scheme}
@@ -99,7 +99,7 @@ export const DatePicker = ({
               showOutsideDays
               mode="single"
               date={value ?? undefined}
-              locale={lang}
+              locale={i18n.language}
               startDate={startDate}
               minDate={minDate}
               maxDate={maxDate}

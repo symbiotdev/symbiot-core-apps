@@ -9,9 +9,9 @@ import { ToggleOnChange } from './toggle-group';
 import { H4 } from '../text/heading';
 import { Switch } from './switch';
 import { Segment } from '../segment/segment';
-import { useT } from '@symbiot-core-apps/i18n';
 import { EmptyView } from '../view/empty-view';
 import { Picker } from './picker';
+import { useTranslation } from 'react-i18next';
 
 export type WeekdaySchedule = {
   day: Weekday;
@@ -96,7 +96,7 @@ const WeekdayScheduleElement = ({
   minutes: MinutesOptions;
   onChange: (value: WeekdaySchedule) => void;
 }) => {
-  const { t } = useT();
+  const { t } = useTranslation();
 
   const [activeSegment, setActiveSegment] = useState<string>('start');
 
@@ -127,12 +127,12 @@ const WeekdayScheduleElement = ({
   const segmentItems = useMemo(
     () => [
       {
-        placeholder: t('schedule.start'),
+        placeholder: t('shared.schedule.start'),
         label: isDayOff ? '-' : start,
         value: 'start',
       },
       {
-        placeholder: t('schedule.end'),
+        placeholder: t('shared.schedule.end'),
         label: isDayOff ? '-' : end,
         value: 'end',
       },
@@ -140,7 +140,7 @@ const WeekdayScheduleElement = ({
     [end, isDayOff, start, t],
   );
 
-  const resetSegment = useCallback(() => setActiveSegment('start'), []);
+  const resetSegment = useCallback(() => setActiveSegment('shared.start'), []);
 
   const toggleDayOff = useCallback(
     (active: boolean) => {
@@ -202,7 +202,7 @@ const WeekdayScheduleElement = ({
           <RegularText>{weekday.label}</RegularText>
 
           <MediumText color={'$disabled'}>
-            {isDayOff ? t('schedule.day_off') : `${start} - ${end}`}
+            {isDayOff ? t('shared.schedule.day_off') : `${start} - ${end}`}
           </MediumText>
         </InputFieldView>
       }
@@ -255,7 +255,7 @@ const WeekdayScheduleElement = ({
         <EmptyView
           padding={75.5}
           iconName="Calendar"
-          message={t('schedule.day_off')}
+          message={t('shared.schedule.day_off')}
         />
       )}
     </AdaptivePopover>

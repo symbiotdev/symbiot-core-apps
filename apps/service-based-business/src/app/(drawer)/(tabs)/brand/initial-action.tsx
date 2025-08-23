@@ -2,7 +2,6 @@ import {
   useCurrentAccount,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { useT } from '@symbiot-core-apps/i18n';
 import { useCallback, useState } from 'react';
 import {
   ActionCard,
@@ -19,9 +18,10 @@ import { router } from 'expo-router';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { MyBrandsSelectionList } from '@symbiot-core-apps/brand';
 import { useApp } from '@symbiot-core-apps/app';
+import { useTranslation } from 'react-i18next';
 
 export default () => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const { icons } = useApp();
   const { me } = useCurrentAccount();
   const { brands: currentBrands } = useCurrentBrandState();
@@ -47,46 +47,26 @@ export default () => {
         ) : (
           <FormView gap="$6">
             <View gap="$2">
-              <H2>
-                {t('initial_actions.title', {
-                  ns: 'app',
-                })}
-              </H2>
-              <RegularText>
-                {t('initial_actions.subtitle', {
-                  ns: 'app',
-                })}
-              </RegularText>
+              <H2>{t('initial_actions.title')}</H2>
+              <RegularText>{t('initial_actions.subtitle')}</RegularText>
             </View>
 
             <ActionCard
-              title={t('initial_actions.create_workspace.title', {
-                ns: 'app',
-              })}
-              subtitle={t('initial_actions.create_workspace.subtitle', {
-                ns: 'app',
-              })}
-              buttonLabel={t('initial_actions.create_workspace.button.label', {
-                ns: 'app',
-              })}
+              title={t('initial_actions.create_workspace.title')}
+              subtitle={t('initial_actions.create_workspace.subtitle')}
+              buttonLabel={t('initial_actions.create_workspace.button.label')}
               buttonIcon={<Icon name={icons.Workspace} />}
               onActionPress={createBrand}
             />
 
             <H4 textAlign="center" textTransform="uppercase">
-              {t('or')}
+              {t('shared.or')}
             </H4>
 
             <ActionCard
-              title={t('initial_actions.join_workspace.title', {
-                ns: 'app',
-              })}
-              subtitle={t('initial_actions.join_workspace.subtitle', {
-                ns: 'app',
-              })}
-              buttonLabel={t('initial_actions.join_workspace.button.label', {
-                ns: 'app',
-              })}
+              title={t('initial_actions.join_workspace.title')}
+              subtitle={t('initial_actions.join_workspace.subtitle')}
+              buttonLabel={t('initial_actions.join_workspace.button.label')}
               buttonIcon={<Icon name="QrCode" />}
               onActionPress={onOpenQrCodeModal}
             />

@@ -11,8 +11,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SurveyStepsFlow } from './survey-steps-flow';
 import { ConfirmAlert, useKeyboardDismisser } from '@symbiot-core-apps/shared';
 import { router, useNavigation } from 'expo-router';
-import { useT } from '@symbiot-core-apps/i18n';
 import { EventArg, NavigationAction } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 export function Survey<V extends object>({
   steps,
@@ -33,7 +33,7 @@ export function Survey<V extends object>({
   ignoreLeaveConfirmation?: boolean;
   onFinish: (value: V) => void;
 }) {
-  const { t } = useT();
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   const valueRef = useRef<V>({} as V);
@@ -89,8 +89,8 @@ export function Survey<V extends object>({
       e.preventDefault();
 
       ConfirmAlert({
-        title: t('brand.create.discard.title'),
-        message: t('brand.create.discard.message'),
+        title: t('shared.brand.create.discard.title'),
+        message: t('shared.brand.create.discard.message'),
         callback: () => navigation.dispatch(e.data.action),
       });
     },

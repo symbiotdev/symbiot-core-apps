@@ -1,13 +1,13 @@
 import { View, ViewProps } from 'tamagui';
 import { Error } from '../text/custom';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const ErrorView = (
   props: ViewProps & {
     message?: string;
   },
 ) => {
-  const { t } = useT();
+  const { t } = useTranslation();
 
   return (
     <View
@@ -18,7 +18,7 @@ export const ErrorView = (
       {...props}
     >
       <Error textAlign="center">
-        {props.message || t('error.general')}
+        {props.message || t('shared.error.general')}
       </Error>
     </View>
   );

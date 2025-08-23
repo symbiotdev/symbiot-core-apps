@@ -7,7 +7,6 @@ import {
   emitHaptic,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
-import { useT } from '@symbiot-core-apps/i18n';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import {
   Avatar,
@@ -21,13 +20,14 @@ import {
 } from '@symbiot-core-apps/ui';
 import { View, XStack } from 'tamagui';
 import { Platform } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 export default () => {
   const timeGridRef = useRef<TimeGridRef>(null);
   const navigation = useNavigation();
   const { me } = useCurrentAccount();
   const { now } = useNativeNow();
-  const { lang, t } = useT();
+  const { i18n, t } = useTranslation();
   const bottomTabBarHeight = useBottomTabBarHeight();
   const headerHeight = useScreenHeaderHeight();
 
@@ -44,17 +44,17 @@ export default () => {
   const headerLeft = useCallback(
     () => (
       <H3 lineHeight={headerButtonSize} textTransform="capitalize">
-        {DateHelper.format(selectedDate, 'LLLL yyyy', lang)}
+        {DateHelper.format(selectedDate, 'LLLL yyyy', i18n.language)}
       </H3>
     ),
-    [lang, selectedDate],
+    [i18n.language, selectedDate],
   );
 
   const renderHeaderSafeArea = useCallback(() => {
     return (
       <View flex={1} justifyContent="center" alignItems="center" gap="$1">
         <RegularText color="$calendarTimeColor" fontSize={10}>
-          {t('schedule.all_day')}
+          {t('shared.schedule.all_day')}
         </RegularText>
         {/*<RegularText fontSize={10}>09:00</RegularText>*/}
         {/*<RegularText fontSize={10}>18:00</RegularText>*/}

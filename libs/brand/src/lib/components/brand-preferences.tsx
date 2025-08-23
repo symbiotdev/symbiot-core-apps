@@ -18,12 +18,12 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useT } from '@symbiot-core-apps/i18n';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { Link } from '@symbiot-core-apps/api';
+import { useTranslation } from 'react-i18next';
 
 export const BrandPreferences = () => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const { me } = useCurrentAccount();
   const { brand, updateBrand$, updateAvatar$, avatarUpdating } =
     useCurrentBrandUpdater();
@@ -38,11 +38,11 @@ export const BrandPreferences = () => {
       yup
         .object()
         .shape({
-          name: yup.string().required(
-            t('brand.information.preferences.form.name.error.required', {
-              ns: 'app',
-            }),
-          ),
+          name: yup
+            .string()
+            .required(
+              t('brand.information.preferences.form.name.error.required'),
+            ),
         })
         .required(),
     ),
@@ -78,9 +78,7 @@ export const BrandPreferences = () => {
           .object()
           .shape({
             website: getAppLinkSchema(
-              t('brand.information.preferences.form.website.error.validation', {
-                ns: 'app',
-              }),
+              t('brand.information.preferences.form.website.error.validation'),
             ).nullable(),
           })
           .required(),
@@ -203,12 +201,9 @@ export const BrandPreferences = () => {
                 enterKeyHint="done"
                 value={value}
                 error={error?.message}
-                label={t('brand.information.preferences.form.name.label', {
-                  ns: 'app',
-                })}
+                label={t('brand.information.preferences.form.name.label')}
                 placeholder={t(
                   'brand.information.preferences.form.name.placeholder',
-                  { ns: 'app' },
                 )}
                 onChange={onChange}
                 onBlur={nameHandleSubmit(updateName)}
@@ -224,12 +219,9 @@ export const BrandPreferences = () => {
                 type="website"
                 enterKeyHint="done"
                 value={value}
-                label={t('brand.information.preferences.form.website.label', {
-                  ns: 'app',
-                })}
+                label={t('brand.information.preferences.form.website.label')}
                 placeholder={t(
                   'brand.information.preferences.form.website.placeholder',
-                  { ns: 'app' },
                 )}
                 error={error?.message}
                 onChange={onChange}
@@ -251,7 +243,6 @@ export const BrandPreferences = () => {
                 })}
                 placeholder={t(
                   'brand.information.preferences.form.instagram.placeholder',
-                  { ns: 'app' },
                 )}
                 error={error?.message}
                 onChange={onChange}
@@ -271,12 +262,9 @@ export const BrandPreferences = () => {
                 weekStartsOn={me.preferences?.weekStartsOn}
                 minDate={DateHelper.addYears(new Date(), -500)}
                 maxDate={new Date()}
-                label={t('brand.information.preferences.form.birthday.label', {
-                  ns: 'app',
-                })}
+                label={t('brand.information.preferences.form.birthday.label')}
                 placeholder={t(
                   'brand.information.preferences.form.birthday.placeholder',
-                  { ns: 'app' },
                 )}
                 onChange={(birthday) => {
                   onChange(birthday);
@@ -295,12 +283,9 @@ export const BrandPreferences = () => {
                 enterKeyHint="done"
                 value={value}
                 error={error?.message}
-                label={t('brand.information.preferences.form.about.label', {
-                  ns: 'app',
-                })}
+                label={t('brand.information.preferences.form.about.label')}
                 placeholder={t(
                   'brand.information.preferences.form.about.placeholder',
-                  { ns: 'app' },
                 )}
                 onChange={onChange}
                 onBlur={aboutHandleSubmit(updateAbout)}

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import i18n from 'i18next';
 import { enUS, Locale, uk } from 'date-fns/locale';
-import { useT } from './use-t';
+import { useTranslation } from 'react-i18next';
 
 export const DATE_FNS_SUPPORTED_LANGUAGES: Record<string, Locale> = {
   en: enUS,
@@ -13,7 +13,10 @@ export const getDateLocale = () => {
 };
 
 export const useDateLocale = () => {
-  const { lang } = useT();
+  const { i18n } = useTranslation();
 
-  return useMemo(() => DATE_FNS_SUPPORTED_LANGUAGES[lang], [lang]);
+  return useMemo(
+    () => DATE_FNS_SUPPORTED_LANGUAGES[i18n.language],
+    [i18n.language],
+  );
 };

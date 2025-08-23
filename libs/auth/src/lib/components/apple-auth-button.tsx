@@ -4,7 +4,7 @@ import {
 } from 'expo-apple-authentication';
 import { useCallback, useState } from 'react';
 import { Button, SocialIcon } from '@symbiot-core-apps/ui';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const AppleAuthButton = ({
   pending,
@@ -17,7 +17,7 @@ export const AppleAuthButton = ({
   onAuth: (token: string) => void;
   onError: (error: string) => void;
 }) => {
-  const { t } = useT();
+  const { t } = useTranslation();
 
   const [loading, setLoading] = useState(false);
 
@@ -51,7 +51,7 @@ export const AppleAuthButton = ({
       loading={loading || pending}
       disabled={disabled}
       icon={<SocialIcon name="Apple" size={20} style={{ marginTop: -4 }} />}
-      label={t('auth.workspace.button.continue_with_apple')}
+      label={t('shared.auth.workspace.button.continue_with_apple')}
       onPress={onPress}
     />
   );

@@ -15,10 +15,10 @@ import {
   WebBrowserPresentationStyle,
 } from 'expo-web-browser';
 import { router } from 'expo-router';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const SignUp = ({ logo }: { logo: ReactElement }) => {
-  const { t } = useT();
+  const { t } = useTranslation();
 
   const { mutateAsync, error } = useAccountAuthSignUpQuery();
 
@@ -43,33 +43,35 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
         .shape({
           firstname: yup
             .string()
-            .required(t('auth.sign_up.form.firstname.error.required')),
+            .required(t('shared.auth.sign_up.form.firstname.error.required')),
           lastname: yup
             .string()
-            .required(t('auth.sign_up.form.lastname.error.required')),
+            .required(t('shared.auth.sign_up.form.lastname.error.required')),
           email: yup
             .string()
-            .required(t('auth.sign_up.form.email.error.required'))
-            .email(t('auth.sign_up.form.email.error.invalid_format')),
+            .required(t('shared.auth.sign_up.form.email.error.required'))
+            .email(t('shared.auth.sign_up.form.email.error.invalid_format')),
           password: yup
             .string()
-            .required(t('auth.sign_up.form.password.error.required'))
+            .required(t('shared.auth.sign_up.form.password.error.required'))
             .matches(
               PasswordPattern,
-              t('auth.sign_up.form.password.error.invalid_format'),
+              t('shared.auth.sign_up.form.password.error.invalid_format'),
             ),
           confirmPassword: yup
             .string()
-            .required(t('auth.sign_up.form.confirm_password.error.required'))
+            .required(
+              t('shared.auth.sign_up.form.confirm_password.error.required'),
+            )
             .oneOf(
               [yup.ref('password')],
-              t('auth.sign_up.form.confirm_password.error.match'),
+              t('shared.auth.sign_up.form.confirm_password.error.match'),
             ),
           agreement: yup
             .boolean()
             .test(
               'validate-agreement',
-              t('auth.sign_up.form.agreement.error.required'),
+              t('shared.auth.sign_up.form.agreement.error.required'),
               function (value) {
                 return !!value;
               },
@@ -116,18 +118,18 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
 
   return (
     <AuthFormView
-      title={t('auth.sign_up.title')}
-      subtitle={t('auth.sign_up.subtitle')}
-      buttonLabel={t('continue')}
+      title={t('shared.auth.sign_up.title')}
+      subtitle={t('shared.auth.sign_up.subtitle')}
+      buttonLabel={t('shared.continue')}
       logo={logo}
       loading={isSubmitting}
       disabled={isSubmitting}
       error={error}
       externalLink={
         <RegularText textAlign="center">
-          {t('auth.sign_up.external_link.already_have_account')}{' '}
+          {t('shared.auth.sign_up.external_link.already_have_account')}{' '}
           <Link disabled={isSubmitting} onPress={signIn}>
-            {t('auth.sign_up.external_link.sign_in')}
+            {t('shared.auth.sign_up.external_link.sign_in')}
           </Link>
         </RegularText>
       }
@@ -146,8 +148,8 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
             enterKeyHint="next"
             autoCapitalize="sentences"
             disabled={isSubmitting}
-            label={t('auth.sign_up.form.firstname.label')}
-            placeholder={t('auth.sign_up.form.firstname.placeholder')}
+            label={t('shared.auth.sign_up.form.firstname.label')}
+            placeholder={t('shared.auth.sign_up.form.firstname.placeholder')}
             onChange={onChange}
             onBlur={onBlur}
           />

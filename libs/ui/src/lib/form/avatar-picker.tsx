@@ -23,7 +23,7 @@ import { ConfirmAlert, ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
 import { filesize } from 'filesize';
 import { Linking, Platform } from 'react-native';
 import { Icon } from '../icons';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const maxAvatarFileSize = 10485760;
 const pickerOptions: ImagePickerOptions = {
@@ -55,7 +55,7 @@ export const AvatarPicker = ({
   onAttach: (images: ImagePickerAsset[]) => void;
   onRemove?: () => void;
 }) => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const [galleryPermissions, requestGalleryPermissions] =
     useMediaLibraryPermissions();
   const [cameraPermissions, requestCameraPermissions] = useCameraPermissions();
@@ -72,7 +72,7 @@ export const AvatarPicker = ({
     if (galleryPermissions?.status === PermissionStatus.DENIED) {
       ShowNativeFailedAlert({
         text: t(
-          'preferences.avatar.action.choose_from_gallery.error.permissions_denied',
+          'shared.preferences.avatar.action.choose_from_gallery.error.permissions_denied',
         ),
       });
 
@@ -95,7 +95,7 @@ export const AvatarPicker = ({
     if (cameraPermissions?.status === PermissionStatus.DENIED) {
       ShowNativeFailedAlert({
         text: t(
-          'preferences.avatar.action.take_phone.error.permissions_denied',
+          'shared.preferences.avatar.action.take_phone.error.permissions_denied',
         ),
       });
 
@@ -131,7 +131,7 @@ export const AvatarPicker = ({
           )
         ) {
           ShowNativeFailedAlert({
-            text: t('error.validation_error.media_size', {
+            text: t('shared.error.validation_error.media_size', {
               size: filesize(maxAvatarFileSize, {
                 base: 2,
                 standard: 'jedec',
@@ -153,8 +153,8 @@ export const AvatarPicker = ({
     popoverRef.current?.close?.();
 
     ConfirmAlert({
-      title: t('preferences.avatar.action.delete.confirm.title'),
-      message: t('preferences.avatar.action.delete.confirm.message'),
+      title: t('shared.preferences.avatar.action.delete.confirm.title'),
+      message: t('shared.preferences.avatar.action.delete.confirm.message'),
       callback: () => {
         onRemove?.();
       },
@@ -193,7 +193,7 @@ export const AvatarPicker = ({
         minWidth={250}
         ref={popoverRef}
         disabled={loading || attaching}
-        sheetTitle={t('preferences.avatar.trigger.label')}
+        sheetTitle={t('shared.preferences.avatar.trigger.label')}
         trigger={
           !loading && !attaching ? (
             <View
@@ -219,7 +219,9 @@ export const AvatarPicker = ({
         <View gap="$2">
           <ListItem
             icon={<Icon name="Gallery" />}
-            label={t('preferences.avatar.action.choose_from_gallery.label')}
+            label={t(
+              'shared.preferences.avatar.action.choose_from_gallery.label',
+            )}
             disabled={galleryPermissions?.status === PermissionStatus.DENIED}
             iconAfter={
               galleryPermissions?.status === PermissionStatus.DENIED && (
@@ -232,7 +234,7 @@ export const AvatarPicker = ({
           {Platform.OS !== 'web' && (
             <ListItem
               icon={<Icon name="Camera" />}
-              label={t('preferences.avatar.action.take_phone.label')}
+              label={t('shared.preferences.avatar.action.take_phone.label')}
               disabled={cameraPermissions?.status === PermissionStatus.DENIED}
               iconAfter={
                 cameraPermissions?.status === PermissionStatus.DENIED && (
@@ -247,7 +249,7 @@ export const AvatarPicker = ({
             <ListItem
               color="$error"
               icon={<Icon name="TrashBinMinimalistic" />}
-              label={t('preferences.avatar.action.delete.label')}
+              label={t('shared.preferences.avatar.action.delete.label')}
               onPress={deleteImage}
             />
           )}
@@ -258,11 +260,11 @@ export const AvatarPicker = ({
 };
 
 const AppSettings = () => {
-  const { t } = useT();
+  const { t } = useTranslation();
 
   return (
     <Link cursor="pointer" onPress={Linking.openSettings}>
-      {t('settings')}
+      {t('shared.settings')}
     </Link>
   );
 };

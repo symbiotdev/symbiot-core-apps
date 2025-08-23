@@ -9,11 +9,11 @@ import {
   useBrandCreateQuery,
   useBrandIndustryQuery,
 } from '@symbiot-core-apps/api';
-import { useT } from '@symbiot-core-apps/i18n';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { useAuthBrand } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { useApp } from '@symbiot-core-apps/app';
+import { useTranslation } from 'react-i18next';
 
 const nameMaxLength = 256;
 const codeMaxLength = 64;
@@ -37,7 +37,7 @@ const isIndustriesEditable = Boolean(
 );
 
 export default () => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const { icons } = useApp();
   const switchBrand = useAuthBrand();
   const { data: referralSources, isPending: referralSourcesLoading } =
@@ -57,16 +57,14 @@ export default () => {
       {
         id: 'name',
         nextId: 'avatar',
-        title: t('brand.create.steps.name.title', { ns: 'app' }),
-        subtitle: t('brand.create.steps.name.subtitle', { ns: 'app' }),
+        title: t('brand.create.steps.name.title'),
+        subtitle: t('brand.create.steps.name.subtitle'),
         elements: [
           {
             type: 'input',
             props: {
               name: 'name',
-              placeholder: t('brand.create.steps.name.form.name.placeholder', {
-                ns: 'app',
-              }),
+              placeholder: t('brand.create.steps.name.form.name.placeholder'),
               enterKeyHint: 'done',
               maxLength: nameMaxLength,
               scheme: yup
@@ -74,14 +72,11 @@ export default () => {
                 .max(
                   nameMaxLength,
                   t('brand.create.steps.name.form.name.error.max_length', {
-                    ns: 'app',
                     max: nameMaxLength,
                   }),
                 )
                 .required(
-                  t('brand.create.steps.name.form.name.error.required', {
-                    ns: 'app',
-                  }),
+                  t('brand.create.steps.name.form.name.error.required'),
                 ),
             },
           },
@@ -90,8 +85,8 @@ export default () => {
       {
         id: 'avatar',
         nextId: isIndustriesEditable ? 'industry' : 'website',
-        title: t('brand.create.steps.avatar.title', { ns: 'app' }),
-        subtitle: t('brand.create.steps.avatar.subtitle', { ns: 'app' }),
+        title: t('brand.create.steps.avatar.title'),
+        subtitle: t('brand.create.steps.avatar.subtitle'),
         skippable: true,
         elements: [
           {
@@ -109,10 +104,8 @@ export default () => {
             {
               id: 'industry',
               nextId: 'website',
-              title: t('brand.create.steps.industry.title', { ns: 'app' }),
-              subtitle: t('brand.create.steps.industry.subtitle', {
-                ns: 'app',
-              }),
+              title: t('brand.create.steps.industry.title'),
+              subtitle: t('brand.create.steps.industry.subtitle'),
               elements: [
                 {
                   type: 'toggle-group',
@@ -135,10 +128,8 @@ export default () => {
       {
         id: 'website',
         nextId: 'referral-source',
-        title: t('brand.create.steps.website.title', { ns: 'app' }),
-        subtitle: t('brand.create.steps.website.subtitle', {
-          ns: 'app',
-        }),
+        title: t('brand.create.steps.website.title'),
+        subtitle: t('brand.create.steps.website.subtitle'),
         skippable: true,
         elements: [
           {
@@ -147,19 +138,12 @@ export default () => {
               type: 'website',
               name: 'website',
               scheme: getAppLinkSchema(
-                t('brand.create.steps.website.form.link.error.validation', {
-                  ns: 'app',
-                }),
+                t('brand.create.steps.website.form.link.error.validation'),
               ).required(
-                t('brand.create.steps.website.form.link.error.required', {
-                  ns: 'app',
-                }),
+                t('brand.create.steps.website.form.link.error.required'),
               ),
               placeholder: t(
                 'brand.create.steps.website.form.link.placeholder',
-                {
-                  ns: 'app',
-                },
               ),
               maxLength: 256,
               keyboardType: 'url',
@@ -171,10 +155,8 @@ export default () => {
       {
         id: 'referral-source',
         nextId: 'competitor-source',
-        title: t('brand.create.steps.referral_source.title', { ns: 'app' }),
-        subtitle: t('brand.create.steps.referral_source.subtitle', {
-          ns: 'app',
-        }),
+        title: t('brand.create.steps.referral_source.title'),
+        subtitle: t('brand.create.steps.referral_source.subtitle'),
         skippable: true,
         elements: [
           {
@@ -197,28 +179,24 @@ export default () => {
               name: 'customReferralSource',
               placeholder: t(
                 'brand.create.steps.referral_source.form.external_source.placeholder',
-                {
-                  ns: 'app',
-                },
               ),
               enterKeyHint: 'done',
               maxLength: customSourceMaxLength,
-              scheme: yup.string().test(
-                'validate-extended',
-                t(
-                  'brand.create.steps.referral_source.form.external_source.error.required',
-                  {
-                    ns: 'app',
+              scheme: yup
+                .string()
+                .test(
+                  'validate-extended',
+                  t(
+                    'brand.create.steps.referral_source.form.external_source.error.required',
+                  ),
+                  function (value) {
+                    return (
+                      !referralSources?.find(
+                        ({ id }) => this.parent['referralSourceId'] === id,
+                      )?.customizable || !!value
+                    );
                   },
                 ),
-                function (value) {
-                  return (
-                    !referralSources?.find(
-                      ({ id }) => this.parent['referralSourceId'] === id,
-                    )?.customizable || !!value
-                  );
-                },
-              ),
               showWhen: ({ referralSourceId }) =>
                 !!referralSources?.find(({ id }) => referralSourceId === id)
                   ?.customizable,
@@ -229,12 +207,8 @@ export default () => {
       {
         id: 'competitor-source',
         nextId: 'promo-code',
-        title: t('brand.create.steps.competitor_source.title', {
-          ns: 'app',
-        }),
-        subtitle: t('brand.create.steps.competitor_source.subtitle', {
-          ns: 'app',
-        }),
+        title: t('brand.create.steps.competitor_source.title'),
+        subtitle: t('brand.create.steps.competitor_source.subtitle'),
         skippable: true,
         elements: [
           {
@@ -257,28 +231,24 @@ export default () => {
               name: 'customCompetitorSource',
               placeholder: t(
                 'brand.create.steps.competitor_source.form.external_source.placeholder',
-                {
-                  ns: 'app',
-                },
               ),
               enterKeyHint: 'done',
               maxLength: customSourceMaxLength,
-              scheme: yup.string().test(
-                'validate-extended',
-                t(
-                  'brand.create.steps.competitor_source.form.external_source.error.required',
-                  {
-                    ns: 'app',
+              scheme: yup
+                .string()
+                .test(
+                  'validate-extended',
+                  t(
+                    'brand.create.steps.competitor_source.form.external_source.error.required',
+                  ),
+                  function (value) {
+                    return (
+                      !competitorSources?.find(
+                        ({ id }) => this.parent['competitorSourceId'] === id,
+                      )?.customizable || !!value
+                    );
                   },
                 ),
-                function (value) {
-                  return (
-                    !competitorSources?.find(
-                      ({ id }) => this.parent['competitorSourceId'] === id,
-                    )?.customizable || !!value
-                  );
-                },
-              ),
               showWhen: ({ competitorSourceId }) =>
                 !!competitorSources?.find(({ id }) => competitorSourceId === id)
                   ?.customizable,
@@ -289,8 +259,8 @@ export default () => {
       {
         id: 'promo-code',
         nextId: null,
-        title: t('brand.create.steps.promo_code.title', { ns: 'app' }),
-        subtitle: t('brand.create.steps.promo_code.subtitle', { ns: 'app' }),
+        title: t('brand.create.steps.promo_code.title'),
+        subtitle: t('brand.create.steps.promo_code.subtitle'),
         skippable: true,
         elements: [
           {
@@ -299,9 +269,6 @@ export default () => {
               name: 'promoCode',
               placeholder: t(
                 'brand.create.steps.promo_code.form.code.placeholder',
-                {
-                  ns: 'app',
-                },
               ),
               enterKeyHint: 'done',
               maxLength: codeMaxLength,
@@ -312,15 +279,12 @@ export default () => {
                   t(
                     'brand.create.steps.promo_code.form.code.error.max_length',
                     {
-                      ns: 'app',
                       max: codeMaxLength,
                     },
                   ),
                 )
                 .required(
-                  t('brand.create.steps.promo_code.form.code.error.required', {
-                    ns: 'app',
-                  }),
+                  t('brand.create.steps.promo_code.form.code.error.required'),
                 ),
             },
           },
@@ -372,15 +336,9 @@ export default () => {
       loading={creating}
       steps={steps}
       introIconName={icons.Workspace}
-      introTitle={t('brand.create.intro.title', {
-        ns: 'app',
-      })}
-      introSubtitle={t('brand.create.intro.subtitle', {
-        ns: 'app',
-      })}
-      introActionLabel={t('brand.create.intro.button.label', {
-        ns: 'app',
-      })}
+      introTitle={t('brand.create.intro.title')}
+      introSubtitle={t('brand.create.intro.subtitle')}
+      introActionLabel={t('brand.create.intro.button.label')}
       ignoreLeaveConfirmation={createdRef.current}
       onFinish={onFinish}
     />

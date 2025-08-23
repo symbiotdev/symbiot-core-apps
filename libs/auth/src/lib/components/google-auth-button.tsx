@@ -5,7 +5,7 @@ import {
   isErrorWithCode,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 GoogleSignin.configure({
   webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
@@ -22,7 +22,7 @@ export const GoogleAuthButton = ({
   onAuth: (token: string) => void;
   onError: (error: string) => void;
 }) => {
-  const { t } = useT();
+  const { t } = useTranslation();
 
   const [loading, setLoading] = useState(false);
 
@@ -59,7 +59,7 @@ export const GoogleAuthButton = ({
       loading={loading || pending}
       disabled={disabled}
       icon={<SocialIcon name="Google" size={18} />}
-      label={t('auth.workspace.button.continue_with_google')}
+      label={t('shared.auth.workspace.button.continue_with_google')}
       onPress={onPress}
     />
   );

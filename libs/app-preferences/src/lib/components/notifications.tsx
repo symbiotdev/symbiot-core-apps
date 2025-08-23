@@ -15,10 +15,10 @@ import {
   NotificationPermissionsStatus,
 } from 'expo-notifications';
 import { Linking, Platform } from 'react-native';
-import { useT } from '@symbiot-core-apps/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const Notifications = () => {
-  const { t } = useT();
+  const { t } = useTranslation();
   const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
   const navigation = useNavigation();
 
@@ -54,7 +54,7 @@ export const Notifications = () => {
           <Card>
             <RegularText>
               {t(
-                'preferences.notifications.posh_notifications.permissions_denied',
+                'shared.preferences.notifications.posh_notifications.permissions_denied',
               )}{' '}
               <Link onPress={Linking.openSettings}>{t('settings')}</Link>
             </RegularText>
@@ -64,7 +64,9 @@ export const Notifications = () => {
         <Card gap="$5">
           {Platform.OS !== 'web' && (
             <Switch
-              label={t('preferences.notifications.posh_notifications.label')}
+              label={t(
+                'shared.preferences.notifications.posh_notifications.label',
+              )}
               checked={
                 pushNotificationsDenied
                   ? false
@@ -75,7 +77,7 @@ export const Notifications = () => {
             />
           )}
           <Switch
-            label={t('preferences.notifications.sound.label')}
+            label={t('shared.preferences.notifications.sound.label')}
             checked={me?.preferences?.enableNotificationSound}
             onChange={toggleNotificationSound}
           />

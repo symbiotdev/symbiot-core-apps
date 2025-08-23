@@ -1,4 +1,10 @@
-import { createContext, PropsWithChildren, useContext, useEffect } from 'react';
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { I18nProvider } from '@symbiot-core-apps/i18n';
 import { ThemeProvider } from '@symbiot-core-apps/theme';
@@ -14,6 +20,8 @@ import { create } from 'zustand/index';
 import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 import { objectsEqual } from '@symbiot-core-apps/shared';
+import { LoadAssetsFailed } from '../components/load-assets-failed';
+import { AssetsLoading } from '../components/assets-loading';
 
 type AppState = {
   theme?: AppConfig['theme'];
@@ -49,8 +57,6 @@ const useAppState = create<AppState>()(
 );
 
 export const AppProvider = ({ children }: PropsWithChildren) => {
-  const { refetch: refetchAppConfig } = useAppConfigQuery();
-  const { refetch: refetchTranslates } = useAppTranslationsQuery();
   const {
     icons,
     theme,
@@ -60,35 +66,68 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     setTheme,
     setTranslations,
   } = useAppState();
-
-  // fixme add catch screen
-
-  useEffect(() => {
-    refetchAppConfig().then(({ data }) => {
-      if (data) {
-        setIcons(data.icons as Record<AppConfigIconName, IconName>);
-        setTheme(data.theme);
-      }
+  const { data: appConfig, error: appConfigError } = useAppConfigQuery({
+    refetch: !icons,
+  });
+  const { data: appTranslations, error: appTranslationError } =
+    useAppTranslationsQuery({
+      refetch: !translations,
     });
 
-    refetchTranslates().then(({ data }) => {
-      if (data) {
-        setTranslations(data);
+  const [loadConfigFailed, setLoadConfigFailed] = useState(false);
+  const [loadTranslationsFailed, setLoadTranslationsFailed] = useState(false);
+
+  useLayoutEffect(() => {
+    if (appConfig) {
+      if (
+        !appConfig.icons ||
+        !appConfig.theme ||
+        !Object.keys(appConfig.theme).length
+      ) {
+        setLoadConfigFailed(true);
+      } else {
+        setIcons(appConfig.icons as Record<AppConfigIconName, IconName>);
+        setTheme(appConfig.theme);
       }
-    });
-  }, [
-    refetchAppConfig,
-    refetchTranslates,
-    setIcons,
-    setTheme,
-    setTranslations,
-  ]);
+    }
+
+    if (appConfigError) {
+      setLoadConfigFailed(true);
+    }
+  }, [appConfig, appConfigError, setIcons, setTheme]);
+
+  useLayoutEffect(() => {
+    if (appTranslations) {
+      if (
+        !appTranslations.languages?.length ||
+        !appTranslations.translations ||
+        Object.keys(appTranslations.translations).length !==
+          appTranslations.languages.length
+      ) {
+        setLoadTranslationsFailed(true);
+      } else {
+        setTranslations(appTranslations);
+        setLoadTranslationsFailed(false);
+      }
+    }
+
+    if (appTranslationError) {
+      setLoadTranslationsFailed(true);
+    }
+  }, [appTranslationError, appTranslations, setTranslations]);
+
+  const hasAssets = !!icons && !!theme && !!languages && !!translations;
+
+  if (!hasAssets) {
+    if (loadConfigFailed || loadTranslationsFailed) {
+      return <LoadAssetsFailed />;
+    }
+
+    return <AssetsLoading />;
+  }
 
   return (
-    !!icons &&
-    !!theme &&
-    !!languages &&
-    !!translations && (
+    hasAssets && (
       <Context.Provider value={{ icons, theme, languages }}>
         <KeyboardProvider>
           <I18nProvider translations={translations}>

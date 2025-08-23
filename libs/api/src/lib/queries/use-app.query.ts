@@ -9,16 +9,22 @@ export enum AppQueryKey {
   translations = 'app-translations',
 }
 
-export const useAppConfigQuery = () =>
+export const useAppConfigQuery = ({ refetch }: { refetch: boolean }) =>
   useQuery<AppConfig>({
-    enabled: false,
+    staleTime: Infinity,
+    refetchOnWindowFocus: refetch,
+    refetchOnMount: refetch,
+    refetchOnReconnect: refetch,
     queryKey: [AppQueryKey.config],
     queryFn: () => requestWithStringError(axios.get('/api/app/config')),
   });
 
-export const useAppTranslationsQuery = () =>
+export const useAppTranslationsQuery = ({ refetch }: { refetch: boolean }) =>
   useQuery<AppTranslations>({
-    enabled: false,
+    staleTime: Infinity,
+    refetchOnWindowFocus: refetch,
+    refetchOnMount: refetch,
+    refetchOnReconnect: refetch,
     queryKey: [AppQueryKey.translations],
     queryFn: () => requestWithStringError(axios.get('/api/app/translations')),
   });

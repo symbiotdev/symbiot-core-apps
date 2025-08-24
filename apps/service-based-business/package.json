@@ -25,6 +25,7 @@
     "axios": "*",
     "socket.io-client": "*",
     "burnt": "*",
+    "states-us": "*",
     "expo": "*",
     "expo-application": "*",
     "expo-audio": "*",

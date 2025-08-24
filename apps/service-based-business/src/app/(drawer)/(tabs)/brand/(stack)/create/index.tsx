@@ -50,7 +50,7 @@ export default () => {
 
   const createdRef = useRef(false);
 
-  const [creating, setCreating] = useState(false);
+  const [processing, setProcessing] = useState(false);
 
   const steps: SurveyStep<Value>[] = useMemo(
     () => [
@@ -137,17 +137,17 @@ export default () => {
             props: {
               type: 'website',
               name: 'website',
+              maxLength: 256,
+              keyboardType: 'url',
+              enterKeyHint: 'done',
+              placeholder: t(
+                'brand.create.steps.website.form.link.placeholder',
+              ),
               scheme: getAppLinkSchema(
                 t('brand.create.steps.website.form.link.error.validation'),
               ).required(
                 t('brand.create.steps.website.form.link.error.required'),
               ),
-              placeholder: t(
-                'brand.create.steps.website.form.link.placeholder',
-              ),
-              maxLength: 256,
-              keyboardType: 'url',
-              enterKeyHint: 'done',
             },
           },
         ],
@@ -304,7 +304,7 @@ export default () => {
 
   const onFinish = useCallback(
     async (value: Value) => {
-      setCreating(true);
+      setProcessing(true);
 
       try {
         const brand = await mutateAsync({
@@ -325,7 +325,7 @@ export default () => {
 
         await switchBrand({ id: brand.id });
       } finally {
-        setCreating(false);
+        setProcessing(false);
       }
     },
     [mutateAsync, switchBrand],
@@ -333,7 +333,7 @@ export default () => {
 
   return (
     <TypedSurvey
-      loading={creating}
+      loading={processing}
       steps={steps}
       introIconName={icons.Workspace}
       introTitle={t('brand.create.intro.title')}

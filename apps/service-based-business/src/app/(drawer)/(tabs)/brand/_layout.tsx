@@ -109,6 +109,12 @@ export default () => {
             gestureEnabled: false,
           }}
         />
+
+        <Stack.Screen
+          name="(stack)/location/update/[id]"
+          options={{
+          }}
+        />
       </Stack.Protected>
 
       <Stack.Screen

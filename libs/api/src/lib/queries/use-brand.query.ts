@@ -4,23 +4,40 @@ import { Brand, CreateBrand, UpdateBrandData } from '../types/brand';
 import { requestWithAlertOnError } from '../utils/request';
 import { generateFormData } from '../utils/media';
 import { AccountAuthTokens } from '../types/account-auth';
+import { queryClient } from '../utils/client';
+import { BrandLocationQueryKey } from './use-brand-location.query';
 
 export enum BrandQueryKey {
   current = 'brand-current',
 }
 
+type CurrentBrandResponse = {
+  brand?: Brand;
+  brands?: Brand[];
+  tokens?: AccountAuthTokens;
+};
+
 export const useCurrentBrandQuery = ({ enabled }: { enabled: boolean }) =>
-  useQuery<
-    {
-      brand?: Brand;
-      brands?: Brand[];
-      tokens?: AccountAuthTokens;
-    },
-    string
-  >({
+  useQuery<CurrentBrandResponse>({
     enabled,
     queryKey: [BrandQueryKey.current],
-    queryFn: () => requestWithAlertOnError(axios.get('/api/brand/current')),
+    queryFn: async () => {
+      const response = await requestWithAlertOnError<CurrentBrandResponse>(
+        axios.get('/api/brand/current'),
+      );
+      const locations = response?.brand?.locations;
+
+      if (locations?.length) {
+        locations.forEach((location) =>
+          queryClient.setQueryData(
+            [BrandLocationQueryKey.byId, location.id],
+            location,
+          ),
+        );
+      }
+
+      return response;
+    },
   });
 
 export const useCurrentBrandUpdate = () =>

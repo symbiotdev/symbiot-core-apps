@@ -140,7 +140,7 @@ const WeekdayScheduleElement = ({
     [end, isDayOff, start, t],
   );
 
-  const resetSegment = useCallback(() => setActiveSegment('shared.start'), []);
+  const resetSegment = useCallback(() => setActiveSegment('start'), []);
 
   const toggleDayOff = useCallback(
     (active: boolean) => {

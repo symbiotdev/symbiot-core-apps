@@ -8,7 +8,7 @@ import { useScheme } from '@symbiot-core-apps/state';
 import { useTheme } from 'tamagui';
 import { InputFieldView } from '../view/input-field-view';
 
-type Phone = {
+export type PhoneValue = {
   formatted: string;
   tel: string;
   country: string;
@@ -49,7 +49,7 @@ export const PhoneInput = ({
   onBlur,
   onChange,
 }: {
-  value: Phone;
+  value: PhoneValue;
   label?: string;
   placeholder?: string;
   error?: string;
@@ -58,7 +58,7 @@ export const PhoneInput = ({
   autoFocusDelay?: number;
   enterKeyHint?: TextInputProps['enterKeyHint'];
   onBlur?: () => void;
-  onChange?: (phone: Phone) => void;
+  onChange?: (phone: PhoneValue) => void;
 }) => {
   const { scheme } = useScheme();
   const theme = useTheme();

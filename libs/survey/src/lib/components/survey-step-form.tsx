@@ -17,10 +17,13 @@ import {
   Input,
   LinkItem,
   PageView,
+  PhoneInput,
+  PhoneValue,
   RegularText,
-  ToggleGroup,
+  Textarea,
+  ToggleGroup, UsStatePicker,
   WeekdaySchedule,
-  WeekdaysSchedule,
+  WeekdaysSchedule
 } from '@symbiot-core-apps/ui';
 import { TCountryCode } from 'countries-list';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
@@ -110,6 +113,43 @@ export function SurveyStepForm<V>({
                         />
                       )}
 
+                      {el.type === 'email' && (
+                        <Input
+                          enterKeyHint="next"
+                          type="email"
+                          keyboardType="email-address"
+                          value={value as string}
+                          error={error?.message}
+                          label={el.props.label}
+                          placeholder={el.props.placeholder}
+                          onChange={onChange}
+                        />
+                      )}
+
+                      {el.type === 'phone' && (
+                        <PhoneInput
+                          enterKeyHint="done"
+                          value={value as PhoneValue}
+                          label={el.props.label}
+                          placeholder={el.props.placeholder}
+                          error={error?.message}
+                          onChange={onChange}
+                        />
+                      )}
+
+                      {el.type === 'textarea' && (
+                        <Textarea
+                          countCharacters
+                          enterKeyHint="done"
+                          value={value as string}
+                          error={error?.message}
+                          label={el.props.label}
+                          maxLength={el.props.maxLength}
+                          placeholder={el.props.placeholder}
+                          onChange={onChange}
+                        />
+                      )}
+
                       {el.type === 'app-link' && (
                         <AppLinkInput
                           autoCapitalize="none"
@@ -153,6 +193,17 @@ export function SurveyStepForm<V>({
                       {el.type === 'country' && (
                         <CountryPicker
                           value={value as TCountryCode}
+                          error={error?.message}
+                          label={el.props.label}
+                          sheetLabel={el.props.sheetLabel}
+                          placeholder={el.props.placeholder}
+                          onChange={onChange}
+                        />
+                      )}
+
+                      {el.type === 'us-state' && (
+                        <UsStatePicker
+                          value={value as string}
                           error={error?.message}
                           label={el.props.label}
                           sheetLabel={el.props.sheetLabel}

@@ -27,6 +27,32 @@ export type SurveyStep<V> = {
         };
       }
     | {
+        type: 'textarea';
+        props: SurveyStepElement<V> & {
+          placeholder: string;
+          label?: string;
+          maxLength?: number;
+          keyboardType?: KeyboardType;
+          enterKeyHint?: TextInputProps['enterKeyHint'];
+        };
+      }
+    | {
+        type: 'phone';
+        props: SurveyStepElement<V> & {
+          label?: string;
+          placeholder: string;
+          enterKeyHint?: TextInputProps['enterKeyHint'];
+        };
+      }
+    | {
+        type: 'email';
+        props: SurveyStepElement<V> & {
+          label?: string;
+          placeholder: string;
+          enterKeyHint?: TextInputProps['enterKeyHint'];
+        };
+      }
+    | {
         type: 'app-link';
         props: SurveyStepElement<V> & {
           type: AppLinkType;
@@ -52,6 +78,14 @@ export type SurveyStep<V> = {
       }
     | {
         type: 'country';
+        props: SurveyStepElement<V> & {
+          label?: string;
+          sheetLabel?: string;
+          placeholder?: string;
+        };
+      }
+    | {
+        type: 'us-state';
         props: SurveyStepElement<V> & {
           label?: string;
           sheetLabel?: string;

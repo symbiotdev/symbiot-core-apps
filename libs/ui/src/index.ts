@@ -23,6 +23,7 @@ export * from './lib/form/app-link-input';
 export * from './lib/form/switch';
 export * from './lib/form/textarea';
 export * from './lib/form/toggle-group';
+export * from './lib/form/us-state-picker';
 export * from './lib/form/weekdays-schedule';
 
 export * from './lib/icons/config';

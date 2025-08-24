@@ -15,6 +15,7 @@ export * from './lib/queries/use-app-referral-source.query';
 
 export * from './lib/queries/use-brand.query';
 export * from './lib/queries/use-brand-industry.query';
+export * from './lib/queries/use-brand-location.query';
 
 export * from './lib/queries/use-gender.query';
 
@@ -25,15 +26,18 @@ export * from './lib/types/notification';
 export * from './lib/types/account-preferences';
 
 export * from './lib/types/app-config';
+export * from './lib/types/app-translations';
 export * from './lib/types/brand';
 export * from './lib/types/brand-industry';
+export * from './lib/types/brand-location';
 
+export * from './lib/types/external-source';
 export * from './lib/types/faq';
 export * from './lib/types/gender';
 export * from './lib/types/link';
 export * from './lib/types/pagination';
 export * from './lib/types/phone';
-export * from './lib/types/external-source';
+export * from './lib/types/schedule';
 
 export * from './lib/utils/client';
 export * from './lib/utils/media';

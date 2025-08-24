@@ -1,0 +1,9 @@
+{
+  "name": "brand-location",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/brand-location/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project brand-location --web",
+  "targets": {}
+}

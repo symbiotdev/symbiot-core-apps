@@ -1,7 +1,5 @@
-import { Weekday } from '@symbiot-core-apps/shared';
-
 export type Schedule = {
-  day: Weekday;
+  day: number;
   start: number;
   end: number;
 };

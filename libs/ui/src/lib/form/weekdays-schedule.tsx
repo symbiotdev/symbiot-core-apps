@@ -12,6 +12,7 @@ import { Segment } from '../segment/segment';
 import { EmptyView } from '../view/empty-view';
 import { Picker } from './picker';
 import { useTranslation } from 'react-i18next';
+import { FormField } from './form-field';
 
 export type WeekdaySchedule = {
   day: Weekday;
@@ -37,11 +38,13 @@ export const getWeekdayScheduleScheme = (error: string) => {
 const minutesInterval = 15;
 
 export const WeekdaysSchedule = ({
+  label,
   value,
   weekStartsOn,
   disabled,
   onChange,
 }: {
+  label?: string;
   value: WeekdaySchedule[];
   weekStartsOn?: Weekday;
   disabled?: boolean;
@@ -68,7 +71,7 @@ export const WeekdaysSchedule = ({
   );
 
   return (
-    <View gap="$2" disabled={disabled}>
+    <FormField label={label}>
       {weekdays.map((weekday, index) => (
         <WeekdayScheduleElement
           key={index}
@@ -79,7 +82,7 @@ export const WeekdaysSchedule = ({
           onChange={onChangeWeekdaySchedule}
         />
       ))}
-    </View>
+    </FormField>
   );
 };
 

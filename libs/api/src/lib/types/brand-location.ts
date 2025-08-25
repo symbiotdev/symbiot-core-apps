@@ -1,6 +1,7 @@
 import { Link } from './link';
 import { Phone } from './phone';
 import { Schedule } from './schedule';
+import { ImagePickerAsset } from 'expo-image-picker';
 
 export type BrandLocation = {
   id: string;
@@ -9,6 +10,7 @@ export type BrandLocation = {
   usState: string;
   currency: string;
   address: string;
+  timezone: string;
   lat: number;
   lng: number;
   email: string;
@@ -24,7 +26,6 @@ export type CreateBrandLocation = {
   name: string;
   country: string;
   usState?: string;
-  currency: string;
   address: string;
   lat: number;
   lng: number;
@@ -33,4 +34,9 @@ export type CreateBrandLocation = {
   links: Omit<Link, 'id'>[];
   phones: Phone[];
   schedules: Schedule[];
+  avatar?: ImagePickerAsset;
+};
+
+export type UpdateBrandLocation = Partial<CreateBrandLocation> & {
+  timezone?: string;
 };

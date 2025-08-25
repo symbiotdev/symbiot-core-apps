@@ -82,6 +82,7 @@ export const AppLinkInput = ({
   placeholder,
   error,
   value,
+  disabled,
   enterKeyHint,
   autoCapitalize,
   onChange,
@@ -92,6 +93,7 @@ export const AppLinkInput = ({
   label?: string;
   placeholder?: string;
   error?: string;
+  disabled?: boolean;
   enterKeyHint?: TextInputProps['enterKeyHint'];
   autoCapitalize?: TextInputProps['autoCapitalize'];
   onChange: (link: LinkItem | null) => void;
@@ -145,6 +147,7 @@ export const AppLinkInput = ({
       label={label}
       placeholder={placeholder}
       error={error}
+      disabled={disabled}
       enterKeyHint={enterKeyHint}
       autoCapitalize={autoCapitalize}
       onChange={onInputChange}

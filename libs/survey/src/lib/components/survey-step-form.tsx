@@ -21,13 +21,14 @@ import {
   PhoneValue,
   RegularText,
   Textarea,
-  ToggleGroup, UsStatePicker,
+  ToggleGroup,
+  UsStatePicker,
   WeekdaySchedule,
-  WeekdaysSchedule
+  WeekdaysSchedule,
 } from '@symbiot-core-apps/ui';
-import { TCountryCode } from 'countries-list';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
+import { CountryCode } from 'countries-and-timezones';
 
 export function SurveyStepForm<V>({
   value: formValue,
@@ -192,7 +193,7 @@ export function SurveyStepForm<V>({
 
                       {el.type === 'country' && (
                         <CountryPicker
-                          value={value as TCountryCode}
+                          value={value as CountryCode}
                           error={error?.message}
                           label={el.props.label}
                           sheetLabel={el.props.sheetLabel}

@@ -212,7 +212,7 @@ export const AccountPreferences = () => {
           onRemove={removeAvatar$}
         />
 
-        <FormView>
+        <FormView gap="$5">
           <Input
             disabled
             value={me.email}

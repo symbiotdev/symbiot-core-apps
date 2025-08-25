@@ -1,21 +1,13 @@
-import { countries, TCountryCode } from 'countries-list';
 import { RegularText } from '../text/text';
 import { SelectPicker } from './select-picker';
 import { PickerOnChange } from './picker';
 import { Platform } from 'react-native';
-import { getCountryEmoji } from '@symbiot-core-apps/shared';
-
-const options = (Object.keys(countries) as TCountryCode[]).map((value) => {
-  const flag = getCountryEmoji(value);
-
-  return {
-    value,
-    label:
-      `${Platform.OS === 'ios' ? flag : ''} ${countries[value].native}`.trim(),
-    description: countries[value].name,
-    icon: <RegularText fontSize={34}>{flag}</RegularText>,
-  };
-});
+import {
+  countryNameInNativeLanguage,
+  getCountryEmoji,
+} from '@symbiot-core-apps/shared';
+import { CountryCode, getAllCountries } from 'countries-and-timezones';
+import { useMemo } from 'react';
 
 export const CountryPicker = ({
   value,
@@ -26,24 +18,43 @@ export const CountryPicker = ({
   disabled,
   onChange,
 }: {
-  value?: TCountryCode;
+  value?: CountryCode;
   label?: string;
   sheetLabel?: string;
   error?: string;
   placeholder?: string;
   disabled?: boolean;
   onChange: (code: string) => void;
-}) => (
-  <SelectPicker
-    lazy
-    moveSelectedToTop
-    sheetLabel={sheetLabel}
-    label={label}
-    value={value}
-    error={error}
-    placeholder={placeholder}
-    disabled={disabled}
-    options={options}
-    onChange={onChange as PickerOnChange}
-  />
-);
+}) => {
+  const options = useMemo(() => {
+    const countries = getAllCountries();
+    const countryKeys = Object.keys(countries) as CountryCode[];
+
+    return countryKeys.map((value) => {
+      const flag = getCountryEmoji(value);
+
+      return {
+        value,
+        label:
+          `${Platform.OS === 'ios' ? flag : ''} ${countryNameInNativeLanguage[value] || countries[value].name}`.trim(),
+        description: countries[value].name,
+        icon: <RegularText fontSize={34}>{flag}</RegularText>,
+      };
+    });
+  }, []);
+
+  return (
+    <SelectPicker
+      lazy
+      moveSelectedToTop
+      sheetLabel={sheetLabel}
+      label={label}
+      value={value}
+      error={error}
+      placeholder={placeholder}
+      disabled={disabled}
+      options={options}
+      onChange={onChange as PickerOnChange}
+    />
+  );
+};

@@ -9,7 +9,7 @@ export type UploadingFile = {
 
 export const convertImagePickerAssetToUploadingFile = (
   asset: ImagePickerAsset,
-) => ({
+): UploadingFile => ({
   uri: asset.uri,
   name: generateUploadingFile(asset.fileName, asset.assetId),
   type: asset.mimeType || 'unknown',
@@ -28,22 +28,19 @@ export async function generateFormData<D extends object>(
       if (!value) return;
 
       if (fileKeys.includes(key)) {
-        const file = convertImagePickerAssetToUploadingFile(
-          value as ImagePickerAsset,
-        );
-
-        if (Platform.OS === 'web') {
-          const blob = await fetch(file.uri);
-
-          formData.append(key as string, await blob.blob());
+        if (Array.isArray(value)) {
+          await Promise.all(
+            value
+              .map(convertImagePickerAssetToUploadingFile)
+              .map((file) =>
+                appendFindToFormData(formData, key as string, file),
+              ),
+          );
         } else {
-          formData.append(
+          await appendFindToFormData(
+            formData,
             key as string,
-            {
-              uri: file.uri,
-              name: file.name,
-              type: file.type,
-            } as never,
+            convertImagePickerAssetToUploadingFile(value as ImagePickerAsset),
           );
         }
       } else {
@@ -63,6 +60,24 @@ export async function generateFormData<D extends object>(
 
   return formData;
 }
+
+const appendFindToFormData = async (
+  formData: FormData,
+  key: string,
+  file: UploadingFile,
+) => {
+  if (Platform.OS === 'web') {
+    const blob = await fetch(file.uri);
+
+    formData.append(key, await blob.blob());
+  } else {
+    formData.append(key, {
+      uri: file.uri,
+      name: file.name,
+      type: file.type,
+    } as never);
+  }
+};
 
 const generateUploadingFile = (
   fileName?: string | null,

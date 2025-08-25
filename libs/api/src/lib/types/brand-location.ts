@@ -2,6 +2,7 @@ import { Link } from './link';
 import { Phone } from './phone';
 import { Schedule } from './schedule';
 import { ImagePickerAsset } from 'expo-image-picker';
+import { Attachment } from './attachment';
 
 export type BrandLocation = {
   id: string;
@@ -20,6 +21,7 @@ export type BrandLocation = {
   links: Link[];
   phones: Phone[];
   schedules: Schedule[];
+  gallery: Attachment[];
 };
 
 export type CreateBrandLocation = {

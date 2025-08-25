@@ -51,14 +51,10 @@ export const useBrandLocationForm = () => {
         subtitle: t('brand.locations.upsert.form.country.subtitle'),
         sheetLabel: t('shared.country'),
         label: t('brand.locations.upsert.form.country.label'),
-        placeholder: t(
-          'brand.locations.upsert.form.country.placeholder',
-        ),
+        placeholder: t('brand.locations.upsert.form.country.placeholder'),
         scheme: yup
           .string()
-          .required(
-            t('brand.locations.upsert.form.country.error.required'),
-          ),
+          .required(t('brand.locations.upsert.form.country.error.required')),
       },
       timezone: {
         defaultValue: 'UTC',
@@ -66,29 +62,19 @@ export const useBrandLocationForm = () => {
         subtitle: t('brand.locations.upsert.form.timezone.subtitle'),
         sheetLabel: t('shared.timezone'),
         label: t('brand.locations.upsert.form.timezone.label'),
-        placeholder: t(
-          'brand.locations.upsert.form.timezone.placeholder',
-        ),
+        placeholder: t('brand.locations.upsert.form.timezone.placeholder'),
         scheme: yup
           .string()
-          .required(
-            t('brand.locations.upsert.form.timezone.error.required'),
-          ),
+          .required(t('brand.locations.upsert.form.timezone.error.required')),
       },
       usState: {
         defaultValue: defaultState,
         label: t('brand.locations.upsert.form.us_state.label'),
-        sheetLabel: t(
-          'brand.locations.upsert.form.us_state.sheet_label',
-        ),
-        placeholder: t(
-          'brand.locations.upsert.form.us_state.placeholder',
-        ),
+        sheetLabel: t('brand.locations.upsert.form.us_state.sheet_label'),
+        placeholder: t('brand.locations.upsert.form.us_state.placeholder'),
         scheme: yup
           .string()
-          .required(
-            t('brand.locations.upsert.form.us_state.error.required'),
-          ),
+          .required(t('brand.locations.upsert.form.us_state.error.required')),
       },
       currency: {
         title: t('brand.locations.upsert.form.currency.title'),
@@ -98,14 +84,10 @@ export const useBrandLocationForm = () => {
           ? countryToCurrency[defaultCountryCode]
           : undefined,
         label: t('brand.locations.upsert.form.currency.label'),
-        placeholder: t(
-          'brand.locations.upsert.form.currency.placeholder',
-        ),
+        placeholder: t('brand.locations.upsert.form.currency.placeholder'),
         scheme: yup
           .string()
-          .required(
-            t('brand.locations.upsert.form.currency.error.required'),
-          ),
+          .required(t('brand.locations.upsert.form.currency.error.required')),
       },
       schedules: {
         title: t('brand.locations.upsert.form.schedule.title'),
@@ -154,33 +136,25 @@ export const useBrandLocationForm = () => {
         scheme: yup
           .string()
           .required(t('brand.locations.upsert.form.email.error.required'))
-          .email(
-            t('brand.locations.upsert.form.email.error.invalid_format'),
-          ),
+          .email(t('brand.locations.upsert.form.email.error.invalid_format')),
         optionalScheme: yup
           .string()
           .nullable()
-          .email(
-            t('brand.locations.upsert.form.email.error.invalid_format'),
-          )
+          .email(t('brand.locations.upsert.form.email.error.invalid_format'))
           .ensure(),
       },
       instagram: {
         title: t('brand.locations.upsert.form.instagram.title'),
         subtitle: t('brand.locations.upsert.form.instagram.subtitle'),
         label: t('brand.locations.upsert.form.instagram.label'),
-        placeholder: t(
-          'brand.locations.upsert.form.instagram.placeholder',
-        ),
+        placeholder: t('brand.locations.upsert.form.instagram.placeholder'),
         optionalScheme: getAppLinkSchema(
           t('brand.locations.upsert.form.instagram.error.validation'),
           true,
         ).nullable(),
         scheme: getAppLinkSchema(
           t('brand.locations.upsert.form.instagram.error.validation'),
-        ).required(
-          t('brand.locations.upsert.form.instagram.error.required'),
-        ),
+        ).required(t('brand.locations.upsert.form.instagram.error.required')),
       },
       remark: {
         maxLength: remarkMaxLength,
@@ -206,9 +180,11 @@ export const useBrandLocationForm = () => {
               max: remarkMaxLength,
             }),
           )
-          .required(
-            t('brand.locations.upsert.form.remark.error.required'),
-          ),
+          .required(t('brand.locations.upsert.form.remark.error.required')),
+      },
+      gallery: {
+        maxImages: 10,
+        label: t('brand.locations.upsert.form.gallery.label'),
       },
     }),
     [brand?.name, t],

@@ -18,7 +18,7 @@ export enum BrandLocationQueryKey {
   byId = 'byId',
 }
 
-const refetchQueriesByLocationChanges = async (
+export const refetchQueriesByLocationChanges = async (
   location: BrandLocation,
   refetchList = true,
 ) => {

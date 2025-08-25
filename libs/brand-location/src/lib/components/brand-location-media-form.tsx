@@ -32,17 +32,20 @@ export const BrandLocationMediaForm = ({
     useRemoveBrandLocationGalleryImagesQuery();
 
   const extendGallery = useCallback(
-    (images: ImagePickerAsset[]) => uploadGalleryImages({ images }),
-    [uploadGalleryImages],
+    (images: ImagePickerAsset[]) =>
+      uploadGalleryImages({ id: location.id, images }),
+    [location.id, uploadGalleryImages],
   );
 
   const cutGallery = useCallback(
     (index: number) => {
       const image = location.gallery?.[index];
 
-      return !image ? Promise.resolve() : removeGalleryImage({ id: image.id });
+      return !image
+        ? Promise.resolve()
+        : removeGalleryImage({ id: location.id, imageId: image.id });
     },
-    [location.gallery, removeGalleryImage],
+    [location.gallery, location.id, removeGalleryImage],
   );
 
   const onAddAvatar = useCallback(

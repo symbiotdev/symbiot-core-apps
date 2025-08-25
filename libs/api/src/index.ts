@@ -16,7 +16,6 @@ export * from './lib/queries/use-app-referral-source.query';
 export * from './lib/queries/use-brand.query';
 export * from './lib/queries/use-brand-industry.query';
 export * from './lib/queries/use-brand-location.query';
-export * from './lib/queries/use-brand-location-gallery.query';
 
 export * from './lib/queries/use-gender.query';
 

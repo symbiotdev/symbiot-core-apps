@@ -14,6 +14,8 @@ export * from './lib/form/checkbox';
 export * from './lib/form/country-picker';
 export * from './lib/form/currency-picker';
 export * from './lib/form/date-picker';
+export * from './lib/form/gallery-picker';
+export * from './lib/form/media-picker';
 export * from './lib/form/input';
 export * from './lib/form/input-code';
 export * from './lib/form/phone-input';

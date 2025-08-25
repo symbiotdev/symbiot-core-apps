@@ -1,8 +1,10 @@
 import { cloneElement, memo, ReactElement } from 'react';
 import { MediumText } from '../text/text';
-import { ColorTokens, XStack, XStackProps } from 'tamagui';
+import { ColorTokens, View, ViewProps, XStack, XStackProps } from 'tamagui';
 import { Spinner } from '../loading/spinner';
 import { emitHaptic } from '@symbiot-core-apps/shared';
+import { Icon } from '../icons';
+import { IconName } from '../icons/config';
 
 export type ButtonType = 'default' | 'outlined' | 'clear' | 'danger';
 
@@ -79,7 +81,7 @@ export const Button = memo(
         }}
       >
         {loading ? (
-          <Spinner color={color} />
+          <Spinner color={color} size="small" />
         ) : (
           <>
             {!!icon &&
@@ -94,3 +96,44 @@ export const Button = memo(
     );
   },
 );
+
+export const ButtonIcon = ({
+  iconName,
+  iconSize,
+  loading,
+  size = 30,
+  type = 'default',
+  ...viewProps
+}: ViewProps & {
+  iconName: IconName;
+  iconSize?: number;
+  loading?: boolean;
+  size?: number;
+  color?: string;
+  type?: ButtonType;
+}) => {
+  const color = viewProps.color || ButtonTheme[type].color;
+  const disabled = viewProps.disabled || loading;
+
+  return (
+    <View
+      borderRadius="100%"
+      justifyContent="center"
+      alignItems="center"
+      cursor="pointer"
+      width={size}
+      height={size}
+      pressStyle={{ opacity: 0.8 }}
+      backgroundColor={ButtonTheme[type].backgroundColor}
+      borderWidth={ButtonTheme[type].borderWidth}
+      {...viewProps}
+      disabled={disabled}
+    >
+      {loading ? (
+        <Spinner color={color} size="small" />
+      ) : (
+        <Icon color={color} name={iconName} size={iconSize} />
+      )}
+    </View>
+  );
+};

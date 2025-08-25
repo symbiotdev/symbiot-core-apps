@@ -28,6 +28,7 @@ export function AnimatedList<T>({
   return (
     <Animated.FlatList
       ref={listRef}
+      keyExtractor={(_, index) => String(index)}
       itemLayoutAnimation={ignoreAnimation ? undefined : LinearTransition}
       onEndReachedThreshold={0.3}
       keyboardShouldPersistTaps="handled"

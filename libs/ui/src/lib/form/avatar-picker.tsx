@@ -24,6 +24,8 @@ import { filesize } from 'filesize';
 import { Linking, Platform } from 'react-native';
 import { Icon } from '../icons';
 import { useTranslation } from 'react-i18next';
+import { FormField } from './form-field';
+import { ButtonIcon } from '../button/button';
 
 export const maxAvatarFileSize = 10485760;
 const pickerOptions: ImagePickerOptions = {
@@ -38,6 +40,7 @@ const pickerOptions: ImagePickerOptions = {
 export const AvatarPicker = ({
   name,
   size,
+  label,
   color,
   url,
   loading,
@@ -48,6 +51,7 @@ export const AvatarPicker = ({
 }: ViewProps & {
   name: string;
   size: number;
+  label?: string;
   color?: string;
   url?: ImageSource | string;
   loading?: boolean;
@@ -162,100 +166,95 @@ export const AvatarPicker = ({
   }, [onRemove, t]);
 
   return (
-    <View
-      alignItems="center"
-      gap="$2"
-      position="relative"
-      {...viewProps}
-      width={size}
-    >
-      <Avatar url={url} name={name} size={size} color={color} />
-
-      {(loading || attaching) && (
-        <View
-          position="absolute"
-          backgroundColor="$color"
-          opacity={0.5}
-          zIndex={1}
-          width="100%"
-          height="100%"
-          borderRadius="100%"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Spinner color="$buttonTextColor" />
-        </View>
-      )}
-
-      <AdaptivePopover
-        placement="bottom"
-        triggerType="child"
-        minWidth={250}
-        ref={popoverRef}
-        disabled={loading || attaching}
-        sheetTitle={t('shared.preferences.avatar.trigger.label')}
-        trigger={
-          !loading && !attaching ? (
-            <View
-              position="absolute"
-              bottom={0}
-              right={0}
-              backgroundColor="$buttonBackground"
-              borderRadius="100%"
-              width={size / 4}
-              height={size / 4}
-              justifyContent="center"
-              alignItems="center"
-              cursor="pointer"
-              pressStyle={{ opacity: 0.8 }}
-            >
-              <Icon name="Pen" color="$buttonTextColor" size={size / 7} />
-            </View>
-          ) : (
-            <View position="absolute" />
-          )
-        }
+    <FormField label={label}>
+      <View
+        alignItems="center"
+        gap="$2"
+        position="relative"
+        {...viewProps}
+        width={size}
       >
-        <View gap="$2">
-          <ListItem
-            icon={<Icon name="Gallery" />}
-            label={t(
-              'shared.preferences.avatar.action.choose_from_gallery.label',
-            )}
-            disabled={galleryPermissions?.status === PermissionStatus.DENIED}
-            iconAfter={
-              galleryPermissions?.status === PermissionStatus.DENIED && (
-                <AppSettings />
-              )
-            }
-            onPress={() => pickImage('gallery')}
-          />
+        <Avatar url={url} name={name} size={size} color={color} />
 
-          {Platform.OS !== 'web' && (
+        {(loading || attaching) && (
+          <View
+            position="absolute"
+            backgroundColor="$color"
+            opacity={0.5}
+            zIndex={1}
+            width="100%"
+            height="100%"
+            borderRadius="100%"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Spinner color="$buttonTextColor" />
+          </View>
+        )}
+
+        <AdaptivePopover
+          placement="bottom"
+          triggerType="child"
+          minWidth={250}
+          ref={popoverRef}
+          disabled={loading || attaching}
+          sheetTitle={t('shared.preferences.avatar.trigger.label')}
+          trigger={
+            !loading && !attaching ? (
+              <ButtonIcon
+                position="absolute"
+                bottom={0}
+                right={0}
+                iconName="Pen"
+                iconSize={size / 7}
+                size={size / 4}
+              />
+            ) : (
+              <View position="absolute" />
+            )
+          }
+        >
+          <View gap="$2">
             <ListItem
-              icon={<Icon name="Camera" />}
-              label={t('shared.preferences.avatar.action.take_phone.label')}
-              disabled={cameraPermissions?.status === PermissionStatus.DENIED}
+              icon={<Icon name="Gallery" />}
+              label={t(
+                'shared.preferences.avatar.action.choose_from_gallery.label',
+              )}
+              disabled={galleryPermissions?.status === PermissionStatus.DENIED}
               iconAfter={
-                cameraPermissions?.status === PermissionStatus.DENIED && (
+                galleryPermissions?.status === PermissionStatus.DENIED && (
                   <AppSettings />
                 )
               }
-              onPress={() => pickImage('camera')}
+              onPress={() => pickImage('gallery')}
             />
-          )}
 
-          {removable && (
-            <ListItem
-              color="$error"
-              icon={<Icon name="TrashBinMinimalistic" />}
-              label={t('shared.preferences.avatar.action.delete.label')}
-              onPress={deleteImage}
-            />
-          )}
-        </View>
-      </AdaptivePopover>
-    </View>
+            {Platform.OS !== 'web' && (
+              <ListItem
+                icon={<Icon name="Camera" />}
+                label={t('shared.preferences.avatar.action.take_phone.label')}
+                disabled={cameraPermissions?.status === PermissionStatus.DENIED}
+                iconAfter={
+                  cameraPermissions?.status === PermissionStatus.DENIED && (
+                    <AppSettings />
+                  )
+                }
+                onPress={() => pickImage('camera')}
+              />
+            )}
+
+            {removable && (
+              <ListItem
+                color="$error"
+                icon={<Icon name="TrashBinMinimalistic" />}
+                label={t('shared.preferences.avatar.action.delete.label')}
+                onPress={deleteImage}
+              />
+            )}
+          </View>
+        </AdaptivePopover>
+      </View>
+    </FormField>
   );
 };
 

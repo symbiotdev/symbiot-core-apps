@@ -54,7 +54,7 @@ export const MediaPicker = ({
     if (galleryPermissions?.status === PermissionStatus.DENIED) {
       ShowNativeFailedAlert({
         text: t(
-          'shared.preferences.avatar.action.choose_from_gallery.error.permissions_denied',
+          'shared.preferences.media.action.choose_from_gallery.error.permissions_denied',
         ),
       });
 
@@ -78,7 +78,7 @@ export const MediaPicker = ({
     if (cameraPermissions?.status === PermissionStatus.DENIED) {
       ShowNativeFailedAlert({
         text: t(
-          'shared.preferences.avatar.action.take_phone.error.permissions_denied',
+          'shared.preferences.media.action.take_phone.error.permissions_denied',
         ),
       });
 
@@ -138,8 +138,8 @@ export const MediaPicker = ({
     popoverRef.current?.close?.();
 
     ConfirmAlert({
-      title: t('shared.preferences.avatar.action.delete.confirm.title'),
-      message: t('shared.preferences.avatar.action.delete.confirm.message'),
+      title: t('shared.preferences.media.action.delete.confirm.title'),
+      message: t('shared.preferences.media.action.delete.confirm.message'),
       callback: async () => {
         setProcessing(true);
         try {
@@ -158,14 +158,14 @@ export const MediaPicker = ({
       minWidth={250}
       ref={popoverRef}
       disabled={processing}
-      sheetTitle={t('shared.preferences.avatar.trigger.label')}
+      sheetTitle={t('shared.preferences.media.trigger.label')}
       trigger={trigger}
     >
       <View gap="$2">
         <ListItem
           icon={<Icon name="Gallery" />}
           label={t(
-            'shared.preferences.avatar.action.choose_from_gallery.label',
+            'shared.preferences.media.action.choose_from_gallery.label',
           )}
           disabled={galleryPermissions?.status === PermissionStatus.DENIED}
           iconAfter={
@@ -179,7 +179,7 @@ export const MediaPicker = ({
         {Platform.OS !== 'web' && (
           <ListItem
             icon={<Icon name="Camera" />}
-            label={t('shared.preferences.avatar.action.take_phone.label')}
+            label={t('shared.preferences.media.action.take_phone.label')}
             disabled={cameraPermissions?.status === PermissionStatus.DENIED}
             iconAfter={
               cameraPermissions?.status === PermissionStatus.DENIED && (
@@ -194,7 +194,7 @@ export const MediaPicker = ({
           <ListItem
             color="$error"
             icon={<Icon name="TrashBinMinimalistic" />}
-            label={t('shared.preferences.avatar.action.delete.label')}
+            label={t('shared.preferences.media.action.delete.label')}
             onPress={remove}
           />
         )}

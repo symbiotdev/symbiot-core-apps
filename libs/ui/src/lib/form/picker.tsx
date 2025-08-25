@@ -13,7 +13,7 @@ import { InitView } from '../view/init-view';
 import { RegularText } from '../text/text';
 import { Icon } from '../icons';
 import { toggleItemMinHeight } from './toggle-group';
-import { defaultPageHorizontalPadding } from '../view/page-view';
+import { defaultPageHorizontalPadding, defaultPageVerticalPadding } from '../view/page-view';
 import { emitHaptic, useRendered } from '@symbiot-core-apps/shared';
 import { LoadingView } from '../view/loading-view';
 
@@ -217,6 +217,7 @@ const CustomPicker = ({
       style={{ maxHeight: 300 }}
       contentContainerStyle={{
         paddingHorizontal: defaultPageHorizontalPadding,
+        paddingVertical: defaultPageVerticalPadding,
       }}
       renderItem={renderItem}
       onScrollToIndexFailed={(info) =>

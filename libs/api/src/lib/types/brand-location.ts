@@ -39,4 +39,5 @@ export type CreateBrandLocation = {
 
 export type UpdateBrandLocation = Partial<CreateBrandLocation> & {
   timezone?: string;
+  currency?: string;
 };

@@ -210,6 +210,15 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
           </>
         )}
 
+        <Br />
+
+        <MenuItem
+          route="/brand/menu/locations"
+          navigation={props.navigation}
+          label={t('navigation.drawer.locations.label')}
+          icon="MapPointWave"
+        />
+
         <Br marginTop="auto" />
 
         <MenuItem

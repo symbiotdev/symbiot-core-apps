@@ -1,17 +1,21 @@
 import {
+  ContextMenuItem,
+  ContextMenuPopover,
   H3,
   HeaderButton,
   headerButtonSize,
+  Icon,
   useDrawer,
   useStackScreenHeaderOptions,
 } from '@symbiot-core-apps/ui';
-import { router, Stack } from 'expo-router';
+import { router, Stack, useGlobalSearchParams } from 'expo-router';
 import {
   useCurrentAccount,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
+import { useMemo } from 'react';
 
 const IndexHeaderLeft = () => {
   const { brand } = useCurrentBrandState();
@@ -67,6 +71,25 @@ const LocationsHeaderRight = () => (
   />
 );
 
+const UpdateLocationHeaderRight = () => {
+  const { t } = useTranslation();
+  const { id } = useGlobalSearchParams<{ id: string }>();
+
+  const contextMenuItems: ContextMenuItem[] = useMemo(
+    () => [
+      {
+        label: t('brand.locations.update.context_menu.remove.label'),
+        icon: <Icon name="TrashBinMinimalistic" />,
+        color: '$error',
+        onPress: () => router.push(`/brand/location/remove/${id}`),
+      },
+    ],
+    [t, id],
+  );
+
+  return <ContextMenuPopover items={contextMenuItems} />;
+};
+
 export default () => {
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
   const { t } = useTranslation();
@@ -110,9 +133,13 @@ export default () => {
           }}
         />
 
+        <Stack.Screen name="(stack)/location/remove/[id]" />
+
         <Stack.Screen
           name="(stack)/location/update/[id]"
           options={{
+            headerTitle: t('brand.locations.update.title'),
+            headerRight: UpdateLocationHeaderRight,
           }}
         />
       </Stack.Protected>

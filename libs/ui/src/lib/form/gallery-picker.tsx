@@ -169,6 +169,7 @@ const AddImage = ({
   <MediaPicker
     allowsMultipleSelection
     selectionLimit={limit}
+    mediaTypes={['images']}
     trigger={
       <View
         disabled={disabled}

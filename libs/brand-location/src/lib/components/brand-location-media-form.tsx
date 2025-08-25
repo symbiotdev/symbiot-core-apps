@@ -46,11 +46,11 @@ export const BrandLocationMediaForm = ({
   );
 
   const onAddAvatar = useCallback(
-    (images: ImagePickerAsset[]) =>
+    (avatar: ImagePickerAsset) =>
       updateAvatar({
         id: location.id,
         data: {
-          avatar: images[0],
+          avatar,
         },
       }),
     [location.id, updateAvatar],

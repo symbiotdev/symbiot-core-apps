@@ -16,12 +16,13 @@ import {
 } from '../popover/adaptive-popover';
 import { ConfirmAlert, ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
 import { filesize } from 'filesize';
-import { maxAvatarFileSize } from './avatar-picker';
 import { ListItem } from '../list/list-item';
 import { Icon } from '../icons';
 import { Linking, Platform } from 'react-native';
 import { View } from 'tamagui';
 import { Link } from '../text/custom';
+
+export const maxAvatarFileSize = 10485760;
 
 export const MediaPicker = ({
   trigger,

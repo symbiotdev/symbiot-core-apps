@@ -14,7 +14,6 @@ import {
   useCurrentBrandUpdater,
 } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
-import { ImagePickerAsset } from 'expo-image-picker';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -119,11 +118,6 @@ export const BrandPreferences = () => {
     ),
   });
 
-  const onAttach = useCallback(
-    (images: ImagePickerAsset[]) => updateAvatar$(images[0]),
-    [updateAvatar$],
-  );
-
   const updateName = useCallback(
     ({ name }: { name: string }) =>
       brand?.name !== name && updateBrand$({ name }),
@@ -188,7 +182,7 @@ export const BrandPreferences = () => {
           color={brand.avatarColor}
           url={brand.avatarUrl}
           size={100}
-          onAttach={onAttach}
+          onAttach={updateAvatar$}
         />
 
         <FormView>

@@ -187,7 +187,7 @@ export function SurveyStepForm<V>({
                           color="$placeholderColor"
                           size={140}
                           marginTop="$10"
-                          onAttach={(images) => onChange(images[0])}
+                          onAttach={onChange}
                         />
                       )}
 

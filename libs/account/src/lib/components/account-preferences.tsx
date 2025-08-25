@@ -14,7 +14,6 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useCurrentAccountUpdater, useGenders } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
-import { ImagePickerAsset } from 'expo-image-picker';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -31,11 +30,6 @@ export const AccountPreferences = () => {
     loading: gendersLoading,
     error: gendersError,
   } = useGenders();
-
-  const onAttach = useCallback(
-    (images: ImagePickerAsset[]) => updateAvatar$(images[0]),
-    [updateAvatar$],
-  );
 
   const { control: firstnameControl, handleSubmit: firstnameHandleSubmit } =
     useForm<{
@@ -208,7 +202,7 @@ export const AccountPreferences = () => {
           url={me.avatarUrl}
           removable={!!me.avatarUrl}
           size={100}
-          onAttach={onAttach}
+          onAttach={updateAvatar$}
           onRemove={removeAvatar$}
         />
 

@@ -10,6 +10,7 @@ import { useTheme, View, XStack } from 'tamagui';
 import {
   DateHelper,
   DeviceInfo,
+  isTablet,
   useNativeNow,
   useScreenOrientation,
   useScreenSize,
@@ -64,7 +65,7 @@ export const Calendar = ({
   const numberOfDays = useMemo(
     () =>
       ['sm', 'md', 'lg', 'xl'].includes(media) &&
-      (DeviceInfo.deviceType === DeviceType.TABLET ||
+      (isTablet ||
         DeviceInfo.deviceType === DeviceType.DESKTOP ||
         orientation === Orientation.LANDSCAPE_LEFT ||
         orientation === Orientation.LANDSCAPE_RIGHT)
@@ -171,7 +172,10 @@ export const Calendar = ({
             horizontalLineColor: theme.calendarLineColor?.val,
             timelineTextColor: theme.calendarTimeColor?.val,
           }}
-          unavailableTime={[{ from: 0, to: 540 }, {from: 1080, to: 1440}]}
+          unavailableTime={[
+            { from: 0, to: 540 },
+            { from: 1080, to: 1440 },
+          ]}
           onChangeDate={onChangeDate}
         />
       )}

@@ -247,7 +247,7 @@ export const AdaptivePopover = forwardRef(
                 paddingLeft={left}
                 paddingRight={right}
               >
-                {!disableDrag && (
+                {!disableDrag ?  (
                   <View
                     width={50}
                     height={4}
@@ -257,7 +257,7 @@ export const AdaptivePopover = forwardRef(
                     marginVertical={popoverHalfPadding}
                     marginHorizontal="auto"
                   />
-                )}
+                ) : <View height={popoverPadding} />}
 
                 {!!sheetTitle && (
                   <H4

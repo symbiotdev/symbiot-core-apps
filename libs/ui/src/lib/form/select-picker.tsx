@@ -17,6 +17,7 @@ export function SelectPicker({
   error,
   placeholder,
   disabled,
+  disableDrag,
   lazy,
   moveSelectedToTop,
   noCheckedValue,
@@ -31,6 +32,7 @@ export function SelectPicker({
   error?: string;
   placeholder?: string;
   disabled?: boolean;
+  disableDrag?: boolean;
   lazy?: boolean;
   moveSelectedToTop?: boolean;
   noCheckedValue?: string;
@@ -76,6 +78,7 @@ export function SelectPicker({
         ignoreScroll
         ref={popoverRef}
         disabled={disabled}
+        disableDrag={disableDrag}
         sheetTitle={sheetLabel}
         minWidth={200}
         triggerType="child"

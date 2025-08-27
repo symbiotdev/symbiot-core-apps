@@ -8,21 +8,30 @@ import { Controller, useForm } from 'react-hook-form';
 import {
   APP_LINK,
   AppLinkInput,
+  defaultPageVerticalPadding,
+  FormView,
+  Icon,
   Input,
+  ListItem,
   PhoneInput,
+  SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useBrandLocationForm } from '../hooks/use-brand-location-form';
+import { useTranslation } from 'react-i18next';
 
 export const BrandLocationContactForm = ({
   location,
 }: {
   location: BrandLocation;
 }) => {
+  const { t } = useTranslation();
   const { mutateAsync: update } = useUpdateBrandLocationQuery();
   const form = useBrandLocationForm();
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   const { control: phoneControl, handleSubmit: phoneHandleSubmit } = useForm<{
     phone: Phone;
@@ -128,59 +137,87 @@ export const BrandLocationContactForm = ({
     [location.id, location.links, targetInstagramLink?.url, update],
   );
 
+  const openModal = useCallback(() => setModalVisible(true), []);
+  const closeModal = useCallback(() => setModalVisible(false), []);
+
   return (
     <>
-      <Controller
-        control={phoneControl}
-        name="phone"
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <PhoneInput
-            enterKeyHint="done"
-            value={value}
-            label={form.phone.label}
-            placeholder={form.phone.placeholder}
-            error={error?.message}
-            onChange={onChange}
-            onBlur={phoneHandleSubmit(updatePhones)}
-          />
-        )}
+      <ListItem
+        icon={<Icon name="ChatRoundDots" />}
+        iconAfter={<Icon name="ArrowRight" />}
+        label={t('shared.contact_information')}
+        text={
+          [
+            location.phones?.map(({ formatted }) => formatted).join(', '),
+            location.email,
+            location.links?.map(({ title }) => title).join(', '),
+          ]
+            .filter(Boolean)
+            .join(' · ') || t('shared.not_specified')
+        }
+        onPress={openModal}
       />
 
-      <Controller
-        control={emailControl}
-        name="email"
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <Input
-            value={value}
-            error={error?.message}
-            enterKeyHint="next"
-            type="email"
-            keyboardType="email-address"
-            label={form.email.label}
-            placeholder={form.email.placeholder}
-            onChange={onChange}
-            onBlur={emailHandleSubmit(updateEmail)}
+      <SlideSheetModal
+        scrollable
+        headerTitle={t('shared.contact_information')}
+        visible={modalVisible}
+        onClose={closeModal}
+      >
+        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+          <Controller
+            control={phoneControl}
+            name="phone"
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <PhoneInput
+                enterKeyHint="done"
+                value={value}
+                label={form.phone.label}
+                placeholder={form.phone.placeholder}
+                error={error?.message}
+                onChange={onChange}
+                onBlur={phoneHandleSubmit(updatePhones)}
+              />
+            )}
           />
-        )}
-      />
 
-      <Controller
-        control={instagramControl}
-        name="instagram"
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <AppLinkInput
-            autoCapitalize="none"
-            type="instagram"
-            value={value}
-            enterKeyHint="done"
-            error={error?.message}
-            label={form.instagram.label}
-            placeholder={form.instagram.placeholder}
-            onChange={onChange}
-            onBlur={instagramHandleSubmit(updateInstagram)}
+          <Controller
+            control={emailControl}
+            name="email"
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <Input
+                value={value}
+                error={error?.message}
+                enterKeyHint="next"
+                type="email"
+                keyboardType="email-address"
+                label={form.email.label}
+                placeholder={form.email.placeholder}
+                onChange={onChange}
+                onBlur={emailHandleSubmit(updateEmail)}
+              />
+            )}
           />
-        )}
-      />
+
+          <Controller
+            control={instagramControl}
+            name="instagram"
+            render={({ field: { value, onChange }, fieldState: { error } }) => (
+              <AppLinkInput
+                autoCapitalize="none"
+                type="instagram"
+                value={value}
+                enterKeyHint="done"
+                error={error?.message}
+                label={form.instagram.label}
+                placeholder={form.instagram.placeholder}
+                onChange={onChange}
+                onBlur={instagramHandleSubmit(updateInstagram)}
+              />
+            )}
+          />
+        </FormView>
+      </SlideSheetModal>
     </>
   );
 };

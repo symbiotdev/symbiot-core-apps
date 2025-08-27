@@ -1,6 +1,7 @@
 import states from 'states-us';
 import { SelectPicker } from './select-picker';
 import { PickerOnChange } from './picker';
+import { useEffect } from 'react';
 
 const options = states.map((state) => ({
   value: state.abbreviation,
@@ -13,7 +14,9 @@ export const UsStatePicker = ({
   sheetLabel,
   error,
   placeholder,
+  preventEmptyValue,
   disabled,
+  disableDrag,
   onChange,
 }: {
   value?: string;
@@ -22,18 +25,29 @@ export const UsStatePicker = ({
   error?: string;
   placeholder?: string;
   disabled?: boolean;
+  disableDrag?: boolean;
+  preventEmptyValue?: boolean;
   onChange: (code: string) => void;
-}) => (
-  <SelectPicker
-    lazy
-    moveSelectedToTop
-    sheetLabel={sheetLabel}
-    label={label}
-    value={value}
-    error={error}
-    placeholder={placeholder}
-    disabled={disabled}
-    options={options}
-    onChange={onChange as PickerOnChange}
-  />
-);
+}) => {
+  useEffect(() => {
+    if (preventEmptyValue && !value) {
+      onChange(options[0].value);
+    }
+  }, [onChange, preventEmptyValue, value]);
+
+  return (
+    <SelectPicker
+      lazy
+      moveSelectedToTop
+      sheetLabel={sheetLabel}
+      label={label}
+      value={value}
+      error={error}
+      placeholder={placeholder}
+      disabled={disabled}
+      disableDrag={disableDrag}
+      options={options}
+      onChange={onChange as PickerOnChange}
+    />
+  );
+};

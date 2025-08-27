@@ -9,7 +9,7 @@ import { memo, ReactElement, useCallback, useMemo } from 'react';
 import { H4 } from '../text/heading';
 import { Icon } from '../icons';
 import { IconName } from '../icons/config';
-import { emitHaptic } from '@symbiot-core-apps/shared';
+import { emitHaptic, isTablet } from '@symbiot-core-apps/shared';
 import { AttentionView } from '../view/attention-view';
 import { NavigationBackground } from './background';
 
@@ -174,7 +174,9 @@ export const ModalHeader = memo(
     headerRight?: () => ReactElement;
     onClose?: () => void;
   }) => {
-    const { left, right } = useSafeAreaInsets();
+    const { top, left, right } = useSafeAreaInsets();
+
+    const adjustedTop = useMemo(() => (isTablet ? top : 0), [top]);
 
     return (
       <XStack
@@ -185,7 +187,8 @@ export const ModalHeader = memo(
         left={0}
         right={0}
         width="100%"
-        height={height || headerHeight}
+        paddingTop={adjustedTop}
+        height={adjustedTop + (height || headerHeight)}
         paddingLeft={left + headerHorizontalPadding}
         paddingRight={right + headerHorizontalPadding}
       >

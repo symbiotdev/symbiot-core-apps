@@ -48,6 +48,8 @@ import { Rocket } from './Rocket';
 import { InfoCircle } from './InfoCircle';
 import { MapPointWave } from './MapPointWave';
 import { ChecklistMinimalistic } from './ChecklistMinimalistic';
+import { Earth } from './Earth';
+import { ChatRoundDots } from './ChatRoundDots';
 
 export const Map: IconMap = {
   AddCircle,
@@ -62,11 +64,13 @@ export const Map: IconMap = {
   Calendar,
   CalendarMinimalistic,
   Camera,
+  ChatRoundDots,
   ChecklistMinimalistic,
   CloseCircle,
   Code,
   CodeCircle,
   CrownLine,
+  Earth,
   FileText,
   Gallery,
   Global,

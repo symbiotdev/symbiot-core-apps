@@ -6,11 +6,7 @@ import {
   BrandLocation,
   useUpdateBrandLocationQuery,
 } from '@symbiot-core-apps/api';
-import {
-  defaultPageHorizontalPadding,
-  FormView,
-  Input,
-} from '@symbiot-core-apps/ui';
+import { Input } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 
 export const BrandLocationPersonalityForm = ({
@@ -49,23 +45,21 @@ export const BrandLocationPersonalityForm = ({
   );
 
   return (
-    <FormView paddingHorizontal={defaultPageHorizontalPadding}>
-      <Controller
-        control={nameControl}
-        name="name"
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <Input
-            autoCapitalize="words"
-            enterKeyHint="done"
-            value={value}
-            error={error?.message}
-            label={form.name.label}
-            placeholder={form.name.placeholder}
-            onChange={onChange}
-            onBlur={nameHandleSubmit(updateName)}
-          />
-        )}
-      />
-    </FormView>
+    <Controller
+      control={nameControl}
+      name="name"
+      render={({ field: { value, onChange }, fieldState: { error } }) => (
+        <Input
+          autoCapitalize="words"
+          enterKeyHint="done"
+          value={value}
+          error={error?.message}
+          label={form.name.label}
+          placeholder={form.name.placeholder}
+          onChange={onChange}
+          onBlur={nameHandleSubmit(updateName)}
+        />
+      )}
+    />
   );
 };

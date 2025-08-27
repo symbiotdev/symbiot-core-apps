@@ -3,6 +3,7 @@ import * as Application from 'expo-application';
 import {
   brand,
   deviceName,
+  DeviceType,
   deviceType,
   manufacturer,
   modelName,
@@ -22,3 +23,5 @@ export const DeviceInfo = {
 };
 
 export const DeviceVersion = Application.nativeApplicationVersion || 'latest';
+
+export const isTablet = DeviceInfo.deviceType === DeviceType.TABLET;

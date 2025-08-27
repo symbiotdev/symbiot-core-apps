@@ -1,8 +1,4 @@
-import {
-  AvatarPicker,
-  defaultPageVerticalPadding,
-  GalleryPicker,
-} from '@symbiot-core-apps/ui';
+import { AvatarPicker, GalleryPicker } from '@symbiot-core-apps/ui';
 import {
   BrandLocation,
   useRemoveBrandLocationGalleryImagesQuery,
@@ -62,8 +58,7 @@ export const BrandLocationMediaForm = ({
   return (
     <View gap="$5">
       <AvatarPicker
-        marginLeft={defaultPageVerticalPadding}
-        label={t('shared.logotype')}
+        marginHorizontal="auto"
         loading={avatarUpdating}
         name={location.name}
         color={brand?.avatarColor}

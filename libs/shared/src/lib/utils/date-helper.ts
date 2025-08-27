@@ -24,12 +24,14 @@ import {
 } from '@symbiot-core-apps/i18n';
 import { isSameMonth } from 'date-fns/isSameMonth';
 import { toDate } from 'date-fns/toDate';
+import { set } from 'date-fns/set';
 
 const defaultWeekdayStartsOn: Day = 0;
 
 export type Weekday = Day;
 
 export const DateHelper = {
+  set,
   toDate,
   isSameDay,
   isSameMonth,

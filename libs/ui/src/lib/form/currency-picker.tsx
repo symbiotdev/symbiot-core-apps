@@ -14,6 +14,7 @@ export const CurrencyPicker = ({
   error,
   placeholder,
   disabled,
+  disableDrag,
   onChange,
 }: {
   value?: string;
@@ -22,6 +23,7 @@ export const CurrencyPicker = ({
   error?: string;
   placeholder?: string;
   disabled?: boolean;
+  disableDrag?: boolean;
   onChange: (code: string) => void;
 }) => (
   <SelectPicker
@@ -33,6 +35,7 @@ export const CurrencyPicker = ({
     error={error}
     placeholder={placeholder}
     disabled={disabled}
+    disableDrag={disableDrag}
     options={options}
     onChange={onChange as PickerOnChange}
   />

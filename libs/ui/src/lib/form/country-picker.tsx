@@ -16,6 +16,7 @@ export const CountryPicker = ({
   error,
   placeholder,
   disabled,
+  disableDrag,
   onChange,
 }: {
   value?: CountryCode;
@@ -24,6 +25,7 @@ export const CountryPicker = ({
   error?: string;
   placeholder?: string;
   disabled?: boolean;
+  disableDrag?: boolean;
   onChange: (code: string) => void;
 }) => {
   const options = useMemo(() => {
@@ -53,6 +55,7 @@ export const CountryPicker = ({
       error={error}
       placeholder={placeholder}
       disabled={disabled}
+      disableDrag={disableDrag}
       options={options}
       onChange={onChange as PickerOnChange}
     />

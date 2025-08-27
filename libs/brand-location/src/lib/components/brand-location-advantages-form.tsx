@@ -12,7 +12,7 @@ import {
   BrandLocation,
   useUpdateBrandLocationQuery,
 } from '@symbiot-core-apps/api';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { arraysOfObjectsEqual } from '@symbiot-core-apps/shared';
 import { useBrandLocationAdvantageOptions } from '../hooks/use-brand-location-advantage-options';
 
@@ -30,16 +30,11 @@ export const BrandLocationAdvantagesForm = ({
   const [modalVisible, setModalVisible] = useState(false);
   const [value, setValue] = useState(location.advantages);
 
-  const hasChanges = useMemo(
-    () => !arraysOfObjectsEqual(location.advantages, value),
-    [location.advantages, value],
-  );
-
   const openModal = useCallback(() => setModalVisible(true), []);
   const closeModal = useCallback(async () => {
     setModalVisible(false);
 
-    if (hasChanges) {
+    if (!arraysOfObjectsEqual(location.advantages, value)) {
       try {
         await updateLocation({
           id: location.id,
@@ -53,14 +48,7 @@ export const BrandLocationAdvantagesForm = ({
         setTimeout(openModal, 500);
       }
     }
-  }, [
-    location.advantages,
-    location.id,
-    hasChanges,
-    openModal,
-    updateLocation,
-    value,
-  ]);
+  }, [location.advantages, location.id, openModal, updateLocation, value]);
 
   return (
     <>
@@ -69,7 +57,7 @@ export const BrandLocationAdvantagesForm = ({
         iconAfter={<Icon name="ArrowRight" />}
         label={form.advantages.title}
         text={
-          value.map(({ name }) => name).join(', ') || t('shared.not_specified')
+          value.map(({ name }) => name).join(' · ') || t('shared.not_specified')
         }
         onPress={openModal}
       />

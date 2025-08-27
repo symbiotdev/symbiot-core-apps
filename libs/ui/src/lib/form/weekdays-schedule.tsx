@@ -13,6 +13,7 @@ import { EmptyView } from '../view/empty-view';
 import { Picker } from './picker';
 import { useTranslation } from 'react-i18next';
 import { FormField } from './form-field';
+import { FormView } from '../view/form-view';
 
 export type WeekdaySchedule = {
   day: Weekday;
@@ -42,12 +43,14 @@ export const WeekdaysSchedule = ({
   value,
   weekStartsOn,
   disabled,
+  disableDrag,
   onChange,
 }: {
   label?: string;
   value: WeekdaySchedule[];
   weekStartsOn?: Weekday;
   disabled?: boolean;
+  disableDrag?: boolean;
   onChange: (value: WeekdaySchedule[]) => void;
 }) => {
   const minutes: MinutesOptions = useMemo(
@@ -76,6 +79,7 @@ export const WeekdaysSchedule = ({
         <WeekdayScheduleElement
           key={index}
           disabled={disabled}
+          disableDrag={disableDrag}
           minutes={minutes}
           weekday={weekday}
           value={value?.find(({ day }) => day === weekday.value)}
@@ -89,12 +93,14 @@ export const WeekdaysSchedule = ({
 const WeekdayScheduleElement = ({
   value,
   disabled,
+  disableDrag,
   weekday,
   minutes,
   onChange,
 }: {
   value?: WeekdaySchedule;
   disabled?: boolean;
+  disableDrag?: boolean;
   weekday: { label: string; value: number };
   minutes: MinutesOptions;
   onChange: (value: WeekdaySchedule) => void;
@@ -195,6 +201,7 @@ const WeekdayScheduleElement = ({
   return (
     <AdaptivePopover
       ignoreScroll
+      disableDrag={disableDrag}
       key={`weekday${weekday.value}`}
       triggerType="child"
       placement="bottom"
@@ -210,7 +217,7 @@ const WeekdayScheduleElement = ({
         </InputFieldView>
       }
       topFixedContent={
-        <View width="100%" alignItems="center" gap="$3">
+        <FormView gap="$3">
           <XStack
             width="100%"
             alignItems="center"
@@ -227,13 +234,13 @@ const WeekdayScheduleElement = ({
             items={segmentItems}
             onChange={setActiveSegment}
           />
-        </View>
+        </FormView>
       }
       onOpen={resetSegment}
       onClose={resetSegment}
     >
       {!isDayOff ? (
-        <>
+        <FormView>
           {activeSegment === 'start' && (
             <Picker
               lazy
@@ -253,7 +260,7 @@ const WeekdayScheduleElement = ({
               onChange={onChangeEndValue as ToggleOnChange}
             />
           )}
-        </>
+        </FormView>
       ) : (
         <EmptyView
           padding={75.5}

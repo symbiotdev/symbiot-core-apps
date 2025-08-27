@@ -6,6 +6,7 @@ import {
 import axios from 'axios';
 import {
   BrandLocation,
+  BrandLocationAdvantage,
   CreateBrandLocation,
   UpdateBrandLocation,
 } from '../types/brand-location';
@@ -16,6 +17,7 @@ import { generateFormData } from '../utils/media';
 export enum BrandLocationQueryKey {
   currentList = 'currentList',
   byId = 'byId',
+  advantages = 'advantages',
 }
 
 export const refetchQueriesByLocationChanges = async (
@@ -123,6 +125,13 @@ export const useCurrentBrandLocationsQuery = () =>
 
       return response;
     },
+  });
+
+export const useBrandLocationAdvantages = () =>
+  useQuery<BrandLocationAdvantage[], string>({
+    queryKey: [BrandLocationQueryKey.advantages],
+    queryFn: () =>
+      requestWithStringError(axios.get(`/api/brand-location/advantages`)),
   });
 
 export const useBrandLocationByIdQuery = (id: string) =>

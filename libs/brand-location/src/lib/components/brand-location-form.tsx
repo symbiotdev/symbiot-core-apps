@@ -2,6 +2,7 @@ import {
   defaultPageHorizontalPadding,
   FormView,
   H3,
+  ListItemGroup,
   PageView,
 } from '@symbiot-core-apps/ui';
 import { BrandLocation } from '@symbiot-core-apps/api';
@@ -13,6 +14,7 @@ import { BrandLocationContactForm } from './brand-location-contact-form';
 import { BrandLocationScheduleForm } from './brand-location-schedule-form';
 import { BrandLocationAdditionalInfo } from './brand-location-additional-info';
 import { useBrandLocationForm } from '../hooks/use-brand-location-form';
+import { BrandLocationAdvantagesForm } from './brand-location-advantages-form';
 
 export const BrandLocationForm = ({
   location,
@@ -23,13 +25,13 @@ export const BrandLocationForm = ({
   const form = useBrandLocationForm();
 
   return (
-    <PageView
-      scrollable
-      withHeaderHeight
-      withKeyboard
-      paddingHorizontal={0}
-      gap="$10"
-    >
+    <PageView scrollable withHeaderHeight withKeyboard gap="$10">
+      <FormView>
+        <ListItemGroup>
+          <BrandLocationAdvantagesForm location={location} />
+        </ListItemGroup>
+      </FormView>
+
       <BrandLocationPersonalityForm location={location} />
 
       <FormView gap="$3">

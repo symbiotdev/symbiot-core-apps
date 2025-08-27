@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import * as yup from 'yup';
+import { object } from 'yup';
 import { useTranslation } from 'react-i18next';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import states from 'states-us';
@@ -185,6 +186,13 @@ export const useBrandLocationForm = () => {
       gallery: {
         maxImages: 10,
         label: t('brand.locations.upsert.form.gallery.label'),
+      },
+      advantages: {
+        multiselect: true,
+        title: t('brand.locations.upsert.form.advantages.title'),
+        subtitle: t('brand.locations.upsert.form.advantages.subtitle'),
+        defaultValue: [],
+        scheme: yup.array().of(object()).required(),
       },
     }),
     [brand?.name, t],

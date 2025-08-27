@@ -2,12 +2,16 @@ import React, { useCallback, useRef, useState } from 'react';
 import {
   GestureResponderEvent,
   LayoutRectangle,
-  Modal,
   StyleSheet,
   useWindowDimensions,
 } from 'react-native';
 import { AnimatePresence, ScrollView, View } from 'tamagui';
-import { FormView, HapticTabBarButton, Icon } from '@symbiot-core-apps/ui';
+import {
+  FormView,
+  FullScreenTransparentModal,
+  HapticTabBarButton,
+  Icon,
+} from '@symbiot-core-apps/ui';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import { emitHaptic, useScreenOrientation } from '@symbiot-core-apps/shared';
 import { useApp } from '@symbiot-core-apps/app';
@@ -59,18 +63,14 @@ export const PlusTapRoundedModal = (props: BottomTabBarButtonProps) => {
         {props.children}
       </HapticTabBarButton>
 
-      <Modal
-        transparent
+      <FullScreenTransparentModal
         visible={state.modalVisible}
-        animationType="none"
-        presentationStyle="overFullScreen"
-        supportedOrientations={['portrait', 'landscape']}
-        onRequestClose={closeModal}
+        onClose={closeModal}
       >
         <AnimatePresence>
           {state.rect && <Content rect={state.rect} onClose={closeModal} />}
         </AnimatePresence>
-      </Modal>
+      </FullScreenTransparentModal>
     </>
   );
 };

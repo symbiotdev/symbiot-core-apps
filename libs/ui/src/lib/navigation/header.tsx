@@ -175,16 +175,17 @@ export const ModalHeader = memo(
     onClose?: () => void;
   }) => {
     const { left, right } = useSafeAreaInsets();
-    const screenHeaderHeight = useScreenHeaderHeight();
 
     return (
       <XStack
         zIndex={1}
         position="absolute"
         top={0}
+        flex={1}
         left={0}
+        right={0}
         width="100%"
-        height={height || screenHeaderHeight}
+        height={height || headerHeight}
         paddingLeft={left + headerHorizontalPadding}
         paddingRight={right + headerHorizontalPadding}
       >
@@ -195,6 +196,7 @@ export const ModalHeader = memo(
 
         <XStack
           gap="$5"
+          width="100%"
           alignItems="center"
           justifyContent="space-between"
           marginTop="auto"

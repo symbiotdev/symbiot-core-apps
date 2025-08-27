@@ -63,7 +63,7 @@ const MenuItem = memo(
     return (
       <ListItem
         borderRadius="$10"
-        numberOfLines={1}
+        labelNumberOfLines={1}
         paddingHorizontal={defaultPageHorizontalPadding}
         marginHorizontal={defaultPageHorizontalPadding / 2}
         backgroundColor={focused ? '$background' : 'transparent'}

@@ -47,6 +47,7 @@ import { SettingsMinimalistic } from './SettingsMinimalistic';
 import { Rocket } from './Rocket';
 import { InfoCircle } from './InfoCircle';
 import { MapPointWave } from './MapPointWave';
+import { ChecklistMinimalistic } from './ChecklistMinimalistic';
 
 export const Map: IconMap = {
   AddCircle,
@@ -61,6 +62,7 @@ export const Map: IconMap = {
   Calendar,
   CalendarMinimalistic,
   Camera,
+  ChecklistMinimalistic,
   CloseCircle,
   Code,
   CodeCircle,

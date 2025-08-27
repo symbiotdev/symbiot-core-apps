@@ -167,7 +167,7 @@ export function SurveyStepForm<V>({
                       {el.type === 'toggle-group' && (
                         <Card>
                           <ToggleGroup
-                            multiselect={false}
+                            multiselect={el.props.multiselect}
                             items={el.props.options}
                             loading={el.props.optionsLoading}
                             value={value as []}

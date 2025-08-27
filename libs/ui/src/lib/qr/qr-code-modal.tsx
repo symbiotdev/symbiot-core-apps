@@ -1,9 +1,4 @@
-import {
-  Modal,
-  Platform,
-  StyleSheet,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { Platform, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { ReactElement, useCallback, useState } from 'react';
 import { PageView } from '../view/page-view';
 import { QrCode } from './qr-code';
@@ -11,6 +6,7 @@ import { Card } from '../card/card';
 import { H2 } from '../text/heading';
 import { Blur } from '../blur/blur';
 import { emitHaptic } from '@symbiot-core-apps/shared';
+import { FullScreenTransparentModal } from '../modal/full-screen-transparent-modal';
 
 export const QrCodeModalWithTrigger = ({
   trigger,
@@ -70,13 +66,10 @@ export const QrCodeModal = ({
   onClose: () => void;
 }) => {
   return (
-    <Modal
-      transparent
+    <FullScreenTransparentModal
       visible={visible}
       animationType={Platform.OS === 'android' ? 'fade' : 'slide'}
-      presentationStyle="overFullScreen"
-      supportedOrientations={['portrait', 'landscape']}
-      onRequestClose={onClose}
+      onClose={onClose}
     >
       <Blur style={StyleSheet.absoluteFillObject} />
 
@@ -97,6 +90,6 @@ export const QrCodeModal = ({
           )}
         </Card>
       </PageView>
-    </Modal>
+    </FullScreenTransparentModal>
   );
 };

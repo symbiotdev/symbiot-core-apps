@@ -2,7 +2,6 @@ import { forwardRef, ReactElement, Ref, useCallback, useState } from 'react';
 import {
   GestureResponderEvent,
   LayoutRectangle,
-  Modal,
   Platform,
   StatusBar,
   StyleSheet,
@@ -27,6 +26,7 @@ import { Spinner } from '../loading/spinner';
 import { ListItem } from '../list/list-item';
 import { emitHaptic, useScreenOrientation } from '@symbiot-core-apps/shared';
 import { Icon } from '../icons';
+import { FullScreenTransparentModal } from '../modal/full-screen-transparent-modal';
 
 export type ContextMenuItem = {
   label: string;
@@ -95,20 +95,16 @@ export const ContextMenuPopover = ({
         onPress={openMenu}
       />
 
-      <Modal
+      <FullScreenTransparentModal
         visible={state.modalVisible}
-        transparent
-        animationType="none"
-        presentationStyle="overFullScreen"
-        supportedOrientations={['portrait', 'landscape']}
-        onRequestClose={closeMenu}
+        onClose={closeMenu}
       >
         <AnimatePresence>
           {state.menuVisible && state.rect && (
             <Menu rect={state.rect} items={items} onClose={closeMenu} />
           )}
         </AnimatePresence>
-      </Modal>
+      </FullScreenTransparentModal>
     </>
   );
 };

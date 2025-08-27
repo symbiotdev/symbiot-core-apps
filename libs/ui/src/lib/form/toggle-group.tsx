@@ -3,7 +3,7 @@ import { memo, ReactElement } from 'react';
 import { RegularText } from '../text/text';
 import { Icon } from '../icons';
 import { InitView } from '../view/init-view';
-import { emitHaptic } from '@symbiot-core-apps/shared';
+import { emitHaptic, objectsEqual } from '@symbiot-core-apps/shared';
 import { IconName } from '../icons/config';
 import { ContainerView } from '../view/container-view';
 
@@ -63,7 +63,6 @@ export const ToggleGroup = ({
     />
   ) : (
     <ContainerView
-      gap={toggleGap}
       lazy={Boolean(renderDelay)}
       delay={renderDelay}
       onRendered={onRendered}
@@ -105,7 +104,7 @@ const Item = memo(
   }) => {
     const selected =
       multiselect && Array.isArray(value)
-        ? value.includes(item.value)
+        ? value.some((valueItem) => objectsEqual(valueItem, item.value))
         : value === item.value;
 
     const onPress = () => {
@@ -113,7 +112,9 @@ const Item = memo(
         if (selected && value.length === 1 && !allowEmpty) {
           return;
         } else if (selected) {
-          onChange?.(value.filter((itemValue) => itemValue !== item.value));
+          onChange?.(value.filter((valueItem) => !objectsEqual(valueItem, item.value)));
+        } else {
+          onChange?.([...value, item.value])
         }
       } else {
         if (!allowEmpty) {
@@ -132,6 +133,7 @@ const Item = memo(
       <XStack
         gap="$4"
         alignItems="center"
+        paddingVertical="$3"
         disabled={disabled}
         cursor={!disabled && onChange ? 'pointer' : 'default'}
         disabledStyle={{ opacity: 0.8 }}

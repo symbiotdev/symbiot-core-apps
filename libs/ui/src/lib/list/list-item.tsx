@@ -5,6 +5,7 @@ import { H5 } from '../text/heading';
 import { Card } from '../card/card';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { GestureResponderEvent } from 'react-native';
+import { defaultIconSize } from '../icons';
 
 export const ListItemGroup = memo((props: ViewProps & { title?: string }) => {
   return (
@@ -27,20 +28,24 @@ export const ListItemGroup = memo((props: ViewProps & { title?: string }) => {
 export const ListItem = memo(
   ({
     label,
+    text,
     icon,
     iconAfter,
     color,
     disabled,
     iconSize,
-    numberOfLines = 2,
+    labelNumberOfLines = 2,
+    textNumberOfLines = 1,
     onPress,
     ...xStackProps
   }: XStackProps & {
     label: string;
+    text?: string;
     icon?: false | ReactElement<{ color?: string; size?: number }>;
     iconAfter?: false | ReactElement<{ color?: string; size?: number }>;
     iconSize?: number;
-    numberOfLines?: number;
+    labelNumberOfLines?: number;
+    textNumberOfLines?: number;
     color?: ColorTokens;
   }) => {
     const adjustedColor = disabled ? '$disabled' : color;
@@ -71,15 +76,29 @@ export const ListItem = memo(
             size: iconSize,
           })}
 
-        {!!label && (
-          <RegularText
-            flex={1}
-            numberOfLines={numberOfLines}
-            color={adjustedColor}
-          >
-            {label}
-          </RegularText>
-        )}
+        <View flex={1} justifyContent="center">
+          {!!label && (
+            <RegularText
+              flex={1}
+              lineHeight={defaultIconSize}
+              numberOfLines={labelNumberOfLines}
+              color={adjustedColor}
+            >
+              {label}
+            </RegularText>
+          )}
+
+          {!!text && (
+            <RegularText
+              flex={1}
+              fontSize={12}
+              numberOfLines={textNumberOfLines}
+              color="$placeholderColor"
+            >
+              {text}
+            </RegularText>
+          )}
+        </View>
 
         {!!iconAfter &&
           cloneElement(iconAfter, {

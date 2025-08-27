@@ -66,7 +66,9 @@ export type SurveyStep<V> = {
     | {
         type: 'toggle-group';
         props: SurveyStepElement<V> & {
+          multiselect?: boolean;
           optionsLoading?: boolean;
+          optionsError?: string;
           options?: ToggleGroupItem[];
         };
       }

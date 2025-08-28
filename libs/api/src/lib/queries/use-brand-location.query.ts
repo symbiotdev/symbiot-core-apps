@@ -15,9 +15,9 @@ import { queryClient } from '../utils/client';
 import { generateFormData } from '../utils/media';
 
 export enum BrandLocationQueryKey {
-  currentList = 'currentList',
-  byId = 'byId',
-  advantages = 'advantages',
+  currentList = 'brand-location-current-list',
+  byId = 'brand-location-by-id',
+  advantages = 'brand-location-advantages',
 }
 
 export const refetchQueriesByLocationChanges = async (

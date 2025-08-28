@@ -10,11 +10,14 @@ import { useCurrentAccountState } from '../hooks/use-current-account.state';
 import { useNotificationsState } from '../hooks/use-notifications.state';
 import { useFaqState } from '../hooks/use-faq.state';
 import { useCurrentBrandState } from '../hooks/use-current-brand';
+import { useCurrentBrandEmployeeState } from '../hooks/use-current-brand-employee';
 
 export const StateProvider = ({ children }: PropsWithChildren) => {
   const { setMe, clear: clearCurrentAccountState } = useCurrentAccountState();
   const { setBrand: setCurrentBrand, clear: clearCurrentBrandState } =
     useCurrentBrandState();
+  const { clear: clearCurrentBrandEmployeeState } =
+    useCurrentBrandEmployeeState();
   const { clear: clearFaq } = useFaqState();
   const { clear: clearNotificationsState } = useNotificationsState();
 
@@ -39,12 +42,14 @@ export const StateProvider = ({ children }: PropsWithChildren) => {
       queryClient.clear();
       clearCurrentAccountState();
       clearCurrentBrandState();
+      clearCurrentBrandEmployeeState();
       clearFaq();
       clearNotificationsState();
     };
   }, [
     clearCurrentAccountState,
     clearCurrentBrandState,
+    clearCurrentBrandEmployeeState,
     clearFaq,
     clearNotificationsState,
     onBrandUpdated,

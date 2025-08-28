@@ -14,7 +14,7 @@ type CurrentBrandState = {
   brands?: Brand[];
   clear: () => void;
   setBrand: (brand?: Brand) => void;
-  setBrands: (brands: Brand[]) => void;
+  setBrands: (brands?: Brand[]) => void;
 };
 
 export const useCurrentBrandState = create<CurrentBrandState>()(

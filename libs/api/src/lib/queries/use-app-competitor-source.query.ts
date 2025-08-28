@@ -4,7 +4,7 @@ import { ExternalSource } from '../types/external-source';
 import { requestWithStringError } from '../utils/request';
 
 export enum AppCompetitorSourceKey {
-  sources = 'app-competitor-source',
+  sources = 'app-competitor-sources',
 }
 
 export const useAppCompetitorSource = () =>

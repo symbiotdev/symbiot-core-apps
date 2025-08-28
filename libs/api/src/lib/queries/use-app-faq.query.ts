@@ -4,7 +4,7 @@ import { requestWithStringError } from '../utils/request';
 import { FAQ } from '../types/faq';
 
 export enum AppFaqQueryKey {
-  list = 'app-faq',
+  list = 'app-faq-list',
 }
 
 export const useAppFaqQuery = () =>

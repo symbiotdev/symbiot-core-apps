@@ -4,7 +4,7 @@ import { requestWithStringError } from '../utils/request';
 import { BrandIndustry } from '../types/brand-industry';
 
 export enum BrandIndustryQueryKey {
-  list = 'brand-industry',
+  list = 'brand-industry-list',
 }
 
 export const useBrandIndustryQuery = () =>

@@ -1,82 +1,31 @@
 import { Redirect } from 'expo-router';
 import { NotificationsProvider } from '@symbiot-core-apps/notification';
-import {
-  StateProvider,
-  useCurrentAccount,
-  useCurrentBrandState,
-} from '@symbiot-core-apps/state';
-import {
-  useAccountMeQuery,
-  useAuthTokens,
-  useCurrentBrandQuery,
-} from '@symbiot-core-apps/api';
+import { StateProvider } from '@symbiot-core-apps/state';
+import { useAuthTokens } from '@symbiot-core-apps/api';
 import { onPressNotification } from '../../utils/notification';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
 import { DrawerMenu, drawerMenuMaxWidth } from '../../components/drawer/menu';
-import { useInitializing } from '../../hooks/use-initializing';
 import { NavigationBackground, useDrawer } from '@symbiot-core-apps/ui';
 import { hideAsync } from 'expo-splash-screen';
-import { changeAppLanguage } from '@symbiot-core-apps/i18n';
-import { useApp } from '@symbiot-core-apps/app';
+import { useCurrentEntitiesLoader } from '../../hooks/use-current-entities-loader';
 
 export default () => {
-  const { languages } = useApp();
-  const { tokens, setTokens } = useAuthTokens();
-  const { setBrand: setCurrentBrand, setBrands: setCurrentBrands } =
-    useCurrentBrandState();
-  const initializing = useInitializing();
-  const { updateMe, updateMePreferences } = useCurrentAccount();
-  const { data: meResponse } = useAccountMeQuery({
-    enabled: !!tokens.access,
-  });
-  const { data: currentBrandResponse } = useCurrentBrandQuery({
-    enabled: !!tokens.access,
-  });
+  const { tokens } = useAuthTokens();
   const {
     headerShown,
     visible: drawerVisible,
     type: drawerType,
     permanent: drawerPermanent,
   } = useDrawer();
+  const currentEntitiesLoaded = useCurrentEntitiesLoader();
 
   useEffect(() => {
-    if (meResponse) {
-      updateMe(meResponse);
-
-      if (
-        meResponse.language &&
-        languages.some(({ code }) => code === meResponse.language)
-      ) {
-        changeAppLanguage(meResponse.language);
-      }
-
-      if (meResponse.preferences) {
-        void updateMePreferences(meResponse.preferences);
-      }
-    }
-  }, [meResponse, updateMe, updateMePreferences, languages]);
-
-  useEffect(() => {
-    if (currentBrandResponse) {
-      setCurrentBrand(currentBrandResponse.brand);
-
-      if (currentBrandResponse.brands) {
-        setCurrentBrands(currentBrandResponse.brands);
-      }
-
-      if (currentBrandResponse.tokens) {
-        setTokens(currentBrandResponse.tokens);
-      }
-    }
-  }, [currentBrandResponse, setCurrentBrand, setCurrentBrands, setTokens]);
-
-  useEffect(() => {
-    if (!initializing) {
+    if (!currentEntitiesLoaded) {
       void hideAsync();
     }
-  }, [initializing]);
+  }, [currentEntitiesLoaded]);
 
   if (!tokens.access) {
     return <Redirect href="/onboarding" />;
@@ -99,13 +48,14 @@ export default () => {
               drawerStyle: {
                 width: drawerPermanent ? 'auto' : drawerMenuMaxWidth,
                 overflow: 'hidden',
-                display: !drawerVisible || initializing ? 'none' : undefined,
+                display:
+                  !drawerVisible || currentEntitiesLoaded ? 'none' : undefined,
                 borderRightWidth: 0,
               },
               headerBackground: () => <NavigationBackground />,
             }}
           >
-            <Drawer.Protected guard={!initializing}>
+            <Drawer.Protected guard={currentEntitiesLoaded}>
               <Drawer.Screen
                 name="(tabs)"
                 options={{
@@ -114,7 +64,7 @@ export default () => {
               />
             </Drawer.Protected>
 
-            <Drawer.Protected guard={initializing}>
+            <Drawer.Protected guard={!currentEntitiesLoaded}>
               <Drawer.Screen
                 name="initializing/index"
                 options={{ headerShown: false }}

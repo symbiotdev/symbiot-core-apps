@@ -22,7 +22,7 @@ type CurrentAccountState = {
   me?: Account;
   stats: AccountStats;
   clear: () => void;
-  setMe: (me: Account) => void;
+  setMe: (me?: Account) => void;
   setMePreferences: (preferences: Partial<AccountPreferences>) => void;
   setMeStats: (stats: AccountStats) => void;
 };

@@ -169,8 +169,8 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
             enterKeyHint="next"
             autoCapitalize="sentences"
             disabled={isSubmitting}
-            label={t('auth.sign_up.form.lastname.label')}
-            placeholder={t('auth.sign_up.form.lastname.placeholder')}
+            label={t('shared.auth.sign_up.form.lastname.label')}
+            placeholder={t('shared.auth.sign_up.form.lastname.placeholder')}
             onChange={onChange}
             onBlur={onBlur}
           />
@@ -191,8 +191,8 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
             type="email"
             keyboardType="email-address"
             disabled={isSubmitting}
-            label={t('auth.sign_up.form.email.label')}
-            placeholder={t('auth.sign_up.form.email.placeholder')}
+            label={t('shared.auth.sign_up.form.email.label')}
+            placeholder={t('shared.auth.sign_up.form.email.placeholder')}
             onChange={onChange}
             onBlur={onBlur}
           />
@@ -212,8 +212,8 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
             enterKeyHint="next"
             type="password"
             disabled={isSubmitting}
-            label={t('auth.sign_up.form.password.label')}
-            placeholder={t('auth.sign_up.form.password.placeholder')}
+            label={t('shared.auth.sign_up.form.password.label')}
+            placeholder={t('shared.auth.sign_up.form.password.placeholder')}
             onChange={onChange}
             onBlur={onBlur}
           />
@@ -233,8 +233,8 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
             enterKeyHint="done"
             type="password"
             disabled={isSubmitting}
-            label={t('auth.sign_up.form.confirm_password.label')}
-            placeholder={t('auth.sign_up.form.confirm_password.placeholder')}
+            label={t('shared.auth.sign_up.form.confirm_password.label')}
+            placeholder={t('shared.auth.sign_up.form.confirm_password.placeholder')}
             onChange={onChange}
             onBlur={onBlur}
           />
@@ -251,13 +251,13 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
               error={error?.message}
               label={
                 <RegularText>
-                  {t('auth.sign_up.form.agreement.prefix')}
+                  {t('shared.auth.sign_up.form.agreement.prefix')}
                   <Link onPress={openPrivacyPolicy}>
-                    {t('docs.privacy_policy')}
+                    {t('shared.docs.privacy_policy')}
                   </Link>{' '}
                   {t('and')}{' '}
                   <Link onPress={openTermsConditions}>
-                    {t('docs.terms_conditions')}
+                    {t('shared.docs.terms_conditions')}
                   </Link>
                 </RegularText>
               }

@@ -61,7 +61,7 @@ export default () => {
   return (
     me && (
       <TabsPageView scrollable withHeaderHeight>
-        <FormView>
+        <FormView gap="$5">
           <ActionCard
             title={t('subscription.card.title')}
             subtitle={t('subscription.card.subtitle')}

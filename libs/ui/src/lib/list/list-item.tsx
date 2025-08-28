@@ -9,9 +9,9 @@ import { defaultIconSize } from '../icons';
 
 export const ListItemGroup = memo((props: ViewProps & { title?: string }) => {
   return (
-    <View gap="$1">
+    <View gap="$2">
       {!!props.title && (
-        <H5 textTransform="uppercase" color="$disabled" marginHorizontal="$3">
+        <H5 textTransform="uppercase" color="$disabled" marginHorizontal="$4">
           {props.title}
         </H5>
       )}

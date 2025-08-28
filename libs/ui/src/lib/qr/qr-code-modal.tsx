@@ -1,12 +1,13 @@
-import { Platform, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { ReactElement, useCallback, useState } from 'react';
 import { PageView } from '../view/page-view';
 import { QrCode } from './qr-code';
 import { Card } from '../card/card';
-import { H2 } from '../text/heading';
+import { H5 } from '../text/heading';
 import { Blur } from '../blur/blur';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { FullScreenTransparentModal } from '../modal/full-screen-transparent-modal';
+import { View } from 'tamagui';
 
 export const QrCodeModalWithTrigger = ({
   trigger,
@@ -34,9 +35,9 @@ export const QrCodeModalWithTrigger = ({
 
   return (
     <>
-      <TouchableWithoutFeedback onPress={onOpen}>
+      <View cursor="pointer" onPress={onOpen}>
         {trigger}
-      </TouchableWithoutFeedback>
+      </View>
 
       <QrCodeModal
         visible={visible}
@@ -75,18 +76,18 @@ export const QrCodeModal = ({
 
       <PageView onPress={onClose}>
         <Card
-          margin="auto"
-          gap="$3"
           borderWidth={1}
           borderColor="$background"
+          margin="auto"
+          gap="$4"
           alignItems="center"
         >
           <QrCode size={qrSize} value={qrValue} content={qrContent} />
 
           {!!title && (
-            <H2 textAlign="center" maxWidth={qrSize}>
+            <H5 textAlign="center" color="$placeholderColor" maxWidth={qrSize}>
               {title}
-            </H2>
+            </H5>
           )}
         </Card>
       </PageView>

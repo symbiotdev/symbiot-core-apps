@@ -4,10 +4,14 @@ import { useCallback } from 'react';
 import { router } from 'expo-router';
 import {
   ActionCard,
+  Avatar,
+  Card,
   FormView,
+  H3,
   Icon,
   ListItem,
   ListItemGroup,
+  MediumText,
   QrCodeModalWithTrigger,
   RegularText,
   TabsPageView,
@@ -15,6 +19,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
+import { View } from 'tamagui';
 
 export default () => {
   const share = useShareApp();
@@ -67,27 +72,33 @@ export default () => {
             }}
           />
 
-          <ListItemGroup title={t('shared.profile')}>
-            <ListItem
-              label={me.name}
-              icon={<Icon name="UserCircle" />}
-              onPress={onAccountPress}
+          <Card flexDirection="row" alignItems="center" gap="$4">
+            <Avatar
+              url={me.avatarXsUrl}
+              name={me.name}
+              color={me.avatarColor}
+              size={50}
             />
-
+            <View flex={1} gap="$2">
+              <H3 numberOfLines={1}>{me.name}</H3>
+              <MediumText color="$placeholderColor" numberOfLines={1}>
+                ID: {me.id}
+              </MediumText>
+            </View>
             <QrCodeModalWithTrigger
-              trigger={
-                <ListItem
-                  cursor="pointer"
-                  label={t('shared.qr_code')}
-                  icon={<Icon name="QrCode" />}
-                />
-              }
+              trigger={<Icon name="QrCode" />}
+              title={`ID: ${me.id}`}
               qrValue={me.id}
               qrContent={<RegularText fontSize={30}>🤩</RegularText>}
             />
-          </ListItemGroup>
+          </Card>
 
           <ListItemGroup title={t('shared.preferences.title')}>
+            <ListItem
+              label={t('shared.profile')}
+              icon={<Icon name="UserCircle" />}
+              onPress={onAccountPress}
+            />
             <ListItem
               label={t('shared.preferences.notifications.title')}
               icon={<Icon name="Bell" />}

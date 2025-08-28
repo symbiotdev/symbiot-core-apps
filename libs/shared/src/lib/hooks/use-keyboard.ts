@@ -76,10 +76,8 @@ export function useKeyboardDismisser<
       }
 
       setTimeout(
-        () => {
-          callback(...args);
-        },
-        isKeyboardVisible ? (Platform.OS === 'ios' ? 300 : 200) : 0,
+        () => callback(...args),
+        isKeyboardVisible ? (Platform.OS === 'ios' ? 100 : 200) : 0,
       );
     },
     [callback],

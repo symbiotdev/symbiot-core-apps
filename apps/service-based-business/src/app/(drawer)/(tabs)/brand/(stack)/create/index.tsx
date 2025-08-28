@@ -15,9 +15,7 @@ import { router } from 'expo-router';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
 
-const nameMaxLength = 256;
 const codeMaxLength = 64;
-const customSourceMaxLength = 256;
 
 type Value = {
   name: string;
@@ -66,15 +64,8 @@ export default () => {
               name: 'name',
               placeholder: t('brand.create.steps.name.form.name.placeholder'),
               enterKeyHint: 'done',
-              maxLength: nameMaxLength,
               scheme: yup
                 .string()
-                .max(
-                  nameMaxLength,
-                  t('brand.create.steps.name.form.name.error.max_length', {
-                    max: nameMaxLength,
-                  }),
-                )
                 .required(
                   t('brand.create.steps.name.form.name.error.required'),
                 ),
@@ -137,7 +128,6 @@ export default () => {
             props: {
               type: 'website',
               name: 'website',
-              maxLength: 256,
               keyboardType: 'url',
               enterKeyHint: 'done',
               placeholder: t(
@@ -181,7 +171,6 @@ export default () => {
                 'brand.create.steps.referral_source.form.external_source.placeholder',
               ),
               enterKeyHint: 'done',
-              maxLength: customSourceMaxLength,
               scheme: yup
                 .string()
                 .test(
@@ -233,7 +222,6 @@ export default () => {
                 'brand.create.steps.competitor_source.form.external_source.placeholder',
               ),
               enterKeyHint: 'done',
-              maxLength: customSourceMaxLength,
               scheme: yup
                 .string()
                 .test(
@@ -274,15 +262,6 @@ export default () => {
               maxLength: codeMaxLength,
               scheme: yup
                 .string()
-                .max(
-                  codeMaxLength,
-                  t(
-                    'brand.create.steps.promo_code.form.code.error.max_length',
-                    {
-                      max: codeMaxLength,
-                    },
-                  ),
-                )
                 .required(
                   t('brand.create.steps.promo_code.form.code.error.required'),
                 ),

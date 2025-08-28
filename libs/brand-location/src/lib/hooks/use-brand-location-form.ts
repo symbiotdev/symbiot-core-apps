@@ -14,7 +14,6 @@ import {
 import { CountryCode, getCountry } from 'countries-and-timezones';
 
 const remarkMaxLength = 512;
-const nameMaxLength = 256;
 const defaultState = states[0].abbreviation;
 const defaultCountryCode = Intl?.DateTimeFormat()
   ?.resolvedOptions()
@@ -27,7 +26,6 @@ export const useBrandLocationForm = () => {
   return useMemo(
     () => ({
       name: {
-        maxLength: nameMaxLength,
         title: t('brand.locations.upsert.form.name.title'),
         subtitle: t('brand.locations.upsert.form.name.subtitle'),
         label: t('brand.locations.upsert.form.name.label'),
@@ -36,12 +34,6 @@ export const useBrandLocationForm = () => {
         }),
         scheme: yup
           .string()
-          .max(
-            nameMaxLength,
-            t('brand.locations.upsert.form.name.error.max_length', {
-              max: nameMaxLength,
-            }),
-          )
           .required(t('brand.locations.upsert.form.name.error.required')),
       },
       country: {
@@ -163,24 +155,9 @@ export const useBrandLocationForm = () => {
         subtitle: t('brand.locations.upsert.form.remark.subtitle'),
         label: t('brand.locations.upsert.form.remark.label'),
         placeholder: t('brand.locations.upsert.form.remark.placeholder'),
-        optionalScheme: yup
-          .string()
-          .max(
-            remarkMaxLength,
-            t('brand.locations.upsert.form.remark.error.max_length', {
-              max: remarkMaxLength,
-            }),
-          )
-          .nullable()
-          .ensure(),
+        optionalScheme: yup.string().nullable().ensure(),
         scheme: yup
           .string()
-          .max(
-            remarkMaxLength,
-            t('brand.locations.upsert.form.remark.error.max_length', {
-              max: remarkMaxLength,
-            }),
-          )
           .required(t('brand.locations.upsert.form.remark.error.required')),
       },
       gallery: {
@@ -193,6 +170,25 @@ export const useBrandLocationForm = () => {
         subtitle: t('brand.locations.upsert.form.advantages.subtitle'),
         defaultValue: [],
         scheme: yup.array().of(object()).required(),
+      },
+      address: {
+        title: t('brand.locations.upsert.form.address.title'),
+        subtitle: t('brand.locations.upsert.form.address.subtitle'),
+        label: t('brand.locations.upsert.form.address.label'),
+        placeholder: t('brand.locations.upsert.form.address.placeholder'),
+        scheme: yup
+          .string()
+          .required(t('brand.locations.upsert.form.address.error.required')),
+      },
+      floor: {
+        label: t('brand.locations.upsert.form.floor.label'),
+        placeholder: t('brand.locations.upsert.form.floor.placeholder'),
+        scheme: yup.string().nullable().ensure(),
+      },
+      entrance: {
+        label: t('brand.locations.upsert.form.entrance.label'),
+        placeholder: t('brand.locations.upsert.form.entrance.placeholder'),
+        scheme: yup.string().nullable().ensure(),
       },
     }),
     [brand?.name, t],

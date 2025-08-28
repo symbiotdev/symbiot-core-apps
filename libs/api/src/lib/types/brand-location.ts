@@ -12,10 +12,10 @@ export type BrandLocation = {
   currency: string;
   address: string;
   timezone: string;
-  lat: number;
-  lng: number;
   email: string;
   remark: string;
+  floor: string;
+  entrance: string;
   avatarUrl: string;
   avatarXsUrl: string;
   links: Link[];
@@ -30,10 +30,10 @@ export type CreateBrandLocation = {
   country: string;
   usState?: string;
   address: string;
-  lat: number;
-  lng: number;
   email?: string;
   remark?: string;
+  floor?: string;
+  entrance?: string;
   advantages?: string[];
   links: Omit<Link, 'id'>[];
   phones: Phone[];

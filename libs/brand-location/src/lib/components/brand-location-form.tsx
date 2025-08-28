@@ -10,8 +10,8 @@ import { BrandLocationPersonalityForm } from './brand-location-personality-form'
 import { BrandLocationLocaleForm } from './brand-location-locale-form';
 import { BrandLocationContactForm } from './brand-location-contact-form';
 import { BrandLocationScheduleForm } from './brand-location-schedule-form';
-import { BrandLocationAdditionalInfo } from './brand-location-additional-info';
 import { BrandLocationAdvantagesForm } from './brand-location-advantages-form';
+import { BrandLocationAddressForm } from './brand-location-address-form';
 
 export const BrandLocationForm = ({
   location,
@@ -33,11 +33,11 @@ export const BrandLocationForm = ({
       <BrandLocationPersonalityForm location={location} />
 
       <ListItemGroup>
-        <BrandLocationAdvantagesForm location={location} />
-        <BrandLocationLocaleForm location={location} />
+        <BrandLocationAddressForm location={location} />
         <BrandLocationScheduleForm location={location} />
+        <BrandLocationLocaleForm location={location} />
+        <BrandLocationAdvantagesForm location={location} />
         <BrandLocationContactForm location={location} />
-        <BrandLocationAdditionalInfo location={location} />
       </ListItemGroup>
     </FormView>
   </PageView>

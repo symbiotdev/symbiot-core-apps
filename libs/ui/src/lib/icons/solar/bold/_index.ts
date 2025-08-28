@@ -50,6 +50,7 @@ import { MapPointWave } from './MapPointWave';
 import { ChecklistMinimalistic } from './ChecklistMinimalistic';
 import { Earth } from './Earth';
 import { ChatRoundDots } from './ChatRoundDots';
+import { MapPoint } from './MapPoint';
 
 export const Map: IconMap = {
   AddCircle,
@@ -82,6 +83,7 @@ export const Map: IconMap = {
   Login,
   Logout2,
   MagicStick,
+  MapPoint,
   MapPointWave,
   Maximize,
   MenuDotsCircle,

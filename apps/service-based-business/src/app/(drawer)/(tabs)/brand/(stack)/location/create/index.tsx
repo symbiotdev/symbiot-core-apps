@@ -174,8 +174,6 @@ export default () => {
         country: value.country,
         usState: value.state,
         address: 'Address',
-        lat: 1,
-        lng: 2,
         email: value.email,
         remark: value.remark,
         links: value.instagram ? [value.instagram] : [],

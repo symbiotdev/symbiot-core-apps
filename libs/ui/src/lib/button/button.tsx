@@ -40,12 +40,14 @@ export const Button = memo(
     label,
     loading,
     icon,
+    fontSize,
     type = 'default',
     onPress,
     ...xStackProps
   }: XStackProps & {
     loading?: boolean;
     label?: string;
+    fontSize?: number;
     icon?: ReactElement<{ color?: string; size?: number }>;
     color?: ColorTokens;
     type?: ButtonType;
@@ -89,7 +91,11 @@ export const Button = memo(
                 color,
               })}
 
-            {!!label && <MediumText color={color}>{label}</MediumText>}
+            {!!label && (
+              <MediumText fontSize={fontSize} color={color}>
+                {label}
+              </MediumText>
+            )}
           </>
         )}
       </XStack>

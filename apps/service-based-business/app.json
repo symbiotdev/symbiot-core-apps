@@ -131,6 +131,12 @@
             "./assets/audio/new_notification_sound.wav"
           ]
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location to find your brand location as quickly as possible."
+        }
       ]
     ],
     "extra": {

@@ -18,11 +18,13 @@ export * from './lib/queries/use-brand-industry.query';
 export * from './lib/queries/use-brand-location.query';
 
 export * from './lib/queries/use-gender.query';
+export * from './lib/queries/use-location.query';
 
 export * from './lib/types/account';
 export * from './lib/types/account-auth';
 export * from './lib/types/account-device';
 export * from './lib/types/attachment';
+export * from './lib/types/location';
 export * from './lib/types/notification';
 export * from './lib/types/account-preferences';
 

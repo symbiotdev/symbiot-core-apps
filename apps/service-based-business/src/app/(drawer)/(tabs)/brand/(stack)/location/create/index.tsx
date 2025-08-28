@@ -15,6 +15,9 @@ type Value = {
   email: string;
   instagram: LinkItem;
   remark: string;
+  floor: string;
+  entrance: string;
+  address: string;
 };
 
 const TypedSurvey = Survey<Value>;
@@ -49,7 +52,7 @@ export default () => {
       },
       {
         id: 'country',
-        nextId: 'weekdays-schedule',
+        nextId: 'address',
         title: form.country.title,
         subtitle: form.country.subtitle,
         elements: [
@@ -68,6 +71,38 @@ export default () => {
               showWhen: (formValue) =>
                 formValue.country?.toLowerCase() === 'us',
               ...form.usState,
+            },
+          },
+        ],
+      },
+      {
+        id: 'address',
+        nextId: 'weekdays-schedule',
+        title: form.address.title,
+        subtitle: form.address.subtitle,
+        elements: [
+          {
+            type: 'address',
+            props: {
+              ...form.address,
+              name: 'address',
+              label: '',
+            },
+          },
+          {
+            type: 'input',
+            props: {
+              ...form.entrance,
+              name: 'entrance',
+            },
+          },
+          {
+            type: 'input',
+            props: {
+              ...form.floor,
+              name: 'floor',
+              regex: /\d+/,
+              keyboardType: 'numeric',
             },
           },
         ],
@@ -171,9 +206,11 @@ export default () => {
     try {
       await createLocation({
         name: value.name,
+        address: value.address,
+        floor: value.floor,
+        entrance: value.entrance,
         country: value.country,
         usState: value.state,
-        address: 'Address',
         email: value.email,
         remark: value.remark,
         links: value.instagram ? [value.instagram] : [],

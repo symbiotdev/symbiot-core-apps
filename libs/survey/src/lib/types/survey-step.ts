@@ -21,6 +21,7 @@ export type SurveyStep<V> = {
         props: SurveyStepElement<V> & {
           placeholder: string;
           label?: string;
+          regex?: RegExp;
           maxLength?: number;
           keyboardType?: KeyboardType;
           enterKeyHint?: TextInputProps['enterKeyHint'];
@@ -100,6 +101,14 @@ export type SurveyStep<V> = {
           label?: string;
           sheetLabel?: string;
           placeholder?: string;
+        };
+      }
+    | {
+        type: 'address';
+        props: SurveyStepElement<V> & {
+          label?: string;
+          placeholder?: string;
+          enterKeyHint?: TextInputProps['enterKeyHint'];
         };
       }
     | {

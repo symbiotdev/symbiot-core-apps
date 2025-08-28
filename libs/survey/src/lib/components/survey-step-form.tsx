@@ -29,6 +29,7 @@ import {
 import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 import { CountryCode } from 'countries-and-timezones';
+import { AddressPicker } from '@symbiot-core-apps/location';
 
 export function SurveyStepForm<V>({
   value: formValue,
@@ -81,7 +82,7 @@ export function SurveyStepForm<V>({
   return (
     currentStepId === step.id && (
       <PageView scrollable withHeaderHeight withKeyboard lazy>
-        <FormView flex={1} gap="$4">
+        <FormView flex={1} gap="$5">
           <View gap="$2">
             <H2>{step.title}</H2>
             <RegularText>{step.subtitle}</RegularText>
@@ -109,6 +110,7 @@ export function SurveyStepForm<V>({
                           enterKeyHint={el.props.enterKeyHint || 'done'}
                           error={error?.message}
                           label={el.props.label}
+                          regex={el.props.regex}
                           placeholder={el.props.placeholder}
                           onChange={onChange}
                         />
@@ -219,6 +221,16 @@ export function SurveyStepForm<V>({
                           error={error?.message}
                           label={el.props.label}
                           sheetLabel={el.props.sheetLabel}
+                          placeholder={el.props.placeholder}
+                          onChange={onChange}
+                        />
+                      )}
+
+                      {el.type === 'address' && (
+                        <AddressPicker
+                          value={value as string}
+                          error={error?.message}
+                          label={el.props.label}
                           placeholder={el.props.placeholder}
                           onChange={onChange}
                         />

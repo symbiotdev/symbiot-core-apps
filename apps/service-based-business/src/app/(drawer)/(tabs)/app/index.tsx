@@ -1,4 +1,4 @@
-import { useShareApp } from '@symbiot-core-apps/shared';
+import { emitHaptic, useShareApp } from '@symbiot-core-apps/shared';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
 import { router } from 'expo-router';
@@ -19,7 +19,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
-import { View } from 'tamagui';
+import { View, XStack } from 'tamagui';
 
 export default () => {
   const share = useShareApp();
@@ -28,10 +28,10 @@ export default () => {
   const { me } = useCurrentAccount();
   const { visible: drawerVisible } = useDrawer();
 
-  const onAccountPress = useCallback(
-    () => router.push('/app/preferences/account'),
-    [],
-  );
+  const onAccountPress = useCallback(() => {
+    emitHaptic();
+    router.push('/app/preferences/account');
+  }, []);
   const onAppearancePress = useCallback(
     () => router.push('/app/preferences/appearance'),
     [],
@@ -61,7 +61,7 @@ export default () => {
   return (
     me && (
       <TabsPageView scrollable withHeaderHeight>
-        <FormView gap="$5">
+        <FormView gap="$3">
           <ActionCard
             title={t('subscription.card.title')}
             subtitle={t('subscription.card.subtitle')}
@@ -73,18 +73,27 @@ export default () => {
           />
 
           <Card flexDirection="row" alignItems="center" gap="$4">
-            <Avatar
-              url={me.avatarXsUrl}
-              name={me.name}
-              color={me.avatarColor}
-              size={50}
-            />
-            <View flex={1} gap="$2">
-              <H3 numberOfLines={1}>{me.name}</H3>
-              <MediumText color="$placeholderColor" numberOfLines={1}>
-                ID: {me.id}
-              </MediumText>
-            </View>
+            <XStack
+              alignItems="center"
+              gap="$4"
+              flex={1}
+              cursor="pointer"
+              pressStyle={{ opacity: 0.8 }}
+              onPress={onAccountPress}
+            >
+              <Avatar
+                url={me.avatarXsUrl}
+                name={me.name}
+                color={me.avatarColor}
+                size={50}
+              />
+              <View flex={1} gap="$2">
+                <H3 numberOfLines={1}>{me.name}</H3>
+                <MediumText color="$placeholderColor" numberOfLines={1}>
+                  ID: {me.id}
+                </MediumText>
+              </View>
+            </XStack>
             <QrCodeModalWithTrigger
               trigger={<Icon name="QrCode" />}
               title={`ID: ${me.id}`}
@@ -94,11 +103,6 @@ export default () => {
           </Card>
 
           <ListItemGroup title={t('shared.preferences.title')}>
-            <ListItem
-              label={t('shared.profile')}
-              icon={<Icon name="UserCircle" />}
-              onPress={onAccountPress}
-            />
             <ListItem
               label={t('shared.preferences.notifications.title')}
               icon={<Icon name="Bell" />}

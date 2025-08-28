@@ -38,7 +38,7 @@ export const Language = () => {
   return (
     <PageView scrollable withHeaderHeight>
       <FormView>
-        <Card>
+        <Card paddingVertical={0}>
           <ToggleGroup
             items={items}
             value={i18n.language}

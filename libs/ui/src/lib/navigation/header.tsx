@@ -1,5 +1,5 @@
 import { Pressable } from 'react-native';
-import { View, ViewProps, XStack } from 'tamagui';
+import { useTheme, View, ViewProps, XStack } from 'tamagui';
 import {
   NativeStackHeaderProps,
   NativeStackNavigationOptions,
@@ -26,12 +26,19 @@ export const useScreenHeaderHeight = () => {
 
 export const useScreenHeaderOptions = () => {
   const { top, left, right } = useSafeAreaInsets();
+  const theme = useTheme();
 
   const header = useCallback(
     (props: NativeStackHeaderProps) => (
-      <ScreenHeader {...props} top={top} left={left} right={right} />
+      <ScreenHeader
+        {...props}
+        top={top}
+        left={left}
+        right={right}
+        borderBottomColor={theme.background1?.val}
+      />
     ),
-    [left, right, top],
+    [left, right, theme.background1?.val, top],
   );
 
   return {
@@ -99,10 +106,12 @@ export const ScreenHeader = memo(
     left,
     right,
     options,
+    borderBottomColor,
   }: NativeStackHeaderProps & {
     top: number;
     left: number;
     right: number;
+    borderBottomColor?: string;
   }) => {
     const withContent =
       !!options.headerLeft ||
@@ -118,11 +127,10 @@ export const ScreenHeader = memo(
         paddingLeft={left + headerHorizontalPadding}
         paddingRight={right + headerHorizontalPadding}
         height={top + (withContent ? headerHeight : 0)}
+        borderBottomWidth={1}
+        borderBottomColor={borderBottomColor}
       >
-        <NavigationBackground
-          borderBottomWidth={1}
-          borderBottomColor="$background1"
-        />
+        <NavigationBackground />
 
         <XStack
           flex={1}
@@ -175,6 +183,7 @@ export const ModalHeader = memo(
     onClose?: () => void;
   }) => {
     const { top, left, right } = useSafeAreaInsets();
+    const theme = useTheme();
 
     const adjustedTop = useMemo(() => (isTablet ? top : 0), [top]);
 
@@ -191,11 +200,10 @@ export const ModalHeader = memo(
         height={adjustedTop + (height || headerHeight)}
         paddingLeft={left + headerHorizontalPadding}
         paddingRight={right + headerHorizontalPadding}
+        borderBottomWidth={1}
+        borderBottomColor={theme.background1?.val}
       >
-        <NavigationBackground
-          borderBottomWidth={1}
-          borderBottomColor="$background1"
-        />
+        <NavigationBackground />
 
         <XStack
           gap="$5"

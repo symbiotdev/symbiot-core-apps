@@ -6,6 +6,7 @@ import {
   getTimezonesForCountry,
 } from 'countries-and-timezones';
 import { useEffect, useMemo } from 'react';
+import { Platform } from 'react-native';
 
 export const TimezonePicker = ({
   value,
@@ -41,7 +42,7 @@ export const TimezonePicker = ({
       .map(({ name, utcOffsetStr }) => {
         return {
           value: name,
-          label: utcOffsetStr,
+          label: `${utcOffsetStr}${Platform.OS === 'ios' ? ` · ${name}` : ''}`,
           description: name,
         };
       })

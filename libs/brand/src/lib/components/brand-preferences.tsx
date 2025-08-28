@@ -232,9 +232,7 @@ export const BrandPreferences = () => {
                 type="instagram"
                 enterKeyHint="done"
                 value={value}
-                label={t('brand.information.preferences.form.instagram.label', {
-                  ns: 'app',
-                })}
+                label={t('brand.information.preferences.form.instagram.label')}
                 placeholder={t(
                   'brand.information.preferences.form.instagram.placeholder',
                 )}

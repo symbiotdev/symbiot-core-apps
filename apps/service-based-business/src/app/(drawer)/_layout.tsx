@@ -49,7 +49,7 @@ export default () => {
                 width: drawerPermanent ? 'auto' : drawerMenuMaxWidth,
                 overflow: 'hidden',
                 display:
-                  !drawerVisible || currentEntitiesLoaded ? 'none' : undefined,
+                  !drawerVisible || !currentEntitiesLoaded ? 'none' : undefined,
                 borderRightWidth: 0,
               },
               headerBackground: () => <NavigationBackground />,

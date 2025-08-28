@@ -52,6 +52,7 @@ export type IconName =
   | 'TuningSquare'
   | 'Unread'
   | 'UserCircle'
+  | 'UsersGroupRounded'
   | 'Widget'
   | 'Widget3';
 export type IconMap = Record<IconName, (props: IconProps) => ReactElement>;

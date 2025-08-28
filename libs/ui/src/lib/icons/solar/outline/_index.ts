@@ -51,6 +51,7 @@ import { ChecklistMinimalistic } from './ChecklistMinimalistic';
 import { Earth } from './Earth';
 import { ChatRoundDots } from './ChatRoundDots';
 import { MapPoint } from './MapPoint';
+import { UsersGroupRounded } from './UsersGroupRounded';
 
 export const Map: IconMap = {
   AddCircle,
@@ -103,6 +104,7 @@ export const Map: IconMap = {
   TuningSquare,
   Unread,
   UserCircle,
+  UsersGroupRounded,
   Widget,
   Widget3,
 };

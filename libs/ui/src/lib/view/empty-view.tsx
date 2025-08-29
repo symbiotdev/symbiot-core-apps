@@ -4,6 +4,7 @@ import { RegularText } from '../text/text';
 import { IconName } from '../icons/config';
 import { Icon } from '../icons';
 import { useTranslation } from 'react-i18next';
+import { FormView } from './form-view';
 
 export const EmptyView = ({
   iconName,
@@ -19,7 +20,7 @@ export const EmptyView = ({
   const { t } = useTranslation();
 
   return (
-    <View
+    <FormView
       flex={1}
       justifyContent="center"
       alignItems="center"
@@ -27,17 +28,17 @@ export const EmptyView = ({
       gap="$5"
       {...viewProps}
     >
-      {!!iconName && (
-        <Icon name={iconName} size={40} color="$placeholderColor" />
-      )}
+      {!!iconName && <Icon name={iconName} size={60} />}
 
-      {!!title && <H2 textAlign="center">{title}</H2>}
+      <View gap="$2">
+        {!!title && <H2 textAlign="center">{title}</H2>}
 
-      <RegularText color="$placeholderColor" textAlign="center" maxWidth={500}>
-        {message || t('shared.its_empty')}
-      </RegularText>
+        <RegularText textAlign="center" maxWidth={500}>
+          {message || t('shared.its_empty')}
+        </RegularText>
+      </View>
 
       {children}
-    </View>
+    </FormView>
   );
 };

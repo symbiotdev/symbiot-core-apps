@@ -53,6 +53,7 @@ export * from './lib/popover/context-menu-popover';
 
 export * from './lib/qr/qr-code';
 export * from './lib/qr/qr-code-modal';
+export * from './lib/qr/qr-code-scan-modal';
 
 export * from './lib/text/heading';
 export * from './lib/text/text';

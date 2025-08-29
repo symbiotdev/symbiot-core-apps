@@ -1,10 +1,21 @@
 import { Survey, SurveyStep } from '@symbiot-core-apps/survey';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { LinkItem, PhoneValue, WeekdaySchedule } from '@symbiot-core-apps/ui';
+import {
+  Button,
+  FormView,
+  H2,
+  Icon,
+  LinkItem,
+  PageView,
+  PhoneValue,
+  RegularText,
+  WeekdaySchedule,
+} from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { useCreateBrandLocationQuery } from '@symbiot-core-apps/api';
 import { useBrandLocationForm } from '@symbiot-core-apps/brand-location';
+import { View } from 'tamagui';
 
 type Value = {
   name: string;
@@ -23,12 +34,12 @@ type Value = {
 const TypedSurvey = Survey<Value>;
 
 export default () => {
-  const { t } = useTranslation();
   const { mutateAsync: createLocation } = useCreateBrandLocationQuery();
   const form = useBrandLocationForm();
 
   const createdRef = useRef(false);
 
+  const [started, setStarted] = useState(false);
   const [processing, setProcessing] = useState(false);
 
   const steps: SurveyStep<Value>[] = useMemo(
@@ -226,16 +237,54 @@ export default () => {
     }
   }, []);
 
+  if (!started) {
+    return <Intro onStart={() => setStarted(true)} />;
+  }
+
   return (
     <TypedSurvey
       steps={steps}
       loading={processing}
       introIconName="MapPointWave"
-      introTitle={t('brand.locations.upsert.intro.title')}
-      introSubtitle={t('brand.locations.upsert.intro.subtitle')}
-      introActionLabel={t('brand.locations.upsert.intro.button.label')}
       ignoreLeaveConfirmation={createdRef.current}
       onFinish={onFinish}
     />
+  );
+};
+
+const Intro = ({ onStart }: { onStart: () => void }) => {
+  const { t } = useTranslation();
+
+  return (
+    <PageView
+      scrollable
+      alignItems="center"
+      justifyContent="center"
+      gap="$10"
+      animation="medium"
+      opacity={1}
+      enterStyle={{ opacity: 0 }}
+      exitStyle={{ opacity: 0 }}
+    >
+      <FormView flex={1}>
+        <View marginVertical="auto" alignItems="center" gap="$5">
+          <Icon name="MapPointWave" size={60} />
+
+          <View gap="$2">
+            <H2 textAlign="center">
+              {t('brand.locations.upsert.intro.title')}
+            </H2>
+            <RegularText textAlign="center">
+              {t('brand.locations.upsert.intro.subtitle')}
+            </RegularText>
+          </View>
+        </View>
+
+        <Button
+          label={t('brand.locations.upsert.intro.button.label')}
+          onPress={onStart}
+        />
+      </FormView>
+    </PageView>
   );
 };

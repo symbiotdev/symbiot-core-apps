@@ -1,11 +1,9 @@
 import {
   headerBackButtonIconName,
   HeaderButton,
-  IconName,
   LoadingView,
   Progress,
 } from '@symbiot-core-apps/ui';
-import { SurveyIntro } from './survey-intro';
 import { SurveyStep } from '../types/survey-step';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SurveyStepsFlow } from './survey-steps-flow';
@@ -16,19 +14,11 @@ import { useTranslation } from 'react-i18next';
 
 export function Survey<V extends object>({
   steps,
-  introIconName,
-  introTitle,
-  introSubtitle,
-  introActionLabel,
   ignoreLeaveConfirmation,
   loading,
   onFinish: onEmitFinish,
 }: {
   steps: SurveyStep<V>[];
-  introTitle: string;
-  introSubtitle: string;
-  introActionLabel: string;
-  introIconName: IconName;
   loading?: boolean;
   ignoreLeaveConfirmation?: boolean;
   onFinish: (value: V) => void;
@@ -38,18 +28,13 @@ export function Survey<V extends object>({
 
   const valueRef = useRef<V>({} as V);
 
-  const [currentStepId, setCurrentStepId] = useState<string>();
+  const [currentStepId, setCurrentStepId] = useState<string>(steps[0].id);
 
   const progress = useMemo(
     () =>
       (100 / steps.length) *
       (steps.findIndex((step) => step.id === currentStepId) + 1),
     [currentStepId, steps],
-  );
-
-  const onStart = useCallback(
-    () => setCurrentStepId(steps[0].id),
-    [setCurrentStepId, steps],
   );
 
   const goToPrevStep = useKeyboardDismisser(
@@ -136,26 +121,12 @@ export function Survey<V extends object>({
   }
 
   return (
-    <>
-      {currentStepId === undefined && (
-        <SurveyIntro
-          iconName={introIconName}
-          title={introTitle}
-          subtitle={introSubtitle}
-          actionLabel={introActionLabel}
-          onStart={onStart}
-        />
-      )}
-
-      {!!currentStepId && (
-        <SurveyStepsFlow
-          currentStepId={currentStepId}
-          steps={steps}
-          value={valueRef.current}
-          onChange={onChange}
-          onSkip={goToNextStep}
-        />
-      )}
-    </>
+    <SurveyStepsFlow
+      currentStepId={currentStepId}
+      steps={steps}
+      value={valueRef.current}
+      onChange={onChange}
+      onSkip={goToNextStep}
+    />
   );
 }

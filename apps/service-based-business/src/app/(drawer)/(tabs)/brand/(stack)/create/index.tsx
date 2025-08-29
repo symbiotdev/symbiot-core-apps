@@ -1,7 +1,15 @@
 import { Survey, SurveyStep } from '@symbiot-core-apps/survey';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import * as yup from 'yup';
-import { getAppLinkSchema } from '@symbiot-core-apps/ui';
+import {
+  Button,
+  FormView,
+  getAppLinkSchema,
+  H2,
+  Icon,
+  PageView,
+  RegularText,
+} from '@symbiot-core-apps/ui';
 import {
   Link,
   useAppCompetitorSource,
@@ -14,6 +22,7 @@ import { useAuthBrand } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
+import { View } from 'tamagui';
 
 const codeMaxLength = 64;
 
@@ -36,7 +45,6 @@ const isIndustriesEditable = Boolean(
 
 export default () => {
   const { t } = useTranslation();
-  const { icons } = useApp();
   const switchBrand = useAuthBrand();
   const { data: referralSources, isPending: referralSourcesLoading } =
     useAppReferralSource();
@@ -48,6 +56,7 @@ export default () => {
 
   const createdRef = useRef(false);
 
+  const [started, setStarted] = useState(false);
   const [processing, setProcessing] = useState(false);
 
   const steps: SurveyStep<Value>[] = useMemo(
@@ -310,16 +319,52 @@ export default () => {
     [mutateAsync, switchBrand],
   );
 
+  if (!started) {
+    return <Intro onStart={() => setStarted(true)} />;
+  }
+
   return (
     <TypedSurvey
       loading={processing}
       steps={steps}
-      introIconName={icons.Workspace}
-      introTitle={t('brand.create.intro.title')}
-      introSubtitle={t('brand.create.intro.subtitle')}
-      introActionLabel={t('brand.create.intro.button.label')}
       ignoreLeaveConfirmation={createdRef.current}
       onFinish={onFinish}
     />
+  );
+};
+
+const Intro = ({ onStart }: { onStart: () => void }) => {
+  const { icons } = useApp();
+  const { t } = useTranslation();
+
+  return (
+    <PageView
+      scrollable
+      alignItems="center"
+      justifyContent="center"
+      gap="$10"
+      animation="medium"
+      opacity={1}
+      enterStyle={{ opacity: 0 }}
+      exitStyle={{ opacity: 0 }}
+    >
+      <FormView flex={1}>
+        <View marginVertical="auto" alignItems="center" gap="$5">
+          <Icon name={icons.Workspace} size={60} />
+
+          <View gap="$2">
+            <H2 textAlign="center">{t('brand.create.intro.title')}</H2>
+            <RegularText textAlign="center">
+              {t('brand.create.intro.subtitle')}
+            </RegularText>
+          </View>
+        </View>
+
+        <Button
+          label={t('brand.create.intro.button.label')}
+          onPress={onStart}
+        />
+      </FormView>
+    </PageView>
   );
 };

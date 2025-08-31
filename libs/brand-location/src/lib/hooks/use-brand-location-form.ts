@@ -108,55 +108,38 @@ export const useBrandLocationForm = () => {
       },
       phone: {
         defaultValue: phoneDefaultValue,
-        title: t('brand.locations.upsert.form.phone.title'),
-        subtitle: t('brand.locations.upsert.form.phone.subtitle'),
         label: t('brand.locations.upsert.form.phone.label'),
         placeholder: t('brand.locations.upsert.form.phone.placeholder'),
         scheme: getPhoneInputSchema(
-          t('brand.locations.upsert.form.phone.error.invalid'),
-        ),
-        optionalScheme: getPhoneInputSchema(
           t('brand.locations.upsert.form.phone.error.invalid'),
           true,
         ),
       },
       email: {
-        title: t('brand.locations.upsert.form.email.title'),
-        subtitle: t('brand.locations.upsert.form.email.subtitle'),
         label: t('brand.locations.upsert.form.email.label'),
         placeholder: t('brand.locations.upsert.form.email.placeholder'),
         scheme: yup
-          .string()
-          .required(t('brand.locations.upsert.form.email.error.required'))
-          .email(t('brand.locations.upsert.form.email.error.invalid_format')),
-        optionalScheme: yup
           .string()
           .nullable()
           .email(t('brand.locations.upsert.form.email.error.invalid_format'))
           .ensure(),
       },
       instagram: {
-        title: t('brand.locations.upsert.form.instagram.title'),
-        subtitle: t('brand.locations.upsert.form.instagram.subtitle'),
         label: t('brand.locations.upsert.form.instagram.label'),
         placeholder: t('brand.locations.upsert.form.instagram.placeholder'),
-        optionalScheme: getAppLinkSchema(
+        scheme: getAppLinkSchema(
           t('brand.locations.upsert.form.instagram.error.validation'),
           true,
         ).nullable(),
-        scheme: getAppLinkSchema(
-          t('brand.locations.upsert.form.instagram.error.validation'),
-        ).required(t('brand.locations.upsert.form.instagram.error.required')),
       },
       remark: {
-        title: t('brand.locations.upsert.form.remark.title'),
-        subtitle: t('brand.locations.upsert.form.remark.subtitle'),
         label: t('brand.locations.upsert.form.remark.label'),
         placeholder: t('brand.locations.upsert.form.remark.placeholder'),
-        optionalScheme: yup.string().nullable().ensure(),
-        scheme: yup
-          .string()
-          .required(t('brand.locations.upsert.form.remark.error.required')),
+        scheme: yup.string().nullable().ensure(),
+      },
+      contactInfo: {
+        title: t('brand.locations.upsert.form.contact_info.title'),
+        subtitle: t('brand.locations.upsert.form.contact_info.subtitle'),
       },
       gallery: {
         maxImages: 10,

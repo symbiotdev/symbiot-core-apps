@@ -18,7 +18,6 @@ export type ToggleGroupValue = unknown | unknown[];
 export type ToggleOnChange = (value: ToggleGroupValue) => void;
 
 export const toggleItemMinHeight = 24;
-export const toggleGap = 12;
 
 export const ToggleGroup = ({
   items,

@@ -10,8 +10,14 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
-import { useCreateBrandLocationQuery } from '@symbiot-core-apps/api';
-import { useBrandLocationForm } from '@symbiot-core-apps/brand-location';
+import {
+  BrandLocationAdvantage,
+  useCreateBrandLocationQuery,
+} from '@symbiot-core-apps/api';
+import {
+  useBrandLocationAdvantageOptions,
+  useBrandLocationForm,
+} from '@symbiot-core-apps/brand-location';
 
 type Value = {
   name: string;
@@ -25,12 +31,15 @@ type Value = {
   floor: string;
   entrance: string;
   address: string;
+  advantages: BrandLocationAdvantage[];
 };
 
 const TypedSurvey = Survey<Value>;
 
 export default () => {
   const { mutateAsync: createLocation } = useCreateBrandLocationQuery();
+  const { advantages, advantagesLoading, advantagesError } =
+    useBrandLocationAdvantageOptions();
   const form = useBrandLocationForm();
 
   const createdRef = useRef(false);
@@ -112,11 +121,20 @@ export default () => {
               keyboardType: 'numeric',
             },
           },
+          {
+            type: 'textarea',
+            props: {
+              ...form.remark,
+              scheme: form.remark.scheme,
+              name: 'remark',
+              enterKeyHint: 'done',
+            },
+          },
         ],
       },
       {
         id: 'weekdays-schedule',
-        nextId: 'phone',
+        nextId: 'advantages',
         title: form.schedules.title,
         subtitle: form.schedules.subtitle,
         elements: [
@@ -131,53 +149,49 @@ export default () => {
         ],
       },
       {
-        id: 'phone',
-        nextId: 'email',
-        skippable: true,
-        title: form.phone.title,
-        subtitle: form.phone.subtitle,
+        id: 'advantages',
+        nextId: 'contact-info',
+        title: form.advantages.title,
+        subtitle: form.address.subtitle,
+        elements: [
+          {
+            type: 'toggle-group',
+            props: {
+              ...form.advantages,
+              name: 'advantages',
+              optionsLoading: advantagesLoading,
+              optionsError: advantagesError,
+              options: advantages,
+            },
+          },
+        ],
+      },
+      {
+        id: 'contact-info',
+        nextId: null,
+        title: form.contactInfo.title,
+        subtitle: form.contactInfo.subtitle,
         elements: [
           {
             type: 'phone',
             props: {
               ...form.phone,
               name: 'phone',
-              enterKeyHint: 'done',
-              label: '',
+              enterKeyHint: 'next',
             },
           },
-        ],
-      },
-      {
-        id: 'email',
-        nextId: 'instagram',
-        skippable: true,
-        title: form.email.title,
-        subtitle: form.email.subtitle,
-        elements: [
           {
             type: 'email',
             props: {
               ...form.email,
               name: 'email',
               enterKeyHint: 'done',
-              label: '',
             },
           },
-        ],
-      },
-      {
-        id: 'instagram',
-        nextId: 'remark',
-        title: form.instagram.title,
-        subtitle: form.instagram.subtitle,
-        skippable: true,
-        elements: [
           {
             type: 'app-link',
             props: {
               ...form.instagram,
-              label: '',
               type: 'instagram',
               name: 'instagram',
               enterKeyHint: 'done',
@@ -185,26 +199,8 @@ export default () => {
           },
         ],
       },
-      {
-        id: 'remark',
-        nextId: null,
-        title: form.remark.title,
-        subtitle: form.remark.subtitle,
-        skippable: true,
-        elements: [
-          {
-            type: 'textarea',
-            props: {
-              ...form.remark,
-              label: '',
-              name: 'remark',
-              enterKeyHint: 'done',
-            },
-          },
-        ],
-      },
     ],
-    [form],
+    [form, advantages, advantagesLoading, advantagesError],
   );
 
   const onFinish = useCallback(async (value: Value) => {
@@ -223,6 +219,7 @@ export default () => {
         links: value.instagram ? [value.instagram] : [],
         phones: value.phone ? [value.phone] : [],
         schedules: value.schedules,
+        advantages: value.advantages?.map(({ id }) => id),
       });
 
       createdRef.current = true;

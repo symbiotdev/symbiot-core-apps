@@ -64,7 +64,7 @@ export function SurveyStepsFlow<V>({
           data={steps}
           modeConfig={{
             snapDirection: 'left',
-            stackInterval: 100,
+            stackInterval: 300,
           }}
           containerStyle={{
             flexGrow: 1,

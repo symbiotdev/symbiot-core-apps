@@ -128,7 +128,7 @@ export const BrandLocationAddressForm = ({
       yup
         .object()
         .shape({
-          remark: form.remark.optionalScheme,
+          remark: form.remark.scheme,
         })
         .required(),
     ),
@@ -226,8 +226,8 @@ export const BrandLocationAddressForm = ({
                 enterKeyHint="done"
                 value={value}
                 error={error?.message}
-                label={form.remark.title}
-                placeholder={form.remark.subtitle}
+                label={form.remark.label}
+                placeholder={form.remark.placeholder}
                 onChange={onChange}
                 onBlur={remarkHandleSubmit(updateRemark)}
               />

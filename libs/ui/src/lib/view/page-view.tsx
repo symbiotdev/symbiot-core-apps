@@ -101,9 +101,9 @@ const PageContent = ({
   ignoreTopSafeArea?: boolean;
   ignoreBottomSafeArea?: boolean;
 }) => {
-  const { top, bottom, left, right } = useSafeAreaInsets();
   const headerHeight = useScreenHeaderHeight();
   const { currentHeight: keyboardHeight } = useKeyboard();
+  const { top, bottom, left, right } = useSafeAreaInsets();
 
   return (
     <ContainerView

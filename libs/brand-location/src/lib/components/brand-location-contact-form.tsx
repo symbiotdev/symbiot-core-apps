@@ -43,7 +43,7 @@ export const BrandLocationContactForm = ({
       yup
         .object()
         .shape({
-          phone: form.phone.optionalScheme,
+          phone: form.phone.scheme,
         })
         .required(),
     ),
@@ -79,7 +79,7 @@ export const BrandLocationContactForm = ({
       yup
         .object()
         .shape({
-          email: form.email.optionalScheme,
+          email: form.email.scheme,
         })
         .required(),
     ),
@@ -112,7 +112,7 @@ export const BrandLocationContactForm = ({
         yup
           .object()
           .shape({
-            instagram: form.instagram.optionalScheme,
+            instagram: form.instagram.scheme,
           })
           .required(),
       ),

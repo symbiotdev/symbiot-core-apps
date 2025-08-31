@@ -151,7 +151,7 @@ export const ScreenHeader = memo(
 
         {typeof options.headerTitle === 'string' && (
           <H4
-            flex={1}
+            flex={4}
             zIndex={1}
             textAlign="center"
             lineHeight={headerButtonSize}
@@ -161,7 +161,9 @@ export const ScreenHeader = memo(
         )}
 
         {typeof options.headerTitle === 'function' && (
-          <View flex={1}>{options.headerTitle({ children: '' })}</View>
+          <View flex={4} alignItems="center">
+            {options.headerTitle({ children: '' })}
+          </View>
         )}
 
         <SideElement
@@ -221,13 +223,13 @@ export const ModalHeader = memo(
         />
 
         {typeof headerTitle === 'string' && (
-          <H4 flex={1} textAlign="center" zIndex={1}>
+          <H4 flex={4} textAlign="center" zIndex={1}>
             {headerTitle}
           </H4>
         )}
 
         {typeof headerTitle === 'function' && (
-          <View flex={1}>{headerTitle()}</View>
+          <View flex={4} alignItems="center">{headerTitle()}</View>
         )}
 
         <SideElement

@@ -85,7 +85,7 @@ export const QrCodeModal = ({
           <QrCode size={qrSize} value={qrValue} content={qrContent} />
 
           {!!title && (
-            <H5 textAlign="center" color="$placeholderColor" maxWidth={qrSize}>
+            <H5 textAlign="center" maxWidth={qrSize}>
               {title}
             </H5>
           )}

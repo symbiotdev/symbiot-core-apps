@@ -11,6 +11,7 @@ import { MediaPicker } from './media-picker';
 import { Platform } from 'react-native';
 import { Spinner } from '../loading/spinner';
 import { defaultPageHorizontalPadding } from '../view/page-view';
+import { emitHaptic } from '@symbiot-core-apps/shared';
 
 const MediaList = AnimatedList<ImageSource | string>;
 
@@ -70,7 +71,10 @@ export const GalleryPicker = ({
             top={-5}
             size={24}
             zIndex={1}
-            onPress={() => removeImage(index)}
+            onPress={() => {
+              emitHaptic();
+              void removeImage(index);
+            }}
           />
         )}
 

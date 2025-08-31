@@ -20,6 +20,7 @@ import { useLocationReverseQuery } from '@symbiot-core-apps/api';
 import { View, XStack } from 'tamagui';
 import { useTranslation } from 'react-i18next';
 import { Linking, TextInputProps } from 'react-native';
+import { emitHaptic } from '@symbiot-core-apps/shared';
 
 export const AddressPicker = ({
   onChange,
@@ -61,6 +62,8 @@ export const AddressPicker = ({
   );
 
   const onPress = useCallback(async () => {
+    emitHaptic();
+
     setLoading(true);
 
     try {

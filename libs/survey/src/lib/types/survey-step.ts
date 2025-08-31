@@ -1,6 +1,6 @@
 import { KeyboardType, TextInputProps } from 'react-native';
 import * as yup from 'yup';
-import { AppLinkType, ToggleGroupItem } from '@symbiot-core-apps/ui';
+import { AppLinkType, PickerItem, ToggleGroupItem } from '@symbiot-core-apps/ui';
 
 type SurveyStepElement<V> = {
   name: string;
@@ -74,10 +74,22 @@ export type SurveyStep<V> = {
     | {
         type: 'toggle-group';
         props: SurveyStepElement<V> & {
+          label?: string;
           multiselect?: boolean;
           optionsLoading?: boolean;
           optionsError?: string | null;
           options?: ToggleGroupItem[];
+        };
+      }
+    | {
+        type: 'select-picker';
+        props: SurveyStepElement<V> & {
+          label?: string;
+          sheetLabel?: string;
+          placeholder?: string;
+          optionsLoading?: boolean;
+          optionsError?: string | null;
+          options?: PickerItem[];
         };
       }
     | {

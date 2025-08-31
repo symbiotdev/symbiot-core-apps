@@ -106,6 +106,7 @@ export default () => {
                 {
                   type: 'toggle-group',
                   props: {
+                    label: '',
                     name: 'industryId',
                     scheme: yup.string().required(),
                     optionsLoading: brandIndustriesLoading,
@@ -157,6 +158,7 @@ export default () => {
           {
             type: 'toggle-group',
             props: {
+              label: '',
               name: 'referralSourceId',
               scheme: yup.string().required(),
               optionsLoading: referralSourcesLoading,
@@ -208,6 +210,7 @@ export default () => {
           {
             type: 'toggle-group',
             props: {
+              label: '',
               name: 'competitorSourceId',
               scheme: yup.string().required(),
               optionsLoading: competitorSourcesLoading,

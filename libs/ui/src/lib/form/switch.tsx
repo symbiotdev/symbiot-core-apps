@@ -1,6 +1,7 @@
 import { Switch as UiSwitch, useTheme, View, XStack } from 'tamagui';
 import { Label } from '../text/custom';
 import { RegularText } from '../text/text';
+import { Platform } from 'react-native';
 
 export const Switch = ({
   label,
@@ -20,7 +21,9 @@ export const Switch = ({
   return (
     <XStack alignItems="flex-start" justifyContent="space-between" gap="$5">
       <View flex={1}>
-        {label && <Label lineHeight={22}>{label}</Label>}
+        {label && (
+          <Label lineHeight={Platform.OS === 'web' ? 28 : 22}>{label}</Label>
+        )}
 
         {description && (
           <RegularText fontSize={12} color="$placeholderColor">

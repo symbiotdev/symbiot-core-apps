@@ -148,13 +148,21 @@ export const useAccountAuthRefreshTokenQuery = () => {
 };
 
 export const useAccountAuthSignOutQuery = () => {
-  const { removeTokens } = useAuthTokens();
+  const { removeTokens, tokens } = useAuthTokens();
 
   return useMutation({
     mutationFn: async () => {
       await removeTokens();
 
-      return axios.post('/api/account-auth/sign-out');
+      return axios.post(
+        '/api/account-auth/sign-out',
+        {},
+        {
+          headers: {
+            [authTokenHeaderKey.access]: tokens.access,
+          },
+        },
+      );
     },
   });
 };

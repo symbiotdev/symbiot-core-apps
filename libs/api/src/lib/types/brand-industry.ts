@@ -4,3 +4,8 @@ export type BrandIndustry = {
   rate: number;
   iconName?: string;
 }
+
+export type BrandIndustryServiceType = {
+  id: string;
+  name: string;
+}

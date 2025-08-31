@@ -2,6 +2,14 @@ export function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
+export function getValueByObjectPath<T>(obj: T, path: string) {
+  return path
+    .split('.')
+    .reduce<
+      unknown | undefined
+    >((o, key) => (key && typeof o === 'object' && o !== null && key in o ? (o as Record<string, unknown>)?.[key] : undefined), obj);
+}
+
 export function objectsEqual(a: unknown, b: unknown): boolean {
   if (a === b) return true;
 
@@ -36,7 +44,7 @@ export function objectsEqual(a: unknown, b: unknown): boolean {
 
 export function arraysOfObjectsEqual(
   arrA: unknown[],
-  arrB: unknown[]
+  arrB: unknown[],
 ): boolean {
   if (!Array.isArray(arrA) || !Array.isArray(arrB)) return false;
   if (arrA.length !== arrB.length) return false;

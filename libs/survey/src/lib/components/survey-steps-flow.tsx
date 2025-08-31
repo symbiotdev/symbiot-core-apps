@@ -34,15 +34,14 @@ export function SurveyStepsFlow<V>({
 
   useEffect(() => {
     const nextIndex = steps.findIndex(({ id }) => id === currentStepId);
-    const carousel = carouselRef.current;
 
-    if (carousel && nextIndex !== carousel.getCurrentIndex()) {
-      carousel.scrollTo({
+    if (width && carouselRef.current) {
+      carouselRef.current.scrollTo({
         index: nextIndex,
-        animated: true,
+        animated: nextIndex !== carouselRef.current.getCurrentIndex(),
       });
     }
-  }, [currentStepId, steps]);
+  }, [width, currentStepId, steps]);
 
   return (
     <View

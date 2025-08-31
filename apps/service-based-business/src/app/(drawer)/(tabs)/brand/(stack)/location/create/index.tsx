@@ -158,6 +158,7 @@ export default () => {
             type: 'toggle-group',
             props: {
               ...form.advantages,
+              label: '',
               name: 'advantages',
               optionsLoading: advantagesLoading,
               optionsError: advantagesError,

@@ -1,4 +1,4 @@
-import { View, XStack, XStackProps } from 'tamagui';
+import { View, ViewProps, XStack, XStackProps } from 'tamagui';
 import { memo, ReactElement } from 'react';
 import { RegularText } from '../text/text';
 import { Icon } from '../icons';
@@ -6,6 +6,7 @@ import { InitView } from '../view/init-view';
 import { emitHaptic, objectsEqual } from '@symbiot-core-apps/shared';
 import { IconName } from '../icons/config';
 import { ContainerView } from '../view/container-view';
+import { FormField } from './form-field';
 
 export type ToggleGroupItem = {
   value: unknown;
@@ -27,11 +28,13 @@ export const ToggleGroup = ({
   allowEmpty,
   loading,
   disabled,
+  label,
   renderDelay,
   noDataIcon,
   noDataTitle,
   noDataMessage,
   error,
+  viewProps,
   itemProps,
   onChange,
   onRendered,
@@ -44,10 +47,12 @@ export const ToggleGroup = ({
   loading?: boolean;
   disabled?: boolean;
   renderDelay?: number;
+  label?: string;
   noDataIcon?: IconName;
   noDataTitle?: string;
   noDataMessage?: string;
   error?: string | null;
+  viewProps?: ViewProps;
   itemProps?: XStackProps;
   onChange?: ToggleOnChange;
   onRendered?: () => void;
@@ -61,25 +66,28 @@ export const ToggleGroup = ({
       noDataMessage={noDataMessage}
     />
   ) : (
-    <ContainerView
-      lazy={Boolean(renderDelay)}
-      delay={renderDelay}
-      onRendered={onRendered}
-    >
-      {items?.map((item, index) => (
-        <Item
-          key={index}
-          item={item}
-          value={value}
-          multiselect={multiselect}
-          ignoreHaptic={ignoreHaptic}
-          allowEmpty={allowEmpty}
-          disabled={disabled}
-          onChange={onChange}
-          {...itemProps}
-        />
-      ))}
-    </ContainerView>
+    <FormField label={label}>
+      <ContainerView
+        lazy={Boolean(renderDelay)}
+        delay={renderDelay}
+        onRendered={onRendered}
+        {...viewProps}
+      >
+        {items?.map((item, index) => (
+          <Item
+            key={index}
+            item={item}
+            value={value}
+            multiselect={multiselect}
+            ignoreHaptic={ignoreHaptic}
+            allowEmpty={allowEmpty}
+            disabled={disabled}
+            onChange={onChange}
+            {...itemProps}
+          />
+        ))}
+      </ContainerView>
+    </FormField>
   );
 
 const Item = memo(
@@ -104,16 +112,18 @@ const Item = memo(
     const selected =
       multiselect && Array.isArray(value)
         ? value.some((valueItem) => objectsEqual(valueItem, item.value))
-        : value === item.value;
+        : objectsEqual(value, item.value);
 
     const onPress = () => {
       if (multiselect && Array.isArray(value)) {
         if (selected && value.length === 1 && !allowEmpty) {
           return;
         } else if (selected) {
-          onChange?.(value.filter((valueItem) => !objectsEqual(valueItem, item.value)));
+          onChange?.(
+            value.filter((valueItem) => !objectsEqual(valueItem, item.value)),
+          );
         } else {
-          onChange?.([...value, item.value])
+          onChange?.([...value, item.value]);
         }
       } else {
         if (!allowEmpty) {

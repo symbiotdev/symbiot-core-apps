@@ -2,6 +2,10 @@ export const shortName = (
   name: string,
   format: '2-first-letters' | 'trim-lastname',
 ) => {
+  if (!name) {
+    return 'A'
+  }
+
   if (format === '2-first-letters') {
     const [f, l] = name
       .split(' ')

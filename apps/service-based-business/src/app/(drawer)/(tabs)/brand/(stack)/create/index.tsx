@@ -3,12 +3,9 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import * as yup from 'yup';
 import {
   Button,
-  FormView,
+  EmptyView,
   getAppLinkSchema,
-  H2,
-  Icon,
   PageView,
-  RegularText,
 } from '@symbiot-core-apps/ui';
 import {
   Link,
@@ -22,7 +19,6 @@ import { useAuthBrand } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
-import { View } from 'tamagui';
 
 const codeMaxLength = 64;
 
@@ -340,31 +336,22 @@ const Intro = ({ onStart }: { onStart: () => void }) => {
   return (
     <PageView
       scrollable
-      alignItems="center"
-      justifyContent="center"
-      gap="$10"
       animation="medium"
       opacity={1}
       enterStyle={{ opacity: 0 }}
       exitStyle={{ opacity: 0 }}
     >
-      <FormView flex={1}>
-        <View marginVertical="auto" alignItems="center" gap="$5">
-          <Icon name={icons.Workspace} size={60} />
-
-          <View gap="$2">
-            <H2 textAlign="center">{t('brand.create.intro.title')}</H2>
-            <RegularText textAlign="center">
-              {t('brand.create.intro.subtitle')}
-            </RegularText>
-          </View>
-        </View>
-
+      <EmptyView
+        padding={0}
+        iconName={icons.Workspace}
+        title={t('brand.create.intro.title')}
+        message={t('brand.create.intro.subtitle')}
+      >
         <Button
           label={t('brand.create.intro.button.label')}
           onPress={onStart}
         />
-      </FormView>
+      </EmptyView>
     </PageView>
   );
 };

@@ -46,6 +46,13 @@ export type SurveyStep<V> = {
         };
       }
     | {
+        type: 'switch';
+        props: SurveyStepElement<V> & {
+          label?: string;
+          description?: string;
+        };
+      }
+    | {
         type: 'email';
         props: SurveyStepElement<V> & {
           label?: string;
@@ -114,6 +121,13 @@ export type SurveyStep<V> = {
     | {
         type: 'weekdays-schedule';
         props: SurveyStepElement<V>;
+      }
+    | {
+        type: 'date-picker';
+        props: SurveyStepElement<V> & {
+          label?: string;
+          placeholder?: string;
+        };
       }
   )[];
 };

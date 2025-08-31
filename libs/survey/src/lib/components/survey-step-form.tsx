@@ -12,6 +12,7 @@ import {
   Card,
   CountryPicker,
   CurrencyPicker,
+  DatePicker,
   FormView,
   H2,
   Input,
@@ -20,6 +21,7 @@ import {
   PhoneInput,
   PhoneValue,
   RegularText,
+  Switch,
   Textarea,
   ToggleGroup,
   UsStatePicker,
@@ -30,6 +32,7 @@ import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 import { CountryCode } from 'countries-and-timezones';
 import { AddressPicker } from '@symbiot-core-apps/location';
+import { DateHelper } from '@symbiot-core-apps/shared';
 
 export function SurveyStepForm<V>({
   value: formValue,
@@ -140,6 +143,15 @@ export function SurveyStepForm<V>({
                         />
                       )}
 
+                      {el.type === 'switch' && (
+                        <Switch
+                          label={el.props.label}
+                          description={el.props.description}
+                          checked={!!value}
+                          onChange={onChange}
+                        />
+                      )}
+
                       {el.type === 'textarea' && (
                         <Textarea
                           countCharacters
@@ -240,6 +252,20 @@ export function SurveyStepForm<V>({
                         <WeekdaysSchedule
                           value={value as WeekdaySchedule[]}
                           weekStartsOn={me?.preferences?.weekStartsOn}
+                          onChange={onChange}
+                        />
+                      )}
+
+                      {el.type === 'date-picker' && (
+                        <DatePicker
+                          value={value as Date}
+                          error={error?.message}
+                          formatStr={me?.preferences?.dateFormat}
+                          weekStartsOn={me?.preferences?.weekStartsOn}
+                          minDate={DateHelper.addYears(new Date(), -100)}
+                          maxDate={new Date()}
+                          label={el.props.label}
+                          placeholder={el.props.placeholder}
                           onChange={onChange}
                         />
                       )}

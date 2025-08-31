@@ -2,20 +2,16 @@ import { Survey, SurveyStep } from '@symbiot-core-apps/survey';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Button,
-  FormView,
-  H2,
-  Icon,
+  EmptyView,
   LinkItem,
   PageView,
   PhoneValue,
-  RegularText,
   WeekdaySchedule,
 } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { useCreateBrandLocationQuery } from '@symbiot-core-apps/api';
 import { useBrandLocationForm } from '@symbiot-core-apps/brand-location';
-import { View } from 'tamagui';
 
 type Value = {
   name: string;
@@ -245,7 +241,6 @@ export default () => {
     <TypedSurvey
       steps={steps}
       loading={processing}
-      introIconName="MapPointWave"
       ignoreLeaveConfirmation={createdRef.current}
       onFinish={onFinish}
     />
@@ -258,33 +253,22 @@ const Intro = ({ onStart }: { onStart: () => void }) => {
   return (
     <PageView
       scrollable
-      alignItems="center"
-      justifyContent="center"
-      gap="$10"
       animation="medium"
       opacity={1}
       enterStyle={{ opacity: 0 }}
       exitStyle={{ opacity: 0 }}
     >
-      <FormView flex={1}>
-        <View marginVertical="auto" alignItems="center" gap="$5">
-          <Icon name="MapPointWave" size={60} />
-
-          <View gap="$2">
-            <H2 textAlign="center">
-              {t('brand.locations.upsert.intro.title')}
-            </H2>
-            <RegularText textAlign="center">
-              {t('brand.locations.upsert.intro.subtitle')}
-            </RegularText>
-          </View>
-        </View>
-
+      <EmptyView
+        padding={0}
+        iconName="MapPointWave"
+        title={t('brand.locations.upsert.intro.title')}
+        message={t('brand.locations.upsert.intro.subtitle')}
+      >
         <Button
           label={t('brand.locations.upsert.intro.button.label')}
           onPress={onStart}
         />
-      </FormView>
+      </EmptyView>
     </PageView>
   );
 };

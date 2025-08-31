@@ -43,11 +43,34 @@ export default () => {
 
   const headerLeft = useCallback(
     () => (
-      <H3 lineHeight={headerButtonSize} textTransform="capitalize">
-        {DateHelper.format(selectedDate, 'LLLL yyyy', i18n.language)}
-      </H3>
+      <XStack gap="$3" alignItems="center" width="100%">
+        <View
+          position="relative"
+          alignItems="center"
+          justifyContent="center"
+          cursor="pointer"
+          pressStyle={{ opacity: 0.8 }}
+          onPress={goToday}
+        >
+          <Icon name="CalendarMinimalistic" color="$buttonTextColor1" />
+
+          <MediumText
+            position="absolute"
+            bottom={3}
+            color="$buttonTextColor1"
+            fontSize={10}
+            lineHeight={10}
+          >
+            {now.getDate()}
+          </MediumText>
+        </View>
+
+        <H3 textTransform="capitalize" flex={1} numberOfLines={1}>
+          {DateHelper.format(selectedDate, 'LLLL yyyy', i18n.language)}
+        </H3>
+      </XStack>
     ),
-    [i18n.language, selectedDate],
+    [i18n.language, now, goToday, selectedDate],
   );
 
   const renderHeaderSafeArea = useCallback(() => {
@@ -64,37 +87,17 @@ export default () => {
 
   const headerRight = useCallback(
     () =>
-      me && (
-        <XStack gap="$3">
-          <View
-            position="relative"
-            alignItems="center"
-            justifyContent="center"
-            cursor="pointer"
-            pressStyle={{ opacity: 0.8 }}
-            onPress={goToday}
-          >
-            <Icon name="CalendarMinimalistic" color="$buttonTextColor1" />
-            <MediumText
-              position="absolute"
-              bottom={3}
-              color="$buttonTextColor1"
-              fontSize={10}
-              lineHeight={10}
-            >
-              {now.getDate()}
-            </MediumText>
-          </View>
-
-          <Avatar
-            name={me.name}
-            size={headerButtonSize}
-            url={me.avatarXsUrl}
-            color={me.avatarColor}
-          />
-        </XStack>
+      me ? (
+        <Avatar
+          name={me.name}
+          size={headerButtonSize}
+          url={me.avatarXsUrl}
+          color={me.avatarColor}
+        />
+      ) : (
+        <View />
       ),
-    [me, now, goToday],
+    [me],
   );
 
   useEffect(() => {
@@ -106,7 +109,7 @@ export default () => {
   }, [headerLeft, headerRight, navigation]);
 
   return (
-    <View flex={1} marginTop={headerHeight} alignItems="center">
+    <View flex={1} marginTop={headerHeight}>
       <Calendar
         timeGridRef={timeGridRef}
         selectedDate={selectedDate}

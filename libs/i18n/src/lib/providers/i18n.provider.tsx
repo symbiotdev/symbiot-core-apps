@@ -13,8 +13,7 @@ const fallbackLanguage = 'en';
 
 void i18n.use(initReactI18next).init({
   compatibilityJSON: 'v4',
-  fallbackLng:
-    mmkvGlobalStorage.getString(LANGUAGE_STORE_KEY) || fallbackLanguage,
+  fallbackLng: fallbackLanguage,
   interpolation: {
     escapeValue: false,
   },

@@ -13,7 +13,6 @@ import {
 } from '@symbiot-core-apps/ui';
 import { CountryCode, getCountry } from 'countries-and-timezones';
 
-const remarkMaxLength = 512;
 const defaultState = states[0].abbreviation;
 const defaultCountryCode = Intl?.DateTimeFormat()
   ?.resolvedOptions()
@@ -150,7 +149,6 @@ export const useBrandLocationForm = () => {
         ).required(t('brand.locations.upsert.form.instagram.error.required')),
       },
       remark: {
-        maxLength: remarkMaxLength,
         title: t('brand.locations.upsert.form.remark.title'),
         subtitle: t('brand.locations.upsert.form.remark.subtitle'),
         label: t('brand.locations.upsert.form.remark.label'),

@@ -59,11 +59,9 @@ export const useStackScreenHeaderOptions = () => {
 const SideElement = memo((props: ViewProps) => (
   <View
     zIndex={1}
-    maxWidth="80%"
     minWidth={headerButtonSize}
     height={headerButtonSize}
     justifyContent="center"
-    alignItems="center"
     {...props}
   />
 ));
@@ -74,8 +72,8 @@ export const HeaderButton = memo(
     iconName,
     onPress,
   }: {
-    attention?: boolean;
     iconName: IconName;
+    attention?: boolean;
     onPress?: () => void;
   }) => (
     <AttentionView attention={Boolean(attention)}>
@@ -122,7 +120,11 @@ export const ScreenHeader = memo(
 
     return (
       <XStack
+        flex={1}
+        gap="$2"
         position="relative"
+        justifyContent="space-between"
+        alignItems="center"
         paddingTop={top}
         paddingLeft={left + headerHorizontalPadding}
         paddingRight={right + headerHorizontalPadding}
@@ -132,37 +134,41 @@ export const ScreenHeader = memo(
       >
         <NavigationBackground />
 
-        <XStack
+        <SideElement
           flex={1}
-          gap="$5"
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <SideElement
-            children={
-              typeof options.headerLeft === 'function'
-                ? options.headerLeft({})
-                : !!back && (
-                    <HeaderButton
-                      iconName={headerBackButtonIconName}
-                      onPress={navigation.goBack}
-                    />
-                  )
-            }
-          />
+          alignItems="flex-start"
+          children={
+            typeof options.headerLeft === 'function'
+              ? options.headerLeft({})
+              : !!back && (
+                  <HeaderButton
+                    iconName={headerBackButtonIconName}
+                    onPress={navigation.goBack}
+                  />
+                )
+          }
+        />
 
-          {typeof options.headerTitle === 'string' && (
-            <H4 zIndex={1} lineHeight={headerButtonSize}>
-              {options.headerTitle}
-            </H4>
-          )}
+        {typeof options.headerTitle === 'string' && (
+          <H4
+            flex={1}
+            zIndex={1}
+            textAlign="center"
+            lineHeight={headerButtonSize}
+          >
+            {options.headerTitle}
+          </H4>
+        )}
 
-          {typeof options.headerTitle === 'function' &&
-            options.headerTitle({ children: '' })}
+        {typeof options.headerTitle === 'function' && (
+          <View flex={1}>{options.headerTitle({ children: '' })}</View>
+        )}
 
-          <SideElement children={options.headerRight?.({})} />
-        </XStack>
+        <SideElement
+          flex={options.headerTitle ? 1 : undefined}
+          alignItems="flex-end"
+          children={options.headerRight?.({})}
+        />
       </XStack>
     );
   },
@@ -196,6 +202,9 @@ export const ModalHeader = memo(
         left={0}
         right={0}
         width="100%"
+        alignItems="center"
+        justifyContent="space-between"
+        gap="$2"
         paddingTop={adjustedTop}
         height={adjustedTop + (height || headerHeight)}
         paddingLeft={left + headerHorizontalPadding}
@@ -205,30 +214,33 @@ export const ModalHeader = memo(
       >
         <NavigationBackground />
 
-        <XStack
-          gap="$5"
-          width="100%"
-          alignItems="center"
-          justifyContent="space-between"
-          marginTop="auto"
-          height={headerHeight}
-        >
-          <SideElement children={headerLeft?.()} />
+        <SideElement
+          flex={1}
+          alignItems="flex-start"
+          children={headerLeft?.()}
+        />
 
-          {typeof headerTitle === 'string' && <H4 zIndex={1}>{headerTitle}</H4>}
+        {typeof headerTitle === 'string' && (
+          <H4 flex={1} textAlign="center" zIndex={1}>
+            {headerTitle}
+          </H4>
+        )}
 
-          {typeof headerTitle === 'function' && headerTitle()}
+        {typeof headerTitle === 'function' && (
+          <View flex={1}>{headerTitle()}</View>
+        )}
 
-          <SideElement
-            children={
-              typeof headerRight === 'function' ? (
-                headerRight()
-              ) : (
-                <HeaderButton iconName="CloseCircle" onPress={onClose} />
-              )
-            }
-          />
-        </XStack>
+        <SideElement
+          flex={headerTitle ? 1 : undefined}
+          alignItems="flex-end"
+          children={
+            typeof headerRight === 'function' ? (
+              headerRight()
+            ) : (
+              <HeaderButton iconName="CloseCircle" onPress={onClose} />
+            )
+          }
+        />
       </XStack>
     );
   },

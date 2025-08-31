@@ -81,7 +81,7 @@ export const Calendar = ({
       return (
         <View alignItems="center" gap="$1">
           <RegularText
-            fontSize={12}
+            fontSize={10}
             color={isToday ? '$color' : '$calendarTimeColor'}
             textTransform="lowercase"
           >
@@ -134,7 +134,7 @@ export const Calendar = ({
   return (
     <View
       flex={1}
-      backgroundColor="$background1"
+      backgroundColor="$calendarHeaderBackgroundColor"
       width="100%"
       paddingLeft={paddings.left}
       paddingRight={paddings.right}
@@ -164,10 +164,11 @@ export const Calendar = ({
           renderDayHeader={renderDayHeader}
           renderNowIndicator={renderNowIndicator}
           theme={{
-            headerSafeAreaBackgroundColor: theme.calendarBackgroundColor?.val,
-            dayHeaderBackgroundColor: theme.calendarBackgroundColor?.val,
+            headerSafeAreaBackgroundColor:
+              theme.calendarHeaderBackgroundColor?.val,
+            dayHeaderBackgroundColor: theme.calendarHeaderBackgroundColor?.val,
             backgroundColor: theme.calendarBackgroundColor?.val,
-            timelineBackgroundColor: theme.calendarBackgroundColor?.val,
+            timelineBackgroundColor: theme.calendarHeaderBackgroundColor?.val,
             verticalLineColor: theme.calendarLineColor?.val,
             horizontalLineColor: theme.calendarLineColor?.val,
             timelineTextColor: theme.calendarTimeColor?.val,

@@ -1,4 +1,4 @@
-import { View, XStack } from 'tamagui';
+import { XStack } from 'tamagui';
 import { DateHelper, Weekday } from '@symbiot-core-apps/shared';
 import { useCallback, useMemo, useState } from 'react';
 import * as yup from 'yup';
@@ -33,7 +33,7 @@ export const getWeekdayScheduleScheme = (error: string) => {
         end: yup.number().required(),
       }),
     )
-    .required();
+    .required(error);
 };
 
 const minutesInterval = 15;

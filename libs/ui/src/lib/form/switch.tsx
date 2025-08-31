@@ -1,13 +1,16 @@
-import { Switch as UiSwitch, useTheme, XStack } from 'tamagui';
+import { Switch as UiSwitch, useTheme, View, XStack } from 'tamagui';
 import { Label } from '../text/custom';
+import { RegularText } from '../text/text';
 
 export const Switch = ({
   label,
+  description,
   checked,
   disabled,
   onChange,
 }: {
   label?: string;
+  description?: string;
   checked?: boolean;
   disabled?: boolean;
   onChange?: (value: boolean) => void;
@@ -15,8 +18,16 @@ export const Switch = ({
   const theme = useTheme();
 
   return (
-    <XStack alignItems="center" justifyContent="space-between" gap="$5">
-      {label && <Label>{label}</Label>}
+    <XStack alignItems="flex-start" justifyContent="space-between" gap="$5">
+      <View flex={1}>
+        {label && <Label lineHeight={22}>{label}</Label>}
+
+        {description && (
+          <RegularText fontSize={12} color="$placeholderColor">
+            {description}
+          </RegularText>
+        )}
+      </View>
 
       <UiSwitch
         paddingHorizontal={2}
@@ -25,13 +36,13 @@ export const Switch = ({
         checked={checked}
         disabled={disabled}
         onCheckedChange={onChange}
-        backgroundColor={checked ? '$switchSelectedColor' : '$background'}
+        backgroundColor={checked ? '$switchSelectedColor' : '$background1'}
         opacity={disabled ? 0.8 : 1}
         native
         nativeProps={{
           disabled,
           trackColor: {
-            false: theme.background?.val,
+            false: theme.background1?.val,
             true: theme.switchSelectedColor?.val,
           },
         }}

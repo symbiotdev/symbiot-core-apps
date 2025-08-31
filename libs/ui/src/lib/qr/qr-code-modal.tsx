@@ -3,7 +3,7 @@ import { ReactElement, useCallback, useState } from 'react';
 import { PageView } from '../view/page-view';
 import { QrCode } from './qr-code';
 import { Card } from '../card/card';
-import { H5 } from '../text/heading';
+import { H4, H5 } from '../text/heading';
 import { Blur } from '../blur/blur';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { FullScreenTransparentModal } from '../modal/full-screen-transparent-modal';
@@ -85,9 +85,9 @@ export const QrCodeModal = ({
           <QrCode size={qrSize} value={qrValue} content={qrContent} />
 
           {!!title && (
-            <H5 textAlign="center" maxWidth={qrSize}>
+            <H4 textAlign="center" maxWidth={qrSize}>
               {title}
-            </H5>
+            </H4>
           )}
         </Card>
       </PageView>

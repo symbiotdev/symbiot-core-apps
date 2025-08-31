@@ -96,7 +96,6 @@ export default () => {
             </XStack>
             <QrCodeModalWithTrigger
               trigger={<Icon name="QrCode" />}
-              title={`ID: ${me.id}`}
               qrValue={me.id}
               qrContent={<RegularText fontSize={30}>🤩</RegularText>}
             />

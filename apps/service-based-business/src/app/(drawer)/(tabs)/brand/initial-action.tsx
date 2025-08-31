@@ -78,6 +78,7 @@ export default () => {
         <QrCodeModal
           visible={qrCodeVisible}
           qrValue={me.id}
+          title={`ID: ${me.id}`}
           qrContent={<RegularText fontSize={30}>🤩</RegularText>}
           onClose={onCloseQrCodeModal}
         />

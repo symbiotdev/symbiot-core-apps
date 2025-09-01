@@ -64,9 +64,7 @@ export const useUploadBrandLocationGalleryImagesQuery = () =>
         ),
       );
 
-      if (location) {
-        await refetchQueriesByLocationChanges(location);
-      }
+      await refetchQueriesByLocationChanges(location);
 
       return location;
     },
@@ -79,9 +77,7 @@ export const useRemoveBrandLocationGalleryImagesQuery = () =>
         axios.delete(`/api/brand-location/${id}/gallery/${imageId}`),
       );
 
-      if (location) {
-        await refetchQueriesByLocationChanges(location);
-      }
+      await refetchQueriesByLocationChanges(location);
 
       return location;
     },
@@ -99,9 +95,7 @@ export const useCreateBrandLocationQuery = () =>
         ),
       );
 
-      if (location) {
-        await refetchQueriesByLocationChanges(location);
-      }
+      await refetchQueriesByLocationChanges(location);
 
       return location;
     },
@@ -147,20 +141,10 @@ export const useRemoveBrandLocationQuery = () =>
 export const useCurrentBrandLocationsQuery = () =>
   useQuery<PaginationList<BrandLocation>, string>({
     queryKey: [BrandLocationQueryKey.currentList],
-    queryFn: async () => {
-      const response = await requestWithStringError<
-        PaginationList<BrandLocation>
-      >(axios.get('/api/brand-location'));
-
-      response?.items?.forEach((location) =>
-        queryClient.setQueryData(
-          [BrandLocationQueryKey.byId, location.id],
-          location,
-        ),
-      );
-
-      return response;
-    },
+    queryFn: () =>
+      requestWithStringError<PaginationList<BrandLocation>>(
+        axios.get('/api/brand-location'),
+      ),
   });
 
 export const useBrandLocationAdvantages = () =>

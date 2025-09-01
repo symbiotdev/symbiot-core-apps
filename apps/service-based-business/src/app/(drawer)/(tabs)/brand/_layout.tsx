@@ -71,6 +71,13 @@ const LocationsHeaderRight = () => (
   />
 );
 
+const EmployeesHeaderRight = () => (
+  <HeaderButton
+    iconName="AddCircle"
+    onPress={() => router.navigate('/brand/employee/create')}
+  />
+);
+
 const UpdateLocationHeaderRight = () => {
   const { t } = useTranslation();
   const { id } = useGlobalSearchParams<{ id: string }>();
@@ -85,6 +92,30 @@ const UpdateLocationHeaderRight = () => {
       },
     ],
     [t, id],
+  );
+
+  return <ContextMenuPopover items={contextMenuItems} />;
+};
+
+const UpdateEmployeeHeaderRight = () => {
+  const { t } = useTranslation();
+  const { id } = useGlobalSearchParams<{ id: string }>();
+  const { brand } = useCurrentBrandState();
+
+  const contextMenuItems: ContextMenuItem[] = useMemo(
+    () => [
+      ...(brand?.owner?.id !== id
+        ? [
+            {
+              label: t('brand.employees.update.context_menu.remove.label'),
+              icon: <Icon name="TrashBinMinimalistic" />,
+              color: '$error',
+              onPress: () => router.push(`/brand/employee/remove/${id}`),
+            } as ContextMenuItem,
+          ]
+        : []),
+    ],
+    [t, id, brand?.owner?.id],
   );
 
   return <ContextMenuPopover items={contextMenuItems} />;
@@ -127,6 +158,21 @@ export default () => {
         />
 
         <Stack.Screen
+          name="(stack)/employee/create/index"
+          options={{
+            gestureEnabled: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="(stack)/employee/update/[id]"
+          options={{
+            headerTitle: t('brand.employees.update.title'),
+            headerRight: UpdateEmployeeHeaderRight,
+          }}
+        />
+
+        <Stack.Screen
           name="(stack)/location/create/index"
           options={{
             gestureEnabled: false,
@@ -159,9 +205,10 @@ export default () => {
       />
 
       <Stack.Screen
-        name="(stack)/menu/information/preferences"
+        name="(stack)/menu/employees/index"
         options={{
-          headerTitle: t('brand.information.title'),
+          headerTitle: t('brand.employees.title'),
+          headerRight: EmployeesHeaderRight,
         }}
       />
 
@@ -170,6 +217,13 @@ export default () => {
         options={{
           headerTitle: t('brand.locations.title'),
           headerRight: LocationsHeaderRight,
+        }}
+      />
+
+      <Stack.Screen
+        name="(stack)/menu/information/preferences"
+        options={{
+          headerTitle: t('brand.information.title'),
         }}
       />
     </Stack>

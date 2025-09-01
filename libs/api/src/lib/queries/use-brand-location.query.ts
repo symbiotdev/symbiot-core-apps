@@ -56,7 +56,7 @@ export const useCreateBrandLocationQuery = () =>
         axios.post(
           '/api/brand-location',
           data.avatar
-            ? generateFormData<UpdateBrandLocation>(data, ['avatar'])
+            ? await generateFormData<UpdateBrandLocation>(data, ['avatar'])
             : data,
         ),
       );
@@ -94,7 +94,7 @@ export const useUpdateBrandLocationQuery = () =>
 export const useRemoveBrandLocationQuery = () =>
   useMutation<void, string, { id: string }>({
     mutationFn: async ({ id }) => {
-      const location = await requestWithAlertOnError<void>(
+      const response = await requestWithAlertOnError<void>(
         axios.delete(`/api/brand-location/${id}`),
       );
 
@@ -104,7 +104,7 @@ export const useRemoveBrandLocationQuery = () =>
         queryKey: [BrandLocationQueryKey.currentList],
       });
 
-      return location;
+      return response;
     },
   });
 

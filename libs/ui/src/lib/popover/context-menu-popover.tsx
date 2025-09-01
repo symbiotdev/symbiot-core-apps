@@ -88,24 +88,26 @@ export const ContextMenuPopover = ({
   }, []);
 
   return (
-    <>
-      <Trigger
-        loading={loading}
-        disabled={disabled || loading}
-        onPress={openMenu}
-      />
+    !!items?.length && (
+      <>
+        <Trigger
+          loading={loading}
+          disabled={disabled || loading}
+          onPress={openMenu}
+        />
 
-      <FullScreenTransparentModal
-        visible={state.modalVisible}
-        onClose={closeMenu}
-      >
-        <AnimatePresence>
-          {state.menuVisible && state.rect && (
-            <Menu rect={state.rect} items={items} onClose={closeMenu} />
-          )}
-        </AnimatePresence>
-      </FullScreenTransparentModal>
-    </>
+        <FullScreenTransparentModal
+          visible={state.modalVisible}
+          onClose={closeMenu}
+        >
+          <AnimatePresence>
+            {state.menuVisible && state.rect && (
+              <Menu rect={state.rect} items={items} onClose={closeMenu} />
+            )}
+          </AnimatePresence>
+        </FullScreenTransparentModal>
+      </>
+    )
   );
 };
 

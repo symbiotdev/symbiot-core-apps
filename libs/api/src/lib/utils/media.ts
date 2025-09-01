@@ -22,24 +22,22 @@ export async function generateFormData<D extends object>(
   const formData = new FormData();
 
   await Promise.all(
-    (Object.keys(data) as (keyof D)[]).map(async (key) => {
-      const value = data[key] as unknown;
+    Object.keys(data).map(async (key) => {
+      const value = data[key as keyof D] as unknown;
 
       if (!value) return;
 
-      if (fileKeys.includes(key)) {
+      if (fileKeys.includes(key as keyof D)) {
         if (Array.isArray(value)) {
           await Promise.all(
             value
               .map(convertImagePickerAssetToUploadingFile)
-              .map((file) =>
-                appendFindToFormData(formData, key as string, file),
-              ),
+              .map((file) => appendFindToFormData(formData, key, file)),
           );
         } else {
           await appendFindToFormData(
             formData,
-            key as string,
+            key,
             convertImagePickerAssetToUploadingFile(value as ImagePickerAsset),
           );
         }
@@ -47,12 +45,14 @@ export async function generateFormData<D extends object>(
         if (Array.isArray(value)) {
           value.forEach((item) => {
             formData.append(
-              `${key as string}[]`,
+              `${key}[]`,
               typeof item === 'object' ? JSON.stringify(item) : item,
             );
           });
+        } else if (typeof value === 'object') {
+          formData.append(key, JSON.stringify(value));
         } else {
-          formData.append(key as string, value as string);
+          formData.append(key, value as string);
         }
       }
     }),

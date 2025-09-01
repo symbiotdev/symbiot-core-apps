@@ -219,6 +219,13 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
           icon="MapPointWave"
         />
 
+        <MenuItem
+          route="/brand/menu/employees"
+          navigation={props.navigation}
+          label={t('navigation.drawer.employees.label')}
+          icon="UsersGroupRounded"
+        />
+
         <Br marginTop="auto" />
 
         <MenuItem

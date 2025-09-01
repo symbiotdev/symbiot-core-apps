@@ -4,3 +4,4 @@ export * from './lib/components/remove-brand-location';
 
 export * from './lib/hooks/use-brand-location-advantage-options';
 export * from './lib/hooks/use-brand-location-form';
+export * from './lib/hooks/use-dynamic-brand-location';

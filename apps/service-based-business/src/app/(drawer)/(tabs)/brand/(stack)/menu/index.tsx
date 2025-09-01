@@ -22,6 +22,11 @@ export default () => {
     [],
   );
 
+  const onEmployeesPress = useCallback(
+    () => router.push('/brand/menu/employees'),
+    [],
+  );
+
   return (
     <PageView scrollable withHeaderHeight>
       <FormView>
@@ -35,6 +40,11 @@ export default () => {
             label={t('brand.locations.title')}
             icon={<Icon name="MapPointWave" />}
             onPress={onLocationsPress}
+          />
+          <ListItem
+            label={t('brand.employees.title')}
+            icon={<Icon name="UsersGroupRounded" />}
+            onPress={onEmployeesPress}
           />
         </ListItemGroup>
       </FormView>

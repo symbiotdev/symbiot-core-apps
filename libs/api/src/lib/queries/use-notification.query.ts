@@ -1,15 +1,15 @@
-import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Notification } from '../types/notification';
 import {
   requestWithAlertOnError,
   requestWithStringError,
 } from '../utils/request';
-import type { InfiniteData, QueryKey } from '@tanstack/query-core';
+import type { InfiniteData } from '@tanstack/query-core';
 import { PaginationList } from '../types/pagination';
-import { getNextPageParam } from '../utils/query';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback } from 'react';
 import { queryClient } from '../utils/client';
+import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 
 export enum NotificationQueryKey {
   countNew = 'notifications-count-new',
@@ -19,31 +19,17 @@ export enum NotificationQueryKey {
 export const useNotificationQueryState = () => {
   const getListState = useCallback(
     () =>
-      queryClient.getQueryData<
-        InfiniteData<PaginationList<Notification>>
-      >([NotificationQueryKey.getList]),
+      queryClient.getQueryData<InfiniteData<PaginationList<Notification>>>([
+        NotificationQueryKey.getList,
+      ]),
     [],
   );
 
   const setListState = useCallback(
     (data: InfiniteData<PaginationList<Notification>> | undefined) =>
-      queryClient.setQueryData<
-        InfiniteData<PaginationList<Notification>>
-      >([NotificationQueryKey.getList], data),
-    [],
-  );
-
-  const clearListCache = useCallback(
-    () =>
-      queryClient.setQueryData<
-        InfiniteData<PaginationList<Notification>>
-      >(
+      queryClient.setQueryData<InfiniteData<PaginationList<Notification>>>(
         [NotificationQueryKey.getList],
-        (data) =>
-          data && {
-            pages: [data.pages[0]],
-            pageParams: [data.pageParams[0]],
-          },
+        data,
       ),
     [],
   );
@@ -86,7 +72,6 @@ export const useNotificationQueryState = () => {
   return {
     getListState,
     setListState,
-    clearListCache,
     addToList,
     markAllAsRead,
   };
@@ -99,70 +84,17 @@ export const useCountNewNotifications = () =>
       requestWithStringError(axios.get('/api/notification/new/count')),
   });
 
-export const useNotificationLoader = ({
-  initialState,
-  setInitialState,
-}: {
-  initialState?: PaginationList<Notification>;
-  setInitialState?: (state: PaginationList<Notification>) => void;
-} = {}) => {
-  const { clearListCache } = useNotificationQueryState();
-
-  const query = useInfiniteQuery<
-    PaginationList<Notification>,
-    string,
-    InfiniteData<PaginationList<Notification>>,
-    QueryKey,
-    Notification | undefined
-  >({
-    getNextPageParam,
-    refetchOnMount: false,
-    initialPageParam: undefined,
+export const useNotificationsListQuery = (
+  props: {
+    initialState?: PaginationList<Notification>;
+    setInitialState?: (state: PaginationList<Notification>) => void;
+  } = {},
+) =>
+  useInfiniteQueryWrapper({
+    apUrl: '/api/notification',
     queryKey: [NotificationQueryKey.getList],
-    queryFn: ({ pageParam }) =>
-      requestWithStringError(
-        axios.get('/api/notification', {
-          params: pageParam && {
-            after: {
-              id: pageParam.id,
-            },
-          },
-        }),
-      ),
+    ...props,
   });
-
-  const notifications = useMemo(
-    () =>
-      query.data?.pages?.length
-        ? query.data.pages.flatMap((page) => page.items)
-        : initialState?.items,
-    [initialState?.items, query.data?.pages],
-  );
-
-  const onRefresh = useCallback(() => {
-    clearListCache();
-    void query.refetch();
-  }, [clearListCache, query]);
-
-  const onEndReached = useCallback(
-    () =>
-      query.hasNextPage && !query.isFetchingNextPage && query.fetchNextPage(),
-    [query],
-  );
-
-  useEffect(() => {
-    if (setInitialState && query.data?.pages?.length) {
-      setInitialState(query.data.pages[0]);
-    }
-  }, [query.data?.pages, setInitialState]);
-
-  return {
-    ...query,
-    notifications,
-    onRefresh,
-    onEndReached,
-  };
-};
 
 export const useNotificationsReadQuery = () => {
   const { markAllAsRead, getListState, setListState } =
@@ -173,9 +105,7 @@ export const useNotificationsReadQuery = () => {
       const currentState = getListState();
 
       try {
-        await requestWithAlertOnError(
-          axios.put('/api/notification/read'),
-        );
+        await requestWithAlertOnError(axios.put('/api/notification/read'));
 
         markAllAsRead();
       } catch {

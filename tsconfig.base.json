@@ -23,6 +23,7 @@
       ],
       "@symbiot-core-apps/auth": ["libs/auth/src/index.ts"],
       "@symbiot-core-apps/brand": ["libs/brand/src/index.ts"],
+      "@symbiot-core-apps/brand-employee": ["libs/brand-employee/src/index.ts"],
       "@symbiot-core-apps/brand-location": ["libs/brand-location/src/index.ts"],
       "@symbiot-core-apps/faq": ["libs/faq/src/index.ts"],
       "@symbiot-core-apps/i18n": ["libs/i18n/src/index.ts"],

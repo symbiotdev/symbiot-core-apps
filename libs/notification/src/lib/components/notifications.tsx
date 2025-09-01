@@ -16,7 +16,7 @@ import {
 import { useCallback, useEffect } from 'react';
 import {
   Notification,
-  useNotificationLoader,
+  useNotificationsListQuery,
   useNotificationsReadQuery,
 } from '@symbiot-core-apps/api';
 import { View, XStack } from 'tamagui';
@@ -35,14 +35,14 @@ export const Notifications = ({
     setNotifications: setInitialNotificationsState,
   } = useNotificationsState();
   const {
-    notifications,
+    items: notifications,
     isFetchingNextPage,
     isRefetching,
     isLoading,
     error,
     onRefresh,
     onEndReached,
-  } = useNotificationLoader({
+  } = useNotificationsListQuery({
     initialState: initialNotificationsState,
     setInitialState: setInitialNotificationsState,
   });

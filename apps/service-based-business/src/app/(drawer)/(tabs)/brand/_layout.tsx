@@ -163,7 +163,7 @@ export default () => {
             gestureEnabled: false,
           }}
         />
-
+        <Stack.Screen name="(stack)/employee/remove/[id]" />
         <Stack.Screen
           name="(stack)/employee/update/[id]"
           options={{
@@ -178,9 +178,7 @@ export default () => {
             gestureEnabled: false,
           }}
         />
-
         <Stack.Screen name="(stack)/location/remove/[id]" />
-
         <Stack.Screen
           name="(stack)/location/update/[id]"
           options={{

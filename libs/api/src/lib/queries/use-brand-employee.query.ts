@@ -81,7 +81,7 @@ export const useRemoveBrandEmployeeQuery = () =>
   useMutation<void, string, { id: string }>({
     mutationFn: async ({ id }) => {
       const response = await requestWithAlertOnError<void>(
-        axios.delete(`/api/brand-location/${id}`),
+        axios.delete(`/api/brand-employee/${id}`),
       );
 
       queryClient.setQueryData(

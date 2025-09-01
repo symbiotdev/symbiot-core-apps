@@ -13,6 +13,7 @@ import {
 import { PaginationList } from '../types/pagination';
 import { queryClient } from '../utils/client';
 import { generateFormData } from '../utils/media';
+import { ImagePickerAsset } from 'expo-image-picker';
 
 export enum BrandLocationQueryKey {
   currentList = 'brand-location-current-list',
@@ -20,7 +21,7 @@ export enum BrandLocationQueryKey {
   advantages = 'brand-location-advantages',
 }
 
-export const refetchQueriesByLocationChanges = async (
+const refetchQueriesByLocationChanges = async (
   location: BrandLocation,
   refetchList = true,
 ) => {
@@ -48,6 +49,43 @@ export const refetchQueriesByLocationChanges = async (
     }
   }
 };
+
+export const useUploadBrandLocationGalleryImagesQuery = () =>
+  useMutation<
+    BrandLocation,
+    string,
+    { id: string; images: ImagePickerAsset[] }
+  >({
+    mutationFn: async ({ id, images }) => {
+      const location = await requestWithAlertOnError<BrandLocation>(
+        axios.put(
+          `/api/brand-location/${id}/gallery`,
+          await generateFormData({ images }, ['images']),
+        ),
+      );
+
+      if (location) {
+        await refetchQueriesByLocationChanges(location);
+      }
+
+      return location;
+    },
+  });
+
+export const useRemoveBrandLocationGalleryImagesQuery = () =>
+  useMutation<BrandLocation, string, { id: string; imageId: string }>({
+    mutationFn: async ({ id, imageId }) => {
+      const location = await requestWithAlertOnError<BrandLocation>(
+        axios.delete(`/api/brand-location/${id}/gallery/${imageId}`),
+      );
+
+      if (location) {
+        await refetchQueriesByLocationChanges(location);
+      }
+
+      return location;
+    },
+  });
 
 export const useCreateBrandLocationQuery = () =>
   useMutation<BrandLocation, string, CreateBrandLocation>({
@@ -82,9 +120,7 @@ export const useUpdateBrandLocationQuery = () =>
           ),
         );
 
-        if (location) {
-          await refetchQueriesByLocationChanges(location, false);
-        }
+        await refetchQueriesByLocationChanges(location, false);
 
         return location;
       },

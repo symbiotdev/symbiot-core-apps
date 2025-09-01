@@ -29,7 +29,7 @@ export const useBrandEmployeeForm = () => {
         subtitle: t('brand.employees.upsert.form.location.subtitle'),
         label: t('brand.employees.upsert.form.location.label'),
         placeholder: t('brand.employees.upsert.form.location.placeholder'),
-        scheme: yup.object().nullable(),
+        scheme: yup.string().nullable(),
       },
       serviceType: {
         label: t('brand.employees.upsert.form.service_type.label'),
@@ -97,8 +97,6 @@ export const useBrandEmployeeForm = () => {
         subtitle: t('brand.employees.upsert.form.permissions.subtitle'),
       },
       schedule: {
-        title: t('brand.employees.upsert.form.schedule.title'),
-        subtitle: t('brand.employees.upsert.form.schedule.subtitle'),
         label: t('brand.employees.upsert.form.schedule.label'),
         defaultValue: [
           ...Array.from({ length: 5 }).map((_, index) => ({

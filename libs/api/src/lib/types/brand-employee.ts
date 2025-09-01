@@ -24,8 +24,12 @@ export type BrandEmployee = {
   phones: Phone[];
   schedules: Schedule[];
   permissions: BrandEmployeePermissions;
-  locations: BrandLocation[];
+  locations: BrandEmployeeSchedule[];
   serviceTypes: BrandIndustryServiceType[];
+};
+
+export type BrandEmployeeSchedule = Schedule & {
+  location: BrandLocation;
 };
 
 export type BrandEmployeePermissions = {
@@ -56,10 +60,11 @@ export type CreateBrandEmployee = {
   taxId: string;
   birthday: string | null;
   position: string;
-  locationId: string;
   genderId: string;
   serviceTypes: string[];
   permissions: BrandEmployeePermissions;
   phones: Phone[];
-  schedules: Schedule[];
+  schedules: (Schedule & { locationId: string | null })[];
 };
+
+export type UpdateBrandEmployee = Partial<CreateBrandEmployee>;

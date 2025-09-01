@@ -20,7 +20,6 @@ import {
   BrandEmployeePermission,
   BrandEmployeePermissions,
   BrandIndustryServiceType,
-  BrandLocation,
   useBrandEmployeeNewAccountQuery,
   useBrandEmployeePermissionsQuery,
   useBrandIndustryServiceTypeQuery,
@@ -43,7 +42,7 @@ type Value = {
   passport: string;
   taxId: string;
   about: string;
-  location: BrandLocation;
+  location: string;
   permissions: BrandEmployeePermissions;
   birthday: string;
   phone: PhoneValue;
@@ -84,14 +83,14 @@ export default () => {
 
   const [account, setAccount] = useState<Account | undefined>(undefined);
 
-  const locationsAsToggleOptions = useMemo(
+  const locationsAsOptions = useMemo(
     () =>
       locations?.items && [
         dynamicLocation,
         ...locations.items.map((location) => ({
           label: location.name,
           description: location.address,
-          value: location,
+          value: location.id,
         })),
       ],
     [dynamicLocation, locations],
@@ -226,22 +225,42 @@ export default () => {
         subtitle: form.location.subtitle,
         elements: [
           {
-            type: 'toggle-group',
+            type: 'select-picker',
             props: {
               ...form.location,
               name: 'location',
-              options: locationsAsToggleOptions,
+              options: locationsAsOptions,
               optionsLoading: locationsLoading,
               optionsError: locationsError,
               defaultValue: null,
               label: '',
             },
           },
+          {
+            type: 'switch',
+            props: {
+              ...form.customSchedule,
+              name: 'customSchedule',
+              showWhen: (value) => !!value.location,
+            },
+          },
+          {
+            type: 'weekdays-schedule',
+            props: {
+              ...form.schedule,
+              name: 'schedule',
+              showWhen: (value) => {
+                console.log('v', value);
+
+                return !value.location || value.customSchedule;
+              },
+            },
+          },
         ],
       },
       {
         id: 'position',
-        nextId: 'schedule',
+        nextId: 'permissions',
         title: form.positionInfo.title,
         subtitle: form.positionInfo.subtitle,
         elements: [
@@ -270,31 +289,6 @@ export default () => {
               optionsLoading: serviceTypesLoading,
               optionsError: serviceTypesError,
               defaultValue: [],
-            },
-          },
-        ],
-      },
-      {
-        id: 'schedule',
-        nextId: permissions ? 'permissions' : 'about',
-        title: form.schedule.title,
-        subtitle: form.schedule.subtitle,
-        elements: [
-          {
-            type: 'switch',
-            props: {
-              ...form.customSchedule,
-              name: 'customSchedule',
-              showWhen: (value) => !!value.location,
-            },
-          },
-          {
-            type: 'weekdays-schedule',
-            props: {
-              ...form.schedule,
-              name: 'schedule',
-              label: '',
-              showWhen: (value) => !value.location || value.customSchedule,
             },
           },
         ],
@@ -344,7 +338,7 @@ export default () => {
       gendersAsOptions,
       gendersLoading,
       gendersError,
-      locationsAsToggleOptions,
+      locationsAsOptions,
       locationsLoading,
       locationsError,
       serviceTypeAsToggleOptions,
@@ -370,7 +364,6 @@ export default () => {
             passport: value.passport,
             taxId: value.taxId,
             birthday: value.birthday ? String(value.birthday) : null,
-            locationId: value.location?.id,
             genderId: value.genderId,
             avatar: value.avatar,
             provider: value.provider,
@@ -378,7 +371,12 @@ export default () => {
             position: value.position,
             permissions: value.permissions,
             phones: value.phone ? [value.phone] : [],
-            schedules: value.customSchedule ? value.schedule : [],
+            schedules: value.customSchedule
+              ? value.schedule.map((schedule) => ({
+                  ...schedule,
+                  locationId: value.location,
+                }))
+              : [],
             serviceTypes: value.serviceTypes?.length
               ? value.serviceTypes.map(({ id }) => id)
               : [],

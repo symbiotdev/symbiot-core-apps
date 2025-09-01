@@ -47,7 +47,6 @@ export function SelectPicker({
   const formattedValue = useMemo(
     () =>
       (value !== undefined &&
-        value !== null &&
         (Array.isArray(value)
           ? value
               .map(

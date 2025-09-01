@@ -13,13 +13,16 @@ import { InitView } from '../view/init-view';
 import { RegularText } from '../text/text';
 import { Icon } from '../icons';
 import { toggleItemMinHeight } from './toggle-group';
-import { defaultPageHorizontalPadding, defaultPageVerticalPadding } from '../view/page-view';
+import {
+  defaultPageHorizontalPadding,
+  defaultPageVerticalPadding,
+} from '../view/page-view';
 import { emitHaptic, useRendered } from '@symbiot-core-apps/shared';
 import { LoadingView } from '../view/loading-view';
 
 export type PickerItem = {
   label: string;
-  value: string | number | undefined;
+  value: string | number | undefined | null;
   description?: string; // not applicable on IOS
   icon?: ReactElement; // not applicable on IOS
 };

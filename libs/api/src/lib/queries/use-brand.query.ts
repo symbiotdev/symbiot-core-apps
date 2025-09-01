@@ -5,12 +5,7 @@ import { requestWithAlertOnError } from '../utils/request';
 import { generateFormData } from '../utils/media';
 import { AccountAuthTokens } from '../types/account-auth';
 import { queryClient } from '../utils/client';
-import {
-  BrandLocationQueryKey,
-  refetchQueriesByLocationChanges,
-} from './use-brand-location.query';
-import { BrandLocation } from '../types/brand-location';
-import { ImagePickerAsset } from 'expo-image-picker';
+import { BrandLocationQueryKey } from './use-brand-location.query';
 
 export enum BrandQueryKey {
   current = 'brand-current',
@@ -73,41 +68,4 @@ export const useBrandCreateQuery = () =>
           await generateFormData<CreateBrand>(data, ['avatar']),
         ),
       ),
-  });
-
-export const useUploadBrandLocationGalleryImagesQuery = () =>
-  useMutation<
-    BrandLocation,
-    string,
-    { id: string; images: ImagePickerAsset[] }
-  >({
-    mutationFn: async ({ id, images }) => {
-      const location = await requestWithAlertOnError<BrandLocation>(
-        axios.put(
-          `/api/brand-location/${id}/gallery`,
-          await generateFormData({ images }, ['images']),
-        ),
-      );
-
-      if (location) {
-        await refetchQueriesByLocationChanges(location);
-      }
-
-      return location;
-    },
-  });
-
-export const useRemoveBrandLocationGalleryImagesQuery = () =>
-  useMutation<BrandLocation, string, { id: string; imageId: string }>({
-    mutationFn: async ({ id, imageId }) => {
-      const location = await requestWithAlertOnError<BrandLocation>(
-        axios.delete(`/api/brand-location/${id}/gallery/${imageId}`),
-      );
-
-      if (location) {
-        await refetchQueriesByLocationChanges(location);
-      }
-
-      return location;
-    },
   });

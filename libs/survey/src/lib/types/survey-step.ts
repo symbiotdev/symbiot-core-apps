@@ -1,6 +1,10 @@
 import { KeyboardType, TextInputProps } from 'react-native';
 import * as yup from 'yup';
-import { AppLinkType, PickerItem, ToggleGroupItem } from '@symbiot-core-apps/ui';
+import {
+  AppLinkType,
+  PickerItem,
+  ToggleGroupItem,
+} from '@symbiot-core-apps/ui';
 
 type SurveyStepElement<V> = {
   name: string;
@@ -132,7 +136,9 @@ export type SurveyStep<V> = {
       }
     | {
         type: 'weekdays-schedule';
-        props: SurveyStepElement<V>;
+        props: SurveyStepElement<V> & {
+          label?: string;
+        };
       }
     | {
         type: 'date-picker';

@@ -43,10 +43,14 @@ export const CurrentBrandLocations = () => {
         pressStyle={{ opacity: 0.8 }}
         onPress={() => {
           emitHaptic();
-          router.push(`/brand/employee/update/${item.id}`);
+          router.push(`/brand/location/update/${item.id}`);
         }}
       >
-        <Avatar name={item.name} size={40} url={item.avatarXsUrl} />
+        <Avatar
+          name={item.name}
+          size={40}
+          url={item.avatarXsUrl || brand?.avatarXsUrl}
+        />
 
         <View gap="$1" flex={1}>
           <SemiBoldText numberOfLines={1}>{item.name}</SemiBoldText>
@@ -58,7 +62,7 @@ export const CurrentBrandLocations = () => {
         <Icon name="ArrowRight" />
       </FormView>
     ),
-    [],
+    [brand?.avatarXsUrl],
   );
 
   if (!locations) {

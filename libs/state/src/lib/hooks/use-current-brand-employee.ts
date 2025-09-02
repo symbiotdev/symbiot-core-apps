@@ -1,12 +1,14 @@
-import { BrandEmployee } from '@symbiot-core-apps/api';
+import { BrandEmployee, PaginationList } from '@symbiot-core-apps/api';
 import { create } from 'zustand/index';
 import { devtools, persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 
 type CurrentBrandEmployeeState = {
-  brandEmployee?: BrandEmployee;
+  currentEmployee?: BrandEmployee;
+  currentList?: PaginationList<BrandEmployee>;
   clear: () => void;
-  setBrandEmployee: (brandEmployee?: BrandEmployee) => void;
+  setCurrentEmployee: (brandEmployee?: BrandEmployee) => void;
+  setCurrentList: (employees?: PaginationList<BrandEmployee>) => void;
 };
 
 export const useCurrentBrandEmployeeState = create<CurrentBrandEmployeeState>()(
@@ -15,10 +17,12 @@ export const useCurrentBrandEmployeeState = create<CurrentBrandEmployeeState>()(
       (set) => ({
         clear: () => {
           set({
-            brandEmployee: undefined,
+            currentEmployee: undefined,
+            currentList: undefined,
           });
         },
-        setBrandEmployee: (brandEmployee) => set({ brandEmployee }),
+        setCurrentEmployee: (currentEmployee) => set({ currentEmployee }),
+        setCurrentList: (currentList) => set({ currentList }),
       }),
       {
         name: 'symbiot-current-brand-employee',

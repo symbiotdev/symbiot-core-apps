@@ -8,7 +8,6 @@ import {
 import {
   useCurrentAccount,
   useCurrentBrandState,
-  useNotificationsState,
 } from '@symbiot-core-apps/state';
 import { Platform } from 'react-native';
 import { AudioSource, useAudioPlayer } from 'expo-audio';
@@ -22,7 +21,6 @@ export const useSocketNotifications = ({
   const soundPlayer = useAudioPlayer(soundSource);
   const { me, setMeStats } = useCurrentAccount();
   const { brand: currentBrand } = useCurrentBrandState();
-  const { add: addToInitialState } = useNotificationsState();
   const { addToList: addToListQueryState, markAllAsRead } =
     useNotificationQueryState();
 
@@ -42,7 +40,6 @@ export const useSocketNotifications = ({
         return;
       }
 
-      addToInitialState(notification);
       addToListQueryState(notification);
       setMeStats({
         newNotifications: 1,
@@ -51,7 +48,6 @@ export const useSocketNotifications = ({
     [
       currentBrand?.id,
       me?.preferences?.enableNotificationSound,
-      addToInitialState,
       addToListQueryState,
       setMeStats,
       soundPlayer,

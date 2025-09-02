@@ -19,8 +19,7 @@ export const useCurrentEntitiesLoader = () => {
   const initializing = useInitializing();
   const { updateMe, updateMePreferences } = useCurrentAccount();
   const { tokens, setTokens } = useAuthTokens();
-  const { setBrandEmployee: setCurrentBrandEmployee } =
-    useCurrentBrandEmployeeState();
+  const { setCurrentEmployee } = useCurrentBrandEmployeeState();
   const {
     brand: currentBrand,
     setBrand: setCurrentBrand,
@@ -84,14 +83,14 @@ export const useCurrentEntitiesLoader = () => {
 
   useEffect(() => {
     if (currentBrandEmployeeResponseError) {
-      setCurrentBrandEmployee(undefined);
+      setCurrentEmployee(undefined);
     } else if (currentBrandEmployeeResponse) {
-      setCurrentBrandEmployee(currentBrandEmployeeResponse);
+      setCurrentEmployee(currentBrandEmployeeResponse);
     }
   }, [
     currentBrandEmployeeResponse,
     currentBrandEmployeeResponseError,
-    setCurrentBrandEmployee,
+    setCurrentEmployee,
   ]);
 
   return !initializing;

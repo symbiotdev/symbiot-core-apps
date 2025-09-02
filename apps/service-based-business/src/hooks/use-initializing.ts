@@ -10,14 +10,13 @@ export const useInitializing = () => {
   const { me } = useCurrentAccount();
   const { processing: authProcessing } = useBrandAuthState();
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
-  const { brandEmployee: currentBrandEmployee } =
-    useCurrentBrandEmployeeState();
+  const { currentEmployee } = useCurrentBrandEmployeeState();
 
   return useMemo(
     () =>
       !me ||
-      !((currentBrand && currentBrandEmployee) || currentBrands) ||
+      !((currentBrand && currentEmployee) || currentBrands) ||
       authProcessing,
-    [me, currentBrand, currentBrandEmployee, currentBrands],
+    [me, currentBrand, currentEmployee, currentBrands],
   );
 };

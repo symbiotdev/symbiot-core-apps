@@ -249,11 +249,7 @@ export default () => {
             props: {
               ...form.schedule,
               name: 'schedule',
-              showWhen: (value) => {
-                console.log('v', value);
-
-                return !value.location || value.customSchedule;
-              },
+              showWhen: (value) => !value.location || value.customSchedule,
             },
           },
         ],

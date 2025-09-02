@@ -17,9 +17,11 @@ import { useCallback } from 'react';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { View } from 'tamagui';
 import { router } from 'expo-router';
+import { useCurrentBrandEmployeeState } from '@symbiot-core-apps/state';
 
 export const CurrentBrandEmployees = () => {
   const headerHeight = useScreenHeaderHeight();
+  const { currentList, setCurrentList } = useCurrentBrandEmployeeState();
   const {
     items: employees,
     isFetchingNextPage,
@@ -28,7 +30,10 @@ export const CurrentBrandEmployees = () => {
     error,
     onRefresh,
     onEndReached,
-  } = useCurrentBrandEmployeeListQuery();
+  } = useCurrentBrandEmployeeListQuery({
+    initialState: currentList,
+    setInitialState: setCurrentList,
+  });
 
   const renderItem = useCallback(
     ({ item }: { item: BrandEmployee }) => (

@@ -97,6 +97,8 @@ export const useBrandEmployeeForm = () => {
         subtitle: t('brand.employees.upsert.form.permissions.subtitle'),
       },
       schedule: {
+        title: t('brand.employees.upsert.form.schedule.title'),
+        subtitle: t('brand.employees.upsert.form.schedule.subtitle'),
         label: t('brand.employees.upsert.form.schedule.label'),
         defaultValue: [
           ...Array.from({ length: 5 }).map((_, index) => ({

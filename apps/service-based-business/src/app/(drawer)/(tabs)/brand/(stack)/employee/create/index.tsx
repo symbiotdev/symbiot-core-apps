@@ -249,6 +249,7 @@ export default () => {
             props: {
               ...form.schedule,
               name: 'schedule',
+              label: form.schedule.subtitle,
               showWhen: (value) => !value.location || value.customSchedule,
             },
           },

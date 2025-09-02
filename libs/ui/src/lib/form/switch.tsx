@@ -22,7 +22,7 @@ export const Switch = ({
     <XStack alignItems="flex-start" justifyContent="space-between" gap="$5">
       <View flex={1}>
         {label && (
-          <Label lineHeight={Platform.OS === 'web' ? 28 : 22}>{label}</Label>
+          <Label lineHeight={Platform.OS === 'web' ? 28 : 30}>{label}</Label>
         )}
 
         {description && (

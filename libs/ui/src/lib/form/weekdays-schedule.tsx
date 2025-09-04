@@ -16,7 +16,7 @@ import { FormField } from './form-field';
 import { FormView } from '../view/form-view';
 
 export type WeekdaySchedule = {
-  day: Weekday;
+  day: number;
   start: number;
   end: number;
 };

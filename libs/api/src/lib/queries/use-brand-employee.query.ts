@@ -8,12 +8,14 @@ import {
   BrandEmployee,
   BrandEmployeePermission,
   CreateBrandEmployee,
+  UpdateBrandEmployee,
 } from '../types/brand-employee';
 import { Account } from '../types/account';
 import { generateFormData } from '../utils/media';
 import { PaginationList } from '../types/pagination';
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { queryClient } from '../utils/client';
+import type { InfiniteData } from '@tanstack/query-core';
 
 export enum BrandEmployeesQueryKey {
   current = 'brand-employee-current',
@@ -21,6 +23,41 @@ export enum BrandEmployeesQueryKey {
   currentList = 'brand-employee-current-list',
   detailedById = 'brand-employee-detailed-by-id',
 }
+
+const refetchQueriesByEmployeeChanges = async (
+  employee: BrandEmployee,
+  refetchList = true,
+) => {
+  queryClient.setQueryData(
+    [BrandEmployeesQueryKey.detailedById, employee.id],
+    employee,
+  );
+
+  if (refetchList) {
+    await queryClient.refetchQueries({
+      queryKey: [BrandEmployeesQueryKey.currentList],
+    });
+  } else {
+    const employeesData = queryClient.getQueryData<
+      InfiniteData<PaginationList<BrandEmployee>>
+    >([BrandEmployeesQueryKey.currentList]);
+
+    if (employeesData) {
+      queryClient.setQueryData<InfiniteData<PaginationList<BrandEmployee>>>(
+        [BrandEmployeesQueryKey.currentList],
+        {
+          ...employeesData,
+          pages: employeesData.pages.map((page) => ({
+            ...page,
+            items: page.items.map((queryEmployee) =>
+              queryEmployee.id === employee.id ? employee : queryEmployee,
+            ),
+          })),
+        },
+      );
+    }
+  }
+};
 
 export const useCurrentBrandEmployeeQuery = ({
   enabled,
@@ -37,7 +74,8 @@ export const useCurrentBrandEmployeeQuery = ({
   });
 
 export const useBrandEmployeePermissionsQuery = () =>
-  useQuery<BrandEmployeePermission[]>({
+  useQuery<BrandEmployeePermission[], string>({
+    enabled: !queryClient.getQueryData([BrandEmployeesQueryKey.permissions]),
     queryKey: [BrandEmployeesQueryKey.permissions],
     queryFn: async () =>
       requestWithStringError<BrandEmployeePermission[]>(
@@ -73,6 +111,26 @@ export const useCreateBrandEmployeeQuery = () =>
         });
 
         return brandEmployee;
+      },
+    },
+  );
+
+export const useUpdateBrandEmployeeQuery = () =>
+  useMutation<BrandEmployee, string, { id: string; data: UpdateBrandEmployee }>(
+    {
+      mutationFn: async ({ id, data }) => {
+        const employee = await requestWithAlertOnError<BrandEmployee>(
+          axios.put(
+            `/api/brand-employee/${id}`,
+            await (data.avatar
+              ? generateFormData<UpdateBrandEmployee>(data, ['avatar'])
+              : data),
+          ),
+        );
+
+        await refetchQueriesByEmployeeChanges(employee, false);
+
+        return employee;
       },
     },
   );

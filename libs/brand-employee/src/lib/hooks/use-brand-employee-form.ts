@@ -32,7 +32,7 @@ export const useBrandEmployeeForm = () => {
         subtitle: t('brand.employees.upsert.form.location.subtitle'),
         label: t('brand.employees.upsert.form.location.label'),
         placeholder: t('brand.employees.upsert.form.location.placeholder'),
-        scheme: yup.string().nullable(),
+        scheme: yup.string().nullable().defined(),
       },
       serviceTypes: {
         label: t('brand.employees.upsert.form.service_type.label'),
@@ -103,7 +103,7 @@ export const useBrandEmployeeForm = () => {
       },
       customSchedule: {
         label: t('brand.employees.upsert.form.custom_schedule.label'),
-        scheme: yup.boolean().required(),
+        scheme: yup.boolean().defined(),
         defaultValue: false,
       },
       permissions: {

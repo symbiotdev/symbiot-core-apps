@@ -368,7 +368,8 @@ export default () => {
             position: value.position,
             permissions: value.permissions,
             phones: value.phone ? [value.phone] : [],
-            schedules: value.customSchedule
+            locations: value.location ? [value.location] : [],
+            schedules: value.customSchedule || !value.location
               ? value.schedule.map((schedule) => ({
                   ...schedule,
                   location: value.location,

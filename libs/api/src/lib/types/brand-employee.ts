@@ -23,6 +23,7 @@ export type BrandEmployee = {
   provider: boolean;
   gender: Gender;
   phones: Phone[];
+  locations: BrandLocation[];
   schedules: BrandEmployeeSchedule[];
   permissions: BrandEmployeePermissions;
   serviceTypes: BrandIndustryServiceType[];
@@ -62,6 +63,7 @@ export type CreateBrandEmployee = {
   position: string;
   gender: string;
   serviceTypes: string[];
+  locations: string[];
   permissions: BrandEmployeePermissions;
   phones: Phone[];
   schedules: (Schedule & { location: string | null })[];

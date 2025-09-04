@@ -13,8 +13,8 @@
     ],
     "ios": {
       "appleTeamId": "8WPTDS74WX",
-      "bundleIdentifier": "com.symbiothub.dance.dev",
-      "buildNumber": "7",
+      "bundleIdentifier": "com.symbiothub.dance",
+      "buildNumber": "8",
       "googleServicesFile": "./google/GoogleService-Info.plist",
       "supportsTablet": true,
       "usesAppleSignIn": true,
@@ -32,8 +32,8 @@
       }
     },
     "android": {
-      "package": "com.symbiothub.dance.dev",
-      "versionCode": 7,
+      "package": "com.symbiothub.dance",
+      "versionCode": 8,
       "icon": "./assets/images/icon/ios-light.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon/adaptive-icon.png",

@@ -414,7 +414,7 @@ const Intro = ({ onStart }: { onStart: (account: Account) => void }) => {
     id: string;
   }>({
     defaultValues: {
-      id: 'qa2Dp72G',
+      id: '',
     },
     resolver: yupResolver(
       yup

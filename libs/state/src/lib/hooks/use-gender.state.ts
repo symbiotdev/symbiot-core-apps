@@ -28,18 +28,26 @@ export const useGenders = () => {
   const gendersAsOptions = useMemo(
     () =>
       genders
+        ? genders.map((gender) => ({
+            label: gender.name,
+            value: gender.id,
+          }))
+        : undefined,
+    [genders],
+  );
+
+  const gendersAsOptionsWithEmptyOption = useMemo(
+    () =>
+      gendersAsOptions
         ? [
             {
               label: '-',
               value: undefined,
             },
-            ...genders.map((gender) => ({
-              label: gender.name,
-              value: gender.id,
-            })),
+            ...gendersAsOptions,
           ]
         : undefined,
-    [genders],
+    [gendersAsOptions],
   );
 
   useEffect(() => {
@@ -51,6 +59,7 @@ export const useGenders = () => {
   return {
     genders,
     gendersAsOptions,
+    gendersAsOptionsWithEmptyOption,
     loading: isPending,
     error,
   };

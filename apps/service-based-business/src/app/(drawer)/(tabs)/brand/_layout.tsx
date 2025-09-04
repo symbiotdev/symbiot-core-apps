@@ -11,6 +11,7 @@ import {
 import { router, Stack, useGlobalSearchParams } from 'expo-router';
 import {
   useCurrentAccount,
+  useCurrentBrandEmployeeState,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useApp } from '@symbiot-core-apps/app';
@@ -101,10 +102,11 @@ const UpdateEmployeeHeaderRight = () => {
   const { t } = useTranslation();
   const { id } = useGlobalSearchParams<{ id: string }>();
   const { brand } = useCurrentBrandState();
+  const { currentEmployee } = useCurrentBrandEmployeeState();
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [
-      ...(brand?.owner?.id !== id
+      ...(brand?.owner?.id !== id && currentEmployee?.id !== id
         ? [
             {
               label: t('brand.employees.update.context_menu.remove.label'),

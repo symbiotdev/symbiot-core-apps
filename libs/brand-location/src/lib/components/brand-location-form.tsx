@@ -25,7 +25,7 @@ export const BrandLocationForm = ({
     gap="$5"
     paddingHorizontal={0}
   >
-    <FormView>
+    <FormView marginTop="$5">
       <BrandLocationMediaForm location={location} />
     </FormView>
 

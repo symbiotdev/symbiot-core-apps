@@ -143,7 +143,7 @@ export const useCurrentBrandLocationsQuery = () =>
     queryKey: [BrandLocationQueryKey.currentList],
     queryFn: () =>
       requestWithStringError<PaginationList<BrandLocation>>(
-        axios.get('/api/brand-location'),
+        axios.get('/api/brand-location/current/list'),
       ),
   });
 

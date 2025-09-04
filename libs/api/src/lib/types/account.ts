@@ -36,6 +36,6 @@ export type UpdateAccountData = {
   birthday?: string | null;
   phones?: Phone[];
   links?: Omit<Link, 'id'>[];
-  genderId?: string | null;
+  gender?: string | null;
   avatar?: ImagePickerAsset;
 };

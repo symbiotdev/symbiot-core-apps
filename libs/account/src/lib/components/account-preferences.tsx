@@ -26,7 +26,7 @@ export const AccountPreferences = () => {
     useCurrentAccountUpdater();
   const { t } = useTranslation();
   const {
-    gendersAsOptions,
+    gendersAsOptionsWithEmptyOption,
     loading: gendersLoading,
     error: gendersError,
   } = useGenders();
@@ -74,16 +74,16 @@ export const AccountPreferences = () => {
     });
 
   const { control: genderControl, handleSubmit: genderHandleSubmit } = useForm<{
-    genderId: string | null;
+    gender: string | null;
   }>({
     defaultValues: {
-      genderId: me?.gender?.id,
+      gender: me?.gender?.id,
     },
     resolver: yupResolver(
       yup
         .object()
         .shape({
-          genderId: yup.string().nullable().default(null),
+          gender: yup.string().nullable().default(null),
         })
         .required(),
     ),
@@ -157,8 +157,8 @@ export const AccountPreferences = () => {
   );
 
   const updateGender = useCallback(
-    ({ genderId }: { genderId: string | null }) =>
-      me?.gender?.id !== genderId && updateAccount$({ genderId }),
+    ({ gender }: { gender: string | null }) =>
+      me?.gender?.id !== gender && updateAccount$({ gender }),
     [me?.gender, updateAccount$],
   );
 
@@ -253,14 +253,14 @@ export const AccountPreferences = () => {
 
           <Controller
             control={genderControl}
-            name="genderId"
+            name="gender"
             render={({ field: { value, onChange }, fieldState: { error } }) => (
               <SelectPicker
                 value={value as string}
                 error={error?.message}
                 optionsLoading={gendersLoading}
                 optionsError={gendersError}
-                options={gendersAsOptions}
+                options={gendersAsOptionsWithEmptyOption}
                 label={t('shared.preferences.account.gender.label')}
                 sheetLabel={t('shared.preferences.account.gender.label')}
                 placeholder={t('shared.preferences.account.gender.placeholder')}

@@ -66,7 +66,7 @@ export const DateHelper = {
     startOfWeek(date, {
       weekStartsOn,
     }),
-  format: (date: Date, formatStr?: string, lang?: string) => {
+  format: (date: Date | string, formatStr?: string, lang?: string) => {
     if (formatStr === 'p' && getDateLocale().code === 'uk') {
       formatStr = 'HH:mm';
     } else if (!formatStr) {

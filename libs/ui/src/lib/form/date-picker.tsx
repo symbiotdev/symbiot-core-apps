@@ -32,7 +32,7 @@ export const DatePicker = ({
   onChange,
   ...viewProps
 }: Omit<ViewProps, 'onPress'> & {
-  value?: Date | null;
+  value?: Date | null | string;
   label?: string;
   error?: string;
   placeholder?: string;

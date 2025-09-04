@@ -48,7 +48,7 @@ type Value = {
   phone: PhoneValue;
   customSchedule: boolean;
   provider: boolean;
-  genderId: string;
+  gender: string;
   schedule: WeekdaySchedule[];
   avatar: ImagePickerAsset;
   serviceTypes: BrandIndustryServiceType[];
@@ -138,7 +138,7 @@ export default () => {
               options: gendersAsOptions,
               optionsLoading: gendersLoading,
               optionsError: gendersError,
-              name: 'genderId',
+              name: 'gender',
             },
           },
           {
@@ -279,7 +279,7 @@ export default () => {
           {
             type: 'toggle-group',
             props: {
-              ...form.serviceType,
+              ...form.serviceTypes,
               name: 'serviceTypes',
               showWhen: (value) => value.provider,
               options: serviceTypeAsToggleOptions,
@@ -361,7 +361,7 @@ export default () => {
             passport: value.passport,
             taxId: value.taxId,
             birthday: value.birthday ? String(value.birthday) : null,
-            genderId: value.genderId,
+            gender: value.gender,
             avatar: value.avatar,
             provider: value.provider,
             about: value.about,
@@ -371,7 +371,7 @@ export default () => {
             schedules: value.customSchedule
               ? value.schedule.map((schedule) => ({
                   ...schedule,
-                  locationId: value.location,
+                  location: value.location,
                 }))
               : [],
             serviceTypes: value.serviceTypes?.length

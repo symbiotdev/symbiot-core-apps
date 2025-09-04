@@ -16,15 +16,15 @@ export type BrandEmployee = {
   lastname: string;
   birthday: string;
   email: string;
+  address: string;
   position: string;
   passport: string;
   taxId: string;
   provider: boolean;
   gender: Gender;
   phones: Phone[];
-  schedules: Schedule[];
+  schedules: BrandEmployeeSchedule[];
   permissions: BrandEmployeePermissions;
-  locations: BrandEmployeeSchedule[];
   serviceTypes: BrandIndustryServiceType[];
 };
 
@@ -60,11 +60,11 @@ export type CreateBrandEmployee = {
   taxId: string;
   birthday: string | null;
   position: string;
-  genderId: string;
+  gender: string;
   serviceTypes: string[];
   permissions: BrandEmployeePermissions;
   phones: Phone[];
-  schedules: (Schedule & { locationId: string | null })[];
+  schedules: (Schedule & { location: string | null })[];
 };
 
 export type UpdateBrandEmployee = Partial<CreateBrandEmployee>;

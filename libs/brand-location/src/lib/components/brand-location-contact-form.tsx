@@ -188,7 +188,7 @@ export const BrandLocationContactForm = ({
               <Input
                 value={value}
                 error={error?.message}
-                enterKeyHint="next"
+                enterKeyHint="done"
                 type="email"
                 keyboardType="email-address"
                 label={form.email.label}

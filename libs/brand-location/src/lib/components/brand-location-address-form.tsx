@@ -4,7 +4,8 @@ import {
   Icon,
   Input,
   ListItem,
-  SlideSheetModal, Textarea
+  SlideSheetModal,
+  Textarea,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useState } from 'react';
 import { useBrandLocationForm } from '../hooks/use-brand-location-form';
@@ -28,9 +29,6 @@ export const BrandLocationAddressForm = ({
   const { mutateAsync: update } = useUpdateBrandLocationQuery();
 
   const [modalVisible, setModalVisible] = useState(false);
-
-  const openModal = useCallback(() => setModalVisible(true), []);
-  const closeModal = useCallback(() => setModalVisible(false), []);
 
   const { control: addressControl, handleSubmit: addressHandleSubmit } =
     useForm<{
@@ -137,15 +135,18 @@ export const BrandLocationAddressForm = ({
   const updateRemark = useCallback(
     ({ remark }: { remark: string }) => {
       remark !== location.remark &&
-      update({
-        id: location.id,
-        data: {
-          remark,
-        },
-      });
+        update({
+          id: location.id,
+          data: {
+            remark,
+          },
+        });
     },
     [location.remark, location.id, update],
   );
+
+  const openModal = useCallback(() => setModalVisible(true), []);
+  const closeModal = useCallback(() => setModalVisible(false), []);
 
   return (
     <>

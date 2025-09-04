@@ -24,6 +24,9 @@ export const useBrandEmployeeForm = () => {
         title: t('brand.employees.upsert.form.position_info.title'),
         subtitle: t('brand.employees.upsert.form.position_info.subtitle'),
       },
+      identificationInfo: {
+        title: t('brand.employees.upsert.form.identification_info.title'),
+      },
       location: {
         title: t('brand.employees.upsert.form.location.title'),
         subtitle: t('brand.employees.upsert.form.location.subtitle'),
@@ -31,9 +34,20 @@ export const useBrandEmployeeForm = () => {
         placeholder: t('brand.employees.upsert.form.location.placeholder'),
         scheme: yup.string().nullable(),
       },
-      serviceType: {
+      serviceTypes: {
         label: t('brand.employees.upsert.form.service_type.label'),
-        scheme: yup.array().of(yup.object().required()).required(),
+        scheme: yup
+          .array()
+          .of(
+            yup
+              .object()
+              .shape({
+                id: yup.string().required(),
+                name: yup.string().required(),
+              })
+              .required(),
+          )
+          .required(),
         multiselect: true,
       },
       avatar: {

@@ -52,6 +52,9 @@ import { Earth } from './Earth';
 import { ChatRoundDots } from './ChatRoundDots';
 import { MapPoint } from './MapPoint';
 import { UsersGroupRounded } from './UsersGroupRounded';
+import { UserId } from './UserId';
+import { Lock } from './Lock';
+import { Tuning2 } from './Tuning2';
 
 export const Map: IconMap = {
   AddCircle,
@@ -81,6 +84,7 @@ export const Map: IconMap = {
   HomeAdd,
   InfoCircle,
   Letter,
+  Lock,
   Login,
   Logout2,
   MagicStick,
@@ -101,9 +105,11 @@ export const Map: IconMap = {
   Suitcase,
   Sun,
   TrashBinMinimalistic,
+  Tuning2,
   TuningSquare,
   Unread,
   UserCircle,
+  UserId,
   UsersGroupRounded,
   Widget,
   Widget3,

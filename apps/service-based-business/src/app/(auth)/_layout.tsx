@@ -1,5 +1,5 @@
 import { Redirect, Stack } from 'expo-router';
-import { useAuthTokens } from '@symbiot-core-apps/api';
+import { queryClient, useAuthTokens } from '@symbiot-core-apps/api';
 import {
   useCurrentBrandState,
   useOnboardingState,
@@ -18,6 +18,8 @@ export default () => {
   useEffect(() => {
     if (!tokens.access) {
       void hideAsync();
+
+      queryClient.clear();
     }
   }, [tokens.access]);
 

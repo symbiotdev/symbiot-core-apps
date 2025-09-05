@@ -17,6 +17,7 @@
     "@react-native-firebase/auth": "*",
     "@react-native-google-signin/google-signin": "*",
     "@react-native-picker/picker": "*",
+    "@react-native-clipboard/clipboard": "*",
     "@symbiot.dev/react-native-heatmap": "*",
     "@tamagui/config": "*",
     "@tanstack/react-query": "*",

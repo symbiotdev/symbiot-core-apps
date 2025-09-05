@@ -1,4 +1,8 @@
-import { emitHaptic, useShareApp } from '@symbiot-core-apps/shared';
+import {
+  emitHaptic,
+  ShowNativeSuccessAlert,
+  useShareApp,
+} from '@symbiot-core-apps/shared';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
 import { router } from 'expo-router';
@@ -20,6 +24,8 @@ import {
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
+import { TouchableOpacity } from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 export default () => {
   const share = useShareApp();
@@ -58,6 +64,18 @@ export default () => {
     [],
   );
 
+  const copyId = useCallback(() => {
+    if (!me?.id) return;
+
+    emitHaptic();
+
+    Clipboard.setString(me?.id);
+
+    ShowNativeSuccessAlert({
+      title: t('shared.copied'),
+    });
+  }, [t, me?.id]);
+
   return (
     me && (
       <TabsPageView scrollable withHeaderHeight>
@@ -89,9 +107,12 @@ export default () => {
               />
               <View flex={1} gap="$2">
                 <H3 numberOfLines={1}>{me.name}</H3>
-                <MediumText color="$placeholderColor" numberOfLines={1}>
-                  ID: {me.id}
-                </MediumText>
+
+                <TouchableOpacity onPress={copyId}>
+                  <MediumText color="$placeholderColor" numberOfLines={1}>
+                    ID: {me.id}
+                  </MediumText>
+                </TouchableOpacity>
               </View>
             </XStack>
             <QrCodeModalWithTrigger

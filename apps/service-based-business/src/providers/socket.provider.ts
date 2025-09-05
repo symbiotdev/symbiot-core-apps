@@ -15,6 +15,7 @@ import { useAuthBrand } from '@symbiot-core-apps/brand';
 import { Platform } from 'react-native';
 import { ShowNativeSuccessAlert } from '@symbiot-core-apps/shared';
 import { useAudioPlayer } from 'expo-audio';
+import { router } from 'expo-router';
 
 export const SocketProvider = ({ children }: PropsWithChildren) => {
   const switchBrand = useAuthBrand();
@@ -35,7 +36,9 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     (brand: Brand) => {
       if (currentBrand?.id) return;
 
-      return switchBrand({ id: brand.id });
+      void switchBrand({ id: brand.id });
+
+      router.replace('/');
     },
     [currentBrand?.id],
   );

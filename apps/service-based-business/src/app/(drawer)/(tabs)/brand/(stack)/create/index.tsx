@@ -15,7 +15,7 @@ import {
   useBrandIndustryQuery,
 } from '@symbiot-core-apps/api';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { useAuthBrand } from '@symbiot-core-apps/brand';
+import { useAuthBrand, useBrandAuthState } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
@@ -42,6 +42,7 @@ const isIndustriesEditable = Boolean(
 export default () => {
   const { t } = useTranslation();
   const switchBrand = useAuthBrand();
+  const { processing: authProcessing } = useBrandAuthState();
   const { data: referralSources, isPending: referralSourcesLoading } =
     useAppReferralSource();
   const { data: competitorSources, isPending: competitorSourcesLoading } =
@@ -326,7 +327,7 @@ export default () => {
     <TypedSurvey
       loading={processing}
       steps={steps}
-      ignoreLeaveConfirmation={createdRef.current}
+      ignoreLeaveConfirmation={createdRef.current || authProcessing}
       onFinish={onFinish}
     />
   );

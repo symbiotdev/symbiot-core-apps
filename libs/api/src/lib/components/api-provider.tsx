@@ -89,6 +89,7 @@ export const ApiProvider = ({
       };
       socket.connect();
     } else {
+      queryClient.clear();
       disconnectSocket();
     }
 

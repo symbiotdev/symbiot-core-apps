@@ -8,5 +8,3 @@ export * from './lib/hooks/use-current-brand-employee';
 export * from './lib/hooks/use-faq.state';
 export * from './lib/hooks/use-gender.state';
 export * from './lib/hooks/use-onboarding.state';
-
-export * from './lib/providers/state.provider';

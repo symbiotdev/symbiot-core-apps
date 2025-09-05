@@ -41,7 +41,7 @@ export const Appearance = () => {
     (scheme: AccountScheme) => updatePreferences$({ scheme }),
     [updatePreferences$],
   );
- 
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: updating ? () => <Spinner /> : undefined,
@@ -54,7 +54,7 @@ export const Appearance = () => {
         <ListItemGroup
           title={t('shared.preferences.appearance.theme.title')}
           gap="$4"
-          paddingTop="$4"
+          paddingVertical="$4"
         >
           <Switch
             checked={scheme === 'system'}

@@ -1,0 +1,106 @@
+import { PropsWithChildren, useCallback, useEffect } from 'react';
+import {
+  Brand,
+  Notification,
+  socket,
+  useNotificationQueryState,
+  WebsocketAction,
+} from '@symbiot-core-apps/api';
+import {
+  useCurrentAccount,
+  useCurrentBrandEmployeeState,
+  useCurrentBrandState,
+} from '@symbiot-core-apps/state';
+import { useAuthBrand } from '@symbiot-core-apps/brand';
+import { Platform } from 'react-native';
+import { ShowNativeSuccessAlert } from '@symbiot-core-apps/shared';
+import { useAudioPlayer } from 'expo-audio';
+
+export const SocketProvider = ({ children }: PropsWithChildren) => {
+  const switchBrand = useAuthBrand();
+  const soundPlayer = useAudioPlayer(
+    require('../../assets/audio/new_notification_sound.wav'),
+  );
+
+  const { me, setMeStats, updateMe, updateMePreferences } = useCurrentAccount();
+  const { brand: currentBrand, setBrand: setCurrentBrand } =
+    useCurrentBrandState();
+  const { setCurrentEmployee } = useCurrentBrandEmployeeState();
+  const {
+    addToList: addNotificationToListQueryState,
+    markAllAsRead: markAllNotificationsAsRead,
+  } = useNotificationQueryState();
+
+  const onBrandAssigned = useCallback(
+    (brand: Brand) => {
+      if (currentBrand?.id) return;
+
+      return switchBrand({ id: brand.id });
+    },
+    [currentBrand?.id],
+  );
+
+  const onNotificationAdded = useCallback(
+    (notification: Notification) => {
+      if (Platform.OS === 'web' && !!me?.preferences?.enableNotificationSound) {
+        soundPlayer.play();
+
+        ShowNativeSuccessAlert({
+          title: notification.title,
+          subtitle: notification.subtitle,
+          duration: 5,
+        });
+      }
+
+      if (currentBrand?.id !== notification.brand?.id) {
+        return;
+      }
+
+      addNotificationToListQueryState(notification);
+      setMeStats({
+        newNotifications: 1,
+      });
+    },
+    [
+      currentBrand?.id,
+      me?.preferences?.enableNotificationSound,
+      addNotificationToListQueryState,
+      setMeStats,
+      soundPlayer,
+    ],
+  );
+
+  const onNotificationsReadAll = useCallback(() => {
+    markAllNotificationsAsRead();
+    setMeStats({
+      newNotifications: 0,
+    });
+  }, [setMeStats, markAllNotificationsAsRead]);
+
+  useEffect(() => {
+    socket.on(WebsocketAction.accountUpdated, updateMe);
+    socket.on(WebsocketAction.accountPreferencesUpdated, updateMePreferences);
+
+    socket.on(WebsocketAction.brandAssigned, onBrandAssigned);
+    socket.on(WebsocketAction.brandUpdated, setCurrentBrand);
+
+    socket.on(WebsocketAction.brandEmployeeUpdated, setCurrentEmployee);
+
+    socket.on(WebsocketAction.notificationAdded, onNotificationAdded);
+    socket.on(WebsocketAction.notificationsRead, onNotificationsReadAll);
+
+    return () => {
+      socket.off();
+    };
+  }, [
+    updateMe,
+    updateMePreferences,
+    setCurrentBrand,
+    setCurrentEmployee,
+    onBrandAssigned,
+    onNotificationAdded,
+    onNotificationsReadAll,
+  ]);
+
+  return children;
+};

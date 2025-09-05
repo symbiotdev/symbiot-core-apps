@@ -2,11 +2,13 @@ import io from 'socket.io-client';
 
 export enum WebsocketAction {
   accountUpdated = 'account_updated',
+  accountPreferencesUpdated = 'account_preferences_updated',
   // notifications
   notificationAdded = 'notification_added',
   notificationsRead = 'notifications_read',
   // brand
-  brandAdded = 'brand_added',
+  brandAssigned = 'brand_assigned',
+  brandCreated = 'brand_created',
   brandUpdated = 'brand_updated',
   // brand employee
   brandEmployeeUpdated = 'brand_employee_updated',

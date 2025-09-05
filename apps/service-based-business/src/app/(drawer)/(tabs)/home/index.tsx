@@ -1,9 +1,16 @@
 import { H2, PageView } from '@symbiot-core-apps/ui';
+import { useCurrentBrandEmployeeState } from '@symbiot-core-apps/state';
 
 export default () => {
+  const { currentEmployee } = useCurrentBrandEmployeeState();
+
   return (
-    <PageView>
-      <H2 margin="auto">Home</H2>
-    </PageView>
+    currentEmployee && (
+      <PageView>
+        <H2 margin="auto" textAlign="center">
+          {currentEmployee.name}
+        </H2>
+      </PageView>
+    )
   );
 };

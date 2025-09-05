@@ -2,6 +2,7 @@ import { PropsWithChildren, useCallback, useEffect } from 'react';
 import {
   Account,
   Brand,
+  BrandEmployee,
   queryClient,
   socket,
   WebsocketAction,
@@ -16,7 +17,7 @@ export const StateProvider = ({ children }: PropsWithChildren) => {
   const { setMe, clear: clearCurrentAccountState } = useCurrentAccountState();
   const { setBrand: setCurrentBrand, clear: clearCurrentBrandState } =
     useCurrentBrandState();
-  const { clear: clearCurrentBrandEmployeeState } =
+  const { setCurrentEmployee, clear: clearCurrentBrandEmployeeState } =
     useCurrentBrandEmployeeState();
   const { clear: clearFaq } = useFaqState();
   const { clear: clearNotificationsState } = useNotificationsState();
@@ -31,13 +32,20 @@ export const StateProvider = ({ children }: PropsWithChildren) => {
     [setMe],
   );
 
+  const onBrandEmployeeUpdated = useCallback(
+    (brandEmployee: BrandEmployee) => setCurrentEmployee(brandEmployee),
+    [setCurrentEmployee],
+  );
+
   useEffect(() => {
     socket.on(WebsocketAction.accountUpdated, onMeUpdated);
     socket.on(WebsocketAction.brandUpdated, onBrandUpdated);
+    socket.on(WebsocketAction.brandEmployeeUpdated, onBrandEmployeeUpdated);
 
     return () => {
       socket.off(WebsocketAction.accountUpdated, onMeUpdated);
       socket.off(WebsocketAction.brandUpdated, onBrandUpdated);
+      socket.off(WebsocketAction.brandEmployeeUpdated, onBrandEmployeeUpdated);
 
       queryClient.clear();
       clearCurrentAccountState();
@@ -54,6 +62,7 @@ export const StateProvider = ({ children }: PropsWithChildren) => {
     clearNotificationsState,
     onBrandUpdated,
     onMeUpdated,
+    onBrandEmployeeUpdated,
   ]);
 
   return children;

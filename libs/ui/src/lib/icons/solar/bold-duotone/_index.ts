@@ -55,6 +55,7 @@ import { UsersGroupRounded } from './UsersGroupRounded';
 import { UserId } from './UserId';
 import { Lock } from './Lock';
 import { Tuning2 } from './Tuning2';
+import { Copy } from './Copy';
 
 export const Map: IconMap = {
   AddCircle,
@@ -74,6 +75,7 @@ export const Map: IconMap = {
   CloseCircle,
   Code,
   CodeCircle,
+  Copy,
   CrownLine,
   Earth,
   FileText,

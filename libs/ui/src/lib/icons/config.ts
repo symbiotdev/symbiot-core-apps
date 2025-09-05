@@ -19,6 +19,7 @@ export type IconName =
   | 'CloseCircle'
   | 'Code'
   | 'CodeCircle'
+  | 'Copy'
   | 'CrownLine'
   | 'Earth'
   | 'FileText'

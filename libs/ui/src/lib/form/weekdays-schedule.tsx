@@ -219,12 +219,12 @@ const WeekdayScheduleElement = ({
       topFixedContent={
         <FormView gap="$3">
           <XStack
-            width="100%"
+            flex={1}
             alignItems="center"
             justifyContent="space-between"
             gap="$5"
           >
-            <H4>{weekday.label}</H4>
+            <H4 flex={1}>{weekday.label}</H4>
             <Switch checked={!isDayOff} onChange={toggleDayOff} />
           </XStack>
 

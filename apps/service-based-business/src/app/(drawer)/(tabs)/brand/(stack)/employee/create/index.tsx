@@ -70,7 +70,7 @@ export default () => {
     error: serviceTypesError,
   } = useBrandIndustryServiceTypeQuery();
   const {
-    gendersAsOptions,
+    gendersAsOptionsWithEmptyOption,
     loading: gendersLoading,
     error: gendersError,
   } = useGenders();
@@ -135,9 +135,10 @@ export default () => {
             type: 'select-picker',
             props: {
               ...form.gender,
-              options: gendersAsOptions,
+              options: gendersAsOptionsWithEmptyOption,
               optionsLoading: gendersLoading,
               optionsError: gendersError,
+              defaultValue: account?.gender?.id,
               name: 'gender',
             },
           },
@@ -245,12 +246,20 @@ export default () => {
             },
           },
           {
+            type: 'switch',
+            props: {
+              ...form.employeeSchedule,
+              name: 'customSchedule',
+              showWhen: (value) => !value.location,
+            },
+          },
+          {
             type: 'weekdays-schedule',
             props: {
               ...form.schedules,
               name: 'schedule',
               label: form.schedules.subtitle,
-              showWhen: (value) => !value.location || value.customSchedule,
+              showWhen: (value) => value.customSchedule,
             },
           },
         ],
@@ -332,7 +341,7 @@ export default () => {
       currentBrand,
       permissions,
       locations?.items?.length,
-      gendersAsOptions,
+      gendersAsOptionsWithEmptyOption,
       gendersLoading,
       gendersError,
       locationsAsOptions,
@@ -369,12 +378,13 @@ export default () => {
             permissions: value.permissions,
             phones: value.phone ? [value.phone] : [],
             locations: value.location ? [value.location] : [],
-            schedules: value.customSchedule || !value.location
-              ? value.schedule.map((schedule) => ({
-                  ...schedule,
-                  location: value.location,
-                }))
-              : [],
+            schedules:
+              value.customSchedule || !value.location
+                ? value.schedule.map((schedule) => ({
+                    ...schedule,
+                    location: value.location,
+                  }))
+                : [],
             serviceTypes: value.serviceTypes?.length
               ? value.serviceTypes.map(({ id }) => id)
               : [],

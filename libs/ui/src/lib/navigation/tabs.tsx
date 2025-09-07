@@ -13,8 +13,10 @@ import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { NavigationBackground } from './background';
 import Animated, {
+  Easing,
   useAnimatedStyle,
-  withTiming,
+  withDelay,
+  withTiming
 } from 'react-native-reanimated';
 
 export const HapticTabBarButton = (props: BottomTabBarButtonProps) => {
@@ -47,9 +49,13 @@ export const AnimatedTabBar = ({
     () => ({
       transform: [
         {
-          translateY: withTiming(hidden ? 250 : 0, {
-            duration: 500,
-          }),
+          translateY: withDelay(
+            hidden ? 200 : 0,
+            withTiming(hidden ? 250 : 0, {
+              duration: 250,
+              easing: Easing.inOut(Easing.ease)
+            }),
+          ),
         },
       ],
     }),

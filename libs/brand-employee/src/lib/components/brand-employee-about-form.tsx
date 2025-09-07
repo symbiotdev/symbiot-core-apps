@@ -40,7 +40,7 @@ export const BrandEmployeeAboutForm = ({
         icon={<Icon name="InfoCircle" />}
         iconAfter={<Icon name="ArrowRight" />}
         label={form.about.title}
-        text={value.about || t('shared.not_specified')}
+        text={value.about?.replace(/\n/gi, ' ').replace(/\s\s/ig, '') || t('shared.not_specified')}
         onPress={openModal}
       />
 

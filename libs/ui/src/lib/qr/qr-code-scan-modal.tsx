@@ -13,6 +13,8 @@ import { EmptyView } from '../view/empty-view';
 import { Button } from '../button/button';
 import { FormView } from '../view/form-view';
 import { useTranslation } from 'react-i18next';
+import { useRendered } from '@symbiot-core-apps/shared';
+import { LoadingView } from '../view/loading-view';
 
 export const QrCodeScanModal = (props: {
   visible: boolean;
@@ -38,6 +40,7 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
   const [permission, requestPermission] = useCameraPermissions();
   const { t } = useTranslation();
   const { width } = useWindowDimensions();
+  const { rendered } = useRendered({ delay: 200 });
 
   const scannedRef = useRef(false);
 
@@ -55,8 +58,14 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
   );
 
   useEffect(() => {
-    void requestPermission();
-  }, [requestPermission]);
+    if (rendered) {
+      void requestPermission();
+    }
+  }, [rendered, requestPermission]);
+
+  if (!rendered) {
+    return <LoadingView />;
+  }
 
   if (!permission) {
     return (

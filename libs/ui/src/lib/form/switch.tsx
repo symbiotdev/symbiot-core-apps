@@ -25,15 +25,21 @@ export const Switch = ({
 
   return (
     <XStack alignItems="flex-start" justifyContent="space-between" gap="$5">
-      <View flex={1}>
-        {label && <Label lineHeight={switchHeight}>{label}</Label>}
+      {(!!label || !!description) && (
+        <View flex={1}>
+          {label && (
+            <Label lineHeight={switchHeight} flex={1}>
+              {label}
+            </Label>
+          )}
 
-        {description && (
-          <RegularText fontSize={12} color="$placeholderColor">
-            {description}
-          </RegularText>
-        )}
-      </View>
+          {description && (
+            <RegularText fontSize={12} color="$placeholderColor" flex={1}>
+              {description}
+            </RegularText>
+          )}
+        </View>
+      )}
 
       {loading ? (
         <View
@@ -47,7 +53,7 @@ export const Switch = ({
       ) : (
         <UiSwitch
           paddingHorizontal={2}
-          height={28}
+          height={switchHeight}
           width={42}
           cursor="pointer"
           checked={checked}

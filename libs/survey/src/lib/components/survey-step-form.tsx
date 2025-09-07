@@ -119,7 +119,7 @@ export function SurveyStepForm<V>({
               paddingTop={headerHeight + defaultPageVerticalPadding}
               paddingBottom={defaultPageVerticalPadding}
             >
-              <View gap="$2" paddingHorizontal="$4">
+              <View gap="$2">
                 <H2>{step.title}</H2>
                 <RegularText>{step.subtitle}</RegularText>
               </View>

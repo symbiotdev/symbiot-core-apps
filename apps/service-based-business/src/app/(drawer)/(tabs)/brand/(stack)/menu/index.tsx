@@ -8,9 +8,11 @@ import {
   PageView,
 } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
+import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 
 export default () => {
   const { t } = useTranslation();
+  const { hasPermission } = useCurrentBrandEmployee();
 
   const onInformationPress = useCallback(
     () => router.push('/brand/menu/information/preferences'),
@@ -31,21 +33,29 @@ export default () => {
     <PageView scrollable withHeaderHeight>
       <FormView>
         <ListItemGroup>
-          <ListItem
-            label={t('brand.information.title')}
-            icon={<Icon name="InfoCircle" />}
-            onPress={onInformationPress}
-          />
-          <ListItem
-            label={t('brand.locations.title')}
-            icon={<Icon name="MapPointWave" />}
-            onPress={onLocationsPress}
-          />
-          <ListItem
-            label={t('brand.employees.title')}
-            icon={<Icon name="UsersGroupRounded" />}
-            onPress={onEmployeesPress}
-          />
+          {hasPermission('brandAll') && (
+            <ListItem
+              label={t('brand.information.title')}
+              icon={<Icon name="InfoCircle" />}
+              onPress={onInformationPress}
+            />
+          )}
+
+          {hasPermission('locationsAll') && (
+            <ListItem
+              label={t('brand.locations.title')}
+              icon={<Icon name="MapPointWave" />}
+              onPress={onLocationsPress}
+            />
+          )}
+
+          {hasPermission('employeesAll') && (
+            <ListItem
+              label={t('brand.employees.title')}
+              icon={<Icon name="UsersGroupRounded" />}
+              onPress={onEmployeesPress}
+            />
+          )}
         </ListItemGroup>
       </FormView>
     </PageView>

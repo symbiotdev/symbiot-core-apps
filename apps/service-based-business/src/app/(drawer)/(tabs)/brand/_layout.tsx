@@ -31,17 +31,10 @@ const IndexHeaderLeft = () => {
 };
 
 const IndexHeaderRight = () => {
-  const { hasAnyOfPermissions } = useCurrentBrandEmployee();
+  const { hasAnyPermission } = useCurrentBrandEmployee();
 
   return (
-    hasAnyOfPermissions([
-      'clientsAll',
-      'locationsAll',
-      'employeesAll',
-      'analyticsAll',
-      'brandAll',
-      'servicesAll',
-    ]) && (
+    hasAnyPermission() && (
       <HeaderButton
         iconName="SettingsMinimalistic"
         onPress={() => router.push('/brand/menu')}
@@ -156,7 +149,7 @@ export default () => {
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
   const { t } = useTranslation();
   const { visible: drawerVisible } = useDrawer();
-  const { hasPermission } = useCurrentBrandEmployee();
+  const { hasPermission, hasAnyPermission } = useCurrentBrandEmployee();
   const screenOptions = useStackScreenHeaderOptions();
 
   return (
@@ -231,12 +224,14 @@ export default () => {
         }}
       />
 
-      <Stack.Screen
-        name="(stack)/menu/index"
-        options={{
-          headerTitle: currentBrand?.name,
-        }}
-      />
+      <Stack.Protected guard={hasAnyPermission()}>
+        <Stack.Screen
+          name="(stack)/menu/index"
+          options={{
+            headerTitle: currentBrand?.name,
+          }}
+        />
+      </Stack.Protected>
 
       <Stack.Protected guard={hasPermission('employeesAll')}>
         <Stack.Screen

@@ -48,6 +48,19 @@ export const useCurrentBrandEmployee = () => {
     [currentEmployee?.permissions],
   );
 
+  const hasAnyPermission = useCallback(
+    () =>
+      hasAnyOfPermissions([
+        'brandAll',
+        'employeesAll',
+        'analyticsAll',
+        'clientsAll',
+        'servicesAll',
+        'locationsAll',
+      ]),
+    [hasAnyOfPermissions],
+  );
+
   const hasPermission = useCallback(
     (permission: keyof BrandEmployeePermissions) =>
       !!currentEmployee?.permissions?.[permission],
@@ -58,6 +71,7 @@ export const useCurrentBrandEmployee = () => {
     currentEmployee,
     setCurrentEmployee,
     hasAnyOfPermissions,
+    hasAnyPermission,
     hasPermission,
   };
 };

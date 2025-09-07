@@ -18,6 +18,7 @@ import {
   useBrandLocationAdvantageOptions,
   useBrandLocationForm,
 } from '@symbiot-core-apps/brand-location';
+import { useCurrentBrandState } from '@symbiot-core-apps/state';
 
 type Value = {
   name: string;
@@ -37,6 +38,7 @@ type Value = {
 const TypedSurvey = Survey<Value>;
 
 export default () => {
+  const { brand: currentBrand } = useCurrentBrandState();
   const { mutateAsync: createLocation } = useCreateBrandLocationQuery();
   const { advantages, advantagesLoading, advantagesError } =
     useBrandLocationAdvantageOptions();
@@ -239,7 +241,7 @@ export default () => {
     <TypedSurvey
       steps={steps}
       loading={processing}
-      ignoreLeaveConfirmation={createdRef.current}
+      ignoreLeaveConfirmation={createdRef.current || !currentBrand}
       onFinish={onFinish}
     />
   );

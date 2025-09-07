@@ -28,7 +28,7 @@ export const BrandLocationAdvantagesForm = ({
     useBrandLocationAdvantageOptions();
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [value, setValue] = useState(location.advantages);
+  const [value, setValue] = useState(location.advantages || []);
 
   const openModal = useCallback(() => setModalVisible(true), []);
   const closeModal = useCallback(async () => {

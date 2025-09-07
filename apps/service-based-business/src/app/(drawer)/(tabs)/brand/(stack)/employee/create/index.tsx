@@ -239,7 +239,7 @@ export default () => {
           {
             type: 'switch',
             props: {
-              ...form.customSchedule,
+              ...form.locationCustomSchedule,
               name: 'customSchedule',
               showWhen: (value) => !!value.location,
             },
@@ -247,9 +247,9 @@ export default () => {
           {
             type: 'weekdays-schedule',
             props: {
-              ...form.schedule,
+              ...form.schedules,
               name: 'schedule',
-              label: form.schedule.subtitle,
+              label: form.schedules.subtitle,
               showWhen: (value) => !value.location || value.customSchedule,
             },
           },
@@ -397,7 +397,7 @@ export default () => {
     <TypedSurvey
       steps={steps}
       loading={processing}
-      ignoreLeaveConfirmation={createdRef.current}
+      ignoreLeaveConfirmation={createdRef.current || !currentBrand}
       onFinish={onFinish}
     />
   );

@@ -14,6 +14,7 @@ import { PaginationList } from '../types/pagination';
 import { queryClient } from '../utils/client';
 import { generateFormData } from '../utils/media';
 import { ImagePickerAsset } from 'expo-image-picker';
+import { BrandEmployeesQueryKey } from './use-brand-employee.query';
 
 export enum BrandLocationQueryKey {
   currentList = 'brand-location-current-list',
@@ -130,6 +131,9 @@ export const useRemoveBrandLocationQuery = () =>
 
       queryClient.setQueryData([BrandLocationQueryKey.byId, id], undefined);
 
+      await queryClient.resetQueries({
+        queryKey: [BrandEmployeesQueryKey.detailedById],
+      });
       await queryClient.refetchQueries({
         queryKey: [BrandLocationQueryKey.currentList],
       });

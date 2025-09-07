@@ -8,6 +8,7 @@ export enum WebsocketAction {
   notificationsRead = 'notifications_read',
   // brand
   brandAssigned = 'brand_assigned',
+  brandUnassigned = 'brand_unassigned',
   brandCreated = 'brand_created',
   brandUpdated = 'brand_updated',
   // brand employee

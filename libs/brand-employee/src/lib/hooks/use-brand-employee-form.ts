@@ -101,8 +101,15 @@ export const useBrandEmployeeForm = () => {
           t('brand.employees.upsert.form.phone.error.invalid'),
         ),
       },
-      customSchedule: {
-        label: t('brand.employees.upsert.form.custom_schedule.label'),
+      locationCustomSchedule: {
+        label: t('brand.employees.upsert.form.location_custom_schedule.label'),
+        description: t('brand.employees.upsert.form.location_custom_schedule.description'),
+        scheme: yup.boolean().defined(),
+        defaultValue: false,
+      },
+      employeeSchedule: {
+        label: t('brand.employees.upsert.form.employee_schedule.label'),
+        description: t('brand.employees.upsert.form.employee_schedule.description'),
         scheme: yup.boolean().defined(),
         defaultValue: false,
       },
@@ -110,7 +117,7 @@ export const useBrandEmployeeForm = () => {
         title: t('brand.employees.upsert.form.permissions.title'),
         subtitle: t('brand.employees.upsert.form.permissions.subtitle'),
       },
-      schedule: {
+      schedules: {
         title: t('brand.employees.upsert.form.schedule.title'),
         subtitle: t('brand.employees.upsert.form.schedule.subtitle'),
         label: t('brand.employees.upsert.form.schedule.label'),

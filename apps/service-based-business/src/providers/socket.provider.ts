@@ -2,6 +2,7 @@ import { PropsWithChildren, useCallback, useEffect } from 'react';
 import {
   Brand,
   Notification,
+  queryClient,
   socket,
   useNotificationQueryState,
   WebsocketAction,
@@ -24,8 +25,11 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
   );
 
   const { me, setMeStats, updateMe, updateMePreferences } = useCurrentAccount();
-  const { brand: currentBrand, setBrand: setCurrentBrand } =
-    useCurrentBrandState();
+  const {
+    brand: currentBrand,
+    setBrand: setCurrentBrand,
+    setBrands: setCurrentBrands,
+  } = useCurrentBrandState();
   const { setCurrentEmployee } = useCurrentBrandEmployeeState();
   const {
     addToList: addNotificationToListQueryState,
@@ -41,6 +45,17 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
       router.replace('/');
     },
     [currentBrand?.id],
+  );
+
+  const onBrandUnassigned = useCallback(
+    (brand: Brand) => {
+      setCurrentEmployee(undefined);
+      setCurrentBrand(undefined);
+      setCurrentBrands([]);
+      router.replace('/');
+      queryClient.clear();
+    },
+    [setCurrentEmployee, setCurrentBrand, setCurrentBrands],
   );
 
   const onNotificationAdded = useCallback(
@@ -85,6 +100,7 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     socket.on(WebsocketAction.accountPreferencesUpdated, updateMePreferences);
 
     socket.on(WebsocketAction.brandAssigned, onBrandAssigned);
+    socket.on(WebsocketAction.brandUnassigned, onBrandUnassigned);
     socket.on(WebsocketAction.brandUpdated, setCurrentBrand);
 
     socket.on(WebsocketAction.brandEmployeeUpdated, setCurrentEmployee);

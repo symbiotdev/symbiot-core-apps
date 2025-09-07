@@ -3,7 +3,7 @@ import {
   useCurrentBrandLocationsQuery,
 } from '@symbiot-core-apps/api';
 import { useBrandEmployeeForm } from '../hooks/use-brand-employee-form';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import {
   Card,
   defaultPageVerticalPadding,
@@ -26,7 +26,6 @@ import { useCurrentAccount } from '@symbiot-core-apps/state';
 
 type FormValue = {
   location: string | null;
-  customSchedule: boolean;
   schedules: WeekdaySchedule[];
 };
 
@@ -37,28 +36,23 @@ export const BrandEmployeeLocationsForm = ({
 }) => {
   const dynamicLocation = useDynamicBrandLocation();
   const form = useBrandEmployeeForm();
+
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useUpdateBrandEmployeeForm<FormValue>({
       id: employee.id,
       initialValue: {
         location:
           employee.locations?.[0]?.id || (dynamicLocation.value as null),
-        customSchedule:
-          !employee.locations.length || !!employee.schedules.length,
-        schedules: employee.schedules?.length
-          ? employee.schedules
-          : form.schedule.defaultValue,
+        schedules: employee.schedules,
       },
       dataRequestFormatted: (value) => {
         return {
           locations: value.location ? [value.location] : [],
           schedules:
-            value.customSchedule || !value.location
-              ? value.schedules?.map((schedule) => ({
-                  ...schedule,
-                  location: value.location,
-                }))
-              : [],
+            value.schedules?.map((schedule) => ({
+              ...schedule,
+              location: value.location,
+            })) || [],
         };
       },
     });
@@ -69,10 +63,17 @@ export const BrandEmployeeLocationsForm = ({
         icon={<Icon name="MapPoint" />}
         iconAfter={<Icon name="ArrowRight" />}
         label={form.location.title}
-        text={
+        text={[
           employee.locations?.map(({ name }) => name).join(' · ') ||
-          dynamicLocation.label
-        }
+            dynamicLocation.label,
+          employee.schedules?.length
+            ? employee.locations?.length
+              ? form.locationCustomSchedule.description
+              : form.employeeSchedule.description
+            : '',
+        ]
+          .filter(Boolean)
+          .join(' · ')}
         onPress={openModal}
       />
 
@@ -90,7 +91,6 @@ export const BrandEmployeeLocationsForm = ({
 
 const Form = ({
   location,
-  customSchedule,
   schedules,
   onUpdateValue,
 }: FormValue & {
@@ -120,14 +120,13 @@ const Form = ({
   );
 
   const { control, handleSubmit, setValue, watch } = useForm<FormValue>({
-    defaultValues: { location, customSchedule, schedules },
+    defaultValues: { location, schedules },
     resolver: yupResolver(
       yup
         .object()
         .shape({
           location: form.location.scheme,
-          customSchedule: form.customSchedule.scheme,
-          schedules: form.schedule.scheme,
+          schedules: form.schedules.scheme,
         })
         .required(),
     ),
@@ -135,13 +134,16 @@ const Form = ({
 
   const watchValue = watch();
 
+  const onChangeSchedule = useCallback(() => {
+    setValue(
+      'schedules',
+      watchValue.schedules.length ? [] : form.schedules.defaultValue,
+    );
+  }, [form.schedules.defaultValue, setValue, watchValue.schedules.length]);
+
   useEffect(() => {
     setValue('location', location);
   }, [setValue, location]);
-
-  useEffect(() => {
-    setValue('customSchedule', customSchedule);
-  }, [setValue, customSchedule]);
 
   useEffect(() => {
     setValue('schedules', schedules);
@@ -168,28 +170,32 @@ const Form = ({
             optionsError={locationsError}
             value={value}
             error={error?.message}
-            onChange={onChange}
+            onChange={(newValue) => {
+              onChange(newValue);
+              setValue('schedules', []);
+            }}
           />
         )}
       />
 
-      {watchValue.location && (
-        <Controller
-          control={control}
-          name="customSchedule"
-          render={({ field: { value, onChange } }) => (
-            <Card>
-              <Switch
-                label={form.customSchedule.label}
-                checked={value}
-                onChange={onChange}
-              />
-            </Card>
-          )}
+      <Card>
+        <Switch
+          label={
+            watchValue.location
+              ? form.locationCustomSchedule.label
+              : form.employeeSchedule.label
+          }
+          description={
+            watchValue.location
+              ? form.locationCustomSchedule.description
+              : form.employeeSchedule.description
+          }
+          checked={!!watchValue.schedules.length}
+          onChange={onChangeSchedule}
         />
-      )}
+      </Card>
 
-      {(watchValue.customSchedule || !watchValue.location) && (
+      {!!watchValue.schedules.length && (
         <Controller
           control={control}
           name="schedules"

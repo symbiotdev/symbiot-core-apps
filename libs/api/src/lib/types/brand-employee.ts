@@ -34,7 +34,6 @@ export type BrandEmployeeSchedule = Schedule & {
 };
 
 export type BrandEmployeePermissions = {
-  all: boolean;
   brandAll: boolean;
   analyticsAll: boolean;
   servicesAll: boolean;

@@ -22,7 +22,10 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
-import { useCurrentBrandState } from '@symbiot-core-apps/state';
+import {
+  useCurrentBrandEmployee,
+  useCurrentBrandState,
+} from '@symbiot-core-apps/state';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
 
@@ -97,6 +100,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
   const { top, bottom, left } = useSafeAreaInsets();
   const { compressed, toggleCompressed } = useDrawerState();
   const { brand: currentBrand } = useCurrentBrandState();
+  const { hasPermission } = useCurrentBrandEmployee();
 
   const animatedStyle = useAnimatedStyle(
     () => ({
@@ -212,19 +216,23 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
 
         <Br />
 
-        <MenuItem
-          route="/brand/menu/locations"
-          navigation={props.navigation}
-          label={t('navigation.drawer.locations.label')}
-          icon="MapPointWave"
-        />
+        {hasPermission('locationsAll') && (
+          <MenuItem
+            route="/brand/menu/locations"
+            navigation={props.navigation}
+            label={t('navigation.drawer.locations.label')}
+            icon="MapPointWave"
+          />
+        )}
 
-        <MenuItem
-          route="/brand/menu/employees"
-          navigation={props.navigation}
-          label={t('navigation.drawer.employees.label')}
-          icon="UsersGroupRounded"
-        />
+        {hasPermission('employeesAll') && (
+          <MenuItem
+            route="/brand/menu/employees"
+            navigation={props.navigation}
+            label={t('navigation.drawer.employees.label')}
+            icon="UsersGroupRounded"
+          />
+        )}
 
         <Br marginTop="auto" />
 

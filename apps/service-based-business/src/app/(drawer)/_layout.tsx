@@ -23,7 +23,7 @@ export default () => {
   const currentEntitiesLoaded = useCurrentEntitiesLoader();
 
   useEffect(() => {
-    if (!currentEntitiesLoaded) {
+    if (currentEntitiesLoaded) {
       void hideAsync();
     }
   }, [currentEntitiesLoaded]);

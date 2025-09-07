@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { changeAppLanguage } from '@symbiot-core-apps/i18n';
 import {
   useCurrentAccount,
-  useCurrentBrandEmployeeState,
+  useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useInitializing } from './use-initializing';
@@ -19,7 +19,7 @@ export const useCurrentEntitiesLoader = () => {
   const initializing = useInitializing();
   const { updateMe, updateMePreferences } = useCurrentAccount();
   const { tokens, setTokens } = useAuthTokens();
-  const { setCurrentEmployee } = useCurrentBrandEmployeeState();
+  const { setCurrentEmployee } = useCurrentBrandEmployee();
   const {
     brand: currentBrand,
     setBrand: setCurrentBrand,

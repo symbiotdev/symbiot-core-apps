@@ -9,7 +9,7 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   useCurrentAccount,
-  useCurrentBrandEmployeeState,
+  useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useAuthBrand } from '@symbiot-core-apps/brand';
@@ -30,7 +30,7 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     setBrand: setCurrentBrand,
     setBrands: setCurrentBrands,
   } = useCurrentBrandState();
-  const { setCurrentEmployee } = useCurrentBrandEmployeeState();
+  const { setCurrentEmployee } = useCurrentBrandEmployee();
   const {
     addToList: addNotificationToListQueryState,
     markAllAsRead: markAllNotificationsAsRead,

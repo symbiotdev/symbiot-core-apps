@@ -1,7 +1,12 @@
-import { BrandEmployee, PaginationList } from '@symbiot-core-apps/api';
+import {
+  BrandEmployee,
+  BrandEmployeePermissions,
+  PaginationList,
+} from '@symbiot-core-apps/api';
 import { create } from 'zustand/index';
 import { devtools, persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
+import { useCallback } from 'react';
 
 type CurrentBrandEmployeeState = {
   currentEmployee?: BrandEmployee;
@@ -31,3 +36,28 @@ export const useCurrentBrandEmployeeState = create<CurrentBrandEmployeeState>()(
     ),
   ),
 );
+
+export const useCurrentBrandEmployee = () => {
+  const { currentEmployee, setCurrentEmployee } =
+    useCurrentBrandEmployeeState();
+
+  const hasAnyOfPermissions = useCallback(
+    (permissions: (keyof BrandEmployeePermissions)[]) =>
+      !!currentEmployee?.permissions &&
+      permissions.some((key) => currentEmployee.permissions[key]),
+    [currentEmployee?.permissions],
+  );
+
+  const hasPermission = useCallback(
+    (permission: keyof BrandEmployeePermissions) =>
+      !!currentEmployee?.permissions?.[permission],
+    [currentEmployee?.permissions],
+  );
+
+  return {
+    currentEmployee,
+    setCurrentEmployee,
+    hasAnyOfPermissions,
+    hasPermission,
+  };
+};

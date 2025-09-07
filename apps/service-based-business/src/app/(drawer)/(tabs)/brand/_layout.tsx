@@ -11,7 +11,7 @@ import {
 import { router, Stack, useGlobalSearchParams } from 'expo-router';
 import {
   useCurrentAccount,
-  useCurrentBrandEmployeeState,
+  useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useApp } from '@symbiot-core-apps/app';
@@ -31,11 +31,22 @@ const IndexHeaderLeft = () => {
 };
 
 const IndexHeaderRight = () => {
+  const { hasAnyOfPermissions } = useCurrentBrandEmployee();
+
   return (
-    <HeaderButton
-      iconName="SettingsMinimalistic"
-      onPress={() => router.push('/brand/menu')}
-    />
+    hasAnyOfPermissions([
+      'clientsAll',
+      'locationsAll',
+      'employeesAll',
+      'analyticsAll',
+      'brandAll',
+      'servicesAll',
+    ]) && (
+      <HeaderButton
+        iconName="SettingsMinimalistic"
+        onPress={() => router.push('/brand/menu')}
+      />
+    )
   );
 };
 
@@ -65,34 +76,50 @@ const InitialActionHeaderRight = () => {
   );
 };
 
-const LocationsHeaderRight = () => (
-  <HeaderButton
-    iconName="AddCircle"
-    onPress={() => router.navigate('/brand/location/create')}
-  />
-);
+const LocationsHeaderRight = () => {
+  const { hasPermission } = useCurrentBrandEmployee();
 
-const EmployeesHeaderRight = () => (
-  <HeaderButton
-    iconName="AddCircle"
-    onPress={() => router.navigate('/brand/employee/create')}
-  />
-);
+  return (
+    hasPermission('locationsAll') && (
+      <HeaderButton
+        iconName="AddCircle"
+        onPress={() => router.navigate('/brand/location/create')}
+      />
+    )
+  );
+};
+
+const EmployeesHeaderRight = () => {
+  const { hasPermission } = useCurrentBrandEmployee();
+
+  return (
+    hasPermission('employeesAll') && (
+      <HeaderButton
+        iconName="AddCircle"
+        onPress={() => router.navigate('/brand/employee/create')}
+      />
+    )
+  );
+};
 
 const UpdateLocationHeaderRight = () => {
   const { t } = useTranslation();
   const { id } = useGlobalSearchParams<{ id: string }>();
+  const { hasPermission } = useCurrentBrandEmployee();
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
-    () => [
-      {
-        label: t('brand.locations.update.context_menu.remove.label'),
-        icon: <Icon name="TrashBinMinimalistic" />,
-        color: '$error',
-        onPress: () => router.push(`/brand/location/remove/${id}`),
-      },
-    ],
-    [t, id],
+    () =>
+      hasPermission('locationsAll')
+        ? [
+            {
+              label: t('brand.locations.update.context_menu.remove.label'),
+              icon: <Icon name="TrashBinMinimalistic" />,
+              color: '$error',
+              onPress: () => router.push(`/brand/location/remove/${id}`),
+            },
+          ]
+        : [],
+    [t, id, hasPermission],
   );
 
   return <ContextMenuPopover items={contextMenuItems} />;
@@ -102,11 +129,13 @@ const UpdateEmployeeHeaderRight = () => {
   const { t } = useTranslation();
   const { id } = useGlobalSearchParams<{ id: string }>();
   const { brand } = useCurrentBrandState();
-  const { currentEmployee } = useCurrentBrandEmployeeState();
+  const { currentEmployee, hasPermission } = useCurrentBrandEmployee();
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [
-      ...(brand?.owner?.id !== id && currentEmployee?.id !== id
+      ...(brand?.owner?.id !== id &&
+      currentEmployee?.id !== id &&
+      hasPermission('employeesAll')
         ? [
             {
               label: t('brand.employees.update.context_menu.remove.label'),
@@ -117,7 +146,7 @@ const UpdateEmployeeHeaderRight = () => {
           ]
         : []),
     ],
-    [t, id, brand?.owner?.id],
+    [t, id, brand?.owner?.id, hasPermission],
   );
 
   return <ContextMenuPopover items={contextMenuItems} />;
@@ -127,6 +156,7 @@ export default () => {
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
   const { t } = useTranslation();
   const { visible: drawerVisible } = useDrawer();
+  const { hasPermission } = useCurrentBrandEmployee();
   const screenOptions = useStackScreenHeaderOptions();
 
   return (
@@ -159,35 +189,39 @@ export default () => {
           }}
         />
 
-        <Stack.Screen
-          name="(stack)/employee/create/index"
-          options={{
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen name="(stack)/employee/remove/[id]" />
-        <Stack.Screen
-          name="(stack)/employee/update/[id]"
-          options={{
-            headerTitle: t('brand.employees.update.title'),
-            headerRight: UpdateEmployeeHeaderRight,
-          }}
-        />
+        <Stack.Protected guard={hasPermission('employeesAll')}>
+          <Stack.Screen
+            name="(stack)/employee/create/index"
+            options={{
+              gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen name="(stack)/employee/remove/[id]" />
+          <Stack.Screen
+            name="(stack)/employee/update/[id]"
+            options={{
+              headerTitle: t('brand.employees.update.title'),
+              headerRight: UpdateEmployeeHeaderRight,
+            }}
+          />
+        </Stack.Protected>
 
-        <Stack.Screen
-          name="(stack)/location/create/index"
-          options={{
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen name="(stack)/location/remove/[id]" />
-        <Stack.Screen
-          name="(stack)/location/update/[id]"
-          options={{
-            headerTitle: t('brand.locations.update.title'),
-            headerRight: UpdateLocationHeaderRight,
-          }}
-        />
+        <Stack.Protected guard={hasPermission('locationsAll')}>
+          <Stack.Screen
+            name="(stack)/location/create/index"
+            options={{
+              gestureEnabled: false,
+            }}
+          />
+          <Stack.Screen name="(stack)/location/remove/[id]" />
+          <Stack.Screen
+            name="(stack)/location/update/[id]"
+            options={{
+              headerTitle: t('brand.locations.update.title'),
+              headerRight: UpdateLocationHeaderRight,
+            }}
+          />
+        </Stack.Protected>
       </Stack.Protected>
 
       <Stack.Screen
@@ -204,28 +238,34 @@ export default () => {
         }}
       />
 
-      <Stack.Screen
-        name="(stack)/menu/employees/index"
-        options={{
-          headerTitle: t('brand.employees.title'),
-          headerRight: EmployeesHeaderRight,
-        }}
-      />
+      <Stack.Protected guard={hasPermission('employeesAll')}>
+        <Stack.Screen
+          name="(stack)/menu/employees/index"
+          options={{
+            headerTitle: t('brand.employees.title'),
+            headerRight: EmployeesHeaderRight,
+          }}
+        />
+      </Stack.Protected>
 
-      <Stack.Screen
-        name="(stack)/menu/locations/index"
-        options={{
-          headerTitle: t('brand.locations.title'),
-          headerRight: LocationsHeaderRight,
-        }}
-      />
+      <Stack.Protected guard={hasPermission('locationsAll')}>
+        <Stack.Screen
+          name="(stack)/menu/locations/index"
+          options={{
+            headerTitle: t('brand.locations.title'),
+            headerRight: LocationsHeaderRight,
+          }}
+        />
+      </Stack.Protected>
 
-      <Stack.Screen
-        name="(stack)/menu/information/preferences"
-        options={{
-          headerTitle: t('brand.information.title'),
-        }}
-      />
+      <Stack.Protected guard={hasPermission('brandAll')}>
+        <Stack.Screen
+          name="(stack)/menu/information/preferences"
+          options={{
+            headerTitle: t('brand.information.title'),
+          }}
+        />
+      </Stack.Protected>
     </Stack>
   );
 };

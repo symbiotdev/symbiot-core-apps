@@ -10,6 +10,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import {
   useCurrentAccount,
+  useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import React, { useEffect } from 'react';
@@ -26,6 +27,7 @@ export default () => {
   const { visible: drawerVisible } = useDrawer();
   const screenOptions = useTabsScreenOptions();
   const { data: countNewNotifications } = useCountNewNotifications();
+  const { hasAnyOfPermissions } = useCurrentBrandEmployee();
 
   useEffect(() => {
     if (countNewNotifications) {
@@ -78,30 +80,39 @@ export default () => {
             ),
           }}
         />
-        <Tabs.Screen
-          name="plus"
-          options={{
-            tabBarButton: PlusActionAdaptiveModal,
-            tabBarIcon: ({ color, size }) => (
-              <View
-                height={size + 18}
-                width={50}
-                backgroundColor="$highlighted"
-                justifyContent="center"
-                alignItems="center"
-                borderRadius="$8"
-              >
-                <LightText
-                  color={color}
-                  fontSize={size * 1.4}
-                  lineHeight={size * 1.4}
+        <Tabs.Protected
+          guard={hasAnyOfPermissions([
+            'locationsAll',
+            'employeesAll',
+            'clientsAll',
+            'servicesAll',
+          ])}
+        >
+          <Tabs.Screen
+            name="plus"
+            options={{
+              tabBarButton: PlusActionAdaptiveModal,
+              tabBarIcon: ({ color, size }) => (
+                <View
+                  height={size + 18}
+                  width={50}
+                  backgroundColor="$highlighted"
+                  justifyContent="center"
+                  alignItems="center"
+                  borderRadius="$8"
                 >
-                  +
-                </LightText>
-              </View>
-            ),
-          }}
-        />
+                  <LightText
+                    color={color}
+                    fontSize={size * 1.4}
+                    lineHeight={size * 1.4}
+                  >
+                    +
+                  </LightText>
+                </View>
+              ),
+            }}
+          />
+        </Tabs.Protected>
       </Tabs.Protected>
 
       <Tabs.Screen

@@ -1,8 +1,8 @@
 import { H2, PageView } from '@symbiot-core-apps/ui';
-import { useCurrentBrandEmployeeState } from '@symbiot-core-apps/state';
+import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 
 export default () => {
-  const { currentEmployee } = useCurrentBrandEmployeeState();
+  const { currentEmployee } = useCurrentBrandEmployee();
 
   return (
     currentEmployee && (

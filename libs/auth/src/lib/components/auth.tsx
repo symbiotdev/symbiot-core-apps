@@ -73,7 +73,7 @@ export const Auth = ({
       <View flex={1} zIndex={20}>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.ScrollView}
+          contentContainerStyle={{ flexGrow: 1 }}
         >
           <View
             flex={1}
@@ -108,9 +108,6 @@ export const Auth = ({
 };
 
 const styles = StyleSheet.create({
-  ScrollView: {
-    minHeight: '100%',
-  },
   Media: {
     position: 'absolute',
     width: '100%',

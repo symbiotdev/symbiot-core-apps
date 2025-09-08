@@ -28,7 +28,7 @@ export const Progress = ({
       borderRadius="$10"
       backgroundColor="$background1"
       height="$1"
-      flex={1}
+      width="100%"
       overflow="hidden"
       {...viewProps}
     >

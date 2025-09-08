@@ -3,6 +3,7 @@ import {
   HeaderButton,
   LoadingView,
   Progress,
+  useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { SurveyStep } from '../types/survey-step';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -25,6 +26,7 @@ export function Survey<V extends object>({
 }) {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const headerHeight = useScreenHeaderHeight();
 
   const valueRef = useRef<V>({} as V);
 
@@ -103,10 +105,8 @@ export function Survey<V extends object>({
             onPress={goToPrevStep}
           />
         ),
-      headerTitle: () =>
-        !loading && !!progress && <Progress value={progress} maxWidth={150} />,
     });
-  }, [progress, goToPrevStep, navigation, loading]);
+  }, [goToPrevStep, loading, navigation, progress]);
 
   useEffect(() => {
     navigation.addListener('beforeRemove', onLeave);
@@ -121,12 +121,23 @@ export function Survey<V extends object>({
   }
 
   return (
-    <SurveyStepsFlow
-      currentStepId={currentStepId}
-      steps={steps}
-      value={valueRef.current}
-      onChange={onChange}
-      onSkip={goToNextStep}
-    />
+    <>
+      <Progress
+        zIndex={1}
+        top={headerHeight}
+        height={2}
+        left={0}
+        position="absolute"
+        value={progress}
+      />
+
+      <SurveyStepsFlow
+        currentStepId={currentStepId}
+        steps={steps}
+        value={valueRef.current}
+        onChange={onChange}
+        onSkip={goToNextStep}
+      />
+    </>
   );
 }

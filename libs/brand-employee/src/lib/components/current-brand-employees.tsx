@@ -48,7 +48,7 @@ export const CurrentBrandEmployees = () => {
         pressStyle={{ opacity: 0.8 }}
         onPress={() => {
           emitHaptic();
-          router.push(`/employee/update/${item.id}`);
+          router.push(`/employees/update/${item.id}`);
         }}
       >
         <Avatar

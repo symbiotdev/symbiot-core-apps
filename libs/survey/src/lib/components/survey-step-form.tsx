@@ -108,7 +108,7 @@ export function SurveyStepForm<V>({
           showsVerticalScrollIndicator={Platform.OS === 'web'}
           style={{ flex: 1 }}
           contentContainerStyle={{
-            minHeight: '100%',
+            flexGrow: 1,
             paddingHorizontal: defaultPageHorizontalPadding,
           }}
         >
@@ -116,7 +116,7 @@ export function SurveyStepForm<V>({
             <FormView
               flex={1}
               gap={0}
-              paddingTop={headerHeight + defaultPageVerticalPadding}
+              paddingTop={headerHeight + defaultPageVerticalPadding * 2}
               paddingBottom={defaultPageVerticalPadding}
             >
               <View gap="$2">

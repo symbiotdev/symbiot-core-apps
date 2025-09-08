@@ -28,7 +28,7 @@ const UpdateEmployeeHeaderRight = () => {
               label: t('brand.employees.update.context_menu.remove.label'),
               icon: <Icon name="TrashBinMinimalistic" />,
               color: '$error',
-              onPress: () => router.push(`/brand/employee/remove/${id}`),
+              onPress: () => router.push(`/employee/remove/${id}`),
             } as ContextMenuItem,
           ]
         : []),

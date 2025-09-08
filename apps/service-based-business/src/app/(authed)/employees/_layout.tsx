@@ -13,7 +13,7 @@ const IndexHeaderRight = () => {
     hasPermission('employeesAll') && (
       <HeaderButton
         iconName="AddCircle"
-        onPress={() => router.push('/brand/employee/create')}
+        onPress={() => router.push('/employee/create')}
       />
     )
   );

@@ -17,7 +17,7 @@ const UpdateLocationHeaderRight = () => {
             label: t('brand.locations.update.context_menu.remove.label'),
             icon: <Icon name="TrashBinMinimalistic" />,
             color: '$error',
-            onPress: () => router.push(`/brand/location/remove/${id}`)
+            onPress: () => router.push(`/location/remove/${id}`)
           }
         ]
         : [],

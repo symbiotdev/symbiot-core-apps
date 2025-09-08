@@ -20,17 +20,17 @@ export default () => {
   );
 
   const onLocationsPress = useCallback(
-    () => router.push('/brand/locations'),
+    () => router.push('/locations'),
     [],
   );
 
   const onEmployeesPress = useCallback(
-    () => router.push('/brand/employees'),
+    () => router.push('/employees'),
     [],
   );
 
   const onClientsPress = useCallback(
-    () => router.push('/brand/clients'),
+    () => router.push('/clients'),
     [],
   );
 

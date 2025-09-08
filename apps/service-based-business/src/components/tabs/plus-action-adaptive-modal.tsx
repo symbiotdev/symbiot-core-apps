@@ -18,17 +18,17 @@ export const PlusActionAdaptiveModal = (props: BottomTabBarButtonProps) => {
 
   const addClient = useCallback(() => {
     popoverRef.current?.close();
-    router.push('/brand/client/create');
+    router.push('/client/create');
   }, []);
 
   const addEmployee = useCallback(() => {
     popoverRef.current?.close();
-    router.push('/brand/employee/create');
+    router.push('/brand/create');
   }, []);
 
   const addLocation = useCallback(() => {
     popoverRef.current?.close();
-    router.push('/brand/location/create');
+    router.push('/location/create');
   }, []);
 
   return (

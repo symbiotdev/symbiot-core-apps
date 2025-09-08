@@ -13,7 +13,7 @@ const IndexHeaderRight = () => {
     hasPermission('clientsAll') && (
       <HeaderButton
         iconName="AddCircle"
-        onPress={() => router.push('/brand/client/create')}
+        onPress={() => router.push('/brand/create')}
       />
     )
   );

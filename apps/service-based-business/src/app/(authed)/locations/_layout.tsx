@@ -13,7 +13,7 @@ const IndexHeaderRight = () => {
     hasPermission('locationsAll') && (
       <HeaderButton
         iconName="AddCircle"
-        onPress={() => router.push('/brand/location/create')}
+        onPress={() => router.push('/location/create')}
       />
     )
   );

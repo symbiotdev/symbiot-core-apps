@@ -14,12 +14,14 @@ import { StateProvider } from '../../providers/state.provider';
 import { SocketProvider } from '../../providers/socket.provider';
 import { NotificationsProvider } from '@symbiot-core-apps/notification';
 import { onPressNotification } from '../../utils/notification';
+import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 
 export default () => {
   const { tokens } = useAuthTokens();
   const { visible: drawerVisible } = useDrawer();
   const currentEntitiesLoaded = useCurrentEntitiesLoader();
   const screenOptions = useStackScreenHeaderOptions();
+  const { hasPermission } = useCurrentBrandEmployee();
 
   useEffect(() => {
     if (currentEntitiesLoaded) {
@@ -56,6 +58,21 @@ export default () => {
                 <Stack.Screen name="help-feedback" />
                 <Stack.Screen name="notifications" />
                 <Stack.Screen name="terms-privacy" />
+
+                <Stack.Protected guard={hasPermission('clientsAll')}>
+                  <Stack.Screen name="client" />
+                  <Stack.Screen name="clients" />
+                </Stack.Protected>
+
+                <Stack.Protected guard={hasPermission('employeesAll')}>
+                  <Stack.Screen name="employee" />
+                  <Stack.Screen name="employees" />
+                </Stack.Protected>
+
+                <Stack.Protected guard={hasPermission('locationsAll')}>
+                  <Stack.Screen name="location" />
+                  <Stack.Screen name="locations" />
+                </Stack.Protected>
               </Stack>
             )}
           </XStack>

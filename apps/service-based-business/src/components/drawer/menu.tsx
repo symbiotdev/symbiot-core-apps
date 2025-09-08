@@ -36,20 +36,16 @@ const MenuItem = memo(
     label,
     route,
     attention,
-    initial,
     ...xStackProps
   }: XStackProps & {
     icon: IconName | ReactElement;
     label: string;
     route: string;
     attention?: boolean;
-    initial?: boolean;
   }) => {
     const pathname = usePathname();
-    const { visible } = useDrawer();
-    const { compressed } = useDrawerState();
 
-    const focused = pathname === route || (pathname === '/' && initial);
+    const focused = pathname === route || pathname === '/';
 
     const onPress = useCallback(() => {
       if (!focused) {
@@ -68,7 +64,7 @@ const MenuItem = memo(
         paddingHorizontal={defaultPageHorizontalPadding}
         marginHorizontal={defaultPageHorizontalPadding / 2}
         backgroundColor={focused ? '$background' : 'transparent'}
-        label={!visible || !compressed ? label : ''}
+        label={label}
         icon={
           <AttentionView attention={Boolean(attention)}>
             {typeof icon === 'string' ? <Icon name={icon} /> : icon}
@@ -167,10 +163,11 @@ export const DrawerMenu = () => {
             <MenuItem
               route="/my-brand"
               label={currentBrand.name}
+              marginLeft={defaultPageHorizontalPadding / 2}
               icon={
                 <View marginHorizontal={-6}>
                   <Avatar
-                    size={defaultIconSize + 10}
+                    size={defaultIconSize + 12}
                     name={currentBrand.name}
                     color={currentBrand.avatarColor}
                     url={currentBrand.avatarXsUrl}
@@ -184,7 +181,6 @@ export const DrawerMenu = () => {
         )}
 
         <MenuItem
-          initial
           route="/home"
           label={t(
             !currentBrand
@@ -206,7 +202,7 @@ export const DrawerMenu = () => {
 
         {hasPermission('locationsAll') && (
           <MenuItem
-            route="/brand/locations"
+            route="/locations"
             label={t('navigation.drawer.locations.label')}
             icon="MapPointWave"
           />
@@ -214,7 +210,7 @@ export const DrawerMenu = () => {
 
         {hasPermission('employeesAll') && (
           <MenuItem
-            route="/brand/employees"
+            route="/employees"
             label={t('navigation.drawer.employees.label')}
             icon="UsersGroupRounded"
           />
@@ -222,7 +218,7 @@ export const DrawerMenu = () => {
 
         {hasPermission('clientsAll') && (
           <MenuItem
-            route="/brand/clients"
+            route="/clients"
             label={t('navigation.drawer.clients.label')}
             icon="SmileCircle"
           />

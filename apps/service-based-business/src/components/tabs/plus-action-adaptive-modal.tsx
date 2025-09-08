@@ -23,7 +23,7 @@ export const PlusActionAdaptiveModal = (props: BottomTabBarButtonProps) => {
 
   const addEmployee = useCallback(() => {
     popoverRef.current?.close();
-    router.push('/brand/create');
+    router.push('/employees/create');
   }, []);
 
   const addLocation = useCallback(() => {

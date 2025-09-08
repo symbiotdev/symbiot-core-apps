@@ -15,13 +15,13 @@ import { useTranslation } from 'react-i18next';
 
 export function Survey<V extends object>({
   steps,
-  ignoreLeaveConfirmation,
+  ignoreNavigation,
   loading,
   onFinish: onEmitFinish,
 }: {
   steps: SurveyStep<V>[];
   loading?: boolean;
-  ignoreLeaveConfirmation?: boolean;
+  ignoreNavigation?: boolean;
   onFinish: (value: V) => void;
 }) {
   const { t } = useTranslation();
@@ -71,7 +71,7 @@ export function Survey<V extends object>({
 
   const onLeave = useCallback(
     (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
-      if (!currentStepId || ignoreLeaveConfirmation) return;
+      if (!currentStepId || ignoreNavigation) return;
 
       e.preventDefault();
 
@@ -81,7 +81,7 @@ export function Survey<V extends object>({
         callback: () => navigation.dispatch(e.data.action),
       });
     },
-    [currentStepId, ignoreLeaveConfirmation, t, navigation],
+    [currentStepId, ignoreNavigation, t, navigation],
   );
 
   const onChange = useCallback(
@@ -98,15 +98,15 @@ export function Survey<V extends object>({
 
   useEffect(() => {
     navigation.setOptions({
-      headerLeft: () =>
-        !loading && (
-          <HeaderButton
-            iconName={headerBackButtonIconName}
-            onPress={goToPrevStep}
-          />
-        ),
+      headerShown: !loading && !ignoreNavigation,
+      headerLeft: () => (
+        <HeaderButton
+          iconName={headerBackButtonIconName}
+          onPress={goToPrevStep}
+        />
+      ),
     });
-  }, [goToPrevStep, loading, navigation, progress]);
+  }, [goToPrevStep, ignoreNavigation, loading, navigation, progress]);
 
   useEffect(() => {
     navigation.addListener('beforeRemove', onLeave);
@@ -116,7 +116,7 @@ export function Survey<V extends object>({
     };
   }, [onLeave, navigation]);
 
-  if (loading) {
+  if (loading || ignoreNavigation) {
     return <LoadingView />;
   }
 

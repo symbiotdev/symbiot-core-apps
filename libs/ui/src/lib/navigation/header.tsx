@@ -35,10 +35,10 @@ export const useScreenHeaderOptions = () => {
         top={top}
         left={left}
         right={right}
-        borderBottomColor={theme.background1?.val}
+        borderBottomColor={theme.background?.val}
       />
     ),
-    [left, right, theme.background1?.val, top],
+    [left, right, theme.background?.val, top],
   );
 
   return {

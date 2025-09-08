@@ -1,21 +1,4 @@
 import {
-  Button,
-  EmptyView,
-  Icon,
-  Input,
-  MediumText,
-  PageView,
-  PhoneValue,
-  QrCodeScanModal,
-  WeekdaySchedule,
-} from '@symbiot-core-apps/ui';
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { View } from 'tamagui';
-import { Controller, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import {
   Account,
   BrandEmployeePermission,
   BrandEmployeePermissions,
@@ -26,12 +9,19 @@ import {
   useCreateBrandEmployeeQuery,
   useCurrentBrandLocationsQuery,
 } from '@symbiot-core-apps/api';
-import { useBrandEmployeeForm } from '@symbiot-core-apps/brand-employee';
+import {
+  LoadingView,
+  PhoneValue,
+  WeekdaySchedule,
+} from '@symbiot-core-apps/ui';
+import { ImagePickerAsset } from 'expo-image-picker';
 import { Survey, SurveyStep } from '@symbiot-core-apps/survey';
 import { useCurrentBrandState, useGenders } from '@symbiot-core-apps/state';
-import { ImagePickerAsset } from 'expo-image-picker';
+import { useBrandEmployeeForm } from '@symbiot-core-apps/brand-employee';
 import { useDynamicBrandLocation } from '@symbiot-core-apps/brand-location';
-import { router } from 'expo-router';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import * as yup from 'yup';
+import { router, useLocalSearchParams } from 'expo-router';
 
 type Value = {
   firstname: string;
@@ -77,6 +67,8 @@ export default () => {
   const { mutateAsync: createEmployee } = useCreateBrandEmployeeQuery();
   const form = useBrandEmployeeForm();
   const dynamicLocation = useDynamicBrandLocation();
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { mutateAsync: getAccountById } = useBrandEmployeeNewAccountQuery();
 
   const createdRef = useRef(false);
   const [processing, setProcessing] = useState(false);
@@ -338,9 +330,7 @@ export default () => {
     [
       form,
       account,
-      currentBrand,
       permissions,
-      locations?.items?.length,
       gendersAsOptionsWithEmptyOption,
       gendersLoading,
       gendersError,
@@ -393,7 +383,8 @@ export default () => {
 
         createdRef.current = true;
 
-        router.dismissTo('/brand/employees');
+        router.dismissAll()
+        router.push('/employees');
       } finally {
         setProcessing(false);
       }
@@ -401,121 +392,18 @@ export default () => {
     [account?.id, createEmployee],
   );
 
+  useEffect(() => {
+    getAccountById({ id }).then(setAccount).catch(router.back);
+  }, [getAccountById, id]);
+
   return !account ? (
-    <Intro onStart={setAccount} />
+    <LoadingView />
   ) : (
     <TypedSurvey
       steps={steps}
       loading={processing}
-      ignoreLeaveConfirmation={createdRef.current || !currentBrand}
+      ignoreNavigation={createdRef.current || !currentBrand}
       onFinish={onFinish}
     />
-  );
-};
-
-const Intro = ({ onStart }: { onStart: (account: Account) => void }) => {
-  const { t } = useTranslation();
-  const { mutateAsync: getNewEmployeeAccountById, isPending: isPendingById } =
-    useBrandEmployeeNewAccountQuery();
-  const { mutateAsync: getNewEmployeeAccountByQR, isPending: isPendingByQR } =
-    useBrandEmployeeNewAccountQuery();
-
-  const { control, handleSubmit } = useForm<{
-    id: string;
-  }>({
-    defaultValues: {
-      id: '',
-    },
-    resolver: yupResolver(
-      yup
-        .object()
-        .shape({
-          id: yup
-            .string()
-            .required(
-              t('brand.employees.upsert.intro.by_id.form.id.error.required'),
-            ),
-        })
-        .required(),
-    ),
-  });
-
-  const [scanQrVisible, setScanQrVisible] = useState<boolean>(false);
-
-  const openScanQr = useCallback(() => setScanQrVisible(true), []);
-  const closeScanQr = useCallback(() => setScanQrVisible(false), []);
-
-  const onScannedQr = useCallback(
-    async (id: string) => onStart(await getNewEmployeeAccountByQR({ id })),
-    [onStart, getNewEmployeeAccountByQR],
-  );
-
-  const onAdd = useCallback(
-    async ({ id }: { id: string }) =>
-      onStart(await getNewEmployeeAccountById({ id })),
-    [onStart, getNewEmployeeAccountById],
-  );
-
-  return (
-    <>
-      <PageView
-        scrollable
-        withKeyboard
-        withHeaderHeight
-        animation="medium"
-        opacity={1}
-        enterStyle={{ opacity: 0 }}
-        exitStyle={{ opacity: 0 }}
-      >
-        <EmptyView
-          padding={0}
-          iconName="UsersGroupRounded"
-          title={t('brand.employees.upsert.intro.title')}
-          message={t('brand.employees.upsert.intro.subtitle')}
-        >
-          <View />
-
-          <Controller
-            control={control}
-            name="id"
-            render={({ field: { value, onChange }, fieldState: { error } }) => (
-              <Input
-                value={value}
-                disabled={isPendingById || isPendingByQR}
-                error={error?.message}
-                label={t('brand.employees.upsert.intro.by_id.form.id.label')}
-                placeholder={t(
-                  'brand.employees.upsert.intro.by_id.form.id.placeholder',
-                )}
-                onChange={onChange}
-              />
-            )}
-          />
-
-          <Button
-            loading={isPendingById}
-            disabled={isPendingById || isPendingByQR}
-            label={t('brand.employees.upsert.intro.by_id.action.label')}
-            onPress={handleSubmit(onAdd)}
-          />
-
-          <MediumText>{t('shared.or')}</MediumText>
-
-          <Button
-            loading={isPendingByQR}
-            disabled={isPendingById || isPendingByQR}
-            icon={<Icon name="QrCode" />}
-            label={t('brand.employees.upsert.intro.qr.action.label')}
-            onPress={openScanQr}
-          />
-        </EmptyView>
-      </PageView>
-
-      <QrCodeScanModal
-        onScan={onScannedQr}
-        visible={scanQrVisible}
-        onClose={closeScanQr}
-      />
-    </>
   );
 };

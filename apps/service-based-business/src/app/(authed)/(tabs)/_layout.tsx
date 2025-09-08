@@ -1,10 +1,14 @@
-import { Tabs, useSegments } from 'expo-router';
+import { router, Tabs, useSegments } from 'expo-router';
 import {
   AnimatedTabBar,
   AttentionView,
   defaultIconSize,
+  H3,
+  HeaderButton,
+  headerButtonSize,
   Icon,
   LightText,
+  RegularText,
   useDrawer,
   useTabsScreenOptions,
 } from '@symbiot-core-apps/ui';
@@ -14,19 +18,24 @@ import {
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import React, { useEffect } from 'react';
-import { useCountNewNotifications } from '@symbiot-core-apps/api';
-import { View } from 'tamagui';
+import { useAccountAuthSignOutQuery, useCountNewNotifications } from '@symbiot-core-apps/api';
+import { View, XStack } from 'tamagui';
 import { useApp } from '@symbiot-core-apps/app';
 import { PlusActionAdaptiveModal } from '../../../components/tabs/plus-action-adaptive-modal';
+import { useTranslation } from 'react-i18next';
+import { Platform } from 'react-native';
+import { ConfirmAlert, DeviceVersion } from '@symbiot-core-apps/shared';
 
 export default () => {
   const { brand: currentBrand } = useCurrentBrandState();
   const { icons } = useApp();
+  const { t } = useTranslation();
   const segments = useSegments();
   const { visible: drawerVisible } = useDrawer();
-  const { stats, setMeStats } = useCurrentAccount();
-  const { hasAnyOfPermissions } = useCurrentBrandEmployee();
+  const { me, stats, setMeStats } = useCurrentAccount();
+  const { mutate: signOut } = useAccountAuthSignOutQuery();
   const { data: countNewNotifications } = useCountNewNotifications();
+  const { hasAnyOfPermissions, hasAnyPermission } = useCurrentBrandEmployee();
   const screenOptions = useTabsScreenOptions();
 
   useEffect(() => {
@@ -41,7 +50,6 @@ export default () => {
     <Tabs
       screenOptions={{
         ...screenOptions,
-        headerShown: false,
         ...(drawerVisible && {
           animation: 'none',
         }),
@@ -55,6 +63,21 @@ export default () => {
       <Tabs.Screen
         name="home"
         options={{
+          headerLeft: () =>
+            me && (
+              <H3 lineHeight={headerButtonSize} numberOfLines={1}>
+                {t('shared.greeting_firstname', {
+                  firstname: me.firstname,
+                })}
+              </H3>
+            ),
+          headerRight: () => (
+            <HeaderButton
+              attention={!!stats.newNotifications}
+              iconName={icons.Notifications}
+              onPress={() => router.push('/notifications')}
+            />
+          ),
           tabBarIcon: ({ color, size, focused }) => (
             <AttentionView attention={!!stats.newNotifications}>
               <Icon
@@ -82,6 +105,7 @@ export default () => {
             ),
           }}
         />
+
         <Tabs.Protected
           guard={hasAnyOfPermissions([
             'locationsAll',
@@ -91,7 +115,7 @@ export default () => {
           ])}
         >
           <Tabs.Screen
-            name="plus/index"
+            name="plus"
             options={{
               tabBarButton: PlusActionAdaptiveModal,
               tabBarIcon: ({ color, size }) => (
@@ -119,6 +143,19 @@ export default () => {
         <Tabs.Screen
           name="my-brand"
           options={{
+            headerLeft: () =>
+              currentBrand && (
+                <H3 lineHeight={headerButtonSize} numberOfLines={1}>
+                  {currentBrand.name}
+                </H3>
+              ),
+            headerRight: () =>
+              hasAnyPermission() && (
+                <HeaderButton
+                  iconName="SettingsMinimalistic"
+                  onPress={() => router.push('/brand/menu')}
+                />
+              ),
             tabBarIcon: ({ color, size, focused }) => (
               <AttentionView
                 attention={!currentBrand && !!stats.newNotifications}
@@ -136,8 +173,28 @@ export default () => {
       </Tabs.Protected>
 
       <Tabs.Screen
-        name="preferences"
+        name="menu"
         options={{
+          headerLeft: () =>
+            Platform.OS !== 'web' && (
+              <XStack gap="$2" alignItems="center">
+                <Icon name="Code" color="$placeholderColor" />
+                <RegularText color="$placeholderColor">
+                  {t('shared.version')}: {DeviceVersion}
+                </RegularText>
+              </XStack>
+            ),
+          headerRight: () => (
+            <HeaderButton
+              iconName="Logout2"
+              onPress={() =>
+                ConfirmAlert({
+                  title: t('shared.auth.sign_out.confirm.title'),
+                  callback: signOut,
+                })
+              }
+            />
+          ),
           tabBarIcon: ({ color, size, focused }) => (
             <Icon
               name={icons.More}

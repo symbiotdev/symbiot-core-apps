@@ -43,7 +43,7 @@ export const CurrentBrandLocations = () => {
         pressStyle={{ opacity: 0.8 }}
         onPress={() => {
           emitHaptic();
-          router.push(`/locations/update/${item.id}`);
+          router.push(`/locations/${item.id}/update`);
         }}
       >
         <Avatar

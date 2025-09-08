@@ -35,17 +35,24 @@ const MenuItem = memo(
     icon,
     label,
     route,
+    additionalRoutes,
     attention,
     ...xStackProps
   }: XStackProps & {
     icon: IconName | ReactElement;
     label: string;
     route: string;
+    additionalRoutes?: string[];
     attention?: boolean;
   }) => {
     const pathname = usePathname();
 
-    const focused = pathname === route || pathname === '/';
+    const focused =
+      pathname === route ||
+      pathname === '/' ||
+      additionalRoutes?.some(
+        (additionalRoute) => additionalRoute.indexOf(pathname) !== -1,
+      );
 
     const onPress = useCallback(() => {
       if (!focused) {
@@ -162,6 +169,7 @@ export const DrawerMenu = () => {
           <>
             <MenuItem
               route="/my-brand"
+              additionalRoutes={['/brand/create']}
               label={currentBrand.name}
               marginLeft={defaultPageHorizontalPadding / 2}
               icon={
@@ -205,6 +213,7 @@ export const DrawerMenu = () => {
             route="/locations"
             label={t('navigation.drawer.locations.label')}
             icon="MapPointWave"
+            additionalRoutes={['/locations/create']}
           />
         )}
 
@@ -213,6 +222,7 @@ export const DrawerMenu = () => {
             route="/employees"
             label={t('navigation.drawer.employees.label')}
             icon="UsersGroupRounded"
+            additionalRoutes={['/employees/create']}
           />
         )}
 
@@ -221,6 +231,7 @@ export const DrawerMenu = () => {
             route="/clients"
             label={t('navigation.drawer.clients.label')}
             icon="SmileCircle"
+            additionalRoutes={['/clients/create']}
           />
         )}
 
@@ -256,7 +267,7 @@ export const DrawerMenu = () => {
         <MenuItem
           icon={icons.More}
           label={t('navigation.drawer.more.label')}
-          route="/preferences"
+          route="/menu"
         />
       </ScrollView>
     </Animated.View>

@@ -36,22 +36,22 @@ export default () => {
 
   const onAccountPress = useCallback(() => {
     emitHaptic();
-    router.push('/preferences/account');
+    router.push('/account/preferences');
   }, []);
   const onAppearancePress = useCallback(
-    () => router.push('/preferences/appearance'),
+    () => router.push('/appearance/preferences'),
     [],
   );
   const onCalendarPress = useCallback(
-    () => router.push('/preferences/calendar'),
+    () => router.push('/calendar/preferences'),
     [],
   );
   const onLanguagePress = useCallback(
-    () => router.push('/preferences/language'),
+    () => router.push('/language/preferences'),
     [],
   );
   const onNotificationsPress = useCallback(
-    () => router.push('/preferences/notifications'),
+    () => router.push('/notifications/preferences'),
     [],
   );
   const onTermsPrivacyPress = useCallback(

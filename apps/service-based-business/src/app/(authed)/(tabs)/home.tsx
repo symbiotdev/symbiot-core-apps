@@ -4,7 +4,7 @@ import {
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { View } from 'tamagui';
-import { InitialAction } from '../../../../components/brand/initial-action';
+import { InitialAction } from '../../../components/brand/initial-action';
 
 export default () => {
   const { currentEmployee } = useCurrentBrandEmployee();

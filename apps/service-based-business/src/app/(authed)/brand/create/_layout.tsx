@@ -6,12 +6,7 @@ export default () => {
 
   return (
     <Stack screenOptions={screenOptions}>
-      <Stack.Screen
-        name="index"
-        options={{
-          gestureEnabled: false,
-        }}
-      />
+      <Stack.Screen name="index" />
     </Stack>
   );
 };

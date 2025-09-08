@@ -393,12 +393,12 @@ export default () => {
 
         createdRef.current = true;
 
-        router.dismissTo('/brand/menu/employees');
+        router.dismissTo('/brand/employees');
       } finally {
         setProcessing(false);
       }
     },
-    [account?.id],
+    [account?.id, createEmployee],
   );
 
   return !account ? (

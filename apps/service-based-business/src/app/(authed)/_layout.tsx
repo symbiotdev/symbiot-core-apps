@@ -60,17 +60,14 @@ export default () => {
                 <Stack.Screen name="terms-privacy" />
 
                 <Stack.Protected guard={hasPermission('clientsAll')}>
-                  <Stack.Screen name="client" />
                   <Stack.Screen name="clients" />
                 </Stack.Protected>
 
                 <Stack.Protected guard={hasPermission('employeesAll')}>
-                  <Stack.Screen name="employee" />
                   <Stack.Screen name="employees" />
                 </Stack.Protected>
 
                 <Stack.Protected guard={hasPermission('locationsAll')}>
-                  <Stack.Screen name="location" />
                   <Stack.Screen name="locations" />
                 </Stack.Protected>
               </Stack>

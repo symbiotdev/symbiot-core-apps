@@ -227,7 +227,7 @@ export default () => {
 
       createdRef.current = true;
 
-      router.dismissTo('/brand/menu/locations');
+      router.dismissTo('/locations');
     } finally {
       setProcessing(false);
     }

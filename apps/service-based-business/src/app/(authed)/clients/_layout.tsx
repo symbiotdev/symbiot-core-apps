@@ -13,7 +13,7 @@ const IndexHeaderRight = () => {
     hasPermission('clientsAll') && (
       <HeaderButton
         iconName="AddCircle"
-        onPress={() => router.push('/brand/create')}
+        onPress={() => router.push('/clients/create')}
       />
     )
   );
@@ -32,6 +32,7 @@ export default () => {
           headerRight: IndexHeaderRight,
         }}
       />
+      <Stack.Screen name="create/index" />
     </Stack>
   );
 };

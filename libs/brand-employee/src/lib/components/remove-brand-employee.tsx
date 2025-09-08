@@ -24,7 +24,7 @@ export const RemoveBrandEmployee = ({
         callback: async () => {
           await mutateAsync({ id: employee.id });
 
-          router.dismissTo('/brand/menu/employees');
+          router.dismissTo('/brand/employees');
         },
       }),
     [employee.id, mutateAsync, t],

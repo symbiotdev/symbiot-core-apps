@@ -1,10 +1,9 @@
-import { useScreenSize } from '@symbiot-core-apps/shared';
+import { isTablet, useScreenSize } from '@symbiot-core-apps/shared';
 import { useMemo } from 'react';
-import { DrawerNavigationOptions } from '@react-navigation/drawer';
-import { Platform } from 'react-native';
 import { create } from 'zustand/index';
 import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
+import { Platform } from 'react-native';
 
 type DrawerState = {
   compressed: boolean;
@@ -27,17 +26,11 @@ export const useDrawerState = create<DrawerState>()(
 export const useDrawer = () => {
   const { media } = useScreenSize();
 
-  return useMemo(() => {
-    const permanent = ['lg', 'xl'].includes(media);
-    const visible = Platform.OS === 'web' || permanent;
-
-    return {
-      visible,
-      permanent,
-      headerShown: visible && !permanent,
-      type: (permanent
-        ? 'permanent'
-        : 'front') as DrawerNavigationOptions['drawerType'],
-    };
-  }, [media]);
+  return useMemo(
+    () => ({
+      permanent: ['xxs', 'xs', 'sm', 'md'].includes(media),
+      visible: isTablet || Platform.OS === 'web',
+    }),
+    [media],
+  );
 };

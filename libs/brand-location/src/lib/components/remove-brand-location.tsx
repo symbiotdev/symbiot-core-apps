@@ -24,7 +24,7 @@ export const RemoveBrandLocation = ({
         callback: async () => {
           await mutateAsync({ id: location.id });
 
-          router.dismissTo('/brand/menu/locations');
+          router.dismissTo('/brand/locations');
         },
       }),
     [location.id, mutateAsync, t],

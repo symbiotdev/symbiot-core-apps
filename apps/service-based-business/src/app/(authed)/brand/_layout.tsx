@@ -1,14 +1,15 @@
 import { Stack } from 'expo-router';
-import { useStackScreenHeaderOptions } from '@symbiot-core-apps/ui';
+import { useDrawer, useStackScreenHeaderOptions } from '@symbiot-core-apps/ui';
 import {
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 
 export default () => {
+  const { brands: currentBrands } = useCurrentBrandState();
+  const { visible: drawerVisible } = useDrawer();
   const { hasPermission, hasAnyPermission } = useCurrentBrandEmployee();
   const screenOptions = useStackScreenHeaderOptions();
-  const { brands: currentBrands } = useCurrentBrandState();
 
   return (
     <Stack
@@ -26,17 +27,38 @@ export default () => {
 
         <Stack.Protected guard={hasPermission('clientsAll')}>
           <Stack.Screen name="client" />
-          <Stack.Screen name="clients" />
+          <Stack.Screen
+            name="clients"
+            options={{
+              ...(drawerVisible && {
+                animation: 'none',
+              }),
+            }}
+          />
         </Stack.Protected>
 
         <Stack.Protected guard={hasPermission('employeesAll')}>
           <Stack.Screen name="employee" />
-          <Stack.Screen name="employees" />
+          <Stack.Screen
+            name="employees"
+            options={{
+              ...(drawerVisible && {
+                animation: 'none',
+              }),
+            }}
+          />
         </Stack.Protected>
 
         <Stack.Protected guard={hasPermission('locationsAll')}>
           <Stack.Screen name="location" />
-          <Stack.Screen name="locations" />
+          <Stack.Screen
+            name="locations"
+            options={{
+              ...(drawerVisible && {
+                animation: 'none',
+              }),
+            }}
+          />
         </Stack.Protected>
 
         <Stack.Protected guard={hasPermission('brandAll')}>

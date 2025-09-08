@@ -125,8 +125,8 @@ export const DrawerMenu = () => {
       style={[
         animatedStyle,
         {
-          paddingTop: top + defaultPageVerticalPadding,
-          paddingBottom: bottom + defaultPageVerticalPadding,
+          paddingTop: top + (!permanent ? defaultPageVerticalPadding : 0),
+          paddingBottom: bottom + (!permanent ? defaultPageVerticalPadding : 0),
           paddingLeft: left,
         },
       ]}
@@ -158,7 +158,7 @@ export const DrawerMenu = () => {
       )}
 
       <ScrollView
-        style={{ marginTop: defaultPageVerticalPadding }}
+        style={{ marginTop: !permanent ? defaultPageVerticalPadding : 0 }}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           flex: 1,

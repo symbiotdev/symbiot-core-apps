@@ -12,7 +12,6 @@ import { hideAsync } from 'expo-splash-screen';
 export default () => {
   const { tokens } = useAuthTokens();
   const { finished: onboardingFinished } = useOnboardingState();
-  const { brand: currentBrand } = useCurrentBrandState();
   const headerScreenOptions = useStackScreenHeaderOptions();
 
   useEffect(() => {
@@ -22,7 +21,7 @@ export default () => {
   }, [tokens.access]);
 
   if (tokens.access) {
-    return <Redirect href={currentBrand ? '/home' : '/brand'} />;
+    return <Redirect href="/home" />;
   }
 
   return (

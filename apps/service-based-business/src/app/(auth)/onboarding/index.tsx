@@ -32,7 +32,7 @@ export default () => {
         image: require('../../../../assets/images/onboarding/3.jpg'),
       },
     ],
-    [],
+    [t],
   );
 
   return <Onboarding slides={slides} />;

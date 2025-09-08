@@ -1,5 +1,4 @@
 import { ScrollView, View, ViewStyle, XStackProps } from 'tamagui';
-import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import {
   AttentionView,
   Avatar,
@@ -21,7 +20,6 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types';
 import {
   useCurrentBrandEmployee,
   useCurrentBrandState,
@@ -34,7 +32,6 @@ export const drawerMenuMinWidth = 68;
 
 const MenuItem = memo(
   ({
-    navigation,
     icon,
     label,
     route,
@@ -42,7 +39,6 @@ const MenuItem = memo(
     initial,
     ...xStackProps
   }: XStackProps & {
-    navigation: DrawerNavigationHelpers;
     icon: IconName | ReactElement;
     label: string;
     route: string;
@@ -50,15 +46,17 @@ const MenuItem = memo(
     initial?: boolean;
   }) => {
     const pathname = usePathname();
-    const { permanent } = useDrawer();
+    const { visible } = useDrawer();
     const { compressed } = useDrawerState();
 
     const focused = pathname === route || (pathname === '/' && initial);
 
     const onPress = useCallback(() => {
-      navigation.closeDrawer();
-
       if (!focused) {
+        if (router.canDismiss()) {
+          router.dismissAll();
+        }
+
         router.replace(route);
       }
     }, [focused, route]);
@@ -70,7 +68,7 @@ const MenuItem = memo(
         paddingHorizontal={defaultPageHorizontalPadding}
         marginHorizontal={defaultPageHorizontalPadding / 2}
         backgroundColor={focused ? '$background' : 'transparent'}
-        label={!permanent || !compressed ? label : ''}
+        label={!visible || !compressed ? label : ''}
         icon={
           <AttentionView attention={Boolean(attention)}>
             {typeof icon === 'string' ? <Icon name={icon} /> : icon}
@@ -92,7 +90,7 @@ const Br = memo((props: ViewStyle) => (
   />
 ));
 
-export const DrawerMenu = (props: DrawerContentComponentProps) => {
+export const DrawerMenu = () => {
   const { t } = useTranslation();
   const { icons } = useApp();
   const share = useShareApp();
@@ -105,7 +103,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
   const animatedStyle = useAnimatedStyle(
     () => ({
       width: withTiming(
-        permanent && compressed ? drawerMenuMinWidth : drawerMenuMaxWidth,
+        permanent || compressed ? drawerMenuMinWidth : drawerMenuMaxWidth,
         {
           duration: 250,
         },
@@ -124,7 +122,6 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
       style={[
         animatedStyle,
         {
-          flex: 1,
           paddingTop: top + defaultPageVerticalPadding,
           paddingBottom: bottom + defaultPageVerticalPadding,
           paddingLeft: left,
@@ -136,7 +133,7 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
         borderRightColor="$background1"
       />
 
-      {permanent && (
+      {!permanent && (
         <View
           marginLeft={
             defaultPageHorizontalPadding + defaultPageHorizontalPadding / 2
@@ -168,11 +165,10 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
         {currentBrand && (
           <>
             <MenuItem
-              navigation={props.navigation}
-              route="/brand"
+              route="/my-brand"
               label={currentBrand.name}
               icon={
-                <View marginHorizontal={-5}>
+                <View marginHorizontal={-6}>
                   <Avatar
                     size={defaultIconSize + 10}
                     name={currentBrand.name}
@@ -187,39 +183,30 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
           </>
         )}
 
-        {!currentBrand ? (
-          <MenuItem
-            initial
-            route="/brand"
-            navigation={props.navigation}
-            label={t('navigation.drawer.actions.label')}
-            icon={icons.Workspace}
-          />
-        ) : (
-          <>
-            <MenuItem
-              initial
-              route="/home"
-              navigation={props.navigation}
-              label={t('navigation.drawer.home.label')}
-              icon={icons.Home}
-            />
+        <MenuItem
+          initial
+          route="/home"
+          label={t(
+            !currentBrand
+              ? 'navigation.drawer.actions.label'
+              : 'navigation.drawer.home.label',
+          )}
+          icon={icons.Home}
+        />
 
-            <MenuItem
-              route="/calendar"
-              navigation={props.navigation}
-              label={t('navigation.drawer.calendar.label')}
-              icon={icons.Calendar}
-            />
-          </>
+        {!!currentBrand && (
+          <MenuItem
+            route="/schedule"
+            label={t('navigation.drawer.calendar.label')}
+            icon={icons.Calendar}
+          />
         )}
 
         <Br />
 
         {hasPermission('locationsAll') && (
           <MenuItem
-            route="/brand/menu/locations"
-            navigation={props.navigation}
+            route="/brand/locations"
             label={t('navigation.drawer.locations.label')}
             icon="MapPointWave"
           />
@@ -227,17 +214,23 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
 
         {hasPermission('employeesAll') && (
           <MenuItem
-            route="/brand/menu/employees"
-            navigation={props.navigation}
+            route="/brand/employees"
             label={t('navigation.drawer.employees.label')}
             icon="UsersGroupRounded"
+          />
+        )}
+
+        {hasPermission('clientsAll') && (
+          <MenuItem
+            route="/brand/clients"
+            label={t('navigation.drawer.clients.label')}
+            icon="SmileCircle"
           />
         )}
 
         <Br marginTop="auto" />
 
         <MenuItem
-          navigation={props.navigation}
           icon="Share"
           label={t('navigation.drawer.share.label')}
           route=""
@@ -245,33 +238,29 @@ export const DrawerMenu = (props: DrawerContentComponentProps) => {
         />
 
         <MenuItem
-          navigation={props.navigation}
           icon="FileText"
           label={t('navigation.drawer.terms_privacy.label')}
-          route="/app/terms-privacy"
+          route="/terms-privacy"
         />
 
         <MenuItem
-          navigation={props.navigation}
           icon="QuestionCircle"
           label={t('navigation.drawer.faq.label')}
-          route="/app/help-feedback"
+          route="/help-feedback"
         />
 
         <MenuItem
-          navigation={props.navigation}
           icon="ShareCircle"
           label={t('navigation.drawer.follow_us.label')}
-          route="/app/follow-us"
+          route="/follow-us"
         />
 
         <Br />
 
         <MenuItem
-          navigation={props.navigation}
           icon={icons.More}
           label={t('navigation.drawer.more.label')}
-          route="/app"
+          route="/preferences"
         />
       </ScrollView>
     </Animated.View>

@@ -44,7 +44,7 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
 
       router.replace('/');
     },
-    [currentBrand?.id],
+    [currentBrand?.id, switchBrand],
   );
 
   const onBrandUnassigned = useCallback(
@@ -119,6 +119,7 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     onBrandAssigned,
     onNotificationAdded,
     onNotificationsReadAll,
+    onBrandUnassigned,
   ]);
 
   return children;

@@ -28,7 +28,7 @@ export default () => {
 
   const [qrCodeVisible, setQrCodeVisible] = useState(false);
 
-  const createBrand = useCallback(() => router.navigate('/brand/create'), []);
+  const createBrand = useCallback(() => router.push('/brand/create'), []);
 
   const onOpenQrCodeModal = useCallback(() => {
     emitHaptic();

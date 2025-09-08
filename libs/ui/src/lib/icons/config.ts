@@ -48,6 +48,7 @@ export type IconName =
   | 'SettingsMinimalistic'
   | 'Share'
   | 'ShareCircle'
+  | 'SmileCircle'
   | 'Suitcase'
   | 'Sun'
   | 'TrashBinMinimalistic'

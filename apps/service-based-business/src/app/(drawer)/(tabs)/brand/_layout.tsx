@@ -64,7 +64,7 @@ const InitialActionHeaderRight = () => {
     <HeaderButton
       attention={!!stats.newNotifications}
       iconName={icons.Notifications}
-      onPress={() => router.navigate('/brand/notifications')}
+      onPress={() => router.push('/brand/notifications')}
     />
   );
 };
@@ -76,7 +76,7 @@ const LocationsHeaderRight = () => {
     hasPermission('locationsAll') && (
       <HeaderButton
         iconName="AddCircle"
-        onPress={() => router.navigate('/brand/location/create')}
+        onPress={() => router.push('/brand/location/create')}
       />
     )
   );
@@ -90,6 +90,7 @@ const EmployeesHeaderRight = () => {
       <HeaderButton
         iconName="AddCircle"
         onPress={() => router.navigate('/brand/employee/create')}
+        onPress={() => router.push('/brand/employee/create')}
       />
     )
   );

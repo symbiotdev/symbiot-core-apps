@@ -32,7 +32,7 @@ const IndexHeaderRight = () => {
     <HeaderButton
       attention={!!stats.newNotifications}
       iconName={icons.Notifications}
-      onPress={() => router.navigate('/home/notifications')}
+      onPress={() => router.push('/home/notifications')}
     />
   );
 };

@@ -56,6 +56,7 @@ import { UserId } from './UserId';
 import { Lock } from './Lock';
 import { Tuning2 } from './Tuning2';
 import { Copy } from './Copy';
+import { SmileCircle } from './SmileCircle';
 
 export const Map: IconMap = {
   AddCircle,
@@ -103,6 +104,7 @@ export const Map: IconMap = {
   Rocket,
   SettingsMinimalistic,
   Share,
+  SmileCircle,
   ShareCircle,
   Suitcase,
   Sun,

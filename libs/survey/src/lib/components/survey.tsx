@@ -98,6 +98,7 @@ export function Survey<V extends object>({
 
   useEffect(() => {
     navigation.setOptions({
+      gestureEnabled: false,
       headerShown: !loading && !ignoreNavigation,
       headerLeft: () => (
         <HeaderButton

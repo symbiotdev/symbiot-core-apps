@@ -7,7 +7,7 @@ import {
 import { Redirect, router, Stack } from 'expo-router';
 import { useAuthTokens } from '@symbiot-core-apps/api';
 import { useCurrentEntitiesLoader } from '../../hooks/use-current-entities-loader';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { hideAsync } from 'expo-splash-screen';
 import { XStack } from 'tamagui';
 import { DrawerMenu } from '../../components/drawer/menu';
@@ -19,7 +19,6 @@ import {
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 
 export default () => {
@@ -30,17 +29,6 @@ export default () => {
   const currentEntitiesLoaded = useCurrentEntitiesLoader();
   const screenOptions = useStackScreenHeaderOptions();
   const { hasPermission, hasAnyPermission } = useCurrentBrandEmployee();
-
-  const topScreenOptions = useMemo(
-    () =>
-      ({
-        headerShown: false,
-        ...(drawerVisible && {
-          animation: 'none',
-        }),
-      }) as NativeStackNavigationOptions,
-    [drawerVisible],
-  );
 
   useEffect(() => {
     if (currentEntitiesLoaded) {
@@ -88,6 +76,31 @@ export default () => {
                   }}
                 />
 
+                <Stack.Protected
+                  guard={!!currentBrands && !currentBrands.length}
+                >
+                  <Stack.Screen name="brand/create/index" />
+                  <Stack.Screen name="brand/create/new" />
+                </Stack.Protected>
+
+                <Stack.Protected guard={hasAnyPermission()}>
+                  <Stack.Screen
+                    name="brand/menu"
+                    options={{
+                      headerTitle: currentBrand?.name,
+                    }}
+                  />
+                </Stack.Protected>
+
+                <Stack.Protected guard={hasPermission('brandAll')}>
+                  <Stack.Screen
+                    name="brand/preferences"
+                    options={{
+                      headerTitle: t('brand.information.title'),
+                    }}
+                  />
+                </Stack.Protected>
+
                 <Stack.Screen
                   name="calendar/preferences"
                   options={{
@@ -95,12 +108,59 @@ export default () => {
                   }}
                 />
 
-                <Stack.Screen
-                  name="language/preferences"
-                  options={{
-                    headerTitle: t('shared.preferences.language.title'),
-                  }}
-                />
+                <Stack.Protected guard={hasPermission('clientsAll')}>
+                  <Stack.Screen name="clients/create/index" />
+
+                  <Stack.Screen
+                    name="clients/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                      headerTitle: t('brand.clients.title'),
+                      headerRight: () => (
+                        <HeaderButton
+                          iconName="AddCircle"
+                          onPress={() => router.push('/clients/create')}
+                        />
+                      ),
+                    }}
+                  />
+                </Stack.Protected>
+
+                <Stack.Protected guard={hasPermission('employeesAll')}>
+                  <Stack.Screen
+                    name="employees/[id]/create"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                    }}
+                  />
+                  <Stack.Screen name="employees/[id]/remove" />
+                  <Stack.Screen
+                    name="employees/[id]/update"
+                    options={{
+                      headerTitle: t('brand.employees.update.title'),
+                    }}
+                  />
+                  <Stack.Screen name="employees/create" />
+                  <Stack.Screen
+                    name="employees/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                      headerTitle: t('brand.employees.title'),
+                      headerRight: () => (
+                        <HeaderButton
+                          iconName="AddCircle"
+                          onPress={() => router.push('/employees/create')}
+                        />
+                      ),
+                    }}
+                  />
+                </Stack.Protected>
 
                 <Stack.Screen
                   name="follow-us/index"
@@ -123,93 +183,22 @@ export default () => {
                 />
 
                 <Stack.Screen
-                  name="notifications/index"
+                  name="language/preferences"
                   options={{
-                    headerTitle: t('shared.notifications.title'),
+                    headerTitle: t('shared.preferences.language.title'),
                   }}
                 />
-
-                <Stack.Screen
-                  name="notifications/preferences"
-                  options={{
-                    headerTitle: t('shared.preferences.notifications.title'),
-                  }}
-                />
-
-                <Stack.Screen
-                  name="terms-privacy"
-                  options={{
-                    headerTitle: t('shared.docs.terms_privacy'),
-                    ...(drawerVisible && {
-                      animation: 'none',
-                    }),
-                  }}
-                />
-
-                <Stack.Protected guard={hasPermission('brandAll')}>
-                  <Stack.Screen name="brand/preferences/index" />
-                </Stack.Protected>
-
-                <Stack.Protected guard={hasPermission('clientsAll')}>
-                  <Stack.Screen name="clients/create/index" />
-
-                  <Stack.Screen
-                    name="clients/index"
-                    options={{
-                      ...topScreenOptions,
-                      headerTitle: t('brand.clients.title'),
-                      headerRight: () => (
-                        <HeaderButton
-                          iconName="AddCircle"
-                          onPress={() => router.push('/clients/create')}
-                        />
-                      ),
-                    }}
-                  />
-                </Stack.Protected>
-
-                <Stack.Protected guard={hasPermission('employeesAll')}>
-                  <Stack.Screen name="employees/create" />
-                  <Stack.Screen
-                    name="employees/index"
-                    options={{
-                      ...(drawerVisible && {
-                        animation: 'none',
-                      }),
-                      headerTitle: t('brand.employees.title'),
-                      headerRight: () => (
-                        <HeaderButton
-                          iconName="AddCircle"
-                          onPress={() => router.push('/employees/create')}
-                        />
-                      ),
-                    }}
-                  />
-                  <Stack.Screen
-                    name="employees/[id]/create"
-                    options={topScreenOptions}
-                  />
-                  <Stack.Screen name="employees/[id]/remove" />
-                  <Stack.Screen
-                    name="employees/[id]/update"
-                    options={{
-                      headerTitle: t('brand.employees.update.title'),
-                    }}
-                  />
-                </Stack.Protected>
 
                 <Stack.Protected guard={hasPermission('locationsAll')}>
                   <Stack.Screen name="locations/create/index" />
-                  <Stack.Screen
-                    name="locations/create/new"
-                    options={{
-                      gestureEnabled: false,
-                    }}
-                  />
+                  <Stack.Screen name="locations/create/new" />
 
                   <Stack.Screen
                     name="locations/index"
                     options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
                       headerTitle: t('brand.locations.title'),
                       headerRight: () => (
                         <HeaderButton
@@ -228,26 +217,28 @@ export default () => {
                   />
                 </Stack.Protected>
 
-                <Stack.Protected
-                  guard={!!currentBrands && !currentBrands.length}
-                >
-                  <Stack.Screen name="brand/create/index" />
-                  <Stack.Screen
-                    name="brand/create/new"
-                    options={{
-                      gestureEnabled: false,
-                    }}
-                  />
-                </Stack.Protected>
+                <Stack.Screen
+                  name="notifications/index"
+                  options={{
+                    headerTitle: t('shared.notifications.title'),
+                  }}
+                />
+                <Stack.Screen
+                  name="notifications/preferences"
+                  options={{
+                    headerTitle: t('shared.preferences.notifications.title'),
+                  }}
+                />
 
-                <Stack.Protected guard={hasAnyPermission()}>
-                  <Stack.Screen
-                    name="brand/menu/index"
-                    options={{
-                      headerTitle: currentBrand?.name,
-                    }}
-                  />
-                </Stack.Protected>
+                <Stack.Screen
+                  name="terms-privacy"
+                  options={{
+                    headerTitle: t('shared.docs.terms_privacy'),
+                    ...(drawerVisible && {
+                      animation: 'none',
+                    }),
+                  }}
+                />
               </Stack>
             )}
           </XStack>

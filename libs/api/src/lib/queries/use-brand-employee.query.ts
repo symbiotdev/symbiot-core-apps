@@ -170,5 +170,5 @@ export const useBrandEmployeeDetailedByIdQuery = (id: string) =>
   useQuery<BrandEmployee, string>({
     queryKey: [BrandEmployeesQueryKey.detailedById, id],
     queryFn: () =>
-      requestWithStringError(axios.get(`/api/brand-employee/${id}`)),
+      requestWithStringError(axios.get(`/api/brand-employee/detailed/${id}`)),
   });

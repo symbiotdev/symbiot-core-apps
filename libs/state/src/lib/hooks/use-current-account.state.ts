@@ -4,7 +4,7 @@ import {
   UpdateAccountData,
   useAccountMeRemoveAvatar,
   useAccountMeUpdate,
-  useUpdateAccountPreferencesQuery,
+  useUpdateAccountMePreferencesQuery,
 } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
@@ -105,7 +105,7 @@ export const useCurrentAccountUpdater = () => {
     mutateAsync: updatePreferences,
     isPending: arePreferencesUpdating,
     error: updatePreferencesError,
-  } = useUpdateAccountPreferencesQuery();
+  } = useUpdateAccountMePreferencesQuery();
   const {
     mutateAsync: updateAccount,
     isPending: isAccountUpdating,

@@ -6,7 +6,6 @@ export * from './lib/queries/use-account.query';
 export * from './lib/queries/use-account-auth.query';
 export * from './lib/queries/use-account-device.query';
 export * from './lib/queries/use-notification.query';
-export * from './lib/queries/use-account-preferences.query';
 
 export * from './lib/queries/use-app.query';
 export * from './lib/queries/use-app-competitor-source.query';

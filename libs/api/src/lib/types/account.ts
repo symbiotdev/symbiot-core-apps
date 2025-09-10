@@ -20,7 +20,6 @@ export type Account = {
   firebaseId: string;
   signInProvider: string;
   email: string;
-  lastVisitDate: string;
   lastRateDate: string;
   birthday: Date;
   preferences: AccountPreferences;

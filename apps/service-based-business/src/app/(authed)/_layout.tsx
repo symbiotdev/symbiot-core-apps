@@ -79,8 +79,8 @@ export default () => {
                 <Stack.Protected
                   guard={!!currentBrands && !currentBrands.length}
                 >
-                  <Stack.Screen name="brand/create/index" />
-                  <Stack.Screen name="brand/create/new" />
+                  <Stack.Screen name="brand/create" />
+                  <Stack.Screen name="brand/new" />
                 </Stack.Protected>
 
                 <Stack.Protected guard={hasAnyPermission()}>
@@ -109,7 +109,8 @@ export default () => {
                 />
 
                 <Stack.Protected guard={hasPermission('clientsAll')}>
-                  <Stack.Screen name="clients/create/index" />
+                  <Stack.Screen name="clients/create" />
+                  <Stack.Screen name="clients/import" />
 
                   <Stack.Screen
                     name="clients/index"
@@ -190,8 +191,8 @@ export default () => {
                 />
 
                 <Stack.Protected guard={hasPermission('locationsAll')}>
-                  <Stack.Screen name="locations/create/index" />
-                  <Stack.Screen name="locations/create/new" />
+                  <Stack.Screen name="locations/create" />
+                  <Stack.Screen name="locations/new" />
 
                   <Stack.Screen
                     name="locations/index"

@@ -9,6 +9,8 @@ export * from './lib/card/card';
 
 export * from './lib/collapsible/accordion';
 
+export * from './lib/devider/br';
+
 export * from './lib/form/avatar-picker';
 export * from './lib/form/checkbox';
 export * from './lib/form/country-picker';

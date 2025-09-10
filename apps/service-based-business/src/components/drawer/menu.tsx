@@ -1,7 +1,8 @@
-import { ScrollView, View, ViewStyle, XStackProps } from 'tamagui';
+import { ScrollView, View, XStackProps } from 'tamagui';
 import {
   AttentionView,
   Avatar,
+  Br,
   defaultIconSize,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
@@ -83,15 +84,6 @@ const MenuItem = memo(
     );
   },
 );
-
-const Br = memo((props: ViewStyle) => (
-  <View
-    height={2}
-    backgroundColor="$background"
-    marginHorizontal={defaultPageHorizontalPadding}
-    {...props}
-  />
-));
 
 export const DrawerMenu = () => {
   const { t } = useTranslation();
@@ -184,7 +176,7 @@ export const DrawerMenu = () => {
               }
             />
 
-            <Br />
+            <Br marginHorizontal={defaultPageHorizontalPadding} />
           </>
         )}
 
@@ -206,7 +198,7 @@ export const DrawerMenu = () => {
           />
         )}
 
-        <Br />
+        <Br marginHorizontal={defaultPageHorizontalPadding} />
 
         {hasPermission('locationsAll') && (
           <MenuItem
@@ -235,7 +227,7 @@ export const DrawerMenu = () => {
           />
         )}
 
-        <Br marginTop="auto" />
+        <Br marginTop="auto" marginHorizontal={defaultPageHorizontalPadding} />
 
         <MenuItem
           icon="Share"
@@ -262,7 +254,7 @@ export const DrawerMenu = () => {
           route="/follow-us"
         />
 
-        <Br />
+        <Br marginHorizontal={defaultPageHorizontalPadding} />
 
         <MenuItem
           icon={icons.More}

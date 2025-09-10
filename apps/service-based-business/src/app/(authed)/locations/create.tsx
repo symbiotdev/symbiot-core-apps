@@ -1,10 +1,8 @@
-import { Button, EmptyView, PageView } from '@symbiot-core-apps/ui';
-import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
+import { Button, EmptyView, PageView } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 
 export default () => {
-  const { icons } = useApp();
   const { t } = useTranslation();
 
   return (
@@ -17,13 +15,13 @@ export default () => {
     >
       <EmptyView
         padding={0}
-        iconName={icons.Workspace}
-        title={t('brand.create.intro.title')}
-        message={t('brand.create.intro.subtitle')}
+        iconName="MapPointWave"
+        title={t('brand.locations.upsert.intro.title')}
+        message={t('brand.locations.upsert.intro.subtitle')}
       >
         <Button
-          label={t('brand.create.intro.button.label')}
-          onPress={() => router.push('/brand/create')}
+          label={t('brand.locations.upsert.intro.button.label')}
+          onPress={() => router.push('/locations/new')}
         />
       </EmptyView>
     </PageView>

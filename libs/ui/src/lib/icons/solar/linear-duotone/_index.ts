@@ -57,6 +57,7 @@ import { Lock } from './Lock';
 import { Tuning2 } from './Tuning2';
 import { Copy } from './Copy';
 import { SmileCircle } from './SmileCircle';
+import { Import } from './Import';
 
 export const Map: IconMap = {
   AddCircle,
@@ -85,6 +86,7 @@ export const Map: IconMap = {
   Heart,
   Home,
   HomeAdd,
+  Import,
   InfoCircle,
   Letter,
   Lock,

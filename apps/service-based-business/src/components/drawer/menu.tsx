@@ -5,13 +5,13 @@ import {
   Br,
   defaultIconSize,
   defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
   Icon,
   IconName,
   ListItem,
   NavigationBackground,
   useDrawer,
   useDrawerState,
+  useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { router, usePathname } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -90,6 +90,7 @@ export const DrawerMenu = () => {
   const { icons } = useApp();
   const share = useShareApp();
   const { permanent } = useDrawer();
+  const headerHeight = useScreenHeaderHeight();
   const { top, bottom, left } = useSafeAreaInsets();
   const { compressed, toggleCompressed } = useDrawerState();
   const { brand: currentBrand } = useCurrentBrandState();
@@ -117,8 +118,8 @@ export const DrawerMenu = () => {
       style={[
         animatedStyle,
         {
-          paddingTop: top + (!permanent ? defaultPageVerticalPadding : 0),
-          paddingBottom: bottom + (!permanent ? defaultPageVerticalPadding : 0),
+          paddingTop: top,
+          paddingBottom: bottom,
           paddingLeft: left,
         },
       ]}
@@ -130,14 +131,11 @@ export const DrawerMenu = () => {
 
       {!permanent && (
         <View
-          marginLeft={
-            defaultPageHorizontalPadding + defaultPageHorizontalPadding / 2
-          }
           cursor="pointer"
-          width={defaultIconSize}
-          height={defaultIconSize}
-          justifyContent="center"
+          width={68}
+          height={headerHeight}
           alignItems="center"
+          justifyContent="center"
           pressStyle={{ opacity: 0.8 }}
           onPress={toggleDrawerCompression}
         >
@@ -150,34 +148,34 @@ export const DrawerMenu = () => {
       )}
 
       <ScrollView
-        style={{ marginTop: !permanent ? defaultPageVerticalPadding : 0 }}
+        style={{
+          flex: 1,
+        }}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          flex: 1,
+          flexGrow: 1,
           gap: 10,
         }}
       >
         {currentBrand && (
-          <>
+          <View>
             <MenuItem
               route="/my-brand"
               additionalRoutes={['/brand/create']}
               label={currentBrand.name}
-              marginLeft={defaultPageHorizontalPadding / 2}
               icon={
-                <View marginHorizontal={-6}>
-                  <Avatar
-                    size={defaultIconSize + 12}
-                    name={currentBrand.name}
-                    color={currentBrand.avatarColor}
-                    url={currentBrand.avatarXsUrl}
-                  />
-                </View>
+                <Avatar
+                  marginHorizontal={-4}
+                  size={defaultIconSize + 8}
+                  name={currentBrand.name}
+                  color={currentBrand.avatarColor}
+                  url={currentBrand.avatarXsUrl}
+                />
               }
             />
 
             <Br marginHorizontal={defaultPageHorizontalPadding} />
-          </>
+          </View>
         )}
 
         <MenuItem

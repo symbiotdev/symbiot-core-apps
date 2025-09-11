@@ -1,12 +1,11 @@
 import {
-  BrandEmployee,
+  BrandClient,
   Phone,
-  UpdateBrandEmployee,
+  UpdateBrandClient,
   useModalUpdateForm,
-  useUpdateBrandEmployeeQuery,
+  useUpdateBrandClientQuery,
 } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
-import { useBrandEmployeeForm } from '../hooks/use-brand-employee-form';
 import {
   defaultPageVerticalPadding,
   FormView,
@@ -20,6 +19,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useLayoutEffect } from 'react';
+import { useBrandClientForm } from '../hooks/use-brand-client-form';
 
 type FormValue = {
   phone: Phone;
@@ -27,21 +27,17 @@ type FormValue = {
   address: string;
 };
 
-export const BrandEmployeeContactInfo = ({
-  employee,
-}: {
-  employee: BrandEmployee;
-}) => {
+export const BrandClientContactInfo = ({ client }: { client: BrandClient }) => {
   const { t } = useTranslation();
-  const form = useBrandEmployeeForm();
+  const form = useBrandClientForm();
   const { value, modalVisible, updateValue, openModal, closeModal } =
-    useModalUpdateForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
-      id: employee.id,
-      query: useUpdateBrandEmployeeQuery,
+    useModalUpdateForm<BrandClient, FormValue, UpdateBrandClient>({
+      id: client.id,
+      query: useUpdateBrandClientQuery,
       initialValue: {
-        phone: employee.phones[0],
-        email: employee.email,
-        address: employee.address,
+        phone: client.phones[0],
+        email: client.email,
+        address: client.address,
       },
       dataRequestFormatted: (requestValue) => {
         if (requestValue.phone) {
@@ -63,7 +59,11 @@ export const BrandEmployeeContactInfo = ({
         iconAfter={<Icon name="ArrowRight" />}
         label={form.contactInfo.title}
         text={
-          [value.phone?.formatted, value.email, value.address]
+          [
+            value.phone.formatted,
+            value.email,
+            value.address,
+          ]
             .filter(Boolean)
             .join(' · ') || t('shared.not_specified')
         }
@@ -90,7 +90,7 @@ const Form = ({
 }: FormValue & {
   onUpdateValue: (value: Partial<FormValue>) => unknown;
 }) => {
-  const form = useBrandEmployeeForm();
+  const form = useBrandClientForm();
 
   const {
     control: phoneControl,

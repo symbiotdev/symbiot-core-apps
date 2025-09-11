@@ -103,13 +103,17 @@ export const useBrandEmployeeForm = () => {
       },
       locationCustomSchedule: {
         label: t('brand.employees.upsert.form.location_custom_schedule.label'),
-        description: t('brand.employees.upsert.form.location_custom_schedule.description'),
+        description: t(
+          'brand.employees.upsert.form.location_custom_schedule.description',
+        ),
         scheme: yup.boolean().defined(),
         defaultValue: false,
       },
       employeeSchedule: {
         label: t('brand.employees.upsert.form.employee_schedule.label'),
-        description: t('brand.employees.upsert.form.employee_schedule.description'),
+        description: t(
+          'brand.employees.upsert.form.employee_schedule.description',
+        ),
         scheme: yup.boolean().defined(),
         defaultValue: false,
       },
@@ -171,9 +175,7 @@ export const useBrandEmployeeForm = () => {
         subtitle: t('brand.employees.upsert.form.about.subtitle'),
         label: t('brand.employees.upsert.form.about.label'),
         placeholder: t('brand.employees.upsert.form.about.placeholder'),
-        scheme: yup
-          .string()
-          .required(t('brand.employees.upsert.form.about.error.required')),
+        scheme: yup.string().nullable().ensure(),
         optionalScheme: yup.string().nullable().ensure(),
       },
     }),

@@ -1,8 +1,8 @@
 import {
-  BrandEmployee,
-  UpdateBrandEmployee,
+  BrandClient,
+  UpdateBrandClient,
   useModalUpdateForm,
-  useUpdateBrandEmployeeQuery,
+  useUpdateBrandClientQuery,
 } from '@symbiot-core-apps/api';
 import {
   DatePicker,
@@ -14,13 +14,13 @@ import {
   SelectPicker,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
-import { useBrandEmployeeForm } from '../hooks/use-brand-employee-form';
 import { useLayoutEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useCurrentAccount, useGenders } from '@symbiot-core-apps/state';
 import { DateHelper } from '@symbiot-core-apps/shared';
+import { useBrandClientForm } from '../hooks/use-brand-client-form';
 
 type FormValue = {
   firstname: string;
@@ -29,22 +29,22 @@ type FormValue = {
   birthday: string;
 };
 
-export const BrandEmployeePersonalInfo = ({
-  employee,
+export const BrandClientPersonalInfo = ({
+  client,
 }: {
-  employee: BrandEmployee;
+  client: BrandClient;
 }) => {
   const { me } = useCurrentAccount();
-  const { personalInfo } = useBrandEmployeeForm();
+  const { personalInfo } = useBrandClientForm();
   const { value, modalVisible, openModal, closeModal, updateValue } =
-    useModalUpdateForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
-      id: employee.id,
-      query: useUpdateBrandEmployeeQuery,
+    useModalUpdateForm<BrandClient, FormValue, UpdateBrandClient>({
+      id: client.id,
+      query: useUpdateBrandClientQuery,
       initialValue: {
-        firstname: employee.firstname,
-        lastname: employee.lastname,
-        gender: employee.gender?.id,
-        birthday: employee.birthday,
+        firstname: client.firstname,
+        lastname: client.lastname,
+        gender: client.gender?.id,
+        birthday: client.birthday,
       },
     });
 
@@ -58,7 +58,7 @@ export const BrandEmployeePersonalInfo = ({
           `${value.firstname} ${value.lastname}`,
           value.birthday &&
             DateHelper.format(value.birthday, me?.preferences?.dateFormat),
-          employee.gender?.name,
+          client.gender?.name,
         ]
           .filter(Boolean)
           .join(' · ')}
@@ -87,7 +87,7 @@ const Form = ({
   onUpdateValue: (value: Partial<FormValue>) => unknown;
 }) => {
   const { me } = useCurrentAccount();
-  const form = useBrandEmployeeForm();
+  const form = useBrandClientForm();
 
   const {
     gendersAsOptions,

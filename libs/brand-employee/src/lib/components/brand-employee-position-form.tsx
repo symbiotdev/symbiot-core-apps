@@ -1,7 +1,9 @@
 import {
   BrandEmployee,
   BrandIndustryServiceType,
+  UpdateBrandEmployee,
   useBrandIndustryServiceTypeQuery,
+  useModalUpdateForm,
   useUpdateBrandEmployeeQuery,
 } from '@symbiot-core-apps/api';
 import { useBrandEmployeeForm } from '../hooks/use-brand-employee-form';
@@ -21,7 +23,6 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useUpdateBrandEmployeeForm } from '../hooks/use-update-brand-employee-form';
 import { arraysOfObjectsEqual } from '@symbiot-core-apps/shared';
 
 type FormValue = {
@@ -37,8 +38,9 @@ export const BrandEmployeePositionForm = ({
   const { positionInfo } = useBrandEmployeeForm();
   const { mutateAsync: update } = useUpdateBrandEmployeeQuery();
   const { value, modalVisible, openModal, closeModal, updateValue } =
-    useUpdateBrandEmployeeForm<FormValue>({
+    useModalUpdateForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
       id: employee.id,
+      query: useUpdateBrandEmployeeQuery,
       initialValue: {
         provider: employee.provider,
         position: employee.position,

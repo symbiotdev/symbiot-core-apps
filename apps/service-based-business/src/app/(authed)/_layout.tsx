@@ -115,12 +115,11 @@ export default () => {
 
                 <Stack.Protected guard={hasPermission('clientsAll')}>
                   <Stack.Screen
-                    name="clients/create"
+                    name="clients/[id]/profile"
                     options={{
-                      headerTitle: t('brand.clients.new_client'),
+                      headerTitle: t('brand.clients.profile.title'),
                     }}
                   />
-                  <Stack.Screen name="clients/import" />
                   <Stack.Screen name="clients/[id]/remove" />
                   <Stack.Screen
                     name="clients/[id]/update"
@@ -129,6 +128,13 @@ export default () => {
                     }}
                   />
 
+                  <Stack.Screen
+                    name="clients/create"
+                    options={{
+                      headerTitle: t('brand.clients.new_client'),
+                    }}
+                  />
+                  <Stack.Screen name="clients/import" />
                   <Stack.Screen
                     name="clients/index"
                     options={{

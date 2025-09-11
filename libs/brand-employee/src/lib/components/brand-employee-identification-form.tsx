@@ -1,4 +1,9 @@
-import { BrandEmployee } from '@symbiot-core-apps/api';
+import {
+  BrandEmployee,
+  UpdateBrandEmployee,
+  useModalUpdateForm,
+  useUpdateBrandEmployeeQuery,
+} from '@symbiot-core-apps/api';
 import {
   defaultPageVerticalPadding,
   FormView,
@@ -12,7 +17,6 @@ import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useUpdateBrandEmployeeForm } from '../hooks/use-update-brand-employee-form';
 
 type FormValue = {
   passport: string;
@@ -27,8 +31,9 @@ export const BrandEmployeeIdentificationForm = ({
   const { t } = useTranslation();
   const form = useBrandEmployeeForm();
   const { value, modalVisible, openModal, closeModal, updateValue } =
-    useUpdateBrandEmployeeForm<FormValue>({
+    useModalUpdateForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
       id: employee.id,
+      query: useUpdateBrandEmployeeQuery,
       initialValue: {
         passport: employee.passport,
         taxId: employee.taxId,

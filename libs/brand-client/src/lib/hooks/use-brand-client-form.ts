@@ -74,10 +74,9 @@ export const useBrandClientForm = () => {
         subtitle: t('brand.clients.upsert.form.note.subtitle'),
         label: t('brand.clients.upsert.form.note.label'),
         placeholder: t('brand.clients.upsert.form.note.placeholder'),
-        scheme: yup
-          .string()
-          .required(t('brand.clients.upsert.form.note.error.required')),
+        scheme: yup.string().nullable().ensure(),
         optionalScheme: yup.string().nullable().ensure(),
+        maxLength: 1000,
       },
     }),
     [t],

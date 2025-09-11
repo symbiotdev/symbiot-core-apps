@@ -2,7 +2,10 @@ import {
   BrandEmployee,
   BrandEmployeePermission,
   BrandEmployeePermissions,
+  UpdateBrandEmployee,
   useBrandEmployeePermissionsQuery,
+  useModalUpdateForm,
+  useUpdateBrandEmployeeQuery,
 } from '@symbiot-core-apps/api';
 import { useBrandEmployeeForm } from '../hooks/use-brand-employee-form';
 import {
@@ -16,7 +19,6 @@ import {
   Switch,
 } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
-import { useUpdateBrandEmployeeForm } from '../hooks/use-update-brand-employee-form';
 import { useState } from 'react';
 
 type FormValue = {
@@ -31,8 +33,9 @@ export const BrandEmployeePermissionsForm = ({
   const { t } = useTranslation();
   const form = useBrandEmployeeForm();
   const { value, modalVisible, openModal, closeModal, updateValue, updating } =
-    useUpdateBrandEmployeeForm<FormValue>({
+    useModalUpdateForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
       id: employee.id,
+      query: useUpdateBrandEmployeeQuery,
       initialValue: {
         permissions: employee.permissions,
       },

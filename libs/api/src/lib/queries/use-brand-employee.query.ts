@@ -15,7 +15,7 @@ import { generateFormData } from '../utils/media';
 import { PaginationList } from '../types/pagination';
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { queryClient } from '../utils/client';
-import type { InfiniteData } from '@tanstack/query-core';
+import { refetchQueriesByChanges } from '../utils/query';
 
 export enum BrandEmployeesQueryKey {
   current = 'brand-employee-current',
@@ -27,37 +27,15 @@ export enum BrandEmployeesQueryKey {
 const refetchQueriesByEmployeeChanges = async (
   employee: BrandEmployee,
   refetchList = true,
-) => {
-  queryClient.setQueryData(
-    [BrandEmployeesQueryKey.detailedById, employee.id],
-    employee,
-  );
-
-  if (refetchList) {
-    await queryClient.refetchQueries({
-      queryKey: [BrandEmployeesQueryKey.currentList],
-    });
-  } else {
-    const employeesData = queryClient.getQueryData<
-      InfiniteData<PaginationList<BrandEmployee>>
-    >([BrandEmployeesQueryKey.currentList]);
-
-    if (employeesData) {
-      queryClient.setQueryData<InfiniteData<PaginationList<BrandEmployee>>>(
-        [BrandEmployeesQueryKey.currentList],
-        {
-          ...employeesData,
-          pages: employeesData.pages.map((page) => ({
-            ...page,
-            items: page.items.map((queryEmployee) =>
-              queryEmployee.id === employee.id ? employee : queryEmployee,
-            ),
-          })),
-        },
-      );
-    }
-  }
-};
+) =>
+  refetchQueriesByChanges<BrandEmployee>({
+    refetchList,
+    entity: employee,
+    queryKeys: {
+      byId: BrandEmployeesQueryKey.detailedById,
+      list: BrandEmployeesQueryKey.currentList,
+    },
+  });
 
 export const useCurrentBrandEmployeeQuery = ({
   enabled,

@@ -1,6 +1,9 @@
 import {
   BrandEmployee,
+  UpdateBrandEmployee,
   useCurrentBrandLocationsQuery,
+  useModalUpdateForm,
+  useUpdateBrandEmployeeQuery,
 } from '@symbiot-core-apps/api';
 import { useBrandEmployeeForm } from '../hooks/use-brand-employee-form';
 import { useCallback, useEffect, useMemo } from 'react';
@@ -17,7 +20,6 @@ import {
   WeekdaysSchedule,
 } from '@symbiot-core-apps/ui';
 import { useDynamicBrandLocation } from '@symbiot-core-apps/brand-location';
-import { useUpdateBrandEmployeeForm } from '../hooks/use-update-brand-employee-form';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -38,8 +40,9 @@ export const BrandEmployeeLocationsForm = ({
   const form = useBrandEmployeeForm();
 
   const { value, modalVisible, openModal, closeModal, updateValue } =
-    useUpdateBrandEmployeeForm<FormValue>({
+    useModalUpdateForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
       id: employee.id,
+      query: useUpdateBrandEmployeeQuery,
       initialValue: {
         location:
           employee.locations?.[0]?.id || (dynamicLocation.value as null),

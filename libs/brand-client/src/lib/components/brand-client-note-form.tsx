@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import {
-  BrandEmployee,
-  UpdateBrandEmployee,
+  BrandClient,
+  UpdateBrandClient,
   useModalUpdateForm,
-  useUpdateBrandEmployeeQuery,
+  useUpdateBrandClientQuery,
 } from '@symbiot-core-apps/api';
-import { useBrandEmployeeForm } from '../hooks/use-brand-employee-form';
 import { useEffect } from 'react';
 import {
   defaultPageVerticalPadding,
@@ -18,35 +17,33 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useBrandClientForm } from '../hooks/use-brand-client-form';
+import { useWindowDimensions } from 'react-native';
 
 type FormValue = {
-  about: string;
+  note: string;
 };
 
-export const BrandEmployeeAboutForm = ({
-  employee,
-}: {
-  employee: BrandEmployee;
-}) => {
+export const BrandClientNoteForm = ({ client }: { client: BrandClient }) => {
   const { t } = useTranslation();
-  const form = useBrandEmployeeForm();
+  const form = useBrandClientForm();
   const { value, modalVisible, openModal, closeModal, updateValue } =
-    useModalUpdateForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
-      id: employee.id,
-      query: useUpdateBrandEmployeeQuery,
+    useModalUpdateForm<BrandClient, FormValue, UpdateBrandClient>({
+      id: client.id,
+      query: useUpdateBrandClientQuery,
       initialValue: {
-        about: employee.about,
+        note: client.note,
       },
     });
 
   return (
     <>
       <ListItem
-        icon={<Icon name="InfoCircle" />}
+        icon={<Icon name="Document" />}
         iconAfter={<Icon name="ArrowRight" />}
-        label={form.about.title}
+        label={form.note.title}
         text={
-          value.about?.replace(/\n/gi, ' ').replace(/\s\s/gi, '') ||
+          value.note?.replace(/\n/gi, ' ').replace(/\s\s/gi, '') ||
           t('shared.not_specified')
         }
         onPress={openModal}
@@ -54,7 +51,7 @@ export const BrandEmployeeAboutForm = ({
 
       <SlideSheetModal
         scrollable
-        headerTitle={form.about.title}
+        headerTitle={form.note.title}
         visible={modalVisible}
         onClose={closeModal}
       >
@@ -65,49 +62,52 @@ export const BrandEmployeeAboutForm = ({
 };
 
 const Form = ({
-  about,
+  note,
   onUpdateValue,
 }: FormValue & {
   onUpdateValue: (value: Partial<FormValue>) => unknown;
 }) => {
-  const form = useBrandEmployeeForm();
+  const form = useBrandClientForm();
+  const { height } = useWindowDimensions();
 
   const {
-    control: aboutControl,
-    handleSubmit: aboutHandleSubmit,
-    setValue: setAboutValue,
+    control: noteControl,
+    handleSubmit: noteHandleSubmit,
+    setValue: setNoteValue,
   } = useForm<{
-    about: string;
+    note: string;
   }>({
-    defaultValues: { about },
+    defaultValues: { note },
     resolver: yupResolver(
       yup
         .object()
         .shape({
-          about: form.about.scheme,
+          note: form.note.scheme,
         })
         .required(),
     ),
   });
 
   useEffect(() => {
-    setAboutValue('about', about);
-  }, [setAboutValue, about]);
+    setNoteValue('note', note);
+  }, [setNoteValue, note]);
 
   return (
     <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
       <Controller
-        control={aboutControl}
-        name="about"
+        control={noteControl}
+        name="note"
         render={({ field: { value, onChange }, fieldState: { error } }) => (
           <Textarea
             countCharacters
             enterKeyHint="done"
+            maxHeight={Math.min(height - 200, 500)}
             value={value}
             error={error?.message}
-            placeholder={form.about.subtitle}
+            placeholder={form.note.subtitle}
+            maxLength={form.note.maxLength}
             onChange={onChange}
-            onBlur={aboutHandleSubmit(onUpdateValue)}
+            onBlur={noteHandleSubmit(onUpdateValue)}
           />
         )}
       />

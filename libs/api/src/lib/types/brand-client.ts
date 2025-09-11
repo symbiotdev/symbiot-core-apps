@@ -20,10 +20,12 @@ export type CreateBrandClient = {
   avatar: ImagePickerAsset;
   phones: Phone[];
   firstname: string;
-  note: string;
   lastname: string;
-  email: string;
-  address: string;
   birthday: string | null;
   gender: string;
+  note: string;
+  address: string;
+  email: string;
 };
+
+export type UpdateBrandClient = Partial<CreateBrandClient>;

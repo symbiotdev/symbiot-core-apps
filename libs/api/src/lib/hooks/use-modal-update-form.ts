@@ -1,29 +1,31 @@
 import { useCallback, useRef, useState } from 'react';
 import { arraysOfObjectsEqual, objectsEqual } from '@symbiot-core-apps/shared';
-import { useUpdateBrandEmployeeQuery } from '@symbiot-core-apps/api';
+import { UseMutationResult } from '@tanstack/react-query';
 
-export function useUpdateBrandEmployeeForm<V>({
+export function useModalUpdateForm<T, FV, UV>({
   id,
   initialValue,
+  query,
   dataRequestFormatted,
 }: {
   id: string;
-  initialValue: V;
-  dataRequestFormatted?: (value: Partial<V>) => object;
+  initialValue: FV;
+  query: () => UseMutationResult<T, string, { id: string; data: Partial<UV> }>;
+  dataRequestFormatted?: (value: Partial<FV>) => object;
 }) {
-  const { mutateAsync: update, isPending } = useUpdateBrandEmployeeQuery();
+  const { mutateAsync: update, isPending } = query();
 
-  const valueRef = useRef<V>(initialValue);
+  const valueRef = useRef<FV>(initialValue);
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [value, setValue] = useState<V>(initialValue);
+  const [value, setValue] = useState<FV>(initialValue);
 
   const openModal = useCallback(() => setModalVisible(true), []);
   const closeModal = useCallback(() => setModalVisible(false), []);
 
   const updateValue = useCallback(
-    async (data: Partial<V>) => {
-      const dataKeys = Object.keys(data) as (keyof V)[];
+    async (data: Partial<FV>) => {
+      const dataKeys = Object.keys(data) as (keyof FV)[];
 
       if (
         dataKeys.every((key) =>

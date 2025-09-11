@@ -1,16 +1,37 @@
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { PaginationList } from '../types/pagination';
-import { BrandClient, CreateBrandClient } from '../types/brand-client';
-import { useMutation } from '@tanstack/react-query';
-import { requestWithAlertOnError } from '../utils/request';
+import {
+  BrandClient,
+  CreateBrandClient,
+  UpdateBrandClient,
+} from '../types/brand-client';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  requestWithAlertOnError,
+  requestWithStringError,
+} from '../utils/request';
 import axios from 'axios';
 import { generateFormData } from '../utils/media';
 import { queryClient } from '../utils/client';
+import { refetchQueriesByChanges } from '../utils/query';
 
 export enum BrandClientQueryKey {
   currentList = 'brand-client-current-list',
   detailedById = 'brand-client-detailed-by-id',
 }
+
+const refetchQueriesByClientChanges = async (
+  client: BrandClient,
+  refetchList = true,
+) =>
+  refetchQueriesByChanges<BrandClient>({
+    refetchList,
+    entity: client,
+    queryKeys: {
+      byId: BrandClientQueryKey.detailedById,
+      list: BrandClientQueryKey.currentList,
+    },
+  });
 
 export const useCurrentBrandClientListQuery = (
   props: {
@@ -41,6 +62,31 @@ export const useCreateBrandClientQuery = () =>
       await queryClient.refetchQueries({
         queryKey: [BrandClientQueryKey.currentList],
       });
+
+      return client;
+    },
+  });
+
+export const useBrandClientDetailedByIdQuery = (id: string) =>
+  useQuery<BrandClient, string>({
+    queryKey: [BrandClientQueryKey.detailedById, id],
+    queryFn: () =>
+      requestWithStringError(axios.get(`/api/brand-client/detailed/${id}`)),
+  });
+
+export const useUpdateBrandClientQuery = () =>
+  useMutation<BrandClient, string, { id: string; data: UpdateBrandClient }>({
+    mutationFn: async ({ id, data }) => {
+      const client = await requestWithAlertOnError<BrandClient>(
+        axios.put(
+          `/api/brand-client/${id}`,
+          await (data.avatar
+            ? generateFormData<UpdateBrandClient>(data, ['avatar'])
+            : data),
+        ),
+      );
+
+      await refetchQueriesByClientChanges(client, false);
 
       return client;
     },

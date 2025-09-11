@@ -1,6 +1,7 @@
 export * from './lib/components/api-provider';
 
 export * from './lib/hooks/use-auth-tokens';
+export * from './lib/hooks/use-modal-update-form';
 
 export * from './lib/queries/use-account.query';
 export * from './lib/queries/use-account-auth.query';

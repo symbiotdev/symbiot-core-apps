@@ -12,64 +12,61 @@ import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 
 export default () => {
   const { t } = useTranslation();
-  const { hasPermission } = useCurrentBrandEmployee();
+  const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
 
   const onInformationPress = useCallback(
     () => router.push('/brand/preferences'),
     [],
   );
 
-  const onLocationsPress = useCallback(
-    () => router.push('/locations'),
-    [],
-  );
+  const onLocationsPress = useCallback(() => router.push('/locations'), []);
 
-  const onEmployeesPress = useCallback(
-    () => router.push('/employees'),
-    [],
-  );
+  const onEmployeesPress = useCallback(() => router.push('/employees'), []);
 
-  const onClientsPress = useCallback(
-    () => router.push('/clients'),
-    [],
-  );
+  const onClientsPress = useCallback(() => router.push('/clients'), []);
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FormView>
-        <ListItemGroup>
-          {hasPermission('brandAll') && (
+      <FormView gap="$3">
+        {hasPermission('brandAll') && (
+          <ListItemGroup title={t('brand.title')}>
             <ListItem
-              label={t('brand.information.title')}
+              label={t('brand.information.short_title')}
               icon={<Icon name="InfoCircle" />}
               onPress={onInformationPress}
             />
-          )}
+          </ListItemGroup>
+        )}
 
-          {hasPermission('locationsAll') && (
-            <ListItem
-              label={t('brand.locations.title')}
-              icon={<Icon name="MapPointWave" />}
-              onPress={onLocationsPress}
-            />
-          )}
+        {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && (
+          <ListItemGroup title={t('brand.infrastructure')}>
+            {hasPermission('locationsAll') && (
+              <ListItem
+                label={t('brand.locations.title')}
+                icon={<Icon name="MapPointWave" />}
+                onPress={onLocationsPress}
+              />
+            )}
 
-          {hasPermission('employeesAll') && (
-            <ListItem
-              label={t('brand.employees.title')}
-              icon={<Icon name="UsersGroupRounded" />}
-              onPress={onEmployeesPress}
-            />
-          )}
+            {hasPermission('employeesAll') && (
+              <ListItem
+                label={t('brand.employees.title')}
+                icon={<Icon name="UsersGroupRounded" />}
+                onPress={onEmployeesPress}
+              />
+            )}
+          </ListItemGroup>
+        )}
 
-          {hasPermission('clientsAll') && (
+        {hasPermission('clientsAll') && (
+          <ListItemGroup title={t('brand.stakeholders')}>
             <ListItem
               label={t('brand.clients.title')}
               icon={<Icon name="SmileCircle" />}
               onPress={onClientsPress}
             />
-          )}
-        </ListItemGroup>
+          </ListItemGroup>
+        )}
       </FormView>
     </PageView>
   );

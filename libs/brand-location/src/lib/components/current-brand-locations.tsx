@@ -1,6 +1,8 @@
 import {
   AnimatedList,
   Avatar,
+  Button,
+  EmptyView,
   FormView,
   Icon,
   InitView,
@@ -16,8 +18,9 @@ import {
   BrandLocation,
   useCurrentBrandLocationsQuery,
 } from '@symbiot-core-apps/api';
-import { Redirect, router } from 'expo-router';
+import { router } from 'expo-router';
 import { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const CurrentBrandLocations = () => {
   const { brand } = useCurrentBrandState();
@@ -65,12 +68,8 @@ export const CurrentBrandLocations = () => {
     [brand?.avatarXsUrl],
   );
 
-  if (!locations) {
-    return <InitView loading={isLoading} error={error} />;
-  }
-
-  if (!locations.length) {
-    return <Redirect href="/locations/create" />;
+  if (!locations?.length) {
+    return <Intro loading={isLoading} error={error} />;
   }
 
   return (
@@ -90,4 +89,40 @@ export const CurrentBrandLocations = () => {
       />
     </PageView>
   );
+};
+
+const Intro = ({
+  loading,
+  error,
+}: {
+  loading?: boolean;
+  error?: string | null;
+}) => {
+  const { t } = useTranslation();
+
+  if (loading || error) {
+    return <InitView loading={loading} error={error} />;
+  } else {
+    return (
+      <PageView
+        scrollable
+        animation="medium"
+        opacity={1}
+        enterStyle={{ opacity: 0 }}
+        exitStyle={{ opacity: 0 }}
+      >
+        <EmptyView
+          padding={0}
+          iconName="MapPointWave"
+          title={t('brand.locations.upsert.intro.title')}
+          message={t('brand.locations.upsert.intro.subtitle')}
+        >
+          <Button
+            label={t('brand.locations.upsert.intro.button.label')}
+            onPress={() => router.push('/locations/create')}
+          />
+        </EmptyView>
+      </PageView>
+    );
+  }
 };

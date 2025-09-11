@@ -55,7 +55,7 @@ export const PlusActionAdaptiveModal = (props: BottomTabBarButtonProps) => {
     >
       <View gap="$3">
         {hasInfrastructurePermissions && (
-          <View>
+          <View gap="$1">
             {hasPermission('locationsAll') && (
               <ListItem
                 icon={<Icon name="MapPointWave" />}
@@ -77,7 +77,7 @@ export const PlusActionAdaptiveModal = (props: BottomTabBarButtonProps) => {
         {hasInfrastructurePermissions && hasClientsPermission && <Br />}
 
         {hasClientsPermission && (
-          <View>
+          <View gap="$1">
             <ListItem
               icon={<Icon name="Import" />}
               label={t('navigation.tabs.plus.actions.import_client.label')}

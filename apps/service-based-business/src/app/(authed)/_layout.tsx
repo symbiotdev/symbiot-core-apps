@@ -62,12 +62,12 @@ export default () => {
                 />
 
                 <Stack.Screen
-                  name="/account/preferences"
+                  name="account/preferences"
                   options={{
                     headerTitle: t('shared.profile'),
                   }}
                 />
-                <Stack.Screen name="/account/remove" />
+                <Stack.Screen name="account/remove" />
 
                 <Stack.Screen
                   name="appearance/preferences"
@@ -80,7 +80,12 @@ export default () => {
                   guard={!!currentBrands && !currentBrands.length}
                 >
                   <Stack.Screen name="brand/create" />
-                  <Stack.Screen name="brand/new" />
+                  <Stack.Screen
+                    name="brand/new"
+                    options={{
+                      headerTitle: t('brand.create.new_brand'),
+                    }}
+                  />
                 </Stack.Protected>
 
                 <Stack.Protected guard={hasAnyPermission()}>
@@ -109,7 +114,12 @@ export default () => {
                 />
 
                 <Stack.Protected guard={hasPermission('clientsAll')}>
-                  <Stack.Screen name="clients/create" />
+                  <Stack.Screen
+                    name="clients/create"
+                    options={{
+                      headerTitle: t('brand.clients.new_client'),
+                    }}
+                  />
                   <Stack.Screen name="clients/import" />
 
                   <Stack.Screen
@@ -133,6 +143,7 @@ export default () => {
                   <Stack.Screen
                     name="employees/[id]/create"
                     options={{
+                      headerTitle: t('brand.employees.new_employee'),
                       ...(drawerVisible && {
                         animation: 'none',
                       }),
@@ -191,8 +202,12 @@ export default () => {
                 />
 
                 <Stack.Protected guard={hasPermission('locationsAll')}>
-                  <Stack.Screen name="locations/create" />
-                  <Stack.Screen name="locations/new" />
+                  <Stack.Screen
+                    name="locations/create"
+                    options={{
+                      headerTitle: t('brand.locations.new_location'),
+                    }}
+                  />
 
                   <Stack.Screen
                     name="locations/index"
@@ -232,7 +247,7 @@ export default () => {
                 />
 
                 <Stack.Screen
-                  name="terms-privacy"
+                  name="terms-privacy/index"
                   options={{
                     headerTitle: t('shared.docs.terms_privacy'),
                     ...(drawerVisible && {

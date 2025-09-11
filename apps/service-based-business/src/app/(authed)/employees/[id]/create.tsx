@@ -388,8 +388,8 @@ export default () => {
 
         createdRef.current = true;
 
-        router.dismissAll()
-        router.push('/employees');
+        router.dismiss(1)
+        router.replace('/employees');
       } finally {
         setProcessing(false);
       }

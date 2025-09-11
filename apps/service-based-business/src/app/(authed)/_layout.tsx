@@ -121,6 +121,13 @@ export default () => {
                     }}
                   />
                   <Stack.Screen name="clients/import" />
+                  <Stack.Screen name="clients/[id]/remove" />
+                  <Stack.Screen
+                    name="clients/[id]/update"
+                    options={{
+                      headerTitle: t('brand.clients.update.title'),
+                    }}
+                  />
 
                   <Stack.Screen
                     name="clients/index"

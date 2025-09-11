@@ -58,6 +58,7 @@ import { Tuning2 } from './Tuning2';
 import { Copy } from './Copy';
 import { SmileCircle } from './SmileCircle';
 import { Import } from './Import';
+import { Document } from './Document';
 
 export const Map: IconMap = {
   AddCircle,
@@ -79,6 +80,7 @@ export const Map: IconMap = {
   CodeCircle,
   Copy,
   CrownLine,
+  Document,
   Earth,
   FileText,
   Gallery,

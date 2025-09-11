@@ -21,6 +21,7 @@ export type IconName =
   | 'CodeCircle'
   | 'Copy'
   | 'CrownLine'
+  | 'Document'
   | 'Earth'
   | 'FileText'
   | 'Gallery'

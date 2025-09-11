@@ -91,3 +91,22 @@ export const useUpdateBrandClientQuery = () =>
       return client;
     },
   });
+
+export const useRemoveBrandClientQuery = () =>
+  useMutation<void, string, { id: string }>({
+    mutationFn: async ({ id }) => {
+      const response = await requestWithAlertOnError<void>(
+        axios.delete(`/api/brand-client/${id}`),
+      );
+
+      queryClient.setQueryData(
+        [BrandClientQueryKey.detailedById, id],
+        undefined,
+      );
+      await queryClient.refetchQueries({
+        queryKey: [BrandClientQueryKey.currentList],
+      });
+
+      return response;
+    },
+  });

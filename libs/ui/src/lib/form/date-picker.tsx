@@ -21,6 +21,7 @@ import { useTranslation } from 'react-i18next';
 export const DatePicker = ({
   value,
   disabled,
+  required,
   label,
   error,
   placeholder,
@@ -37,6 +38,7 @@ export const DatePicker = ({
   error?: string;
   placeholder?: string;
   formatStr?: string;
+  required?: boolean;
   weekStartsOn?: Weekday;
   startDate?: Date;
   minDate?: Date;
@@ -62,7 +64,7 @@ export const DatePicker = ({
   );
 
   return (
-    <FormField label={label} error={error}>
+    <FormField label={label} error={error} required={required}>
       <AdaptivePopover
         ref={popoverRef}
         disabled={disabled}

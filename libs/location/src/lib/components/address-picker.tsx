@@ -32,6 +32,7 @@ export const AddressPicker = ({
   placeholder?: string;
   error?: string;
   disabled?: boolean;
+  required?: boolean;
   autoFocus?: boolean;
   enterKeyHint?: TextInputProps['enterKeyHint'];
   autoCapitalize?: TextInputProps['autoCapitalize'];

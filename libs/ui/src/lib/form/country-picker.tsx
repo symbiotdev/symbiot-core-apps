@@ -16,6 +16,7 @@ export const CountryPicker = ({
   error,
   placeholder,
   disabled,
+  required,
   disableDrag,
   onChange,
 }: {
@@ -25,6 +26,7 @@ export const CountryPicker = ({
   error?: string;
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
   disableDrag?: boolean;
   onChange: (code: string) => void;
 }) => {
@@ -55,6 +57,7 @@ export const CountryPicker = ({
       error={error}
       placeholder={placeholder}
       disabled={disabled}
+      required={required}
       disableDrag={disableDrag}
       options={options}
       onChange={onChange as PickerOnChange}

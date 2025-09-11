@@ -43,6 +43,7 @@ export const WeekdaysSchedule = ({
   value,
   weekStartsOn,
   disabled,
+  required,
   disableDrag,
   onChange,
 }: {
@@ -50,6 +51,7 @@ export const WeekdaysSchedule = ({
   value: WeekdaySchedule[];
   weekStartsOn?: Weekday;
   disabled?: boolean;
+  required?: boolean;
   disableDrag?: boolean;
   onChange: (value: WeekdaySchedule[]) => void;
 }) => {
@@ -74,7 +76,7 @@ export const WeekdaysSchedule = ({
   );
 
   return (
-    <FormField label={label}>
+    <FormField label={label} required={required}>
       {weekdays.map((weekday, index) => (
         <WeekdayScheduleElement
           key={index}

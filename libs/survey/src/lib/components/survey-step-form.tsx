@@ -146,8 +146,9 @@ export function SurveyStepForm<V>({
                             enterKeyHint={el.props.enterKeyHint || 'done'}
                             error={error?.message}
                             label={el.props.label}
-                            regex={el.props.regex}
                             placeholder={el.props.placeholder}
+                            required={el.props.required}
+                            regex={el.props.regex}
                             onChange={onChange}
                           />
                         )}
@@ -161,6 +162,7 @@ export function SurveyStepForm<V>({
                             error={error?.message}
                             label={el.props.label}
                             placeholder={el.props.placeholder}
+                            required={el.props.required}
                             onChange={onChange}
                           />
                         )}
@@ -171,6 +173,7 @@ export function SurveyStepForm<V>({
                             value={value as PhoneValue}
                             label={el.props.label}
                             placeholder={el.props.placeholder}
+                            required={el.props.required}
                             error={error?.message}
                             onChange={onChange}
                           />
@@ -181,6 +184,7 @@ export function SurveyStepForm<V>({
                             <Switch
                               label={el.props.label}
                               description={el.props.description}
+                              required={el.props.required}
                               checked={!!value}
                               onChange={onChange}
                             />
@@ -194,8 +198,9 @@ export function SurveyStepForm<V>({
                             value={value as string}
                             error={error?.message}
                             label={el.props.label}
-                            maxLength={el.props.maxLength}
                             placeholder={el.props.placeholder}
+                            maxLength={el.props.maxLength}
+                            required={el.props.required}
                             onChange={onChange}
                           />
                         )}
@@ -209,6 +214,7 @@ export function SurveyStepForm<V>({
                             error={error?.message}
                             label={el.props.label}
                             placeholder={el.props.placeholder}
+                            required={el.props.required}
                             onChange={onChange}
                           />
                         )}
@@ -224,6 +230,7 @@ export function SurveyStepForm<V>({
                             multiselect={el.props.multiselect}
                             items={el.props.options}
                             loading={el.props.optionsLoading}
+                            required={el.props.required}
                             value={value as []}
                             error={error?.message}
                             onChange={onChange}
@@ -235,6 +242,7 @@ export function SurveyStepForm<V>({
                             label={el.props.label}
                             sheetLabel={el.props.sheetLabel || el.props.label}
                             placeholder={el.props.placeholder}
+                            required={el.props.required}
                             options={el.props.options}
                             optionsLoading={el.props.optionsLoading}
                             optionsError={el.props.optionsError}
@@ -266,6 +274,7 @@ export function SurveyStepForm<V>({
                             label={el.props.label}
                             sheetLabel={el.props.sheetLabel}
                             placeholder={el.props.placeholder}
+                            required={el.props.required}
                             onChange={onChange}
                           />
                         )}
@@ -277,6 +286,7 @@ export function SurveyStepForm<V>({
                             label={el.props.label}
                             sheetLabel={el.props.sheetLabel}
                             placeholder={el.props.placeholder}
+                            required={el.props.required}
                             onChange={onChange}
                           />
                         )}
@@ -288,6 +298,7 @@ export function SurveyStepForm<V>({
                             label={el.props.label}
                             sheetLabel={el.props.sheetLabel}
                             placeholder={el.props.placeholder}
+                            required={el.props.required}
                             onChange={onChange}
                           />
                         )}
@@ -298,6 +309,7 @@ export function SurveyStepForm<V>({
                             error={error?.message}
                             label={el.props.label}
                             placeholder={el.props.placeholder}
+                            required={el.props.required}
                             onChange={onChange}
                           />
                         )}
@@ -305,6 +317,7 @@ export function SurveyStepForm<V>({
                         {el.type === 'weekdays-schedule' && (
                           <WeekdaysSchedule
                             label={el.props.label}
+                            required={el.props.required}
                             value={value as WeekdaySchedule[]}
                             weekStartsOn={me?.preferences?.weekStartsOn}
                             onChange={onChange}
@@ -321,6 +334,7 @@ export function SurveyStepForm<V>({
                             maxDate={new Date()}
                             label={el.props.label}
                             placeholder={el.props.placeholder}
+                            required={el.props.required}
                             onChange={onChange}
                           />
                         )}

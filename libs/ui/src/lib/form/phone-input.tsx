@@ -43,6 +43,7 @@ export const PhoneInput = ({
   placeholder,
   error,
   disabled,
+  required,
   autoFocus,
   autoFocusDelay,
   enterKeyHint,
@@ -54,6 +55,7 @@ export const PhoneInput = ({
   placeholder?: string;
   error?: string;
   disabled?: boolean;
+  required?: boolean;
   autoFocus?: boolean;
   autoFocusDelay?: number;
   enterKeyHint?: TextInputProps['enterKeyHint'];
@@ -106,7 +108,7 @@ export const PhoneInput = ({
   }, []);
 
   return (
-    <FormField label={label} error={error}>
+    <FormField label={label} error={error} required={required}>
       <InputFieldView pressStyle={{}}>
         <PhoneInputUI
           autoFormat

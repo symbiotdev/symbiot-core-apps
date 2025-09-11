@@ -19,6 +19,7 @@ export const Textarea = forwardRef(
       label,
       placeholder,
       error,
+      required,
       disabled,
       autoFocus,
       ignoreTab,
@@ -42,6 +43,7 @@ export const Textarea = forwardRef(
       placeholder?: string;
       error?: string;
       disabled?: boolean;
+      required?: boolean;
       autoFocus?: boolean;
       ignoreTab?: boolean;
       countCharacters?: boolean;
@@ -121,7 +123,7 @@ export const Textarea = forwardRef(
     const onTouchEnd = useCallback(() => setIsScrolling(false), []);
 
     return (
-      <FormField label={label} error={error}>
+      <FormField label={label} error={error} required={required}>
         <Input
           multiline
           ref={ref}

@@ -16,6 +16,7 @@ export const TimezonePicker = ({
   error,
   placeholder,
   disabled,
+  required,
   disableDrag,
   onlyCountryTimezones,
   onChange,
@@ -27,6 +28,7 @@ export const TimezonePicker = ({
   error?: string;
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
   disableDrag?: boolean;
   onlyCountryTimezones?: boolean;
   onChange: (value: string) => void;
@@ -70,6 +72,7 @@ export const TimezonePicker = ({
       error={error}
       placeholder={placeholder}
       disabled={disabled}
+      required={required}
       disableDrag={disableDrag}
       options={options}
       onChange={onChange as PickerOnChange}

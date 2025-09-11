@@ -11,6 +11,7 @@ export const Switch = ({
   description,
   checked,
   disabled,
+  required,
   loading,
   onChange,
 }: {
@@ -18,6 +19,7 @@ export const Switch = ({
   description?: string;
   checked?: boolean;
   disabled?: boolean;
+  required?: boolean;
   loading?: boolean;
   onChange?: (value: boolean) => void;
 }) => {
@@ -29,7 +31,7 @@ export const Switch = ({
         <View flex={1}>
           {label && (
             <Label lineHeight={switchHeight} flex={1}>
-              {label}
+              {label} {required ? '*' : ''}
             </Label>
           )}
 

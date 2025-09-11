@@ -17,6 +17,7 @@ export function SelectPicker({
   error,
   placeholder,
   disabled,
+  required,
   disableDrag,
   lazy,
   moveSelectedToTop,
@@ -32,6 +33,7 @@ export function SelectPicker({
   error?: string;
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
   disableDrag?: boolean;
   lazy?: boolean;
   moveSelectedToTop?: boolean;
@@ -72,7 +74,7 @@ export function SelectPicker({
   );
 
   return (
-    <FormField label={label} error={error}>
+    <FormField label={label} error={error} required={required}>
       <AdaptivePopover
         ignoreScroll
         ref={popoverRef}

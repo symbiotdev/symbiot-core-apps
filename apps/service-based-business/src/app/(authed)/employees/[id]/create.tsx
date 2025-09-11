@@ -109,6 +109,7 @@ export default () => {
             type: 'input',
             props: {
               ...form.firstname,
+              required: true,
               name: 'firstname',
               enterKeyHint: 'next',
               defaultValue: account?.firstname,
@@ -118,6 +119,7 @@ export default () => {
             type: 'input',
             props: {
               ...form.lastname,
+              required: true,
               name: 'lastname',
               enterKeyHint: 'next',
               defaultValue: account?.lastname,
@@ -127,6 +129,7 @@ export default () => {
             type: 'select-picker',
             props: {
               ...form.gender,
+              required: true,
               options: gendersAsOptionsWithEmptyOption,
               optionsLoading: gendersLoading,
               optionsError: gendersError,
@@ -188,6 +191,7 @@ export default () => {
             type: 'phone',
             props: {
               ...form.phone,
+              required: true,
               name: 'phone',
               enterKeyHint: 'done',
               defaultValue: account?.phones?.[0] || form.phone.defaultValue,
@@ -273,6 +277,7 @@ export default () => {
             type: 'input',
             props: {
               ...form.position,
+              required: true,
               name: 'position',
               defaultValue: '',
             },

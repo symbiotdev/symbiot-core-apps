@@ -28,6 +28,7 @@ export const ToggleGroup = ({
   allowEmpty,
   loading,
   disabled,
+  required,
   label,
   renderDelay,
   noDataIcon,
@@ -46,6 +47,7 @@ export const ToggleGroup = ({
   allowEmpty?: boolean;
   loading?: boolean;
   disabled?: boolean;
+  required?: boolean;
   renderDelay?: number;
   label?: string;
   noDataIcon?: IconName;
@@ -66,7 +68,7 @@ export const ToggleGroup = ({
       noDataMessage={noDataMessage}
     />
   ) : (
-    <FormField label={label}>
+    <FormField label={label} required={required}>
       <ContainerView
         lazy={Boolean(renderDelay)}
         delay={renderDelay}

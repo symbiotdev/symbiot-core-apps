@@ -10,6 +10,7 @@ type SurveyStepElement<V> = {
   name: string;
   scheme: yup.Schema;
   defaultValue?: unknown;
+  required?: boolean;
   showWhen?: (formValue: V) => boolean;
 };
 

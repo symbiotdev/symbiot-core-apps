@@ -39,6 +39,7 @@ export const Input = forwardRef(
       type,
       keyboardType,
       disabled,
+      required,
       autoFocus,
       debounce,
       maxLength,
@@ -59,6 +60,7 @@ export const Input = forwardRef(
       type?: 'email' | 'password' | 'text' | 'numeric';
       keyboardType?: KeyboardType;
       disabled?: boolean;
+      required?: boolean;
       autoFocus?: boolean;
       debounce?: number;
       maxLength?: number;
@@ -111,7 +113,7 @@ export const Input = forwardRef(
     );
 
     return (
-      <FormField label={label} error={error}>
+      <FormField label={label} error={error} required={required}>
         <InputUi
           ref={ref}
           id={id}

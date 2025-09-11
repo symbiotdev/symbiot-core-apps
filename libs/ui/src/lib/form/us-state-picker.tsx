@@ -16,6 +16,7 @@ export const UsStatePicker = ({
   placeholder,
   preventEmptyValue,
   disabled,
+  required,
   disableDrag,
   onChange,
 }: {
@@ -25,6 +26,7 @@ export const UsStatePicker = ({
   error?: string;
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
   disableDrag?: boolean;
   preventEmptyValue?: boolean;
   onChange: (code: string) => void;
@@ -45,6 +47,7 @@ export const UsStatePicker = ({
       error={error}
       placeholder={placeholder}
       disabled={disabled}
+      required={required}
       disableDrag={disableDrag}
       options={options}
       onChange={onChange as PickerOnChange}

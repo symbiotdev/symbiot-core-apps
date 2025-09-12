@@ -12,6 +12,7 @@ import {
   Icon,
   Input,
   ListItem,
+  phoneDefaultValue,
   PhoneInput,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
@@ -35,7 +36,7 @@ export const BrandClientContactInfo = ({ client }: { client: BrandClient }) => {
       id: client.id,
       query: useUpdateBrandClientQuery,
       initialValue: {
-        phone: client.phones[0],
+        phone: client.phones?.[0] || phoneDefaultValue,
         email: client.email,
         address: client.address,
       },
@@ -59,11 +60,7 @@ export const BrandClientContactInfo = ({ client }: { client: BrandClient }) => {
         iconAfter={<Icon name="ArrowRight" />}
         label={form.contactInfo.title}
         text={
-          [
-            value.phone.formatted,
-            value.email,
-            value.address,
-          ]
+          [value.phone.formatted, value.email, value.address]
             .filter(Boolean)
             .join(' · ') || t('shared.not_specified')
         }

@@ -1,3 +1,3 @@
-import { PageView } from '@symbiot-core-apps/ui';
+import { BrandClientImportForm } from '@symbiot-core-apps/brand-client';
 
-export default PageView;
+export default BrandClientImportForm;

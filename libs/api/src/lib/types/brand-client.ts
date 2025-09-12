@@ -22,10 +22,13 @@ export type CreateBrandClient = {
   firstname: string;
   lastname: string;
   birthday: string | null;
-  gender: string;
+  gender: string | undefined;
   note: string;
   address: string;
   email: string;
 };
 
 export type UpdateBrandClient = Partial<CreateBrandClient>;
+export type ImportBrandClient = Omit<CreateBrandClient, 'avatar' | 'note'> & {
+  avatarUrl?: string;
+};

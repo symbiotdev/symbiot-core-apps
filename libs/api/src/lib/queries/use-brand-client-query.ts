@@ -3,6 +3,7 @@ import { PaginationList } from '../types/pagination';
 import {
   BrandClient,
   CreateBrandClient,
+  ImportBrandClient,
   UpdateBrandClient,
 } from '../types/brand-client';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -67,6 +68,30 @@ export const useCreateBrandClientQuery = () =>
     },
   });
 
+export const useImportBrandClientsQuery = () =>
+  useMutation<BrandClient[], string, ImportBrandClient[]>({
+    mutationFn: async (clients) => {
+      const importedClients = await requestWithAlertOnError<BrandClient[]>(
+        axios.post(`/api/brand-client/import`, {
+          clients: clients,
+        }),
+      );
+
+      importedClients.forEach((client) => {
+        queryClient.setQueryData(
+          [BrandClientQueryKey.detailedById, client.id],
+          client,
+        );
+      });
+
+      await queryClient.refetchQueries({
+        queryKey: [BrandClientQueryKey.currentList],
+      });
+
+      return importedClients;
+    },
+  });
+
 export const useBrandClientDetailedByIdQuery = (id: string) =>
   useQuery<BrandClient, string>({
     queryKey: [BrandClientQueryKey.detailedById, id],
@@ -109,4 +134,14 @@ export const useRemoveBrandClientQuery = () =>
 
       return response;
     },
+  });
+
+export const useUpdateBrandClientImportTemplateQuery = () =>
+  useMutation<ArrayBufferLike, string>({
+    mutationFn: () =>
+      requestWithAlertOnError<ArrayBufferLike>(
+        axios.get(`/api/brand-client/template`, {
+          responseType: 'arraybuffer',
+        }),
+      ),
   });

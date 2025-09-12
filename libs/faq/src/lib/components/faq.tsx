@@ -5,6 +5,7 @@ import {
   Icon,
   LoadingView,
   PageView,
+  RegularText,
 } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import { Linking } from 'react-native';
@@ -26,7 +27,12 @@ export const Faq = () => {
         <LoadingView />
       ) : (
         <FormView>
-          <Accordion items={sortedFaq} />
+          <Accordion
+            items={sortedFaq.map((item) => ({
+              title: item.title,
+              content: <RegularText>{item.text}</RegularText>,
+            }))}
+          />
 
           <ActionCard
             title={t('shared.faq.contact_us.title')}

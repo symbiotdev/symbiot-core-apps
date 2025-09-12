@@ -86,7 +86,7 @@ export const CurrentBrandClients = () => {
   );
 
   const ListEmptyComponent = useCallback(
-    () => <EmptyView iconName="Magnifer" title={t('shared.nothing_found')} />,
+    () => <EmptyView iconName="Magnifer" message={t('shared.nothing_found')} />,
     [t],
   );
 

@@ -12,7 +12,7 @@ import {
 } from '../types/brand-employee';
 import { Account } from '../types/account';
 import { generateFormData } from '../utils/media';
-import { PaginationList } from '../types/pagination';
+import { PaginationList, PaginationListParams } from '../types/pagination';
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { queryClient } from '../utils/client';
 import { refetchQueriesByChanges } from '../utils/query';
@@ -132,15 +132,14 @@ export const useRemoveBrandEmployeeQuery = () =>
     },
   });
 
-export const useCurrentBrandEmployeeListQuery = (
-  props: {
-    initialState?: PaginationList<BrandEmployee>;
-    setInitialState?: (state: PaginationList<BrandEmployee>) => void;
-  } = {},
-) =>
+export const useCurrentBrandEmployeeListQuery = (props?: {
+  initialState?: PaginationList<BrandEmployee>;
+  setInitialState?: (state: PaginationList<BrandEmployee>) => void;
+  params?: PaginationListParams;
+}) =>
   useInfiniteQueryWrapper({
     apUrl: '/api/brand-employee',
-    queryKey: [BrandEmployeesQueryKey.currentList],
+    queryKey: [BrandEmployeesQueryKey.currentList, props?.params],
     ...props,
   });
 

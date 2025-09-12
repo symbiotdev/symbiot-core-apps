@@ -55,6 +55,12 @@ export function AnimatedList<T>({
       onEndReached={onEndReached}
       // decelerationRate={0.9} // specially for swipe lists and keep the same behaviour on all list
       {...flatListProps}
+      style={[
+        {
+          flex: 1,
+        },
+        flatListProps.style,
+      ]}
       contentContainerStyle={[
         {
           flexGrow: 1,

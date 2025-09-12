@@ -2,11 +2,16 @@ import {
   AnimatedList,
   Avatar,
   Button,
+  ContainerView,
+  defaultPageHorizontalPadding,
+  defaultPageVerticalPadding,
   EmptyView,
   FormView,
   Icon,
   InitView,
+  NavigationBackground,
   PageView,
+  Search,
   SemiBoldText,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
@@ -15,14 +20,21 @@ import {
   BrandClient,
   useCurrentBrandClientListQuery,
 } from '@symbiot-core-apps/api';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { KeyboardStickyView } from 'react-native-keyboard-controller';
 
 export const CurrentBrandClients = () => {
   const { currentList, setCurrentList } = useCurrentBrandClientState();
+  const { t } = useTranslation();
+  const { bottom } = useSafeAreaInsets();
   const headerHeight = useScreenHeaderHeight();
+
+  const [search, setSearch] = useState('');
+
   const {
     items: clients,
     isFetchingNextPage,
@@ -34,6 +46,11 @@ export const CurrentBrandClients = () => {
   } = useCurrentBrandClientListQuery({
     initialState: currentList,
     setInitialState: setCurrentList,
+    params: {
+      ...(!!search && {
+        search,
+      }),
+    },
   });
 
   const renderItem = useCallback(
@@ -68,28 +85,65 @@ export const CurrentBrandClients = () => {
     [],
   );
 
-  if (!clients?.length) {
+  const ListEmptyComponent = useCallback(
+    () => <EmptyView iconName="Magnifer" title={t('shared.nothing_found')} />,
+    [t],
+  );
+
+  if (!clients?.length && !search) {
     return <Intro loading={isLoading} error={error} />;
   }
 
   return (
-    <PageView ignoreTopSafeArea ignoreBottomSafeArea>
-      <AnimatedList
-        refreshing={isRefetching && !isLoading}
-        expanding={isFetchingNextPage}
-        data={clients}
-        progressViewOffset={headerHeight}
-        contentContainerStyle={{
-          gap: 2,
-          paddingTop: headerHeight,
-          paddingBottom: 100,
+    <>
+      <ContainerView flex={1} paddingVertical={defaultPageVerticalPadding}>
+        <AnimatedList
+          keyboardDismissMode="on-drag"
+          refreshing={isRefetching && !isLoading}
+          expanding={isFetchingNextPage}
+          data={clients}
+          progressViewOffset={headerHeight}
+          contentContainerStyle={{
+            gap: 2,
+            paddingTop: headerHeight,
+            paddingHorizontal: defaultPageHorizontalPadding,
+            paddingBottom: 100,
+          }}
+          keyExtractor={(item) => item.id}
+          ListEmptyComponent={ListEmptyComponent}
+          renderItem={renderItem}
+          onRefresh={onRefresh}
+          onEndReached={onEndReached}
+        />
+      </ContainerView>
+
+      <KeyboardStickyView
+        offset={{ opened: bottom }}
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          paddingTop: 10,
+          paddingBottom: bottom + 10,
+          paddingHorizontal: defaultPageHorizontalPadding,
+          width: '100%',
+          zIndex: 1,
         }}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        onRefresh={onRefresh}
-        onEndReached={onEndReached}
-      />
-    </PageView>
+      >
+        <NavigationBackground
+          borderTopWidth={1}
+          borderTopColor="$background1"
+        />
+
+        <Search
+          value={search}
+          debounce={300}
+          placeholder={t('brand.clients.search.placeholder')}
+          inputFieldProps={{ backgroundColor: '$background' }}
+          onChange={setSearch}
+        />
+      </KeyboardStickyView>
+    </>
   );
 };
 

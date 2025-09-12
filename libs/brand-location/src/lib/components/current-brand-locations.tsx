@@ -22,7 +22,11 @@ import { router } from 'expo-router';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const CurrentBrandLocations = () => {
+export const CurrentBrandLocations = ({
+  navigateTo,
+}: {
+  navigateTo: 'update' | 'profile';
+}) => {
   const { brand } = useCurrentBrandState();
   const headerHeight = useScreenHeaderHeight();
   const { data, isLoading, isRefetching, error, refetch } =
@@ -46,7 +50,7 @@ export const CurrentBrandLocations = () => {
         pressStyle={{ opacity: 0.8 }}
         onPress={() => {
           emitHaptic();
-          router.push(`/locations/${item.id}/update`);
+          router.push(`/locations/${item.id}/${navigateTo}`);
         }}
       >
         <Avatar
@@ -65,7 +69,7 @@ export const CurrentBrandLocations = () => {
         <Icon name="ArrowRight" />
       </FormView>
     ),
-    [brand?.avatarXsUrl],
+    [brand?.avatarXsUrl, navigateTo],
   );
 
   if (!locations?.length) {

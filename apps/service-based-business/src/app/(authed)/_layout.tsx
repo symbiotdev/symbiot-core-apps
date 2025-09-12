@@ -1,10 +1,9 @@
 import {
-  HeaderButton,
   LoadingView,
   useDrawer,
   useStackScreenHeaderOptions,
 } from '@symbiot-core-apps/ui';
-import { Redirect, router, Stack } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 import { useAuthTokens } from '@symbiot-core-apps/api';
 import { useCurrentEntitiesLoader } from '../../hooks/use-current-entities-loader';
 import React, { useEffect } from 'react';
@@ -88,6 +87,15 @@ export default () => {
                   />
                 </Stack.Protected>
 
+                <Stack.Protected guard={hasPermission('analyticsAll')}>
+                  <Stack.Screen
+                    name="brand/analytics"
+                    options={{
+                      headerTitle: t('brand.analytics.title'),
+                    }}
+                  />
+                </Stack.Protected>
+
                 <Stack.Protected guard={hasAnyPermission()}>
                   <Stack.Screen
                     name="brand/menu"
@@ -114,17 +122,23 @@ export default () => {
                 />
 
                 <Stack.Protected guard={hasPermission('clientsAll')}>
+                  <Stack.Screen name="clients/[id]/remove" />
+                  <Stack.Screen
+                    name="clients/[id]/update"
+                    options={{
+                      headerTitle: t('brand.clients.update.title'),
+                    }}
+                  />
                   <Stack.Screen
                     name="clients/[id]/profile"
                     options={{
                       headerTitle: t('brand.clients.profile.title'),
                     }}
                   />
-                  <Stack.Screen name="clients/[id]/remove" />
                   <Stack.Screen
-                    name="clients/[id]/update"
+                    name="clients/[id]/analytics"
                     options={{
-                      headerTitle: t('brand.clients.update.title'),
+                      headerTitle: t('brand.clients.analytics.title'),
                     }}
                   />
 
@@ -141,18 +155,21 @@ export default () => {
                     }}
                   />
                   <Stack.Screen
+                    name="clients/preferences/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                      headerTitle: t('brand.clients.title'),
+                    }}
+                  />
+                  <Stack.Screen
                     name="clients/index"
                     options={{
                       ...(drawerVisible && {
                         animation: 'none',
                       }),
                       headerTitle: t('brand.clients.title'),
-                      headerRight: () => (
-                        <HeaderButton
-                          iconName="AddCircle"
-                          onPress={() => router.push('/clients/create')}
-                        />
-                      ),
                     }}
                   />
                 </Stack.Protected>
@@ -174,7 +191,28 @@ export default () => {
                       headerTitle: t('brand.employees.update.title'),
                     }}
                   />
+                  <Stack.Screen
+                    name="employees/[id]/profile"
+                    options={{
+                      headerTitle: t('brand.employees.profile.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="employees/[id]/analytics"
+                    options={{
+                      headerTitle: t('brand.employees.analytics.title'),
+                    }}
+                  />
                   <Stack.Screen name="employees/create" />
+                  <Stack.Screen
+                    name="employees/preferences/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                      headerTitle: t('brand.employees.title'),
+                    }}
+                  />
                   <Stack.Screen
                     name="employees/index"
                     options={{
@@ -182,12 +220,6 @@ export default () => {
                         animation: 'none',
                       }),
                       headerTitle: t('brand.employees.title'),
-                      headerRight: () => (
-                        <HeaderButton
-                          iconName="AddCircle"
-                          onPress={() => router.push('/employees/create')}
-                        />
-                      ),
                     }}
                   />
                 </Stack.Protected>
@@ -228,18 +260,19 @@ export default () => {
                   />
 
                   <Stack.Screen
+                    name="locations/preferences/index"
+                    options={{
+                      headerTitle: t('brand.locations.title'),
+                    }}
+                  />
+
+                  <Stack.Screen
                     name="locations/index"
                     options={{
                       ...(drawerVisible && {
                         animation: 'none',
                       }),
                       headerTitle: t('brand.locations.title'),
-                      headerRight: () => (
-                        <HeaderButton
-                          iconName="AddCircle"
-                          onPress={() => router.push('/locations/create')}
-                        />
-                      ),
                     }}
                   />
                   <Stack.Screen name="locations/[id]/remove" />
@@ -247,6 +280,18 @@ export default () => {
                     name="locations/[id]/update"
                     options={{
                       headerTitle: t('brand.locations.update.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="locations/[id]/profile"
+                    options={{
+                      headerTitle: t('brand.locations.profile.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="locations/[id]/analytics"
+                    options={{
+                      headerTitle: t('brand.locations.analytics.title'),
                     }}
                   />
                 </Stack.Protected>

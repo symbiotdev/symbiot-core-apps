@@ -1,3 +1,3 @@
 import { CurrentBrandClients } from '@symbiot-core-apps/brand-client';
 
-export default CurrentBrandClients;
+export default () => <CurrentBrandClients navigateTo="profile" />;

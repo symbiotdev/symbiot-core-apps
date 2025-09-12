@@ -1,7 +1,7 @@
+import { BrandEmployeeProfile } from '@symbiot-core-apps/brand-employee';
+import { useBrandEmployeeByIdQuery } from '@symbiot-core-apps/api';
 import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
-import { BrandClientProfile } from '@symbiot-core-apps/brand-client';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import { useBrandClientDetailedByIdQuery } from '@symbiot-core-apps/api';
 import React, { useLayoutEffect } from 'react';
 import { XStack } from 'tamagui';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
@@ -10,11 +10,7 @@ export default () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
-  const {
-    data: client,
-    error,
-    isPending,
-  } = useBrandClientDetailedByIdQuery(id);
+  const { data: employee, isPending, error } = useBrandEmployeeByIdQuery(id);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -23,13 +19,13 @@ export default () => {
           {hasPermission('analyticsAll') && (
             <HeaderButton
               iconName="ChartSquare"
-              onPress={() => router.push(`/clients/${id}/analytics`)}
+              onPress={() => router.push(`/employees/${id}/analytics`)}
             />
           )}
-          {hasPermission('clientsAll') && (
+          {hasPermission('employeesAll') && (
             <HeaderButton
               iconName="SettingsMinimalistic"
-              onPress={() => router.push(`/clients/${id}/update`)}
+              onPress={() => router.push(`/employees/${id}/update`)}
             />
           )}
         </XStack>
@@ -37,9 +33,9 @@ export default () => {
     });
   }, [hasPermission, id, navigation]);
 
-  if (!client || error) {
+  if (!employee) {
     return <InitView loading={isPending} error={error} />;
   }
 
-  return <BrandClientProfile client={client} />;
+  return <BrandEmployeeProfile employee={employee} />;
 };

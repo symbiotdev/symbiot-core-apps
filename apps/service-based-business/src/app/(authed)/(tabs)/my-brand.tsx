@@ -79,7 +79,7 @@ export default () => {
 
       <Button
         icon={<Icon name="SmileCircle" />}
-        label="Employees"
+        label="Clients"
         onPress={() => router.push(`/clients`)}
       />
     </TabsPageView>

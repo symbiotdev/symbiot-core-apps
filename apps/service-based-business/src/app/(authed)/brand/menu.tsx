@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { router } from 'expo-router';
 import {
   FormView,
@@ -19,11 +19,20 @@ export default () => {
     [],
   );
 
-  const onLocationsPress = useCallback(() => router.push('/locations'), []);
+  const onLocationsPress = useCallback(
+    () => router.push('/locations/preferences'),
+    [],
+  );
 
-  const onEmployeesPress = useCallback(() => router.push('/employees'), []);
+  const onEmployeesPress = useCallback(
+    () => router.push('/employees/preferences'),
+    [],
+  );
 
-  const onClientsPress = useCallback(() => router.push('/clients'), []);
+  const onClientsPress = useCallback(
+    () => router.push('/clients/preferences'),
+    [],
+  );
 
   return (
     <PageView scrollable withHeaderHeight>

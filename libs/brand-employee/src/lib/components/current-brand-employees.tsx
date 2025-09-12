@@ -27,7 +27,11 @@ import { useTranslation } from 'react-i18next';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export const CurrentBrandEmployees = () => {
+export const CurrentBrandEmployees = ({
+  navigateTo,
+}: {
+  navigateTo: 'update' | 'profile';
+}) => {
   const { currentList, setCurrentList } = useCurrentBrandEmployeeState();
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
@@ -66,7 +70,7 @@ export const CurrentBrandEmployees = () => {
         pressStyle={{ opacity: 0.8 }}
         onPress={() => {
           emitHaptic();
-          router.push(`/employees/${item.id}/update`);
+          router.push(`/employees/${item.id}/${navigateTo}`);
         }}
       >
         <Avatar
@@ -86,7 +90,7 @@ export const CurrentBrandEmployees = () => {
         <Icon name="ArrowRight" />
       </FormView>
     ),
-    [],
+    [navigateTo],
   );
 
   const ListEmptyComponent = useCallback(

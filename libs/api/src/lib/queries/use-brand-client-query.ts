@@ -1,5 +1,5 @@
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
-import { PaginationList } from '../types/pagination';
+import { PaginationList, PaginationListParams } from '../types/pagination';
 import {
   BrandClient,
   CreateBrandClient,
@@ -14,7 +14,10 @@ import {
 import axios from 'axios';
 import { generateFormData } from '../utils/media';
 import { queryClient } from '../utils/client';
-import { refetchQueriesByChanges } from '../utils/query';
+import {
+  refetchInfiniteListByKey,
+  refetchQueriesByChanges,
+} from '../utils/query';
 
 export enum BrandClientQueryKey {
   currentList = 'brand-client-current-list',
@@ -34,15 +37,14 @@ const refetchQueriesByClientChanges = async (
     },
   });
 
-export const useCurrentBrandClientListQuery = (
-  props: {
-    initialState?: PaginationList<BrandClient>;
-    setInitialState?: (state: PaginationList<BrandClient>) => void;
-  } = {},
-) =>
+export const useCurrentBrandClientListQuery = (props?: {
+  initialState?: PaginationList<BrandClient>;
+  setInitialState?: (state: PaginationList<BrandClient>) => void;
+  params?: PaginationListParams;
+}) =>
   useInfiniteQueryWrapper({
     apUrl: '/api/brand-client',
-    queryKey: [BrandClientQueryKey.currentList],
+    queryKey: [BrandClientQueryKey.currentList, props?.params],
     ...props,
   });
 
@@ -60,9 +62,8 @@ export const useCreateBrandClientQuery = () =>
         [BrandClientQueryKey.detailedById, client.id],
         client,
       );
-      await queryClient.refetchQueries({
-        queryKey: [BrandClientQueryKey.currentList],
-      });
+
+      await refetchInfiniteListByKey(BrandClientQueryKey.currentList);
 
       return client;
     },
@@ -84,9 +85,7 @@ export const useImportBrandClientsQuery = () =>
         );
       });
 
-      await queryClient.refetchQueries({
-        queryKey: [BrandClientQueryKey.currentList],
-      });
+      await refetchInfiniteListByKey(BrandClientQueryKey.currentList);
 
       return importedClients;
     },
@@ -128,9 +127,8 @@ export const useRemoveBrandClientQuery = () =>
         [BrandClientQueryKey.detailedById, id],
         undefined,
       );
-      await queryClient.refetchQueries({
-        queryKey: [BrandClientQueryKey.currentList],
-      });
+
+      await refetchInfiniteListByKey(BrandClientQueryKey.currentList);
 
       return response;
     },

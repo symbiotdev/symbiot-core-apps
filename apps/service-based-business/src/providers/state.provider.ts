@@ -1,6 +1,7 @@
 import { PropsWithChildren, useEffect } from 'react';
 import {
   useCurrentAccountState,
+  useCurrentBrandClientState,
   useCurrentBrandEmployeeState,
   useCurrentBrandState,
   useFaqState,
@@ -12,6 +13,7 @@ export const StateProvider = ({ children }: PropsWithChildren) => {
   const { clear: clearCurrentBrandState } = useCurrentBrandState();
   const { clear: clearCurrentBrandEmployeeState } =
     useCurrentBrandEmployeeState();
+  const { clear: clearCurrentBrandClientState } = useCurrentBrandClientState();
   const { clear: clearFaq } = useFaqState();
   const { clear: clearNotificationsState } = useNotificationsState();
 
@@ -20,6 +22,7 @@ export const StateProvider = ({ children }: PropsWithChildren) => {
       clearCurrentAccountState();
       clearCurrentBrandState();
       clearCurrentBrandEmployeeState();
+      clearCurrentBrandClientState();
       clearFaq();
       clearNotificationsState();
     };
@@ -27,6 +30,7 @@ export const StateProvider = ({ children }: PropsWithChildren) => {
     clearCurrentAccountState,
     clearCurrentBrandState,
     clearCurrentBrandEmployeeState,
+    clearCurrentBrandClientState,
     clearFaq,
     clearNotificationsState,
   ]);

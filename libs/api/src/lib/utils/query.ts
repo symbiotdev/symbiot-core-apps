@@ -2,10 +2,14 @@ import { PaginationList } from '../types/pagination';
 import type { InfiniteData } from '@tanstack/query-core';
 import { queryClient } from './client';
 
-export function getNextPageParam<T>(page: PaginationList<T>) {
-  return page.items.length < page.count
-    ? page.items[page.items.length - 1]
-    : undefined;
+export async function refetchInfiniteListByKey(key: string) {
+  void queryClient.resetQueries({
+    queryKey: [key],
+  });
+
+  await queryClient.refetchQueries({
+    queryKey: [key],
+  });
 }
 
 export async function refetchQueriesByChanges<T extends { id: string }>({
@@ -23,9 +27,7 @@ export async function refetchQueriesByChanges<T extends { id: string }>({
   queryClient.setQueryData([queryKeys.byId, entity.id], entity);
 
   if (refetchList) {
-    await queryClient.refetchQueries({
-      queryKey: [queryKeys.list],
-    });
+    await refetchInfiniteListByKey(queryKeys.list);
   } else {
     const data = queryClient.getQueryData<InfiniteData<PaginationList<T>>>([
       queryKeys.list,

@@ -1,20 +1,27 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import type { InfiniteData, QueryKey } from '@tanstack/query-core';
-import { getNextPageParam } from '../utils/query';
 import axios from 'axios';
 import { useCallback, useEffect, useMemo } from 'react';
-import { PaginationList } from '../types/pagination';
+import { PaginationList, PaginationListParams } from '../types/pagination';
 import { queryClient } from '../utils/client';
 import { requestWithStringError } from '../utils/request';
+
+function getNextPageParam<T>(page: PaginationList<T>) {
+  return page.items.length < page.count
+    ? page.items[page.items.length - 1]
+    : undefined;
+}
 
 export function useInfiniteQueryWrapper<T>({
   apUrl,
   queryKey,
+  params,
   initialState,
   setInitialState,
 }: {
   apUrl: string;
-  queryKey: string[];
+  queryKey: unknown[];
+  params?: PaginationListParams;
   initialState?: PaginationList<T>;
   setInitialState?: (state: PaginationList<T>) => void;
 }) {
@@ -32,10 +39,13 @@ export function useInfiniteQueryWrapper<T>({
     queryFn: ({ pageParam }) =>
       requestWithStringError(
         axios.get(apUrl, {
-          params: pageParam && {
-            after: {
-              id: (pageParam as { id: string })['id'],
-            },
+          params: {
+            ...params,
+            ...(!!pageParam && {
+              after: {
+                id: (pageParam as { id: string })['id'],
+              },
+            }),
           },
         }),
       ),

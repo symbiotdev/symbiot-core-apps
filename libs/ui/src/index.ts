@@ -23,6 +23,7 @@ export * from './lib/form/input';
 export * from './lib/form/input-code';
 export * from './lib/form/phone-input';
 export * from './lib/form/picker';
+export * from './lib/form/search';
 export * from './lib/form/select-picker';
 export * from './lib/form/app-link-input';
 export * from './lib/form/switch';

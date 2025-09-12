@@ -4,7 +4,7 @@ import { ViewStyle } from 'react-native';
 import { useScheme } from '@symbiot-core-apps/state';
 
 export const Blur = memo(
-  ({ style, intensity = 30 }: { style?: ViewStyle; intensity?: number }) => {
+  ({ style, intensity = 50 }: { style?: ViewStyle; intensity?: number }) => {
     const { scheme } = useScheme();
 
     return (

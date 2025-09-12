@@ -59,6 +59,7 @@ import { Copy } from './Copy';
 import { SmileCircle } from './SmileCircle';
 import { Import } from './Import';
 import { Document } from './Document';
+import { Magnifer } from './Magnifer';
 
 export const Map: IconMap = {
   AddCircle,
@@ -95,6 +96,7 @@ export const Map: IconMap = {
   Login,
   Logout2,
   MagicStick,
+  Magnifer,
   MapPoint,
   MapPointWave,
   Maximize,

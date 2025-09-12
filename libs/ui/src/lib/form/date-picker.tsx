@@ -71,7 +71,11 @@ export const DatePicker = ({
         triggerType="child"
         sheetTitle={label}
         trigger={
-          <InputFieldView disabled={disabled} {...viewProps}>
+          <InputFieldView
+            disabled={disabled}
+            pressStyle={{ opacity: 0.8 }}
+            {...viewProps}
+          >
             <RegularText
               color={
                 !value ? '$placeholderColor' : disabled ? '$disabled' : '$color'

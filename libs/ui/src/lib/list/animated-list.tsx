@@ -1,8 +1,8 @@
 import React, { ForwardedRef } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Platform } from 'react-native';
 import Animated, {
+  EntryExitTransition,
   FlatListPropsWithLayout,
-  LinearTransition,
 } from 'react-native-reanimated';
 import { Refresher } from '../loading/refresher';
 import { ListLoadingFooter } from './list-loading-footer';
@@ -29,7 +29,11 @@ export function AnimatedList<T>({
     <Animated.FlatList
       ref={listRef}
       keyExtractor={(_, index) => String(index)}
-      itemLayoutAnimation={ignoreAnimation ? undefined : LinearTransition}
+      itemLayoutAnimation={
+        Platform.OS === 'web' || ignoreAnimation
+          ? undefined
+          : EntryExitTransition
+      }
       onEndReachedThreshold={0.3}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
@@ -51,6 +55,12 @@ export function AnimatedList<T>({
       onEndReached={onEndReached}
       // decelerationRate={0.9} // specially for swipe lists and keep the same behaviour on all list
       {...flatListProps}
+      contentContainerStyle={[
+        {
+          flexGrow: 1,
+        },
+        flatListProps.contentContainerStyle,
+      ]}
     />
   );
 }

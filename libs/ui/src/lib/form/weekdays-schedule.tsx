@@ -210,7 +210,11 @@ const WeekdayScheduleElement = ({
       maxHeight={300}
       minWidth={250}
       trigger={
-        <InputFieldView justifyContent="space-between" disabled={disabled}>
+        <InputFieldView
+          justifyContent="space-between"
+          disabled={disabled}
+          pressStyle={{ opacity: 0.8 }}
+        >
           <RegularText>{weekday.label}</RegularText>
 
           <MediumText color={'$disabled'}>

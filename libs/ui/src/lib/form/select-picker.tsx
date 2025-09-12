@@ -84,7 +84,7 @@ export function SelectPicker({
         minWidth={200}
         triggerType="child"
         trigger={
-          <InputFieldView disabled={disabled}>
+          <InputFieldView disabled={disabled} pressStyle={{ opacity: 0.8 }}>
             {!options?.length && optionsLoading ? (
               <>
                 <Spinner width={16} height={16} />

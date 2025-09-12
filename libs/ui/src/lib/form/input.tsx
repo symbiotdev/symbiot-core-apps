@@ -106,10 +106,9 @@ export const Input = forwardRef(
           nextValue = isNaN(numValue) ? 0 : numValue;
         }
 
-        onChange?.(nextValue);
         onDebounceChange(nextValue);
       },
-      [maxLength, onChange, onDebounceChange, regex, type],
+      [maxLength, onDebounceChange, regex, type],
     );
 
     return (

@@ -109,7 +109,7 @@ export const PhoneInput = ({
 
   return (
     <FormField label={label} error={error} required={required}>
-      <InputFieldView pressStyle={{}}>
+      <InputFieldView>
         <PhoneInputUI
           autoFormat
           ref={phoneRef}

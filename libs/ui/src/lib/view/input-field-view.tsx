@@ -15,7 +15,6 @@ export const InputFieldView = (props: XStackProps) => {
       alignItems="center"
       opacity={props.disabled ? 0.8 : 1}
       cursor={!props.disabled ? 'pointer' : 'auto'}
-      pressStyle={{ opacity: 0.8 }}
       {...props}
     />
   );

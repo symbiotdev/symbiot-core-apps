@@ -36,6 +36,7 @@ export type IconName =
   | 'Lock'
   | 'Logout2'
   | 'MagicStick'
+  | 'Magnifer'
   | 'MapPoint'
   | 'MapPointWave'
   | 'Maximize'

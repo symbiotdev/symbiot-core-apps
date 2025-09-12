@@ -60,6 +60,7 @@ import { SmileCircle } from './SmileCircle';
 import { Import } from './Import';
 import { Document } from './Document';
 import { Magnifer } from './Magnifer';
+import { ChartSquare } from './ChartSquare';
 
 export const Map: IconMap = {
   AddCircle,
@@ -74,6 +75,7 @@ export const Map: IconMap = {
   Calendar,
   CalendarMinimalistic,
   Camera,
+  ChartSquare,
   ChatRoundDots,
   ChecklistMinimalistic,
   CloseCircle,

@@ -1,17 +1,20 @@
 import {
+  ConfirmAlert,
+  DeviceVersion,
   emitHaptic,
   ShowNativeSuccessAlert,
   useShareApp,
 } from '@symbiot-core-apps/shared';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
-import { useCallback } from 'react';
-import { router } from 'expo-router';
+import React, { useCallback, useLayoutEffect } from 'react';
+import { router, useNavigation } from 'expo-router';
 import {
   ActionCard,
   Avatar,
   Card,
   FormView,
   H3,
+  HeaderButton,
   Icon,
   ListItem,
   ListItemGroup,
@@ -24,8 +27,9 @@ import {
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
-import { TouchableOpacity } from 'react-native';
+import { Platform, TouchableOpacity } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { useAccountAuthSignOutQuery } from '@symbiot-core-apps/api';
 
 export default () => {
   const share = useShareApp();
@@ -33,6 +37,8 @@ export default () => {
   const { languages } = useApp();
   const { me } = useCurrentAccount();
   const { visible: drawerVisible } = useDrawer();
+  const { mutate: signOut } = useAccountAuthSignOutQuery();
+  const navigation = useNavigation();
 
   const onAccountPress = useCallback(() => {
     emitHaptic();
@@ -75,6 +81,31 @@ export default () => {
       title: t('shared.copied'),
     });
   }, [t, me?.id]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () =>
+        Platform.OS !== 'web' && (
+          <XStack gap="$2" alignItems="center">
+            <Icon name="Code" color="$placeholderColor" />
+            <RegularText color="$placeholderColor">
+              {t('shared.version')}: {DeviceVersion}
+            </RegularText>
+          </XStack>
+        ),
+      headerRight: () => (
+        <HeaderButton
+          iconName="Logout2"
+          onPress={() =>
+            ConfirmAlert({
+              title: t('shared.auth.sign_out.confirm.title'),
+              callback: signOut,
+            })
+          }
+        />
+      ),
+    });
+  }, [navigation, signOut, t]);
 
   return (
     me && (

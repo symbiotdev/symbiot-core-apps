@@ -1,26 +1,87 @@
-import { Avatar, H2, TabsPageView } from '@symbiot-core-apps/ui';
-import { View } from 'tamagui';
-import { useCurrentBrandState } from '@symbiot-core-apps/state';
+import {
+  Avatar,
+  Button,
+  H2,
+  H3,
+  HeaderButton,
+  headerButtonSize,
+  Icon,
+  TabsPageView,
+} from '@symbiot-core-apps/ui';
+import { View, XStack } from 'tamagui';
+import {
+  useCurrentBrandEmployee,
+  useCurrentBrandState,
+} from '@symbiot-core-apps/state';
+import { router, useNavigation } from 'expo-router';
+import React, { useLayoutEffect } from 'react';
 
 export default () => {
-  const { brand } = useCurrentBrandState();
+  const { brand: currentBrand } = useCurrentBrandState();
+  const navigation = useNavigation();
+  const { hasPermission, hasAnyPermission } = useCurrentBrandEmployee();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () =>
+        currentBrand?.name && (
+          <H3 lineHeight={headerButtonSize} numberOfLines={1}>
+            {currentBrand.name}
+          </H3>
+        ),
+      headerRight: () => (
+        <XStack gap="$3">
+          {hasPermission('analyticsAll') && (
+            <HeaderButton
+              iconName="ChartSquare"
+              onPress={() => router.push(`/brand/analytics`)}
+            />
+          )}
+          {hasAnyPermission() && (
+            <HeaderButton
+              iconName="SettingsMinimalistic"
+              onPress={() => router.push(`/brand/menu`)}
+            />
+          )}
+        </XStack>
+      ),
+    });
+  }, [currentBrand?.name, hasAnyPermission, hasPermission, navigation]);
 
   return (
-    <TabsPageView>
-      {!!brand && (
+    <TabsPageView gap="$3">
+      {!!currentBrand && (
         <View margin="auto" alignItems="center" gap="$2">
           <Avatar
-            name={brand.name}
+            name={currentBrand.name}
             size={80}
-            url={brand.avatarXsUrl}
-            color={brand.avatarColor}
+            url={currentBrand.avatarXsUrl}
+            color={currentBrand.avatarColor}
           />
 
           <H2 numberOfLines={1} textAlign="center">
-            {brand.name}
+            {currentBrand.name}
           </H2>
         </View>
       )}
+
+      <Button
+        icon={<Icon name="MapPointWave" />}
+        label="Locations"
+        onPress={() => router.push(`/locations`)}
+      />
+
+      <Button
+        icon={<Icon name="UsersGroupRounded" />}
+        label="Employees"
+        onPress={() => router.push(`/employees`)}
+      />
+
+      <Button
+        icon={<Icon name="SmileCircle" />}
+        label="Employees"
+        onPress={() => router.push(`/clients`)}
+      />
     </TabsPageView>
   );
 };

@@ -91,6 +91,7 @@ export const AvatarPicker = ({
           trigger={
             !loading && !processing ? (
               <ButtonIcon
+                hapticable={false}
                 position="absolute"
                 bottom={0}
                 right={0}

@@ -41,6 +41,7 @@ export const Button = memo(
     loading,
     icon,
     fontSize,
+    hapticable = true,
     type = 'default',
     onPress,
     ...xStackProps
@@ -48,6 +49,7 @@ export const Button = memo(
     loading?: boolean;
     label?: string;
     fontSize?: number;
+    hapticable?: boolean;
     icon?: ReactElement<{ color?: string; size?: number }>;
     color?: ColorTokens;
     type?: ButtonType;
@@ -79,7 +81,7 @@ export const Button = memo(
         disabled={disabled}
         onPress={(e) => {
           onPress?.(e);
-          emitHaptic();
+          hapticable && emitHaptic();
         }}
       >
         {loading ? (
@@ -106,14 +108,17 @@ export const Button = memo(
 export const ButtonIcon = ({
   iconName,
   iconSize,
+  hapticable = true,
   loading,
   size = 30,
   type = 'default',
+  onPress,
   ...viewProps
 }: ViewProps & {
   iconName: IconName;
   iconSize?: number;
   loading?: boolean;
+  hapticable?: boolean;
   size?: number;
   color?: string;
   type?: ButtonType;
@@ -134,6 +139,10 @@ export const ButtonIcon = ({
       borderWidth={ButtonTheme[type].borderWidth}
       {...viewProps}
       disabled={disabled}
+      onPress={(e) => {
+        onPress?.(e);
+        hapticable && emitHaptic();
+      }}
     >
       {loading ? (
         <Spinner color={color} size="small" />

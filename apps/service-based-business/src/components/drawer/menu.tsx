@@ -5,6 +5,7 @@ import {
   Br,
   defaultIconSize,
   defaultPageHorizontalPadding,
+  defaultPageVerticalPadding,
   Icon,
   IconName,
   ListItem,
@@ -119,7 +120,7 @@ export const DrawerMenu = () => {
         animatedStyle,
         {
           paddingTop: top,
-          paddingBottom: bottom,
+          paddingBottom: bottom + defaultPageVerticalPadding,
           paddingLeft: left,
         },
       ]}

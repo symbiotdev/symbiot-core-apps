@@ -1,19 +1,19 @@
 import { View, XStack } from 'tamagui';
 import Collapsible from 'react-native-collapsible';
-import { memo, useCallback, useState } from 'react';
-import { MediumText, RegularText } from '../text/text';
+import { memo, ReactElement, useCallback, useState } from 'react';
 import { Icon } from '../icons';
 import { Card } from '../card/card';
 import { emitHaptic } from '@symbiot-core-apps/shared';
+import { H3 } from '../text/heading';
 
 type AccordionItem = {
   title: string;
-  text: string;
+  content: ReactElement;
 };
 
 export const Accordion = ({ items }: { items: AccordionItem[] }) => {
   return (
-    <Card>
+    <Card paddingVertical="$1">
       {items.map((item, index) => (
         <Item
           key={index}
@@ -36,9 +36,6 @@ const Item = memo(
     first: boolean;
     last: boolean;
   }) => {
-    const paddingTop = first ? 0 : '$3';
-    const paddingBottom = last ? 0 : '$3';
-
     const [collapsed, setCollapsed] = useState(true);
 
     const toggle = useCallback(() => {
@@ -51,22 +48,19 @@ const Item = memo(
         <XStack
           cursor="pointer"
           gap="$5"
-          paddingTop={paddingTop}
-          paddingBottom={paddingBottom}
           justifyContent="space-between"
+          alignItems="center"
           onPress={toggle}
         >
-          <MediumText flex={1} fontSize={20}>
+          <H3 paddingVertical="$3" flex={1}>
             {item.title}
-          </MediumText>
+          </H3>
 
           <Icon name={collapsed ? 'AltArrowDown' : 'AltArrowUp'} />
         </XStack>
 
         <Collapsible collapsed={collapsed}>
-          <RegularText paddingTop={paddingTop} paddingBottom={paddingBottom}>
-            {item.text}
-          </RegularText>
+          <View paddingBottom="$3">{item.content}</View>
         </Collapsible>
       </View>
     );

@@ -134,7 +134,12 @@ export default () => {
                       headerTitle: t('brand.clients.new_client'),
                     }}
                   />
-                  <Stack.Screen name="clients/import" />
+                  <Stack.Screen
+                    name="clients/import"
+                    options={{
+                      headerTitle: t('brand.clients.import.title'),
+                    }}
+                  />
                   <Stack.Screen
                     name="clients/index"
                     options={{

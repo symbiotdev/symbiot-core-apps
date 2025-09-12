@@ -25,6 +25,7 @@ import {
 import { isSameMonth } from 'date-fns/isSameMonth';
 import { toDate } from 'date-fns/toDate';
 import { set } from 'date-fns/set';
+import { isValid } from 'date-fns/isValid';
 
 const defaultWeekdayStartsOn: Day = 0;
 
@@ -36,6 +37,7 @@ export const DateHelper = {
   isSameDay,
   isSameMonth,
   isAfter,
+  isValid,
   addMinutes,
   addHours,
   addDays,

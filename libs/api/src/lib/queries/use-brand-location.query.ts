@@ -158,9 +158,13 @@ export const useBrandLocationAdvantages = () =>
       requestWithStringError(axios.get(`/api/brand-location/advantages`)),
   });
 
-export const useBrandLocationByIdQuery = (id: string) =>
-  useQuery<BrandLocation, string>({
-    queryKey: [BrandLocationQueryKey.byId, id],
+export const useBrandLocationByIdQuery = (id: string, enabled = true) => {
+  const queryKey = [BrandLocationQueryKey.byId, id];
+
+  return useQuery<BrandLocation, string>({
+    queryKey,
+    enabled: enabled || !queryClient.getQueryData(queryKey),
     queryFn: () =>
       requestWithStringError(axios.get(`/api/brand-location/${id}`)),
   });
+};

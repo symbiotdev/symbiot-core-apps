@@ -9,7 +9,7 @@ export default () => {
     data: client,
     error,
     isPending,
-  } = useBrandClientDetailedByIdQuery(id);
+  } = useBrandClientDetailedByIdQuery(id, false);
 
   if (!client || error) {
     return <InitView loading={isPending} error={error} />;

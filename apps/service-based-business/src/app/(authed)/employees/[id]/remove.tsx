@@ -9,7 +9,7 @@ export default () => {
     data: employee,
     error,
     isPending,
-  } = useBrandEmployeeDetailedByIdQuery(id);
+  } = useBrandEmployeeDetailedByIdQuery(id, false);
 
   if (!employee || error) {
     return <InitView loading={isPending} error={error} />;

@@ -91,12 +91,16 @@ export const useImportBrandClientsQuery = () =>
     },
   });
 
-export const useBrandClientDetailedByIdQuery = (id: string) =>
-  useQuery<BrandClient, string>({
-    queryKey: [BrandClientQueryKey.detailedById, id],
+export const useBrandClientDetailedByIdQuery = (id: string, enabled = true) => {
+  const queryKey = [BrandClientQueryKey.detailedById, id];
+
+  return useQuery<BrandClient, string>({
+    queryKey,
+    enabled: enabled || !queryClient.getQueryData(queryKey),
     queryFn: () =>
       requestWithStringError(axios.get(`/api/brand-client/detailed/${id}`)),
   });
+};
 
 export const useUpdateBrandClientQuery = () =>
   useMutation<BrandClient, string, { id: string; data: UpdateBrandClient }>({

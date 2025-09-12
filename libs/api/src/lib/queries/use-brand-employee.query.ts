@@ -143,9 +143,16 @@ export const useCurrentBrandEmployeeListQuery = (props?: {
     ...props,
   });
 
-export const useBrandEmployeeDetailedByIdQuery = (id: string) =>
-  useQuery<BrandEmployee, string>({
-    queryKey: [BrandEmployeesQueryKey.detailedById, id],
+export const useBrandEmployeeDetailedByIdQuery = (
+  id: string,
+  enabled = true,
+) => {
+  const queryKey = [BrandEmployeesQueryKey.detailedById, id];
+
+  return useQuery<BrandEmployee, string>({
+    queryKey,
+    enabled: enabled || !queryClient.getQueryData(queryKey),
     queryFn: () =>
       requestWithStringError(axios.get(`/api/brand-employee/detailed/${id}`)),
   });
+};

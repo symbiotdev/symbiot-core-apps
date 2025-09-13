@@ -66,18 +66,21 @@ export default () => {
       )}
 
       <Button
+        type="clear"
         icon={<Icon name="MapPointWave" />}
         label="Locations"
         onPress={() => router.push(`/locations`)}
       />
 
       <Button
+        type="clear"
         icon={<Icon name="UsersGroupRounded" />}
         label="Employees"
         onPress={() => router.push(`/employees`)}
       />
 
       <Button
+        type="clear"
         icon={<Icon name="SmileCircle" />}
         label="Clients"
         onPress={() => router.push(`/clients`)}

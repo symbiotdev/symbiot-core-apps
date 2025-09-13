@@ -6,8 +6,6 @@ import { emitHaptic } from '@symbiot-core-apps/shared';
 import { Icon } from '../icons';
 import { IconName } from '../icons/config';
 
-export type ButtonType = 'default' | 'outlined' | 'clear' | 'danger';
-
 export const ButtonTheme = {
   default: {
     color: '$buttonTextColor',
@@ -34,6 +32,8 @@ export const ButtonTheme = {
     borderColor: 'transparent',
   },
 };
+
+export type ButtonType = keyof typeof ButtonTheme;
 
 export const Button = memo(
   ({

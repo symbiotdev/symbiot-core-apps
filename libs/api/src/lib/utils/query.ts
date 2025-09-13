@@ -28,7 +28,7 @@ export async function refetchQueriesByChanges<T extends { id: string }>({
   refetchList: boolean;
 }) {
   queryKeys.byId.forEach((key) =>
-    queryClient.setQueryData([key, entity.id], entity),
+    queryClient.setQueryData([key, entity.id], entity.data),
   );
 
   if (refetchList || !entity.data) {

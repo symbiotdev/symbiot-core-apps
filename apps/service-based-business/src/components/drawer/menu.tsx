@@ -6,13 +6,13 @@ import {
   defaultIconSize,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
+  headerHeight,
   Icon,
   IconName,
   ListItem,
   NavigationBackground,
   useDrawer,
   useDrawerState,
-  useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { router, usePathname } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -23,11 +23,13 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {
+  useCurrentAccount,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
+import { Platform } from 'react-native';
 
 export const drawerMenuMaxWidth = 250;
 export const drawerMenuMinWidth = 68;
@@ -91,11 +93,11 @@ export const DrawerMenu = () => {
   const { icons } = useApp();
   const share = useShareApp();
   const { permanent } = useDrawer();
-  const headerHeight = useScreenHeaderHeight();
   const { top, bottom, left } = useSafeAreaInsets();
   const { compressed, toggleCompressed } = useDrawerState();
   const { brand: currentBrand } = useCurrentBrandState();
   const { hasPermission } = useCurrentBrandEmployee();
+  const { stats } = useCurrentAccount();
 
   const animatedStyle = useAnimatedStyle(
     () => ({
@@ -120,7 +122,8 @@ export const DrawerMenu = () => {
         animatedStyle,
         {
           paddingTop: top,
-          paddingBottom: bottom + defaultPageVerticalPadding,
+          paddingBottom:
+            bottom + (Platform.OS === 'web' ? defaultPageVerticalPadding : 0),
           paddingLeft: left,
         },
       ]}
@@ -134,7 +137,7 @@ export const DrawerMenu = () => {
         <View
           cursor="pointer"
           width={68}
-          height={headerHeight - top}
+          height={headerHeight}
           alignItems="center"
           justifyContent="center"
           pressStyle={{ opacity: 0.8 }}
@@ -191,6 +194,13 @@ export const DrawerMenu = () => {
           icon={icons.Home}
         />
 
+        <MenuItem
+          attention={!!stats.newNotifications}
+          route="/notifications"
+          label={t('navigation.drawer.notifications.label')}
+          icon={icons.Notifications}
+        />
+
         {!!currentBrand && (
           <MenuItem
             route="/schedule"
@@ -200,6 +210,14 @@ export const DrawerMenu = () => {
         )}
 
         <Br marginHorizontal={defaultPageHorizontalPadding} />
+
+        {hasPermission('analyticsAll') && (
+          <MenuItem
+            route="/analytics"
+            label={t('navigation.drawer.analytics.label')}
+            icon="ChartSquare"
+          />
+        )}
 
         {hasPermission('locationsAll') && (
           <MenuItem
@@ -228,39 +246,13 @@ export const DrawerMenu = () => {
           />
         )}
 
-        {hasPermission('analyticsAll') && (
-          <MenuItem
-            route="/brand/analytics"
-            label={t('navigation.drawer.analytics.label')}
-            icon="ChartSquare"
-          />
-        )}
-
-        <Br marginTop="auto" marginHorizontal={defaultPageHorizontalPadding} />
+        <Br marginHorizontal={defaultPageHorizontalPadding} />
 
         <MenuItem
-          icon="Share"
-          label={t('navigation.drawer.share.label')}
-          route=""
-          onPress={share}
-        />
-
-        <MenuItem
-          icon="FileText"
-          label={t('navigation.drawer.terms_privacy.label')}
-          route="/terms-privacy"
-        />
-
-        <MenuItem
+          marginTop="auto"
           icon="QuestionCircle"
           label={t('navigation.drawer.faq.label')}
-          route="/help-feedback"
-        />
-
-        <MenuItem
-          icon="ShareCircle"
-          label={t('navigation.drawer.follow_us.label')}
-          route="/follow-us"
+          route="/app/help-feedback"
         />
 
         <Br marginHorizontal={defaultPageHorizontalPadding} />

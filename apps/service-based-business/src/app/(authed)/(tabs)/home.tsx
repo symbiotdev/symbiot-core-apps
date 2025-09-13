@@ -4,6 +4,7 @@ import {
   HeaderButton,
   headerButtonSize,
   PageView,
+  useDrawer,
 } from '@symbiot-core-apps/ui';
 import {
   useCurrentAccount,
@@ -24,6 +25,7 @@ export default () => {
   const { me, stats } = useCurrentAccount();
   const { currentEmployee } = useCurrentBrandEmployee();
   const navigation = useNavigation();
+  const { visible: drawerVisible } = useDrawer();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -35,15 +37,17 @@ export default () => {
             })}
           </H3>
         ),
-      headerRight: () => (
-        <HeaderButton
-          attention={!!stats.newNotifications}
-          iconName={icons.Notifications}
-          onPress={() => router.push('/notifications')}
-        />
-      ),
+      headerRight: () =>
+        !drawerVisible && (
+          <HeaderButton
+            attention={!!stats.newNotifications}
+            iconName={icons.Notifications}
+            onPress={() => router.push('/notifications')}
+          />
+        ),
     });
   }, [
+    drawerVisible,
     icons.Notifications,
     me?.firstname,
     navigation,

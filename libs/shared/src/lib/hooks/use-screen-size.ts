@@ -19,7 +19,7 @@ export const useScreenSize = () => {
     () =>
       (Object.keys(SCREEN_MEDIA_SIZE) as ScreenMediaSize[])
         .sort((key1, key2) => SCREEN_MEDIA_SIZE[key1] - SCREEN_MEDIA_SIZE[key2])
-        .find((key) => SCREEN_MEDIA_SIZE[key] >= width) || 'lg',
+        .find((key) => SCREEN_MEDIA_SIZE[key] >= width) || 'xl',
     [width],
   );
 

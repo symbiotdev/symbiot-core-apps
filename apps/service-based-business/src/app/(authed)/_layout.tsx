@@ -1,9 +1,12 @@
 import {
+  Button,
+  defaultPageHorizontalPadding,
+  defaultPageVerticalPadding,
   LoadingView,
   useDrawer,
   useStackScreenHeaderOptions,
 } from '@symbiot-core-apps/ui';
-import { Redirect, Stack } from 'expo-router';
+import { Redirect, Stack, usePathname } from 'expo-router';
 import { useAuthTokens } from '@symbiot-core-apps/api';
 import { useCurrentEntitiesLoader } from '../../hooks/use-current-entities-loader';
 import React, { useEffect } from 'react';
@@ -19,6 +22,32 @@ import {
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
+import { PlusActionAdaptiveModal } from '../../components/tabs/plus-action-adaptive-modal';
+
+const PlusButton = () => {
+  const pathname = usePathname();
+
+  return (
+    pathname.split('/').filter(Boolean).length === 1 && (
+      <PlusActionAdaptiveModal
+        placement="top-end"
+        trigger={
+          <Button
+            paddingHorizontal={0}
+            label="+"
+            fontSize={25}
+            borderRadius={50}
+            width={50}
+            height={50}
+            position="absolute"
+            right={defaultPageHorizontalPadding}
+            bottom={defaultPageVerticalPadding}
+          />
+        }
+      />
+    )
+  );
+};
 
 export default () => {
   const { t } = useTranslation();
@@ -68,6 +97,42 @@ export default () => {
                 />
                 <Stack.Screen name="account/remove" />
 
+                <Stack.Protected guard={hasPermission('analyticsAll')}>
+                  <Stack.Screen
+                    name="analytics/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                      headerTitle: t('brand.analytics.title'),
+                    }}
+                  />
+                </Stack.Protected>
+
+                <Stack.Screen
+                  name="app/follow-us"
+                  options={{
+                    headerTitle: t('shared.follow_us'),
+                  }}
+                />
+
+                <Stack.Screen
+                  name="app/help-feedback"
+                  options={{
+                    headerTitle: t('shared.faq.title'),
+                    ...(drawerVisible && {
+                      animation: 'none',
+                    }),
+                  }}
+                />
+
+                <Stack.Screen
+                  name="app/terms-privacy"
+                  options={{
+                    headerTitle: t('shared.docs.terms_privacy'),
+                  }}
+                />
+
                 <Stack.Screen
                   name="appearance/preferences"
                   options={{
@@ -83,18 +148,6 @@ export default () => {
                     name="brand/new"
                     options={{
                       headerTitle: t('brand.create.new_brand'),
-                    }}
-                  />
-                </Stack.Protected>
-
-                <Stack.Protected guard={hasPermission('analyticsAll')}>
-                  <Stack.Screen
-                    name="brand/analytics"
-                    options={{
-                      ...(drawerVisible && {
-                        animation: 'none',
-                      }),
-                      headerTitle: t('brand.analytics.title'),
                     }}
                   />
                 </Stack.Protected>
@@ -222,26 +275,6 @@ export default () => {
                 </Stack.Protected>
 
                 <Stack.Screen
-                  name="follow-us/index"
-                  options={{
-                    headerTitle: t('shared.follow_us'),
-                    ...(drawerVisible && {
-                      animation: 'none',
-                    }),
-                  }}
-                />
-
-                <Stack.Screen
-                  name="help-feedback/index"
-                  options={{
-                    headerTitle: t('shared.faq.title'),
-                    ...(drawerVisible && {
-                      animation: 'none',
-                    }),
-                  }}
-                />
-
-                <Stack.Screen
                   name="language/preferences"
                   options={{
                     headerTitle: t('shared.preferences.language.title'),
@@ -296,6 +329,9 @@ export default () => {
                 <Stack.Screen
                   name="notifications/index"
                   options={{
+                    ...(drawerVisible && {
+                      animation: 'none',
+                    }),
                     headerTitle: t('shared.notifications.title'),
                   }}
                 />
@@ -305,18 +341,10 @@ export default () => {
                     headerTitle: t('shared.preferences.notifications.title'),
                   }}
                 />
-
-                <Stack.Screen
-                  name="terms-privacy/index"
-                  options={{
-                    headerTitle: t('shared.docs.terms_privacy'),
-                    ...(drawerVisible && {
-                      animation: 'none',
-                    }),
-                  }}
-                />
               </Stack>
             )}
+
+            {drawerVisible && <PlusButton />}
           </XStack>
         </NotificationsProvider>
       </SocketProvider>

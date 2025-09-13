@@ -234,11 +234,11 @@ const ImportGuide = () => {
   const { t } = useTranslation();
 
   const openHelp = useCallback(() => {
-    router.navigate('/help-feedback');
+    router.navigate('/app/help-feedback');
   }, []);
 
   return (
-    <View gap="$5">
+    <View gap="$5" marginTop="$2">
       {(
         t('brand.clients.import.guide.fields', { returnObjects: true }) as {
           name: string;
@@ -246,7 +246,7 @@ const ImportGuide = () => {
         }[]
       ).map(({ name, options }, index) => (
         <View key={index} gap="$2">
-          <SemiBoldText fontSize={14}>{name}</SemiBoldText>
+          <MediumText>{name}</MediumText>
 
           {options.map((option, index) => (
             <RegularText key={index}>- {option}</RegularText>

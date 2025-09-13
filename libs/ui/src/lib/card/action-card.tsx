@@ -1,7 +1,6 @@
 import { Card } from './card';
 import { ReactElement } from 'react';
-import { H3 } from '../text/heading';
-import { RegularText } from '../text/text';
+import { RegularText, SemiBoldText } from '../text/text';
 import { Button, ButtonType } from '../button/button';
 import { ViewProps } from 'tamagui';
 
@@ -25,7 +24,7 @@ export const ActionCard = ({
 }) => {
   return (
     <Card gap="$2" width="100%" {...viewProps}>
-      <H3>{title}</H3>
+      <SemiBoldText fontSize={18}>{title}</SemiBoldText>
       <RegularText>{subtitle}</RegularText>
       <Button
         marginTop="$2"

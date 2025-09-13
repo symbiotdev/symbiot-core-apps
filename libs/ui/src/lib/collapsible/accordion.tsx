@@ -4,7 +4,7 @@ import { memo, ReactElement, useCallback, useState } from 'react';
 import { Icon } from '../icons';
 import { Card } from '../card/card';
 import { emitHaptic } from '@symbiot-core-apps/shared';
-import { H3 } from '../text/heading';
+import { SemiBoldText } from '../text/text';
 
 type AccordionItem = {
   title: string;
@@ -52,9 +52,9 @@ const Item = memo(
           alignItems="center"
           onPress={toggle}
         >
-          <H3 paddingVertical="$3" flex={1}>
+          <SemiBoldText fontSize={18} paddingVertical="$3" flex={1}>
             {item.title}
-          </H3>
+          </SemiBoldText>
 
           <Icon name={collapsed ? 'AltArrowDown' : 'AltArrowUp'} />
         </XStack>

@@ -219,8 +219,7 @@ export default () => {
 
         createdRef.current = true;
 
-        router.dismissAll();
-        router.push('/locations');
+        router.dismissTo('/locations');
       } finally {
         setProcessing(false);
       }

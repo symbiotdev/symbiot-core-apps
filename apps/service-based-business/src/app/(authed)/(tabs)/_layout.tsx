@@ -3,6 +3,7 @@ import {
   AnimatedTabBar,
   AttentionView,
   defaultIconSize,
+  HapticTabBarButton,
   Icon,
   LightText,
   useDrawer,
@@ -18,6 +19,17 @@ import { useCountNewNotifications } from '@symbiot-core-apps/api';
 import { View } from 'tamagui';
 import { useApp } from '@symbiot-core-apps/app';
 import { PlusActionAdaptiveModal } from '../../../components/tabs/plus-action-adaptive-modal';
+import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
+
+export const PlusTabButtonWithAdaptiveModal = (
+  props: BottomTabBarButtonProps,
+) => (
+  <PlusActionAdaptiveModal
+    trigger={
+      <HapticTabBarButton style={props.style} children={props.children} />
+    }
+  />
+);
 
 export default () => {
   const { brand: currentBrand } = useCurrentBrandState();
@@ -93,7 +105,7 @@ export default () => {
           <Tabs.Screen
             name="plus"
             options={{
-              tabBarButton: PlusActionAdaptiveModal,
+              tabBarButton: PlusTabButtonWithAdaptiveModal,
               tabBarIcon: ({ color, size }) => (
                 <View
                   height={size + 18}

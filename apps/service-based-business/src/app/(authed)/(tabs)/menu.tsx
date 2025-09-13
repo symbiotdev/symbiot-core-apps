@@ -5,7 +5,11 @@ import {
   ShowNativeSuccessAlert,
   useShareApp,
 } from '@symbiot-core-apps/shared';
-import { useCurrentAccount } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccount,
+  useCurrentBrandEmployee,
+  useCurrentBrandState,
+} from '@symbiot-core-apps/state';
 import React, { useCallback, useLayoutEffect } from 'react';
 import { router, useNavigation } from 'expo-router';
 import {
@@ -36,6 +40,8 @@ export default () => {
   const { t } = useTranslation();
   const { languages } = useApp();
   const { me } = useCurrentAccount();
+  const { brand: currentBrand } = useCurrentBrandState();
+  const { currentEmployee } = useCurrentBrandEmployee();
   const { visible: drawerVisible } = useDrawer();
   const { mutate: signOut } = useAccountAuthSignOutQuery();
   const navigation = useNavigation();
@@ -61,12 +67,12 @@ export default () => {
     [],
   );
   const onTermsPrivacyPress = useCallback(
-    () => router.push('/terms-privacy'),
+    () => router.push('/app/terms-privacy'),
     [],
   );
-  const onFollowUsPress = useCallback(() => router.push('/follow-us'), []);
+  const onFollowUsPress = useCallback(() => router.push('/app/follow-us'), []);
   const onHelpFeedbackPress = useCallback(
-    () => router.push('/help-feedback'),
+    () => router.push('/app/help-feedback'),
     [],
   );
 
@@ -111,15 +117,18 @@ export default () => {
     me && (
       <TabsPageView scrollable withHeaderHeight>
         <FormView gap="$3">
-          <ActionCard
-            title={t('subscription.card.title')}
-            subtitle={t('subscription.card.subtitle')}
-            buttonLabel={t('subscription.card.button.label')}
-            buttonIcon={<Icon name="Rocket" />}
-            onActionPress={() => {
-              alert('get pro');
-            }}
-          />
+          {(!currentBrand ||
+            currentEmployee?.id === currentBrand.owner?.id) && (
+            <ActionCard
+              title={t('subscription.card.title')}
+              subtitle={t('subscription.card.subtitle')}
+              buttonLabel={t('subscription.card.button.label')}
+              buttonIcon={<Icon name="Rocket" />}
+              onActionPress={() => {
+                alert('get pro');
+              }}
+            />
+          )}
 
           <Card flexDirection="row" alignItems="center" gap="$4">
             <XStack
@@ -180,30 +189,30 @@ export default () => {
             />
           </ListItemGroup>
 
-          {!drawerVisible && (
-            <ListItemGroup title={t('shared.application')}>
-              <ListItem
-                label={t('shared.share_app')}
-                icon={<Icon name="Share" />}
-                onPress={share}
-              />
+          <ListItemGroup title={t('shared.application')}>
+            <ListItem
+              label={t('shared.share_app')}
+              icon={<Icon name="Share" />}
+              onPress={share}
+            />
+            {!drawerVisible && (
               <ListItem
                 label={t('shared.faq.title')}
                 icon={<Icon name="QuestionCircle" />}
                 onPress={onHelpFeedbackPress}
               />
-              <ListItem
-                label={t('shared.docs.terms_privacy')}
-                icon={<Icon name="FileText" />}
-                onPress={onTermsPrivacyPress}
-              />
-              <ListItem
-                label={t('shared.follow_us')}
-                icon={<Icon name="ShareCircle" />}
-                onPress={onFollowUsPress}
-              />
-            </ListItemGroup>
-          )}
+            )}
+            <ListItem
+              label={t('shared.docs.terms_privacy')}
+              icon={<Icon name="FileText" />}
+              onPress={onTermsPrivacyPress}
+            />
+            <ListItem
+              label={t('shared.follow_us')}
+              icon={<Icon name="ShareCircle" />}
+              onPress={onFollowUsPress}
+            />
+          </ListItemGroup>
         </FormView>
       </TabsPageView>
     )

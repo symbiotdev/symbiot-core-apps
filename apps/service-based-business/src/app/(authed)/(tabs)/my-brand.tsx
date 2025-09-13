@@ -7,6 +7,7 @@ import {
   headerButtonSize,
   Icon,
   TabsPageView,
+  useDrawer,
 } from '@symbiot-core-apps/ui';
 import { View, XStack } from 'tamagui';
 import {
@@ -20,6 +21,7 @@ export default () => {
   const { brand: currentBrand } = useCurrentBrandState();
   const navigation = useNavigation();
   const { hasPermission, hasAnyPermission } = useCurrentBrandEmployee();
+  const { visible: drawerVisible } = useDrawer();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -31,12 +33,13 @@ export default () => {
         ),
       headerRight: () => (
         <XStack gap="$3">
-          {hasPermission('analyticsAll') && (
+          {!drawerVisible && hasPermission('analyticsAll') && (
             <HeaderButton
               iconName="ChartSquare"
-              onPress={() => router.push(`/brand/analytics`)}
+              onPress={() => router.push(`/analytics`)}
             />
           )}
+
           {hasAnyPermission() && (
             <HeaderButton
               iconName="SettingsMinimalistic"
@@ -46,7 +49,13 @@ export default () => {
         </XStack>
       ),
     });
-  }, [currentBrand?.name, hasAnyPermission, hasPermission, navigation]);
+  }, [
+    currentBrand?.name,
+    drawerVisible,
+    hasAnyPermission,
+    hasPermission,
+    navigation,
+  ]);
 
   return (
     <TabsPageView gap="$3">

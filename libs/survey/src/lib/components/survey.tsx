@@ -98,7 +98,7 @@ export function Survey<V extends object>({
 
   useEffect(() => {
     navigation.setOptions({
-      gestureEnabled: false,
+      gestureEnabled: currentStepId && !Object.values(valueRef.current).length,
       headerShown: !loading && !ignoreNavigation,
       headerLeft: () => (
         <HeaderButton
@@ -107,7 +107,14 @@ export function Survey<V extends object>({
         />
       ),
     });
-  }, [goToPrevStep, ignoreNavigation, loading, navigation, progress]);
+  }, [
+    currentStepId,
+    goToPrevStep,
+    ignoreNavigation,
+    loading,
+    navigation,
+    progress,
+  ]);
 
   useEffect(() => {
     navigation.addListener('beforeRemove', onLeave);

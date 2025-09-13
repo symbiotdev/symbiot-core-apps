@@ -2,18 +2,23 @@ import {
   AdaptivePopover,
   AdaptivePopoverRef,
   Br,
-  HapticTabBarButton,
   Icon,
   ListItem,
 } from '@symbiot-core-apps/ui';
-import React, { useCallback, useRef } from 'react';
-import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
+import React, { ReactElement, useCallback, useRef } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { View } from 'tamagui';
+import { Placement } from '@floating-ui/react-native';
 
-export const PlusActionAdaptiveModal = (props: BottomTabBarButtonProps) => {
+export const PlusActionAdaptiveModal = ({
+  trigger,
+  placement,
+}: {
+  trigger: ReactElement;
+  placement?: Placement;
+}) => {
   const { t } = useTranslation();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
   const popoverRef = useRef<AdaptivePopoverRef>(null);
@@ -48,10 +53,9 @@ export const PlusActionAdaptiveModal = (props: BottomTabBarButtonProps) => {
     <AdaptivePopover
       ref={popoverRef}
       triggerType="child"
+      placement={placement}
       ignoreHapticOnOpen
-      trigger={
-        <HapticTabBarButton style={props.style} children={props.children} />
-      }
+      trigger={trigger}
     >
       <View gap="$3">
         {hasInfrastructurePermissions && (

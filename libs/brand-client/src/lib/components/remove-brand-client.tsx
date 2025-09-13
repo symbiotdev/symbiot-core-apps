@@ -17,7 +17,8 @@ export const RemoveBrandClient = ({ client }: { client: BrandClient }) => {
         callback: async () => {
           await mutateAsync({ id: client.id });
 
-          router.dismissTo('/clients');
+          router.dismissAll();
+          router.push('/clients');
         },
       }),
     [client.id, mutateAsync, t],

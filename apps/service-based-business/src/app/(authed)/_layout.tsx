@@ -91,6 +91,9 @@ export default () => {
                   <Stack.Screen
                     name="brand/analytics"
                     options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
                       headerTitle: t('brand.analytics.title'),
                     }}
                   />
@@ -157,9 +160,6 @@ export default () => {
                   <Stack.Screen
                     name="clients/preferences/index"
                     options={{
-                      ...(drawerVisible && {
-                        animation: 'none',
-                      }),
                       headerTitle: t('brand.clients.title'),
                     }}
                   />
@@ -207,9 +207,6 @@ export default () => {
                   <Stack.Screen
                     name="employees/preferences/index"
                     options={{
-                      ...(drawerVisible && {
-                        animation: 'none',
-                      }),
                       headerTitle: t('brand.employees.title'),
                     }}
                   />

@@ -134,7 +134,7 @@ export const DrawerMenu = () => {
         <View
           cursor="pointer"
           width={68}
-          height={headerHeight}
+          height={headerHeight - top}
           alignItems="center"
           justifyContent="center"
           pressStyle={{ opacity: 0.8 }}
@@ -159,7 +159,7 @@ export const DrawerMenu = () => {
         }}
       >
         {currentBrand && (
-          <View>
+          <>
             <MenuItem
               route="/my-brand"
               additionalRoutes={['/brand/create']}
@@ -175,8 +175,10 @@ export const DrawerMenu = () => {
               }
             />
 
-            <Br marginHorizontal={defaultPageHorizontalPadding} />
-          </View>
+            {!permanent && (
+              <Br marginHorizontal={defaultPageHorizontalPadding} />
+            )}
+          </>
         )}
 
         <MenuItem

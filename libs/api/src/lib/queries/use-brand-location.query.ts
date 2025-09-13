@@ -14,7 +14,7 @@ import { PaginationList } from '../types/pagination';
 import { queryClient } from '../utils/client';
 import { generateFormData } from '../utils/media';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { BrandEmployeesQueryKey } from './use-brand-employee.query';
+import { refetchQueriesByChanges } from '../utils/query';
 
 export enum BrandLocationQueryKey {
   currentList = 'brand-location-current-list',
@@ -23,33 +23,20 @@ export enum BrandLocationQueryKey {
 }
 
 const refetchQueriesByLocationChanges = async (
-  location: BrandLocation,
+  entity: {
+    id: string;
+    data?: BrandLocation;
+  },
   refetchList = true,
-) => {
-  queryClient.setQueryData([BrandLocationQueryKey.byId, location.id], location);
-
-  if (refetchList) {
-    await queryClient.refetchQueries({
-      queryKey: [BrandLocationQueryKey.currentList],
-    });
-  } else {
-    const locations = queryClient.getQueryData<PaginationList<BrandLocation>>([
-      BrandLocationQueryKey.currentList,
-    ]);
-
-    if (locations) {
-      queryClient.setQueryData<PaginationList<BrandLocation>>(
-        [BrandLocationQueryKey.currentList],
-        {
-          ...locations,
-          items: locations.items.map((queryLocation) =>
-            queryLocation.id === location.id ? location : queryLocation,
-          ),
-        },
-      );
-    }
-  }
-};
+) =>
+  refetchQueriesByChanges<BrandLocation>({
+    refetchList,
+    entity,
+    queryKeys: {
+      byId: [BrandLocationQueryKey.byId],
+      list: [BrandLocationQueryKey.currentList],
+    },
+  });
 
 export const useUploadBrandLocationGalleryImagesQuery = () =>
   useMutation<
@@ -65,7 +52,13 @@ export const useUploadBrandLocationGalleryImagesQuery = () =>
         ),
       );
 
-      await refetchQueriesByLocationChanges(location);
+      await refetchQueriesByLocationChanges(
+        {
+          id,
+          data: location,
+        },
+        false,
+      );
 
       return location;
     },
@@ -78,7 +71,13 @@ export const useRemoveBrandLocationGalleryImagesQuery = () =>
         axios.delete(`/api/brand-location/${id}/gallery/${imageId}`),
       );
 
-      await refetchQueriesByLocationChanges(location);
+      await refetchQueriesByLocationChanges(
+        {
+          id,
+          data: location,
+        },
+        false,
+      );
 
       return location;
     },
@@ -96,7 +95,10 @@ export const useCreateBrandLocationQuery = () =>
         ),
       );
 
-      await refetchQueriesByLocationChanges(location);
+      await refetchQueriesByLocationChanges({
+        id: location.id,
+        data: location,
+      });
 
       return location;
     },
@@ -115,7 +117,13 @@ export const useUpdateBrandLocationQuery = () =>
           ),
         );
 
-        await refetchQueriesByLocationChanges(location, false);
+        await refetchQueriesByLocationChanges(
+          {
+            id,
+            data: location,
+          },
+          false,
+        );
 
         return location;
       },
@@ -129,13 +137,8 @@ export const useRemoveBrandLocationQuery = () =>
         axios.delete(`/api/brand-location/${id}`),
       );
 
-      queryClient.setQueryData([BrandLocationQueryKey.byId, id], undefined);
-
-      await queryClient.resetQueries({
-        queryKey: [BrandEmployeesQueryKey.detailedById],
-      });
-      await queryClient.refetchQueries({
-        queryKey: [BrandLocationQueryKey.currentList],
+      await refetchQueriesByLocationChanges({
+        id,
       });
 
       return response;

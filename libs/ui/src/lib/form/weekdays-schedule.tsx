@@ -131,9 +131,9 @@ const WeekdayScheduleElement = ({
         DateHelper.addMinutes(startOfDay, value?.end || 0),
         'p',
       ),
-      isDayOff: !value?.start && !value?.end,
+      isDayOff: value && DateHelper.isDayOff(value.start, value.end),
     };
-  }, [value?.end, value?.start]);
+  }, [value]);
 
   const segmentItems = useMemo(
     () => [

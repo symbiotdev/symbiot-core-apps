@@ -1,0 +1,157 @@
+import { BrandEmployee } from '@symbiot-core-apps/api';
+import {
+  APP_LINK,
+  Avatar,
+  Card,
+  FormView,
+  H3,
+  Link,
+  ListItemGroup,
+  PageView,
+  RegularText,
+  SemiBoldText,
+  SocialIcon,
+  WeekdaySchedule,
+} from '@symbiot-core-apps/ui';
+import { useCallback, useMemo } from 'react';
+import { View, XStack } from 'tamagui';
+import {
+  DateHelper,
+  emitHaptic,
+  useNativeNow,
+} from '@symbiot-core-apps/shared';
+import { useCurrentAccount } from '@symbiot-core-apps/state';
+import { useTranslation } from 'react-i18next';
+import { openBrowserAsync } from 'expo-web-browser';
+
+const startOfDay = DateHelper.startOfDay(new Date());
+
+export const BrandEmployeeProfile = ({
+  employee,
+}: {
+  employee: BrandEmployee;
+}) => {
+  const { t } = useTranslation();
+  const { me } = useCurrentAccount();
+  const { now } = useNativeNow();
+
+  const instagram = useMemo(
+    () => employee.links?.find(APP_LINK.instagram.isValidUrl),
+    [employee.links],
+  );
+
+  const schedules = useMemo(
+    () =>
+      employee.schedules?.length
+        ? employee.schedules
+        : employee.locations?.[0]?.schedules,
+    [employee.locations, employee.schedules],
+  );
+
+  const onInstagramPress = useCallback(() => {
+    if (!instagram) return;
+
+    emitHaptic();
+
+    void openBrowserAsync(instagram.url);
+  }, [instagram]);
+
+  return (
+    <PageView scrollable withHeaderHeight>
+      <FormView alignItems="center" gap="$5">
+        <Card width="100%" gap="$3" alignItems="center">
+          <Avatar
+            name={employee.name}
+            size={100}
+            url={employee.avatarXsUrl}
+            color={employee.avatarColor}
+          />
+
+          <RegularText color="$placeholderColor" textAlign="center">
+            {employee.position}
+          </RegularText>
+
+          <H3 textAlign="center">{employee.name}</H3>
+
+          {!!instagram && (
+            <XStack
+              alignItems="center"
+              justifyContent="center"
+              gap="$2"
+              flex={1}
+            >
+              <SocialIcon name="Instagram" size={16} color="$link" />
+              <Link onPress={onInstagramPress}>
+                {APP_LINK.instagram.getNicknameFromUrl(instagram.url)}
+              </Link>
+            </XStack>
+          )}
+        </Card>
+
+        {!!employee.about && (
+          <ListItemGroup
+            title={t('shared.experience')}
+            paddingVertical="$4"
+            gap="$2"
+          >
+            <RegularText lineHeight={22}>{employee.about}</RegularText>
+          </ListItemGroup>
+        )}
+
+        {!!schedules?.length && (
+          <ListItemGroup
+            title={t('shared.schedule.working_hours')}
+            paddingVertical="$4"
+            gap="$2"
+          >
+            {DateHelper.getWeekdays({
+              weekStartsOn: me?.preferences?.weekStartsOn,
+            })
+              .map((weekday) => ({
+                ...weekday,
+                schedule: schedules.find(
+                  ({ day }) => day === weekday.value,
+                ) as WeekdaySchedule,
+              }))
+              .filter(({ schedule }) => !!schedule)
+              .map(({ label, schedule: { start, end, day } }) => {
+                const isDayOff = DateHelper.isDayOff(start, end);
+                const Text = now.getDay() === day ? SemiBoldText : RegularText;
+
+                return (
+                  <XStack
+                    key={day}
+                    opacity={isDayOff ? 0.5 : 1}
+                    alignItems="center"
+                    gap="$3"
+                  >
+                    <View
+                      width={5}
+                      height={5}
+                      borderRadius="$10"
+                      backgroundColor="$link"
+                    />
+
+                    <Text>{label}</Text>
+                    <Text marginLeft="auto">
+                      {isDayOff
+                        ? t('shared.schedule.day_off')
+                        : DateHelper.isAllDay(start, end)
+                          ? t('shared.schedule.all_day')
+                          : `${DateHelper.format(
+                              DateHelper.addMinutes(startOfDay, start),
+                              'p',
+                            )} - ${DateHelper.format(
+                              DateHelper.addMinutes(startOfDay, end),
+                              'p',
+                            )}`}
+                    </Text>
+                  </XStack>
+                );
+              })}
+          </ListItemGroup>
+        )}
+      </FormView>
+    </PageView>
+  );
+};

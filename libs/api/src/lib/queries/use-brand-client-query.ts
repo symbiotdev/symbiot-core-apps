@@ -25,15 +25,18 @@ export enum BrandClientQueryKey {
 }
 
 const refetchQueriesByClientChanges = async (
-  client: BrandClient,
+  entity: {
+    id: string;
+    data?: BrandClient;
+  },
   refetchList = true,
 ) =>
   refetchQueriesByChanges<BrandClient>({
     refetchList,
-    entity: client,
+    entity,
     queryKeys: {
-      byId: BrandClientQueryKey.detailedById,
-      list: BrandClientQueryKey.currentList,
+      byId: [BrandClientQueryKey.detailedById],
+      list: [BrandClientQueryKey.currentList],
     },
   });
 
@@ -58,12 +61,10 @@ export const useCreateBrandClientQuery = () =>
         ),
       );
 
-      queryClient.setQueryData(
-        [BrandClientQueryKey.detailedById, client.id],
-        client,
-      );
-
-      await refetchInfiniteListByKey(BrandClientQueryKey.currentList);
+      await refetchQueriesByClientChanges({
+        id: client.id,
+        data: client,
+      });
 
       return client;
     },
@@ -114,7 +115,13 @@ export const useUpdateBrandClientQuery = () =>
         ),
       );
 
-      await refetchQueriesByClientChanges(client, false);
+      await refetchQueriesByClientChanges(
+        {
+          id,
+          data: client,
+        },
+        false,
+      );
 
       return client;
     },
@@ -127,18 +134,15 @@ export const useRemoveBrandClientQuery = () =>
         axios.delete(`/api/brand-client/${id}`),
       );
 
-      queryClient.setQueryData(
-        [BrandClientQueryKey.detailedById, id],
-        undefined,
-      );
-
-      await refetchInfiniteListByKey(BrandClientQueryKey.currentList);
+      await refetchQueriesByClientChanges({
+        id,
+      });
 
       return response;
     },
   });
 
-export const useUpdateBrandClientImportTemplateQuery = () =>
+export const useBrandClientImportTemplateQuery = () =>
   useMutation<ArrayBufferLike, string>({
     mutationFn: () =>
       requestWithAlertOnError<ArrayBufferLike>(

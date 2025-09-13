@@ -226,6 +226,14 @@ export const DrawerMenu = () => {
           />
         )}
 
+        {hasPermission('analyticsAll') && (
+          <MenuItem
+            route="/brand/analytics"
+            label={t('navigation.drawer.analytics.label')}
+            icon="ChartSquare"
+          />
+        )}
+
         <Br marginTop="auto" marginHorizontal={defaultPageHorizontalPadding} />
 
         <MenuItem

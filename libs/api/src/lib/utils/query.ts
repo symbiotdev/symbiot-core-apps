@@ -18,34 +18,43 @@ export async function refetchQueriesByChanges<T extends { id: string }>({
   refetchList,
 }: {
   queryKeys: {
-    byId: string;
-    list: string;
+    byId: string[];
+    list: string[];
   };
-  entity: T;
+  entity: {
+    id: string;
+    data?: T;
+  };
   refetchList: boolean;
 }) {
-  queryClient.setQueryData([queryKeys.byId, entity.id], entity);
+  queryKeys.byId.forEach((key) =>
+    queryClient.setQueryData([key, entity.id], entity),
+  );
 
-  if (refetchList) {
-    await refetchInfiniteListByKey(queryKeys.list);
+  if (refetchList || !entity.data) {
+    await Promise.all(queryKeys.list.map(refetchInfiniteListByKey));
   } else {
-    const data = queryClient.getQueryData<InfiniteData<PaginationList<T>>>([
-      queryKeys.list,
-    ]);
+    queryKeys.list.forEach((key) => {
+      const queryData = queryClient.getQueriesData<
+        InfiniteData<PaginationList<T>>
+      >({
+        queryKey: [key],
+        exact: false,
+      });
 
-    if (data) {
-      queryClient.setQueryData<InfiniteData<PaginationList<T>>>(
-        [queryKeys.list],
-        {
+      queryData.forEach(([queryKey, data]) => {
+        if (!data) return;
+
+        queryClient.setQueryData<InfiniteData<PaginationList<T>>>(queryKey, {
           ...data,
           pages: data.pages.map((page) => ({
             ...page,
             items: page.items.map((item) =>
-              item.id === entity.id ? entity : item,
+              item.id === entity.id ? entity.data as T : item,
             ),
           })),
-        },
-      );
-    }
+        });
+      });
+    });
   }
 }

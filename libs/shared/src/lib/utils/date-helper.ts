@@ -121,4 +121,10 @@ export const DateHelper = {
       value: i * interval,
     }));
   },
+  isDayOff(start: number, end: number) {
+    return !start && !end;
+  },
+  isAllDay(start: number, end: number, offset = 15) {
+    return 24 * 60 - (end - start) <= offset;
+  },
 };

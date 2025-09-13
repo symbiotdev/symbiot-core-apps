@@ -21,19 +21,28 @@ export enum BrandEmployeesQueryKey {
   current = 'brand-employee-current',
   permissions = 'brand-employee-permissions',
   currentList = 'brand-employee-current-list',
+  profileById = 'brand-employee-profile-by-id',
+  providerById = 'brand-employee-provider-by-id',
   detailedById = 'brand-employee-detailed-by-id',
 }
 
 const refetchQueriesByEmployeeChanges = async (
-  employee: BrandEmployee,
+  entity: {
+    id: string;
+    data?: BrandEmployee;
+  },
   refetchList = true,
 ) =>
   refetchQueriesByChanges<BrandEmployee>({
     refetchList,
-    entity: employee,
+    entity,
     queryKeys: {
-      byId: BrandEmployeesQueryKey.detailedById,
-      list: BrandEmployeesQueryKey.currentList,
+      byId: [
+        BrandEmployeesQueryKey.profileById,
+        BrandEmployeesQueryKey.providerById,
+        BrandEmployeesQueryKey.detailedById,
+      ],
+      list: [BrandEmployeesQueryKey.currentList],
     },
   });
 
@@ -80,12 +89,9 @@ export const useCreateBrandEmployeeQuery = () =>
           ),
         );
 
-        queryClient.setQueryData(
-          [BrandEmployeesQueryKey.detailedById, brandEmployee.id],
-          brandEmployee,
-        );
-        await queryClient.refetchQueries({
-          queryKey: [BrandEmployeesQueryKey.currentList],
+        await refetchQueriesByEmployeeChanges({
+          id: brandEmployee.id,
+          data: brandEmployee,
         });
 
         return brandEmployee;
@@ -106,7 +112,13 @@ export const useUpdateBrandEmployeeQuery = () =>
           ),
         );
 
-        await refetchQueriesByEmployeeChanges(employee, false);
+        await refetchQueriesByEmployeeChanges(
+          {
+            id,
+            data: employee,
+          },
+          false,
+        );
 
         return employee;
       },
@@ -120,12 +132,8 @@ export const useRemoveBrandEmployeeQuery = () =>
         axios.delete(`/api/brand-employee/${id}`),
       );
 
-      queryClient.setQueryData(
-        [BrandEmployeesQueryKey.detailedById, id],
-        undefined,
-      );
-      await queryClient.refetchQueries({
-        queryKey: [BrandEmployeesQueryKey.currentList],
+      await refetchQueriesByEmployeeChanges({
+        id,
       });
 
       return response;
@@ -142,6 +150,34 @@ export const useCurrentBrandEmployeeListQuery = (props?: {
     queryKey: [BrandEmployeesQueryKey.currentList, props?.params],
     ...props,
   });
+
+export const useBrandEmployeeProfileByIdQuery = (
+  id: string,
+  enabled = true,
+) => {
+  const queryKey = [BrandEmployeesQueryKey.profileById, id];
+
+  return useQuery<BrandEmployee, string>({
+    queryKey,
+    enabled: enabled || !queryClient.getQueryData(queryKey),
+    queryFn: () =>
+      requestWithStringError(axios.get(`/api/brand-employee/profile/${id}`)),
+  });
+};
+
+export const useBrandEmployeeProviderByIdQuery = (
+  id: string,
+  enabled = true,
+) => {
+  const queryKey = [BrandEmployeesQueryKey.providerById, id];
+
+  return useQuery<BrandEmployee, string>({
+    queryKey,
+    enabled: enabled || !queryClient.getQueryData(queryKey),
+    queryFn: () =>
+      requestWithStringError(axios.get(`/api/brand-employee/provider/${id}`)),
+  });
+};
 
 export const useBrandEmployeeDetailedByIdQuery = (
   id: string,

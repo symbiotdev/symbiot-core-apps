@@ -1,3 +1,3 @@
-import { PageView } from '@symbiot-core-apps/ui';
+import { EmptyView } from '@symbiot-core-apps/ui';
 
-export default PageView;
+export default EmptyView;

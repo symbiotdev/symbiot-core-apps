@@ -17,8 +17,8 @@ import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
 import {
   ImportBrandClient,
+  useBrandClientImportTemplateQuery,
   useImportBrandClientsQuery,
-  useUpdateBrandClientImportTemplateQuery,
 } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
 import { Platform } from 'react-native';
@@ -41,7 +41,7 @@ import { useGenders } from '@symbiot-core-apps/state';
 export const BrandClientImportForm = () => {
   const { t } = useTranslation();
   const { mutateAsync, isPending: templateLoading } =
-    useUpdateBrandClientImportTemplateQuery();
+    useBrandClientImportTemplateQuery();
   const { mutateAsync: importClients, isPending: clientsImporting } =
     useImportBrandClientsQuery();
   const { genders } = useGenders();
@@ -148,19 +148,19 @@ export const BrandClientImportForm = () => {
             <View gap="$3" marginTop="$5">
               <XStack alignItems="center">
                 <RegularText>
-                  🔢 {t('brand.clients.import.uploaded.summary.total')}:
+                  {t('brand.clients.import.uploaded.summary.total')}:
                 </RegularText>
                 <SemiBoldText> {summary.failed + summary.succeed}</SemiBoldText>
               </XStack>
               <XStack alignItems="center">
                 <RegularText>
-                  ✅ {t('brand.clients.import.uploaded.summary.success')}:
+                  {t('brand.clients.import.uploaded.summary.success')}:
                 </RegularText>
                 <SemiBoldText> {summary.succeed}</SemiBoldText>
               </XStack>
               <XStack alignItems="center">
                 <RegularText>
-                  ❌ {t('brand.clients.import.uploaded.summary.failed')}:
+                  {t('brand.clients.import.uploaded.summary.failed')}:
                 </RegularText>
                 <SemiBoldText> {summary.failed}</SemiBoldText>
               </XStack>

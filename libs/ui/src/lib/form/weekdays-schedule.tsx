@@ -113,9 +113,9 @@ const WeekdayScheduleElement = ({
 
   const endMinutes = useMemo(
     () =>
-      !value?.start
+      typeof value?.start !== 'number'
         ? minutes
-        : minutes.filter((minuteItem) => minuteItem.value > value?.start),
+        : minutes.filter((minuteItem) => minuteItem.value > value.start),
     [minutes, value?.start],
   );
 
@@ -173,30 +173,40 @@ const WeekdayScheduleElement = ({
   );
 
   const onChangeStartValue = useCallback(
-    (start: number) =>
+    (start: number) => {
+      const endDefined = typeof value?.end === 'number';
+
       onChange({
         ...value,
-        day: weekday.value as Weekday,
         start,
+        day: weekday.value as Weekday,
         end:
-          value?.end && value.end <= start
+          endDefined && value.end <= start
             ? start + minutesInterval
-            : value?.end || start + minutesInterval,
-      }),
+            : endDefined
+              ? value.end
+              : start + minutesInterval,
+      });
+    },
     [onChange, value, weekday.value],
   );
 
   const onChangeEndValue = useCallback(
-    (end: number) =>
+    (end: number) => {
+      const startDefined = typeof value?.start === 'number';
+
       onChange({
         ...value,
-        day: weekday.value as Weekday,
         end,
+        day: weekday.value as Weekday,
         start:
-          value?.start && value.start >= end
+          startDefined && value.start >= end
             ? end - minutesInterval
-            : value?.start || end - minutesInterval,
-      }),
+            : startDefined
+              ? value.start
+              : end - minutesInterval,
+      });
+    },
     [onChange, value, weekday.value],
   );
 

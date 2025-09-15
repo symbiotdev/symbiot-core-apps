@@ -65,6 +65,8 @@ import { TurntableMusicNote } from './TurntableMusicNote';
 import { TicketStar } from './TicketStar';
 import { Gift } from './Gift';
 import { Plate } from './Plate';
+import { MusicLibrary2 } from './MusicLibrary2';
+import { Library } from './Library';
 
 export const Map: IconMap = {
   AddCircle,
@@ -99,6 +101,7 @@ export const Map: IconMap = {
   Import,
   InfoCircle,
   Letter,
+  Library,
   Lock,
   Login,
   Logout2,
@@ -110,6 +113,7 @@ export const Map: IconMap = {
   MenuDotsCircle,
   Minimize,
   Moon,
+  MusicLibrary2,
   PaperclipRounded,
   Pen,
   Plate,

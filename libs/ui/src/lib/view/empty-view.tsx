@@ -1,5 +1,5 @@
 import { View, ViewProps } from 'tamagui';
-import { H2 } from '../text/heading';
+import { H3 } from '../text/heading';
 import { RegularText } from '../text/text';
 import { IconName } from '../icons/config';
 import { Icon } from '../icons';
@@ -31,7 +31,7 @@ export const EmptyView = ({
       {!!iconName && <Icon name={iconName} size={60} />}
 
       <View gap="$2">
-        {!!title && <H2 textAlign="center">{title}</H2>}
+        {!!title && <H3 textAlign="center">{title}</H3>}
 
         <RegularText textAlign="center" maxWidth={500}>
           {message || t('shared.its_empty')}

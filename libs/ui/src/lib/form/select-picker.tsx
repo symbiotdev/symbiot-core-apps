@@ -9,6 +9,7 @@ import { Spinner } from '../loading/spinner';
 import { RegularText } from '../text/text';
 import { InputFieldView } from '../view/input-field-view';
 import { Picker, PickerItem, PickerOnChange } from './picker';
+import { View } from 'tamagui';
 
 export function SelectPicker({
   value,
@@ -21,6 +22,7 @@ export function SelectPicker({
   disableDrag,
   lazy,
   moveSelectedToTop,
+  showSelectedDescription,
   noCheckedValue,
   optionsLoading,
   optionsError,
@@ -37,6 +39,7 @@ export function SelectPicker({
   disableDrag?: boolean;
   lazy?: boolean;
   moveSelectedToTop?: boolean;
+  showSelectedDescription?: boolean;
   noCheckedValue?: string;
   maxWidth?: DimensionValue;
   optionsLoading?: boolean;
@@ -62,6 +65,18 @@ export function SelectPicker({
     [noCheckedValue, options, value],
   );
 
+  const description = useMemo(
+    () =>
+      showSelectedDescription &&
+      value !== undefined &&
+      (Array.isArray(value)
+        ? value.find((valueItem) =>
+            options?.some((option) => option.value === valueItem),
+          )?.description
+        : options?.find((option) => option.value === value)?.description),
+    [options, showSelectedDescription, value],
+  );
+
   const onChangeValue = useCallback(
     (value: unknown) => {
       onChange?.(value);
@@ -84,10 +99,20 @@ export function SelectPicker({
         minWidth={200}
         triggerType="child"
         trigger={
-          <InputFieldView disabled={disabled} pressStyle={{ opacity: 0.8 }}>
-            {!options?.length && optionsLoading ? (
-              <>
-                <Spinner width={16} height={16} />
+          <View gap="$2" pressStyle={{ opacity: 0.8 }}>
+            <InputFieldView disabled={disabled}>
+              {!options?.length && optionsLoading ? (
+                <>
+                  <Spinner width={16} height={16} />
+                  <RegularText
+                    color="$placeholderColor"
+                    numberOfLines={1}
+                    flex={1}
+                  >
+                    {placeholder}
+                  </RegularText>
+                </>
+              ) : !formattedValue ? (
                 <RegularText
                   color="$placeholderColor"
                   numberOfLines={1}
@@ -95,21 +120,23 @@ export function SelectPicker({
                 >
                   {placeholder}
                 </RegularText>
-              </>
-            ) : !formattedValue ? (
-              <RegularText color="$placeholderColor" numberOfLines={1} flex={1}>
-                {placeholder}
-              </RegularText>
-            ) : (
-              <RegularText
-                flex={1}
-                numberOfLines={1}
-                color={disabled ? '$disabled' : '$color'}
-              >
-                {formattedValue}
+              ) : (
+                <RegularText
+                  flex={1}
+                  numberOfLines={1}
+                  color={disabled ? '$disabled' : '$color'}
+                >
+                  {formattedValue}
+                </RegularText>
+              )}
+            </InputFieldView>
+
+            {!!description && (
+              <RegularText color="$placeholderColor" paddingHorizontal="$4">
+                {description}
               </RegularText>
             )}
-          </InputFieldView>
+          </View>
         }
       >
         <Picker

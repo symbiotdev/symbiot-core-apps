@@ -5,7 +5,6 @@ import { Map as SolarBoldDuotone } from './solar/bold-duotone/_index';
 import { Map as SolarBroken } from './solar/broken/_index';
 import { Map as SolarLinear } from './solar/linear/_index';
 import { Map as SolarLinearDuotone } from './solar/linear-duotone/_index';
-import { Map as SolarOutline } from './solar/outline/_index';
 import { Map as Social } from './social/_index';
 import { IconName } from './config';
 import { ViewStyle } from 'react-native';
@@ -16,7 +15,6 @@ const Map = {
   SolarBroken,
   SolarLinear,
   SolarLinearDuotone,
-  SolarOutline,
 } as const;
 
 export const defaultIconSize = 24;

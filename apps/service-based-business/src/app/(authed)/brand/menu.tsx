@@ -6,13 +6,17 @@ import {
   ListItem,
   ListItemGroup,
   PageView,
+  RegularText,
 } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
+import { View } from 'tamagui';
+import { useApp } from '@symbiot-core-apps/app';
 
 export default () => {
   const { t } = useTranslation();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
+  const { icons } = useApp();
 
   const onInformationPress = useCallback(
     () => router.push('/brand/preferences'),
@@ -66,6 +70,28 @@ export default () => {
             )}
           </ListItemGroup>
         )}
+
+        <ListItemGroup title={t('shared.catalog')}>
+          <ListItem
+            label={t('brand.services.title')}
+            icon={<Icon name={icons.Service} />}
+          />
+          <ListItem
+            label={t('brand.packages.title')}
+            icon={<Icon name={icons.Package} />}
+          />
+          <ListItem
+            label={t('brand.gift_cards.title')}
+            icon={<Icon name="Gift" />}
+            iconAfter={
+              <View>
+                <RegularText color="$placeholderColor" fontSize={12}>
+                  {t('shared.coming_soon')}
+                </RegularText>
+              </View>
+            }
+          />
+        </ListItemGroup>
 
         {hasPermission('clientsAll') && (
           <ListItemGroup title={t('brand.stakeholders')}>

@@ -18,7 +18,7 @@ export type BrandEmployee = {
   birthday: string;
   email: string;
   address: string;
-  position: string;
+  role: string;
   passport: string;
   taxId: string;
   provider: boolean;
@@ -61,7 +61,7 @@ export type CreateBrandEmployee = {
   passport: string;
   taxId: string;
   birthday: string | null;
-  position: string;
+  role: string;
   gender: string;
   serviceTypes: string[];
   locations: string[];

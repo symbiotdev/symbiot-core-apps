@@ -68,20 +68,19 @@ export const BrandEmployeeProfile = ({
           />
 
           <RegularText color="$placeholderColor" textAlign="center">
-            {employee.position}
+            {employee.role}
           </RegularText>
 
           <H3 textAlign="center">{employee.name}</H3>
 
           {!!instagram && (
-            <XStack
-              alignItems="center"
-              justifyContent="center"
-              gap="$2"
-              flex={1}
-            >
-              <SocialIcon name="Instagram" size={16} color="$link" />
-              <Link onPress={onInstagramPress}>
+            <XStack justifyContent="center" gap="$2" flex={1} maxWidth="80%">
+              <SocialIcon name="Instagram" size={18} color="$link" />
+              <Link
+                onPress={onInstagramPress}
+                lineHeight={18}
+                numberOfLines={1}
+              >
                 {APP_LINK.instagram.getNicknameFromUrl(instagram.url)}
               </Link>
             </XStack>

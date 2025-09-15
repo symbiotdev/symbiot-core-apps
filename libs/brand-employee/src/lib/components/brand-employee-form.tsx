@@ -8,7 +8,7 @@ import { BrandEmployeeLocationsForm } from './brand-employee-locations-form';
 import { BrandEmployeePermissionsForm } from './brand-employee-permissions-form';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { BrandEmployeeAboutForm } from './brand-employee-about-form';
-import { BrandEmployeePositionForm } from './brand-employee-position-form';
+import { BrandEmployeeProfessionalActivityForm } from './brand-employee-professional-activity-form';
 
 export const BrandEmployeeForm = ({
   employee,
@@ -24,7 +24,7 @@ export const BrandEmployeeForm = ({
 
         <ListItemGroup>
           <BrandEmployeePersonalInfo employee={employee} />
-          <BrandEmployeePositionForm employee={employee} />
+          <BrandEmployeeProfessionalActivityForm employee={employee} />
           <BrandEmployeeAboutForm employee={employee} />
           <BrandEmployeeLocationsForm employee={employee} />
           <BrandEmployeeContactInfo employee={employee} />

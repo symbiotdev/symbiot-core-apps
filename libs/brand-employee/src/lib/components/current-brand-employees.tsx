@@ -83,7 +83,7 @@ export const CurrentBrandEmployees = ({
         <View gap="$1" flex={1}>
           <SemiBoldText numberOfLines={1}>{item.name}</SemiBoldText>
           <RegularText color="$placeholderColor" numberOfLines={1}>
-            {item.position}
+            {item.role}
           </RegularText>
         </View>
 

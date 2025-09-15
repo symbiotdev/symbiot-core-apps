@@ -3,7 +3,7 @@ import { Image, ImageStyle } from 'expo-image';
 import { useScheme } from '@symbiot-core-apps/state';
 
 export const AdaptiveLogo = memo(
-  ({ size = 100, style }: { size?: number; style?: ImageStyle }) => {
+  ({ width = 180, style }: { width?: number; style?: ImageStyle }) => {
     const { scheme } = useScheme();
 
     return (
@@ -14,7 +14,7 @@ export const AdaptiveLogo = memo(
             : require('../../../assets/images/icon/logo-dark.png')
         }
         contentFit="contain"
-        style={{ width: size, height: size, ...style }}
+        style={{ width: width, height: 80, ...style }}
       />
     );
   },

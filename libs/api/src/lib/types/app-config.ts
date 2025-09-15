@@ -38,6 +38,8 @@ export type AppConfigIconName =
   | 'Calendar'
   | 'TabsPlus'
   | 'Workspace'
+  | 'Service'
+  | 'Package'
   | 'More';
 
 export type AppConfig = {

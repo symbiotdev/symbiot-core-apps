@@ -5,7 +5,6 @@ import {
   BrandIndustryServiceType,
   useBrandEmployeeNewAccountQuery,
   useBrandEmployeePermissionsQuery,
-  useBrandIndustryServiceTypeQuery,
   useCreateBrandEmployeeQuery,
   useCurrentBrandLocationsQuery,
 } from '@symbiot-core-apps/api';
@@ -26,7 +25,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 type Value = {
   firstname: string;
   lastname: string;
-  position: string;
+  role: string;
   email: string;
   address: string;
   passport: string;
@@ -55,11 +54,6 @@ export default () => {
     error: locationsError,
   } = useCurrentBrandLocationsQuery();
   const {
-    data: serviceTypes,
-    isPending: serviceTypesLoading,
-    error: serviceTypesError,
-  } = useBrandIndustryServiceTypeQuery();
-  const {
     gendersAsOptionsWithEmptyOption,
     loading: gendersLoading,
     error: gendersError,
@@ -86,15 +80,6 @@ export default () => {
         })),
       ],
     [dynamicLocation, locations],
-  );
-
-  const serviceTypeAsToggleOptions = useMemo(
-    () =>
-      serviceTypes?.map((serviceType) => ({
-        label: serviceType.name,
-        value: serviceType,
-      })),
-    [serviceTypes],
   );
 
   const steps: SurveyStep<Value>[] = useMemo(
@@ -217,7 +202,7 @@ export default () => {
       },
       {
         id: 'location',
-        nextId: 'position',
+        nextId: 'professionalActivity',
         title: form.location.title,
         subtitle: form.location.subtitle,
         elements: [
@@ -261,37 +246,25 @@ export default () => {
         ],
       },
       {
-        id: 'position',
+        id: 'professionalActivity',
         nextId: 'permissions',
-        title: form.positionInfo.title,
-        subtitle: form.positionInfo.subtitle,
+        title: form.professionalActivity.title,
+        subtitle: form.professionalActivity.subtitle,
         elements: [
+          {
+            type: 'input',
+            props: {
+              ...form.role,
+              required: true,
+              name: 'role',
+              defaultValue: '',
+            },
+          },
           {
             type: 'switch',
             props: {
               ...form.provider,
               name: 'provider',
-            },
-          },
-          {
-            type: 'input',
-            props: {
-              ...form.position,
-              required: true,
-              name: 'position',
-              defaultValue: '',
-            },
-          },
-          {
-            type: 'toggle-group',
-            props: {
-              ...form.serviceTypes,
-              name: 'serviceTypes',
-              showWhen: (value) => value.provider,
-              options: serviceTypeAsToggleOptions,
-              optionsLoading: serviceTypesLoading,
-              optionsError: serviceTypesError,
-              defaultValue: [],
             },
           },
         ],
@@ -342,9 +315,6 @@ export default () => {
       locationsAsOptions,
       locationsLoading,
       locationsError,
-      serviceTypeAsToggleOptions,
-      serviceTypesLoading,
-      serviceTypesError,
     ],
   );
 
@@ -369,7 +339,7 @@ export default () => {
             avatar: value.avatar,
             provider: value.provider,
             about: value.about,
-            position: value.position,
+            role: value.role,
             permissions: value.permissions,
             phones: value.phone ? [value.phone] : [],
             locations: value.location ? [value.location] : [],

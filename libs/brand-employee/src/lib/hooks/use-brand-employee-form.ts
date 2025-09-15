@@ -20,9 +20,9 @@ export const useBrandEmployeeForm = () => {
         title: t('brand.employees.upsert.form.contact_info.title'),
         subtitle: t('brand.employees.upsert.form.contact_info.subtitle'),
       },
-      positionInfo: {
-        title: t('brand.employees.upsert.form.position_info.title'),
-        subtitle: t('brand.employees.upsert.form.position_info.subtitle'),
+      professionalActivity: {
+        title: t('brand.employees.upsert.form.professional_activity.title'),
+        subtitle: t('brand.employees.upsert.form.professional_activity.subtitle'),
       },
       identificationInfo: {
         title: t('brand.employees.upsert.form.identification_info.title'),
@@ -81,15 +81,16 @@ export const useBrandEmployeeForm = () => {
           .string()
           .required(t('brand.employees.upsert.form.gender.error.required')),
       },
-      position: {
-        label: t('brand.employees.upsert.form.position.label'),
-        placeholder: t('brand.employees.upsert.form.position.placeholder'),
+      role: {
+        label: t('brand.employees.upsert.form.role.label'),
+        placeholder: t('brand.employees.upsert.form.role.placeholder'),
         scheme: yup
           .string()
-          .required(t('brand.employees.upsert.form.position.error.required')),
+          .required(t('brand.employees.upsert.form.role.error.required')),
       },
       provider: {
         label: t('brand.employees.upsert.form.provider.label'),
+        description: t('brand.employees.upsert.form.provider.description'),
         scheme: yup.boolean().required(),
         defaultValue: true,
       },

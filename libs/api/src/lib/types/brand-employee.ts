@@ -1,5 +1,4 @@
 import { BrandLocation } from './brand-location';
-import { BrandIndustryServiceType } from './brand-industry';
 import { Gender } from './gender';
 import { Phone } from './phone';
 import { Schedule } from './schedule';
@@ -28,7 +27,6 @@ export type BrandEmployee = {
   locations: BrandLocation[];
   schedules: BrandEmployeeSchedule[];
   permissions: BrandEmployeePermissions;
-  serviceTypes: BrandIndustryServiceType[];
 };
 
 export type BrandEmployeeSchedule = Schedule & {
@@ -63,7 +61,6 @@ export type CreateBrandEmployee = {
   birthday: string | null;
   role: string;
   gender: string;
-  serviceTypes: string[];
   locations: string[];
   permissions: BrandEmployeePermissions;
   phones: Phone[];

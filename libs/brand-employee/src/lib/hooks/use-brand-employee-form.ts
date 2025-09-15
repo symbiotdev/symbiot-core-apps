@@ -34,22 +34,6 @@ export const useBrandEmployeeForm = () => {
         placeholder: t('brand.employees.upsert.form.location.placeholder'),
         scheme: yup.string().nullable().defined(),
       },
-      serviceTypes: {
-        label: t('brand.employees.upsert.form.service_type.label'),
-        scheme: yup
-          .array()
-          .of(
-            yup
-              .object()
-              .shape({
-                id: yup.string().required(),
-                name: yup.string().required(),
-              })
-              .required(),
-          )
-          .required(),
-        multiselect: true,
-      },
       avatar: {
         title: t('brand.employees.upsert.form.avatar.title'),
         subtitle: t('brand.employees.upsert.form.avatar.subtitle'),
@@ -177,7 +161,6 @@ export const useBrandEmployeeForm = () => {
         label: t('brand.employees.upsert.form.about.label'),
         placeholder: t('brand.employees.upsert.form.about.placeholder'),
         scheme: yup.string().nullable().ensure(),
-        optionalScheme: yup.string().nullable().ensure(),
       },
     }),
     [t],

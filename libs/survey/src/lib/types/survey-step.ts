@@ -26,6 +26,7 @@ export type SurveyStep<V> = {
         props: SurveyStepElement<V> & {
           placeholder: string;
           label?: string;
+          type?: 'email' | 'password' | 'text' | 'numeric';
           regex?: RegExp;
           maxLength?: number;
           keyboardType?: KeyboardType;
@@ -93,6 +94,8 @@ export type SurveyStep<V> = {
           sheetLabel?: string;
           placeholder?: string;
           optionsLoading?: boolean;
+          noCheckedValue?: string;
+          showSelectedDescription?: boolean;
           optionsError?: string | null;
           options?: PickerItem[];
         };

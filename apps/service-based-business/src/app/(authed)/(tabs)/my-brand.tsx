@@ -16,12 +16,16 @@ import {
 } from '@symbiot-core-apps/state';
 import { router, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
+import { useApp } from '@symbiot-core-apps/app';
+import { useTranslation } from 'react-i18next';
 
 export default () => {
   const { brand: currentBrand } = useCurrentBrandState();
+  const { icons } = useApp();
+  const {t} = useTranslation();
+  const { visible: drawerVisible } = useDrawer();
   const navigation = useNavigation();
   const { hasPermission, hasAnyPermission } = useCurrentBrandEmployee();
-  const { visible: drawerVisible } = useDrawer();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -77,22 +81,29 @@ export default () => {
       <Button
         type="clear"
         icon={<Icon name="MapPointWave" />}
-        label="Locations"
+        label={t('brand.locations.title')}
         onPress={() => router.push(`/locations`)}
       />
 
       <Button
         type="clear"
         icon={<Icon name="UsersGroupRounded" />}
-        label="Employees"
+        label={t('brand.employees.title')}
         onPress={() => router.push(`/employees`)}
       />
 
       <Button
         type="clear"
         icon={<Icon name="SmileCircle" />}
-        label="Clients"
+        label={t('brand.clients.title')}
         onPress={() => router.push(`/clients`)}
+      />
+
+      <Button
+        type="clear"
+        icon={<Icon name={icons.Service} />}
+        label={t('brand.services.title')}
+        onPress={() => router.push(`/services`)}
       />
     </TabsPageView>
   );

@@ -2,7 +2,6 @@ import {
   Account,
   BrandEmployeePermission,
   BrandEmployeePermissions,
-  BrandIndustryServiceType,
   useBrandEmployeeNewAccountQuery,
   useBrandEmployeePermissionsQuery,
   useCreateBrandEmployeeQuery,
@@ -40,7 +39,6 @@ type Value = {
   gender: string;
   schedule: WeekdaySchedule[];
   avatar: ImagePickerAsset;
-  serviceTypes: BrandIndustryServiceType[];
 };
 
 const TypedSurvey = Survey<Value>;
@@ -350,9 +348,6 @@ export const CreateBrandEmployee = () => {
                     location: value.location,
                   }))
                 : [],
-            serviceTypes: value.serviceTypes?.length
-              ? value.serviceTypes.map(({ id }) => id)
-              : [],
           },
         });
 

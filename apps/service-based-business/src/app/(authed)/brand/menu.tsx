@@ -38,6 +38,11 @@ export default () => {
     [],
   );
 
+  const onServicesPress = useCallback(
+    () => router.push('/services/preferences'),
+    [],
+  );
+
   return (
     <PageView scrollable withHeaderHeight>
       <FormView gap="$3">
@@ -75,6 +80,7 @@ export default () => {
           <ListItem
             label={t('brand.services.title')}
             icon={<Icon name={icons.Service} />}
+            onPress={onServicesPress}
           />
           <ListItem
             label={t('brand.packages.title')}

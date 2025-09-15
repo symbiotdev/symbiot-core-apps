@@ -109,6 +109,7 @@ export const CreateBrandLocation = () => {
               ...form.floor,
               name: 'floor',
               regex: /\d+/,
+              type: 'numeric',
               keyboardType: 'numeric',
             },
           },
@@ -116,7 +117,6 @@ export const CreateBrandLocation = () => {
             type: 'textarea',
             props: {
               ...form.remark,
-              scheme: form.remark.scheme,
               name: 'remark',
               enterKeyHint: 'done',
             },

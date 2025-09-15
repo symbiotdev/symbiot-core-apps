@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { View } from 'tamagui';
 import { Placement } from '@floating-ui/react-native';
+import { useApp } from '@symbiot-core-apps/app';
 
 export const PlusActionAdaptiveModal = ({
   trigger,
@@ -20,6 +21,7 @@ export const PlusActionAdaptiveModal = ({
   placement?: Placement;
 }) => {
   const { t } = useTranslation();
+  const { icons } = useApp();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
   const popoverRef = useRef<AdaptivePopoverRef>(null);
 
@@ -43,7 +45,13 @@ export const PlusActionAdaptiveModal = ({
     router.push('/locations/create');
   }, []);
 
+  const addService = useCallback(() => {
+    popoverRef.current?.close();
+    router.push('/services/create');
+  }, []);
+
   const hasClientsPermission = hasPermission('clientsAll');
+  const hasServicesPermission = hasPermission('servicesAll');
   const hasInfrastructurePermissions = hasAnyOfPermissions([
     'employeesAll',
     'locationsAll',
@@ -78,7 +86,18 @@ export const PlusActionAdaptiveModal = ({
           </View>
         )}
 
-        {hasInfrastructurePermissions && hasClientsPermission && <Br />}
+        {hasInfrastructurePermissions && hasServicesPermission && <Br />}
+
+        {hasServicesPermission && (
+          <ListItem
+            icon={<Icon name={icons.Service} />}
+            label={t('navigation.tabs.plus.actions.add_service.label')}
+            onPress={addService}
+          />
+        )}
+
+        {(hasInfrastructurePermissions || hasServicesPermission) &&
+          hasClientsPermission && <Br />}
 
         {hasClientsPermission && (
           <View gap="$1">

@@ -58,14 +58,14 @@ const MenuItem = memo(
       );
 
     const onPress = useCallback(() => {
-      if (!focused) {
+      if (pathname !== route) {
         if (router.canDismiss()) {
           router.dismissAll();
         }
 
         router.replace(route);
       }
-    }, [focused, route]);
+    }, [pathname, route]);
 
     return (
       <ListItem
@@ -216,6 +216,15 @@ export const DrawerMenu = () => {
           />
         )}
 
+        {hasPermission('clientsAll') && (
+          <MenuItem
+            route="/clients"
+            label={t('navigation.drawer.clients.label')}
+            icon="SmileCircle"
+            additionalRoutes={['/clients/create']}
+          />
+        )}
+
         {hasPermission('locationsAll') && (
           <MenuItem
             route="/locations"
@@ -234,12 +243,12 @@ export const DrawerMenu = () => {
           />
         )}
 
-        {hasPermission('clientsAll') && (
+        {hasPermission('servicesAll') && (
           <MenuItem
-            route="/clients"
-            label={t('navigation.drawer.clients.label')}
-            icon="SmileCircle"
-            additionalRoutes={['/clients/create']}
+            route="/services"
+            label={t('navigation.drawer.services.label')}
+            icon={icons.Service}
+            additionalRoutes={['/services/create']}
           />
         )}
 

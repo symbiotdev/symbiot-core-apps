@@ -147,8 +147,10 @@ export function SurveyStepForm<V>({
                             error={error?.message}
                             label={el.props.label}
                             placeholder={el.props.placeholder}
+                            maxLength={el.props.maxLength}
                             required={el.props.required}
                             regex={el.props.regex}
+                            type={el.props.type}
                             onChange={onChange}
                           />
                         )}
@@ -246,6 +248,8 @@ export function SurveyStepForm<V>({
                             options={el.props.options}
                             optionsLoading={el.props.optionsLoading}
                             optionsError={el.props.optionsError}
+                            noCheckedValue={el.props.noCheckedValue}
+                            showSelectedDescription={el.props.showSelectedDescription}
                             value={value}
                             error={error?.message}
                             onChange={onChange}

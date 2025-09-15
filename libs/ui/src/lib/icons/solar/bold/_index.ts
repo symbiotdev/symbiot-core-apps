@@ -61,6 +61,10 @@ import { Import } from './Import';
 import { Document } from './Document';
 import { Magnifer } from './Magnifer';
 import { ChartSquare } from './ChartSquare';
+import { TurntableMusicNote } from './TurntableMusicNote';
+import { TicketStar } from './TicketStar';
+import { Gift } from './Gift';
+import { Plate } from './Plate';
 
 export const Map: IconMap = {
   AddCircle,
@@ -87,6 +91,7 @@ export const Map: IconMap = {
   Earth,
   FileText,
   Gallery,
+  Gift,
   Global,
   Heart,
   Home,
@@ -107,6 +112,7 @@ export const Map: IconMap = {
   Moon,
   PaperclipRounded,
   Pen,
+  Plate,
   QrCode,
   QuestionCircle,
   Rocket,
@@ -116,9 +122,11 @@ export const Map: IconMap = {
   ShareCircle,
   Suitcase,
   Sun,
+  TicketStar,
   TrashBinMinimalistic,
   Tuning2,
   TuningSquare,
+  TurntableMusicNote,
   Unread,
   UserCircle,
   UserId,

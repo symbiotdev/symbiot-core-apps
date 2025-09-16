@@ -1,4 +1,8 @@
-import { KeyboardType, TextInputProps } from 'react-native';
+import {
+  AnimatableNumericValue,
+  KeyboardType,
+  TextInputProps,
+} from 'react-native';
 import * as yup from 'yup';
 import {
   AppLinkType,
@@ -113,6 +117,7 @@ export type SurveyStep<V> = {
         type: 'avatar';
         props: SurveyStepElement<V> & {
           stepValueKey: string;
+          borderRadius?: AnimatableNumericValue | string | undefined;
         };
       }
     | {

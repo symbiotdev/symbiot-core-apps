@@ -341,6 +341,37 @@ export default () => {
                     headerTitle: t('shared.preferences.notifications.title'),
                   }}
                 />
+
+                <Stack.Protected guard={hasPermission('servicesAll')}>
+                  <Stack.Screen
+                    name="services/preferences/index"
+                    options={{
+                      headerTitle: t('brand.services.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="services/create"
+                    options={{
+                      headerTitle: t('brand.services.new_service'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="services/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                      headerTitle: t('brand.services.title'),
+                    }}
+                  />
+
+                  <Stack.Screen
+                    name="services/[id]/profile"
+                    options={{
+                      headerTitle: t('brand.services.profile.title'),
+                    }}
+                  />
+                </Stack.Protected>
               </Stack>
             )}
 

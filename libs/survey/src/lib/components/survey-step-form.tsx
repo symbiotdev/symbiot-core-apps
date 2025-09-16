@@ -282,6 +282,7 @@ export function SurveyStepForm<V>({
                             )}
                             color="$placeholderColor"
                             size={140}
+                            borderRadius={el.props.borderRadius}
                             marginTop="$10"
                             onAttach={onChange}
                           />

@@ -13,6 +13,7 @@ export const AvatarPicker = ({
   size,
   label,
   color,
+  borderRadius = '100%',
   url,
   loading,
   removable,
@@ -64,7 +65,13 @@ export const AvatarPicker = ({
         {...viewProps}
         width={size}
       >
-        <Avatar url={url} name={name} size={size} color={color} />
+        <Avatar
+          url={url}
+          name={name}
+          size={size}
+          color={color}
+          borderRadius={borderRadius}
+        />
 
         {(loading || processing) && (
           <View
@@ -74,7 +81,7 @@ export const AvatarPicker = ({
             zIndex={1}
             width="100%"
             height="100%"
-            borderRadius="100%"
+            borderRadius={borderRadius}
             justifyContent="center"
             alignItems="center"
           >

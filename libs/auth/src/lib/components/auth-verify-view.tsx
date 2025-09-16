@@ -1,4 +1,4 @@
-import { InputCode, Link, RegularText } from '@symbiot-core-apps/ui';
+import { CodeInput, Link, RegularText } from '@symbiot-core-apps/ui';
 import { AuthFormView } from './auth-form-view';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { router } from 'expo-router';
@@ -73,7 +73,7 @@ export const AuthVerifyView = ({
       }
       onButtonPress={resend}
     >
-      <InputCode
+      <CodeInput
         cellCount={authCodeLength}
         disabled={loading}
         onChange={onChange}

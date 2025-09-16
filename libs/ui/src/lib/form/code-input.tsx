@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
 import {
   CodeField,
   Cursor,
@@ -11,7 +11,7 @@ import { View } from 'tamagui';
 import { Error } from '../text/custom';
 import { RegularText } from '../text/text';
 
-export const InputCode = ({
+export const CodeInput = ({
   cellCount,
   error,
   disabled,
@@ -48,7 +48,7 @@ export const InputCode = ({
         </RegularText>
       </View>
     ),
-    [getCellOnLayout]
+    [getCellOnLayout],
   );
 
   return (
@@ -58,7 +58,10 @@ export const InputCode = ({
         {...codeFieldProps}
         autoFocus
         value={value}
-        rootStyle={styles.CodeFieldRoot}
+        rootStyle={{
+          justifyContent: 'center',
+          gap: 12,
+        }}
         readOnly={disabled}
         cellCount={cellCount}
         keyboardType="number-pad"
@@ -73,10 +76,3 @@ export const InputCode = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  CodeFieldRoot: {
-    justifyContent: 'center',
-    gap: 12,
-  },
-});

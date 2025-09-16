@@ -23,6 +23,7 @@ import {
   LinkItem,
   PhoneInput,
   PhoneValue,
+  PriceInput,
   RegularText,
   SelectPicker,
   Switch,
@@ -152,6 +153,17 @@ export function SurveyStepForm<V>({
                             required={el.props.required}
                             regex={el.props.regex}
                             type={el.props.type}
+                            onChange={onChange}
+                          />
+                        )}
+
+                        {el.type === 'price-input' && (
+                          <PriceInput
+                            value={value as number}
+                            error={error?.message}
+                            label={el.props.label}
+                            placeholder={el.props.placeholder}
+                            required={el.props.required}
                             onChange={onChange}
                           />
                         )}

@@ -53,6 +53,13 @@ export type SurveyStep<V> = {
         };
       }
     | {
+        type: 'price-input';
+        props: SurveyStepElement<V> & {
+          label?: string;
+          placeholder: string;
+        };
+      }
+    | {
         type: 'switch';
         props: SurveyStepElement<V> & {
           label?: string;

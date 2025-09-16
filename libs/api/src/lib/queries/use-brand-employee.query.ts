@@ -151,6 +151,18 @@ export const useCurrentBrandEmployeeListQuery = (props?: {
     ...props,
   });
 
+export const useCurrentBrandEmployeeProvidersListQuery = (props?: {
+  initialState?: PaginationList<BrandEmployee>;
+  setInitialState?: (state: PaginationList<BrandEmployee>) => void;
+  params?: PaginationListParams;
+}) =>
+  useInfiniteQueryWrapper({
+    refetchOnMount: true,
+    apUrl: '/api/brand-employee/providers',
+    queryKey: [BrandEmployeesQueryKey.currentList, props?.params],
+    ...props,
+  });
+
 export const useBrandEmployeeProfileByIdQuery = (
   id: string,
   enabled = true,

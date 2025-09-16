@@ -16,11 +16,13 @@ export function useInfiniteQueryWrapper<T>({
   apUrl,
   queryKey,
   params,
+  refetchOnMount = false,
   initialState,
   setInitialState,
 }: {
   apUrl: string;
   queryKey: unknown[];
+  refetchOnMount?: boolean;
   params?: PaginationListParams;
   initialState?: PaginationList<T>;
   setInitialState?: (state: PaginationList<T>) => void;
@@ -33,7 +35,7 @@ export function useInfiniteQueryWrapper<T>({
     T | undefined
   >({
     getNextPageParam,
-    refetchOnMount: false,
+    refetchOnMount,
     initialPageParam: undefined,
     queryKey,
     queryFn: ({ pageParam }) =>

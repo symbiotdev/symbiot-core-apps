@@ -17,6 +17,7 @@ export * from './lib/form/country-picker';
 export * from './lib/form/currency-picker';
 export * from './lib/form/date-picker';
 export * from './lib/form/document-picker';
+export * from './lib/form/duration-picker';
 export * from './lib/form/gallery-picker';
 export * from './lib/form/media-picker';
 export * from './lib/form/input';

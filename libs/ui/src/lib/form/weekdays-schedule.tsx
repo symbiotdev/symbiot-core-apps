@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from 'react';
 import * as yup from 'yup';
 import { MediumText, RegularText } from '../text/text';
 import { InputFieldView } from '../view/input-field-view';
-import { AdaptivePopover, popoverPadding } from '../popover/adaptive-popover';
+import { AdaptivePopover } from '../popover/adaptive-popover';
 import { ToggleOnChange } from './toggle-group';
 import { H4 } from '../text/heading';
 import { Switch } from './switch';
@@ -262,7 +262,6 @@ const WeekdayScheduleElement = ({
               lazy
               value={value?.start}
               options={minutes}
-              paddingHorizontal={popoverPadding}
               onChange={onChangeStartValue as ToggleOnChange}
             />
           )}
@@ -272,7 +271,6 @@ const WeekdayScheduleElement = ({
               lazy
               value={value?.end}
               options={endMinutes}
-              paddingHorizontal={popoverPadding}
               onChange={onChangeEndValue as ToggleOnChange}
             />
           )}

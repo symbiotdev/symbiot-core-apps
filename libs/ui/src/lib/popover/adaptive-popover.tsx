@@ -26,11 +26,14 @@ import {
   useScreenSize,
 } from '@symbiot-core-apps/shared';
 import { ContainerView } from '../view/container-view';
+import {
+  defaultPageHorizontalPadding,
+  defaultPageVerticalPadding,
+} from '../view/page-view';
 
-export const popoverPadding = 24;
-export const popoverHalfPadding = 12;
-
-const adaptiveMediaSize = (Platform.OS === 'web' ? 'md' : 'xl') as keyof AdaptWhen;
+const adaptiveMediaSize = (
+  Platform.OS === 'web' ? 'md' : 'xl'
+) as keyof AdaptWhen;
 
 export type AdaptivePopoverRef = {
   open: () => void;
@@ -164,10 +167,7 @@ export const AdaptivePopover = forwardRef(
         {triggerType === 'manual' || disabled ? (
           trigger
         ) : (
-          <Popover.Trigger
-            asChild
-            disabled={disabled}
-          >
+          <Popover.Trigger asChild disabled={disabled}>
             {trigger}
           </Popover.Trigger>
         )}
@@ -190,9 +190,8 @@ export const AdaptivePopover = forwardRef(
             !!topFixedContent && (
               <View
                 width="100%"
-                paddingHorizontal={popoverPadding}
-                paddingTop={popoverPadding}
-                paddingBottom={popoverHalfPadding}
+                paddingHorizontal={defaultPageHorizontalPadding}
+                paddingVertical={defaultPageVerticalPadding}
               >
                 {topFixedContent}
               </View>
@@ -209,9 +208,9 @@ export const AdaptivePopover = forwardRef(
                 width: '100%',
               }}
               contentContainerStyle={{
-                paddingTop: topFixedContent ? 0 : popoverHalfPadding,
-                paddingBottom: popoverHalfPadding,
-                paddingHorizontal: popoverPadding,
+                paddingTop: topFixedContent ? 0 : defaultPageVerticalPadding,
+                paddingBottom: defaultPageHorizontalPadding,
+                paddingHorizontal: defaultPageHorizontalPadding,
               }}
             >
               <ContainerView children={children} />
@@ -247,23 +246,25 @@ export const AdaptivePopover = forwardRef(
                 paddingLeft={left}
                 paddingRight={right}
               >
-                {!disableDrag ?  (
+                {!disableDrag ? (
                   <View
                     width={50}
                     height={4}
                     borderRadius="$10"
                     cursor="pointer"
                     backgroundColor="$disabled"
-                    marginVertical={popoverHalfPadding}
+                    marginVertical={defaultPageVerticalPadding}
                     marginHorizontal="auto"
                   />
-                ) : <View height={popoverPadding} />}
+                ) : (
+                  <View height={defaultPageVerticalPadding * 2} />
+                )}
 
                 {!!sheetTitle && (
                   <H4
                     textAlign="center"
-                    paddingHorizontal={popoverPadding}
-                    paddingBottom={popoverHalfPadding}
+                    paddingHorizontal={defaultPageHorizontalPadding}
+                    paddingBottom={defaultPageVerticalPadding}
                   >
                     {sheetTitle}
                   </H4>
@@ -272,8 +273,8 @@ export const AdaptivePopover = forwardRef(
                 {!!topFixedContent && (
                   <View
                     width="100%"
-                    paddingHorizontal={popoverPadding}
-                    paddingBottom={popoverHalfPadding}
+                    paddingHorizontal={defaultPageHorizontalPadding}
+                    paddingBottom={defaultPageVerticalPadding}
                   >
                     {topFixedContent}
                   </View>
@@ -288,9 +289,11 @@ export const AdaptivePopover = forwardRef(
                     style={{ maxHeight: adjustedMaxHeight }}
                     contentContainerStyle={{
                       paddingTop:
-                        sheetTitle || topFixedContent ? 0 : popoverHalfPadding,
-                      paddingBottom: bottom + popoverPadding,
-                      paddingHorizontal: popoverPadding,
+                        sheetTitle || topFixedContent
+                          ? 0
+                          : defaultPageHorizontalPadding,
+                      paddingBottom: bottom + defaultPageHorizontalPadding,
+                      paddingHorizontal: defaultPageHorizontalPadding,
                     }}
                   >
                     <Adapt.Contents />

@@ -8,10 +8,9 @@ import {
   useState,
 } from 'react';
 import { useTheme, View, ViewProps, XStack } from 'tamagui';
-import { FlatList, Platform } from 'react-native';
+import { FlatList, Platform, ViewStyle } from 'react-native';
 import { InitView } from '../view/init-view';
 import { RegularText } from '../text/text';
-import { Icon } from '../icons';
 import { toggleItemMinHeight } from './toggle-group';
 import {
   defaultPageHorizontalPadding,
@@ -36,6 +35,7 @@ export const Picker = ({
   optionsError,
   disabled,
   lazy,
+  contentContainerStyle,
   moveSelectedToTop,
   onChange,
   ...viewProps
@@ -47,6 +47,7 @@ export const Picker = ({
   disabled?: boolean;
   lazy?: boolean; // not applicable on IOS
   moveSelectedToTop?: boolean; // not applicable on IOS
+  contentContainerStyle?: ViewStyle; // not applicable on IOS
   onChange?: PickerOnChange;
 }) => {
   const theme = useTheme();
@@ -76,6 +77,7 @@ export const Picker = ({
 
   return Platform.OS === 'ios' ? (
     <View
+      flex={1}
       disabled={disabled}
       onMoveShouldSetResponder={(e) => {
         e.stopPropagation();
@@ -86,8 +88,8 @@ export const Picker = ({
     >
       <RNPicker
         selectedValue={selectedValue as string}
-        onValueChange={onValueChange}
         itemStyle={{ fontFamily: 'BodyMedium', color: theme.color?.val }}
+        onValueChange={onValueChange}
       >
         {adjustedOptions.map((option, index) => (
           <RNPicker.Item
@@ -104,6 +106,7 @@ export const Picker = ({
       options={adjustedOptions}
       disabled={disabled}
       lazy={lazy}
+      contentContainerStyle={contentContainerStyle}
       ignoreScrollTopOnChange={!moveSelectedToTop}
       onChange={onValueChange as PickerOnChange}
     />
@@ -116,12 +119,14 @@ const CustomPicker = ({
   disabled,
   ignoreScrollTopOnChange,
   lazy,
+  contentContainerStyle,
   onChange,
 }: {
   value?: unknown;
   disabled?: boolean;
   ignoreScrollTopOnChange?: boolean;
   lazy?: boolean;
+  contentContainerStyle?: ViewStyle;
   options: PickerItem[];
   onChange: PickerOnChange;
 }) => {
@@ -147,10 +152,12 @@ const CustomPicker = ({
   const renderItem = useCallback(
     ({ item }: { item: PickerItem }) => {
       return (
-        <XStack
-          gap="$4"
+        <View
+          gap="$1"
+          justifyContent="center"
           alignItems="center"
           paddingVertical={10}
+          minHeight={toggleItemMinHeight}
           paddingHorizontal={defaultPageHorizontalPadding}
           disabled={disabled}
           backgroundColor={value === item.value ? '$background' : undefined}
@@ -168,32 +175,27 @@ const CustomPicker = ({
             }
           }}
         >
-          {item.icon}
+          <XStack alignItems="center" gap="$2">
+            {item.icon}
 
-          <View
-            flex={1}
-            gap="$1"
-            minHeight={toggleItemMinHeight}
-            justifyContent="center"
-          >
-            <RegularText color={disabled ? '$disabled' : '$color'}>
+            <RegularText
+              color={disabled ? '$disabled' : '$color'}
+              textAlign="center"
+            >
               {item.label}
             </RegularText>
+          </XStack>
 
-            {item.description && (
-              <RegularText fontSize={12} color="$placeholderColor">
-                {item.description}
-              </RegularText>
-            )}
-          </View>
-
-          {value === item.value && (
-            <Icon
-              name="Unread"
-              color={disabled ? '$disabled' : '$checkboxColor'}
-            />
+          {item.description && (
+            <RegularText
+              fontSize={12}
+              color="$placeholderColor"
+              textAlign="center"
+            >
+              {item.description}
+            </RegularText>
           )}
-        </XStack>
+        </View>
       );
     },
     [disabled, ignoreScrollTopOnChange, scrollToIndex, onChange, value],
@@ -218,10 +220,13 @@ const CustomPicker = ({
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       style={{ maxHeight: 300 }}
-      contentContainerStyle={{
-        paddingHorizontal: defaultPageHorizontalPadding,
-        paddingVertical: defaultPageVerticalPadding,
-      }}
+      contentContainerStyle={[
+        {
+          paddingHorizontal: defaultPageHorizontalPadding,
+          paddingVertical: defaultPageVerticalPadding,
+        },
+        contentContainerStyle,
+      ]}
       renderItem={renderItem}
       onScrollToIndexFailed={(info) =>
         setTimeout(() => scrollToIndex(info.index))

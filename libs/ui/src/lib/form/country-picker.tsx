@@ -42,7 +42,7 @@ export const CountryPicker = ({
         label:
           `${Platform.OS === 'ios' ? flag : ''} ${countryNameInNativeLanguage[value] || countries[value].name}`.trim(),
         description: countries[value].name,
-        icon: <RegularText fontSize={34}>{flag}</RegularText>,
+        icon: <RegularText fontSize={18}>{flag}</RegularText>,
       };
     });
   }, []);

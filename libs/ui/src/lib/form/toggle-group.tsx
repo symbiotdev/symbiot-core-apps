@@ -160,12 +160,12 @@ const Item = memo(
           minHeight={toggleItemMinHeight}
           justifyContent="center"
         >
-          <RegularText color={disabled ? '$disabled' : '$color'}>
+          <RegularText color={disabled ? '$disabled' : '$color'} numberOfLines={1}>
             {item.label}
           </RegularText>
 
           {item.description && (
-            <RegularText fontSize={12} color="$placeholderColor">
+            <RegularText fontSize={12} color="$placeholderColor" numberOfLines={2}>
               {item.description}
             </RegularText>
           )}

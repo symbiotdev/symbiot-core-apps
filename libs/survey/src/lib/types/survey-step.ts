@@ -2,6 +2,7 @@ import { KeyboardType, TextInputProps } from 'react-native';
 import * as yup from 'yup';
 import {
   AppLinkType,
+  DurationPickerUnit,
   PickerItem,
   ToggleGroupItem,
 } from '@symbiot-core-apps/ui';
@@ -82,6 +83,7 @@ export type SurveyStep<V> = {
         props: SurveyStepElement<V> & {
           label?: string;
           multiselect?: boolean;
+          allowEmpty?: boolean;
           optionsLoading?: boolean;
           optionsError?: string | null;
           options?: ToggleGroupItem[];
@@ -147,6 +149,14 @@ export type SurveyStep<V> = {
     | {
         type: 'date-picker';
         props: SurveyStepElement<V> & {
+          label?: string;
+          placeholder?: string;
+        };
+      }
+    | {
+        type: 'duration-picker';
+        props: SurveyStepElement<V> & {
+          units: DurationPickerUnit[];
           label?: string;
           placeholder?: string;
         };

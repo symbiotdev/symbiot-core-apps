@@ -16,6 +16,7 @@ import {
   DatePicker,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
+  DurationPicker,
   FormView,
   H2,
   Input,
@@ -228,6 +229,7 @@ export function SurveyStepForm<V>({
                               borderRadius: '$10',
                               paddingHorizontal: defaultPageHorizontalPadding,
                             }}
+                            allowEmpty={el.props.allowEmpty}
                             label={el.props.label}
                             multiselect={el.props.multiselect}
                             items={el.props.options}
@@ -249,7 +251,9 @@ export function SurveyStepForm<V>({
                             optionsLoading={el.props.optionsLoading}
                             optionsError={el.props.optionsError}
                             noCheckedValue={el.props.noCheckedValue}
-                            showSelectedDescription={el.props.showSelectedDescription}
+                            showSelectedDescription={
+                              el.props.showSelectedDescription
+                            }
                             value={value}
                             error={error?.message}
                             onChange={onChange}
@@ -339,6 +343,18 @@ export function SurveyStepForm<V>({
                             label={el.props.label}
                             placeholder={el.props.placeholder}
                             required={el.props.required}
+                            onChange={onChange}
+                          />
+                        )}
+
+                        {el.type === 'duration-picker' && (
+                          <DurationPicker
+                            value={value as number}
+                            error={error?.message}
+                            label={el.props.label}
+                            placeholder={el.props.placeholder}
+                            required={el.props.required}
+                            units={el.props.units}
                             onChange={onChange}
                           />
                         )}

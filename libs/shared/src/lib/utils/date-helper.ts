@@ -1,4 +1,4 @@
-import { Day, Duration } from 'date-fns/types';
+import { Day } from 'date-fns/types';
 import { startOfWeek } from 'date-fns/startOfWeek';
 import { format } from 'date-fns/format';
 import { addDays } from 'date-fns/addDays';
@@ -26,8 +26,16 @@ import { isSameMonth } from 'date-fns/isSameMonth';
 import { toDate } from 'date-fns/toDate';
 import { set } from 'date-fns/set';
 import { isValid } from 'date-fns/isValid';
+import i18n from 'i18next';
 
-const defaultWeekdayStartsOn: Day = 0;
+export const defaultWeekdayStartsOn: Day = 0;
+export const minutesInHour = 60;
+export const hoursInDay = 24;
+export const minutesInDay = hoursInDay * minutesInHour;
+export const averageDaysInMonth = 30.4375;
+export const averageDaysInYear = 365.25;
+export const minutesInYear = averageDaysInYear * minutesInDay;
+export const minutesInMonth = averageDaysInMonth * minutesInDay;
 
 export type Weekday = Day;
 
@@ -52,17 +60,43 @@ export const DateHelper = {
   differenceInYears,
   intervalToDuration,
   eachDayOfInterval,
-  formatDuration: (duration: Duration) =>
-    formatDuration(duration, {
-      locale: getDateLocale(),
-    }),
-  formatDurationFromMinutes: (minutes: number) => {
-    const start = DateHelper.startOfDay(new Date());
-    const end = DateHelper.addMinutes(start, minutes);
+  formatDuration: (totalMinutes: number, shortFormat?: boolean) => {
+    const years = Math.floor(totalMinutes / minutesInYear);
+    const remainingMinutesAfterYears = totalMinutes % minutesInYear;
 
-    return DateHelper.formatDuration(
-      DateHelper.intervalToDuration({ start, end }),
-    );
+    const months = Math.floor(remainingMinutesAfterYears / minutesInMonth);
+    const remainingMinutesAfterMonths =
+      remainingMinutesAfterYears % minutesInMonth;
+
+    const days = Math.floor(remainingMinutesAfterMonths / minutesInDay);
+    const remainingMinutesAfterDays =
+      remainingMinutesAfterMonths % minutesInDay;
+
+    const hours = Math.floor(remainingMinutesAfterDays / 60);
+    const minutes = remainingMinutesAfterDays % 60;
+
+    const duration: Record<string, number> = {
+      years,
+      months,
+      days,
+      hours,
+      minutes,
+    };
+
+    if (shortFormat) {
+      return Object.keys(duration)
+        .filter((key) => duration[key])
+        .reduce(
+          (str, key) =>
+            `${duration[key]} ${i18n.t(`shared.datetime.short_format.${key}`)}`,
+          '',
+        )
+        .trim();
+    }
+
+    return formatDuration(duration, {
+      locale: getDateLocale(),
+    });
   },
   startOfWeek: (date: Date, weekStartsOn: Day = defaultWeekdayStartsOn) =>
     startOfWeek(date, {
@@ -116,7 +150,7 @@ export const DateHelper = {
   get24HoursInFormattedTime: (interval = 15) => {
     const start = DateHelper.startOfDay(new Date());
 
-    return Array.from({ length: (24 * 60) / interval }).map((_, i) => ({
+    return Array.from({ length: minutesInDay / interval }).map((_, i) => ({
       label: DateHelper.format(DateHelper.addMinutes(start, i * interval), 'p'),
       value: i * interval,
     }));
@@ -125,6 +159,6 @@ export const DateHelper = {
     return !start && !end;
   },
   isAllDay(start: number, end: number, offset = 15) {
-    return 24 * 60 - (end - start) <= offset;
+    return minutesInDay - (end - start) <= offset;
   },
 };

@@ -1,12 +1,21 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { Brand, CreateBrand, UpdateBrandData } from '../types/brand';
-import { requestWithAlertOnError } from '../utils/request';
+import {
+  Brand,
+  BrandIndustry,
+  CreateBrand,
+  UpdateBrandData,
+} from '../types/brand';
+import {
+  requestWithAlertOnError,
+  requestWithStringError,
+} from '../utils/request';
 import { generateFormData } from '../utils/media';
 import { AccountAuthTokens } from '../types/account-auth';
 
 export enum BrandQueryKey {
   current = 'brand-current',
+  industries = 'brand-industries',
 }
 
 type CurrentBrandResponse = {
@@ -23,6 +32,12 @@ export const useCurrentBrandQuery = ({ enabled }: { enabled: boolean }) =>
       requestWithAlertOnError<CurrentBrandResponse>(
         axios.get('/api/brand/current'),
       ),
+  });
+
+export const useBrandIndustriesQuery = () =>
+  useQuery<BrandIndustry[], string>({
+    queryKey: [BrandQueryKey.industries],
+    queryFn: () => requestWithStringError(axios.get('/api/brand/industries')),
   });
 
 export const useCurrentBrandUpdate = () =>

@@ -6,7 +6,7 @@ import {
   useAppCompetitorSource,
   useAppReferralSource,
   useBrandCreateQuery,
-  useBrandIndustryQuery,
+  useBrandIndustriesQuery,
 } from '@symbiot-core-apps/api';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { router } from 'expo-router';
@@ -21,7 +21,7 @@ type Value = {
   competitorSourceId?: string;
   customCompetitorSource?: string;
   customReferralSource?: string;
-  industryId: string;
+  industry: string;
   name: string;
   promoCode?: string;
   referralSourceId?: string;
@@ -41,8 +41,11 @@ export const CreateBrand = () => {
     useAppReferralSource();
   const { data: competitorSources, isPending: competitorSourcesLoading } =
     useAppCompetitorSource();
-  const { data: brandIndustries, isPending: brandIndustriesLoading } =
-    useBrandIndustryQuery();
+  const {
+    data: industries,
+    isPending: industriesLoading,
+    error: industriesError,
+  } = useBrandIndustriesQuery();
   const { mutateAsync } = useBrandCreateQuery();
 
   const createdRef = useRef(false);
@@ -101,15 +104,11 @@ export const CreateBrand = () => {
                   type: 'toggle-group',
                   props: {
                     label: '',
-                    name: 'industryId',
+                    name: 'industry',
                     scheme: yup.string().required(),
-                    optionsLoading: brandIndustriesLoading,
-                    options: brandIndustries
-                      ?.sort((a, b) => b.rate - a.rate)
-                      ?.map((industry) => ({
-                        label: industry.name,
-                        value: industry.id,
-                      })),
+                    options: industries,
+                    optionsLoading: industriesLoading,
+                    optionsError: industriesError,
                   },
                 },
               ],
@@ -278,8 +277,9 @@ export const CreateBrand = () => {
       referralSourcesLoading,
       competitorSources,
       competitorSourcesLoading,
-      brandIndustries,
-      brandIndustriesLoading,
+      industries,
+      industriesLoading,
+      industriesError,
     ],
   );
 
@@ -292,7 +292,7 @@ export const CreateBrand = () => {
           name: value.name,
           avatar: value.avatar,
           promoCode: value.promoCode,
-          industries: value.industryId ? [value.industryId] : [],
+          industries: value.industry ? [value.industry] : [],
           referralSourceId: value.referralSourceId,
           customReferralSource: value.customReferralSource,
           competitorSourceId: value.competitorSourceId,

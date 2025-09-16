@@ -1,8 +1,12 @@
 import { ImagePickerAsset } from 'expo-image-picker';
-import { BrandIndustry } from './brand-industry';
 import { Account } from './account';
 import { Link } from './link';
 import { BrandLocation } from './brand-location';
+
+export type BrandIndustry = {
+  label: string;
+  value: string;
+};
 
 export type Brand = {
   id: string;

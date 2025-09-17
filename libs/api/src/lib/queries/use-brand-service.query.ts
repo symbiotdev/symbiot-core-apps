@@ -15,12 +15,15 @@ import { generateFormData } from '../utils/media';
 import { PaginationList, PaginationListParams } from '../types/pagination';
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { Gender } from '../types/gender';
+import { queryClient } from '../utils/client';
 
 export enum BrandServiceQueryKey {
   types = 'brand-service-types',
   formats = 'brand-service-formats',
   genders = 'brand-service-genders',
   currentList = 'brand-service-current-list',
+  profileById = 'brand-service-profile-by-id',
+  viewById = 'brand-service-view-by-id',
   detailedById = 'brand-service-detailed-by-id',
 }
 
@@ -35,7 +38,11 @@ const refetchQueriesByServiceChanges = async (
     refetchList,
     entity,
     queryKeys: {
-      byId: [BrandServiceQueryKey.detailedById],
+      byId: [
+        BrandServiceQueryKey.profileById,
+        BrandServiceQueryKey.viewById,
+        BrandServiceQueryKey.detailedById,
+      ],
       list: [BrandServiceQueryKey.currentList],
     },
   });
@@ -46,6 +53,42 @@ export const useBrandServiceTypesQuery = () =>
     queryFn: () =>
       requestWithStringError(axios.get('/api/brand-service/types')),
   });
+
+export const useBrandServiceProfileByIdQuery = (id: string, enabled = true) => {
+  const queryKey = [BrandServiceQueryKey.profileById, id];
+
+  return useQuery<BrandService, string>({
+    queryKey,
+    enabled: enabled || !queryClient.getQueryData(queryKey),
+    queryFn: () =>
+      requestWithStringError(axios.get(`/api/brand-service/profile/${id}`)),
+  });
+};
+
+export const useBrandServiceViewByIdQuery = (id: string, enabled = true) => {
+  const queryKey = [BrandServiceQueryKey.viewById, id];
+
+  return useQuery<BrandService, string>({
+    queryKey,
+    enabled: enabled || !queryClient.getQueryData(queryKey),
+    queryFn: () =>
+      requestWithStringError(axios.get(`/api/brand-service/view/${id}`)),
+  });
+};
+
+export const useBrandServiceDetailedByIdQuery = (
+  id: string,
+  enabled = true,
+) => {
+  const queryKey = [BrandServiceQueryKey.detailedById, id];
+
+  return useQuery<BrandService, string>({
+    queryKey,
+    enabled: enabled || !queryClient.getQueryData(queryKey),
+    queryFn: () =>
+      requestWithStringError(axios.get(`/api/brand-service/detailed/${id}`)),
+  });
+};
 
 export const useBrandServiceFormatsQuery = () =>
   useQuery<BrandServiceFormat[], string>({

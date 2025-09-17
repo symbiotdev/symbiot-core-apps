@@ -13,6 +13,8 @@ import {
 } from '../types/brand-service';
 import { refetchQueriesByChanges } from '../utils/query';
 import { generateFormData } from '../utils/media';
+import { PaginationList, PaginationListParams } from '../types/pagination';
+import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 
 export enum BrandServiceQueryKey {
   types = 'brand-service-types',
@@ -57,6 +59,17 @@ export const useBrandServiceGendersQuery = () =>
     queryKey: [BrandServiceQueryKey.genders],
     queryFn: () =>
       requestWithStringError(axios.get('/api/brand-service/genders')),
+  });
+
+export const useCurrentBrandServiceListQuery = (props?: {
+  initialState?: PaginationList<BrandService>;
+  setInitialState?: (state: PaginationList<BrandService>) => void;
+  params?: PaginationListParams;
+}) =>
+  useInfiniteQueryWrapper({
+    apUrl: '/api/brand-service',
+    queryKey: [BrandServiceQueryKey.currentList, props?.params],
+    ...props,
   });
 
 export const useCreateBrandServiceQuery = () =>

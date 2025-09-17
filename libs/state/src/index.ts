@@ -5,6 +5,7 @@ export * from './lib/hooks/use-current-account.state';
 export * from './lib/hooks/use-current-brand.state';
 export * from './lib/hooks/use-current-brand-client.state';
 export * from './lib/hooks/use-current-brand-employee.state';
+export * from './lib/hooks/use-current-brand-service.state';
 
 export * from './lib/hooks/use-faq.state';
 export * from './lib/hooks/use-gender.state';

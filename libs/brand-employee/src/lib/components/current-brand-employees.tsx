@@ -8,10 +8,10 @@ import {
   FormView,
   Icon,
   InitView,
+  MediumText,
   NavigationBackground,
   RegularText,
   Search,
-  SemiBoldText,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import {
@@ -81,8 +81,12 @@ export const CurrentBrandEmployees = ({
         />
 
         <View gap="$1" flex={1}>
-          <SemiBoldText numberOfLines={1}>{item.name}</SemiBoldText>
-          <RegularText color="$placeholderColor" numberOfLines={1}>
+          <MediumText numberOfLines={1}>{item.name}</MediumText>
+          <RegularText
+            color="$placeholderColor"
+            numberOfLines={1}
+            lineHeight={20}
+          >
             {item.role}
           </RegularText>
         </View>

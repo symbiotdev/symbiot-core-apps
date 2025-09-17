@@ -9,10 +9,10 @@ import {
   FormView,
   Icon,
   InitView,
+  MediumText,
   NavigationBackground,
   PageView,
   Search,
-  SemiBoldText,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { useCurrentBrandClientState } from '@symbiot-core-apps/state';
@@ -79,9 +79,9 @@ export const CurrentBrandClients = ({
           url={item.avatarXsUrl}
         />
 
-        <SemiBoldText numberOfLines={1} flex={1}>
+        <MediumText numberOfLines={1} flex={1}>
           {`${item.firstname} ${item.lastname}`}
-        </SemiBoldText>
+        </MediumText>
 
         <Icon name="ArrowRight" />
       </FormView>

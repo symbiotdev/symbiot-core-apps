@@ -26,11 +26,12 @@ export type BrandService = {
   duration: number;
   price: number;
   discount: number;
-  bookable: boolean;
+  hidden: boolean;
   places: number;
   avatarUrl: string;
   avatarXsUrl: string;
   reminders: number[];
+  gender: BrandServiceGender;
   employees: BrandEmployee[];
   type: BrandServiceType;
   format: BrandServiceFormat;
@@ -44,7 +45,7 @@ export type CreateBrandService = {
   discount: number;
   places: number;
   duration: number;
-  bookable: boolean;
+  hidden: boolean;
   note?: string;
   gender?: string;
   description?: string;

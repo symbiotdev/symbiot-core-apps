@@ -3,6 +3,7 @@ import {
   useCurrentAccountState,
   useCurrentBrandClientState,
   useCurrentBrandEmployeeState,
+  useCurrentBrandServiceState,
   useCurrentBrandState,
   useFaqState,
   useNotificationsState,
@@ -11,9 +12,11 @@ import {
 export const StateProvider = ({ children }: PropsWithChildren) => {
   const { clear: clearCurrentAccountState } = useCurrentAccountState();
   const { clear: clearCurrentBrandState } = useCurrentBrandState();
+  const { clear: clearCurrentBrandClientState } = useCurrentBrandClientState();
   const { clear: clearCurrentBrandEmployeeState } =
     useCurrentBrandEmployeeState();
-  const { clear: clearCurrentBrandClientState } = useCurrentBrandClientState();
+  const { clear: clearCurrentBrandServiceState } =
+    useCurrentBrandServiceState();
   const { clear: clearFaq } = useFaqState();
   const { clear: clearNotificationsState } = useNotificationsState();
 
@@ -23,6 +26,7 @@ export const StateProvider = ({ children }: PropsWithChildren) => {
       clearCurrentBrandState();
       clearCurrentBrandEmployeeState();
       clearCurrentBrandClientState();
+      clearCurrentBrandServiceState();
       clearFaq();
       clearNotificationsState();
     };
@@ -31,6 +35,7 @@ export const StateProvider = ({ children }: PropsWithChildren) => {
     clearCurrentBrandState,
     clearCurrentBrandEmployeeState,
     clearCurrentBrandClientState,
+    clearCurrentBrandServiceState,
     clearFaq,
     clearNotificationsState,
   ]);

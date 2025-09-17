@@ -13,7 +13,11 @@ import {
 import { Avatar } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 
-const TypedSurvey = Survey<TCreateBrandService>;
+type Value = Omit<TCreateBrandService, 'hidden'> & {
+  available: boolean;
+};
+
+const TypedSurvey = Survey<Value>;
 
 export const CreateBrandService = () => {
   const { brand: currentBrand } = useCurrentBrandState();
@@ -47,7 +51,7 @@ export const CreateBrandService = () => {
   const createdRef = useRef(false);
   const [processing, setProcessing] = useState(false);
 
-  const steps: SurveyStep<TCreateBrandService>[] = useMemo(
+  const steps: SurveyStep<Value>[] = useMemo(
     () => [
       {
         id: 'about',
@@ -58,8 +62,8 @@ export const CreateBrandService = () => {
           {
             type: 'switch',
             props: {
-              ...form.bookable,
-              name: 'bookable',
+              ...form.available,
+              name: 'available',
               defaultValue: true,
             },
           },
@@ -293,19 +297,25 @@ export const CreateBrandService = () => {
     ],
   );
 
-  const onFinish = useCallback(async (value: TCreateBrandService) => {
-    try {
-      setProcessing(true);
+  const onFinish = useCallback(
+    async (value: Value) => {
+      try {
+        setProcessing(true);
 
-      const service = await createService(value);
+        const service = await createService({
+          ...value,
+          hidden: !value.available,
+        });
 
-      createdRef.current = true;
+        createdRef.current = true;
 
-      router.replace(`/services/${service.id}/profile`);
-    } finally {
-      setProcessing(false);
-    }
-  }, []);
+        router.replace(`/services/${service.id}/profile`);
+      } finally {
+        setProcessing(false);
+      }
+    },
+    [createService],
+  );
 
   return (
     <TypedSurvey

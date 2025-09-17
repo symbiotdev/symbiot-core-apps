@@ -17,6 +17,7 @@ export type Account = {
   test: boolean;
   hidden: boolean;
   blocked: boolean;
+  sourced: boolean;
   firebaseId: string;
   signInProvider: string;
   email: string;

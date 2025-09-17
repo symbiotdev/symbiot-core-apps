@@ -27,10 +27,8 @@ export type CreateBrand = {
   avatar?: ImagePickerAsset;
   promoCode?: string;
   industries?: string[];
-  referralSourceId?: string;
-  customReferralSource?: string;
-  competitorSourceId?: string;
-  customCompetitorSource?: string;
+  referralSource?: string;
+  competitorSource?: string;
   links?: Omit<Link, 'id'>[];
 };
 

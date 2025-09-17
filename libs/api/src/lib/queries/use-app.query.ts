@@ -7,6 +7,8 @@ import { AppTranslations } from '../types/app-translations';
 export enum AppQueryKey {
   config = 'app-config',
   translations = 'app-translations',
+  competitors = 'app-competitors',
+  referrals = 'app-referrals',
 }
 
 export const useAppConfigQuery = ({ refetch }: { refetch: boolean }) =>
@@ -27,4 +29,18 @@ export const useAppTranslationsQuery = ({ refetch }: { refetch: boolean }) =>
     refetchOnReconnect: refetch,
     queryKey: [AppQueryKey.translations],
     queryFn: () => requestWithStringError(axios.get('/api/app/translations')),
+  });
+
+export const useAppCompetitorsQuery = () =>
+  useQuery<{ label: string; value: string; free?: true }[]>({
+    staleTime: Infinity,
+    queryKey: [AppQueryKey.competitors],
+    queryFn: () => requestWithStringError(axios.get('/api/app/competitors')),
+  });
+
+export const useAppReferralsQuery = () =>
+  useQuery<{ label: string; value: string; free?: true }[]>({
+    staleTime: Infinity,
+    queryKey: [AppQueryKey.referrals],
+    queryFn: () => requestWithStringError(axios.get('/api/app/referrals')),
   });

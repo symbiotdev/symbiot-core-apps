@@ -9,9 +9,7 @@ export * from './lib/queries/use-account-device.query';
 export * from './lib/queries/use-notification.query';
 
 export * from './lib/queries/use-app.query';
-export * from './lib/queries/use-app-competitor-source.query';
 export * from './lib/queries/use-app-faq.query';
-export * from './lib/queries/use-app-referral-source.query';
 
 export * from './lib/queries/use-brand.query';
 export * from './lib/queries/use-brand-client-query';
@@ -37,7 +35,6 @@ export * from './lib/types/brand-employee';
 export * from './lib/types/brand-location';
 export * from './lib/types/brand-service';
 
-export * from './lib/types/external-source';
 export * from './lib/types/faq';
 export * from './lib/types/gender';
 export * from './lib/types/link';

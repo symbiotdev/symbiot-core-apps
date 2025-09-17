@@ -3,8 +3,8 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { Survey, SurveyStep } from '@symbiot-core-apps/survey';
 import {
   Link,
-  useAppCompetitorSource,
-  useAppReferralSource,
+  useAppCompetitorsQuery,
+  useAppReferralsQuery,
   useBrandCreateQuery,
   useBrandIndustriesQuery,
 } from '@symbiot-core-apps/api';
@@ -13,6 +13,7 @@ import { router } from 'expo-router';
 import * as yup from 'yup';
 import { getAppLinkSchema } from '@symbiot-core-apps/ui';
 import { useAuthBrand, useBrandAuthState } from '../hooks/use-brand-auth';
+import { useCurrentAccount } from '@symbiot-core-apps/state';
 
 const codeMaxLength = 64;
 
@@ -35,12 +36,13 @@ const isIndustriesEditable = Boolean(
 
 export const CreateBrand = () => {
   const { t } = useTranslation();
+  const { me } = useCurrentAccount();
   const switchBrand = useAuthBrand();
   const { processing: authProcessing } = useBrandAuthState();
-  const { data: referralSources, isPending: referralSourcesLoading } =
-    useAppReferralSource();
-  const { data: competitorSources, isPending: competitorSourcesLoading } =
-    useAppCompetitorSource();
+  const { data: referrals, isPending: referralsLoading } =
+    useAppReferralsQuery();
+  const { data: competitors, isPending: competitorsLoading } =
+    useAppCompetitorsQuery();
   const {
     data: industries,
     isPending: industriesLoading,
@@ -51,6 +53,149 @@ export const CreateBrand = () => {
   const createdRef = useRef(false);
 
   const [processing, setProcessing] = useState(false);
+
+  const additionalSteps: SurveyStep<Value>[] = useMemo(
+    () =>
+      !me?.sourced
+        ? [
+            {
+              id: 'referral-source',
+              nextId: 'competitor-source',
+              title: t('brand.create.steps.referral_source.title'),
+              subtitle: t('brand.create.steps.referral_source.subtitle'),
+              skippable: true,
+              elements: [
+                {
+                  type: 'toggle-group',
+                  props: {
+                    label: '',
+                    name: 'referralSourceId',
+                    scheme: yup.string().required(),
+                    optionsLoading: referralsLoading,
+                    options: referrals,
+                  },
+                },
+                {
+                  type: 'input',
+                  props: {
+                    name: 'customReferralSource',
+                    placeholder: t(
+                      'brand.create.steps.referral_source.form.external_source.placeholder',
+                    ),
+                    enterKeyHint: 'done',
+                    scheme: yup
+                      .string()
+                      .test(
+                        'validate-extended',
+                        t(
+                          'brand.create.steps.referral_source.form.external_source.error.required',
+                        ),
+                        function (value) {
+                          return (
+                            !referrals?.find(
+                              (referral) =>
+                                this.parent['referralSourceId'] ===
+                                referral.value,
+                            )?.free || !!value
+                          );
+                        },
+                      ),
+                    showWhen: ({ referralSourceId }) =>
+                      !!referrals?.find(
+                        (referral) => referralSourceId === referral.value,
+                      )?.free,
+                  },
+                },
+              ],
+            },
+            {
+              id: 'competitor-source',
+              nextId: 'promo-code',
+              title: t('brand.create.steps.competitor_source.title'),
+              subtitle: t('brand.create.steps.competitor_source.subtitle'),
+              skippable: true,
+              elements: [
+                {
+                  type: 'toggle-group',
+                  props: {
+                    label: '',
+                    name: 'competitorSourceId',
+                    scheme: yup.string().required(),
+                    optionsLoading: competitorsLoading,
+                    options: competitors,
+                  },
+                },
+                {
+                  type: 'input',
+                  props: {
+                    name: 'customCompetitorSource',
+                    placeholder: t(
+                      'brand.create.steps.competitor_source.form.external_source.placeholder',
+                    ),
+                    enterKeyHint: 'done',
+                    scheme: yup
+                      .string()
+                      .test(
+                        'validate-extended',
+                        t(
+                          'brand.create.steps.competitor_source.form.external_source.error.required',
+                        ),
+                        function (value) {
+                          return (
+                            !competitors?.find(
+                              (competitor) =>
+                                this.parent['competitorSourceId'] ===
+                                competitor.value,
+                            )?.free || !!value
+                          );
+                        },
+                      ),
+                    showWhen: ({ competitorSourceId }) =>
+                      !!competitors?.find(
+                        (competitor) => competitorSourceId === competitor.value,
+                      )?.free,
+                  },
+                },
+              ],
+            },
+            {
+              id: 'promo-code',
+              nextId: null,
+              title: t('brand.create.steps.promo_code.title'),
+              subtitle: t('brand.create.steps.promo_code.subtitle'),
+              skippable: true,
+              elements: [
+                {
+                  type: 'input',
+                  props: {
+                    name: 'promoCode',
+                    placeholder: t(
+                      'brand.create.steps.promo_code.form.code.placeholder',
+                    ),
+                    enterKeyHint: 'done',
+                    maxLength: codeMaxLength,
+                    scheme: yup
+                      .string()
+                      .required(
+                        t(
+                          'brand.create.steps.promo_code.form.code.error.required',
+                        ),
+                      ),
+                  },
+                },
+              ],
+            },
+          ]
+        : [],
+    [
+      competitors,
+      competitorsLoading,
+      me?.sourced,
+      referrals,
+      referralsLoading,
+      t,
+    ],
+  );
 
   const steps: SurveyStep<Value>[] = useMemo(
     () => [
@@ -117,7 +262,7 @@ export const CreateBrand = () => {
         : []),
       {
         id: 'website',
-        nextId: 'referral-source',
+        nextId: additionalSteps[0]?.id,
         title: t('brand.create.steps.website.title'),
         subtitle: t('brand.create.steps.website.subtitle'),
         skippable: true,
@@ -141,146 +286,9 @@ export const CreateBrand = () => {
           },
         ],
       },
-      {
-        id: 'referral-source',
-        nextId: 'competitor-source',
-        title: t('brand.create.steps.referral_source.title'),
-        subtitle: t('brand.create.steps.referral_source.subtitle'),
-        skippable: true,
-        elements: [
-          {
-            type: 'toggle-group',
-            props: {
-              label: '',
-              name: 'referralSourceId',
-              scheme: yup.string().required(),
-              optionsLoading: referralSourcesLoading,
-              options: referralSources
-                ?.sort((a, b) => b.rate - a.rate)
-                ?.map((source) => ({
-                  label: source.name,
-                  value: source.id,
-                })),
-            },
-          },
-          {
-            type: 'input',
-            props: {
-              name: 'customReferralSource',
-              placeholder: t(
-                'brand.create.steps.referral_source.form.external_source.placeholder',
-              ),
-              enterKeyHint: 'done',
-              scheme: yup
-                .string()
-                .test(
-                  'validate-extended',
-                  t(
-                    'brand.create.steps.referral_source.form.external_source.error.required',
-                  ),
-                  function (value) {
-                    return (
-                      !referralSources?.find(
-                        ({ id }) => this.parent['referralSourceId'] === id,
-                      )?.customizable || !!value
-                    );
-                  },
-                ),
-              showWhen: ({ referralSourceId }) =>
-                !!referralSources?.find(({ id }) => referralSourceId === id)
-                  ?.customizable,
-            },
-          },
-        ],
-      },
-      {
-        id: 'competitor-source',
-        nextId: 'promo-code',
-        title: t('brand.create.steps.competitor_source.title'),
-        subtitle: t('brand.create.steps.competitor_source.subtitle'),
-        skippable: true,
-        elements: [
-          {
-            type: 'toggle-group',
-            props: {
-              label: '',
-              name: 'competitorSourceId',
-              scheme: yup.string().required(),
-              optionsLoading: competitorSourcesLoading,
-              options: competitorSources
-                ?.sort((a, b) => b.rate - a.rate)
-                ?.map((source) => ({
-                  label: source.name,
-                  value: source.id,
-                })),
-            },
-          },
-          {
-            type: 'input',
-            props: {
-              name: 'customCompetitorSource',
-              placeholder: t(
-                'brand.create.steps.competitor_source.form.external_source.placeholder',
-              ),
-              enterKeyHint: 'done',
-              scheme: yup
-                .string()
-                .test(
-                  'validate-extended',
-                  t(
-                    'brand.create.steps.competitor_source.form.external_source.error.required',
-                  ),
-                  function (value) {
-                    return (
-                      !competitorSources?.find(
-                        ({ id }) => this.parent['competitorSourceId'] === id,
-                      )?.customizable || !!value
-                    );
-                  },
-                ),
-              showWhen: ({ competitorSourceId }) =>
-                !!competitorSources?.find(({ id }) => competitorSourceId === id)
-                  ?.customizable,
-            },
-          },
-        ],
-      },
-      {
-        id: 'promo-code',
-        nextId: null,
-        title: t('brand.create.steps.promo_code.title'),
-        subtitle: t('brand.create.steps.promo_code.subtitle'),
-        skippable: true,
-        elements: [
-          {
-            type: 'input',
-            props: {
-              name: 'promoCode',
-              placeholder: t(
-                'brand.create.steps.promo_code.form.code.placeholder',
-              ),
-              enterKeyHint: 'done',
-              maxLength: codeMaxLength,
-              scheme: yup
-                .string()
-                .required(
-                  t('brand.create.steps.promo_code.form.code.error.required'),
-                ),
-            },
-          },
-        ],
-      },
+      ...additionalSteps,
     ],
-    [
-      t,
-      referralSources,
-      referralSourcesLoading,
-      competitorSources,
-      competitorSourcesLoading,
-      industries,
-      industriesLoading,
-      industriesError,
-    ],
+    [t, industries, industriesLoading, industriesError, additionalSteps],
   );
 
   const onFinish = useCallback(
@@ -293,11 +301,17 @@ export const CreateBrand = () => {
           avatar: value.avatar,
           promoCode: value.promoCode,
           industries: value.industry ? [value.industry] : [],
-          referralSourceId: value.referralSourceId,
-          customReferralSource: value.customReferralSource,
-          competitorSourceId: value.competitorSourceId,
-          customCompetitorSource: value.customCompetitorSource,
           links: value.website ? [value.website] : [],
+          competitorSource: competitors?.find(
+            (competitor) => value.competitorSourceId === competitor.value,
+          )?.free
+            ? value.customCompetitorSource
+            : value.competitorSourceId,
+          referralSource: referrals?.find(
+            (referral) => value.referralSourceId === referral.value,
+          )?.free
+            ? value.customReferralSource
+            : value.referralSourceId,
         });
 
         createdRef.current = true;
@@ -309,7 +323,7 @@ export const CreateBrand = () => {
         setProcessing(false);
       }
     },
-    [mutateAsync, switchBrand],
+    [competitors, mutateAsync, referrals, switchBrand],
   );
 
   return (

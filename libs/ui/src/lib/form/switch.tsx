@@ -1,11 +1,12 @@
-import { Switch as UiSwitch, useTheme, View, XStack } from 'tamagui';
+import { Switch as UiSwitch, View, XStack } from 'tamagui';
 import { Label } from '../text/custom';
 import { RegularText } from '../text/text';
-import { Platform } from 'react-native';
 import { Spinner } from '../loading/spinner';
+import { useCallback } from 'react';
+import { emitHaptic } from '@symbiot-core-apps/shared';
 
-const switchHeight = Platform.OS === 'web' ? 28 : 30;
-const switchWidth = Platform.OS === 'ios' ? 62 : 42;
+const switchHeight = 26;
+const switchWidth = 42;
 
 export const Switch = ({
   label,
@@ -24,7 +25,10 @@ export const Switch = ({
   loading?: boolean;
   onChange?: (value: boolean) => void;
 }) => {
-  const theme = useTheme();
+  const onCheckedChange = useCallback((value: boolean) => {
+    emitHaptic();
+    onChange?.(value);
+  }, [onChange]);
 
   return (
     <XStack alignItems="flex-start" justifyContent="space-between" gap="$5">
@@ -54,33 +58,26 @@ export const Switch = ({
           <Spinner />
         </View>
       ) : (
-        <View height={switchHeight} width={switchWidth} alignItems="flex-end">
-          <UiSwitch
-            paddingHorizontal={2}
-            cursor="pointer"
-            checked={checked}
-            disabled={disabled}
-            onCheckedChange={onChange}
-            backgroundColor={checked ? '$switchSelectedColor' : '$background1'}
-            opacity={disabled ? 0.8 : 1}
-            native
-            nativeProps={{
-              disabled,
-              trackColor: {
-                false: theme.background1?.val,
-                true: theme.switchSelectedColor?.val,
-              },
-            }}
-          >
-            <UiSwitch.Thumb
-              top={1}
-              backgroundColor={checked ? '$o_color' : '$color'}
-              animation="bouncy"
-              width={20}
-              height={20}
-            />
-          </UiSwitch>
-        </View>
+        <UiSwitch
+          paddingHorizontal={2}
+          cursor="pointer"
+          width={switchWidth}
+          height={switchHeight}
+          checked={checked}
+          borderWidth={0}
+          disabled={disabled}
+          backgroundColor={checked ? '$switchSelectedColor' : '$background'}
+          opacity={disabled ? 0.8 : 1}
+          onCheckedChange={onCheckedChange}
+        >
+          <UiSwitch.Thumb
+            top={2}
+            backgroundColor={checked ? '$o_color' : '$color'}
+            animation="bouncy"
+            width={21}
+            height={21}
+          />
+        </UiSwitch>
       )}
     </XStack>
   );

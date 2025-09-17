@@ -134,8 +134,8 @@ export const useBrandServiceForm = () => {
         placeholder: t('brand.services.upsert.form.note.placeholder'),
         scheme: yup.string().nullable().ensure(),
       },
-      bookable: {
-        label: t('brand.services.upsert.form.bookable.label'),
+      available: {
+        label: t('brand.services.upsert.form.available.label'),
         scheme: yup.boolean().required(),
       },
     }),

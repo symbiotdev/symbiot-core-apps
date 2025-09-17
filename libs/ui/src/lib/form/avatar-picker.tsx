@@ -103,8 +103,8 @@ export const AvatarPicker = ({
                 bottom={0}
                 right={0}
                 iconName="Pen"
-                iconSize={size / 7}
-                size={size / 4}
+                iconSize={Math.min(size / 7, 20)}
+                size={Math.min(size / 4, 40)}
               />
             ) : (
               <View position="absolute" />

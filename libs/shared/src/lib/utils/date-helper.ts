@@ -86,12 +86,12 @@ export const DateHelper = {
     if (shortFormat) {
       return Object.keys(duration)
         .filter((key) => duration[key])
-        .reduce(
-          (str, key) =>
-            `${duration[key]} ${i18n.t(`shared.datetime.short_format.${key}`)}`,
+        .map(
+          (key) =>
+            `${duration[key]}${i18n.t(`shared.datetime.short_format.${key}`)}`,
           '',
         )
-        .trim();
+        .join(' ');
     }
 
     return formatDuration(duration, {

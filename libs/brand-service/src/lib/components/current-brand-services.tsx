@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import {
   AnimatedList,
   Button,
+  Chip,
   ContainerView,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
@@ -25,8 +26,8 @@ import {
   useCurrentBrandServiceListQuery,
 } from '@symbiot-core-apps/api';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
-import { emitHaptic } from '@symbiot-core-apps/shared';
-import { View, XStack } from 'tamagui';
+import { DateHelper, emitHaptic } from '@symbiot-core-apps/shared';
+import { XStack } from 'tamagui';
 import { formatBrandServicePrice } from '../utils/price';
 
 export const CurrentBrandServices = ({
@@ -62,41 +63,57 @@ export const CurrentBrandServices = ({
   const renderItem = useCallback(
     ({ item }: { item: BrandService }) => (
       <FormView
-        alignItems="center"
         backgroundColor="$background1"
         borderRadius="$10"
         padding="$4"
-        gap="$4"
+        gap="$2"
         cursor="pointer"
-        flexDirection="row"
+        opacity={item.hidden ? 0.7 : 1}
         pressStyle={{ opacity: 0.8 }}
         onPress={() => {
           emitHaptic();
           router.push(`/services/${item.id}/${navigateTo}`);
         }}
       >
-        <View flex={1}>
+        <XStack flex={1}>
           <MediumText numberOfLines={2} flex={1}>
             {item.name}
           </MediumText>
-        </View>
 
-        {item.price ? (
-          <XStack gap="$2" alignItems="center">
-            {!!item.discount && (
-              <RegularText
-                textDecorationLine="line-through"
-                color="$placeholderColor"
-              >
-                {formatBrandServicePrice(item, true)}
-              </RegularText>
-            )}
+          {item.price ? (
+            <XStack gap="$2" alignItems="center">
+              <RegularText>{formatBrandServicePrice(item)}</RegularText>
 
-            <RegularText>{formatBrandServicePrice(item)}</RegularText>
-          </XStack>
-        ) : (
-          <RegularText>{t('brand.services.free')}</RegularText>
-        )}
+              {!!item.discount && (
+                <RegularText
+                  textDecorationLine="line-through"
+                  color="$placeholderColor"
+                >
+                  {formatBrandServicePrice(item, true)}
+                </RegularText>
+              )}
+            </XStack>
+          ) : (
+            <RegularText>{t('brand.services.free')}</RegularText>
+          )}
+        </XStack>
+
+        <XStack flex={1} flexWrap="wrap" gap="$1">
+          {item.duration && (
+            <Chip
+              label={DateHelper.formatDuration(item.duration, true)}
+              size="small"
+            />
+          )}
+
+          {item.type?.value && <Chip label={item.type.label} size="small" />}
+          {item.format?.value && (
+            <Chip label={item.format.label} size="small" />
+          )}
+          {item.gender?.value && (
+            <Chip label={item.gender.label} size="small" />
+          )}
+        </XStack>
       </FormView>
     ),
     [navigateTo, t],

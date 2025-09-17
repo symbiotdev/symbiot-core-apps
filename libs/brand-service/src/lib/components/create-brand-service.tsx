@@ -10,8 +10,9 @@ import {
   useCreateBrandServiceQuery,
   useCurrentBrandEmployeeProvidersListQuery,
 } from '@symbiot-core-apps/api';
-import { Avatar } from '@symbiot-core-apps/ui';
+import { Avatar, defaultPageHorizontalPadding } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
+import { useWindowDimensions } from 'react-native';
 
 type Value = Omit<TCreateBrandService, 'hidden'> & {
   available: boolean;
@@ -21,6 +22,7 @@ const TypedSurvey = Survey<Value>;
 
 export const CreateBrandService = () => {
   const { brand: currentBrand } = useCurrentBrandState();
+  const { width } = useWindowDimensions();
   const form = useBrandServiceForm();
   const { mutateAsync: createService } = useCreateBrandServiceQuery();
   const {
@@ -97,7 +99,8 @@ export const CreateBrandService = () => {
             type: 'avatar',
             props: {
               ...form.avatar,
-              borderRadius: 20,
+              borderRadius: 32,
+              size: Math.min(width - defaultPageHorizontalPadding * 2, 300),
               name: 'avatar',
               stepValueKey: 'name',
             },
@@ -281,6 +284,7 @@ export const CreateBrandService = () => {
       },
     ],
     [
+      width,
       form,
       types,
       typesLoading,

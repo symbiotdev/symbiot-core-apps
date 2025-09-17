@@ -12,12 +12,12 @@ import {
   PhoneInput,
   SelectPicker,
 } from '@symbiot-core-apps/ui';
-import { useCurrentAccountUpdater, useGenders } from '@symbiot-core-apps/state';
+import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Link, Phone } from '@symbiot-core-apps/api';
+import { Link, Phone, useAccountGendersQuery } from '@symbiot-core-apps/api';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { useTranslation } from 'react-i18next';
 
@@ -26,10 +26,10 @@ export const AccountPreferences = () => {
     useCurrentAccountUpdater();
   const { t } = useTranslation();
   const {
-    gendersAsOptionsWithEmptyOption,
-    loading: gendersLoading,
+    data: genders,
+    isPending: gendersLoading,
     error: gendersError,
-  } = useGenders();
+  } = useAccountGendersQuery();
 
   const { control: firstnameControl, handleSubmit: firstnameHandleSubmit } =
     useForm<{
@@ -77,7 +77,7 @@ export const AccountPreferences = () => {
     gender: string | null;
   }>({
     defaultValues: {
-      gender: me?.gender?.id,
+      gender: me?.gender?.value,
     },
     resolver: yupResolver(
       yup
@@ -158,7 +158,7 @@ export const AccountPreferences = () => {
 
   const updateGender = useCallback(
     ({ gender }: { gender: string | null }) =>
-      me?.gender?.id !== gender && updateAccount$({ gender }),
+      me?.gender?.value !== gender && updateAccount$({ gender }),
     [me?.gender, updateAccount$],
   );
 
@@ -260,7 +260,7 @@ export const AccountPreferences = () => {
                 error={error?.message}
                 optionsLoading={gendersLoading}
                 optionsError={gendersError}
-                options={gendersAsOptionsWithEmptyOption}
+                options={genders}
                 label={t('shared.preferences.account.gender.label')}
                 sheetLabel={t('shared.preferences.account.gender.label')}
                 placeholder={t('shared.preferences.account.gender.placeholder')}

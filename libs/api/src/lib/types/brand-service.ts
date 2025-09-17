@@ -1,5 +1,6 @@
 import { ImagePickerAsset } from 'expo-image-picker';
 import { BrandEmployee } from './brand-employee';
+import { Gender } from './gender';
 
 export type BrandServiceFormat = {
   label: string;
@@ -9,11 +10,6 @@ export type BrandServiceFormat = {
 };
 
 export type BrandServiceType = {
-  label: string;
-  value: string;
-};
-
-export type BrandServiceGender = {
   label: string;
   value: string;
 };
@@ -31,7 +27,7 @@ export type BrandService = {
   avatarUrl: string;
   avatarXsUrl: string;
   reminders: number[];
-  gender: BrandServiceGender;
+  gender: Gender;
   employees: BrandEmployee[];
   type: BrandServiceType;
   format: BrandServiceFormat;

@@ -7,7 +7,6 @@ import axios from 'axios';
 import {
   BrandService,
   BrandServiceFormat,
-  BrandServiceGender,
   BrandServiceType,
   CreateBrandService,
 } from '../types/brand-service';
@@ -15,6 +14,7 @@ import { refetchQueriesByChanges } from '../utils/query';
 import { generateFormData } from '../utils/media';
 import { PaginationList, PaginationListParams } from '../types/pagination';
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
+import { Gender } from '../types/gender';
 
 export enum BrandServiceQueryKey {
   types = 'brand-service-types',
@@ -55,7 +55,7 @@ export const useBrandServiceFormatsQuery = () =>
   });
 
 export const useBrandServiceGendersQuery = () =>
-  useQuery<BrandServiceGender[], string>({
+  useQuery<Gender[], string>({
     queryKey: [BrandServiceQueryKey.genders],
     queryFn: () =>
       requestWithStringError(axios.get('/api/brand-service/genders')),

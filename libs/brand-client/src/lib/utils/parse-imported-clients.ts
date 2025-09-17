@@ -57,10 +57,10 @@ export const parseImportedClients = (
     const gender =
       client[keys.gender] && client[keys.gender] !== '-'
         ? genders.find(
-            ({ id, name }) =>
-              name.toLowerCase() ===
+            ({ label }) =>
+              label.toLowerCase() ===
               String(client[keys.gender]).toLowerCase().trim(),
-          )?.id
+          )?.value
         : undefined;
     let email =
       client[keys.email] && client[keys.email] !== '-'

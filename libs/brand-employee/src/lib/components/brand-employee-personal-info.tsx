@@ -1,8 +1,9 @@
 import {
-  BrandEmployee,
+  BrandEmployee, gendersWithoutEmptyOption,
   UpdateBrandEmployee,
+  useBrandEmployeeGendersQuery,
   useModalUpdateForm,
-  useUpdateBrandEmployeeQuery,
+  useUpdateBrandEmployeeQuery
 } from '@symbiot-core-apps/api';
 import {
   DatePicker,
@@ -19,7 +20,7 @@ import { useLayoutEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useCurrentAccount, useGenders } from '@symbiot-core-apps/state';
+import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { DateHelper } from '@symbiot-core-apps/shared';
 
 type FormValue = {
@@ -43,7 +44,7 @@ export const BrandEmployeePersonalInfo = ({
       initialValue: {
         firstname: employee.firstname,
         lastname: employee.lastname,
-        gender: employee.gender?.id,
+        gender: employee.gender?.value,
         birthday: employee.birthday,
       },
     });
@@ -58,7 +59,7 @@ export const BrandEmployeePersonalInfo = ({
           `${value.firstname} ${value.lastname}`,
           value.birthday &&
             DateHelper.format(value.birthday, me?.preferences?.dateFormat),
-          employee.gender?.name,
+          employee.gender?.label,
         ]
           .filter(Boolean)
           .join(' · ')}
@@ -90,10 +91,10 @@ const Form = ({
   const form = useBrandEmployeeForm();
 
   const {
-    gendersAsOptions,
-    loading: gendersLoading,
+    data: genders,
+    isPending: gendersLoading,
     error: gendersError,
-  } = useGenders();
+  } = useBrandEmployeeGendersQuery();
 
   const {
     control: firstnameControl,
@@ -246,7 +247,7 @@ const Form = ({
             label={form.gender.label}
             sheetLabel={form.gender.label}
             placeholder={form.gender.placeholder}
-            options={gendersAsOptions}
+            options={gendersWithoutEmptyOption(genders)}
             optionsLoading={gendersLoading}
             optionsError={gendersError}
             value={value}

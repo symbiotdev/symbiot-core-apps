@@ -19,7 +19,6 @@ export * from './lib/queries/use-brand-employee.query';
 export * from './lib/queries/use-brand-location.query';
 export * from './lib/queries/use-brand-service.query';
 
-export * from './lib/queries/use-gender.query';
 export * from './lib/queries/use-location.query';
 
 export * from './lib/types/account';
@@ -47,6 +46,7 @@ export * from './lib/types/phone';
 export * from './lib/types/schedule';
 
 export * from './lib/utils/client';
+export * from './lib/utils/gender';
 export * from './lib/utils/media';
 export * from './lib/utils/request';
 export * from './lib/utils/socket';

@@ -1,12 +1,17 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Account, UpdateAccountData } from '../types/account';
-import { requestWithAlertOnError } from '../utils/request';
+import {
+  requestWithAlertOnError,
+  requestWithStringError,
+} from '../utils/request';
 import { generateFormData } from '../utils/media';
 import { AccountPreferences } from '../types/account-preferences';
+import { Gender } from '../types/gender';
 
 export enum AccountQueryKey {
   me = 'account-me',
+  genders = 'account-genders',
 }
 
 export const useAccountMeQuery = ({ enabled }: { enabled: boolean }) =>
@@ -14,6 +19,12 @@ export const useAccountMeQuery = ({ enabled }: { enabled: boolean }) =>
     enabled,
     queryKey: [AccountQueryKey.me],
     queryFn: () => requestWithAlertOnError(axios.get('/api/account/me')),
+  });
+
+export const useAccountGendersQuery = () =>
+  useQuery<Gender[], string>({
+    queryKey: [AccountQueryKey.genders],
+    queryFn: () => requestWithStringError(axios.get('/api/account/genders')),
   });
 
 export const useAccountMeUpdate = () =>

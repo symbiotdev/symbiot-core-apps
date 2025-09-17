@@ -1,9 +1,12 @@
 import { Survey, SurveyStep } from '@symbiot-core-apps/survey';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { useCurrentBrandState, useGenders } from '@symbiot-core-apps/state';
+import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { PhoneValue } from '@symbiot-core-apps/ui';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { useCreateBrandClientQuery } from '@symbiot-core-apps/api';
+import {
+  useBrandClientGendersQuery,
+  useCreateBrandClientQuery,
+} from '@symbiot-core-apps/api';
 import { router } from 'expo-router';
 import { useBrandClientForm } from '../hooks/use-brand-client-form';
 
@@ -25,10 +28,10 @@ export const CreateBrandClient = () => {
   const { brand: currentBrand } = useCurrentBrandState();
   const form = useBrandClientForm();
   const {
-    gendersAsOptionsWithEmptyOption,
-    loading: gendersLoading,
+    data: genders,
+    isPending: gendersLoading,
     error: gendersError,
-  } = useGenders();
+  } = useBrandClientGendersQuery();
   const { mutateAsync: createClient } = useCreateBrandClientQuery();
 
   const createdRef = useRef(false);
@@ -68,7 +71,7 @@ export const CreateBrandClient = () => {
             props: {
               ...form.gender,
               required: true,
-              options: gendersAsOptionsWithEmptyOption,
+              options: genders,
               optionsLoading: gendersLoading,
               optionsError: gendersError,
               name: 'gender',
@@ -152,7 +155,7 @@ export const CreateBrandClient = () => {
         ],
       },
     ],
-    [form, gendersAsOptionsWithEmptyOption, gendersLoading, gendersError],
+    [form, genders, gendersLoading, gendersError],
   );
 
   const onFinish = useCallback(

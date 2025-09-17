@@ -2,6 +2,7 @@ import {
   Account,
   BrandEmployeePermission,
   BrandEmployeePermissions,
+  useBrandEmployeeGendersQuery,
   useBrandEmployeeNewAccountQuery,
   useBrandEmployeePermissionsQuery,
   useCreateBrandEmployeeQuery,
@@ -14,7 +15,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { Survey, SurveyStep } from '@symbiot-core-apps/survey';
-import { useCurrentBrandState, useGenders } from '@symbiot-core-apps/state';
+import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { useDynamicBrandLocation } from '@symbiot-core-apps/brand-location';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as yup from 'yup';
@@ -52,10 +53,10 @@ export const CreateBrandEmployee = () => {
     error: locationsError,
   } = useCurrentBrandLocationsQuery();
   const {
-    gendersAsOptionsWithEmptyOption,
-    loading: gendersLoading,
+    data: genders,
+    isPending: gendersLoading,
     error: gendersError,
-  } = useGenders();
+  } = useBrandEmployeeGendersQuery();
   const { mutateAsync: createEmployee } = useCreateBrandEmployeeQuery();
   const form = useBrandEmployeeForm();
   const dynamicLocation = useDynamicBrandLocation();
@@ -113,10 +114,10 @@ export const CreateBrandEmployee = () => {
             props: {
               ...form.gender,
               required: true,
-              options: gendersAsOptionsWithEmptyOption,
+              options: genders,
               optionsLoading: gendersLoading,
               optionsError: gendersError,
-              defaultValue: account?.gender?.id,
+              defaultValue: account?.gender?.value,
               name: 'gender',
             },
           },
@@ -307,7 +308,7 @@ export const CreateBrandEmployee = () => {
       form,
       account,
       permissions,
-      gendersAsOptionsWithEmptyOption,
+      genders,
       gendersLoading,
       gendersError,
       locationsAsOptions,

@@ -16,7 +16,9 @@ import {
 import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
 import {
+  gendersWithoutEmptyOption,
   ImportBrandClient,
+  useBrandClientGendersQuery,
   useBrandClientImportTemplateQuery,
   useImportBrandClientsQuery,
 } from '@symbiot-core-apps/api';
@@ -36,7 +38,6 @@ import {
   ImportedClientsSummary,
   parseImportedClients,
 } from '../utils/parse-imported-clients';
-import { useGenders } from '@symbiot-core-apps/state';
 
 export const BrandClientImportForm = () => {
   const { t } = useTranslation();
@@ -44,7 +45,7 @@ export const BrandClientImportForm = () => {
     useBrandClientImportTemplateQuery();
   const { mutateAsync: importClients, isPending: clientsImporting } =
     useImportBrandClientsQuery();
-  const { genders } = useGenders();
+  const { data: genders } = useBrandClientGendersQuery();
 
   const [sharing, setSharing] = useState(false);
   const [uploaded, setUploaded] = useState(false);
@@ -113,7 +114,7 @@ export const BrandClientImportForm = () => {
           try {
             const { summary, clients } = parseImportedClients(
               parsedData.data,
-              genders || [],
+              gendersWithoutEmptyOption(genders) || [],
             );
 
             setClients(clients);

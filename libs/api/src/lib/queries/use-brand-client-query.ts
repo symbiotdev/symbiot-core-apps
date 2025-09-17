@@ -18,8 +18,10 @@ import {
   refetchInfiniteListByKey,
   refetchQueriesByChanges,
 } from '../utils/query';
+import { Gender } from '../types/gender';
 
 export enum BrandClientQueryKey {
+  genders = 'brand-client-genders',
   currentList = 'brand-client-current-list',
   detailedById = 'brand-client-detailed-by-id',
 }
@@ -49,6 +51,13 @@ export const useCurrentBrandClientListQuery = (props?: {
     apUrl: '/api/brand-client',
     queryKey: [BrandClientQueryKey.currentList, props?.params],
     ...props,
+  });
+
+export const useBrandClientGendersQuery = () =>
+  useQuery<Gender[], string>({
+    queryKey: [BrandClientQueryKey.genders],
+    queryFn: () =>
+      requestWithStringError(axios.get('/api/brand-client/genders')),
   });
 
 export const useCreateBrandClientQuery = () =>

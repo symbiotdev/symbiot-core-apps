@@ -1,6 +1,8 @@
 import {
   BrandClient,
+  gendersWithoutEmptyOption,
   UpdateBrandClient,
+  useBrandClientGendersQuery,
   useModalUpdateForm,
   useUpdateBrandClientQuery,
 } from '@symbiot-core-apps/api';
@@ -18,7 +20,7 @@ import { useLayoutEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useCurrentAccount, useGenders } from '@symbiot-core-apps/state';
+import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { useBrandClientForm } from '../hooks/use-brand-client-form';
 
@@ -43,7 +45,7 @@ export const BrandClientPersonalInfo = ({
       initialValue: {
         firstname: client.firstname,
         lastname: client.lastname,
-        gender: client.gender?.id,
+        gender: client.gender?.value,
         birthday: client.birthday,
       },
     });
@@ -58,7 +60,7 @@ export const BrandClientPersonalInfo = ({
           `${value.firstname} ${value.lastname}`,
           value.birthday &&
             DateHelper.format(value.birthday, me?.preferences?.dateFormat),
-          client.gender?.name,
+          client.gender?.label,
         ]
           .filter(Boolean)
           .join(' · ')}
@@ -90,10 +92,10 @@ const Form = ({
   const form = useBrandClientForm();
 
   const {
-    gendersAsOptions,
-    loading: gendersLoading,
+    data: genders,
+    isPending: gendersLoading,
     error: gendersError,
-  } = useGenders();
+  } = useBrandClientGendersQuery();
 
   const {
     control: firstnameControl,
@@ -246,7 +248,7 @@ const Form = ({
             label={form.gender.label}
             sheetLabel={form.gender.label}
             placeholder={form.gender.placeholder}
-            options={gendersAsOptions}
+            options={gendersWithoutEmptyOption(genders)}
             optionsLoading={gendersLoading}
             optionsError={gendersError}
             value={value}

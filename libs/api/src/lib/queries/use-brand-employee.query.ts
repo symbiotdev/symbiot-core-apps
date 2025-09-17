@@ -16,8 +16,10 @@ import { PaginationList, PaginationListParams } from '../types/pagination';
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { queryClient } from '../utils/client';
 import { refetchQueriesByChanges } from '../utils/query';
+import { Gender } from '../types/gender';
 
 export enum BrandEmployeesQueryKey {
+  genders = 'brand-employee-genders',
   current = 'brand-employee-current',
   permissions = 'brand-employee-permissions',
   currentList = 'brand-employee-current-list',
@@ -58,6 +60,13 @@ export const useCurrentBrandEmployeeQuery = ({
       requestWithAlertOnError<BrandEmployee>(
         axios.get('/api/brand-employee/current'),
       ),
+  });
+
+export const useBrandEmployeeGendersQuery = () =>
+  useQuery<Gender[], string>({
+    queryKey: [BrandEmployeesQueryKey.genders],
+    queryFn: () =>
+      requestWithStringError(axios.get('/api/brand-employee/genders')),
   });
 
 export const useBrandEmployeePermissionsQuery = () =>

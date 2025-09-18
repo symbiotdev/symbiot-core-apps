@@ -67,6 +67,7 @@ import { Gift } from './Gift';
 import { Plate } from './Plate';
 import { MusicLibrary2 } from './MusicLibrary2';
 import { Library } from './Library';
+import { Close } from './Close';
 
 export const Map: IconMap = {
   AddCircle,
@@ -84,6 +85,7 @@ export const Map: IconMap = {
   ChartSquare,
   ChatRoundDots,
   ChecklistMinimalistic,
+  Close,
   CloseCircle,
   Code,
   CodeCircle,

@@ -17,6 +17,7 @@ export type IconName =
   | 'ChartSquare'
   | 'ChatRoundDots'
   | 'ChecklistMinimalistic'
+  | 'Close'
   | 'CloseCircle'
   | 'Code'
   | 'CodeCircle'

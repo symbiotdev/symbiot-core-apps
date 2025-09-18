@@ -239,7 +239,7 @@ export const ModalHeader = memo(
             typeof headerRight === 'function' ? (
               headerRight()
             ) : (
-              <HeaderButton iconName="CloseCircle" onPress={onClose} />
+              <HeaderButton iconName="Close" onPress={onClose} />
             )
           }
         />

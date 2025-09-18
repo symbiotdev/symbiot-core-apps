@@ -52,11 +52,11 @@ const PlusButton = () => {
 export default () => {
   const { tokens } = useAuthTokens();
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
-  const { visible: drawerVisible } = useDrawer();
   const { t } = useTranslation();
+  const { visible: drawerVisible } = useDrawer();
+  const screenOptions = useStackScreenHeaderOptions();
   const currentEntitiesLoaded = useCurrentEntitiesLoader();
   const { hasPermission, hasAnyPermission } = useCurrentBrandEmployee();
-  const screenOptions = useStackScreenHeaderOptions();
 
   useEffect(() => {
     if (currentEntitiesLoaded) {

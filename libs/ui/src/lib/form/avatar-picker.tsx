@@ -1,4 +1,4 @@
-import { Avatar } from '../media/avatar';
+import { Avatar, AvatarSize } from '../media/avatar';
 import { View, ViewProps } from 'tamagui';
 import { ImageSource } from 'expo-image';
 import { Spinner } from '../loading/spinner';
@@ -22,7 +22,7 @@ export const AvatarPicker = ({
   ...viewProps
 }: ViewProps & {
   name: string;
-  size: number;
+  size: AvatarSize;
   label?: string;
   color?: string;
   url?: ImageSource | string;
@@ -31,6 +31,8 @@ export const AvatarPicker = ({
   onAttach: (image: ImagePickerAsset) => Promise<unknown> | unknown;
   onRemove?: () => Promise<unknown> | unknown;
 }) => {
+  const width = typeof size === 'number' ? size : size.width;
+
   const [processing, setProcessing] = useState(false);
 
   const add = useCallback(
@@ -63,7 +65,7 @@ export const AvatarPicker = ({
         gap="$2"
         position="relative"
         {...viewProps}
-        width={size}
+        width={width}
       >
         <Avatar
           url={url}
@@ -103,8 +105,6 @@ export const AvatarPicker = ({
                 bottom={0}
                 right={0}
                 iconName="Pen"
-                iconSize={Math.min(size / 7, 20)}
-                size={Math.min(size / 4, 40)}
               />
             ) : (
               <View position="absolute" />

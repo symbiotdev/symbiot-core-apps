@@ -107,7 +107,7 @@ export const Button = memo(
 
 export const ButtonIcon = ({
   iconName,
-  iconSize,
+  iconSize = 18,
   hapticable = true,
   loading,
   size = 30,

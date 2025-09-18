@@ -9,6 +9,7 @@ import {
   BrandServiceFormat,
   BrandServiceType,
   CreateBrandService,
+  UpdateBrandService,
 } from '../types/brand-service';
 import { refetchQueriesByChanges } from '../utils/query';
 import { generateFormData } from '../utils/media';
@@ -129,6 +130,30 @@ export const useCreateBrandServiceQuery = () =>
         id: service.id,
         data: service,
       });
+
+      return service;
+    },
+  });
+
+export const useUpdateBrandServiceQuery = () =>
+  useMutation<BrandService, string, { id: string; data: UpdateBrandService }>({
+    mutationFn: async ({ id, data }) => {
+      const service = await requestWithAlertOnError<BrandService>(
+        axios.put(
+          `/api/brand-service/${id}`,
+          await (data.avatar
+            ? generateFormData<UpdateBrandService>(data, ['avatar'])
+            : data),
+        ),
+      );
+
+      await refetchQueriesByServiceChanges(
+        {
+          id,
+          data: service,
+        },
+        false,
+      );
 
       return service;
     },

@@ -10,7 +10,7 @@ import {
   useCreateBrandServiceQuery,
   useCurrentBrandEmployeeProvidersListQuery,
 } from '@symbiot-core-apps/api';
-import { Avatar, defaultPageHorizontalPadding } from '@symbiot-core-apps/ui';
+import { Avatar } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useWindowDimensions } from 'react-native';
 
@@ -99,8 +99,11 @@ export const CreateBrandService = () => {
             type: 'avatar',
             props: {
               ...form.avatar,
-              borderRadius: 32,
-              size: Math.min(width - defaultPageHorizontalPadding * 2, 300),
+              borderRadius: '$10',
+              size: {
+                width: '100%',
+                height: 300,
+              },
               name: 'avatar',
               stepValueKey: 'name',
             },

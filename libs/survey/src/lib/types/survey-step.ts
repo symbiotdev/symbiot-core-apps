@@ -6,6 +6,7 @@ import {
 import * as yup from 'yup';
 import {
   AppLinkType,
+  AvatarSize,
   DurationPickerUnit,
   PickerItem,
   ToggleGroupItem,
@@ -117,7 +118,7 @@ export type SurveyStep<V> = {
         type: 'avatar';
         props: SurveyStepElement<V> & {
           stepValueKey: string;
-          size?: number;
+          size?: AvatarSize;
           borderRadius?: AnimatableNumericValue | string | undefined;
         };
       }

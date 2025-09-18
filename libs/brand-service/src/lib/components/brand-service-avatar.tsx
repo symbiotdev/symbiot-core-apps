@@ -5,12 +5,14 @@ import {
 import { AvatarPicker } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
+import { useWindowDimensions } from 'react-native';
 
 export const BrandServiceAvatarForm = ({
   service,
 }: {
   service: BrandService;
 }) => {
+  const { height } = useWindowDimensions();
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
     useUpdateBrandServiceQuery();
 
@@ -27,6 +29,7 @@ export const BrandServiceAvatarForm = ({
 
   return (
     <AvatarPicker
+      allowsEditing={false}
       marginHorizontal="auto"
       loading={avatarUpdating}
       name={service.name}
@@ -35,7 +38,7 @@ export const BrandServiceAvatarForm = ({
       url={service.avatarUrl}
       size={{
         width: '100%',
-        height: 300,
+        height: Math.max(height / 3, 250),
       }}
       onAttach={onAddAvatar}
     />

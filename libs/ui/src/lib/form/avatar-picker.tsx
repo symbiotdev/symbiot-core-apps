@@ -17,6 +17,7 @@ export const AvatarPicker = ({
   url,
   loading,
   removable,
+  allowsEditing,
   onAttach,
   onRemove,
   ...viewProps
@@ -27,6 +28,7 @@ export const AvatarPicker = ({
   color?: string;
   url?: ImageSource | string;
   loading?: boolean;
+  allowsEditing?: boolean;
   removable?: boolean;
   onAttach: (image: ImagePickerAsset) => Promise<unknown> | unknown;
   onRemove?: () => Promise<unknown> | unknown;
@@ -92,7 +94,7 @@ export const AvatarPicker = ({
         )}
 
         <MediaPicker
-          allowsEditing
+          allowsEditing={allowsEditing}
           removable={removable}
           selectionLimit={1}
           aspect={[1, 1]}

@@ -118,6 +118,7 @@ export type SurveyStep<V> = {
         type: 'avatar';
         props: SurveyStepElement<V> & {
           stepValueKey: string;
+          allowsEditing?: boolean;
           size?: AvatarSize;
           borderRadius?: AnimatableNumericValue | string | undefined;
         };

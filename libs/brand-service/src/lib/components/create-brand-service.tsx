@@ -22,8 +22,8 @@ const TypedSurvey = Survey<Value>;
 
 export const CreateBrandService = () => {
   const { brand: currentBrand } = useCurrentBrandState();
-  const { width } = useWindowDimensions();
   const form = useBrandServiceForm();
+  const { height } = useWindowDimensions();
   const { mutateAsync: createService } = useCreateBrandServiceQuery();
   const {
     data: types,
@@ -102,10 +102,11 @@ export const CreateBrandService = () => {
               borderRadius: '$10',
               size: {
                 width: '100%',
-                height: 300,
+                height: Math.max(height / 3, 250),
               },
               name: 'avatar',
               stepValueKey: 'name',
+              allowsEditing: false,
             },
           },
         ],
@@ -287,7 +288,7 @@ export const CreateBrandService = () => {
       },
     ],
     [
-      width,
+      height,
       form,
       types,
       typesLoading,

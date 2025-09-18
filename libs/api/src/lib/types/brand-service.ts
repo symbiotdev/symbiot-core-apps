@@ -43,7 +43,7 @@ export type CreateBrandService = {
   duration: number;
   hidden: boolean;
   note?: string;
-  gender?: string;
+  gender?: string | null;
   description?: string;
   employees?: string[];
   reminders?: number[];

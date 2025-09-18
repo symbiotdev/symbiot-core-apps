@@ -3,6 +3,7 @@ import { BrandService } from '@symbiot-core-apps/api';
 import { BrandServiceAvatarForm } from './brand-service-avatar';
 import { BrandServiceAvailability } from './brand-service-availability';
 import { BrandServiceAboutForm } from './brand-service-about-form';
+import { BrandServiceStructureForm } from './brand-service-structure-form';
 
 export const BrandServiceForm = ({ service }: { service: BrandService }) => {
   return (
@@ -14,6 +15,7 @@ export const BrandServiceForm = ({ service }: { service: BrandService }) => {
 
         <ListItemGroup>
           <BrandServiceAboutForm service={service} />
+          <BrandServiceStructureForm service={service} />
         </ListItemGroup>
       </FormView>
     </PageView>

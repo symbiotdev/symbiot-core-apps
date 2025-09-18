@@ -115,7 +115,7 @@ export const useBrandServiceForm = () => {
       gender: {
         label: t('brand.services.upsert.form.gender.label'),
         placeholder: t('brand.services.upsert.form.gender.placeholder'),
-        scheme: yup.string().nullable(),
+        scheme: yup.string().nullable().default(null),
       },
       price: {
         label: t('brand.services.upsert.form.price.label'),

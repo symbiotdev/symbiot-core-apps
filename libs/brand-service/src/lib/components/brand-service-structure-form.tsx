@@ -169,7 +169,7 @@ const Form = ({
       yup
         .object()
         .shape({
-          gender: form.gender.scheme,
+          gender: form.gender.scheme.default(null),
         })
         .required(),
     ),

@@ -4,6 +4,7 @@ import { BrandServiceAvatarForm } from './brand-service-avatar';
 import { BrandServiceAvailability } from './brand-service-availability';
 import { BrandServiceAboutForm } from './brand-service-about-form';
 import { BrandServiceStructureForm } from './brand-service-structure-form';
+import { BrandServiceSchedulingForm } from './brand-service-scheduling-form';
 
 export const BrandServiceForm = ({ service }: { service: BrandService }) => {
   return (
@@ -16,6 +17,7 @@ export const BrandServiceForm = ({ service }: { service: BrandService }) => {
         <ListItemGroup>
           <BrandServiceAboutForm service={service} />
           <BrandServiceStructureForm service={service} />
+          <BrandServiceSchedulingForm service={service} />
         </ListItemGroup>
       </FormView>
     </PageView>

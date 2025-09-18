@@ -87,7 +87,8 @@ export const useBrandServiceForm = () => {
             t('brand.services.upsert.form.duration.error.max', {
               value: `${7 * minutesInDay} ${t('shared.datetime.unit.minutes')}`,
             }),
-          ),
+          )
+          .required('brand.services.upsert.form.duration.error.required'),
       },
       reminders: {
         label: t('brand.services.upsert.form.reminders.label'),

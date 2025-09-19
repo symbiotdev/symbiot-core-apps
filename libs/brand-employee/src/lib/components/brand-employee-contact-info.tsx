@@ -2,7 +2,7 @@ import {
   BrandEmployee,
   Phone,
   UpdateBrandEmployee,
-  useModalUpdateForm,
+  useModalUpdateByIdForm,
   useUpdateBrandEmployeeQuery,
 } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
@@ -35,7 +35,7 @@ export const BrandEmployeeContactInfo = ({
   const { t } = useTranslation();
   const form = useBrandEmployeeForm();
   const { value, modalVisible, updateValue, openModal, closeModal } =
-    useModalUpdateForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
+    useModalUpdateByIdForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
       id: employee.id,
       query: useUpdateBrandEmployeeQuery,
       initialValue: {

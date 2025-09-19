@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useCallback, useEffect } from 'react';
 
 type FormValue = {
-  birthday: Date | null;
+  birthday: string | null;
 };
 
 export const BrandBirthdayController = ({
@@ -27,7 +27,9 @@ export const BrandBirthdayController = ({
     (value: FormValue) => {
       value.birthday !== birthday &&
         onUpdate({
-          birthday: value.birthday?.toISOString() || null,
+          birthday: value.birthday
+            ? new Date(value.birthday)?.toISOString()
+            : null,
         });
     },
     [birthday, onUpdate],
@@ -50,9 +52,7 @@ export const BrandBirthdayController = ({
           minDate={DateHelper.addYears(new Date(), -500)}
           maxDate={new Date()}
           label={t('brand.form.birthday.label')}
-          placeholder={t(
-            'brand.form.birthday.placeholder',
-          )}
+          placeholder={t('brand.form.birthday.placeholder')}
           onChange={(birthday) => {
             onChange(birthday);
             handleSubmit(update)();

@@ -1,7 +1,7 @@
 import {
   BrandEmployee,
   UpdateBrandEmployee,
-  useModalUpdateForm,
+  useModalUpdateByIdForm,
   useUpdateBrandEmployeeQuery,
 } from '@symbiot-core-apps/api';
 import {
@@ -31,7 +31,7 @@ export const BrandEmployeeIdentificationForm = ({
   const { t } = useTranslation();
   const form = useBrandEmployeeForm();
   const { value, modalVisible, openModal, closeModal, updateValue } =
-    useModalUpdateForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
+    useModalUpdateByIdForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
       id: employee.id,
       query: useUpdateBrandEmployeeQuery,
       initialValue: {

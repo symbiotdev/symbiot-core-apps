@@ -4,7 +4,7 @@ import {
   BrandEmployeePermissions,
   UpdateBrandEmployee,
   useBrandEmployeePermissionsQuery,
-  useModalUpdateForm,
+  useModalUpdateByIdForm,
   useUpdateBrandEmployeeQuery,
 } from '@symbiot-core-apps/api';
 import { useBrandEmployeeForm } from '../hooks/use-brand-employee-form';
@@ -33,7 +33,7 @@ export const BrandEmployeePermissionsForm = ({
   const { t } = useTranslation();
   const form = useBrandEmployeeForm();
   const { value, modalVisible, openModal, closeModal, updateValue, updating } =
-    useModalUpdateForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
+    useModalUpdateByIdForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
       id: employee.id,
       query: useUpdateBrandEmployeeQuery,
       initialValue: {

@@ -4,12 +4,13 @@ import { Link } from './link';
 import { BrandLocation } from './brand-location';
 
 export type BrandCountry = {
+  flag: string;
   label: string;
   value: string;
-  flag: string;
 };
 
 export type BrandCurrency = {
+  symbol: string;
   label: string;
   value: string;
 };
@@ -26,7 +27,7 @@ export type Brand = {
   avatarUrl: string;
   avatarXsUrl: string;
   about: string;
-  birthday: Date;
+  birthday: string;
   owner: Account;
   links: Link[];
   industries: BrandIndustry[];

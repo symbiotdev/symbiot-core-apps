@@ -1,4 +1,4 @@
-import { BrandCurrency, useBrandCurrenciesQuery } from '@symbiot-core-apps/api';
+import { useBrandCurrenciesQuery } from '@symbiot-core-apps/api';
 import { SelectPicker } from '@symbiot-core-apps/ui';
 import { Controller, useForm } from 'react-hook-form';
 import { useCallback, useEffect } from 'react';
@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { arraysOfObjectsEqual } from '@symbiot-core-apps/shared';
 
 type FormValue = {
-  currencies: BrandCurrency[];
+  currencies: string[];
 };
 
 export const BrandCurrenciesController = ({
@@ -26,7 +26,7 @@ export const BrandCurrenciesController = ({
     currency: string | null;
   }>({
     defaultValues: {
-      currency: currencies[0]?.value,
+      currency: currencies[0],
     },
   });
 
@@ -40,7 +40,7 @@ export const BrandCurrenciesController = ({
   );
 
   useEffect(() => {
-    setValue('currency', currencies[0]?.value || null);
+    setValue('currency', currencies[0] || null);
   }, [setValue, currencies]);
 
   return (

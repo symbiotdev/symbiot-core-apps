@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { TextInputProps } from 'react-native';
 import { APP_LINK } from './app-link-input';
 
-const getNicknameFromUrl = (input?: InputValue) => {
+export const getNicknameFromUrl = (input?: InputValue) => {
   if (!input) return '';
 
   input = String(input);

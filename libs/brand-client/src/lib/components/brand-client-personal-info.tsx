@@ -3,7 +3,7 @@ import {
   gendersWithoutEmptyOption,
   UpdateBrandClient,
   useBrandClientGendersQuery,
-  useModalUpdateForm,
+  useModalUpdateByIdForm,
   useUpdateBrandClientQuery,
 } from '@symbiot-core-apps/api';
 import {
@@ -39,7 +39,7 @@ export const BrandClientPersonalInfo = ({
   const { me } = useCurrentAccount();
   const { personalInfo } = useBrandClientForm();
   const { value, modalVisible, openModal, closeModal, updateValue } =
-    useModalUpdateForm<BrandClient, FormValue, UpdateBrandClient>({
+    useModalUpdateByIdForm<BrandClient, FormValue, UpdateBrandClient>({
       id: client.id,
       query: useUpdateBrandClientQuery,
       initialValue: {

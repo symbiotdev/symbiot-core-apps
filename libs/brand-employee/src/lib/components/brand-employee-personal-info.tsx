@@ -2,7 +2,7 @@ import {
   BrandEmployee, gendersWithoutEmptyOption,
   UpdateBrandEmployee,
   useBrandEmployeeGendersQuery,
-  useModalUpdateForm,
+  useModalUpdateByIdForm,
   useUpdateBrandEmployeeQuery
 } from '@symbiot-core-apps/api';
 import {
@@ -38,7 +38,7 @@ export const BrandEmployeePersonalInfo = ({
   const { me } = useCurrentAccount();
   const { personalInfo } = useBrandEmployeeForm();
   const { value, modalVisible, openModal, closeModal, updateValue } =
-    useModalUpdateForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
+    useModalUpdateByIdForm<BrandEmployee, FormValue, UpdateBrandEmployee>({
       id: employee.id,
       query: useUpdateBrandEmployeeQuery,
       initialValue: {

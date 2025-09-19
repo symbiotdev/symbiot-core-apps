@@ -1,7 +1,7 @@
 import {
   BrandService,
   UpdateBrandService,
-  useModalUpdateForm,
+  useModalUpdateByIdForm,
   useUpdateBrandServiceQuery,
 } from '@symbiot-core-apps/api';
 import { useBrandServiceForm } from '../hooks/use-brand-service-form';
@@ -31,7 +31,7 @@ export const BrandServiceAboutForm = ({
 }) => {
   const { about } = useBrandServiceForm();
   const { value, modalVisible, openModal, closeModal, updateValue } =
-    useModalUpdateForm<BrandService, FormValue, UpdateBrandService>({
+    useModalUpdateByIdForm<BrandService, FormValue, UpdateBrandService>({
       id: service.id,
       query: useUpdateBrandServiceQuery,
       initialValue: {

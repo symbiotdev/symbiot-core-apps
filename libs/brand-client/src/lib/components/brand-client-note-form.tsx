@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import {
   BrandClient,
   UpdateBrandClient,
-  useModalUpdateForm,
+  useModalUpdateByIdForm,
   useUpdateBrandClientQuery,
 } from '@symbiot-core-apps/api';
 import { useEffect } from 'react';
@@ -28,7 +28,7 @@ export const BrandClientNoteForm = ({ client }: { client: BrandClient }) => {
   const { t } = useTranslation();
   const form = useBrandClientForm();
   const { value, modalVisible, openModal, closeModal, updateValue } =
-    useModalUpdateForm<BrandClient, FormValue, UpdateBrandClient>({
+    useModalUpdateByIdForm<BrandClient, FormValue, UpdateBrandClient>({
       id: client.id,
       query: useUpdateBrandClientQuery,
       initialValue: {

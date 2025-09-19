@@ -1,4 +1,4 @@
-import { BrandCountry, useBrandCountriesQuery } from '@symbiot-core-apps/api';
+import { useBrandCountriesQuery } from '@symbiot-core-apps/api';
 import { SelectPicker } from '@symbiot-core-apps/ui';
 import { Controller, useForm } from 'react-hook-form';
 import { useCallback, useEffect, useMemo } from 'react';
@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { arraysOfObjectsEqual } from '@symbiot-core-apps/shared';
 
 type FormValue = {
-  countries: BrandCountry[];
+  countries: string[];
 };
 
 export const BrandCountriesController = ({
@@ -26,7 +26,7 @@ export const BrandCountriesController = ({
     country: string | null;
   }>({
     defaultValues: {
-      country: countries[0]?.value,
+      country: countries[0],
     },
   });
 
@@ -49,7 +49,7 @@ export const BrandCountriesController = ({
   );
 
   useEffect(() => {
-    setValue('country', countries[0]?.value || null);
+    setValue('country', countries[0] || null);
   }, [setValue, countries]);
 
   return (

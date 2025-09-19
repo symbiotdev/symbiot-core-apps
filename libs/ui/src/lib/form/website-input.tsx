@@ -2,7 +2,7 @@ import { Input, InputValue } from './input';
 import { useCallback } from 'react';
 import { TextInputProps } from 'react-native';
 
-const getDomain = (input?: InputValue) => {
+export const getWebsiteDomain = (input?: InputValue) => {
   if (!input) return '';
 
   input = String(input);
@@ -41,14 +41,14 @@ export const WebsiteInput = ({
 }) => {
   const onInputChange = useCallback(
     (value: InputValue) => {
-      onChange(!value ? null : `https://${getDomain(value)}`);
+      onChange(!value ? null : `https://${getWebsiteDomain(value)}`);
     },
     [onChange],
   );
 
   return (
     <Input
-      value={getDomain(value)}
+      value={getWebsiteDomain(value)}
       label={label}
       placeholder={placeholder}
       error={error}

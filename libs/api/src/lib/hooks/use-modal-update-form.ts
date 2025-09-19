@@ -3,6 +3,25 @@ import { arraysOfObjectsEqual, objectsEqual } from '@symbiot-core-apps/shared';
 import { UseMutationResult } from '@tanstack/react-query';
 
 export function useModalUpdateForm<T, FV, UV>({
+  initialValue,
+  query,
+  dataRequestFormatted,
+}: {
+  initialValue: FV;
+  query: () => UseMutationResult<T, string, Partial<UV>>;
+  dataRequestFormatted?: (value: Partial<FV>) => object;
+}) {
+  const { mutateAsync, isPending } = query();
+
+  return useUpdateForm(
+    initialValue,
+    isPending,
+    mutateAsync,
+    dataRequestFormatted,
+  );
+}
+
+export function useModalUpdateByIdForm<T, FV, UV>({
   id,
   initialValue,
   query,
@@ -13,8 +32,22 @@ export function useModalUpdateForm<T, FV, UV>({
   query: () => UseMutationResult<T, string, { id: string; data: Partial<UV> }>;
   dataRequestFormatted?: (value: Partial<FV>) => object;
 }) {
-  const { mutateAsync: update, isPending } = query();
+  const { mutateAsync, isPending } = query();
 
+  const update = useCallback(
+    (data: Partial<UV>) => mutateAsync({ id, data }),
+    [id, mutateAsync],
+  );
+
+  return useUpdateForm(initialValue, isPending, update, dataRequestFormatted);
+}
+
+export function useUpdateForm<FV, UV>(
+  initialValue: FV,
+  updating: boolean,
+  update: (value: Partial<UV>) => Promise<unknown>,
+  dataRequestFormatted?: (value: Partial<FV>) => object,
+) {
   const valueRef = useRef<FV>(initialValue);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -45,10 +78,7 @@ export function useModalUpdateForm<T, FV, UV>({
       setValue(valueRef.current);
 
       try {
-        await update({
-          id,
-          data: dataRequestFormatted ? dataRequestFormatted(data) : data,
-        });
+        await update(dataRequestFormatted ? dataRequestFormatted(data) : data);
       } catch {
         valueRef.current = currentValue;
         setValue(currentValue);
@@ -56,12 +86,12 @@ export function useModalUpdateForm<T, FV, UV>({
         setTimeout(openModal, 500);
       }
     },
-    [update, id, dataRequestFormatted, openModal],
+    [update, dataRequestFormatted, openModal],
   );
 
   return {
     value,
-    updating: isPending,
+    updating,
     modalVisible,
     openModal,
     closeModal,

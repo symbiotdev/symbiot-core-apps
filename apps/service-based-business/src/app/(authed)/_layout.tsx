@@ -150,37 +150,35 @@ export default () => {
 
                 {/*BRAND*/}
 
-                <>
-                  <Stack.Protected
-                    guard={!!currentBrands && !currentBrands.length}
-                  >
-                    <Stack.Screen name="brand/create" />
-                    <Stack.Screen
-                      name="brand/new"
-                      options={{
-                        headerTitle: t('brand.create.new_brand'),
-                      }}
-                    />
-                  </Stack.Protected>
+                <Stack.Protected
+                  guard={!!currentBrands && !currentBrands.length}
+                >
+                  <Stack.Screen name="brand/create" />
+                  <Stack.Screen
+                    name="brand/new"
+                    options={{
+                      headerTitle: t('brand.create.new_brand'),
+                    }}
+                  />
+                </Stack.Protected>
 
-                  <Stack.Protected guard={hasAnyPermission()}>
-                    <Stack.Screen
-                      name="brand/menu"
-                      options={{
-                        headerTitle: currentBrand?.name,
-                      }}
-                    />
-                  </Stack.Protected>
+                <Stack.Protected guard={hasAnyPermission()}>
+                  <Stack.Screen
+                    name="brand/menu"
+                    options={{
+                      headerTitle: currentBrand?.name,
+                    }}
+                  />
+                </Stack.Protected>
 
-                  <Stack.Protected guard={hasPermission('brandAll')}>
-                    <Stack.Screen
-                      name="brand/update"
-                      options={{
-                        headerTitle: t('brand.information.title'),
-                      }}
-                    />
-                  </Stack.Protected>
-                </>
+                <Stack.Protected guard={hasPermission('brandAll')}>
+                  <Stack.Screen
+                    name="brand/update"
+                    options={{
+                      headerTitle: t('brand.information.title'),
+                    }}
+                  />
+                </Stack.Protected>
 
                 {/*CALENDAR*/}
 

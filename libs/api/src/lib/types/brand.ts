@@ -3,6 +3,17 @@ import { Account } from './account';
 import { Link } from './link';
 import { BrandLocation } from './brand-location';
 
+export type BrandCountry = {
+  label: string;
+  value: string;
+  flag: string;
+};
+
+export type BrandCurrency = {
+  label: string;
+  value: string;
+};
+
 export type BrandIndustry = {
   label: string;
   value: string;
@@ -19,11 +30,16 @@ export type Brand = {
   owner: Account;
   links: Link[];
   industries: BrandIndustry[];
+  countries: BrandCountry[];
+  currencies: BrandCurrency[];
   locations: BrandLocation[];
+  instagrams: string[];
+  websites: string[];
 };
 
 export type CreateBrand = {
   name: string;
+  countries: string[];
   avatar?: ImagePickerAsset;
   promoCode?: string;
   industries?: string[];
@@ -32,10 +48,14 @@ export type CreateBrand = {
   links?: Omit<Link, 'id'>[];
 };
 
-export type UpdateBrandData = {
+export type UpdateBrand = {
   avatar?: ImagePickerAsset;
   links?: Omit<Link, 'id'>[];
   birthday?: string | null;
   name?: string;
   about?: string;
+  countries?: string[];
+  currencies?: string[];
+  instagrams?: string[];
+  websites?: string[];
 };

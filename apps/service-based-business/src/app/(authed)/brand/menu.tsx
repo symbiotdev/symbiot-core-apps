@@ -19,7 +19,7 @@ export default () => {
   const { icons } = useApp();
 
   const onInformationPress = useCallback(
-    () => router.push('/brand/preferences'),
+    () => router.push('/brand/update'),
     [],
   );
 

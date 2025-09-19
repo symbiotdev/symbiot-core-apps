@@ -1,6 +1,6 @@
 import {
   Brand,
-  UpdateBrandData,
+  UpdateBrand,
   useCurrentBrandUpdate,
 } from '@symbiot-core-apps/api';
 import { create } from 'zustand/index';
@@ -52,7 +52,7 @@ export const useCurrentBrandUpdater = () => {
   } = useCurrentBrandUpdate();
 
   const updateBrand$ = useCallback(
-    async (data: UpdateBrandData) => setBrand(await updateBrand(data)),
+    async (data: UpdateBrand) => setBrand(await updateBrand(data)),
     [setBrand, updateBrand],
   );
 

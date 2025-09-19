@@ -1,7 +1,5 @@
-import { RegularText } from '../text/text';
 import { SelectPicker } from './select-picker';
 import { PickerOnChange } from './picker';
-import { Platform } from 'react-native';
 import {
   countryNameInNativeLanguage,
   getCountryEmoji,
@@ -40,9 +38,8 @@ export const CountryPicker = ({
       return {
         value,
         label:
-          `${Platform.OS === 'ios' ? flag : ''} ${countryNameInNativeLanguage[value] || countries[value].name}`.trim(),
+          `${flag} ${countryNameInNativeLanguage[value] || countries[value].name}`.trim(),
         description: countries[value].name,
-        icon: <RegularText fontSize={18}>{flag}</RegularText>,
       };
     });
   }, []);

@@ -2,9 +2,10 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import {
   Brand,
+  BrandCountry,
   BrandIndustry,
   CreateBrand,
-  UpdateBrandData,
+  UpdateBrand,
 } from '../types/brand';
 import {
   requestWithAlertOnError,
@@ -16,6 +17,7 @@ import { AccountAuthTokens } from '../types/account-auth';
 export enum BrandQueryKey {
   current = 'brand-current',
   industries = 'brand-industries',
+  countries = 'brand-countries',
 }
 
 type CurrentBrandResponse = {
@@ -40,14 +42,20 @@ export const useBrandIndustriesQuery = () =>
     queryFn: () => requestWithStringError(axios.get('/api/brand/industries')),
   });
 
+export const useBrandCountriesQuery = () =>
+  useQuery<BrandCountry[], string>({
+    queryKey: [BrandQueryKey.countries],
+    queryFn: () => requestWithStringError(axios.get('/api/brand/countries')),
+  });
+
 export const useCurrentBrandUpdate = () =>
-  useMutation<Brand, string, UpdateBrandData>({
+  useMutation<Brand, string, UpdateBrand>({
     mutationFn: async (data) =>
       requestWithAlertOnError(
         axios.put(
           '/api/brand/current',
           await (data.avatar
-            ? generateFormData<UpdateBrandData>(data, ['avatar'])
+            ? generateFormData<UpdateBrand>(data, ['avatar'])
             : data),
         ),
       ),

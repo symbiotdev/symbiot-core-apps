@@ -174,7 +174,7 @@ export default () => {
 
                   <Stack.Protected guard={hasPermission('brandAll')}>
                     <Stack.Screen
-                      name="brand/preferences"
+                      name="brand/update"
                       options={{
                         headerTitle: t('brand.information.title'),
                       }}
@@ -421,7 +421,7 @@ export default () => {
               </Stack>
             )}
 
-            {drawerVisible && <PlusButton />}
+            {drawerVisible && !!currentBrand && <PlusButton />}
           </XStack>
         </NotificationsProvider>
       </SocketProvider>

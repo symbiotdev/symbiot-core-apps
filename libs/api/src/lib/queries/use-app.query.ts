@@ -12,7 +12,7 @@ export enum AppQueryKey {
 }
 
 export const useAppConfigQuery = ({ refetch }: { refetch: boolean }) =>
-  useQuery<AppConfig>({
+  useQuery<AppConfig, string>({
     staleTime: Infinity,
     refetchOnWindowFocus: refetch,
     refetchOnMount: refetch,
@@ -22,7 +22,7 @@ export const useAppConfigQuery = ({ refetch }: { refetch: boolean }) =>
   });
 
 export const useAppTranslationsQuery = ({ refetch }: { refetch: boolean }) =>
-  useQuery<AppTranslations>({
+  useQuery<AppTranslations, string>({
     staleTime: Infinity,
     refetchOnWindowFocus: refetch,
     refetchOnMount: refetch,
@@ -32,14 +32,14 @@ export const useAppTranslationsQuery = ({ refetch }: { refetch: boolean }) =>
   });
 
 export const useAppCompetitorsQuery = () =>
-  useQuery<{ label: string; value: string; free?: true }[]>({
+  useQuery<{ label: string; value: string; free?: true }[], string>({
     staleTime: Infinity,
     queryKey: [AppQueryKey.competitors],
     queryFn: () => requestWithStringError(axios.get('/api/app/competitors')),
   });
 
 export const useAppReferralsQuery = () =>
-  useQuery<{ label: string; value: string; free?: true }[]>({
+  useQuery<{ label: string; value: string; free?: true }[], string>({
     staleTime: Infinity,
     queryKey: [AppQueryKey.referrals],
     queryFn: () => requestWithStringError(axios.get('/api/app/referrals')),

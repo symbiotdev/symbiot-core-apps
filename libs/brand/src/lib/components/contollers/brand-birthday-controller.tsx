@@ -13,7 +13,7 @@ export const BrandBirthdayController = ({
   birthday,
   onUpdate,
 }: FormValue & {
-  onUpdate: (props: { birthday: string | null }) => void;
+  onUpdate: (value: { birthday: string | null }) => void;
 }) => {
   const { t } = useTranslation();
   const { me } = useCurrentAccount();
@@ -49,9 +49,9 @@ export const BrandBirthdayController = ({
           weekStartsOn={me?.preferences?.weekStartsOn}
           minDate={DateHelper.addYears(new Date(), -500)}
           maxDate={new Date()}
-          label={t('brand.information.preferences.form.birthday.label')}
+          label={t('brand.form.birthday.label')}
           placeholder={t(
-            'brand.information.preferences.form.birthday.placeholder',
+            'brand.form.birthday.placeholder',
           )}
           onChange={(birthday) => {
             onChange(birthday);

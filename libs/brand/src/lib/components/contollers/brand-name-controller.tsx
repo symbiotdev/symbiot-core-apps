@@ -11,7 +11,7 @@ export const BrandNameController = ({
   name = '',
   onUpdate,
 }: FormValue & {
-  onUpdate: (props: FormValue) => void;
+  onUpdate: (value: FormValue) => void;
 }) => {
   const { t } = useTranslation();
 
@@ -39,7 +39,7 @@ export const BrandNameController = ({
       rules={{
         required: {
           value: true,
-          message: t('brand.information.preferences.form.name.error.required'),
+          message: t('brand.form.name.error.required'),
         },
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
@@ -48,8 +48,8 @@ export const BrandNameController = ({
           enterKeyHint="done"
           value={value}
           error={error?.message}
-          label={t('brand.information.preferences.form.name.label')}
-          placeholder={t('brand.information.preferences.form.name.placeholder')}
+          label={t('brand.form.name.label')}
+          placeholder={t('brand.form.name.placeholder')}
           onChange={onChange}
           onBlur={handleSubmit(update)}
         />

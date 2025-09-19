@@ -8,11 +8,11 @@ type FormValue = {
   websites: string[];
 };
 
-export const BrandWebsiteController = ({
+export const BrandWebsitesController = ({
   websites,
   onUpdate,
 }: FormValue & {
-  onUpdate: (props: { websites: string[] }) => void;
+  onUpdate: (value: FormValue) => void;
 }) => {
   const { t } = useTranslation();
   const { control, handleSubmit, setValue } = useForm<{
@@ -34,7 +34,6 @@ export const BrandWebsiteController = ({
   );
 
   useEffect(() => {
-    console.log('websites', websites);
     setValue('website', websites[0] || null);
   }, [setValue, websites]);
 
@@ -46,15 +45,15 @@ export const BrandWebsiteController = ({
         validate: (value) =>
           !value || isValidURL(value)
             ? true
-            : t('brand.information.preferences.form.website.error.validation'),
+            : t('brand.form.website.error.validation'),
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <WebsiteInput
           enterKeyHint="done"
           value={value}
-          label={t('brand.information.preferences.form.website.label')}
+          label={t('brand.form.website.label')}
           placeholder={t(
-            'brand.information.preferences.form.website.placeholder',
+            'brand.form.website.placeholder',
           )}
           error={error?.message}
           onChange={onChange}

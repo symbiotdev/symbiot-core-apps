@@ -8,11 +8,11 @@ type FormValue = {
   instagrams: string[];
 };
 
-export const BrandInstagramController = ({
+export const BrandInstagramsController = ({
   instagrams,
   onUpdate,
 }: FormValue & {
-  onUpdate: (props: { instagrams: string[] }) => void;
+  onUpdate: (value: FormValue) => void;
 }) => {
   const { t } = useTranslation();
   const { control, handleSubmit, setValue } = useForm<{
@@ -50,9 +50,9 @@ export const BrandInstagramController = ({
         <InstagramInput
           enterKeyHint="done"
           value={value}
-          label={t('brand.information.preferences.form.instagram.label')}
+          label={t('brand.form.instagram.label')}
           placeholder={t(
-            'brand.information.preferences.form.instagram.placeholder',
+            'brand.form.instagram.placeholder',
           )}
           error={error?.message}
           onChange={onChange}

@@ -11,7 +11,7 @@ export const BrandAboutController = ({
   about = '',
   onUpdate,
 }: FormValue & {
-  onUpdate: (props: FormValue) => void;
+  onUpdate: (value: FormValue) => void;
 }) => {
   const { t } = useTranslation();
 
@@ -42,9 +42,9 @@ export const BrandAboutController = ({
           enterKeyHint="done"
           value={value}
           error={error?.message}
-          label={t('brand.information.preferences.form.about.label')}
+          label={t('brand.form.about.label')}
           placeholder={t(
-            'brand.information.preferences.form.about.placeholder',
+            'brand.form.about.placeholder',
           )}
           onChange={onChange}
           onBlur={handleSubmit(update)}

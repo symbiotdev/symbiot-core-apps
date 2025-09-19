@@ -1,16 +1,17 @@
 import { AvatarPicker, FormView, PageView } from '@symbiot-core-apps/ui';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { BrandNameController } from './contollers/brand-name-controller';
-import { BrandWebsiteController } from './contollers/brand-website-controller';
-import { BrandInstagramController } from './contollers/brand-instagram-controller';
+import { BrandWebsitesController } from './contollers/brand-websites-controller';
+import { BrandInstagramsController } from './contollers/brand-instagrams-controller';
 import { BrandBirthdayController } from './contollers/brand-birthday-controller';
-import { BrandAboutController } from './contollers/brand-avout-controller';
+import { BrandAboutController } from './contollers/brand-about-controller';
 import {
   UpdateBrand as TUpdateBrand,
   useCurrentBrandUpdate,
 } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
+import { BrandCountriesController } from './contollers/brand-countries-controller';
 
 export const UpdateBrand = () => {
   const { brand, setBrand } = useCurrentBrandState();
@@ -44,11 +45,15 @@ export const UpdateBrand = () => {
 
         <FormView>
           <BrandNameController name={brand.name} onUpdate={updateBrand$} />
-          <BrandWebsiteController
+          <BrandCountriesController
+            countries={brand.countries}
+            onUpdate={updateBrand$}
+          />
+          <BrandWebsitesController
             websites={brand.websites}
             onUpdate={updateBrand$}
           />
-          <BrandInstagramController
+          <BrandInstagramsController
             instagrams={brand.instagrams}
             onUpdate={updateBrand$}
           />

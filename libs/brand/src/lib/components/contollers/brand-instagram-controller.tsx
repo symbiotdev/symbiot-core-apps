@@ -15,7 +15,9 @@ export const BrandInstagramController = ({
   onUpdate: (props: { instagrams: string[] }) => void;
 }) => {
   const { t } = useTranslation();
-  const { control, handleSubmit, setValue } = useForm<{ instagram: string }>({
+  const { control, handleSubmit, setValue } = useForm<{
+    instagram: string | null;
+  }>({
     defaultValues: {
       instagram: instagrams[0],
     },
@@ -24,7 +26,7 @@ export const BrandInstagramController = ({
   const initialValueRef = useRef(instagrams);
 
   const update = useCallback(
-    ({ instagram }: { instagram: string }) => {
+    ({ instagram }: { instagram: string | null }) => {
       const nextValue = instagram ? [instagram] : [];
 
       if (!arraysOfObjectsEqual(instagrams, nextValue))
@@ -35,7 +37,7 @@ export const BrandInstagramController = ({
 
   useEffect(() => {
     if (!arraysOfObjectsEqual(instagrams, initialValueRef.current)) {
-      setValue('instagram', instagrams[0]);
+      setValue('instagram', instagrams[0] || null);
       initialValueRef.current = instagrams;
     }
   }, [setValue, instagrams]);

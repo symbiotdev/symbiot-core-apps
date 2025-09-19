@@ -89,7 +89,7 @@ export const BrandEmployeeProfile = ({
 
         {!!employee.about && (
           <ListItemGroup
-            title={t('shared.experience')}
+            title={t('shared.about')}
             paddingVertical="$4"
             gap="$2"
           >

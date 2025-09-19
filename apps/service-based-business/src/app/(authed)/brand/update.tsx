@@ -1,3 +1,3 @@
-import { BrandUpdate } from '@symbiot-core-apps/brand';
+import { UpdateBrand } from '@symbiot-core-apps/brand';
 
-export default BrandUpdate;
+export default UpdateBrand;

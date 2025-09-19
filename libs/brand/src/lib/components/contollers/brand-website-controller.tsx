@@ -15,14 +15,16 @@ export const BrandWebsiteController = ({
   onUpdate: (props: { websites: string[] }) => void;
 }) => {
   const { t } = useTranslation();
-  const { control, handleSubmit, setValue } = useForm<{ website: string }>({
+  const { control, handleSubmit, setValue } = useForm<{
+    website: string | null;
+  }>({
     defaultValues: {
       website: websites[0],
     },
   });
 
   const update = useCallback(
-    ({ website }: { website: string }) => {
+    ({ website }: { website: string | null }) => {
       const nextValue = website ? [website] : [];
 
       if (!arraysOfObjectsEqual(websites, nextValue))
@@ -32,7 +34,8 @@ export const BrandWebsiteController = ({
   );
 
   useEffect(() => {
-    setValue('website', websites[0]);
+    console.log('websites', websites);
+    setValue('website', websites[0] || null);
   }, [setValue, websites]);
 
   return (

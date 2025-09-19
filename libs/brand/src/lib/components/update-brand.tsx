@@ -32,6 +32,11 @@ import { BrandCurrenciesController } from './contollers/brand-currencies-control
 import { useTranslation } from 'react-i18next';
 import { DateHelper } from '@symbiot-core-apps/shared';
 
+type GroupProps = {
+  brand: Brand;
+  onUpdated: (brand: Brand) => void;
+};
+
 export const UpdateBrand = () => {
   const { brand, setBrand } = useCurrentBrandState();
   const { mutateAsync: updateAvatar, isPending: isAvatarUpdating } =
@@ -58,9 +63,9 @@ export const UpdateBrand = () => {
 
         <FormView>
           <ListItemGroup>
-            <Information brand={brand} />
-            <Localization brand={brand} />
-            <ExternalLinks brand={brand} />
+            <Information brand={brand} onUpdated={setBrand} />
+            <Localization brand={brand} onUpdated={setBrand} />
+            <ExternalLinks brand={brand} onUpdated={setBrand} />
           </ListItemGroup>
         </FormView>
       </PageView>
@@ -68,7 +73,7 @@ export const UpdateBrand = () => {
   );
 };
 
-const Information = ({ brand }: { brand: Brand }) => {
+const Information = ({ brand, onUpdated }: GroupProps) => {
   const { t } = useTranslation();
   const { me } = useCurrentAccount();
   const { value, modalVisible, openModal, closeModal, updateValue } =
@@ -83,6 +88,7 @@ const Information = ({ brand }: { brand: Brand }) => {
         about: brand.about,
         birthday: brand.birthday,
       },
+      onUpdated,
     });
 
   return (
@@ -122,7 +128,7 @@ const Information = ({ brand }: { brand: Brand }) => {
   );
 };
 
-const Localization = ({ brand }: { brand: Brand }) => {
+const Localization = ({ brand, onUpdated }: GroupProps) => {
   const { t } = useTranslation();
 
   const { value, modalVisible, openModal, closeModal, updateValue } =
@@ -136,6 +142,7 @@ const Localization = ({ brand }: { brand: Brand }) => {
         countries: brand.countries.map(({ value }) => value),
         currencies: brand.currencies.map(({ value }) => value),
       },
+      onUpdated,
     });
 
   return (
@@ -171,7 +178,7 @@ const Localization = ({ brand }: { brand: Brand }) => {
   );
 };
 
-const ExternalLinks = ({ brand }: { brand: Brand }) => {
+const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
   const { t } = useTranslation();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateForm<
@@ -184,6 +191,7 @@ const ExternalLinks = ({ brand }: { brand: Brand }) => {
         instagrams: brand.instagrams,
         websites: brand.websites,
       },
+      onUpdated,
     });
 
   return (

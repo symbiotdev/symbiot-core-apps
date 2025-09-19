@@ -6,10 +6,12 @@ export function useModalUpdateForm<T, FV, UV>({
   initialValue,
   query,
   dataRequestFormatted,
+  onUpdated,
 }: {
   initialValue: FV;
   query: () => UseMutationResult<T, string, Partial<UV>>;
   dataRequestFormatted?: (value: Partial<FV>) => object;
+  onUpdated?: (value: T) => void;
 }) {
   const { mutateAsync, isPending } = query();
 
@@ -18,6 +20,7 @@ export function useModalUpdateForm<T, FV, UV>({
     isPending,
     mutateAsync,
     dataRequestFormatted,
+    onUpdated,
   );
 }
 
@@ -26,11 +29,13 @@ export function useModalUpdateByIdForm<T, FV, UV>({
   initialValue,
   query,
   dataRequestFormatted,
+  onUpdated,
 }: {
   id: string;
   initialValue: FV;
   query: () => UseMutationResult<T, string, { id: string; data: Partial<UV> }>;
   dataRequestFormatted?: (value: Partial<FV>) => object;
+  onUpdated?: (value: T) => void;
 }) {
   const { mutateAsync, isPending } = query();
 
@@ -39,14 +44,21 @@ export function useModalUpdateByIdForm<T, FV, UV>({
     [id, mutateAsync],
   );
 
-  return useUpdateForm(initialValue, isPending, update, dataRequestFormatted);
+  return useUpdateForm(
+    initialValue,
+    isPending,
+    update,
+    dataRequestFormatted,
+    onUpdated,
+  );
 }
 
-export function useUpdateForm<FV, UV>(
+export function useUpdateForm<T, FV, UV>(
   initialValue: FV,
   updating: boolean,
-  update: (value: Partial<UV>) => Promise<unknown>,
+  update: (value: Partial<UV>) => Promise<T>,
   dataRequestFormatted?: (value: Partial<FV>) => object,
+  onUpdated?: (value: T) => void,
 ) {
   const valueRef = useRef<FV>(initialValue);
 
@@ -56,18 +68,19 @@ export function useUpdateForm<FV, UV>(
   const openModal = useCallback(() => setModalVisible(true), []);
   const closeModal = useCallback(() => setModalVisible(false), []);
 
+  const hasChanges = useCallback((data: Partial<FV>) => {
+    const dataKeys = Object.keys(data) as (keyof FV)[];
+
+    return dataKeys.every((key) =>
+      Array.isArray(data[key]) && Array.isArray(valueRef.current[key])
+        ? arraysOfObjectsEqual(data[key], valueRef.current[key])
+        : objectsEqual(data[key], valueRef.current[key]),
+    );
+  }, []);
+
   const updateValue = useCallback(
     async (data: Partial<FV>) => {
-      const dataKeys = Object.keys(data) as (keyof FV)[];
-
-      if (
-        dataKeys.every((key) =>
-          Array.isArray(data[key]) && Array.isArray(valueRef.current[key])
-            ? arraysOfObjectsEqual(data[key], valueRef.current[key])
-            : objectsEqual(data[key], valueRef.current[key]),
-        )
-      )
-        return;
+      if (hasChanges(data)) return;
 
       const currentValue = { ...valueRef.current };
 
@@ -78,7 +91,11 @@ export function useUpdateForm<FV, UV>(
       setValue(valueRef.current);
 
       try {
-        await update(dataRequestFormatted ? dataRequestFormatted(data) : data);
+        onUpdated?.(
+          await update(
+            dataRequestFormatted ? dataRequestFormatted(data) : data,
+          ),
+        );
       } catch {
         valueRef.current = currentValue;
         setValue(currentValue);
@@ -86,7 +103,7 @@ export function useUpdateForm<FV, UV>(
         setTimeout(openModal, 500);
       }
     },
-    [update, dataRequestFormatted, openModal],
+    [hasChanges, onUpdated, update, dataRequestFormatted, openModal],
   );
 
   return {

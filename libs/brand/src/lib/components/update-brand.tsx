@@ -12,6 +12,7 @@ import {
 import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { BrandCountriesController } from './contollers/brand-countries-controller';
+import { BrandCurrenciesController } from './contollers/brand-currencies-controller';
 
 export const UpdateBrand = () => {
   const { brand, setBrand } = useCurrentBrandState();
@@ -47,6 +48,10 @@ export const UpdateBrand = () => {
           <BrandNameController name={brand.name} onUpdate={updateBrand$} />
           <BrandCountriesController
             countries={brand.countries}
+            onUpdate={updateBrand$}
+          />
+          <BrandCurrenciesController
+            currencies={brand.currencies}
             onUpdate={updateBrand$}
           />
           <BrandWebsitesController

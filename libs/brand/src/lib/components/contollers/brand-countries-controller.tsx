@@ -65,7 +65,7 @@ export const BrandCountriesController = ({
           optionsError={countriesError}
           label={t('brand.form.country.label')}
           sheetLabel={t('brand.form.country.label')}
-          placeholder={t('brand.form.country.placehodler')}
+          placeholder={t('brand.form.country.placeholder')}
           onChange={(country) => {
             onChange(country);
             handleSubmit(update)();

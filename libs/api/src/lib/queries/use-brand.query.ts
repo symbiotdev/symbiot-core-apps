@@ -18,6 +18,7 @@ export enum BrandQueryKey {
   current = 'brand-current',
   industries = 'brand-industries',
   countries = 'brand-countries',
+  currencies = 'brand-currencies',
 }
 
 type CurrentBrandResponse = {
@@ -46,6 +47,12 @@ export const useBrandCountriesQuery = () =>
   useQuery<BrandCountry[], string>({
     queryKey: [BrandQueryKey.countries],
     queryFn: () => requestWithStringError(axios.get('/api/brand/countries')),
+  });
+
+export const useBrandCurrenciesQuery = () =>
+  useQuery<BrandCountry[], string>({
+    queryKey: [BrandQueryKey.currencies],
+    queryFn: () => requestWithStringError(axios.get('/api/brand/currencies')),
   });
 
 export const useCurrentBrandUpdate = () =>

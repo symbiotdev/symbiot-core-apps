@@ -1,337 +1,280 @@
+import React, { useCallback, useEffect, useRef } from 'react';
+import { AvatarPicker, Survey, SurveyStep } from '@symbiot-core-apps/ui';
+import { Controller, useForm } from 'react-hook-form';
+import { BrandNameController } from './contoller/brand-name-controller';
 import { useTranslation } from 'react-i18next';
-import { ImagePickerAsset } from 'expo-image-picker';
-import { Survey, SurveyStep } from '@symbiot-core-apps/survey';
-import {
-  Link,
-  useAppCompetitorsQuery,
-  useAppReferralsQuery,
-  useBrandCreateQuery,
-  useBrandIndustriesQuery,
-} from '@symbiot-core-apps/api';
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { router } from 'expo-router';
-import * as yup from 'yup';
-import { getAppLinkSchema } from '@symbiot-core-apps/ui';
+import { EventArg, NavigationAction } from '@react-navigation/native';
+import { ConfirmAlert } from '@symbiot-core-apps/shared';
+import { router, useNavigation } from 'expo-router';
 import { useAuthBrand, useBrandAuthState } from '../hooks/use-brand-auth';
+import { useBrandCreateQuery } from '@symbiot-core-apps/api';
+import { BrandIndustriesController } from './contoller/brand-industries-controller';
+import { useApp } from '@symbiot-core-apps/app';
+import { BrandWebsitesController } from './contoller/brand-websites-controller';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
-
-const codeMaxLength = 64;
-
-type Value = {
-  avatar?: ImagePickerAsset;
-  competitorSourceId?: string;
-  customCompetitorSource?: string;
-  customReferralSource?: string;
-  industry: string;
-  name: string;
-  promoCode?: string;
-  referralSourceId?: string;
-  website?: Omit<Link, 'id'>;
-};
-
-const TypedSurvey = Survey<Value>;
-const isIndustriesEditable = Boolean(
-  Number(process.env.EXPO_PUBLIC_INDUSTRIES_EDITABLE),
-);
+import { BrandReferralSourceController } from './contoller/brand-referral-source-controller';
+import { BrandCompetitorController } from './contoller/brand-competitor-controller';
+import { BrandPromoCodeController } from './contoller/brand-promo-code-controller';
+import { BrandCountriesController } from './contoller/brand-countries-controller';
+import { ImagePickerAsset } from 'expo-image-picker';
 
 export const CreateBrand = () => {
-  const { t } = useTranslation();
-  const { me } = useCurrentAccount();
-  const switchBrand = useAuthBrand();
   const { processing: authProcessing } = useBrandAuthState();
-  const { data: referrals, isPending: referralsLoading } =
-    useAppReferralsQuery();
-  const { data: competitors, isPending: competitorsLoading } =
-    useAppCompetitorsQuery();
-  const {
-    data: industries,
-    isPending: industriesLoading,
-    error: industriesError,
-  } = useBrandIndustriesQuery();
-  const { mutateAsync } = useBrandCreateQuery();
+  const { t } = useTranslation();
+  const navigation = useNavigation();
+  const { me } = useCurrentAccount();
+  const { functionality } = useApp();
+  const { mutateAsync, isPending } = useBrandCreateQuery();
+  const switchBrand = useAuthBrand();
 
   const createdRef = useRef(false);
+  const ignoreNavigation = createdRef.current || authProcessing;
 
-  const [processing, setProcessing] = useState(false);
+  const {
+    control: nameControl,
+    getValues: nameGetValues,
+    formState: nameFormState,
+    watch: nameWatch,
+  } = useForm<{ name: string }>({
+    defaultValues: { name: '' },
+  });
 
-  const additionalSteps: SurveyStep<Value>[] = useMemo(
-    () =>
-      !me?.sourced
-        ? [
-            {
-              id: 'referral-source',
-              nextId: 'competitor-source',
-              title: t('brand.create.steps.referral_source.title'),
-              subtitle: t('brand.create.steps.referral_source.subtitle'),
-              skippable: true,
-              elements: [
-                {
-                  type: 'toggle-group',
-                  props: {
-                    label: '',
-                    name: 'referralSourceId',
-                    scheme: yup.string().required(),
-                    optionsLoading: referralsLoading,
-                    options: referrals,
-                  },
-                },
-                {
-                  type: 'input',
-                  props: {
-                    name: 'customReferralSource',
-                    placeholder: t(
-                      'brand.create.steps.referral_source.form.external_source.placeholder',
-                    ),
-                    enterKeyHint: 'done',
-                    scheme: yup
-                      .string()
-                      .test(
-                        'validate-extended',
-                        t(
-                          'brand.create.steps.referral_source.form.external_source.error.required',
-                        ),
-                        function (value) {
-                          return (
-                            !referrals?.find(
-                              (referral) =>
-                                this.parent['referralSourceId'] ===
-                                referral.value,
-                            )?.free || !!value
-                          );
-                        },
-                      ),
-                    showWhen: ({ referralSourceId }) =>
-                      !!referrals?.find(
-                        (referral) => referralSourceId === referral.value,
-                      )?.free,
-                  },
-                },
-              ],
-            },
-            {
-              id: 'competitor-source',
-              nextId: 'promo-code',
-              title: t('brand.create.steps.competitor_source.title'),
-              subtitle: t('brand.create.steps.competitor_source.subtitle'),
-              skippable: true,
-              elements: [
-                {
-                  type: 'toggle-group',
-                  props: {
-                    label: '',
-                    name: 'competitorSourceId',
-                    scheme: yup.string().required(),
-                    optionsLoading: competitorsLoading,
-                    options: competitors,
-                  },
-                },
-                {
-                  type: 'input',
-                  props: {
-                    name: 'customCompetitorSource',
-                    placeholder: t(
-                      'brand.create.steps.competitor_source.form.external_source.placeholder',
-                    ),
-                    enterKeyHint: 'done',
-                    scheme: yup
-                      .string()
-                      .test(
-                        'validate-extended',
-                        t(
-                          'brand.create.steps.competitor_source.form.external_source.error.required',
-                        ),
-                        function (value) {
-                          return (
-                            !competitors?.find(
-                              (competitor) =>
-                                this.parent['competitorSourceId'] ===
-                                competitor.value,
-                            )?.free || !!value
-                          );
-                        },
-                      ),
-                    showWhen: ({ competitorSourceId }) =>
-                      !!competitors?.find(
-                        (competitor) => competitorSourceId === competitor.value,
-                      )?.free,
-                  },
-                },
-              ],
-            },
-            {
-              id: 'promo-code',
-              nextId: null,
-              title: t('brand.create.steps.promo_code.title'),
-              subtitle: t('brand.create.steps.promo_code.subtitle'),
-              skippable: true,
-              elements: [
-                {
-                  type: 'input',
-                  props: {
-                    name: 'promoCode',
-                    placeholder: t(
-                      'brand.create.steps.promo_code.form.code.placeholder',
-                    ),
-                    enterKeyHint: 'done',
-                    maxLength: codeMaxLength,
-                    scheme: yup
-                      .string()
-                      .required(
-                        t(
-                          'brand.create.steps.promo_code.form.code.error.required',
-                        ),
-                      ),
-                  },
-                },
-              ],
-            },
-          ]
-        : [],
-    [
-      competitors,
-      competitorsLoading,
-      me?.sourced,
-      referrals,
-      referralsLoading,
-      t,
-    ],
-  );
+  const {
+    control: countryControl,
+    getValues: countryGetValues,
+    formState: countryFormState,
+  } = useForm<{ country: string | null }>();
 
-  const steps: SurveyStep<Value>[] = useMemo(
-    () => [
-      {
-        id: 'name',
-        nextId: 'avatar',
-        title: t('brand.create.steps.name.title'),
-        subtitle: t('brand.create.steps.name.subtitle'),
-        elements: [
-          {
-            type: 'input',
-            props: {
-              name: 'name',
-              placeholder: t('brand.create.steps.name.form.name.placeholder'),
-              enterKeyHint: 'done',
-              scheme: yup
-                .string()
-                .required(
-                  t('brand.create.steps.name.form.name.error.required'),
-                ),
-            },
-          },
-        ],
-      },
-      {
-        id: 'avatar',
-        nextId: isIndustriesEditable ? 'industry' : 'website',
-        title: t('brand.create.steps.avatar.title'),
-        subtitle: t('brand.create.steps.avatar.subtitle'),
-        skippable: true,
-        elements: [
-          {
-            type: 'avatar',
-            props: {
-              name: 'avatar',
-              stepValueKey: 'name',
-              scheme: yup.object().required(),
-            },
-          },
-        ],
-      },
-      ...(isIndustriesEditable
-        ? [
-            {
-              id: 'industry',
-              nextId: 'website',
-              title: t('brand.create.steps.industry.title'),
-              subtitle: t('brand.create.steps.industry.subtitle'),
-              elements: [
-                {
-                  type: 'toggle-group',
-                  props: {
-                    label: '',
-                    name: 'industry',
-                    scheme: yup.string().required(),
-                    options: industries,
-                    optionsLoading: industriesLoading,
-                    optionsError: industriesError,
-                  },
-                },
-              ],
-            } as SurveyStep<Value>,
-          ]
-        : []),
-      {
-        id: 'website',
-        nextId: additionalSteps[0]?.id,
-        title: t('brand.create.steps.website.title'),
-        subtitle: t('brand.create.steps.website.subtitle'),
-        skippable: true,
-        elements: [
-          {
-            type: 'app-link',
-            props: {
-              type: 'website',
-              name: 'website',
-              keyboardType: 'url',
-              enterKeyHint: 'done',
-              placeholder: t(
-                'brand.create.steps.website.form.link.placeholder',
-              ),
-              scheme: getAppLinkSchema(
-                t('brand.create.steps.website.form.link.error.validation'),
-              ).required(
-                t('brand.create.steps.website.form.link.error.required'),
-              ),
-            },
-          },
-        ],
-      },
-      ...additionalSteps,
-    ],
-    [t, industries, industriesLoading, industriesError, additionalSteps],
-  );
+  const {
+    control: avatarControl,
+    getValues: avatarGetValues,
+    formState: avatarFormState,
+  } = useForm<{ avatar: ImagePickerAsset }>();
 
-  const onFinish = useCallback(
-    async (value: Value) => {
-      setProcessing(true);
+  const {
+    control: industryControl,
+    getValues: industryGetValues,
+    formState: industryFormState,
+  } = useForm<{ industry: string | null }>();
 
-      try {
-        const brand = await mutateAsync({
-          name: value.name,
-          avatar: value.avatar,
-          promoCode: value.promoCode,
-          industries: value.industry ? [value.industry] : [],
-          links: value.website ? [value.website] : [],
-          competitorSource: competitors?.find(
-            (competitor) => value.competitorSourceId === competitor.value,
-          )?.free
-            ? value.customCompetitorSource
-            : value.competitorSourceId,
-          referralSource: referrals?.find(
-            (referral) => value.referralSourceId === referral.value,
-          )?.free
-            ? value.customReferralSource
-            : value.referralSourceId,
-        });
+  const {
+    control: websiteControl,
+    getValues: websiteGetValues,
+    formState: websiteFormState,
+  } = useForm<{ website: string | null }>();
 
-        createdRef.current = true;
+  const {
+    control: referralSourceControl,
+    getValues: referralSourceGetValues,
+    formState: referralSourceFormState,
+  } = useForm<{ referralSource: string | null }>();
 
-        router.replace('/');
+  const {
+    control: competitorSourceControl,
+    getValues: competitorSourceGetValues,
+    formState: competitorSourceFormState,
+  } = useForm<{ competitorSource: string | null }>();
 
-        await switchBrand({ id: brand.id });
-      } finally {
-        setProcessing(false);
-      }
+  const {
+    control: promoCodeControl,
+    getValues: promoCodeGetValues,
+    formState: promoCodeFormState,
+  } = useForm<{ promoCode: string | null }>({
+    defaultValues: { promoCode: '' },
+  });
+
+  const onFinish = useCallback(async () => {
+    const name = nameGetValues('name');
+    const avatar = avatarGetValues('avatar');
+    const promoCode = promoCodeGetValues('promoCode');
+    const country = countryGetValues('country');
+    const industry = industryGetValues('industry');
+    const website = websiteGetValues('website');
+    const competitorSource = competitorSourceGetValues('competitorSource');
+    const referralSource = referralSourceGetValues('referralSource');
+
+    const brand = await mutateAsync({
+      name,
+      avatar,
+      promoCode,
+      competitorSource,
+      referralSource,
+      countries: country ? [country] : [],
+      industries: industry ? [industry] : [],
+      websites: website ? [website] : [],
+    });
+
+    createdRef.current = true;
+
+    router.replace('/');
+
+    await switchBrand({ id: brand.id });
+  }, [
+    avatarGetValues,
+    competitorSourceGetValues,
+    countryGetValues,
+    industryGetValues,
+    mutateAsync,
+    nameGetValues,
+    promoCodeGetValues,
+    referralSourceGetValues,
+    switchBrand,
+    websiteGetValues,
+  ]);
+
+  const onLeave = useCallback(
+    (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
+      if (ignoreNavigation) return;
+
+      e.preventDefault();
+
+      ConfirmAlert({
+        title: t('shared.brand.create.discard.title'),
+        message: t('shared.brand.create.discard.message'),
+        callback: () => navigation.dispatch(e.data.action),
+      });
     },
-    [competitors, mutateAsync, referrals, switchBrand],
+    [ignoreNavigation, t, navigation],
   );
+
+  useEffect(() => {
+    navigation.setOptions({
+      gestureEnabled: false,
+      headerShown: !isPending && !ignoreNavigation,
+    });
+  }, [ignoreNavigation, isPending, navigation]);
+
+  useEffect(() => {
+    navigation.addListener('beforeRemove', onLeave);
+
+    return () => {
+      navigation.removeListener('beforeRemove', onLeave);
+    };
+  }, [onLeave, navigation]);
 
   return (
-    <TypedSurvey
-      loading={processing}
-      steps={steps}
-      ignoreNavigation={createdRef.current || authProcessing}
-      onFinish={onFinish}
-    />
+    <Survey loading={isPending || createdRef.current} onFinish={onFinish}>
+      <SurveyStep
+        canGoNext={nameFormState.isValid}
+        title={t('brand.create.steps.name.title')}
+        subtitle={t('brand.create.steps.name.subtitle')}
+      >
+        <BrandNameController noLabel name="name" control={nameControl} />
+      </SurveyStep>
+
+      <SurveyStep
+        canGoNext={countryFormState.isValid}
+        title={t('brand.create.steps.country.title')}
+        subtitle={t('brand.create.steps.country.subtitle')}
+      >
+        <BrandCountriesController
+          noLabel
+          name="country"
+          control={countryControl}
+        />
+      </SurveyStep>
+
+      <SurveyStep
+        skippable
+        canGoNext={avatarFormState.isValid}
+        title={t('brand.create.steps.avatar.title')}
+        subtitle={t('brand.create.steps.avatar.subtitle')}
+      >
+        <Controller
+          control={avatarControl}
+          name="avatar"
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, value } }) => (
+            <AvatarPicker
+              allowsEditing
+              removable
+              alignSelf="center"
+              marginTop="$5"
+              url={value}
+              name={nameWatch().name}
+              color="$placeholderColor"
+              size={140}
+              onAttach={onChange}
+              onRemove={() => onChange(undefined)}
+            />
+          )}
+        />
+      </SurveyStep>
+
+      {functionality.availability.brandIndustry && (
+        <SurveyStep
+          canGoNext={industryFormState.isValid}
+          title={t('brand.create.steps.industry.title')}
+          subtitle={t('brand.create.steps.industry.subtitle')}
+        >
+          <BrandIndustriesController
+            noLabel
+            name="industry"
+            control={industryControl}
+          />
+        </SurveyStep>
+      )}
+
+      <SurveyStep
+        skippable
+        canGoNext={websiteFormState.isValid}
+        title={t('brand.create.steps.website.title')}
+        subtitle={t('brand.create.steps.website.subtitle')}
+      >
+        <BrandWebsitesController
+          noLabel
+          name="website"
+          allowEmpty={false}
+          control={websiteControl}
+        />
+      </SurveyStep>
+
+      {!me?.sourced && (
+        <SurveyStep
+          skippable
+          canGoNext={referralSourceFormState.isValid}
+          title={t('brand.create.steps.referral_source.title')}
+          subtitle={t('brand.create.steps.referral_source.subtitle')}
+        >
+          <BrandReferralSourceController
+            noLabel
+            name="referralSource"
+            control={referralSourceControl}
+          />
+        </SurveyStep>
+      )}
+
+      {!me?.sourced && (
+        <SurveyStep
+          skippable
+          canGoNext={competitorSourceFormState.isValid}
+          title={t('brand.create.steps.competitor_source.title')}
+          subtitle={t('brand.create.steps.competitor_source.subtitle')}
+        >
+          <BrandCompetitorController
+            noLabel
+            name="competitorSource"
+            control={competitorSourceControl}
+          />
+        </SurveyStep>
+      )}
+
+      {!me?.sourced && (
+        <SurveyStep
+          skippable
+          canGoNext={promoCodeFormState.isValid}
+          title={t('brand.create.steps.promo_code.title')}
+          subtitle={t('brand.create.steps.promo_code.subtitle')}
+        >
+          <BrandPromoCodeController
+            noLabel
+            name="promoCode"
+            control={promoCodeControl}
+          />
+        </SurveyStep>
+      )}
+    </Survey>
   );
 };

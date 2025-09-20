@@ -3,7 +3,6 @@ import { XStack } from 'tamagui';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { useAuthBrand } from '../hooks/use-brand-auth';
 import { Avatar, FormView, Icon, SemiBoldText } from '@symbiot-core-apps/ui';
-import { router } from 'expo-router';
 
 export const MyBrandsSelectionList = () => {
   const switchBrand = useAuthBrand();
@@ -24,8 +23,6 @@ export const MyBrandsSelectionList = () => {
           pressStyle={{ opacity: 0.8 }}
           onPress={() => {
             emitHaptic();
-
-            router.replace('/');
 
             void switchBrand({ id: brand.id });
           }}

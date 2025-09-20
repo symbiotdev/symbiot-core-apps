@@ -10,6 +10,7 @@ export type IconName =
   | 'AltArrowUp'
   | 'ArrowLeft'
   | 'ArrowRight'
+  | 'ArrowToTopLeft'
   | 'Bell'
   | 'Calendar'
   | 'CalendarMinimalistic'

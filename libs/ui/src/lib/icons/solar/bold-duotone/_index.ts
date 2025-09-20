@@ -68,6 +68,7 @@ import { Plate } from './Plate';
 import { MusicLibrary2 } from './MusicLibrary2';
 import { Library } from './Library';
 import { Close } from './Close';
+import { ArrowToTopLeft } from './ArrowToTopLeft';
 
 export const Map: IconMap = {
   AddCircle,
@@ -78,6 +79,7 @@ export const Map: IconMap = {
   AltArrowUp,
   ArrowLeft,
   ArrowRight,
+  ArrowToTopLeft,
   Bell,
   Calendar,
   CalendarMinimalistic,

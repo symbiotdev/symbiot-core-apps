@@ -14,11 +14,10 @@ import {
   useCurrentAccount,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { BrandNameController } from './contollers/brand-name-controller';
-import { BrandWebsitesController } from './contollers/brand-websites-controller';
-import { BrandInstagramsController } from './contollers/brand-instagrams-controller';
-import { BrandBirthdayController } from './contollers/brand-birthday-controller';
-import { BrandAboutController } from './contollers/brand-about-controller';
+import { BrandWebsitesController } from './contoller/brand-websites-controller';
+import { BrandInstagramsController } from './contoller/brand-instagrams-controller';
+import { BrandBirthdayController } from './contoller/brand-birthday-controller';
+import { BrandAboutController } from './contoller/brand-about-controller';
 import {
   Brand,
   UpdateBrand as TUpdateBrand,
@@ -27,10 +26,11 @@ import {
 } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { BrandCountriesController } from './contollers/brand-countries-controller';
-import { BrandCurrenciesController } from './contollers/brand-currencies-controller';
+import { BrandCountriesController } from './contoller/brand-countries-controller';
+import { BrandCurrenciesController } from './contoller/brand-currencies-controller';
 import { useTranslation } from 'react-i18next';
 import { DateHelper } from '@symbiot-core-apps/shared';
+import { BrandNameForm } from './form/brand-name-form';
 
 type GroupProps = {
   brand: Brand;
@@ -116,7 +116,7 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <BrandNameController name={value.name} onUpdate={updateValue} />
+          <BrandNameForm name={value.name} onUpdate={updateValue} />
           <BrandBirthdayController
             birthday={brand.birthday}
             onUpdate={updateValue}

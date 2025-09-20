@@ -20,6 +20,12 @@ export type BrandIndustry = {
   value: string;
 };
 
+export type BrandSourceOption = {
+  label: string;
+  value: string;
+  free?: true;
+};
+
 export type Brand = {
   id: string;
   name: string;
@@ -40,13 +46,13 @@ export type Brand = {
 
 export type CreateBrand = {
   name: string;
-  countries: string[];
   avatar?: ImagePickerAsset;
-  promoCode?: string;
+  promoCode?: string | null;
+  referralSource?: string | null;
+  competitorSource?: string | null;
+  countries: string[];
   industries?: string[];
-  referralSource?: string;
-  competitorSource?: string;
-  links?: Omit<Link, 'id'>[];
+  websites?: string[];
 };
 
 export type UpdateBrand = {

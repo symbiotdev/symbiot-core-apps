@@ -3,6 +3,7 @@ import axios from 'axios';
 import { requestWithStringError } from '../utils/request';
 import { AppConfig } from '../types/app-config';
 import { AppTranslations } from '../types/app-translations';
+import { BrandSourceOption } from '../types/brand';
 
 export enum AppQueryKey {
   config = 'app-config',
@@ -32,14 +33,14 @@ export const useAppTranslationsQuery = ({ refetch }: { refetch: boolean }) =>
   });
 
 export const useAppCompetitorsQuery = () =>
-  useQuery<{ label: string; value: string; free?: true }[], string>({
+  useQuery<BrandSourceOption[], string>({
     staleTime: Infinity,
     queryKey: [AppQueryKey.competitors],
     queryFn: () => requestWithStringError(axios.get('/api/app/competitors')),
   });
 
 export const useAppReferralsQuery = () =>
-  useQuery<{ label: string; value: string; free?: true }[], string>({
+  useQuery<BrandSourceOption[], string>({
     staleTime: Infinity,
     queryKey: [AppQueryKey.referrals],
     queryFn: () => requestWithStringError(axios.get('/api/app/referrals')),

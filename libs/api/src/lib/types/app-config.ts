@@ -42,7 +42,14 @@ export type AppConfigIconName =
   | 'Package'
   | 'More';
 
+export type AppConfigFunctionality = {
+  availability: {
+    brandIndustry: boolean;
+  };
+};
+
 export type AppConfig = {
   icons: Record<AppConfigIconName, string>;
   theme: Record<Scheme, ThemeConfig>;
+  functionality: AppConfigFunctionality;
 };

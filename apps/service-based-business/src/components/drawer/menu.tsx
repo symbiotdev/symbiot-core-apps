@@ -221,7 +221,7 @@ export const DrawerMenu = () => {
             route="/clients"
             label={t('navigation.drawer.clients.label')}
             icon="SmileCircle"
-            additionalRoutes={['/clients/create']}
+            additionalRoutes={['/clients/survey']}
           />
         )}
 
@@ -230,7 +230,7 @@ export const DrawerMenu = () => {
             route="/locations"
             label={t('navigation.drawer.locations.label')}
             icon="MapPointWave"
-            additionalRoutes={['/locations/create']}
+            additionalRoutes={['/locations/survey']}
           />
         )}
 
@@ -239,7 +239,7 @@ export const DrawerMenu = () => {
             route="/employees"
             label={t('navigation.drawer.employees.label')}
             icon="UsersGroupRounded"
-            additionalRoutes={['/employees/create']}
+            additionalRoutes={['/employees/survey']}
           />
         )}
 
@@ -248,7 +248,7 @@ export const DrawerMenu = () => {
             route="/services"
             label={t('navigation.drawer.services.label')}
             icon={icons.Service}
-            additionalRoutes={['/services/create']}
+            additionalRoutes={['/services/survey']}
           />
         )}
 

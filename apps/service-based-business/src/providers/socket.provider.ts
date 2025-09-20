@@ -41,8 +41,6 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
       if (currentBrand?.id) return;
 
       void switchBrand({ id: brand.id });
-
-      router.replace('/');
     },
     [currentBrand?.id, switchBrand],
   );

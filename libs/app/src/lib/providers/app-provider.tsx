@@ -10,6 +10,7 @@ import { I18nProvider } from '@symbiot-core-apps/i18n';
 import { ThemeProvider } from '@symbiot-core-apps/theme';
 import {
   AppConfig,
+  AppConfigFunctionality,
   AppConfigIconName,
   AppTranslations,
   useAppConfigQuery,
@@ -25,17 +26,20 @@ import { AssetsLoading } from '../components/assets-loading';
 
 type AppState = {
   theme?: AppConfig['theme'];
-  translations?: AppTranslations['translations'];
-  languages?: AppTranslations['languages'];
   icons?: Record<AppConfigIconName, IconName>;
+  languages?: AppTranslations['languages'];
+  translations?: AppTranslations['translations'];
+  functionality?: AppConfigFunctionality;
   setTheme: (theme: AppConfig['theme']) => void;
-  setTranslations: (translations: AppTranslations) => void;
   setIcons: (icons: Record<AppConfigIconName, IconName>) => void;
+  setTranslations: (translations: AppTranslations) => void;
+  setFunctionality: (functionality: AppConfigFunctionality) => void;
 };
 
 type AppContext = {
   icons: Record<AppConfigIconName, IconName>;
   theme: AppConfig['theme'];
+  functionality: AppConfigFunctionality;
   languages: AppTranslations['languages'];
 };
 
@@ -45,6 +49,8 @@ const useAppState = create<AppState>()(
     (set, get) => ({
       setTheme: (theme) => !objectsEqual(get().theme, theme) && set({ theme }),
       setIcons: (icons) => !objectsEqual(get().icons, icons) && set({ icons }),
+      setFunctionality: (functionality) =>
+        !objectsEqual(get().icons, functionality) && set({ functionality }),
       setTranslations: ({ translations, languages }) =>
         !objectsEqual(get().translations, translations) &&
         set({ translations, languages }),
@@ -62,9 +68,11 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     theme,
     languages,
     translations,
+    functionality,
     setIcons,
     setTheme,
     setTranslations,
+    setFunctionality,
   } = useAppState();
   const { data: appConfig, error: appConfigError } = useAppConfigQuery({
     refetch: !icons,
@@ -88,13 +96,14 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
       } else {
         setIcons(appConfig.icons as Record<AppConfigIconName, IconName>);
         setTheme(appConfig.theme);
+        setFunctionality(appConfig.functionality);
       }
     }
 
     if (appConfigError) {
       setLoadConfigFailed(true);
     }
-  }, [appConfig, appConfigError, setIcons, setTheme]);
+  }, [appConfig, appConfigError, setFunctionality, setIcons, setTheme]);
 
   useLayoutEffect(() => {
     if (appTranslations) {
@@ -116,7 +125,8 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     }
   }, [appTranslationError, appTranslations, setTranslations]);
 
-  const hasAssets = !!icons && !!theme && !!languages && !!translations;
+  const hasAssets =
+    !!icons && !!theme && !!languages && !!translations && functionality;
 
   if (!hasAssets) {
     if (loadConfigFailed || loadTranslationsFailed) {
@@ -128,7 +138,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
 
   return (
     hasAssets && (
-      <Context.Provider value={{ icons, theme, languages }}>
+      <Context.Provider value={{ icons, theme, languages, functionality }}>
         <KeyboardProvider>
           <I18nProvider translations={translations}>
             <ThemeProvider theme={theme}>{children}</ThemeProvider>

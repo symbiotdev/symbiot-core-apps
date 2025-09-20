@@ -1,3 +1,3 @@
-import { CreateBrand } from '@symbiot-core-apps/brand';
+import { NewBrand } from '@symbiot-core-apps/brand';
 
-export default CreateBrand;
+export default NewBrand;

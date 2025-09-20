@@ -151,7 +151,9 @@ export default () => {
                 {/*BRAND*/}
 
                 <Stack.Protected
-                  guard={!!currentBrands && !currentBrands.length}
+                  guard={
+                    !!currentBrands && !currentBrands.length && !currentBrand
+                  }
                 >
                   <Stack.Screen name="brand/create" />
                   <Stack.Screen

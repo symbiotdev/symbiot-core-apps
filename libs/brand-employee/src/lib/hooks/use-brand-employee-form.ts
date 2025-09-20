@@ -1,11 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
-import {
-  getPhoneInputSchema,
-  getWeekdayScheduleScheme,
-  phoneDefaultValue,
-} from '@symbiot-core-apps/ui';
+import { getWeekdayScheduleScheme } from '@symbiot-core-apps/ui';
 
 export const useBrandEmployeeForm = () => {
   const { t } = useTranslation();
@@ -22,7 +18,9 @@ export const useBrandEmployeeForm = () => {
       },
       professionalActivity: {
         title: t('brand.employees.upsert.form.professional_activity.title'),
-        subtitle: t('brand.employees.upsert.form.professional_activity.subtitle'),
+        subtitle: t(
+          'brand.employees.upsert.form.professional_activity.subtitle',
+        ),
       },
       identificationInfo: {
         title: t('brand.employees.upsert.form.identification_info.title'),
@@ -79,12 +77,9 @@ export const useBrandEmployeeForm = () => {
         defaultValue: true,
       },
       phone: {
-        defaultValue: phoneDefaultValue,
         label: t('brand.employees.upsert.form.phone.label'),
         placeholder: t('brand.employees.upsert.form.phone.placeholder'),
-        scheme: getPhoneInputSchema(
-          t('brand.employees.upsert.form.phone.error.invalid'),
-        ),
+        scheme: yup.string().nullable().ensure(),
       },
       locationCustomSchedule: {
         label: t('brand.employees.upsert.form.location_custom_schedule.label'),

@@ -314,7 +314,7 @@ export default () => {
                     <Stack.Screen
                       name="locations/[id]/analytics"
                       options={{
-                        headerTitle: t('brand.locations.analytics.title'),
+                        headerTitle: t('brand_location.analytics.title'),
                       }}
                     />
                   </Stack.Protected>
@@ -322,25 +322,25 @@ export default () => {
                   <Stack.Screen
                     name="locations/[id]/update"
                     options={{
-                      headerTitle: t('brand.locations.update.title'),
+                      headerTitle: t('brand_location.update.title'),
                     }}
                   />
                   <Stack.Screen
                     name="locations/[id]/profile"
                     options={{
-                      headerTitle: t('brand.locations.profile.title'),
+                      headerTitle: t('brand_location.profile.title'),
                     }}
                   />
                   <Stack.Screen
                     name="locations/create"
                     options={{
-                      headerTitle: t('brand.locations.new_location'),
+                      headerTitle: t('brand_location.new_location'),
                     }}
                   />
                   <Stack.Screen
                     name="locations/preferences/index"
                     options={{
-                      headerTitle: t('brand.locations.title'),
+                      headerTitle: t('brand_location.title'),
                     }}
                   />
                   <Stack.Screen
@@ -349,7 +349,7 @@ export default () => {
                       ...(drawerVisible && {
                         animation: 'none',
                       }),
-                      headerTitle: t('brand.locations.title'),
+                      headerTitle: t('brand_location.title'),
                     }}
                   />
                 </Stack.Protected>

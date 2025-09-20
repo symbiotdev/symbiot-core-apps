@@ -81,7 +81,7 @@ export default () => {
       <Button
         type="clear"
         icon={<Icon name="MapPointWave" />}
-        label={t('brand.locations.title')}
+        label={t('brand_location.title')}
         onPress={() => router.push(`/locations`)}
       />
 

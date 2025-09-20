@@ -19,8 +19,8 @@ export const RemoveBrandLocation = ({
   const onActionPress = useCallback(
     () =>
       ConfirmAlert({
-        title: t('brand.locations.remove.confirm_dialog.title'),
-        message: t('brand.locations.remove.confirm_dialog.message'),
+        title: t('brand_location.remove.confirm_dialog.title'),
+        message: t('brand_location.remove.confirm_dialog.message'),
         callback: async () => {
           await mutateAsync({ id: location.id });
 
@@ -35,11 +35,11 @@ export const RemoveBrandLocation = ({
     <PageView scrollable withHeaderHeight>
       <FormView>
         <ActionCard
-          title={t('brand.locations.remove.title')}
-          subtitle={t('brand.locations.remove.subtitle', {
+          title={t('brand_location.remove.title')}
+          subtitle={t('brand_location.remove.subtitle', {
             name: location.name,
           })}
-          buttonLabel={t('brand.locations.remove.button.label')}
+          buttonLabel={t('brand_location.remove.button.label')}
           buttonIcon={<Icon name="TrashBinMinimalistic" />}
           buttonLoading={isPending}
           buttonType="danger"

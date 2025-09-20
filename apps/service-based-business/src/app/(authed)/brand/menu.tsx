@@ -60,7 +60,7 @@ export default () => {
           <ListItemGroup title={t('brand.infrastructure')}>
             {hasPermission('locationsAll') && (
               <ListItem
-                label={t('brand.locations.title')}
+                label={t('brand_location.title')}
                 icon={<Icon name="MapPointWave" />}
                 onPress={onLocationsPress}
               />

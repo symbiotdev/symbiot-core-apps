@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
 import * as yup from 'yup';
-import { getPhoneInputSchema, phoneDefaultValue } from '@symbiot-core-apps/ui';
 
 export const useBrandClientForm = () => {
   const { t } = useTranslation();
@@ -43,12 +42,9 @@ export const useBrandClientForm = () => {
           .required(t('brand.clients.upsert.form.gender.error.required')),
       },
       phone: {
-        defaultValue: phoneDefaultValue,
         label: t('brand.clients.upsert.form.phone.label'),
         placeholder: t('brand.clients.upsert.form.phone.placeholder'),
-        scheme: getPhoneInputSchema(
-          t('brand.clients.upsert.form.phone.error.invalid'),
-        ),
+        scheme: yup.string().nullable().ensure(),
       },
       email: {
         label: t('brand.clients.upsert.form.email.label'),

@@ -118,11 +118,11 @@ const Intro = ({
         <EmptyView
           padding={0}
           iconName="MapPointWave"
-          title={t('brand.locations.upsert.intro.title')}
-          message={t('brand.locations.upsert.intro.subtitle')}
+          title={t('brand_location.intro.title')}
+          message={t('brand_location.intro.subtitle')}
         >
           <Button
-            label={t('brand.locations.upsert.intro.button.label')}
+            label={t('brand_location.intro.button.label')}
             onPress={() => router.push('/locations/create')}
           />
         </EmptyView>

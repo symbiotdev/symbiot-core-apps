@@ -7,9 +7,7 @@ import states from 'states-us';
 import { countryToCurrency } from '@symbiot-core-apps/shared';
 import {
   getAppLinkSchema,
-  getPhoneInputSchema,
   getWeekdayScheduleScheme,
-  phoneDefaultValue,
 } from '@symbiot-core-apps/ui';
 import { CountryCode, getCountry } from 'countries-and-timezones';
 
@@ -25,66 +23,66 @@ export const useBrandLocationForm = () => {
   return useMemo(
     () => ({
       name: {
-        title: t('brand.locations.upsert.form.name.title'),
-        subtitle: t('brand.locations.upsert.form.name.subtitle'),
-        label: t('brand.locations.upsert.form.name.label'),
-        placeholder: t('brand.locations.upsert.form.name.placeholder', {
+        title: t('brand_location.form.name.title'),
+        subtitle: t('brand_location.form.name.subtitle'),
+        label: t('brand_location.form.name.label'),
+        placeholder: t('brand_location.form.name.placeholder', {
           brandName: brand?.name,
         }),
         scheme: yup
           .string()
-          .required(t('brand.locations.upsert.form.name.error.required')),
+          .required(t('brand_location.form.name.error.required')),
       },
       country: {
         defaultValue: getCountry(defaultCountryCode as CountryCode)
           ? defaultCountryCode
           : undefined,
-        title: t('brand.locations.upsert.form.country.title'),
-        subtitle: t('brand.locations.upsert.form.country.subtitle'),
+        title: t('brand_location.form.country.title'),
+        subtitle: t('brand_location.form.country.subtitle'),
         sheetLabel: t('shared.country'),
-        label: t('brand.locations.upsert.form.country.label'),
-        placeholder: t('brand.locations.upsert.form.country.placeholder'),
+        label: t('brand_location.form.country.label'),
+        placeholder: t('brand_location.form.country.placeholder'),
         scheme: yup
           .string()
-          .required(t('brand.locations.upsert.form.country.error.required')),
+          .required(t('brand_location.form.country.error.required')),
       },
       timezone: {
         defaultValue: 'UTC',
-        title: t('brand.locations.upsert.form.timezone.title'),
-        subtitle: t('brand.locations.upsert.form.timezone.subtitle'),
+        title: t('brand_location.form.timezone.title'),
+        subtitle: t('brand_location.form.timezone.subtitle'),
         sheetLabel: t('shared.timezone'),
-        label: t('brand.locations.upsert.form.timezone.label'),
-        placeholder: t('brand.locations.upsert.form.timezone.placeholder'),
+        label: t('brand_location.form.timezone.label'),
+        placeholder: t('brand_location.form.timezone.placeholder'),
         scheme: yup
           .string()
-          .required(t('brand.locations.upsert.form.timezone.error.required')),
+          .required(t('brand_location.form.timezone.error.required')),
       },
       usState: {
         defaultValue: defaultState,
-        label: t('brand.locations.upsert.form.us_state.label'),
-        sheetLabel: t('brand.locations.upsert.form.us_state.sheet_label'),
-        placeholder: t('brand.locations.upsert.form.us_state.placeholder'),
+        label: t('brand_location.form.us_state.label'),
+        sheetLabel: t('brand_location.form.us_state.sheet_label'),
+        placeholder: t('brand_location.form.us_state.placeholder'),
         scheme: yup
           .string()
-          .required(t('brand.locations.upsert.form.us_state.error.required')),
+          .required(t('brand_location.form.us_state.error.required')),
       },
       currency: {
-        title: t('brand.locations.upsert.form.currency.title'),
-        subtitle: t('brand.locations.upsert.form.currency.subtitle'),
+        title: t('brand_location.form.currency.title'),
+        subtitle: t('brand_location.form.currency.subtitle'),
         sheetLabel: t('shared.currency'),
         defaultValue: defaultCountryCode
           ? countryToCurrency[defaultCountryCode]
           : undefined,
-        label: t('brand.locations.upsert.form.currency.label'),
-        placeholder: t('brand.locations.upsert.form.currency.placeholder'),
+        label: t('brand_location.form.currency.label'),
+        placeholder: t('brand_location.form.currency.placeholder'),
         scheme: yup
           .string()
-          .required(t('brand.locations.upsert.form.currency.error.required')),
+          .required(t('brand_location.form.currency.error.required')),
       },
       schedules: {
-        title: t('brand.locations.upsert.form.schedule.title'),
-        subtitle: t('brand.locations.upsert.form.schedule.subtitle'),
-        label: t('brand.locations.upsert.form.schedule.label'),
+        title: t('brand_location.form.schedule.title'),
+        subtitle: t('brand_location.form.schedule.subtitle'),
+        label: t('brand_location.form.schedule.label'),
         defaultValue: [
           ...Array.from({ length: 5 }).map((_, index) => ({
             day: index + 1,
@@ -103,72 +101,68 @@ export const useBrandLocationForm = () => {
           },
         ],
         scheme: getWeekdayScheduleScheme(
-          t('brand.locations.upsert.form.schedule.error.required'),
+          t('brand_location.form.schedule.error.required'),
         ),
       },
       phone: {
-        defaultValue: phoneDefaultValue,
-        label: t('brand.locations.upsert.form.phone.label'),
-        placeholder: t('brand.locations.upsert.form.phone.placeholder'),
-        scheme: getPhoneInputSchema(
-          t('brand.locations.upsert.form.phone.error.invalid'),
-          true,
-        ),
+        label: t('brand_location.form.phone.label'),
+        placeholder: t('brand_location.form.phone.placeholder'),
+        scheme: yup.string().nullable().nullable(),
       },
       email: {
-        label: t('brand.locations.upsert.form.email.label'),
-        placeholder: t('brand.locations.upsert.form.email.placeholder'),
+        label: t('brand_location.form.email.label'),
+        placeholder: t('brand_location.form.email.placeholder'),
         scheme: yup
           .string()
           .nullable()
-          .email(t('brand.locations.upsert.form.email.error.invalid_format'))
+          .email(t('brand_location.form.email.error.invalid_format'))
           .ensure(),
       },
       instagram: {
-        label: t('brand.locations.upsert.form.instagram.label'),
-        placeholder: t('brand.locations.upsert.form.instagram.placeholder'),
+        label: t('brand_location.form.instagram.label'),
+        placeholder: t('brand_location.form.instagram.placeholder'),
         scheme: getAppLinkSchema(
-          t('brand.locations.upsert.form.instagram.error.validation'),
+          t('brand_location.form.instagram.error.validation'),
           true,
         ).nullable(),
       },
       remark: {
-        label: t('brand.locations.upsert.form.remark.label'),
-        placeholder: t('brand.locations.upsert.form.remark.placeholder'),
+        label: t('brand_location.form.remark.label'),
+        placeholder: t('brand_location.form.remark.placeholder'),
         scheme: yup.string().nullable().ensure(),
       },
       contactInfo: {
-        title: t('brand.locations.upsert.form.contact_info.title'),
-        subtitle: t('brand.locations.upsert.form.contact_info.subtitle'),
+        title: t('brand_location.form.contact_info.title'),
+        subtitle: t('brand_location.form.contact_info.subtitle'),
       },
       gallery: {
         maxImages: 10,
-        label: t('brand.locations.upsert.form.gallery.label'),
+        label: t('brand_location.form.gallery.label'),
       },
       advantages: {
         multiselect: true,
-        title: t('brand.locations.upsert.form.advantages.title'),
-        subtitle: t('brand.locations.upsert.form.advantages.subtitle'),
+        title: t('brand_location.form.advantages.title'),
+        subtitle: t('brand_location.form.advantages.subtitle'),
         defaultValue: [],
         scheme: yup.array().of(object()).required(),
       },
       address: {
-        title: t('brand.locations.upsert.form.address.title'),
-        subtitle: t('brand.locations.upsert.form.address.subtitle'),
-        label: t('brand.locations.upsert.form.address.label'),
-        placeholder: t('brand.locations.upsert.form.address.placeholder'),
+        title: t('brand_location.form.address.title'),
+        subtitle: t('brand_location.form.address.subtitle'),
+        label: t('brand_location.form.address.label'),
+        placeholder: t('brand_location.form.address.placeholder'),
         scheme: yup
           .string()
-          .required(t('brand.locations.upsert.form.address.error.required')),
+          .required(t('brand_location.form.address.error.required')),
       },
       floor: {
-        label: t('brand.locations.upsert.form.floor.label'),
-        placeholder: t('brand.locations.upsert.form.floor.placeholder'),
+        label: t('brand_location.form.floor.label'),
+        placeholder: t('brand_location.form.floor.placeholder'),
         scheme: yup.string().nullable().ensure(),
       },
       entrance: {
-        label: t('brand.locations.upsert.form.entrance.label'),
-        placeholder: t('brand.locations.upsert.form.entrance.placeholder'),
+        label: t('brand_location.form.entrance.label'),
+        placeholder: t('brand_location.form.entrance.placeholder'),
         scheme: yup.string().nullable().ensure(),
       },
     }),

@@ -8,8 +8,8 @@ export const useDynamicBrandLocation = () => {
   return useMemo(
     () =>
       ({
-        label: t('brand.locations.dynamic_location.title'),
-        description: t('brand.locations.dynamic_location.subtitle'),
+        label: t('brand_location.dynamic_location.title'),
+        description: t('brand_location.dynamic_location.subtitle'),
         value: null,
       }) as PickerItem,
     [t],

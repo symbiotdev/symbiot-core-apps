@@ -1,19 +1,17 @@
 import { useBrandCountriesQuery } from '@symbiot-core-apps/api';
 import { SelectPicker } from '@symbiot-core-apps/ui';
-import { Controller, useForm } from 'react-hook-form';
-import { useCallback, useEffect, useMemo } from 'react';
+import { Control, Controller } from 'react-hook-form';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { arraysOfObjectsEqual } from '@symbiot-core-apps/shared';
-
-type FormValue = {
-  countries: string[];
-};
 
 export const BrandCountriesController = ({
-  countries,
-  onUpdate,
-}: FormValue & {
-  onUpdate: (props: { countries: string[] }) => void;
+  control,
+  noLabel,
+  onBlur,
+}: {
+  control: Control<{ country: string | null }>;
+  noLabel?: boolean;
+  onBlur?: () => void;
 }) => {
   const { t } = useTranslation();
   const {
@@ -21,14 +19,6 @@ export const BrandCountriesController = ({
     isPending: countriesLoading,
     error: countriesError,
   } = useBrandCountriesQuery();
-
-  const { control, handleSubmit, setValue } = useForm<{
-    country: string | null;
-  }>({
-    defaultValues: {
-      country: countries[0],
-    },
-  });
 
   const options = useMemo(
     () =>
@@ -38,19 +28,6 @@ export const BrandCountriesController = ({
       })),
     [data],
   );
-
-  const update = useCallback(
-    ({ country }: { country: string | null }) => {
-      if (!country || arraysOfObjectsEqual([country], countries)) return;
-
-      onUpdate({ countries: [country] });
-    },
-    [countries, onUpdate],
-  );
-
-  useEffect(() => {
-    setValue('country', countries[0] || null);
-  }, [setValue, countries]);
 
   return (
     <Controller
@@ -63,13 +40,11 @@ export const BrandCountriesController = ({
           options={options}
           optionsLoading={countriesLoading}
           optionsError={countriesError}
-          label={t('brand.form.country.label')}
+          label={!noLabel ? t('brand.form.country.label') : undefined}
           sheetLabel={t('brand.form.country.label')}
           placeholder={t('brand.form.country.placeholder')}
-          onChange={(country) => {
-            onChange(country);
-            handleSubmit(update)();
-          }}
+          onChange={onChange}
+          onBlur={onBlur}
         />
       )}
     />

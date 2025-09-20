@@ -1,43 +1,18 @@
-import { Controller, useForm } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
 import { DatePicker } from '@symbiot-core-apps/ui';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
-import { useCallback, useEffect } from 'react';
-
-type FormValue = {
-  birthday: string | null;
-};
 
 export const BrandBirthdayController = ({
-  birthday,
-  onUpdate,
-}: FormValue & {
-  onUpdate: (value: { birthday: string | null }) => void;
+  control,
+  onBlur,
+}: {
+  control: Control<{ birthday: string | null }>;
+  onBlur?: () => void;
 }) => {
   const { t } = useTranslation();
   const { me } = useCurrentAccount();
-  const { control, handleSubmit, setValue } = useForm<FormValue>({
-    defaultValues: {
-      birthday,
-    },
-  });
-
-  const update = useCallback(
-    (value: FormValue) => {
-      value.birthday !== birthday &&
-        onUpdate({
-          birthday: value.birthday
-            ? new Date(value.birthday)?.toISOString()
-            : null,
-        });
-    },
-    [birthday, onUpdate],
-  );
-
-  useEffect(() => {
-    setValue('birthday', birthday);
-  }, [birthday, setValue]);
 
   return (
     <Controller
@@ -53,10 +28,7 @@ export const BrandBirthdayController = ({
           maxDate={new Date()}
           label={t('brand.form.birthday.label')}
           placeholder={t('brand.form.birthday.placeholder')}
-          onChange={(birthday) => {
-            onChange(birthday);
-            handleSubmit(update)();
-          }}
+          onBlur={onBlur}
         />
       )}
     />

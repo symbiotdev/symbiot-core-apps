@@ -31,6 +31,7 @@ export const DatePicker = ({
   minDate,
   maxDate,
   onChange,
+  onBlur,
   ...viewProps
 }: Omit<ViewProps, 'onPress'> & {
   value?: Date | null | string;
@@ -44,6 +45,7 @@ export const DatePicker = ({
   minDate?: Date;
   maxDate?: Date;
   onChange?: (date: Date) => void;
+  onBlur?: () => void;
 }) => {
   const theme = useTheme();
   const { scheme } = useScheme();
@@ -85,6 +87,7 @@ export const DatePicker = ({
             </RegularText>
           </InputFieldView>
         }
+        onClose={onBlur}
       >
         <View
           maxWidth={Platform.OS === 'web' ? 350 : undefined}

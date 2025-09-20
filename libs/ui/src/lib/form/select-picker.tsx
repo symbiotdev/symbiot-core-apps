@@ -28,6 +28,7 @@ export function SelectPicker({
   optionsError,
   options,
   onChange,
+  onBlur,
 }: {
   value: unknown;
   label?: string;
@@ -46,6 +47,7 @@ export function SelectPicker({
   optionsError?: string | null;
   options?: PickerItem[];
   onChange: PickerOnChange;
+  onBlur?: () => void;
 }) {
   const popoverRef = useRef<AdaptivePopoverRef>(null);
 
@@ -138,6 +140,7 @@ export function SelectPicker({
             )}
           </View>
         }
+        onClose={onBlur}
       >
         <Picker
           value={value}

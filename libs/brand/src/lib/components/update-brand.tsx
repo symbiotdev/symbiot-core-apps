@@ -14,10 +14,6 @@ import {
   useCurrentAccount,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { BrandWebsitesController } from './contoller/brand-websites-controller';
-import { BrandInstagramsController } from './contoller/brand-instagrams-controller';
-import { BrandBirthdayController } from './contoller/brand-birthday-controller';
-import { BrandAboutController } from './contoller/brand-about-controller';
 import {
   Brand,
   UpdateBrand as TUpdateBrand,
@@ -26,11 +22,15 @@ import {
 } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { BrandCountriesController } from './contoller/brand-countries-controller';
-import { BrandCurrenciesController } from './contoller/brand-currencies-controller';
 import { useTranslation } from 'react-i18next';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { BrandNameForm } from './form/brand-name-form';
+import { BrandAboutForm } from './form/brand-about-form';
+import { BrandBirthdayForm } from './form/brand-birthday-form';
+import { BrandCountriesForm } from './form/brand-countries-form';
+import { BrandCurrenciesForm } from './form/brand-currencies-form';
+import { BrandInstagramsForm } from './form/brand-instagrams-form';
+import { BrandWebsitesForm } from './form/brand-websites-form';
 
 type GroupProps = {
   brand: Brand;
@@ -117,11 +117,8 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <BrandNameForm name={value.name} onUpdate={updateValue} />
-          <BrandBirthdayController
-            birthday={brand.birthday}
-            onUpdate={updateValue}
-          />
-          <BrandAboutController about={value.about} onUpdate={updateValue} />
+          <BrandBirthdayForm birthday={brand.birthday} onUpdate={updateValue} />
+          <BrandAboutForm about={value.about} onUpdate={updateValue} />
         </FormView>
       </SlideSheetModal>
     </>
@@ -164,11 +161,11 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <BrandCountriesController
+          <BrandCountriesForm
             countries={value.countries}
             onUpdate={updateValue}
           />
-          <BrandCurrenciesController
+          <BrandCurrenciesForm
             currencies={value.currencies}
             onUpdate={updateValue}
           />
@@ -216,11 +213,8 @@ const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <BrandWebsitesController
-            websites={value.websites}
-            onUpdate={updateValue}
-          />
-          <BrandInstagramsController
+          <BrandWebsitesForm websites={value.websites} onUpdate={updateValue} />
+          <BrandInstagramsForm
             instagrams={value.instagrams}
             onUpdate={updateValue}
           />

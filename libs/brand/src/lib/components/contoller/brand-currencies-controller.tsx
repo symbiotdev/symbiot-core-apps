@@ -1,19 +1,16 @@
 import { useBrandCurrenciesQuery } from '@symbiot-core-apps/api';
 import { SelectPicker } from '@symbiot-core-apps/ui';
-import { Controller, useForm } from 'react-hook-form';
-import { useCallback, useEffect } from 'react';
+import { Control, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { arraysOfObjectsEqual } from '@symbiot-core-apps/shared';
-
-type FormValue = {
-  currencies: string[];
-};
 
 export const BrandCurrenciesController = ({
-  currencies,
-  onUpdate,
-}: FormValue & {
-  onUpdate: (props: { currencies: string[] }) => void;
+  control,
+  noLabel,
+  onBlur,
+}: {
+  control: Control<{ currency: string | null }>;
+  noLabel?: boolean;
+  onBlur?: () => void;
 }) => {
   const { t } = useTranslation();
   const {
@@ -21,27 +18,6 @@ export const BrandCurrenciesController = ({
     isPending: currenciesLoading,
     error: currenciesError,
   } = useBrandCurrenciesQuery();
-
-  const { control, handleSubmit, setValue } = useForm<{
-    currency: string | null;
-  }>({
-    defaultValues: {
-      currency: currencies[0],
-    },
-  });
-
-  const update = useCallback(
-    ({ currency }: { currency: string | null }) => {
-      if (!currency || arraysOfObjectsEqual([currency], currencies)) return;
-
-      onUpdate({ currencies: [currency] });
-    },
-    [currencies, onUpdate],
-  );
-
-  useEffect(() => {
-    setValue('currency', currencies[0] || null);
-  }, [setValue, currencies]);
 
   return (
     <Controller
@@ -54,13 +30,11 @@ export const BrandCurrenciesController = ({
           options={data}
           optionsLoading={currenciesLoading}
           optionsError={currenciesError}
-          label={t('brand.form.currency.label')}
+          label={!noLabel ? t('brand.form.currency.label') : undefined}
           sheetLabel={t('brand.form.currency.label')}
           placeholder={t('brand.form.currency.placeholder')}
-          onChange={(currency) => {
-            onChange(currency);
-            handleSubmit(update)();
-          }}
+          onChange={onChange}
+          onBlur={onBlur}
         />
       )}
     />

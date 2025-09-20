@@ -48,6 +48,7 @@ export const WebsiteInput = ({
 
   return (
     <Input
+      keyboardType="url"
       value={getWebsiteDomain(value)}
       label={label}
       placeholder={placeholder}

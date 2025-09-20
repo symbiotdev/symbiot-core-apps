@@ -2,7 +2,7 @@ import { View, ViewProps } from 'tamagui';
 import { ViewStyle } from 'react-native';
 
 export const formViewStyles: ViewStyle = {
-  marginHorizontal: 'auto',
+  alignSelf: 'center',
   width: '100%',
   maxWidth: 600,
   gap: 10,

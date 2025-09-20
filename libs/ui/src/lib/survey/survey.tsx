@@ -159,6 +159,7 @@ export const Survey = ({
               overflow="hidden"
               zIndex={1}
               pressStyle={{ opacity: 0.8 }}
+              style={formViewStyles}
               onPress={onBackPress}
             >
               <Animated.View
@@ -190,7 +191,12 @@ export const Survey = ({
                 { gap: defaultPageVerticalPadding },
               ]}
             >
-              <View gap="$2">
+              <View
+                gap="$2"
+                paddingTop={
+                  defaultPageVerticalPadding / (Platform.OS === 'web' ? 1 : 2)
+                }
+              >
                 <H2>{currentStep.props.title}</H2>
                 <RegularText>{currentStep.props.subtitle}</RegularText>
               </View>
@@ -201,27 +207,33 @@ export const Survey = ({
         </KeyboardAwareScrollView>
 
         {!!currentStep && (
-          <KeyboardStickyView
-            offset={{ opened: bottom }}
-            style={[
-              formViewStyles,
-              {
-                gap: 0,
-                paddingHorizontal: defaultPageHorizontalPadding,
-                paddingBottom: bottom + defaultPageVerticalPadding,
-              },
-            ]}
-          >
-            <Button
-              disabled={!currentStep.props.canGoNext}
-              label={t(isLastStep ? 'shared.finish' : 'shared.next')}
-              onPress={onNext}
-            />
+          <Animated.View style={[animatedStyle]}>
+            <KeyboardStickyView
+              offset={{ opened: bottom }}
+              style={[
+                formViewStyles,
+                {
+                  gap: 0,
+                  paddingHorizontal: defaultPageHorizontalPadding,
+                  paddingBottom: bottom + defaultPageVerticalPadding,
+                },
+              ]}
+            >
+              <Button
+                disabled={!currentStep.props.canGoNext}
+                label={t(isLastStep ? 'shared.finish' : 'shared.next')}
+                onPress={onNext}
+              />
 
-            {currentStep.props.skippable && (
-              <Button type="clear" label={t('shared.skip')} onPress={onNext} />
-            )}
-          </KeyboardStickyView>
+              {currentStep.props.skippable && (
+                <Button
+                  type="clear"
+                  label={t('shared.skip')}
+                  onPress={onNext}
+                />
+              )}
+            </KeyboardStickyView>
+          </Animated.View>
         )}
       </View>
     </ContainerView>

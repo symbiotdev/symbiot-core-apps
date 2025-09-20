@@ -97,7 +97,15 @@ export const Input = forwardRef(
         }
 
         if (regex) {
-          nextValue = (text as string).match(regex)?.join('') || '';
+          const result = (text as string).match(regex);
+
+          if (result) {
+            nextValue = result?.join('');
+          } else {
+            if (!text) {
+              nextValue = '';
+            }
+          }
         }
 
         if (type === 'numeric') {

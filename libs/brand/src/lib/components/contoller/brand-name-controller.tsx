@@ -1,22 +1,24 @@
 import { Input } from '@symbiot-core-apps/ui';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-export const BrandNameController = ({
+export function BrandNameController<T extends FieldValues>({
+  name,
   control,
   noLabel,
   onBlur,
 }: {
-  control: Control<{ name: string }>;
+  name: Path<T>;
+  control: Control<T>;
   noLabel?: boolean;
   onBlur?: () => void;
-}) => {
+}) {
   const { t } = useTranslation();
 
   return (
     <Controller
       control={control}
-      name="name"
+      name={name}
       rules={{
         required: {
           value: true,
@@ -37,4 +39,4 @@ export const BrandNameController = ({
       )}
     />
   );
-};
+}

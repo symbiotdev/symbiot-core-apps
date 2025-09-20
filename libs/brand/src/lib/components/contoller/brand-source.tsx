@@ -1,75 +1,81 @@
-import { useAppReferralsQuery } from '@symbiot-core-apps/api';
+import { BrandSourceOption } from '@symbiot-core-apps/api';
 import {
   Input,
   onChangeInput,
   PickerOnChange,
   SelectPicker,
 } from '@symbiot-core-apps/ui';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { View } from 'tamagui';
 
 type FormValue = {
-  source: string;
+  source: string | null;
 };
 
 export const BrandSource = ({
-  referralSource,
+  source,
+  options,
+  optionsLoading,
+  optionsError,
   label,
   placeholder,
   customPlaceholder,
   onUpdate,
-}: {
-  referralSource?: string;
+  onBlur,
+}: FormValue & {
   label: string;
   placeholder: string;
   customPlaceholder: string;
-  onUpdate: (value: FormValue) => void;
+  options?: BrandSourceOption[];
+  optionsLoading?: boolean;
+  optionsError?: string | null;
+  onUpdate: (source: string | null) => void;
+  onBlur?: () => void;
 }) => {
-  const {
-    data: referrals,
-    isPending: referralsLoading,
-    error: referralsError,
-  } = useAppReferralsQuery();
-
   const [sourceId, setSourceId] = useState<string | undefined>(undefined);
   const [customSource, setCustomSource] = useState<string | undefined>(
     undefined,
   );
 
-  const onCustomSourceBlur = useCallback(() => {
-    if (!customSource) return;
-
-    onUpdate({ source: customSource.trim() });
-  }, [onUpdate, customSource]);
+  const sourceAppliedRef = useRef(false);
 
   const onChangeReferralSource = useCallback(
     (newSource: string) => {
-      if (!referrals || referralSource === newSource) return;
+      if (!options || sourceId === newSource) return;
 
       setSourceId(newSource);
 
-      if (referrals.find((referral) => referral.value === newSource)?.free) {
-        setCustomSource((prev) => prev || '');
+      if (options.find((referral) => referral.value === newSource)?.free) {
+        setCustomSource('');
+        onUpdate('');
       } else {
         setCustomSource(undefined);
-        onUpdate({ source: newSource });
+        onUpdate(newSource);
       }
     },
-    [onUpdate, referralSource, referrals],
+    [options, sourceId, onUpdate],
+  );
+
+  const onChangeCustomSource = useCallback(
+    (source: string) => {
+      setCustomSource(source);
+      onUpdate(source);
+    },
+    [onUpdate],
   );
 
   useEffect(() => {
-    if (!referrals) return;
+    if (!options || sourceAppliedRef.current) return;
 
-    if (referralSource) {
-      const currentSource = referrals?.find(
-        ({ value }) => value === referralSource,
-      );
+    sourceAppliedRef.current = true;
+
+    if (source) {
+      const currentSource = options?.find(({ value }) => value === source);
       const isFreeSelected = !currentSource || !!currentSource?.free;
 
       if (isFreeSelected) {
-        setSourceId(referrals?.find(({ free }) => free)?.value);
-        setCustomSource(referralSource);
+        setSourceId(options?.find(({ free }) => free)?.value);
+        setCustomSource(source);
       } else {
         setSourceId(currentSource?.value);
         setCustomSource(undefined);
@@ -78,19 +84,20 @@ export const BrandSource = ({
       setSourceId(undefined);
       setCustomSource(undefined);
     }
-  }, [referralSource, referrals]);
+  }, [source, options]);
 
   return (
     <View gap="$2">
       <SelectPicker
         value={sourceId}
-        options={referrals}
-        optionsLoading={referralsLoading}
-        optionsError={referralsError}
+        options={options}
+        optionsLoading={optionsLoading}
+        optionsError={optionsError}
         label={label}
         sheetLabel={label}
         placeholder={placeholder}
         onChange={onChangeReferralSource as PickerOnChange}
+        onBlur={onBlur}
       />
 
       {customSource !== undefined && (
@@ -99,8 +106,8 @@ export const BrandSource = ({
           enterKeyHint="done"
           value={customSource}
           placeholder={customPlaceholder}
-          onChange={setCustomSource as onChangeInput}
-          onBlur={onCustomSourceBlur}
+          onChange={onChangeCustomSource as onChangeInput}
+          onBlur={onBlur}
         />
       )}
     </View>

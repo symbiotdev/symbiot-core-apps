@@ -30,6 +30,10 @@ export const BrandAboutForm = ({
   }, [about, setValue]);
 
   return (
-    <BrandAboutController control={control} onBlur={handleSubmit(update)} />
+    <BrandAboutController
+      name="about"
+      control={control}
+      onBlur={handleSubmit(update)}
+    />
   );
 };

@@ -42,6 +42,7 @@ export const BrandInstagramsForm = ({
 
   return (
     <BrandInstagramsController
+      name="instagram"
       control={control}
       onBlur={handleSubmit(update)}
     />

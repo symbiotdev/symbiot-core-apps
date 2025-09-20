@@ -36,6 +36,10 @@ export const BrandWebsitesForm = ({
   }, [setValue, websites]);
 
   return (
-    <BrandWebsitesController control={control} onBlur={handleSubmit(update)} />
+    <BrandWebsitesController
+      name="website"
+      control={control}
+      onBlur={handleSubmit(update)}
+    />
   );
 };

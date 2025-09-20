@@ -1,18 +1,20 @@
 import { useBrandCountriesQuery } from '@symbiot-core-apps/api';
 import { SelectPicker } from '@symbiot-core-apps/ui';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const BrandCountriesController = ({
+export function BrandCountriesController<T extends FieldValues>({
+  name,
   control,
   noLabel,
   onBlur,
 }: {
-  control: Control<{ country: string | null }>;
+  name: Path<T>;
+  control: Control<T>;
   noLabel?: boolean;
   onBlur?: () => void;
-}) => {
+}) {
   const { t } = useTranslation();
   const {
     data,
@@ -32,7 +34,13 @@ export const BrandCountriesController = ({
   return (
     <Controller
       control={control}
-      name="country"
+      name={name}
+      rules={{
+        required: {
+          value: true,
+          message: t('brand.form.country.error.required'),
+        },
+      }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <SelectPicker
           value={value as string}
@@ -49,4 +57,4 @@ export const BrandCountriesController = ({
       )}
     />
   );
-};
+}

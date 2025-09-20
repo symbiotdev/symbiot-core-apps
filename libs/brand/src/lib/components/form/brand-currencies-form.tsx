@@ -36,6 +36,7 @@ export const BrandCurrenciesForm = ({
 
   return (
     <BrandCurrenciesController
+      name="currency"
       control={control}
       onBlur={handleSubmit(update)}
     />

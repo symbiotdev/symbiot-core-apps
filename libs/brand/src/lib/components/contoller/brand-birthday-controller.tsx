@@ -1,23 +1,25 @@
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { DatePicker } from '@symbiot-core-apps/ui';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 
-export const BrandBirthdayController = ({
+export function BrandBirthdayController<T extends FieldValues>({
+  name,
   control,
   onBlur,
 }: {
-  control: Control<{ birthday: string | null }>;
+  name: Path<T>;
+  control: Control<T>;
   onBlur?: () => void;
-}) => {
+}) {
   const { t } = useTranslation();
   const { me } = useCurrentAccount();
 
   return (
     <Controller
       control={control}
-      name="birthday"
+      name={name}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <DatePicker
           value={value}
@@ -28,9 +30,10 @@ export const BrandBirthdayController = ({
           maxDate={new Date()}
           label={t('brand.form.birthday.label')}
           placeholder={t('brand.form.birthday.placeholder')}
+          onChange={onChange}
           onBlur={onBlur}
         />
       )}
     />
   );
-};
+}

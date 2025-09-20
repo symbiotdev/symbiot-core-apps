@@ -35,6 +35,10 @@ export const BrandCountriesForm = ({
   }, [setValue, countries]);
 
   return (
-    <BrandCountriesController control={control} onBlur={handleSubmit(update)} />
+    <BrandCountriesController
+      name="country"
+      control={control}
+      onBlur={handleSubmit(update)}
+    />
   );
 };

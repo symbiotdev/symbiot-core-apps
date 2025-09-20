@@ -35,6 +35,10 @@ export const BrandBirthdayForm = ({
   }, [birthday, setValue]);
 
   return (
-    <BrandBirthdayController control={control} onBlur={handleSubmit(update)} />
+    <BrandBirthdayController
+      name="birthday"
+      control={control}
+      onBlur={handleSubmit(update)}
+    />
   );
 };

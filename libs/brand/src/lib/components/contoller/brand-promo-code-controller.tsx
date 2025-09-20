@@ -1,40 +1,38 @@
+import { Input } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { isValidURL } from '@symbiot-core-apps/shared';
-import { WebsiteInput } from '@symbiot-core-apps/ui';
 
-export function BrandWebsitesController<T extends FieldValues>({
+export function BrandPromoCodeController<T extends FieldValues>({
   name,
   control,
-  allowEmpty = true,
   noLabel,
   onBlur,
 }: {
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
-  allowEmpty?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
 
   return (
     <Controller
-      name={name}
       control={control}
+      name={name}
       rules={{
-        validate: (value) =>
-          (allowEmpty && !value) || (value && isValidURL(value))
-            ? true
-            : t('brand.form.website.error.validation'),
+        required: {
+          value: true,
+          message: t('brand.form.promo_code.error.required'),
+        },
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <WebsiteInput
+        <Input
           enterKeyHint="done"
+          regex={/^[a-zA-Z0-9_]+$/}
           value={value}
-          label={!noLabel ? t('brand.form.website.label') : ''}
-          placeholder={t('brand.form.website.placeholder')}
           error={error?.message}
+          label={!noLabel ? t('brand.form.promo_code.label') : undefined}
+          placeholder={t('brand.form.promo_code.placeholder')}
           onChange={onChange}
           onBlur={onBlur}
         />

@@ -1,22 +1,32 @@
 import { Textarea } from '@symbiot-core-apps/ui';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-export const BrandAboutController = ({
+export function BrandAboutController<T extends FieldValues>({
+  name,
   control,
+  allowEmpty = true,
   noLabel,
   onBlur,
 }: {
-  control: Control<{ about: string }>;
+  name: Path<T>;
+  control: Control<T>;
   noLabel?: boolean;
+  allowEmpty?: boolean;
   onBlur?: () => void;
-}) => {
+}) {
   const { t } = useTranslation();
 
   return (
     <Controller
       control={control}
-      name="about"
+      name={name}
+      rules={{
+        required: {
+          value: !allowEmpty,
+          message: t('brand.form.about.error.required'),
+        },
+      }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <Textarea
           countCharacters
@@ -31,4 +41,4 @@ export const BrandAboutController = ({
       )}
     />
   );
-};
+}

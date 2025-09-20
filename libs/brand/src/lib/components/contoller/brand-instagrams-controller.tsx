@@ -23,8 +23,8 @@ export function BrandInstagramsController<T extends FieldValues>({
         <InstagramInput
           enterKeyHint="done"
           value={value}
-          label={!noLabel ? t('brand.form.instagram.label') : ''}
-          placeholder={t('brand.form.instagram.placeholder')}
+          label={!noLabel ? t('brand.form.instagrams.label') : ''}
+          placeholder={t('brand.form.instagrams.placeholder')}
           error={error?.message}
           onChange={onChange}
           onBlur={onBlur}

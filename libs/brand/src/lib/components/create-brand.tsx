@@ -17,6 +17,11 @@ import { BrandCompetitorController } from './contoller/brand-competitor-controll
 import { BrandPromoCodeController } from './contoller/brand-promo-code-controller';
 import { BrandCountriesController } from './contoller/brand-countries-controller';
 import { ImagePickerAsset } from 'expo-image-picker';
+import { CountryCode, getCountry } from 'countries-and-timezones';
+
+const defaultCountryCode = Intl?.DateTimeFormat()
+  ?.resolvedOptions()
+  ?.locale?.split('-')?.[1];
 
 export const CreateBrand = () => {
   const { processing: authProcessing } = useBrandAuthState();
@@ -43,7 +48,13 @@ export const CreateBrand = () => {
     control: countryControl,
     getValues: countryGetValues,
     formState: countryFormState,
-  } = useForm<{ country: string | null }>();
+  } = useForm<{ country: string | null }>({
+    defaultValues: {
+      country: getCountry(defaultCountryCode as CountryCode)
+        ? defaultCountryCode
+        : null,
+    },
+  });
 
   const {
     control: avatarControl,
@@ -164,8 +175,8 @@ export const CreateBrand = () => {
 
       <SurveyStep
         canGoNext={countryFormState.isValid}
-        title={t('brand.create.steps.country.title')}
-        subtitle={t('brand.create.steps.country.subtitle')}
+        title={t('brand.create.steps.countries.title')}
+        subtitle={t('brand.create.steps.countries.subtitle')}
       >
         <BrandCountriesController
           noLabel
@@ -206,8 +217,8 @@ export const CreateBrand = () => {
       {functionality.availability.brandIndustry && (
         <SurveyStep
           canGoNext={industryFormState.isValid}
-          title={t('brand.create.steps.industry.title')}
-          subtitle={t('brand.create.steps.industry.subtitle')}
+          title={t('brand.create.steps.industries.title')}
+          subtitle={t('brand.create.steps.industries.subtitle')}
         >
           <BrandIndustriesController
             noLabel
@@ -220,8 +231,8 @@ export const CreateBrand = () => {
       <SurveyStep
         skippable
         canGoNext={websiteFormState.isValid}
-        title={t('brand.create.steps.website.title')}
-        subtitle={t('brand.create.steps.website.subtitle')}
+        title={t('brand.create.steps.websites.title')}
+        subtitle={t('brand.create.steps.websites.subtitle')}
       >
         <BrandWebsitesController
           noLabel

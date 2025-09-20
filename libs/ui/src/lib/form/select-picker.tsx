@@ -85,9 +85,10 @@ export function SelectPicker({
 
       if (Platform.OS !== 'ios') {
         popoverRef.current?.close();
+        onBlur?.();
       }
     },
-    [onChange],
+    [onBlur, onChange],
   );
 
   return (

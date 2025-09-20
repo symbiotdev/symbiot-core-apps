@@ -9,8 +9,10 @@ type FormValue = {
 
 export const BrandCurrenciesForm = ({
   currencies,
+  disabled,
   onUpdate,
 }: FormValue & {
+  disabled?: boolean;
   onUpdate: (value: FormValue) => void;
 }) => {
   const { control, handleSubmit, setValue } = useForm<{
@@ -36,6 +38,7 @@ export const BrandCurrenciesForm = ({
 
   return (
     <BrandCurrenciesController
+      disabled={disabled}
       name="currency"
       control={control}
       onBlur={handleSubmit(update)}

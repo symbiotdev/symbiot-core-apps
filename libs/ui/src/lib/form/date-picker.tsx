@@ -59,10 +59,11 @@ export const DatePicker = ({
       popoverRef.current?.close();
 
       onChange?.(DateHelper.toDate(date as Date));
+      onBlur?.()
 
       emitHaptic();
     },
-    [onChange],
+    [onChange, onBlur],
   );
 
   return (

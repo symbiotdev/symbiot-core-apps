@@ -128,7 +128,7 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
 const Localization = ({ brand, onUpdated }: GroupProps) => {
   const { t } = useTranslation();
 
-  const { value, modalVisible, openModal, closeModal, updateValue } =
+  const { value, modalVisible, openModal, closeModal, updateValue, updating } =
     useModalUpdateForm<
       Brand,
       { countries: string[]; currencies: string[] },
@@ -162,10 +162,12 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <BrandCountriesForm
+            disabled={updating}
             countries={value.countries}
             onUpdate={updateValue}
           />
           <BrandCurrenciesForm
+            disabled={updating}
             currencies={value.currencies}
             onUpdate={updateValue}
           />

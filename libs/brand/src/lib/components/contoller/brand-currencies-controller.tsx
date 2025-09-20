@@ -7,11 +7,13 @@ export function BrandCurrenciesController<T extends FieldValues>({
   name,
   control,
   noLabel,
+  disabled,
   onBlur,
 }: {
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
+  disabled?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
@@ -33,6 +35,7 @@ export function BrandCurrenciesController<T extends FieldValues>({
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <SelectPicker
+          disabled={disabled}
           value={value as string}
           error={error?.message}
           options={data}

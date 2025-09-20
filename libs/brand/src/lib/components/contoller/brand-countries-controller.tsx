@@ -7,12 +7,14 @@ import { useTranslation } from 'react-i18next';
 export function BrandCountriesController<T extends FieldValues>({
   name,
   control,
+  disabled,
   noLabel,
   onBlur,
 }: {
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
+  disabled?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
@@ -43,6 +45,7 @@ export function BrandCountriesController<T extends FieldValues>({
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <SelectPicker
+          disabled={disabled}
           value={value as string}
           error={error?.message}
           options={options}

@@ -8,9 +8,11 @@ type FormValue = {
 };
 
 export const BrandCountriesForm = ({
+  disabled,
   countries,
   onUpdate,
 }: FormValue & {
+  disabled?: boolean;
   onUpdate: (value: FormValue) => void;
 }) => {
   const { control, handleSubmit, setValue } = useForm<{
@@ -37,6 +39,7 @@ export const BrandCountriesForm = ({
   return (
     <BrandCountriesController
       name="country"
+      disabled={disabled}
       control={control}
       onBlur={handleSubmit(update)}
     />

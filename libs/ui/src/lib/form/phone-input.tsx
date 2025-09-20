@@ -1,41 +1,25 @@
 import { TextInput, TextInputProps } from 'react-native';
 import { FormField } from './form-field';
-import { PhoneNumber } from 'react-native-phone-input/dist';
-import * as yup from 'yup';
 import { useCallback, useEffect, useRef } from 'react';
 import PhoneInputUI from 'react-native-phone-input';
 import { useScheme } from '@symbiot-core-apps/state';
 import { useTheme } from 'tamagui';
 import { InputFieldView } from '../view/input-field-view';
+import { PhoneNumber } from 'react-native-phone-input/dist';
 
-export type PhoneValue = {
-  formatted: string;
-  tel: string;
-  country: string;
-};
-
-export const phoneDefaultValue = {
-  country: '',
-  formatted: '',
-  tel: '',
-};
-
-export const getPhoneInputSchema = (error: string, optional?: boolean) => {
-  return yup
-    .object()
-    .shape({
-      country: optional ? yup.string().ensure() : yup.string().required(),
-      formatted: optional ? yup.string().ensure() : yup.string().required(),
-      tel: optional ? yup.string().ensure() : yup.string().required(),
-    })
-    .test('phone-validation', error, function (phone) {
-      if (!phone || !phone.country || !phone.tel || !phone.formatted) {
-        return optional;
-      }
-
-      return PhoneNumber.isValidNumber(phone.tel, phone.country);
-    });
-};
+export const validatePhone = (
+  value: string,
+  error: string,
+  required = false,
+) =>
+  !required && !value
+    ? true
+    : PhoneNumber.isValidNumber(
+          PhoneNumber.getNumeric(value),
+          PhoneNumber.getCountryCodeOfNumber(value),
+        )
+      ? true
+      : error;
 
 export const PhoneInput = ({
   value,
@@ -50,7 +34,7 @@ export const PhoneInput = ({
   onBlur,
   onChange,
 }: {
-  value: PhoneValue;
+  value: string;
   label?: string;
   placeholder?: string;
   error?: string;
@@ -60,45 +44,18 @@ export const PhoneInput = ({
   autoFocusDelay?: number;
   enterKeyHint?: TextInputProps['enterKeyHint'];
   onBlur?: () => void;
-  onChange?: (phone: PhoneValue) => void;
+  onChange?: (phone: string) => void;
 }) => {
   const { scheme } = useScheme();
   const theme = useTheme();
 
   const phoneRef = useRef<PhoneInputUI<typeof TextInput>>(null);
 
-  const blur = useCallback(() => {
-    if (!phoneRef.current?.isValidNumber()) {
-      const state = phoneRef.current?.state as {
-        displayValue: string;
-        value: string;
-        iso2: string;
-      };
-
-      if (!state['displayValue'] || !state['value'] || !state['iso2']) {
-        phoneRef.current?.setState((prev) => ({
-          ...prev,
-          displayValue: '',
-          value: '',
-        }));
-
-        onChange?.(phoneDefaultValue);
-      }
-    }
-
-    onBlur?.();
-  }, [onBlur, onChange]);
-
-  const onChangePhoneNumber = useCallback(
-    (formatted: string, iso: string) => {
-      onChange?.({
-        tel: (phoneRef.current?.getValue() || '').replace(/\D/g, ''),
-        country: iso,
-        formatted,
-      });
-    },
-    [onChange],
-  );
+  const change = useCallback(() => {
+    onChange?.(
+      !phoneRef.current?.isValidNumber() ? '' : phoneRef.current.getValue(),
+    );
+  }, [onChange]);
 
   useEffect(() => {
     if (autoFocus) {
@@ -114,8 +71,7 @@ export const PhoneInput = ({
           autoFormat
           ref={phoneRef}
           disabled={disabled}
-          initialCountry={value?.country}
-          initialValue={value?.tel}
+          initialValue={value}
           flagStyle={{ display: 'none' }}
           textStyle={{
             fontFamily: 'BodyRegular',
@@ -136,9 +92,9 @@ export const PhoneInput = ({
             placeholderTextColor: theme.placeholderColor?.val,
             enterKeyHint,
             textContentType: 'oneTimeCode', // https://github.com/facebook/react-native/issues/39411
-            onBlur: blur,
+            onBlur,
           }}
-          onChangePhoneNumber={onChangePhoneNumber}
+          onChangePhoneNumber={change}
         />
       </InputFieldView>
     </FormField>

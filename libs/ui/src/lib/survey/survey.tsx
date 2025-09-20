@@ -23,6 +23,7 @@ import { LoadingView } from '../view/loading-view';
 import { H2 } from '../text/heading';
 import { RegularText, SemiBoldText } from '../text/text';
 import Animated, {
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
@@ -71,6 +72,7 @@ export const Survey = ({
   const animatedValue$ = useSharedValue(0);
 
   const [selectedIndex, setSelectedIndex] = useState(initialIndex || 0);
+  const [scrollEnabled, setScrollEnabled] = useState(true);
 
   const childrenArr = React.Children.toArray(
     children,
@@ -116,9 +118,16 @@ export const Survey = ({
       selectedIndex !== null &&
       selectedIndex !== currentSelectedIndexRef.current
     ) {
+      setScrollEnabled(false);
+
       animatedValue$.value =
         selectedIndex >= (currentSelectedIndexRef.current || 0) ? 1 : -1;
-      animatedValue$.value = withDelay(50, withTiming(0, { duration: 250 }));
+      animatedValue$.value = withDelay(
+        50,
+        withTiming(0, { duration: 250 }, () => {
+          runOnJS(setScrollEnabled)(true);
+        }),
+      );
 
       currentSelectedIndexRef.current = selectedIndex;
     }
@@ -139,9 +148,10 @@ export const Survey = ({
 
       <View flex={1}>
         <KeyboardAwareScrollView
-          ref={scrollViewRef}
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="none"
+          ref={scrollViewRef}
+          scrollEnabled={scrollEnabled}
           bottomOffset={100}
           showsVerticalScrollIndicator={Platform.OS === 'web'}
           style={{ flex: 1 }}

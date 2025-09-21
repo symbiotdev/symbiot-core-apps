@@ -36,8 +36,8 @@ export function BrandLocationRemarkController<T extends FieldValues>({
           disabled={disabled}
           value={value}
           error={error?.message}
-          label={!noLabel ? t('brand_location.form.entrance.label') : undefined}
-          placeholder={t('brand_location.form.entrance.placeholder')}
+          label={!noLabel ? t('brand_location.form.remark.label') : undefined}
+          placeholder={t('brand_location.form.remark.placeholder')}
           onChange={onChange}
           onBlur={onBlur}
         />

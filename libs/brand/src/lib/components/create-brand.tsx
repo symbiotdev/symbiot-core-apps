@@ -140,8 +140,8 @@ export const CreateBrand = () => {
       e.preventDefault();
 
       ConfirmAlert({
-        title: t('shared.brand.create.discard.title'),
-        message: t('shared.brand.create.discard.message'),
+        title: t('brand.create.discard.title'),
+        message: t('brand.create.discard.message'),
         callback: () => navigation.dispatch(e.data.action),
       });
     },

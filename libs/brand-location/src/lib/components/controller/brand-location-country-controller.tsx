@@ -8,6 +8,7 @@ export function BrandLocationCountryController<T extends FieldValues>({
   name,
   control,
   disabled,
+  disableDrag,
   noLabel,
   onBlur,
 }: {
@@ -15,6 +16,7 @@ export function BrandLocationCountryController<T extends FieldValues>({
   control: Control<T>;
   noLabel?: boolean;
   disabled?: boolean;
+  disableDrag?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
@@ -41,13 +43,12 @@ export function BrandLocationCountryController<T extends FieldValues>({
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <SelectPicker
+          disableDrag={disableDrag}
           disabled={disabled}
           value={value as string}
           error={error?.message}
           options={options}
-          label={
-            !noLabel ? t('brand_location.form.country.label') : undefined
-          }
+          label={!noLabel ? t('brand_location.form.country.label') : undefined}
           sheetLabel={t('brand_location.form.country.label')}
           placeholder={t('brand_location.form.country.placeholder')}
           onChange={onChange}

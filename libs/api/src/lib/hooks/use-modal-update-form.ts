@@ -71,7 +71,7 @@ export function useUpdateForm<T, FV, UV>(
   const hasChanges = useCallback((data: Partial<FV>) => {
     const dataKeys = Object.keys(data) as (keyof FV)[];
 
-    return dataKeys.every((key) =>
+    return !dataKeys.every((key) =>
       Array.isArray(data[key]) && Array.isArray(valueRef.current[key])
         ? arraysOfObjectsEqual(data[key], valueRef.current[key])
         : objectsEqual(data[key], valueRef.current[key]),
@@ -80,7 +80,7 @@ export function useUpdateForm<T, FV, UV>(
 
   const updateValue = useCallback(
     async (data: Partial<FV>) => {
-      if (hasChanges(data)) return;
+      if (!hasChanges(data)) return;
 
       const currentValue = { ...valueRef.current };
 
@@ -91,11 +91,11 @@ export function useUpdateForm<T, FV, UV>(
       setValue(valueRef.current);
 
       try {
-        onUpdated?.(
-          await update(
-            dataRequestFormatted ? dataRequestFormatted(data) : data,
-          ),
+        const result = await update(
+          dataRequestFormatted ? dataRequestFormatted(data) : data,
         );
+
+        onUpdated?.(result);
       } catch {
         valueRef.current = currentValue;
         setValue(currentValue);

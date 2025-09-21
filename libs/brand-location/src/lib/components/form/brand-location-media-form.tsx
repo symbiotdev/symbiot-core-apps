@@ -1,23 +1,24 @@
-import { AvatarPicker, GalleryPicker } from '@symbiot-core-apps/ui';
+import { AvatarPicker, FormView, GalleryPicker } from '@symbiot-core-apps/ui';
 import {
   BrandLocation,
   useRemoveBrandLocationGalleryImagesQuery,
   useUpdateBrandLocationQuery,
   useUploadBrandLocationGalleryImagesQuery,
 } from '@symbiot-core-apps/api';
-import { useBrandLocationForm } from '../hooks/use-brand-location-form';
 import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
-import { View } from 'tamagui';
+import { ViewProps } from 'tamagui';
+import { useTranslation } from 'react-i18next';
 
 export const BrandLocationMediaForm = ({
   location,
-}: {
+  ...viewProps
+}: ViewProps & {
   location: BrandLocation;
 }) => {
   const { brand } = useCurrentBrandState();
-  const form = useBrandLocationForm();
+  const { t } = useTranslation();
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
     useUpdateBrandLocationQuery();
   const { mutateAsync: uploadGalleryImages } =
@@ -54,7 +55,7 @@ export const BrandLocationMediaForm = ({
   );
 
   return (
-    <View gap="$5">
+    <FormView gap="$5" {...viewProps}>
       <AvatarPicker
         marginHorizontal="auto"
         loading={avatarUpdating}
@@ -67,11 +68,11 @@ export const BrandLocationMediaForm = ({
 
       <GalleryPicker
         value={location.gallery?.map(({ xsUrl }) => xsUrl) || []}
-        maxImages={form.gallery.maxImages}
-        label={form.gallery.label}
+        maxImages={10}
+        label={t('brand_location.form.gallery.label')}
         onAdd={extendGallery}
         onRemove={cutGallery}
       />
-    </View>
+    </FormView>
   );
 };

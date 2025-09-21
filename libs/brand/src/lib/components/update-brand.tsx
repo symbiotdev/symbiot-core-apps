@@ -1,5 +1,6 @@
 import {
   AvatarPicker,
+  defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   FormView,
   getNicknameFromUrl,
@@ -61,7 +62,9 @@ export const UpdateBrand = () => {
           onAttach={updateAvatar$}
         />
 
-        <FormView>
+        <FormView paddingHorizontal={defaultPageHorizontalPadding}>
+          <Name brand={brand} onUpdated={setBrand} />
+
           <ListItemGroup>
             <Information brand={brand} onUpdated={setBrand} />
             <Localization brand={brand} onUpdated={setBrand} />
@@ -73,18 +76,28 @@ export const UpdateBrand = () => {
   );
 };
 
+const Name = ({ brand, onUpdated }: GroupProps) => {
+  const { mutateAsync } = useCurrentBrandUpdate();
+
+  const update = useCallback(
+    async (data: { name: string }) => onUpdated(await mutateAsync(data)),
+    [mutateAsync, onUpdated],
+  );
+
+  return <BrandNameForm name={brand.name} onUpdate={update} />;
+};
+
 const Information = ({ brand, onUpdated }: GroupProps) => {
   const { t } = useTranslation();
   const { me } = useCurrentAccount();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateForm<
       Brand,
-      { name: string; about: string; birthday: string | null },
+      { about: string; birthday: string | null },
       TUpdateBrand
     >({
       query: useCurrentBrandUpdate,
       initialValue: {
-        name: brand.name,
         about: brand.about,
         birthday: brand.birthday,
       },
@@ -97,15 +110,16 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
         icon={<Icon name="InfoCircle" />}
         iconAfter={<Icon name="ArrowRight" />}
         label={t('brand.update.groups.information.title')}
-        text={[
-          value.name,
-          value.birthday
-            ? DateHelper.format(value.birthday, me?.preferences?.dateFormat)
-            : '',
-          value.about,
-        ]
-          .filter(Boolean)
-          .join(' · ')}
+        text={
+          [
+            value.birthday
+              ? DateHelper.format(value.birthday, me?.preferences?.dateFormat)
+              : '',
+            value.about,
+          ]
+            .filter(Boolean)
+            .join(' · ') || t('shared.not_specified')
+        }
         onPress={openModal}
       />
 
@@ -116,7 +130,6 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <BrandNameForm name={value.name} onUpdate={updateValue} />
           <BrandBirthdayForm birthday={brand.birthday} onUpdate={updateValue} />
           <BrandAboutForm about={value.about} onUpdate={updateValue} />
         </FormView>

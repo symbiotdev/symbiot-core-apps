@@ -7,6 +7,7 @@ export function BrandLocationUsStateController<T extends FieldValues>({
   name,
   control,
   disabled,
+  disableDrag,
   noLabel,
   onBlur,
 }: {
@@ -14,6 +15,7 @@ export function BrandLocationUsStateController<T extends FieldValues>({
   control: Control<T>;
   noLabel?: boolean;
   disabled?: boolean;
+  disableDrag?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
@@ -30,11 +32,12 @@ export function BrandLocationUsStateController<T extends FieldValues>({
       rules={{
         required: {
           value: true,
-          message: t('brand.form.us_state.error.required'),
+          message: t('brand_location.form.us_state.error.required'),
         },
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <SelectPicker
+          disableDrag={disableDrag}
           disabled={disabled}
           value={value as string}
           error={error?.message}

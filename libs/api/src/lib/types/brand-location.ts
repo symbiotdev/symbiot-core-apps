@@ -1,25 +1,37 @@
-import { Link } from './link';
-import { Phone } from './phone';
 import { Schedule } from './schedule';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { Attachment } from './attachment';
+import { BrandCountry } from './brand';
+
+export type BrandLocationAdvantage = {
+  label: string;
+  value: string;
+};
+
+export type BrandLocationUsState = {
+  name: string;
+  abbreviation: string;
+  territory: boolean;
+  contiguous: boolean;
+};
 
 export type BrandLocation = {
   id: string;
   name: string;
-  country: string;
-  usState: string;
+  currencies: string[];
   currency: string;
   address: string;
   timezone: string;
-  email: string;
   remark: string;
   floor: string;
   entrance: string;
   avatarUrl: string;
   avatarXsUrl: string;
-  links: Link[];
-  phones: Phone[];
+  instagrams: string[];
+  phones: string[];
+  emails: string[];
+  country: BrandCountry;
+  usState: BrandLocationUsState;
   schedules: Schedule[];
   gallery: Attachment[];
   advantages: BrandLocationAdvantage[];
@@ -27,28 +39,21 @@ export type BrandLocation = {
 
 export type CreateBrandLocation = {
   name: string;
-  country: string;
-  usState?: string;
   address: string;
-  email?: string;
+  country?: string | null;
+  usState?: string | null;
   remark?: string;
   floor?: string;
   entrance?: string;
+  currencies?: string[];
+  instagrams?: string[];
   advantages?: string[];
-  links: Omit<Link, 'id'>[];
-  phones: Phone[];
+  phones?: string[];
+  emails?: string[];
   schedules: Schedule[];
   avatar?: ImagePickerAsset;
 };
 
 export type UpdateBrandLocation = Partial<CreateBrandLocation> & {
   timezone?: string;
-  currency?: string;
-};
-
-export type BrandLocationAdvantage = {
-  id: string;
-  name: string;
-  rate: number;
-  iconName: string;
 };

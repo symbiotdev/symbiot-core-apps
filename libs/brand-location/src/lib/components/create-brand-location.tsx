@@ -1,236 +1,308 @@
-import { Survey, SurveyStep } from '@symbiot-core-apps/survey';
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { LinkItem, PhoneValue, WeekdaySchedule } from '@symbiot-core-apps/ui';
-import { router } from 'expo-router';
-import {
-  BrandLocationAdvantage,
-  useCreateBrandLocationQuery,
-} from '@symbiot-core-apps/api';
+import { Survey, SurveyStep, WeekdaySchedule } from '@symbiot-core-apps/ui';
+import { useCreateBrandLocationQuery } from '@symbiot-core-apps/api';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { BrandLocationNameController } from './controller/brand-location-name-controller';
+import { BrandLocationCountryController } from './controller/brand-location-country-controller';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
-import { useBrandLocationAdvantageOptions } from '../hooks/use-brand-location-advantage-options';
-import { useBrandLocationForm } from '../hooks/use-brand-location-form';
-
-type Value = {
-  name: string;
-  schedules: WeekdaySchedule[];
-  country: string;
-  state: string;
-  phone: PhoneValue;
-  email: string;
-  instagram: LinkItem;
-  remark: string;
-  floor: string;
-  entrance: string;
-  address: string;
-  advantages: BrandLocationAdvantage[];
-};
-
-const TypedSurvey = Survey<Value>;
+import { BrandLocationUsStateController } from './controller/brand-location-us-state-controller';
+import { BrandLocationAddressController } from './controller/brand-location-address-controller';
+import { BrandLocationEntranceController } from './controller/brand-location-entrance-controller';
+import { BrandLocationFloorController } from './controller/brand-location-floor-controller';
+import { BrandLocationRemarkController } from './controller/brand-location-remark-controller';
+import { BrandLocationAdvantagesController } from './controller/brand-location-advantages-controller';
+import { BrandLocationSchedulesController } from './controller/brand-location-schedules-controller';
+import { BrandLocationInstagramsController } from './controller/brand-location-instagrams-controller';
+import { BrandLocationEmailsController } from './controller/brand-location-emails-controller';
+import { BrandLocationPhonesController } from './controller/brand-location-phones-controller';
+import { BrandLocationCurrenciesController } from './controller/brand-location-currencies-controller';
+import { router, useNavigation } from 'expo-router';
+import { EventArg, NavigationAction } from '@react-navigation/native';
+import { ConfirmAlert } from '@symbiot-core-apps/shared';
 
 export const CreateBrandLocation = () => {
-  const { brand: currentBrand } = useCurrentBrandState();
-  const { mutateAsync: createLocation } = useCreateBrandLocationQuery();
-  const { advantages, advantagesLoading, advantagesError } =
-    useBrandLocationAdvantageOptions();
-  const form = useBrandLocationForm();
+  const { brand } = useCurrentBrandState();
+  const { t } = useTranslation();
+  const { mutateAsync, isPending } = useCreateBrandLocationQuery();
+  const navigation = useNavigation();
 
   const createdRef = useRef(false);
 
-  const [processing, setProcessing] = useState(false);
+  const {
+    control: nameControl,
+    getValues: nameGetValues,
+    formState: nameFormState,
+  } = useForm<{ name: string }>({
+    defaultValues: { name: '' },
+  });
 
-  const steps: SurveyStep<Value>[] = useMemo(
-    () => [
-      {
-        id: 'name',
-        nextId: 'country',
-        title: form.name.title,
-        subtitle: form.name.subtitle,
-        elements: [
-          {
-            type: 'input',
-            props: {
-              ...form.name,
-              label: '',
-              name: 'name',
-              enterKeyHint: 'done',
-            },
-          },
-        ],
-      },
-      {
-        id: 'country',
-        nextId: 'address',
-        title: form.country.title,
-        subtitle: form.country.subtitle,
-        elements: [
-          {
-            type: 'country',
-            props: {
-              ...form.country,
-              name: 'country',
-              label: '',
-            },
-          },
-          {
-            type: 'us-state',
-            props: {
-              name: 'state',
-              showWhen: (formValue) =>
-                formValue.country?.toLowerCase() === 'us',
-              ...form.usState,
-            },
-          },
-        ],
-      },
-      {
-        id: 'address',
-        nextId: 'weekdays-schedule',
-        title: form.address.title,
-        subtitle: form.address.subtitle,
-        elements: [
-          {
-            type: 'address',
-            props: {
-              ...form.address,
-              name: 'address',
-              label: '',
-            },
-          },
-          {
-            type: 'input',
-            props: {
-              ...form.entrance,
-              name: 'entrance',
-            },
-          },
-          {
-            type: 'input',
-            props: {
-              ...form.floor,
-              name: 'floor',
-              regex: /\d+/,
-              type: 'numeric',
-              keyboardType: 'numeric',
-            },
-          },
-          {
-            type: 'textarea',
-            props: {
-              ...form.remark,
-              name: 'remark',
-              enterKeyHint: 'done',
-            },
-          },
-        ],
-      },
-      {
-        id: 'weekdays-schedule',
-        nextId: 'advantages',
-        title: form.schedules.title,
-        subtitle: form.schedules.subtitle,
-        elements: [
-          {
-            type: 'weekdays-schedule',
-            props: {
-              ...form.schedules,
-              name: 'schedules',
-              label: '',
-            },
-          },
-        ],
-      },
-      {
-        id: 'advantages',
-        nextId: 'contact-info',
-        title: form.advantages.title,
-        subtitle: form.address.subtitle,
-        elements: [
-          {
-            type: 'toggle-group',
-            props: {
-              ...form.advantages,
-              label: '',
-              name: 'advantages',
-              optionsLoading: advantagesLoading,
-              optionsError: advantagesError,
-              options: advantages,
-            },
-          },
-        ],
-      },
-      {
-        id: 'contact-info',
-        nextId: null,
-        title: form.contactInfo.title,
-        subtitle: form.contactInfo.subtitle,
-        elements: [
-          {
-            type: 'phone',
-            props: {
-              ...form.phone,
-              name: 'phone',
-              enterKeyHint: 'next',
-            },
-          },
-          {
-            type: 'email',
-            props: {
-              ...form.email,
-              name: 'email',
-              enterKeyHint: 'done',
-            },
-          },
-          {
-            type: 'app-link',
-            props: {
-              ...form.instagram,
-              type: 'instagram',
-              name: 'instagram',
-              enterKeyHint: 'done',
-            },
-          },
-        ],
-      },
-    ],
-    [form, advantages, advantagesLoading, advantagesError],
-  );
+  const {
+    control: countryControl,
+    getValues: countryGetValues,
+    formState: countryFormState,
+    watch: countryWatch,
+  } = useForm<{ country: string; usState: string | null }>({
+    defaultValues: { country: brand?.countries?.[0]?.value, usState: null },
+  });
 
-  const onFinish = useCallback(
-    async (value: Value) => {
-      setProcessing(true);
+  const {
+    control: currencyControl,
+    getValues: currencyGetValues,
+    formState: currencyFormState,
+  } = useForm<{ currency: string }>({
+    defaultValues: { currency: brand?.currencies?.[0]?.value },
+  });
 
-      try {
-        await createLocation({
-          name: value.name,
-          address: value.address,
-          floor: value.floor,
-          entrance: value.entrance,
-          country: value.country,
-          usState: value.state,
-          email: value.email,
-          remark: value.remark,
-          links: value.instagram ? [value.instagram] : [],
-          phones: value.phone ? [value.phone] : [],
-          schedules: value.schedules,
-          advantages: value.advantages?.map(({ id }) => id),
-        });
+  const { country } = countryWatch();
 
-        createdRef.current = true;
+  const {
+    control: addressControl,
+    getValues: addressGetValues,
+    formState: addressFormState,
+  } = useForm<{
+    address: string;
+    entrance: string;
+    floor: string;
+    remark: string;
+  }>({
+    defaultValues: { address: '', entrance: '', floor: '', remark: '' },
+  });
 
-        router.dismissTo('/locations');
-      } finally {
-        setProcessing(false);
-      }
+  const {
+    control: scheduleControl,
+    getValues: scheduleGetValues,
+    formState: scheduleFromState,
+  } = useForm<{
+    schedule: WeekdaySchedule[];
+  }>({
+    defaultValues: {
+      schedule: [
+        ...Array.from({ length: 5 }).map((_, index) => ({
+          day: index + 1,
+          start: 540,
+          end: 1080,
+        })),
+        {
+          day: 0,
+          start: 0,
+          end: 0,
+        },
+        {
+          day: 6,
+          start: 0,
+          end: 0,
+        },
+      ],
     },
-    [createLocation],
+  });
+
+  const {
+    control: advantagesControl,
+    getValues: advantagesGetValues,
+    formState: advantagesFromState,
+  } = useForm<{
+    advantages: string[];
+  }>({
+    defaultValues: { advantages: [] },
+  });
+
+  const {
+    control: contactControl,
+    getValues: contactGetValues,
+    formState: contactFromState,
+  } = useForm<{
+    phone: string;
+    email: string;
+    instagram: string;
+  }>({
+    defaultValues: { phone: '', email: '', instagram: '' },
+  });
+
+  const onFinish = useCallback(async () => {
+    const name = nameGetValues('name');
+    const country = countryGetValues('country');
+    const usState = countryGetValues('usState');
+    const currency = currencyGetValues('currency');
+    const address = addressGetValues('address');
+    const entrance = addressGetValues('entrance');
+    const floor = addressGetValues('floor');
+    const remark = addressGetValues('remark');
+    const schedules = scheduleGetValues('schedule');
+    const advantages = advantagesGetValues('advantages');
+    const phone = contactGetValues('phone');
+    const email = contactGetValues('email');
+    const instagram = contactGetValues('instagram');
+
+    await mutateAsync({
+      name,
+      country,
+      usState,
+      address,
+      entrance,
+      floor,
+      remark,
+      schedules,
+      advantages,
+      currencies: currency ? [currency] : [],
+      phones: phone ? [phone] : [],
+      emails: email ? [email] : [],
+      instagrams: instagram ? [instagram] : [],
+    });
+
+    createdRef.current = true;
+
+    router.dismissTo('/locations');
+  }, [
+    addressGetValues,
+    advantagesGetValues,
+    contactGetValues,
+    countryGetValues,
+    currencyGetValues,
+    mutateAsync,
+    nameGetValues,
+    scheduleGetValues,
+  ]);
+
+  const onLeave = useCallback(
+    (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
+      if (createdRef.current) return;
+
+      e.preventDefault();
+
+      ConfirmAlert({
+        title: t('brand_location.create.discard.title'),
+        message: t('brand_location.create.discard.message'),
+        callback: () => navigation.dispatch(e.data.action),
+      });
+    },
+    [t, navigation],
   );
+
+  useEffect(() => {
+    navigation.setOptions({
+      gestureEnabled: false,
+      headerShown: !isPending,
+    });
+  }, [isPending, navigation]);
+
+  useEffect(() => {
+    navigation.addListener('beforeRemove', onLeave);
+
+    return () => {
+      navigation.removeListener('beforeRemove', onLeave);
+    };
+  }, [onLeave, navigation]);
 
   return (
-    <TypedSurvey
-      steps={steps}
-      loading={processing}
-      ignoreNavigation={createdRef.current || !currentBrand}
-      onFinish={onFinish}
-    />
+    <Survey loading={isPending || createdRef.current} onFinish={onFinish}>
+      <SurveyStep
+        canGoNext={nameFormState.isValid}
+        title={t('brand_location.create.steps.name.title')}
+        subtitle={t('brand_location.create.steps.name.subtitle')}
+      >
+        <BrandLocationNameController
+          noLabel
+          name="name"
+          control={nameControl}
+        />
+      </SurveyStep>
+
+      {brand?.countries && brand.countries.length > 1 && (
+        <SurveyStep
+          canGoNext={countryFormState.isValid}
+          title={t('brand_location.create.steps.country.title')}
+          subtitle={t('brand_location.create.steps.country.subtitle')}
+        >
+          <BrandLocationCountryController
+            noLabel
+            name="country"
+            control={countryControl}
+          />
+
+          {country === 'US' && (
+            <BrandLocationUsStateController
+              name="usState"
+              control={countryControl}
+            />
+          )}
+        </SurveyStep>
+      )}
+
+      {brand?.currencies && brand.currencies.length > 1 && (
+        <SurveyStep
+          canGoNext={currencyFormState.isValid}
+          title={t('brand_location.create.steps.currencies.title')}
+          subtitle={t('brand_location.create.steps.currencies.subtitle')}
+        >
+          <BrandLocationCurrenciesController
+            noLabel
+            name="currency"
+            control={currencyControl}
+          />
+        </SurveyStep>
+      )}
+
+      <SurveyStep
+        canGoNext={addressFormState.isValid}
+        title={t('brand_location.create.steps.address.title')}
+        subtitle={t('brand_location.create.steps.address.subtitle')}
+      >
+        <BrandLocationAddressController
+          noLabel
+          name="address"
+          control={addressControl}
+        />
+        <BrandLocationEntranceController
+          name="entrance"
+          control={addressControl}
+        />
+        <BrandLocationFloorController name="floor" control={addressControl} />
+        <BrandLocationRemarkController name="remark" control={addressControl} />
+      </SurveyStep>
+
+      <SurveyStep
+        canGoNext={scheduleFromState.isValid}
+        title={t('brand_location.create.steps.schedule.title')}
+        subtitle={t('brand_location.create.steps.schedule.subtitle')}
+      >
+        <BrandLocationSchedulesController
+          name="schedule"
+          control={scheduleControl}
+        />
+      </SurveyStep>
+
+      <SurveyStep
+        skippable
+        canGoNext={advantagesFromState.isValid}
+        title={t('brand_location.create.steps.advantages.title')}
+        subtitle={t('brand_location.create.steps.advantages.subtitle')}
+      >
+        <BrandLocationAdvantagesController
+          noLabel
+          required
+          name="advantages"
+          control={advantagesControl}
+        />
+      </SurveyStep>
+
+      <SurveyStep
+        skippable
+        canGoNext={contactFromState.isValid}
+        title={t('brand_location.create.steps.contact.title')}
+        subtitle={t('brand_location.create.steps.contact.subtitle')}
+      >
+        <BrandLocationPhonesController
+          required
+          name="phone"
+          control={contactControl}
+        />
+        <BrandLocationEmailsController name="email" control={contactControl} />
+        <BrandLocationInstagramsController
+          name="instagram"
+          control={contactControl}
+        />
+      </SurveyStep>
+    </Survey>
   );
 };

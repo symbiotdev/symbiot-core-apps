@@ -1,25 +1,25 @@
-import { SelectPicker } from '@symbiot-core-apps/ui';
+import { TimezonePicker } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useCurrentBrandState } from '@symbiot-core-apps/state';
 
-export function BrandLocationCurrenciesController<T extends FieldValues>({
+export function BrandLocationTimezoneController<T extends FieldValues>({
   name,
   control,
-  noLabel,
+  country,
   disabled,
   disableDrag,
+  noLabel,
   onBlur,
 }: {
   name: Path<T>;
   control: Control<T>;
+  country?: string;
   noLabel?: boolean;
   disabled?: boolean;
   disableDrag?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
-  const { brand } = useCurrentBrandState();
 
   return (
     <Controller
@@ -28,20 +28,20 @@ export function BrandLocationCurrenciesController<T extends FieldValues>({
       rules={{
         required: {
           value: true,
-          message: t('brand.form.currencies.error.required'),
+          message: t('brand_location.form.timezone.error.required'),
         },
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <SelectPicker
+        <TimezonePicker
           disableDrag={disableDrag}
           disabled={disabled}
-          value={value as string}
+          onlyCountryTimezones={!!country}
+          country={country}
+          value={value}
           error={error?.message}
-          options={brand?.currencies}
-          optionsLoading={!brand}
-          label={!noLabel ? t('brand.form.currencies.label') : undefined}
-          sheetLabel={t('brand.form.currencies.label')}
-          placeholder={t('brand.form.currencies.placeholder')}
+          label={!noLabel ? t('brand_location.form.timezone.label') : ''}
+          sheetLabel={t('brand_location.form.timezone.label')}
+          placeholder={t('brand_location.form.timezone.placeholder')}
           onChange={onChange}
           onBlur={onBlur}
         />

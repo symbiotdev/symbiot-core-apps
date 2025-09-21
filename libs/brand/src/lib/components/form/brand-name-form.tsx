@@ -19,9 +19,7 @@ export const BrandNameForm = ({
   });
 
   const update = useCallback(
-    (value: FormValue) => {
-      value.name !== name && onUpdate(value);
-    },
+    (value: FormValue) => value.name !== name && onUpdate(value),
     [name, onUpdate],
   );
 

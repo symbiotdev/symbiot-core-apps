@@ -1,4 +1,4 @@
-import { BrandLocationForm } from '@symbiot-core-apps/brand-location';
+import { UpdateBrandLocation } from '@symbiot-core-apps/brand-location';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useBrandLocationByIdQuery } from '@symbiot-core-apps/api';
 import {
@@ -43,5 +43,5 @@ export default () => {
     return <InitView loading={isPending} error={error} />;
   }
 
-  return <BrandLocationForm location={location} />;
+  return <UpdateBrandLocation location={location} />;
 };

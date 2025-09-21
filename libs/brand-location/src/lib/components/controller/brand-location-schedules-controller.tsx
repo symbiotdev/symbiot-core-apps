@@ -3,16 +3,18 @@ import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
 
-export function BrandLocationScheduleController<T extends FieldValues>({
+export function BrandLocationSchedulesController<T extends FieldValues>({
   name,
   control,
   disabled,
   disableDrag,
+  onBlur,
 }: {
   name: Path<T>;
   control: Control<T>;
   disabled?: boolean;
   disableDrag?: boolean;
+  onBlur?: () => void;
 }) {
   const { me } = useCurrentAccount();
   const { t } = useTranslation();
@@ -34,6 +36,7 @@ export function BrandLocationScheduleController<T extends FieldValues>({
           value={value as WeekdaySchedule[]}
           weekStartsOn={me?.preferences?.weekStartsOn}
           onChange={onChange}
+          onBlur={onBlur}
         />
       )}
     />

@@ -153,6 +153,7 @@ export const ScreenHeader = memo(
           <H4
             flex={4}
             zIndex={1}
+            numberOfLines={2}
             textAlign="center"
             lineHeight={headerButtonSize}
           >

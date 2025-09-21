@@ -46,6 +46,7 @@ export const WeekdaysSchedule = ({
   required,
   disableDrag,
   onChange,
+  onBlur,
 }: {
   label?: string;
   value: WeekdaySchedule[];
@@ -54,6 +55,7 @@ export const WeekdaysSchedule = ({
   required?: boolean;
   disableDrag?: boolean;
   onChange: (value: WeekdaySchedule[]) => void;
+  onBlur?: () => void;
 }) => {
   const minutes: MinutesOptions = useMemo(
     () => DateHelper.get24HoursInFormattedTime(minutesInterval),
@@ -86,6 +88,7 @@ export const WeekdaysSchedule = ({
           weekday={weekday}
           value={value?.find(({ day }) => day === weekday.value)}
           onChange={onChangeWeekdaySchedule}
+          onBlur={onBlur}
         />
       ))}
     </FormField>
@@ -99,6 +102,7 @@ const WeekdayScheduleElement = ({
   weekday,
   minutes,
   onChange,
+  onBlur,
 }: {
   value?: WeekdaySchedule;
   disabled?: boolean;
@@ -106,6 +110,7 @@ const WeekdayScheduleElement = ({
   weekday: { label: string; value: number };
   minutes: MinutesOptions;
   onChange: (value: WeekdaySchedule) => void;
+  onBlur?: () => void;
 }) => {
   const { t } = useTranslation();
 
@@ -152,6 +157,11 @@ const WeekdayScheduleElement = ({
   );
 
   const resetSegment = useCallback(() => setActiveSegment('start'), []);
+
+  const onClose = useCallback(() => {
+    resetSegment();
+    onBlur?.();
+  }, [onBlur]);
 
   const toggleDayOff = useCallback(
     (active: boolean) => {
@@ -253,7 +263,7 @@ const WeekdayScheduleElement = ({
         </FormView>
       }
       onOpen={resetSegment}
-      onClose={resetSegment}
+      onClose={onClose}
     >
       {!isDayOff ? (
         <FormView>

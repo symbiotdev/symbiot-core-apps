@@ -109,9 +109,11 @@ export const Input = forwardRef(
         }
 
         if (type === 'numeric') {
-          const numValue = Number(text);
+          const numValue = text ? Number(text) : null;
 
-          nextValue = isNaN(numValue) ? 0 : numValue;
+          if (numValue !== null) {
+            nextValue = isNaN(numValue) ? 0 : numValue;
+          }
         }
 
         onDebounceChange(nextValue);
@@ -124,7 +126,7 @@ export const Input = forwardRef(
         <InputUi
           ref={ref}
           id={id}
-          value={value as string}
+          value={(value as string) || ''}
           autoFocus={autoFocus}
           backgroundColor="$inputBackgroundColor"
           borderWidth={0}

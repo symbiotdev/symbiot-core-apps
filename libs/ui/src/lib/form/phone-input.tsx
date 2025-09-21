@@ -52,10 +52,30 @@ export const PhoneInput = ({
   const phoneRef = useRef<PhoneInputUI<typeof TextInput>>(null);
 
   const change = useCallback(() => {
-    onChange?.(
-      !phoneRef.current?.isValidNumber() ? '' : phoneRef.current.getValue(),
-    );
+    onChange?.(phoneRef.current?.getValue() || '');
   }, [onChange]);
+
+  const blur = useCallback(() => {
+    if (!phoneRef.current?.isValidNumber()) {
+      const state = phoneRef.current?.state as {
+        displayValue: string;
+        value: string;
+        iso2: string;
+      };
+
+      if (!state['displayValue'] || !state['value'] || !state['iso2']) {
+        phoneRef.current?.setState((prev) => ({
+          ...prev,
+          displayValue: '',
+          value: '',
+        }));
+
+        onChange?.('');
+      }
+    }
+
+    onBlur?.();
+  }, [onBlur, onChange]);
 
   useEffect(() => {
     if (autoFocus) {
@@ -92,7 +112,7 @@ export const PhoneInput = ({
             placeholderTextColor: theme.placeholderColor?.val,
             enterKeyHint,
             textContentType: 'oneTimeCode', // https://github.com/facebook/react-native/issues/39411
-            onBlur,
+            onBlur: blur,
           }}
           onChangePhoneNumber={change}
         />

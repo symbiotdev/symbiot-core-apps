@@ -128,7 +128,7 @@ export const Textarea = forwardRef(
           multiline
           ref={ref}
           id={id}
-          value={value}
+          value={value || ''}
           autoFocus={autoFocus}
           backgroundColor="$inputBackgroundColor"
           borderWidth={0}

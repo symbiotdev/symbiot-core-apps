@@ -1,7 +1,6 @@
 import { SelectPicker } from './select-picker';
 import { PickerOnChange } from './picker';
 import {
-  CountryCode,
   getAllTimezones,
   getTimezonesForCountry,
 } from 'countries-and-timezones';
@@ -20,9 +19,10 @@ export const TimezonePicker = ({
   disableDrag,
   onlyCountryTimezones,
   onChange,
+  onBlur,
 }: {
   value?: string;
-  country?: CountryCode;
+  country?: string;
   label?: string;
   sheetLabel?: string;
   error?: string;
@@ -32,13 +32,25 @@ export const TimezonePicker = ({
   disableDrag?: boolean;
   onlyCountryTimezones?: boolean;
   onChange: (value: string) => void;
+  onBlur?: () => void;
 }) => {
   const options = useMemo(() => {
+    const allTimezones = Object.values(getAllTimezones());
     const timezones = onlyCountryTimezones
       ? country
-        ? getTimezonesForCountry(country)
+        ? getTimezonesForCountry(country) || []
         : []
-      : Object.values(getAllTimezones());
+      : allTimezones;
+
+    if (value && !timezones.some((timezone) => timezone.name === value)) {
+      const currentTimezone = allTimezones.find(
+        (timezone) => timezone.name === value,
+      );
+
+      if (currentTimezone) {
+        timezones.push(currentTimezone);
+      }
+    }
 
     return timezones
       .map(({ name, utcOffsetStr }) => {
@@ -49,7 +61,7 @@ export const TimezonePicker = ({
         };
       })
       .sort((a, b) => (a.label > b.label ? 1 : -1));
-  }, [country, onlyCountryTimezones]);
+  }, [country, onlyCountryTimezones, value]);
 
   useEffect(() => {
     if (onlyCountryTimezones) {
@@ -76,6 +88,7 @@ export const TimezonePicker = ({
       disableDrag={disableDrag}
       options={options}
       onChange={onChange as PickerOnChange}
+      onBlur={onBlur}
     />
   );
 };

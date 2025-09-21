@@ -50,7 +50,7 @@ type SurveyStepProps = PropsWithChildren<{
 }>;
 
 export const SurveyStep = (props: SurveyStepProps) => {
-  const { rendered } = useRendered({ delay: 100 });
+  const { rendered } = useRendered();
 
   return rendered && props.children;
 };

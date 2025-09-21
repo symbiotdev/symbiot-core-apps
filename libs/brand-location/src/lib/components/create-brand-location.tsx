@@ -232,8 +232,8 @@ export const CreateBrandLocation = () => {
       {brand?.currencies && brand.currencies.length > 1 && (
         <SurveyStep
           canGoNext={currencyFormState.isValid}
-          title={t('brand_location.create.steps.currencies.title')}
-          subtitle={t('brand_location.create.steps.currencies.subtitle')}
+          title={t('brand_location.create.steps.currency.title')}
+          subtitle={t('brand_location.create.steps.currency.subtitle')}
         >
           <BrandLocationCurrenciesController
             noLabel

@@ -30,10 +30,10 @@ export function BrandLocationEmailsController<T extends FieldValues>({
             ? true
             : String(value).match(EmailPattern)
               ? true
-              : t('brand_location.form.emails.error.validation'),
+              : t('brand_location.form.email.error.validation'),
         required: {
           value: Boolean(required),
-          message: t('brand_location.form.emails.error.required'),
+          message: t('brand_location.form.email.error.required'),
         },
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
@@ -44,8 +44,8 @@ export function BrandLocationEmailsController<T extends FieldValues>({
           disabled={disabled}
           value={value}
           error={error?.message}
-          label={!noLabel ? t('brand_location.form.emails.label') : undefined}
-          placeholder={t('brand_location.form.emails.placeholder')}
+          label={!noLabel ? t('brand_location.form.email.label') : undefined}
+          placeholder={t('brand_location.form.email.placeholder')}
           onChange={onChange}
           onBlur={onBlur}
         />

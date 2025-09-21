@@ -27,7 +27,7 @@ export function BrandLocationPhonesController<T extends FieldValues>({
         validate: (value) =>
           validatePhone(
             value,
-            t('brand_location.form.phones.error.validation'),
+            t('brand_location.form.phone.error.validation'),
             required,
           ),
       }}
@@ -36,8 +36,8 @@ export function BrandLocationPhonesController<T extends FieldValues>({
           disabled={disabled}
           value={value}
           error={error?.message}
-          label={!noLabel ? t('brand_location.form.phones.label') : undefined}
-          placeholder={t('brand_location.form.phones.placeholder')}
+          label={!noLabel ? t('brand_location.form.phone.label') : undefined}
+          placeholder={t('brand_location.form.phone.placeholder')}
           onChange={onChange}
           onBlur={onBlur}
         />

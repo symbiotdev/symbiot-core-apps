@@ -28,7 +28,7 @@ export function BrandLocationCurrenciesController<T extends FieldValues>({
       rules={{
         required: {
           value: true,
-          message: t('brand.form.currencies.error.required'),
+          message: t('brand_location.form.currency.error.required'),
         },
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
@@ -39,9 +39,9 @@ export function BrandLocationCurrenciesController<T extends FieldValues>({
           error={error?.message}
           options={brand?.currencies}
           optionsLoading={!brand}
-          label={!noLabel ? t('brand.form.currencies.label') : undefined}
-          sheetLabel={t('brand.form.currencies.label')}
-          placeholder={t('brand.form.currencies.placeholder')}
+          label={!noLabel ? t('brand_location.form.currency.label') : undefined}
+          sheetLabel={t('brand_location.form.currency.label')}
+          placeholder={t('brand_location.form.currency.placeholder')}
           onChange={onChange}
           onBlur={onBlur}
         />

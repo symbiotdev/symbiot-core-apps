@@ -142,7 +142,7 @@ export const CurrentBrandClients = ({
         <Search
           value={search}
           debounce={300}
-          placeholder={t('brand.clients.search.placeholder')}
+          placeholder={t('brand_client.search.placeholder')}
           inputFieldProps={{ backgroundColor: '$background' }}
           onChange={setSearch}
         />
@@ -174,11 +174,11 @@ const Intro = ({
         <EmptyView
           padding={0}
           iconName="SmileCircle"
-          title={t('brand.clients.upsert.intro.title')}
-          message={t('brand.clients.upsert.intro.subtitle')}
+          title={t('brand_client.create.intro.title')}
+          message={t('brand_client.create.intro.subtitle')}
         >
           <Button
-            label={t('brand.clients.upsert.intro.button.label')}
+            label={t('brand_client.create.intro.button.label')}
             onPress={() => router.push('/clients/create')}
           />
         </EmptyView>

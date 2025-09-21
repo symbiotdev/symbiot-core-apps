@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useCallback, useEffect } from 'react';
-import { BrandClientPhonesController } from '../controller/brand-client-phones-controller';
+import { BrandClientPhoneController } from '../controller/brand-client-phone-controller';
 
 type FormValue = {
   phones: string[];
@@ -30,7 +30,7 @@ export const BrandClientPhonesForm = ({
   }, [phones, setValue]);
 
   return (
-    <BrandClientPhonesController
+    <BrandClientPhoneController
       name="phone"
       control={control}
       onBlur={handleSubmit(update)}

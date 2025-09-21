@@ -3,7 +3,7 @@ import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { EmailPattern } from '@symbiot-core-apps/shared';
 
-export function BrandClientEmailsController<T extends FieldValues>({
+export function BrandClientEmailController<T extends FieldValues>({
   name,
   control,
   noLabel,

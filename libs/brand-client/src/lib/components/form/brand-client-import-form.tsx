@@ -37,7 +37,7 @@ import { parse } from 'papaparse';
 import {
   ImportedClientsSummary,
   parseImportedClients,
-} from '../utils/parse-imported-clients';
+} from '../../utils/parse-imported-clients';
 
 export const BrandClientImportForm = () => {
   const { t } = useTranslation();

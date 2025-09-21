@@ -10,8 +10,8 @@ import { BrandClientFirstnameController } from './controller/brand-client-firstn
 import { BrandClientLastnameController } from './controller/brand-client-lastname-controller';
 import { BrandClientGenderController } from './controller/brand-client-gender-controller';
 import { BrandClientBirthdayController } from './controller/brand-client-birthday-controller';
-import { BrandClientPhonesController } from './controller/brand-client-phones-controller';
-import { BrandClientEmailsController } from './controller/brand-client-emails-controller';
+import { BrandClientPhoneController } from './controller/brand-client-phone-controller';
+import { BrandClientEmailController } from './controller/brand-client-email-controller';
 import { BrandClientAddressController } from './controller/brand-client-address-controller';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { BrandClientNoteController } from './controller/brand-client-note-controller';
@@ -59,6 +59,12 @@ export const CreateBrandClient = () => {
   });
 
   const {
+    control: avatarControl,
+    getValues: avatarGetValues,
+    formState: avatarFormState,
+  } = useForm<{ avatar: ImagePickerAsset }>();
+
+  const {
     control: noteControl,
     getValues: noteGetValues,
     formState: noteFormState,
@@ -69,12 +75,6 @@ export const CreateBrandClient = () => {
       note: '',
     },
   });
-
-  const {
-    control: avatarControl,
-    getValues: avatarGetValues,
-    formState: avatarFormState,
-  } = useForm<{ avatar: ImagePickerAsset }>();
 
   const onFinish = useCallback(async () => {
     const firstname = personalityGetValues('firstname');
@@ -172,8 +172,8 @@ export const CreateBrandClient = () => {
         title={t('brand_client.create.steps.contact.title')}
         subtitle={t('brand_client.create.steps.contact.subtitle')}
       >
-        <BrandClientPhonesController name="phone" control={contactControl} />
-        <BrandClientEmailsController name="email" control={contactControl} />
+        <BrandClientPhoneController name="phone" control={contactControl} />
+        <BrandClientEmailController name="email" control={contactControl} />
         <BrandClientAddressController name="address" control={contactControl} />
       </SurveyStep>
 

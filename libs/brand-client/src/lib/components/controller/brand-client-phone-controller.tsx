@@ -2,7 +2,7 @@ import { PhoneInput, validatePhone } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-export function BrandClientPhonesController<T extends FieldValues>({
+export function BrandClientPhoneController<T extends FieldValues>({
   name,
   control,
   disabled,
@@ -23,7 +23,11 @@ export function BrandClientPhonesController<T extends FieldValues>({
         validate: (value) =>
           validatePhone(
             value,
-            t('brand_client.form.phone.error.validation'),
+            t(
+              value
+                ? 'brand_client.form.phone.error.validation'
+                : 'brand_client.form.phone.error.required',
+            ),
             true,
           ),
       }}

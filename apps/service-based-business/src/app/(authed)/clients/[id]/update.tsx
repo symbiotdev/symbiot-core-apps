@@ -1,4 +1,4 @@
-import { BrandClientForm } from '@symbiot-core-apps/brand-client';
+import { UpdateBrandClient } from '@symbiot-core-apps/brand-client';
 import { useTranslation } from 'react-i18next';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useBrandClientDetailedByIdQuery } from '@symbiot-core-apps/api';
@@ -47,5 +47,5 @@ export default () => {
     return <InitView loading={isPending} error={error} />;
   }
 
-  return <BrandClientForm client={client} />;
+  return <UpdateBrandClient client={client} />;
 };

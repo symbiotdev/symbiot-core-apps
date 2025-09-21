@@ -10,7 +10,7 @@ export type BrandClient = {
   birthday: string;
   note: string;
   addresses: string[];
-  email: string[];
+  emails: string[];
   phones: string[];
   gender: Gender;
 };

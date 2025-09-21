@@ -25,7 +25,11 @@ export function AccountPhonesController<T extends FieldValues>({
         validate: (value) =>
           validatePhone(
             value,
-            t('shared.account.form.phone.error.validation'),
+            t(
+              value
+                ? 'shared.account.form.phone.error.validation'
+                : 'shared.account.form.phone.error.required',
+            ),
             required,
           ),
       }}

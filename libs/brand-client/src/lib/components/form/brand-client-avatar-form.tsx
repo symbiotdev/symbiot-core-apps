@@ -3,7 +3,7 @@ import { AvatarPicker } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 
-export const BrandClientMediaForm = ({ client }: { client: BrandClient }) => {
+export const BrandClientAvatarForm = ({ client }: { client: BrandClient }) => {
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
     useUpdateBrandClientQuery();
 

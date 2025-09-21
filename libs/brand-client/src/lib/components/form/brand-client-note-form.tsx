@@ -25,6 +25,7 @@ export const BrandClientNoteForm = ({
 
   return (
     <BrandClientNoteController
+      noLabel
       name="note"
       control={control}
       onBlur={handleSubmit(update)}

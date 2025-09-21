@@ -27,7 +27,11 @@ export function BrandLocationPhonesController<T extends FieldValues>({
         validate: (value) =>
           validatePhone(
             value,
-            t('brand_location.form.phone.error.validation'),
+            t(
+              value
+                ? 'brand_location.form.phone.error.validation'
+                : 'brand_location.form.phone.error.required',
+            ),
             required,
           ),
       }}

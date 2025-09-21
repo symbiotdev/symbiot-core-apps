@@ -12,8 +12,8 @@ export const RemoveBrandClient = ({ client }: { client: BrandClient }) => {
   const onActionPress = useCallback(
     () =>
       ConfirmAlert({
-        title: t('brand.clients.remove.confirm_dialog.title'),
-        message: t('brand.clients.remove.confirm_dialog.message'),
+        title: t('brand_client.remove.confirm_dialog.title'),
+        message: t('brand_client.remove.confirm_dialog.message'),
         callback: async () => {
           await mutateAsync({ id: client.id });
 
@@ -28,11 +28,11 @@ export const RemoveBrandClient = ({ client }: { client: BrandClient }) => {
     <PageView scrollable withHeaderHeight>
       <FormView>
         <ActionCard
-          title={t('brand.clients.remove.title')}
-          subtitle={t('brand.clients.remove.subtitle', {
+          title={t('brand_client.remove.title')}
+          subtitle={t('brand_client.remove.subtitle', {
             name: `${client.firstname} ${client.lastname}`,
           })}
-          buttonLabel={t('brand.clients.remove.button.label')}
+          buttonLabel={t('brand_client.remove.button.label')}
           buttonIcon={<Icon name="TrashBinMinimalistic" />}
           buttonLoading={isPending}
           buttonType="danger"

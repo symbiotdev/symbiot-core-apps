@@ -3,29 +3,31 @@ import { useCallback, useEffect } from 'react';
 import { BrandClientAddressController } from '../controller/brand-client-address-controller';
 
 type FormValue = {
-  address: string;
+  addresses: string[];
 };
 
-export const BrandClientAddressForm = ({
-  address,
+export const BrandClientAddressesForm = ({
+  addresses,
   onUpdate,
 }: FormValue & {
   onUpdate: (value: FormValue) => void;
 }) => {
-  const { control, handleSubmit, setValue } = useForm<FormValue>({
+  const { control, handleSubmit, setValue } = useForm<{ address: string }>({
     defaultValues: {
-      address,
+      address: addresses[0],
     },
   });
 
   const update = useCallback(
-    (value: FormValue) => value.address !== address && onUpdate(value),
-    [address, onUpdate],
+    (value: { address: string }) =>
+      addresses[0] !== value.address &&
+      onUpdate({ addresses: [value.address].filter(Boolean) }),
+    [addresses, onUpdate],
   );
 
   useEffect(() => {
-    address && setValue('address', address);
-  }, [address, setValue]);
+    setValue('address', addresses[0]);
+  }, [addresses, setValue]);
 
   return (
     <BrandClientAddressController

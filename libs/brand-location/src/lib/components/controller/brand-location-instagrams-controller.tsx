@@ -26,7 +26,7 @@ export function BrandLocationInstagramsController<T extends FieldValues>({
       rules={{
         required: {
           value: Boolean(required),
-          message: t('brand_location.form.instagramss.error.required'),
+          message: t('brand_location.form.instagrams.error.required'),
         },
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (

@@ -102,7 +102,7 @@ export default () => {
         {hasPermission('clientsAll') && (
           <ListItemGroup title={t('brand.stakeholders')}>
             <ListItem
-              label={t('brand.clients.title')}
+              label={t('brand_client.title')}
               icon={<Icon name="SmileCircle" />}
               onPress={onClientsPress}
             />

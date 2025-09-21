@@ -198,7 +198,7 @@ export default () => {
                     <Stack.Screen
                       name="clients/[id]/analytics"
                       options={{
-                        headerTitle: t('brand.clients.analytics.title'),
+                        headerTitle: t('brand_client.analytics.title'),
                       }}
                     />
                   </Stack.Protected>
@@ -207,32 +207,32 @@ export default () => {
                   <Stack.Screen
                     name="clients/[id]/update"
                     options={{
-                      headerTitle: t('brand.clients.update.title'),
+                      headerTitle: t('brand_client.update.title'),
                     }}
                   />
                   <Stack.Screen
                     name="clients/[id]/profile"
                     options={{
-                      headerTitle: t('brand.clients.profile.title'),
+                      headerTitle: t('brand_client.profile.title'),
                     }}
                   />
 
                   <Stack.Screen
                     name="clients/create"
                     options={{
-                      headerTitle: t('brand.clients.new_client'),
+                      headerTitle: t('brand_client.create.new_client'),
                     }}
                   />
                   <Stack.Screen
                     name="clients/import"
                     options={{
-                      headerTitle: t('brand.clients.import.title'),
+                      headerTitle: t('brand_client.import.title'),
                     }}
                   />
                   <Stack.Screen
                     name="clients/preferences/index"
                     options={{
-                      headerTitle: t('brand.clients.title'),
+                      headerTitle: t('brand_client.title'),
                     }}
                   />
                   <Stack.Screen
@@ -241,7 +241,7 @@ export default () => {
                       ...(drawerVisible && {
                         animation: 'none',
                       }),
-                      headerTitle: t('brand.clients.title'),
+                      headerTitle: t('brand_client.title'),
                     }}
                   />
                 </Stack.Protected>

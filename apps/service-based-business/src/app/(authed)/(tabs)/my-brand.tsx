@@ -95,7 +95,7 @@ export default () => {
       <Button
         type="clear"
         icon={<Icon name="SmileCircle" />}
-        label={t('brand.clients.title')}
+        label={t('brand_client.title')}
         onPress={() => router.push(`/clients`)}
       />
 

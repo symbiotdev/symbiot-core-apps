@@ -1,196 +1,224 @@
-import { Survey, SurveyStep } from '@symbiot-core-apps/survey';
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { useCurrentBrandState } from '@symbiot-core-apps/state';
-import { PhoneValue } from '@symbiot-core-apps/ui';
+import { AvatarPicker, Survey, SurveyStep } from '@symbiot-core-apps/ui';
+import { useCreateBrandClientQuery } from '@symbiot-core-apps/api';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { router, useNavigation } from 'expo-router';
+import { EventArg, NavigationAction } from '@react-navigation/native';
+import { ConfirmAlert } from '@symbiot-core-apps/shared';
+import { useTranslation } from 'react-i18next';
+import { Controller, useForm } from 'react-hook-form';
+import { BrandClientFirstnameController } from './controller/brand-client-firstname-controller';
+import { BrandClientLastnameController } from './controller/brand-client-lastname-controller';
+import { BrandClientGenderController } from './controller/brand-client-gender-controller';
+import { BrandClientBirthdayController } from './controller/brand-client-birthday-controller';
+import { BrandClientPhonesController } from './controller/brand-client-phones-controller';
+import { BrandClientEmailsController } from './controller/brand-client-emails-controller';
+import { BrandClientAddressController } from './controller/brand-client-address-controller';
 import { ImagePickerAsset } from 'expo-image-picker';
-import {
-  useBrandClientGendersQuery,
-  useCreateBrandClientQuery,
-} from '@symbiot-core-apps/api';
-import { router } from 'expo-router';
-import { useBrandClientForm } from '../hooks/use-brand-client-form';
-
-type Value = {
-  firstname: string;
-  lastname: string;
-  gender: string;
-  birthday: string;
-  phone: PhoneValue;
-  email: string;
-  address: string;
-  avatar: ImagePickerAsset;
-  note: string;
-};
-
-const TypedSurvey = Survey<Value>;
+import { BrandClientNoteController } from './controller/brand-client-note-controller';
 
 export const CreateBrandClient = () => {
-  const { brand: currentBrand } = useCurrentBrandState();
-  const form = useBrandClientForm();
-  const {
-    data: genders,
-    isPending: gendersLoading,
-    error: gendersError,
-  } = useBrandClientGendersQuery();
-  const { mutateAsync: createClient } = useCreateBrandClientQuery();
+  const { t } = useTranslation();
+  const { mutateAsync, isPending } = useCreateBrandClientQuery();
+  const navigation = useNavigation();
 
   const createdRef = useRef(false);
 
-  const [processing, setProcessing] = useState(false);
-
-  const steps: SurveyStep<Value>[] = useMemo(
-    () => [
-      {
-        id: 'personality',
-        nextId: 'contact-info',
-        title: form.personalInfo.title,
-        subtitle: form.personalInfo.subtitle,
-        elements: [
-          {
-            type: 'input',
-            props: {
-              ...form.firstname,
-              required: true,
-              name: 'firstname',
-              enterKeyHint: 'next',
-              defaultValue: '',
-            },
-          },
-          {
-            type: 'input',
-            props: {
-              ...form.lastname,
-              required: true,
-              name: 'lastname',
-              enterKeyHint: 'next',
-              defaultValue: '',
-            },
-          },
-          {
-            type: 'select-picker',
-            props: {
-              ...form.gender,
-              required: true,
-              options: genders,
-              optionsLoading: gendersLoading,
-              optionsError: gendersError,
-              name: 'gender',
-            },
-          },
-          {
-            type: 'date-picker',
-            props: {
-              ...form.birthday,
-              name: 'birthday',
-            },
-          },
-        ],
-      },
-      {
-        id: 'contact-info',
-        nextId: 'avatar',
-        title: form.contactInfo.title,
-        subtitle: form.contactInfo.subtitle,
-        elements: [
-          {
-            type: 'phone',
-            props: {
-              ...form.phone,
-              required: true,
-              name: 'phone',
-              enterKeyHint: 'done',
-            },
-          },
-          {
-            type: 'email',
-            props: {
-              ...form.email,
-              name: 'email',
-              enterKeyHint: 'done',
-            },
-          },
-          {
-            type: 'input',
-            props: {
-              ...form.address,
-              name: 'address',
-              enterKeyHint: 'done',
-            },
-          },
-        ],
-      },
-      {
-        id: 'avatar',
-        nextId: 'notes',
-        title: form.avatar.title,
-        subtitle: form.avatar.subtitle,
-        skippable: true,
-        elements: [
-          {
-            type: 'avatar',
-            props: {
-              ...form.avatar,
-              name: 'avatar',
-              stepValueKey: 'firstname',
-            },
-          },
-        ],
-      },
-      {
-        id: 'notes',
-        nextId: null,
-        title: form.note.title,
-        subtitle: form.note.subtitle,
-        skippable: true,
-        elements: [
-          {
-            type: 'textarea',
-            props: {
-              ...form.note,
-              label: '',
-              name: 'note',
-              enterKeyHint: 'done',
-            },
-          },
-        ],
-      },
-    ],
-    [form, genders, gendersLoading, gendersError],
-  );
-
-  const onFinish = useCallback(
-    async (value: Value) => {
-      setProcessing(true);
-
-      try {
-        const client = await createClient({
-          avatar: value.avatar,
-          note: value.note,
-          firstname: value.firstname,
-          lastname: value.lastname,
-          email: value.email,
-          gender: value.gender,
-          birthday: value.birthday,
-          address: value.address,
-          phones: value.phone ? [value.phone] : [],
-        });
-
-        createdRef.current = true;
-
-        router.replace(`/clients/${client.id}/profile`);
-      } finally {
-        setProcessing(false);
-      }
+  const {
+    control: personalityControl,
+    getValues: personalityGetValues,
+    formState: personalityFormState,
+    watch: personalityWatch,
+  } = useForm<{
+    firstname: string;
+    lastname: string;
+    gender: string;
+    birthday: string | null;
+  }>({
+    defaultValues: {
+      firstname: '',
+      lastname: '',
+      gender: '',
+      birthday: null,
     },
-    [createClient],
+  });
+
+  const {
+    control: contactControl,
+    getValues: contactGetValues,
+    formState: contactFormState,
+  } = useForm<{
+    phone: string;
+    email: string;
+    address: string;
+  }>({
+    defaultValues: {
+      phone: '',
+      email: '',
+      address: '',
+    },
+  });
+
+  const {
+    control: noteControl,
+    getValues: noteGetValues,
+    formState: noteFormState,
+  } = useForm<{
+    note: string;
+  }>({
+    defaultValues: {
+      note: '',
+    },
+  });
+
+  const {
+    control: avatarControl,
+    getValues: avatarGetValues,
+    formState: avatarFormState,
+  } = useForm<{ avatar: ImagePickerAsset }>();
+
+  const onFinish = useCallback(async () => {
+    const firstname = personalityGetValues('firstname');
+    const lastname = personalityGetValues('lastname');
+    const gender = personalityGetValues('gender');
+    const birthday = personalityGetValues('birthday');
+    const phone = contactGetValues('phone');
+    const email = contactGetValues('email');
+    const address = contactGetValues('address');
+    const avatar = avatarGetValues('avatar');
+    const note = noteGetValues('note');
+
+    const client = await mutateAsync({
+      avatar,
+      firstname,
+      lastname,
+      gender,
+      note,
+      birthday: birthday ? String(birthday) : null,
+      phones: [phone],
+      emails: email ? [email] : [],
+      addresses: address ? [address] : [],
+    });
+
+    createdRef.current = true;
+
+    router.replace(`/clients/${client.id}/profile`);
+  }, [
+    avatarGetValues,
+    contactGetValues,
+    mutateAsync,
+    noteGetValues,
+    personalityGetValues,
+  ]);
+
+  const onLeave = useCallback(
+    (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
+      if (createdRef.current) return;
+
+      e.preventDefault();
+
+      ConfirmAlert({
+        title: t('brand_client.create.discard.title'),
+        message: t('brand_client.create.discard.message'),
+        callback: () => navigation.dispatch(e.data.action),
+      });
+    },
+    [t, navigation],
   );
+
+  useEffect(() => {
+    navigation.setOptions({
+      gestureEnabled: false,
+      headerShown: !isPending,
+    });
+  }, [isPending, navigation]);
+
+  useEffect(() => {
+    navigation.addListener('beforeRemove', onLeave);
+
+    return () => {
+      navigation.removeListener('beforeRemove', onLeave);
+    };
+  }, [onLeave, navigation]);
+
+  const { firstname, lastname } = personalityWatch();
 
   return (
-    <TypedSurvey
-      steps={steps}
-      loading={processing}
-      ignoreNavigation={createdRef.current || !currentBrand}
-      onFinish={onFinish}
-    />
+    <Survey loading={isPending || createdRef.current} onFinish={onFinish}>
+      <SurveyStep
+        canGoNext={personalityFormState.isValid}
+        title={t('brand_client.create.steps.personality.title')}
+        subtitle={t('brand_client.create.steps.personality.subtitle')}
+      >
+        <BrandClientFirstnameController
+          name="firstname"
+          control={personalityControl}
+        />
+        <BrandClientLastnameController
+          name="lastname"
+          control={personalityControl}
+        />
+        <BrandClientGenderController
+          name="gender"
+          control={personalityControl}
+        />
+        <BrandClientBirthdayController
+          name="birthday"
+          control={personalityControl}
+        />
+      </SurveyStep>
+
+      <SurveyStep
+        canGoNext={contactFormState.isValid}
+        title={t('brand_client.create.steps.contact.title')}
+        subtitle={t('brand_client.create.steps.contact.subtitle')}
+      >
+        <BrandClientPhonesController name="phone" control={contactControl} />
+        <BrandClientEmailsController name="email" control={contactControl} />
+        <BrandClientAddressController name="address" control={contactControl} />
+      </SurveyStep>
+
+      <SurveyStep
+        skippable
+        canGoNext={avatarFormState.isValid}
+        title={t('brand_client.create.steps.avatar.title')}
+        subtitle={t('brand_client.create.steps.avatar.subtitle')}
+      >
+        <Controller
+          control={avatarControl}
+          name="avatar"
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, value } }) => (
+            <AvatarPicker
+              allowsEditing
+              removable={!!value}
+              alignSelf="center"
+              marginTop="$5"
+              url={value}
+              name={`${firstname} ${lastname}`}
+              color="$placeholderColor"
+              size={140}
+              onAttach={onChange}
+              onRemove={() => onChange(undefined)}
+            />
+          )}
+        />
+      </SurveyStep>
+
+      <SurveyStep
+        skippable
+        canGoNext={noteFormState.isValid}
+        title={t('brand_client.create.steps.note.title')}
+        subtitle={t('brand_client.create.steps.note.subtitle')}
+      >
+        <BrandClientNoteController
+          required
+          noLabel
+          name="note"
+          control={noteControl}
+        />
+      </SurveyStep>
+    </Survey>
   );
 };

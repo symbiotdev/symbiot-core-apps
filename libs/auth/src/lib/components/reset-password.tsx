@@ -42,7 +42,7 @@ export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
             .matches(
               PasswordPattern,
               t(
-                'shared.auth.reset_password.form.password.error.invalid_format',
+                'shared.auth.reset_password.form.password.error.validation',
               ),
             ),
           confirmPassword: yup

@@ -132,7 +132,7 @@ export const useBrandEmployeeForm = () => {
         scheme: yup
           .string()
           .nullable()
-          .email(t('brand.employees.upsert.form.email.error.invalid_format'))
+          .email(t('brand.employees.upsert.form.email.error.validation'))
           .ensure(),
       },
       address: {

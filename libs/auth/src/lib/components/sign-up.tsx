@@ -50,13 +50,13 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
           email: yup
             .string()
             .required(t('shared.auth.sign_up.form.email.error.required'))
-            .email(t('shared.auth.sign_up.form.email.error.invalid_format')),
+            .email(t('shared.auth.sign_up.form.email.error.validation')),
           password: yup
             .string()
             .required(t('shared.auth.sign_up.form.password.error.required'))
             .matches(
               PasswordPattern,
-              t('shared.auth.sign_up.form.password.error.invalid_format'),
+              t('shared.auth.sign_up.form.password.error.validation'),
             ),
           confirmPassword: yup
             .string()

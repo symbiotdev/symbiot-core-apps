@@ -33,7 +33,7 @@ export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
               t('shared.auth.forgot_password.form.email.error.required'),
             )
             .email(
-              t('shared.auth.forgot_password.form.email.error.invalid_format'),
+              t('shared.auth.forgot_password.form.email.error.validation'),
             ),
         })
         .required(),

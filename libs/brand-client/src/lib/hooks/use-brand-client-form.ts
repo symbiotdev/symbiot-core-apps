@@ -52,7 +52,7 @@ export const useBrandClientForm = () => {
         scheme: yup
           .string()
           .nullable()
-          .email(t('brand.clients.upsert.form.email.error.invalid_format'))
+          .email(t('brand.clients.upsert.form.email.error.validation'))
           .ensure(),
       },
       address: {

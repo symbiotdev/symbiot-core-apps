@@ -32,13 +32,13 @@ export const SignIn = ({ logo }: { logo: ReactElement }) => {
           email: yup
             .string()
             .required(t('shared.auth.sign_in.form.email.error.required'))
-            .email(t('shared.auth.sign_in.form.email.error.invalid_format')),
+            .email(t('shared.auth.sign_in.form.email.error.validation')),
           password: yup
             .string()
             .required(t('shared.auth.sign_in.form.password.error.required'))
             .matches(
               PasswordPattern,
-              t('shared.auth.sign_in.form.password.error.invalid_format'),
+              t('shared.auth.sign_in.form.password.error.validation'),
             ),
         })
         .required(),

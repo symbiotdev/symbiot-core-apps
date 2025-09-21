@@ -78,16 +78,16 @@ export default () => {
 
         <ListItemGroup title={t('shared.catalog')}>
           <ListItem
-            label={t('brand.services.title')}
+            label={t('brand_service.title')}
             icon={<Icon name={icons.Service} />}
             onPress={onServicesPress}
           />
           <ListItem
-            label={t('brand.packages.title')}
+            label={t('brand_package.title')}
             icon={<Icon name={icons.Package} />}
           />
           <ListItem
-            label={t('brand.gift_cards.title')}
+            label={t('gift_cards.title')}
             icon={<Icon name="Gift" />}
             iconAfter={
               <View>

@@ -1,9 +1,7 @@
 import { BrandLocation } from './brand-location';
 import { Gender } from './gender';
-import { Phone } from './phone';
 import { Schedule } from './schedule';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { Link } from './link';
 
 export type BrandEmployee = {
   id: string;
@@ -21,9 +19,9 @@ export type BrandEmployee = {
   passport: string;
   taxId: string;
   provider: boolean;
-  links: Link[];
   gender: Gender;
-  phones: Phone[];
+  phones: string[];
+  instagrams: string[];
   locations: BrandLocation[];
   schedules: BrandEmployeeSchedule[];
   permissions: BrandEmployeePermissions;
@@ -63,7 +61,7 @@ export type CreateBrandEmployee = {
   gender: string;
   locations: string[];
   permissions: BrandEmployeePermissions;
-  phones: Phone[];
+  phones: string[];
   schedules: (Schedule & { location: string | null })[];
 };
 

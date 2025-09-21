@@ -36,8 +36,8 @@ export const BrandEmployeeProfile = ({
   const { now } = useNativeNow();
 
   const instagram = useMemo(
-    () => employee.links?.find(APP_LINK.instagram.isValidUrl),
-    [employee.links],
+    () => employee.instagrams?.[0],
+    [employee.instagrams],
   );
 
   const schedules = useMemo(
@@ -53,7 +53,7 @@ export const BrandEmployeeProfile = ({
 
     emitHaptic();
 
-    void openBrowserAsync(instagram.url);
+    void openBrowserAsync(instagram);
   }, [instagram]);
 
   return (
@@ -81,7 +81,7 @@ export const BrandEmployeeProfile = ({
                 lineHeight={18}
                 numberOfLines={1}
               >
-                {APP_LINK.instagram.getNicknameFromUrl(instagram.url)}
+                {APP_LINK.instagram.getNicknameFromUrl(instagram)}
               </Link>
             </XStack>
           )}

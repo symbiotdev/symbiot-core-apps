@@ -37,9 +37,7 @@ export * from './lib/types/brand-service';
 
 export * from './lib/types/faq';
 export * from './lib/types/gender';
-export * from './lib/types/link';
 export * from './lib/types/pagination';
-export * from './lib/types/phone';
 export * from './lib/types/schedule';
 
 export * from './lib/utils/client';

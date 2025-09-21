@@ -1,6 +1,5 @@
 import { ImagePickerAsset } from 'expo-image-picker';
 import { Account } from './account';
-import { Link } from './link';
 import { BrandLocation } from './brand-location';
 
 export type BrandCountry = {
@@ -35,7 +34,6 @@ export type Brand = {
   about: string;
   birthday: string;
   owner: Account;
-  links: Link[];
   industries: BrandIndustry[];
   countries: BrandCountry[];
   currencies: BrandCurrency[];
@@ -57,7 +55,6 @@ export type CreateBrand = {
 
 export type UpdateBrand = {
   avatar?: ImagePickerAsset;
-  links?: Omit<Link, 'id'>[];
   birthday?: string | null;
   name?: string;
   about?: string;

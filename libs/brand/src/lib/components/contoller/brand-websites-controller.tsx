@@ -26,14 +26,14 @@ export function BrandWebsitesController<T extends FieldValues>({
         validate: (value) =>
           (allowEmpty && !value) || (value && isValidURL(value))
             ? true
-            : t('brand.form.websites.error.validation'),
+            : t('brand.form.website.error.validation'),
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <WebsiteInput
           enterKeyHint="done"
           value={value}
-          label={!noLabel ? t('brand.form.websites.label') : ''}
-          placeholder={t('brand.form.websites.placeholder')}
+          label={!noLabel ? t('brand.form.website.label') : ''}
+          placeholder={t('brand.form.website.placeholder')}
           error={error?.message}
           onChange={onChange}
           onBlur={onBlur}

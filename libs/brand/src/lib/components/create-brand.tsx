@@ -175,8 +175,8 @@ export const CreateBrand = () => {
 
       <SurveyStep
         canGoNext={countryFormState.isValid}
-        title={t('brand.create.steps.countries.title')}
-        subtitle={t('brand.create.steps.countries.subtitle')}
+        title={t('brand.create.steps.country.title')}
+        subtitle={t('brand.create.steps.country.subtitle')}
       >
         <BrandCountriesController
           noLabel
@@ -217,8 +217,8 @@ export const CreateBrand = () => {
       {functionality.availability.brandIndustry && (
         <SurveyStep
           canGoNext={industryFormState.isValid}
-          title={t('brand.create.steps.industries.title')}
-          subtitle={t('brand.create.steps.industries.subtitle')}
+          title={t('brand.create.steps.industry.title')}
+          subtitle={t('brand.create.steps.industry.subtitle')}
         >
           <BrandIndustriesController
             noLabel
@@ -231,8 +231,8 @@ export const CreateBrand = () => {
       <SurveyStep
         skippable
         canGoNext={websiteFormState.isValid}
-        title={t('brand.create.steps.websites.title')}
-        subtitle={t('brand.create.steps.websites.subtitle')}
+        title={t('brand.create.steps.website.title')}
+        subtitle={t('brand.create.steps.website.subtitle')}
       >
         <BrandWebsitesController
           noLabel

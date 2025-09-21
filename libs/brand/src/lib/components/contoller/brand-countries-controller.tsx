@@ -40,7 +40,7 @@ export function BrandCountriesController<T extends FieldValues>({
       rules={{
         required: {
           value: true,
-          message: t('brand.form.countries.error.required'),
+          message: t('brand.form.country.error.required'),
         },
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
@@ -51,9 +51,9 @@ export function BrandCountriesController<T extends FieldValues>({
           options={options}
           optionsLoading={countriesLoading}
           optionsError={countriesError}
-          label={!noLabel ? t('brand.form.countries.label') : undefined}
-          sheetLabel={t('brand.form.countries.label')}
-          placeholder={t('brand.form.countries.placeholder')}
+          label={!noLabel ? t('brand.form.country.label') : undefined}
+          sheetLabel={t('brand.form.country.label')}
+          placeholder={t('brand.form.country.placeholder')}
           onChange={onChange}
           onBlur={onBlur}
         />

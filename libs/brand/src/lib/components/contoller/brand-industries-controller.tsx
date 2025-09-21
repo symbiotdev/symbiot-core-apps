@@ -28,7 +28,7 @@ export function BrandIndustriesController<T extends FieldValues>({
       rules={{
         required: {
           value: true,
-          message: t('brand.form.industries.error.required'),
+          message: t('brand.form.industry.error.required'),
         },
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
@@ -38,9 +38,9 @@ export function BrandIndustriesController<T extends FieldValues>({
           options={data}
           optionsLoading={industriesLoading}
           optionsError={industriesError}
-          label={!noLabel ? t('brand.form.industries.label') : ''}
-          sheetLabel={t('brand.form.industries.label')}
-          placeholder={t('brand.form.industries.placeholder')}
+          label={!noLabel ? t('brand.form.industry.label') : ''}
+          sheetLabel={t('brand.form.industry.label')}
+          placeholder={t('brand.form.industry.placeholder')}
           onChange={onChange}
           onBlur={onBlur}
         />

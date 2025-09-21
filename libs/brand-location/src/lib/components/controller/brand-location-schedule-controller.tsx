@@ -24,7 +24,7 @@ export function BrandLocationScheduleController<T extends FieldValues>({
       rules={{
         required: {
           value: true,
-          message: t('brand.form.schedule.error.required'),
+          message: t('brand.form.schedules.error.required'),
         },
       }}
       render={({ field: { value, onChange } }) => (

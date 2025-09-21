@@ -149,19 +149,19 @@ export const BrandClientImportForm = () => {
             <View gap="$3" marginTop="$5">
               <XStack alignItems="center">
                 <RegularText>
-                  {t('brand.clients.import.uploaded.summary.total')}:
+                  {t('brand_client.import.uploaded.summary.total')}:
                 </RegularText>
                 <SemiBoldText> {summary.failed + summary.succeed}</SemiBoldText>
               </XStack>
               <XStack alignItems="center">
                 <RegularText>
-                  {t('brand.clients.import.uploaded.summary.success')}:
+                  {t('brand_client.import.uploaded.summary.success')}:
                 </RegularText>
                 <SemiBoldText> {summary.succeed}</SemiBoldText>
               </XStack>
               <XStack alignItems="center">
                 <RegularText>
-                  {t('brand.clients.import.uploaded.summary.failed')}:
+                  {t('brand_client.import.uploaded.summary.failed')}:
                 </RegularText>
                 <SemiBoldText> {summary.failed}</SemiBoldText>
               </XStack>
@@ -170,7 +170,7 @@ export const BrandClientImportForm = () => {
 
           <Button
             marginTop="$10"
-            label={t('brand.clients.import.uploaded.button.label')}
+            label={t('brand_client.import.uploaded.button.label')}
             onPress={goToClients}
           />
         </FormView>
@@ -178,8 +178,8 @@ export const BrandClientImportForm = () => {
         <FormView gap="$5">
           {!clients.length || !file ? (
             <DocumentPicker
-              label={t('brand.clients.import.upload.label')}
-              uploadLabel={t('brand.clients.import.upload.file')}
+              label={t('brand_client.import.upload.label')}
+              uploadLabel={t('brand_client.import.upload.file')}
               type={['text/csv', 'application/vnd.ms-excel', '.csv']}
               error={fileError}
               onUpload={onUploadFile}
@@ -187,14 +187,14 @@ export const BrandClientImportForm = () => {
           ) : (
             <View gap="$2">
               <FileChip
-                label={t('brand.clients.import.upload.label')}
+                label={t('brand_client.import.upload.label')}
                 removable={!clientsImporting}
                 file={file}
                 onRemove={removeFile}
               />
 
               <Button
-                label={t('brand.clients.import.upload.button.label')}
+                label={t('brand_client.import.upload.button.label')}
                 loading={clientsImporting}
                 disabled={clientsImporting}
                 onPress={uploadClients}
@@ -204,13 +204,13 @@ export const BrandClientImportForm = () => {
 
           <View gap="$2">
             <Label paddingHorizontal="$4">
-              {t('brand.clients.import.guide.subtitle')}
+              {t('brand_client.import.guide.subtitle')}
             </Label>
 
             <Accordion
               items={[
                 {
-                  title: t('brand.clients.import.guide.title'),
+                  title: t('brand_client.import.guide.title'),
                   content: <ImportGuide />,
                 },
               ]}
@@ -218,9 +218,9 @@ export const BrandClientImportForm = () => {
           </View>
 
           <ActionCard
-            title={t('brand.clients.import.template.title')}
-            subtitle={t('brand.clients.import.template.subtitle')}
-            buttonLabel={t('brand.clients.import.template.button.label')}
+            title={t('brand_client.import.template.title')}
+            subtitle={t('brand_client.import.template.subtitle')}
+            buttonLabel={t('brand_client.import.template.button.label')}
             buttonLoading={templateLoading || sharing}
             buttonIcon={<Icon name="Import" />}
             onActionPress={downloadTemplate}
@@ -241,7 +241,7 @@ const ImportGuide = () => {
   return (
     <View gap="$5" marginTop="$2">
       {(
-        t('brand.clients.import.guide.fields', { returnObjects: true }) as {
+        t('brand_client.import.guide.fields', { returnObjects: true }) as {
           name: string;
           options: string[];
         }[]
@@ -256,13 +256,13 @@ const ImportGuide = () => {
       ))}
 
       <MediumText fontSize={12} color="$placeholderColor">
-        *{t('brand.clients.import.guide.warning')}
+        *{t('brand_client.import.guide.warning')}
       </MediumText>
 
       <MediumText>
-        {t('brand.clients.import.guide.help.title')}{' '}
+        {t('brand_client.import.guide.help.title')}{' '}
         <Link onPress={openHelp}>
-          {t('brand.clients.import.guide.help.button.label')}
+          {t('brand_client.import.guide.help.button.label')}
         </Link>
       </MediumText>
     </View>

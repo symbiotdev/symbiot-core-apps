@@ -106,8 +106,6 @@ export const parseImportedClients = (
     result.clients.push({
       firstname,
       lastname,
-      email,
-      address,
       avatarUrl,
       gender,
       birthday: birthday
@@ -115,19 +113,9 @@ export const parseImportedClients = (
             parse(birthday, 'dd-MM-yyyy', new Date()),
           ).toUTCString()
         : null,
-      phones: phone
-        ? [
-            {
-              country: PhoneNumber.getCountryCodeOfNumber(phone),
-              tel: phone,
-              formatted: PhoneNumber.format(
-                phone,
-                PhoneNumber.getCountryCodeOfNumber(phone),
-              ),
-              name: '',
-            },
-          ]
-        : [],
+      addresses: address ? [address.trim()] : [],
+      emails: email ? [email.trim()] : [],
+      phones: [phone.trim()],
     });
   });
 

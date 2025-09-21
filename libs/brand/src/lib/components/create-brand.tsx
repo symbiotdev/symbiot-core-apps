@@ -200,7 +200,7 @@ export const CreateBrand = () => {
           render={({ field: { onChange, value } }) => (
             <AvatarPicker
               allowsEditing
-              removable
+              removable={!!value}
               alignSelf="center"
               marginTop="$5"
               url={value}

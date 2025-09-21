@@ -1,5 +1,4 @@
 import { Gender } from './gender';
-import { Phone } from './phone';
 import { ImagePickerAsset } from 'expo-image-picker';
 
 export type BrandClient = {
@@ -9,23 +8,23 @@ export type BrandClient = {
   avatarUrl: string;
   avatarXsUrl: string;
   birthday: string;
-  email: string;
-  address: string;
   note: string;
+  addresses: string[];
+  email: string[];
+  phones: string[];
   gender: Gender;
-  phones: Phone[];
 };
 
 export type CreateBrandClient = {
   avatar: ImagePickerAsset;
-  phones: Phone[];
   firstname: string;
   lastname: string;
   birthday: string | null;
   gender: string | undefined;
   note: string;
-  address: string;
-  email: string;
+  addresses: string[];
+  phones: string[];
+  emails: string[];
 };
 
 export type UpdateBrandClient = Partial<CreateBrandClient>;

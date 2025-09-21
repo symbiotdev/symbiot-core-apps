@@ -1,6 +1,4 @@
 import { AccountPreferences } from './account-preferences';
-import { Phone } from './phone';
-import { Link } from './link';
 import { Gender } from './gender';
 import { ImagePickerAsset } from 'expo-image-picker';
 
@@ -22,10 +20,10 @@ export type Account = {
   signInProvider: string;
   email: string;
   lastRateDate: string;
-  birthday: Date;
+  birthday: string;
   preferences: AccountPreferences;
-  phones: Phone[];
-  links: Link[];
+  phones: string[];
+  instagrams: string[];
   gender: Gender;
 };
 
@@ -34,8 +32,8 @@ export type UpdateAccountData = {
   firstname?: string;
   lastname?: string;
   birthday?: string | null;
-  phones?: Phone[];
-  links?: Omit<Link, 'id'>[];
+  phones?: string[];
+  instagrams?: string[];
   gender?: string | null;
   avatar?: ImagePickerAsset;
 };

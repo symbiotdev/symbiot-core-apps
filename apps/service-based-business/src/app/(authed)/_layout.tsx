@@ -92,7 +92,7 @@ export default () => {
                 {/*ACCOUNT*/}
 
                 <Stack.Screen
-                  name="account/preferences"
+                  name="account/update"
                   options={{
                     headerTitle: t('shared.profile'),
                   }}

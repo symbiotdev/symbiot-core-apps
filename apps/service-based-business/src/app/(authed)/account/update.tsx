@@ -1,4 +1,4 @@
-import { AccountPreferences } from '@symbiot-core-apps/account';
+import { UpdateAccount } from '@symbiot-core-apps/account';
 import { router, useNavigation } from 'expo-router';
 import React, { useCallback, useLayoutEffect, useMemo } from 'react';
 import {
@@ -16,7 +16,7 @@ export default () => {
     () => [
       {
         label: t(
-          'shared.preferences.account.context_menu.remove_account.label',
+          'shared.account.update.context_menu.remove_account.label',
         ),
         icon: <Icon name="TrashBinMinimalistic" />,
         color: '$error',
@@ -28,7 +28,7 @@ export default () => {
 
   const headerRight = useCallback(
     () => <ContextMenuPopover items={contextMenuItems} />,
-    [],
+    [contextMenuItems],
   );
 
   useLayoutEffect(() => {
@@ -37,5 +37,5 @@ export default () => {
     });
   }, [headerRight, navigation]);
 
-  return <AccountPreferences />;
+  return <UpdateAccount />;
 };

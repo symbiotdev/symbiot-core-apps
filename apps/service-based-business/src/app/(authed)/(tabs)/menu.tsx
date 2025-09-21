@@ -48,7 +48,7 @@ export default () => {
 
   const onAccountPress = useCallback(() => {
     emitHaptic();
-    router.push('/account/preferences');
+    router.push('/account/update');
   }, []);
   const onAppearancePress = useCallback(
     () => router.push('/appearance/preferences'),

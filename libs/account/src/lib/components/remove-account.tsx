@@ -13,8 +13,8 @@ export const RemoveAccount = () => {
   const onActionPress = useCallback(
     () =>
       ConfirmAlert({
-        title: t('shared.preferences.remove_account.confirm_dialog.title'),
-        message: t('shared.preferences.remove_account.confirm_dialog.message'),
+        title: t('shared.account.remove.confirm_dialog.title'),
+        message: t('shared.account.remove.confirm_dialog.message'),
         callback: mutateAsync,
       }),
     [mutateAsync, t],
@@ -24,11 +24,11 @@ export const RemoveAccount = () => {
     <PageView scrollable withHeaderHeight>
       <FormView>
         <ActionCard
-          title={t('shared.preferences.remove_account.title')}
-          subtitle={t('shared.preferences.remove_account.subtitle', {
+          title={t('shared.account.remove.title')}
+          subtitle={t('shared.account.remove.subtitle', {
             name: me?.name,
           })}
-          buttonLabel={t('shared.preferences.remove_account.button.label')}
+          buttonLabel={t('shared.account.remove.button.label')}
           buttonIcon={<Icon name="TrashBinMinimalistic" />}
           buttonLoading={isPending}
           buttonType="danger"

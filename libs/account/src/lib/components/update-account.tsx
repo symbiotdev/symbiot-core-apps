@@ -1,5 +1,4 @@
-import { FormView, Input, PageView } from '@symbiot-core-apps/ui';
-import { AccountAvatarForm } from './form/account-avatar-form';
+import { AvatarPicker, FormView, Input, PageView } from '@symbiot-core-apps/ui';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
 import {
   UpdateAccountData,
@@ -7,14 +6,22 @@ import {
   useAccountMeUpdate,
 } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
-import { AccountFirstnameForm } from './form/account-firstname-form';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { AccountLastnameForm } from './form/account-lastname-form';
 import { useTranslation } from 'react-i18next';
-import { AccountGenderForm } from './form/account-gender-form';
-import { AccountBirthdayForm } from './form/account-birthday-form';
-import { AccountPhonesForm } from './form/account-phones-form';
-import { AccountInstagramsForm } from './form/account-instagrams-form';
+import {
+  BirthdayForm,
+  FirstnameForm,
+  GenderForm,
+  InstagramsForm,
+  LastnameForm,
+  PhonesForm,
+} from '@symbiot-core-apps/form-controller';
+import { AccountFirstnameController } from './controller/account-firstname-controller';
+import { AccountLastnameController } from './controller/account-lastname-controller';
+import { AccountGenderController } from './controller/account-gender-controller';
+import { AccountBirthdayController } from './controller/account-birthday-controller';
+import { AccountInstagramController } from './controller/account-instagram-controller';
+import { AccountPhoneController } from './controller/account-phone-controller';
 
 export const UpdateAccount = () => {
   const { t } = useTranslation();
@@ -44,9 +51,14 @@ export const UpdateAccount = () => {
   return (
     me && (
       <PageView scrollable withHeaderHeight withKeyboard gap="$5">
-        <AccountAvatarForm
-          account={me}
+        <AvatarPicker
+          alignSelf="center"
           loading={avatarUploading || avatarRemoving}
+          name={me.name}
+          color={me.avatarColor}
+          url={me.avatarUrl}
+          removable={!!me.avatarUrl}
+          size={100}
           onAttach={onAttach}
           onRemove={onRemove}
         />
@@ -58,12 +70,36 @@ export const UpdateAccount = () => {
             label={t('shared.account.form.email.label')}
           />
 
-          <AccountFirstnameForm firstname={me.firstname} onUpdate={update} />
-          <AccountLastnameForm lastname={me.lastname} onUpdate={update} />
-          <AccountGenderForm gender={me.gender?.value} onUpdate={update} />
-          <AccountBirthdayForm birthday={me.birthday} onUpdate={update} />
-          <AccountPhonesForm phones={me.phones || []} onUpdate={update} />
-          <AccountInstagramsForm instagrams={me.instagrams || []} onUpdate={update} />
+          <FirstnameForm
+            firstname={me.firstname}
+            onUpdate={update}
+            Controller={AccountFirstnameController}
+          />
+          <LastnameForm
+            lastname={me.lastname}
+            onUpdate={update}
+            Controller={AccountLastnameController}
+          />
+          <GenderForm
+            gender={me.gender?.value}
+            onUpdate={update}
+            Controller={AccountGenderController}
+          />
+          <BirthdayForm
+            birthday={me.birthday}
+            onUpdate={update}
+            Controller={AccountBirthdayController}
+          />
+          <PhonesForm
+            phones={me.phones || []}
+            onUpdate={update}
+            Controller={AccountPhoneController}
+          />
+          <InstagramsForm
+            instagrams={me.instagrams || []}
+            onUpdate={update}
+            Controller={AccountInstagramController}
+          />
         </FormView>
       </PageView>
     )

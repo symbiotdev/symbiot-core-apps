@@ -1,8 +1,8 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { StringController } from '@symbiot-core-apps/form-controller';
+import { InstagramController } from '@symbiot-core-apps/form-controller';
 
-export function BrandLocationEntranceController<T extends FieldValues>(props: {
+export function BrandLocationInstagramController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
@@ -13,13 +13,13 @@ export function BrandLocationEntranceController<T extends FieldValues>(props: {
   const { t } = useTranslation();
 
   return (
-    <StringController
-      label={!props.noLabel ? t('brand_location.form.entrance.label') : ''}
-      placeholder={t('brand_location.form.entrance.placeholder')}
+    <InstagramController
+      label={!props.noLabel ? t('brand_location.form.instagram.label') : ''}
+      placeholder={t('brand_location.form.instagram.placeholder')}
       rules={{
         required: {
           value: Boolean(props.required),
-          message: t('brand_location.form.entrance.error.required'),
+          message: t('brand_location.form.instagram.error.required'),
         },
       }}
       {...props}

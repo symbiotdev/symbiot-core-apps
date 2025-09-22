@@ -1,16 +1,9 @@
-import { SelectPicker } from '@symbiot-core-apps/ui';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import states from 'states-us';
+import { SelectController } from '@symbiot-core-apps/form-controller';
 
-export function BrandLocationUsStateController<T extends FieldValues>({
-  name,
-  control,
-  disabled,
-  disableDrag,
-  noLabel,
-  onBlur,
-}: {
+export function BrandLocationUsStateController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
@@ -26,29 +19,17 @@ export function BrandLocationUsStateController<T extends FieldValues>({
   }));
 
   return (
-    <Controller
-      control={control}
-      name={name}
+    <SelectController
+      options={options}
+      label={!props.noLabel ? t('brand_location.form.us_state.label') : ''}
+      placeholder={t('brand_location.form.us_state.placeholder')}
       rules={{
         required: {
           value: true,
           message: t('brand_location.form.us_state.error.required'),
         },
       }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <SelectPicker
-          disableDrag={disableDrag}
-          disabled={disabled}
-          value={value as string}
-          error={error?.message}
-          options={options}
-          label={!noLabel ? t('brand_location.form.us_state.label') : undefined}
-          sheetLabel={t('brand_location.form.us_state.label')}
-          placeholder={t('brand_location.form.us_state.placeholder')}
-          onChange={onChange}
-          onBlur={onBlur}
-        />
-      )}
+      {...props}
     />
   );
 }

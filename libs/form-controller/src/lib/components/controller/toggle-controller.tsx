@@ -1,0 +1,63 @@
+import {
+  defaultPageHorizontalPadding,
+  ToggleGroup,
+  ToggleGroupItem,
+} from '@symbiot-core-apps/ui';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+
+export function ToggleController<T extends FieldValues>({
+  name,
+  control,
+  label,
+  disabled,
+  required,
+  errors,
+  items,
+  itemsLoading,
+  itemsError,
+}: {
+  name: Path<T>;
+  control: Control<T>;
+  label: string;
+  required?: boolean;
+  items?: ToggleGroupItem[];
+  itemsLoading?: boolean;
+  itemsError?: string | null;
+  errors?: {
+    required: string;
+  };
+  disabled?: boolean;
+}) {
+  return (
+    <Controller
+      control={control}
+      name={name}
+      rules={{
+        validate: (value) =>
+          !required
+            ? true
+            : Array.isArray(value) && value.length
+              ? true
+              : errors?.required,
+      }}
+      render={({ field: { value, onChange } }) => (
+        <ToggleGroup
+          allowEmpty
+          multiselect
+          disabled={disabled}
+          viewProps={{
+            backgroundColor: '$background1',
+            borderRadius: '$10',
+            paddingHorizontal: defaultPageHorizontalPadding,
+          }}
+          label={label}
+          items={items}
+          loading={itemsLoading}
+          error={itemsError}
+          value={value}
+          onChange={onChange}
+        />
+      )}
+    />
+  );
+}

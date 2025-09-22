@@ -1,10 +1,9 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 
-export function BrandLocationCountryController<T extends FieldValues>(props: {
+export function BrandLocationCurrencyController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
@@ -15,24 +14,15 @@ export function BrandLocationCountryController<T extends FieldValues>(props: {
   const { t } = useTranslation();
   const { brand } = useCurrentBrandState();
 
-  const options = useMemo(
-    () =>
-      brand?.countries?.map((item) => ({
-        label: `${item.flag} ${item.label}`,
-        value: item.value,
-      })),
-    [brand?.countries],
-  );
-
   return (
     <SelectController
-      label={!props.noLabel ? t('brand_location.form.country.label') : ''}
-      placeholder={t('brand_location.form.country.placeholder')}
-      options={options}
+      label={!props.noLabel ? t('brand_location.form.currency.label') : ''}
+      placeholder={t('brand_location.form.currency.placeholder')}
+      options={brand?.currencies}
       rules={{
         required: {
           value: true,
-          message: t('brand_location.form.countries.error.required'),
+          message: t('brand_location.form.currency.error.required'),
         },
       }}
       {...props}

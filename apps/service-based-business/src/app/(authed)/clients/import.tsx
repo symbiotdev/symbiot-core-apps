@@ -1,3 +1,3 @@
-import { BrandClientImportForm } from '@symbiot-core-apps/brand-client';
+import { ImportBrandClient } from '@symbiot-core-apps/brand-client';
 
-export default BrandClientImportForm;
+export default ImportBrandClient;

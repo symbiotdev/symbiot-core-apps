@@ -1,14 +1,15 @@
-import { Input } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { AddressPicker } from '@symbiot-core-apps/location';
 import type { ControllerProps } from 'react-hook-form/dist/types';
 
-export function NameController<T extends FieldValues>({
+export function AddressController<T extends FieldValues>({
   name,
+  control,
   label,
   placeholder,
   rules,
   required,
-  control,
+  disabled,
   onBlur,
 }: {
   name: Path<T>;
@@ -17,6 +18,7 @@ export function NameController<T extends FieldValues>({
   placeholder: string;
   required?: boolean;
   rules?: ControllerProps<T>['rules'];
+  disabled?: boolean;
   onBlur?: () => void;
 }) {
   return (
@@ -25,14 +27,13 @@ export function NameController<T extends FieldValues>({
       name={name}
       rules={rules}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <Input
-          autoCapitalize="words"
-          enterKeyHint="done"
+        <AddressPicker
           required={required}
+          disabled={disabled}
           value={value}
-          error={error?.message}
           label={label}
           placeholder={placeholder}
+          error={error?.message}
           onChange={onChange}
           onBlur={onBlur}
         />

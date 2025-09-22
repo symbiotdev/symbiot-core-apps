@@ -1,15 +1,9 @@
-import { Input } from '@symbiot-core-apps/ui';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
+import { StringController } from '@symbiot-core-apps/form-controller';
 
-export function BrandLocationNameController<T extends FieldValues>({
-  name,
-  control,
-  noLabel,
-  disabled,
-  onBlur,
-}: {
+export function BrandLocationNameController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
@@ -20,30 +14,18 @@ export function BrandLocationNameController<T extends FieldValues>({
   const { brand } = useCurrentBrandState();
 
   return (
-    <Controller
-      control={control}
-      name={name}
+    <StringController
+      label={!props.noLabel ? t('brand_location.form.name.label') : ''}
+      placeholder={t('brand_location.form.name.placeholder', {
+        brandName: brand?.name,
+      })}
       rules={{
         required: {
           value: true,
           message: t('brand_location.form.name.error.required'),
         },
       }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <Input
-          autoCapitalize="words"
-          enterKeyHint="done"
-          disabled={disabled}
-          value={value}
-          error={error?.message}
-          label={!noLabel ? t('brand_location.form.name.label') : undefined}
-          placeholder={t('brand_location.form.name.placeholder', {
-            brandName: brand?.name,
-          })}
-          onChange={onChange}
-          onBlur={onBlur}
-        />
-      )}
+      {...props}
     />
   );
 }

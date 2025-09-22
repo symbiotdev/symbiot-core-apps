@@ -1,10 +1,16 @@
+export * from './lib/components/controller/address-controller';
 export * from './lib/components/controller/date-controller';
+export * from './lib/components/controller/email-controller';
 export * from './lib/components/controller/instagram-controller';
-export * from './lib/components/controller/name-controller';
+export * from './lib/components/controller/string-controller';
+export * from './lib/components/controller/number-controller';
 export * from './lib/components/controller/phone-controller';
 export * from './lib/components/controller/promo-code-controller';
+export * from './lib/components/controller/schedule-controller';
 export * from './lib/components/controller/select-controller';
 export * from './lib/components/controller/text-controller';
+export * from './lib/components/controller/timezone-controller';
+export * from './lib/components/controller/toggle-controller';
 export * from './lib/components/controller/website-controller';
 
 export * from './lib/components/form/date-form';

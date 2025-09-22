@@ -1,18 +1,11 @@
-import {
-  defaultPageHorizontalPadding,
-  ToggleGroup,
-} from '@symbiot-core-apps/ui';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useBrandLocationAdvantages } from '@symbiot-core-apps/api';
+import { ToggleController } from '@symbiot-core-apps/form-controller';
 
-export function BrandLocationAdvantagesController<T extends FieldValues>({
-  name,
-  control,
-  disabled,
-  noLabel,
-  required,
-}: {
+export function BrandLocationAdvantagesController<
+  T extends FieldValues,
+>(props: {
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
@@ -23,37 +16,15 @@ export function BrandLocationAdvantagesController<T extends FieldValues>({
   const { data, isPending, error } = useBrandLocationAdvantages();
 
   return (
-    <Controller
-      control={control}
-      name={name}
-      rules={{
-        validate: (value) =>
-          !required
-            ? true
-            : Array.isArray(value) && value.length
-              ? true
-              : t('brand.form.advantages.error.required'),
+    <ToggleController
+      label={!props.noLabel ? t('brand_location.form.advantages.label') : ''}
+      items={data}
+      itemsLoading={isPending}
+      itemsError={error}
+      errors={{
+        required: t('brand.form.advantages.error.required'),
       }}
-      render={({ field: { value, onChange } }) => (
-        <ToggleGroup
-          allowEmpty
-          multiselect
-          disabled={disabled}
-          viewProps={{
-            backgroundColor: '$background1',
-            borderRadius: '$10',
-            paddingHorizontal: defaultPageHorizontalPadding,
-          }}
-          label={
-            !noLabel ? t('brand_location.form.advantages.label') : undefined
-          }
-          items={data}
-          loading={isPending}
-          error={error}
-          value={value}
-          onChange={onChange}
-        />
-      )}
+      {...props}
     />
   );
 }

@@ -1,25 +1,29 @@
 import { Input } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { EmailPattern } from '@symbiot-core-apps/shared';
 
-export function BrandLocationEmailsController<T extends FieldValues>({
+export function EmailController<T extends FieldValues>({
   name,
   control,
-  noLabel,
+  label,
+  placeholder,
   disabled,
   required,
+  errors,
   onBlur,
 }: {
   name: Path<T>;
   control: Control<T>;
-  noLabel?: boolean;
+  label: string;
+  placeholder: string;
   disabled?: boolean;
   required?: boolean;
+  errors: {
+    required: string;
+    validation: string;
+  };
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
-
   return (
     <Controller
       control={control}
@@ -30,10 +34,10 @@ export function BrandLocationEmailsController<T extends FieldValues>({
             ? true
             : String(value).match(EmailPattern)
               ? true
-              : t('brand_location.form.email.error.validation'),
+              : errors.validation,
         required: {
           value: Boolean(required),
-          message: t('brand_location.form.email.error.required'),
+          message: errors.required,
         },
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
@@ -44,8 +48,8 @@ export function BrandLocationEmailsController<T extends FieldValues>({
           disabled={disabled}
           value={value}
           error={error?.message}
-          label={!noLabel ? t('brand_location.form.email.label') : undefined}
-          placeholder={t('brand_location.form.email.placeholder')}
+          label={label}
+          placeholder={placeholder}
           onChange={onChange}
           onBlur={onBlur}
         />

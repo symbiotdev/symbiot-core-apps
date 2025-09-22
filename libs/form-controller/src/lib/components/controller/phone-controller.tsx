@@ -48,6 +48,7 @@ export function PhoneController<T extends FieldValues>({
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <PhoneInput
+          required={required}
           disabled={disabled}
           value={value}
           error={error?.message}

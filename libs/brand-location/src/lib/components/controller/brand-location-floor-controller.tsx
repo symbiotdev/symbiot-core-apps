@@ -1,15 +1,8 @@
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import { Input } from '@symbiot-core-apps/ui';
+import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { NumberController } from '@symbiot-core-apps/form-controller';
 
-export function BrandLocationFloorController<T extends FieldValues>({
-  name,
-  control,
-  disabled,
-  required,
-  noLabel,
-  onBlur,
-}: {
+export function BrandLocationFloorController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
@@ -20,30 +13,17 @@ export function BrandLocationFloorController<T extends FieldValues>({
   const { t } = useTranslation();
 
   return (
-    <Controller
-      control={control}
-      name={name}
+    <NumberController
+      maxLength={3}
+      label={!props.noLabel ? t('brand_location.form.floor.label') : ''}
+      placeholder={t('brand_location.form.floor.placeholder')}
       rules={{
         required: {
-          value: Boolean(required),
+          value: Boolean(props.required),
           message: t('brand_location.form.floor.error.required'),
         },
       }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <Input
-          type="numeric"
-          keyboardType="numeric"
-          regex={/\d+/}
-          disabled={disabled}
-          value={value}
-          maxLength={3}
-          label={!noLabel ? t('brand_location.form.floor.label') : undefined}
-          placeholder={t('brand_location.form.floor.placeholder')}
-          error={error?.message}
-          onChange={onChange}
-          onBlur={onBlur}
-        />
-      )}
+      {...props}
     />
   );
 }

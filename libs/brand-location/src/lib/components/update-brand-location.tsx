@@ -18,26 +18,31 @@ import {
 } from '@symbiot-core-apps/ui';
 import { BrandLocationMediaForm } from './form/brand-location-media-form';
 import { useTranslation } from 'react-i18next';
-import { BrandLocationAddressForm } from './form/brand-location-address-form';
-import { BrandLocationFloorForm } from './form/brand-location-floor-form';
-import { BrandLocationEntranceForm } from './form/brand-location-entrance-form';
-import { BrandLocationRemarkForm } from './form/brand-location-remark-form';
 import { useCallback, useMemo } from 'react';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import {
   useCurrentAccount,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { BrandLocationSchedulesForm } from './form/brand-location-schedules-form';
 import { BrandLocationCountryForm } from './form/brand-location-country-form';
-import { BrandLocationCurrenciesForm } from './form/brand-location-currencies-form';
 import { BrandLocationTimezoneForm } from './form/brand-location-timezone-form';
-import { BrandLocationAdvantagesForm } from './form/brand-location-advantages-form';
 import { PhoneNumber } from 'react-native-phone-input/dist';
-import { BrandLocationPhonesForm } from './form/brand-location-phones-form';
-import { BrandLocationEmailsForm } from './form/brand-location-emails-form';
-import { BrandLocationInstagramsForm } from './form/brand-location-instagrams-form';
-import { BrandLocationNameForm } from './form/brand-location-name-form';
+import {
+  ArrayForm,
+  SingleStringArrayForm,
+  StringForm,
+} from '@symbiot-core-apps/form-controller';
+import { BrandLocationAddressController } from './controller/brand-location-address-controller';
+import { BrandLocationCurrencyController } from './controller/brand-location-currency-controller';
+import { BrandLocationEmailController } from './controller/brand-location-email-controller';
+import { BrandLocationEntranceController } from './controller/brand-location-entrance-controller';
+import { BrandLocationFloorController } from './controller/brand-location-floor-controller';
+import { BrandLocationInstagramController } from './controller/brand-location-instagram-controller';
+import { BrandLocationNameController } from './controller/brand-location-name-controller';
+import { BrandLocationPhoneController } from './controller/brand-location-phone-controller';
+import { BrandLocationRemarkController } from './controller/brand-location-remark-controller';
+import { BrandLocationScheduleController } from './controller/brand-location-schedule-controller';
+import { BrandLocationAdvantagesForm } from './form/brand-location-advantages-form';
 
 export const UpdateBrandLocation = ({
   location,
@@ -73,7 +78,7 @@ const Name = ({ location }: { location: BrandLocation }) => {
   const { mutateAsync } = useUpdateBrandLocationQuery();
 
   const updateValue = useCallback(
-    (data: { name: string }) =>
+    (data: TUpdateBrandLocation) =>
       mutateAsync({
         id: location.id,
         data,
@@ -81,7 +86,14 @@ const Name = ({ location }: { location: BrandLocation }) => {
     [location.id, mutateAsync],
   );
 
-  return <BrandLocationNameForm name={location.name} onUpdate={updateValue} />;
+  return (
+    <StringForm
+      name="name"
+      value={location.name}
+      onUpdate={updateValue}
+      Controller={BrandLocationNameController}
+    />
+  );
 };
 
 const Address = ({ location }: { location: BrandLocation }) => {
@@ -123,18 +135,29 @@ const Address = ({ location }: { location: BrandLocation }) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <BrandLocationAddressForm
-            address={value.address}
+          <StringForm
+            name="address"
+            value={value.address}
             onUpdate={updateValue}
+            Controller={BrandLocationAddressController}
           />
-          <BrandLocationEntranceForm
-            entrance={value.entrance}
+          <StringForm
+            name="entrance"
+            value={value.entrance}
             onUpdate={updateValue}
+            Controller={BrandLocationEntranceController}
           />
-          <BrandLocationFloorForm floor={value.floor} onUpdate={updateValue} />
-          <BrandLocationRemarkForm
-            remark={value.remark}
+          <StringForm
+            name="floor"
+            value={value.floor}
             onUpdate={updateValue}
+            Controller={BrandLocationFloorController}
+          />
+          <StringForm
+            name="remark"
+            value={value.remark}
+            onUpdate={updateValue}
+            Controller={BrandLocationRemarkController}
           />
         </FormView>
       </SlideSheetModal>
@@ -210,9 +233,11 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
         onClose={closeModal}
       >
         <FormView paddingVertical={defaultPageVerticalPadding}>
-          <BrandLocationSchedulesForm
-            schedules={value.schedules}
+          <ArrayForm
+            name="schedules"
+            value={value.schedules}
             onUpdate={updateValue}
+            Controller={BrandLocationScheduleController}
           />
         </FormView>
       </SlideSheetModal>
@@ -281,9 +306,11 @@ const Locale = ({ location }: { location: BrandLocation }) => {
           )}
 
           {canChangeCurrencies && (
-            <BrandLocationCurrenciesForm
-              currencies={value.currencies}
+            <SingleStringArrayForm
+              name="currencies"
+              value={value.currencies}
               onUpdate={updateValue}
+              Controller={BrandLocationCurrencyController}
             />
           )}
 
@@ -399,17 +426,23 @@ const Contact = ({ location }: { location: BrandLocation }) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <BrandLocationPhonesForm
-            phones={value.phones}
+          <SingleStringArrayForm
+            name="phones"
+            value={value.phones}
             onUpdate={updateValue}
+            Controller={BrandLocationPhoneController}
           />
-          <BrandLocationEmailsForm
-            emails={value.emails}
+          <SingleStringArrayForm
+            name="emails"
+            value={value.emails}
             onUpdate={updateValue}
+            Controller={BrandLocationEmailController}
           />
-          <BrandLocationInstagramsForm
-            instagrams={value.instagrams}
+          <SingleStringArrayForm
+            name="instagrams"
+            value={value.instagrams}
             onUpdate={updateValue}
+            Controller={BrandLocationInstagramController}
           />
         </FormView>
       </SlideSheetModal>

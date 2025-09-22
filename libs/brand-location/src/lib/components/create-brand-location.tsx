@@ -12,11 +12,11 @@ import { BrandLocationEntranceController } from './controller/brand-location-ent
 import { BrandLocationFloorController } from './controller/brand-location-floor-controller';
 import { BrandLocationRemarkController } from './controller/brand-location-remark-controller';
 import { BrandLocationAdvantagesController } from './controller/brand-location-advantages-controller';
-import { BrandLocationSchedulesController } from './controller/brand-location-schedules-controller';
-import { BrandLocationInstagramsController } from './controller/brand-location-instagrams-controller';
-import { BrandLocationEmailsController } from './controller/brand-location-emails-controller';
-import { BrandLocationPhonesController } from './controller/brand-location-phones-controller';
-import { BrandLocationCurrenciesController } from './controller/brand-location-currencies-controller';
+import { BrandLocationScheduleController } from './controller/brand-location-schedule-controller';
+import { BrandLocationInstagramController } from './controller/brand-location-instagram-controller';
+import { BrandLocationEmailController } from './controller/brand-location-email-controller';
+import { BrandLocationPhoneController } from './controller/brand-location-phone-controller';
+import { BrandLocationCurrencyController } from './controller/brand-location-currency-controller';
 import { router, useNavigation } from 'expo-router';
 import { EventArg, NavigationAction } from '@react-navigation/native';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
@@ -235,7 +235,7 @@ export const CreateBrandLocation = () => {
           title={t('brand_location.create.steps.currency.title')}
           subtitle={t('brand_location.create.steps.currency.subtitle')}
         >
-          <BrandLocationCurrenciesController
+          <BrandLocationCurrencyController
             noLabel
             name="currency"
             control={currencyControl}
@@ -266,7 +266,7 @@ export const CreateBrandLocation = () => {
         title={t('brand_location.create.steps.schedule.title')}
         subtitle={t('brand_location.create.steps.schedule.subtitle')}
       >
-        <BrandLocationSchedulesController
+        <BrandLocationScheduleController
           name="schedule"
           control={scheduleControl}
         />
@@ -292,13 +292,13 @@ export const CreateBrandLocation = () => {
         title={t('brand_location.create.steps.contact.title')}
         subtitle={t('brand_location.create.steps.contact.subtitle')}
       >
-        <BrandLocationPhonesController
+        <BrandLocationPhoneController
           required
           name="phone"
           control={contactControl}
         />
-        <BrandLocationEmailsController name="email" control={contactControl} />
-        <BrandLocationInstagramsController
+        <BrandLocationEmailController name="email" control={contactControl} />
+        <BrandLocationInstagramController
           name="instagram"
           control={contactControl}
         />

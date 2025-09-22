@@ -15,4 +15,5 @@ export * from './lib/components/controller/website-controller';
 
 export * from './lib/components/form/date-form';
 export * from './lib/components/form/single-string-array-form';
+export * from './lib/components/form/array-form';
 export * from './lib/components/form/string-form';

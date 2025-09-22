@@ -1,39 +1,41 @@
 import { Control, Path, useForm } from 'react-hook-form';
 import { ComponentType, useEffect } from 'react';
 
-type FormValue = {
-  firstname: string;
-};
+type FormValue = Record<string, string | null>;
 
-export const FirstnameForm = ({
-  firstname,
+export function StringForm({
+  name,
+  value,
   Controller,
   onUpdate,
-}: FormValue & {
+}: {
+  name: string;
+  value: string | null;
   onUpdate: (value: FormValue) => void;
   Controller: ComponentType<{
     name: Path<FormValue>;
     control: Control<FormValue>;
     onBlur: () => void;
   }>;
-}) => {
+}) {
   const { control, handleSubmit, setValue } = useForm<FormValue>({
     defaultValues: {
-      firstname,
+      [name]: value,
     },
   });
 
   useEffect(() => {
-    setValue('firstname', firstname);
-  }, [firstname, setValue]);
+    setValue(name, value);
+  }, [name, value, setValue]);
 
   return (
     <Controller
-      name="firstname"
+      name={name}
       control={control}
       onBlur={handleSubmit(
-        (value: FormValue) => firstname !== value.firstname && onUpdate(value),
+        (currentValue: FormValue) =>
+          value !== currentValue[name] && onUpdate(currentValue),
       )}
     />
   );
-};
+}

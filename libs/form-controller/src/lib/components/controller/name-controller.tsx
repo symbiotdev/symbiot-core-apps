@@ -7,6 +7,7 @@ export function NameController<T extends FieldValues>({
   label,
   placeholder,
   rules,
+  required,
   control,
   onBlur,
 }: {
@@ -14,6 +15,7 @@ export function NameController<T extends FieldValues>({
   control: Control<T>;
   label: string;
   placeholder: string;
+  required?: boolean;
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
 }) {
@@ -26,6 +28,7 @@ export function NameController<T extends FieldValues>({
         <Input
           autoCapitalize="words"
           enterKeyHint="done"
+          required={required}
           value={value}
           error={error?.message}
           label={label}

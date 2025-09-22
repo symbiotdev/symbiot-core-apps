@@ -8,6 +8,7 @@ export function InstagramController<T extends FieldValues>({
   label,
   placeholder,
   disabled,
+  required,
   rules,
   onBlur,
 }: {
@@ -16,6 +17,7 @@ export function InstagramController<T extends FieldValues>({
   label: string;
   placeholder: string;
   disabled?: boolean;
+  required?: boolean;
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
 }) {
@@ -28,6 +30,7 @@ export function InstagramController<T extends FieldValues>({
         <InstagramInput
           enterKeyHint="done"
           disabled={disabled}
+          required={required}
           value={value}
           label={label}
           placeholder={placeholder}

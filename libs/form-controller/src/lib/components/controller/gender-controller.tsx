@@ -9,6 +9,7 @@ export function GenderController<T extends FieldValues>({
   label,
   placeholder,
   disabled,
+  required,
   rules,
   genders,
   gendersLoading,
@@ -23,6 +24,7 @@ export function GenderController<T extends FieldValues>({
   gendersLoading?: boolean;
   gendersError?: string | null;
   disabled?: boolean;
+  required?: boolean;
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
 }) {
@@ -33,6 +35,7 @@ export function GenderController<T extends FieldValues>({
       rules={rules}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <SelectPicker
+          required={required}
           disabled={disabled}
           value={value}
           error={error?.message}

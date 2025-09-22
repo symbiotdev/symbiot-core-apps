@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { arraysOfObjectsEqual, objectsEqual } from '@symbiot-core-apps/shared';
+import { arraysOfObjectsEqual, isEqual } from '@symbiot-core-apps/shared';
 import { UseMutationResult } from '@tanstack/react-query';
 
 export function useModalUpdateForm<T, FV, UV>({
@@ -74,7 +74,7 @@ export function useUpdateForm<T, FV, UV>(
     return !dataKeys.every((key) =>
       Array.isArray(data[key]) && Array.isArray(valueRef.current[key])
         ? arraysOfObjectsEqual(data[key], valueRef.current[key])
-        : objectsEqual(data[key], valueRef.current[key]),
+        : isEqual(data[key], valueRef.current[key]),
     );
   }, []);
 

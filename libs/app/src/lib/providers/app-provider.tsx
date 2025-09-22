@@ -20,7 +20,7 @@ import { IconName } from '@symbiot-core-apps/ui';
 import { create } from 'zustand/index';
 import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
-import { objectsEqual } from '@symbiot-core-apps/shared';
+import { isEqual } from '@symbiot-core-apps/shared';
 import { LoadAssetsFailed } from '../components/load-assets-failed';
 import { AssetsLoading } from '../components/assets-loading';
 
@@ -47,12 +47,12 @@ const Context = createContext<AppContext | undefined>(undefined);
 const useAppState = create<AppState>()(
   persist<AppState>(
     (set, get) => ({
-      setTheme: (theme) => !objectsEqual(get().theme, theme) && set({ theme }),
-      setIcons: (icons) => !objectsEqual(get().icons, icons) && set({ icons }),
+      setTheme: (theme) => !isEqual(get().theme, theme) && set({ theme }),
+      setIcons: (icons) => !isEqual(get().icons, icons) && set({ icons }),
       setFunctionality: (functionality) =>
-        !objectsEqual(get().icons, functionality) && set({ functionality }),
+        !isEqual(get().icons, functionality) && set({ functionality }),
       setTranslations: ({ translations, languages }) =>
-        !objectsEqual(get().translations, translations) &&
+        !isEqual(get().translations, translations) &&
         set({ translations, languages }),
     }),
     {

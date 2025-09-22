@@ -3,7 +3,7 @@ import { memo, ReactElement } from 'react';
 import { RegularText } from '../text/text';
 import { Icon } from '../icons';
 import { InitView } from '../view/init-view';
-import { emitHaptic, objectsEqual } from '@symbiot-core-apps/shared';
+import { emitHaptic, isEqual } from '@symbiot-core-apps/shared';
 import { IconName } from '../icons/config';
 import { ContainerView } from '../view/container-view';
 import { FormField } from './form-field';
@@ -113,8 +113,8 @@ const Item = memo(
   }) => {
     const selected =
       multiselect && Array.isArray(value)
-        ? value.some((valueItem) => objectsEqual(valueItem, item.value))
-        : objectsEqual(value, item.value);
+        ? value.some((valueItem) => isEqual(valueItem, item.value))
+        : isEqual(value, item.value);
 
     const onPress = () => {
       if (multiselect && Array.isArray(value)) {
@@ -122,7 +122,7 @@ const Item = memo(
           return;
         } else if (selected) {
           onChange?.(
-            value.filter((valueItem) => !objectsEqual(valueItem, item.value)),
+            value.filter((valueItem) => !isEqual(valueItem, item.value)),
           );
         } else {
           onChange?.([...value, item.value]);

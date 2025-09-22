@@ -2,11 +2,11 @@ import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { WebsiteController } from '@symbiot-core-apps/form-controller';
 
-export function BrandWebsitesController<T extends FieldValues>(props: {
+export function BrandWebsiteController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
-  allowEmpty?: boolean;
+  required?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();

@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AvatarPicker, Survey, SurveyStep } from '@symbiot-core-apps/ui';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { BrandNameController } from './contoller/brand-name-controller';
 import { useTranslation } from 'react-i18next';
 import { EventArg, NavigationAction } from '@react-navigation/native';
@@ -9,7 +9,7 @@ import { router, useNavigation } from 'expo-router';
 import { useAuthBrand, useBrandAuthState } from '../hooks/use-brand-auth';
 import { useBrandCreateQuery } from '@symbiot-core-apps/api';
 import { useApp } from '@symbiot-core-apps/app';
-import { BrandWebsitesController } from './contoller/brand-websites-controller';
+import { BrandWebsiteController } from './contoller/brand-website-controller';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { BrandReferralSourceController } from './contoller/brand-referral-source-controller';
 import { BrandCompetitorController } from './contoller/brand-competitor-controller';
@@ -35,6 +35,8 @@ export const CreateBrand = () => {
   const createdRef = useRef(false);
   const ignoreNavigation = createdRef.current || authProcessing;
 
+  const [avatar, setAvatar] = useState<ImagePickerAsset>();
+
   const {
     control: nameControl,
     getValues: nameGetValues,
@@ -55,12 +57,6 @@ export const CreateBrand = () => {
         : null,
     },
   });
-
-  const {
-    control: avatarControl,
-    getValues: avatarGetValues,
-    formState: avatarFormState,
-  } = useForm<{ avatar: ImagePickerAsset }>();
 
   const {
     control: industryControl,
@@ -96,7 +92,6 @@ export const CreateBrand = () => {
 
   const onFinish = useCallback(async () => {
     const name = nameGetValues('name');
-    const avatar = avatarGetValues('avatar');
     const promoCode = promoCodeGetValues('promoCode');
     const country = countryGetValues('country');
     const industry = industryGetValues('industry');
@@ -121,7 +116,7 @@ export const CreateBrand = () => {
 
     await switchBrand({ id: brand.id });
   }, [
-    avatarGetValues,
+    avatar,
     competitorSourceGetValues,
     countryGetValues,
     industryGetValues,
@@ -187,30 +182,21 @@ export const CreateBrand = () => {
 
       <SurveyStep
         skippable
-        canGoNext={avatarFormState.isValid}
+        canGoNext={!!avatar}
         title={t('brand.create.steps.avatar.title')}
         subtitle={t('brand.create.steps.avatar.subtitle')}
       >
-        <Controller
-          control={avatarControl}
-          name="avatar"
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, value } }) => (
-            <AvatarPicker
-              allowsEditing
-              removable={!!value}
-              alignSelf="center"
-              marginTop="$5"
-              url={value}
-              name={nameWatch().name}
-              color="$placeholderColor"
-              size={140}
-              onAttach={onChange}
-              onRemove={() => onChange(undefined)}
-            />
-          )}
+        <AvatarPicker
+          allowsEditing
+          removable={!!avatar}
+          alignSelf="center"
+          marginTop="$5"
+          url={avatar}
+          name={nameWatch().name}
+          color="$placeholderColor"
+          size={140}
+          onAttach={setAvatar}
+          onRemove={() => setAvatar(undefined)}
         />
       </SurveyStep>
 
@@ -234,10 +220,10 @@ export const CreateBrand = () => {
         title={t('brand.create.steps.website.title')}
         subtitle={t('brand.create.steps.website.subtitle')}
       >
-        <BrandWebsitesController
+        <BrandWebsiteController
           noLabel
           name="website"
-          allowEmpty={false}
+          required
           control={websiteControl}
         />
       </SurveyStep>

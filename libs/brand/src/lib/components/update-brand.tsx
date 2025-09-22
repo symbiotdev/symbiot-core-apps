@@ -35,7 +35,7 @@ import { BrandBirthdayController } from './contoller/brand-birthday-controller';
 import { BrandNameController } from './contoller/brand-name-controller';
 import { BrandCountryController } from './contoller/brand-country-controller';
 import { BrandCurrencyController } from './contoller/brand-currency-controller';
-import { BrandWebsitesController } from './contoller/brand-websites-controller';
+import { BrandWebsiteController } from './contoller/brand-website-controller';
 import { BrandInstagramController } from './contoller/brand-instagram-controller';
 
 type GroupProps = {
@@ -258,7 +258,7 @@ const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
             name="websites"
             value={value.websites}
             onUpdate={updateValue}
-            Controller={BrandWebsitesController}
+            Controller={BrandWebsiteController}
           />
           <SingleStringArrayForm
             name="instagrams"

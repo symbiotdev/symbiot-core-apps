@@ -10,7 +10,7 @@ export function getValueByObjectPath<T>(obj: T, path: string) {
     >((o, key) => (key && typeof o === 'object' && o !== null && key in o ? (o as Record<string, unknown>)?.[key] : undefined), obj);
 }
 
-export function objectsEqual(a: unknown, b: unknown): boolean {
+export function isEqual(a: unknown, b: unknown): boolean {
   if (a === b) return true;
 
   if (a instanceof Date && b instanceof Date) {
@@ -34,7 +34,7 @@ export function objectsEqual(a: unknown, b: unknown): boolean {
     const valA = (a as Record<string, unknown>)[key];
     const valB = (b as Record<string, unknown>)[key];
 
-    if (!objectsEqual(valA, valB)) {
+    if (!isEqual(valA, valB)) {
       return false;
     }
   }
@@ -50,7 +50,7 @@ export function arraysOfObjectsEqual(
   if (arrA.length !== arrB.length) return false;
 
   for (let i = 0; i < arrA.length; i++) {
-    if (!objectsEqual(arrA[i], arrB[i])) {
+    if (!isEqual(arrA[i], arrB[i])) {
       return false;
     }
   }

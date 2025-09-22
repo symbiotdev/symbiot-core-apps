@@ -8,14 +8,17 @@ type InternalValue = { str: string };
 export const SingleStringArrayForm = ({
   name,
   value,
+  disabled,
   Controller,
   onUpdate,
 }: {
   name: string;
   value: string[];
+  disabled?: boolean;
   onUpdate: (value: FormValue) => void;
   Controller: ComponentType<{
     name: Path<InternalValue>;
+    disabled?: boolean;
     control: Control<InternalValue>;
     onBlur: () => void;
   }>;
@@ -34,6 +37,7 @@ export const SingleStringArrayForm = ({
     <Controller
       name="str"
       control={control}
+      disabled={disabled}
       onBlur={handleSubmit(
         (currentValue: InternalValue) =>
           value[0] !== currentValue.str &&

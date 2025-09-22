@@ -1,10 +1,8 @@
-import { DatePicker } from '@symbiot-core-apps/ui';
+import { PickerItem, SelectPicker } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import { DateHelper } from '@symbiot-core-apps/shared';
-import { useCurrentAccount } from '@symbiot-core-apps/state';
 import type { ControllerProps } from 'react-hook-form/dist/types';
 
-export function BirthdayController<T extends FieldValues>({
+export function SelectController<T extends FieldValues>({
   name,
   control,
   label,
@@ -12,35 +10,39 @@ export function BirthdayController<T extends FieldValues>({
   disabled,
   required,
   rules,
+  options,
+  optionsLoading,
+  optionsError,
   onBlur,
 }: {
   name: Path<T>;
   control: Control<T>;
   label: string;
   placeholder: string;
+  options?: PickerItem[];
+  optionsLoading?: boolean;
+  optionsError?: string | null;
   disabled?: boolean;
   required?: boolean;
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
 }) {
-  const { me } = useCurrentAccount();
-
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <DatePicker
+        <SelectPicker
           required={required}
           disabled={disabled}
           value={value}
           error={error?.message}
-          formatStr={me?.preferences?.dateFormat}
-          weekStartsOn={me?.preferences?.weekStartsOn}
-          minDate={DateHelper.addYears(new Date(), -100)}
-          maxDate={new Date()}
+          options={options}
+          optionsLoading={optionsLoading}
+          optionsError={optionsError}
           label={label}
+          sheetLabel={label}
           placeholder={placeholder}
           onChange={onChange}
           onBlur={onBlur}

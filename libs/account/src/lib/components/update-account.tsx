@@ -9,12 +9,9 @@ import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { useTranslation } from 'react-i18next';
 import {
-  BirthdayForm,
-  FirstnameForm,
-  GenderForm,
-  InstagramsForm,
-  LastnameForm,
-  PhonesForm,
+  DateFrom,
+  SingleStringArrayForm,
+  StringForm,
 } from '@symbiot-core-apps/form-controller';
 import { AccountFirstnameController } from './controller/account-firstname-controller';
 import { AccountLastnameController } from './controller/account-lastname-controller';
@@ -70,33 +67,39 @@ export const UpdateAccount = () => {
             label={t('shared.account.form.email.label')}
           />
 
-          <FirstnameForm
-            firstname={me.firstname}
+          <StringForm
+            name="firstname"
+            value={me.firstname}
             onUpdate={update}
             Controller={AccountFirstnameController}
           />
-          <LastnameForm
-            lastname={me.lastname}
+          <StringForm
+            name="lastname"
+            value={me.lastname}
             onUpdate={update}
             Controller={AccountLastnameController}
           />
-          <GenderForm
-            gender={me.gender?.value}
+          <StringForm
+            name="gender"
+            value={me.gender?.value}
             onUpdate={update}
             Controller={AccountGenderController}
           />
-          <BirthdayForm
-            birthday={me.birthday}
+          <DateFrom
+            name="birthday"
+            value={me.birthday}
             onUpdate={update}
             Controller={AccountBirthdayController}
           />
-          <PhonesForm
-            phones={me.phones || []}
+          <SingleStringArrayForm
+            name="phones"
+            value={me.phones || []}
             onUpdate={update}
             Controller={AccountPhoneController}
           />
-          <InstagramsForm
-            instagrams={me.instagrams || []}
+          <SingleStringArrayForm
+            name="instagrams"
+            value={me.instagrams || []}
             onUpdate={update}
             Controller={AccountInstagramController}
           />

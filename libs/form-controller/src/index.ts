@@ -1,5 +1,5 @@
-export * from './lib/components/controller/birthday-controller';
-export * from './lib/components/controller/gender-controller';
+export * from './lib/components/controller/date-controller';
+export * from './lib/components/controller/select-controller';
 export * from './lib/components/controller/instagram-controller';
 export * from './lib/components/controller/name-controller';
 export * from './lib/components/controller/phone-controller';

@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BirthdayController } from '@symbiot-core-apps/form-controller';
+import { DateController } from '@symbiot-core-apps/form-controller';
 
 export function AccountBirthdayController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -11,7 +11,7 @@ export function AccountBirthdayController<T extends FieldValues>(props: {
   const { t } = useTranslation();
 
   return (
-    <BirthdayController
+    <DateController
       label={t('shared.account.form.birthday.label')}
       placeholder={t('shared.account.form.birthday.placeholder')}
       {...props}

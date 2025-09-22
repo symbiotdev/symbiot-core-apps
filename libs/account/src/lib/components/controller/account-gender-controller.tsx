@@ -1,7 +1,7 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useAccountGendersQuery } from '@symbiot-core-apps/api';
-import { GenderController } from '@symbiot-core-apps/form-controller';
+import { SelectController } from '@symbiot-core-apps/form-controller';
 
 export function AccountGenderController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -13,12 +13,12 @@ export function AccountGenderController<T extends FieldValues>(props: {
   const { data, isPending, error } = useAccountGendersQuery();
 
   return (
-    <GenderController
+    <SelectController
       label={t('shared.account.form.gender.label')}
       placeholder={t('shared.account.form.gender.placeholder')}
-      genders={data}
-      gendersLoading={isPending}
-      gendersError={error}
+      options={data}
+      optionsLoading={isPending}
+      optionsError={error}
       {...props}
     />
   );

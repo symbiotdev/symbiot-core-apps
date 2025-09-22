@@ -1,15 +1,8 @@
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import { Textarea } from '@symbiot-core-apps/ui';
+import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { TextController } from '@symbiot-core-apps/form-controller';
 
-export function BrandClientNoteController<T extends FieldValues>({
-  name,
-  control,
-  disabled,
-  required,
-  noLabel,
-  onBlur,
-}: {
+export function BrandClientNoteController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
@@ -20,28 +13,16 @@ export function BrandClientNoteController<T extends FieldValues>({
   const { t } = useTranslation();
 
   return (
-    <Controller
-      control={control}
-      name={name}
+    <TextController
+      label={!props.noLabel ? t('brand_client.form.note.label') : ''}
+      placeholder={t('brand_client.form.note.placeholder')}
       rules={{
         required: {
-          value: Boolean(required),
+          value: Boolean(props.required),
           message: t('brand_client.form.note.error.required'),
         },
       }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <Textarea
-          countCharacters
-          enterKeyHint="done"
-          disabled={disabled}
-          value={value}
-          error={error?.message}
-          label={!noLabel ? t('brand_client.form.note.label') : undefined}
-          placeholder={t('brand_client.form.note.placeholder')}
-          onChange={onChange}
-          onBlur={onBlur}
-        />
-      )}
+      {...props}
     />
   );
 }

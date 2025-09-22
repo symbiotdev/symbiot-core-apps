@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { NameController } from '@symbiot-core-apps/form-controller';
+import { StringController } from '@symbiot-core-apps/form-controller';
 
 export function BrandNameController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -11,7 +11,7 @@ export function BrandNameController<T extends FieldValues>(props: {
   const { t } = useTranslation();
 
   return (
-    <NameController
+    <StringController
       label={!props.noLabel ? t('brand.form.name.label') : ''}
       placeholder={t('brand.form.name.placeholder')}
       rules={{

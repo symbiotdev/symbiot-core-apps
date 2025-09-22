@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
 import {
   gendersWithoutEmptyOption,
-  ImportBrandClient,
+  ImportBrandClient as TImportBrandClient,
   useBrandClientGendersQuery,
   useBrandClientImportTemplateQuery,
   useImportBrandClientsQuery,
@@ -37,9 +37,9 @@ import { parse } from 'papaparse';
 import {
   ImportedClientsSummary,
   parseImportedClients,
-} from '../../utils/parse-imported-clients';
+} from '../utils/parse-imported-clients';
 
-export const BrandClientImportForm = () => {
+export const ImportBrandClient = () => {
   const { t } = useTranslation();
   const { mutateAsync, isPending: templateLoading } =
     useBrandClientImportTemplateQuery();
@@ -51,7 +51,7 @@ export const BrandClientImportForm = () => {
   const [uploaded, setUploaded] = useState(false);
   const [file, setFile] = useState<DocumentPickerAsset>();
   const [fileError, setFileError] = useState<string>();
-  const [clients, setClients] = useState<ImportBrandClient[]>([]);
+  const [clients, setClients] = useState<TImportBrandClient[]>([]);
   const [summary, setSummary] = useState<ImportedClientsSummary>();
 
   const downloadTemplate = useCallback(async () => {

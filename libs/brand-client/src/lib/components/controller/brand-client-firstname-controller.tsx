@@ -1,12 +1,9 @@
-import { Input } from '@symbiot-core-apps/ui';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { StringController } from '@symbiot-core-apps/form-controller';
+import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-export function BrandClientFirstnameController<T extends FieldValues>({
-  name,
-  control,
-  onBlur,
-}: {
+export function BrandClientFirstnameController<T extends FieldValues>(props: {
+  required?: boolean;
   name: Path<T>;
   control: Control<T>;
   onBlur?: () => void;
@@ -14,27 +11,16 @@ export function BrandClientFirstnameController<T extends FieldValues>({
   const { t } = useTranslation();
 
   return (
-    <Controller
-      control={control}
-      name={name}
+    <StringController
+      label={t('brand_client.form.firstname.label')}
+      placeholder={t('brand_client.form.firstname.placeholder')}
       rules={{
         required: {
           value: true,
           message: t('brand_client.form.firstname.error.required'),
         },
       }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <Input
-          autoCapitalize="words"
-          enterKeyHint="done"
-          value={value}
-          error={error?.message}
-          label={t('brand_client.form.firstname.label')}
-          placeholder={t('brand_client.form.firstname.placeholder')}
-          onChange={onChange}
-          onBlur={onBlur}
-        />
-      )}
+      {...props}
     />
   );
 }

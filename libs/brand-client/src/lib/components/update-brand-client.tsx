@@ -5,6 +5,7 @@ import {
   useUpdateBrandClientQuery,
 } from '@symbiot-core-apps/api';
 import {
+  AvatarPicker,
   defaultPageVerticalPadding,
   FormView,
   Icon,
@@ -13,24 +14,52 @@ import {
   PageView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
-import { BrandClientAvatarForm } from './form/brand-client-avatar-form';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { useTranslation } from 'react-i18next';
-import { BrandClientFirstnameForm } from './form/brand-client-firstname-form';
-import { BrandClientLastnameForm } from './form/brand-client-lastname-form';
-import { BrandClientGenderForm } from './form/brand-client-gender-form';
-import { BrandClientBirthdayForm } from './form/brand-client-birthday-form';
-import { BrandClientPhonesForm } from './form/brand-client-phones-form';
-import { BrandClientEmailsForm } from './form/brand-client-emails-form';
-import { BrandClientAddressesForm } from './form/brand-client-adresses-form';
-import { BrandClientNoteForm } from './form/brand-client-note-form';
+import {
+  DateFrom,
+  SingleStringArrayForm,
+  StringForm,
+} from '@symbiot-core-apps/form-controller';
+import { BrandClientAddressController } from './controller/brand-client-address-controller';
+import { useCallback } from 'react';
+import { ImagePickerAsset } from 'expo-image-picker';
+import { BrandClientBirthdayController } from './controller/brand-client-birthday-controller';
+import { BrandClientEmailController } from './controller/brand-client-email-controller';
+import { BrandClientFirstnameController } from './controller/brand-client-firstname-controller';
+import { BrandClientGenderController } from './controller/brand-client-gender-controller';
+import { BrandClientLastnameController } from './controller/brand-client-lastname-controller';
+import { BrandClientNoteController } from './controller/brand-client-note-controller';
+import { BrandClientPhoneController } from './controller/brand-client-phone-controller';
 
 export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
+  const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
+    useUpdateBrandClientQuery();
+
+  const onAddAvatar = useCallback(
+    (avatar: ImagePickerAsset) =>
+      updateAvatar({
+        id: client.id,
+        data: {
+          avatar,
+        },
+      }),
+    [client.id, updateAvatar],
+  );
+
   return (
     <PageView scrollable withHeaderHeight withKeyboard gap="$5">
       <FormView gap="$10" paddingVertical="$5">
-        <BrandClientAvatarForm client={client} />
+        <AvatarPicker
+          marginHorizontal="auto"
+          loading={avatarUpdating}
+          name={`${client.firstname} ${client.lastname}`}
+          color="$background1"
+          url={client.avatarUrl}
+          size={100}
+          onAttach={onAddAvatar}
+        />
 
         <ListItemGroup>
           <Personality client={client} />
@@ -90,18 +119,29 @@ const Personality = ({ client }: { client: BrandClient }) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <BrandClientFirstnameForm
-            firstname={value.firstname}
+          <StringForm
+            name="firstname"
+            value={value.firstname}
             onUpdate={updateValue}
+            Controller={BrandClientFirstnameController}
           />
-          <BrandClientLastnameForm
-            lastname={value.lastname}
+          <StringForm
+            name="lastname"
+            value={value.lastname}
             onUpdate={updateValue}
+            Controller={BrandClientLastnameController}
           />
-          <BrandClientGenderForm gender={value.gender} onUpdate={updateValue} />
-          <BrandClientBirthdayForm
-            birthday={value.birthday}
+          <StringForm
+            name="gender"
+            value={value.gender}
             onUpdate={updateValue}
+            Controller={BrandClientGenderController}
+          />
+          <DateFrom
+            name="birthday"
+            value={value.birthday}
+            onUpdate={updateValue}
+            Controller={BrandClientBirthdayController}
           />
         </FormView>
       </SlideSheetModal>
@@ -155,11 +195,23 @@ const Contact = ({ client }: { client: BrandClient }) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <BrandClientPhonesForm phones={value.phones} onUpdate={updateValue} />
-          <BrandClientEmailsForm emails={value.emails} onUpdate={updateValue} />
-          <BrandClientAddressesForm
-            addresses={value.addresses}
+          <SingleStringArrayForm
+            name="phones"
+            value={value.phones}
             onUpdate={updateValue}
+            Controller={BrandClientPhoneController}
+          />
+          <SingleStringArrayForm
+            name="emails"
+            value={value.emails}
+            onUpdate={updateValue}
+            Controller={BrandClientEmailController}
+          />
+          <SingleStringArrayForm
+            name="addresses"
+            value={value.addresses}
+            onUpdate={updateValue}
+            Controller={BrandClientAddressController}
           />
         </FormView>
       </SlideSheetModal>
@@ -204,7 +256,12 @@ const Note = ({ client }: { client: BrandClient }) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <BrandClientNoteForm note={value.note} onUpdate={updateValue} />
+          <StringForm
+            name="note"
+            value={value.note}
+            onUpdate={updateValue}
+            Controller={BrandClientNoteController}
+          />
         </FormView>
       </SlideSheetModal>
     </>

@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { NameController } from '@symbiot-core-apps/form-controller';
+import { StringController } from '@symbiot-core-apps/form-controller';
 
 export function AccountLastnameController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -11,7 +11,7 @@ export function AccountLastnameController<T extends FieldValues>(props: {
   const { t } = useTranslation();
 
   return (
-    <NameController
+    <StringController
       label={t('shared.account.form.lastname.label')}
       placeholder={t('shared.account.form.lastname.label')}
       rules={{

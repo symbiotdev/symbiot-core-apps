@@ -150,14 +150,17 @@ export const CreateBrandClient = () => {
         subtitle={t('brand_client.create.steps.personality.subtitle')}
       >
         <BrandClientFirstnameController
+          required
           name="firstname"
           control={personalityControl}
         />
         <BrandClientLastnameController
+          required
           name="lastname"
           control={personalityControl}
         />
         <BrandClientGenderController
+          required
           name="gender"
           control={personalityControl}
         />
@@ -172,7 +175,7 @@ export const CreateBrandClient = () => {
         title={t('brand_client.create.steps.contact.title')}
         subtitle={t('brand_client.create.steps.contact.subtitle')}
       >
-        <BrandClientPhoneController name="phone" control={contactControl} />
+        <BrandClientPhoneController required name="phone" control={contactControl} />
         <BrandClientEmailController name="email" control={contactControl} />
         <BrandClientAddressController name="address" control={contactControl} />
       </SurveyStep>

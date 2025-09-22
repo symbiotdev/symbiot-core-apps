@@ -25,13 +25,18 @@ import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { useTranslation } from 'react-i18next';
 import { DateHelper } from '@symbiot-core-apps/shared';
-import { BrandNameForm } from './form/brand-name-form';
-import { BrandAboutForm } from './form/brand-about-form';
-import { BrandBirthdayForm } from './form/brand-birthday-form';
-import { BrandCountriesForm } from './form/brand-countries-form';
-import { BrandCurrenciesForm } from './form/brand-currencies-form';
-import { BrandInstagramsForm } from './form/brand-instagrams-form';
-import { BrandWebsitesForm } from './form/brand-websites-form';
+import {
+  DateFrom,
+  SingleStringArrayForm,
+  StringForm,
+} from '@symbiot-core-apps/form-controller';
+import { BrandAboutController } from './contoller/brand-about-controller';
+import { BrandBirthdayController } from './contoller/brand-birthday-controller';
+import { BrandNameController } from './contoller/brand-name-controller';
+import { BrandCountryController } from './contoller/brand-country-controller';
+import { BrandCurrencyController } from './contoller/brand-currency-controller';
+import { BrandWebsitesController } from './contoller/brand-websites-controller';
+import { BrandInstagramController } from './contoller/brand-instagram-controller';
 
 type GroupProps = {
   brand: Brand;
@@ -80,11 +85,18 @@ const Name = ({ brand, onUpdated }: GroupProps) => {
   const { mutateAsync } = useCurrentBrandUpdate();
 
   const update = useCallback(
-    async (data: { name: string }) => onUpdated(await mutateAsync(data)),
+    async (data: TUpdateBrand) => onUpdated(await mutateAsync(data)),
     [mutateAsync, onUpdated],
   );
 
-  return <BrandNameForm name={brand.name} onUpdate={update} />;
+  return (
+    <StringForm
+      name="name"
+      value={brand.name}
+      onUpdate={update}
+      Controller={BrandNameController}
+    />
+  );
 };
 
 const Information = ({ brand, onUpdated }: GroupProps) => {
@@ -130,8 +142,18 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <BrandBirthdayForm birthday={brand.birthday} onUpdate={updateValue} />
-          <BrandAboutForm about={value.about} onUpdate={updateValue} />
+          <DateFrom
+            name="birthday"
+            value={brand.birthday}
+            onUpdate={updateValue}
+            Controller={BrandBirthdayController}
+          />
+          <StringForm
+            name="about"
+            value={value.about}
+            onUpdate={updateValue}
+            Controller={BrandAboutController}
+          />
         </FormView>
       </SlideSheetModal>
     </>
@@ -174,15 +196,19 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <BrandCountriesForm
+          <SingleStringArrayForm
+            name="countries"
+            value={value.countries}
             disabled={updating}
-            countries={value.countries}
             onUpdate={updateValue}
+            Controller={BrandCountryController}
           />
-          <BrandCurrenciesForm
+          <SingleStringArrayForm
+            name="currencies"
             disabled={updating}
-            currencies={value.currencies}
+            value={value.currencies}
             onUpdate={updateValue}
+            Controller={BrandCurrencyController}
           />
         </FormView>
       </SlideSheetModal>
@@ -228,10 +254,17 @@ const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <BrandWebsitesForm websites={value.websites} onUpdate={updateValue} />
-          <BrandInstagramsForm
-            instagrams={value.instagrams}
+          <SingleStringArrayForm
+            name="websites"
+            value={value.websites}
             onUpdate={updateValue}
+            Controller={BrandWebsitesController}
+          />
+          <SingleStringArrayForm
+            name="instagrams"
+            value={value.instagrams}
+            onUpdate={updateValue}
+            Controller={BrandInstagramController}
           />
         </FormView>
       </SlideSheetModal>

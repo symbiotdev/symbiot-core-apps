@@ -1,13 +1,13 @@
-import { Input } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import type { ControllerProps } from 'react-hook-form/dist/types';
+import { isValidURL } from '@symbiot-core-apps/shared';
+import { WebsiteInput } from '@symbiot-core-apps/ui';
 
-export function PromoCodeController<T extends FieldValues>({
+export function WebsiteController<T extends FieldValues>({
   name,
   label,
   placeholder,
-  rules,
   required,
+  errors,
   control,
   onBlur,
 }: {
@@ -16,23 +16,29 @@ export function PromoCodeController<T extends FieldValues>({
   label: string;
   placeholder: string;
   required?: boolean;
-  rules?: ControllerProps<T>['rules'];
+  errors?: {
+    validation: string;
+  };
   onBlur?: () => void;
 }) {
   return (
     <Controller
-      control={control}
       name={name}
-      rules={rules}
+      control={control}
+      rules={{
+        validate: (value) =>
+          (!required && !value) || (value && isValidURL(value))
+            ? true
+            : errors?.validation,
+      }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <Input
+        <WebsiteInput
           enterKeyHint="done"
-          regex={/^[a-zA-Z0-9_]+$/}
-          value={value}
           required={required}
-          error={error?.message}
+          value={value}
           label={label}
           placeholder={placeholder}
+          error={error?.message}
           onChange={onChange}
           onBlur={onBlur}
         />

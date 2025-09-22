@@ -1,13 +1,8 @@
-import { Input } from '@symbiot-core-apps/ui';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { PromoCodeController } from '@symbiot-core-apps/form-controller';
 
-export function BrandPromoCodeController<T extends FieldValues>({
-  name,
-  control,
-  noLabel,
-  onBlur,
-}: {
+export function BrandPromoCodeController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
@@ -16,27 +11,16 @@ export function BrandPromoCodeController<T extends FieldValues>({
   const { t } = useTranslation();
 
   return (
-    <Controller
-      control={control}
-      name={name}
+    <PromoCodeController
+      label={!props.noLabel ? t('brand.form.promo_code.label') : ''}
+      placeholder={t('brand.form.promo_code.placeholder')}
       rules={{
         required: {
           value: true,
           message: t('brand.form.promo_code.error.required'),
         },
       }}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <Input
-          enterKeyHint="done"
-          regex={/^[a-zA-Z0-9_]+$/}
-          value={value}
-          error={error?.message}
-          label={!noLabel ? t('brand.form.promo_code.label') : undefined}
-          placeholder={t('brand.form.promo_code.placeholder')}
-          onChange={onChange}
-          onBlur={onBlur}
-        />
-      )}
+      {...props}
     />
   );
 }

@@ -8,16 +8,16 @@ import { ConfirmAlert } from '@symbiot-core-apps/shared';
 import { router, useNavigation } from 'expo-router';
 import { useAuthBrand, useBrandAuthState } from '../hooks/use-brand-auth';
 import { useBrandCreateQuery } from '@symbiot-core-apps/api';
-import { BrandIndustriesController } from './contoller/brand-industries-controller';
 import { useApp } from '@symbiot-core-apps/app';
 import { BrandWebsitesController } from './contoller/brand-websites-controller';
 import { useCurrentAccount } from '@symbiot-core-apps/state';
 import { BrandReferralSourceController } from './contoller/brand-referral-source-controller';
 import { BrandCompetitorController } from './contoller/brand-competitor-controller';
 import { BrandPromoCodeController } from './contoller/brand-promo-code-controller';
-import { BrandCountriesController } from './contoller/brand-countries-controller';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { CountryCode, getCountry } from 'countries-and-timezones';
+import { BrandIndustryController } from './contoller/brand-industry-controller';
+import { BrandCountryController } from './contoller/brand-country-controller';
 
 const defaultCountryCode = Intl?.DateTimeFormat()
   ?.resolvedOptions()
@@ -178,7 +178,7 @@ export const CreateBrand = () => {
         title={t('brand.create.steps.country.title')}
         subtitle={t('brand.create.steps.country.subtitle')}
       >
-        <BrandCountriesController
+        <BrandCountryController
           noLabel
           name="country"
           control={countryControl}
@@ -220,7 +220,7 @@ export const CreateBrand = () => {
           title={t('brand.create.steps.industry.title')}
           subtitle={t('brand.create.steps.industry.subtitle')}
         >
-          <BrandIndustriesController
+          <BrandIndustryController
             noLabel
             name="industry"
             control={industryControl}

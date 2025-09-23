@@ -12,8 +12,9 @@ export function AccountLastnameController<T extends FieldValues>(props: {
 
   return (
     <StringController
+      maxLength={64}
       label={t('shared.account.form.lastname.label')}
-      placeholder={t('shared.account.form.lastname.label')}
+      placeholder={t('shared.account.form.lastname.placeholder')}
       rules={{
         required: {
           value: true,

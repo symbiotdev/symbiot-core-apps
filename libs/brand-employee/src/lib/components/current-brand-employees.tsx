@@ -149,7 +149,7 @@ export const CurrentBrandEmployees = ({
         <Search
           value={search}
           debounce={300}
-          placeholder={t('brand.employees.search.placeholder')}
+          placeholder={t('brand_employee.search.placeholder')}
           inputFieldProps={{ backgroundColor: '$background' }}
           onChange={setSearch}
         />

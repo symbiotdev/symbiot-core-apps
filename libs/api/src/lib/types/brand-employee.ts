@@ -60,7 +60,7 @@ export type CreateBrandEmployee = {
   role: string;
   gender: string;
   locations: string[];
-  permissions: BrandEmployeePermissions;
+  permissions: Partial<BrandEmployeePermissions>;
   phones: string[];
   schedules: (Schedule & { location: string | null })[];
 };

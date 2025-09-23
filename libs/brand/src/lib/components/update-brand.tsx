@@ -27,8 +27,8 @@ import { useTranslation } from 'react-i18next';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import {
   DateFrom,
-  SingleStringArrayForm,
-  StringForm,
+  SingleElementToArrayForm,
+  SingeElementForm,
 } from '@symbiot-core-apps/form-controller';
 import { BrandAboutController } from './contoller/brand-about-controller';
 import { BrandBirthdayController } from './contoller/brand-birthday-controller';
@@ -90,7 +90,7 @@ const Name = ({ brand, onUpdated }: GroupProps) => {
   );
 
   return (
-    <StringForm
+    <SingeElementForm
       name="name"
       value={brand.name}
       onUpdate={update}
@@ -148,7 +148,7 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
             onUpdate={updateValue}
             Controller={BrandBirthdayController}
           />
-          <StringForm
+          <SingeElementForm
             name="about"
             value={value.about}
             onUpdate={updateValue}
@@ -196,14 +196,14 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <SingleStringArrayForm
+          <SingleElementToArrayForm
             name="countries"
             value={value.countries}
             disabled={updating}
             onUpdate={updateValue}
             Controller={BrandCountryController}
           />
-          <SingleStringArrayForm
+          <SingleElementToArrayForm
             name="currencies"
             disabled={updating}
             value={value.currencies}
@@ -254,13 +254,13 @@ const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <SingleStringArrayForm
+          <SingleElementToArrayForm
             name="websites"
             value={value.websites}
             onUpdate={updateValue}
             Controller={BrandWebsiteController}
           />
-          <SingleStringArrayForm
+          <SingleElementToArrayForm
             name="instagrams"
             value={value.instagrams}
             onUpdate={updateValue}

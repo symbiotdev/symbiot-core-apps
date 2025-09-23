@@ -1,16 +1,17 @@
 import { Control, Path, useForm } from 'react-hook-form';
 import { ComponentType, useEffect } from 'react';
+import { isEqual } from '@symbiot-core-apps/shared';
 
-type FormValue = Record<string, string | null>;
+type FormValue = Record<string, unknown>;
 
-export function StringForm({
+export function SingeElementForm({
   name,
   value,
   Controller,
   onUpdate,
 }: {
   name: string;
-  value: string | null;
+  value: unknown;
   onUpdate: (value: FormValue) => void;
   Controller: ComponentType<{
     name: Path<FormValue>;
@@ -34,7 +35,7 @@ export function StringForm({
       control={control}
       onBlur={handleSubmit(
         (currentValue: FormValue) =>
-          value !== currentValue[name] && onUpdate(currentValue),
+          !isEqual(value, currentValue[name]) && onUpdate(currentValue),
       )}
     />
   );

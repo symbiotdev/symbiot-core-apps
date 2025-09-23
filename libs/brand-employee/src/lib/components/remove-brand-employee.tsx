@@ -19,8 +19,8 @@ export const RemoveBrandEmployee = ({
   const onActionPress = useCallback(
     () =>
       ConfirmAlert({
-        title: t('brand.employees.remove.confirm_dialog.title'),
-        message: t('brand.employees.remove.confirm_dialog.message'),
+        title: t('brand_employee.remove.confirm_dialog.title'),
+        message: t('brand_employee.remove.confirm_dialog.message'),
         callback: async () => {
           await mutateAsync({ id: employee.id });
 
@@ -35,11 +35,11 @@ export const RemoveBrandEmployee = ({
     <PageView scrollable withHeaderHeight>
       <FormView>
         <ActionCard
-          title={t('brand.employees.remove.title')}
-          subtitle={t('brand.employees.remove.subtitle', {
+          title={t('brand_employee.remove.title')}
+          subtitle={t('brand_employee.remove.subtitle', {
             name: employee.name,
           })}
-          buttonLabel={t('brand.employees.remove.button.label')}
+          buttonLabel={t('brand_employee.remove.button.label')}
           buttonIcon={<Icon name="TrashBinMinimalistic" />}
           buttonLoading={isPending}
           buttonType="danger"

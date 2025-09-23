@@ -12,6 +12,7 @@ export function BrandClientLastnameController<T extends FieldValues>(props: {
 
   return (
     <StringController
+      maxLength={64}
       label={t('brand_client.form.lastname.label')}
       placeholder={t('brand_client.form.lastname.placeholder')}
       rules={{

@@ -19,8 +19,8 @@ import { DateHelper } from '@symbiot-core-apps/shared';
 import { useTranslation } from 'react-i18next';
 import {
   DateFrom,
-  SingleStringArrayForm,
-  StringForm,
+  SingleElementToArrayForm,
+  SingeElementForm,
 } from '@symbiot-core-apps/form-controller';
 import { BrandClientAddressController } from './controller/brand-client-address-controller';
 import { useCallback } from 'react';
@@ -32,6 +32,7 @@ import { BrandClientGenderController } from './controller/brand-client-gender-co
 import { BrandClientLastnameController } from './controller/brand-client-lastname-controller';
 import { BrandClientNoteController } from './controller/brand-client-note-controller';
 import { BrandClientPhoneController } from './controller/brand-client-phone-controller';
+import { PhoneNumber } from 'react-native-phone-input/dist';
 
 export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
@@ -119,19 +120,19 @@ const Personality = ({ client }: { client: BrandClient }) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <StringForm
+          <SingeElementForm
             name="firstname"
             value={value.firstname}
             onUpdate={updateValue}
             Controller={BrandClientFirstnameController}
           />
-          <StringForm
+          <SingeElementForm
             name="lastname"
             value={value.lastname}
             onUpdate={updateValue}
             Controller={BrandClientLastnameController}
           />
-          <StringForm
+          <SingeElementForm
             name="gender"
             value={value.gender}
             onUpdate={updateValue}
@@ -178,7 +179,14 @@ const Contact = ({ client }: { client: BrandClient }) => {
         label={t('brand_client.update.groups.contact.title')}
         text={
           [
-            value.phones.join(', '),
+            value.phones.map((phone) =>
+              PhoneNumber.format(
+                phone,
+                PhoneNumber.getCountryCodeOfNumber(phone),
+              ),
+            )
+              .filter(Boolean)
+              .join(', '),
             value.emails.join(', '),
             value.addresses.join(', '),
           ]
@@ -195,19 +203,19 @@ const Contact = ({ client }: { client: BrandClient }) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <SingleStringArrayForm
+          <SingleElementToArrayForm
             name="phones"
             value={value.phones}
             onUpdate={updateValue}
             Controller={BrandClientPhoneController}
           />
-          <SingleStringArrayForm
+          <SingleElementToArrayForm
             name="emails"
             value={value.emails}
             onUpdate={updateValue}
             Controller={BrandClientEmailController}
           />
-          <SingleStringArrayForm
+          <SingleElementToArrayForm
             name="addresses"
             value={value.addresses}
             onUpdate={updateValue}
@@ -256,7 +264,7 @@ const Note = ({ client }: { client: BrandClient }) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <StringForm
+          <SingeElementForm
             name="note"
             value={value.note}
             onUpdate={updateValue}

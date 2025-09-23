@@ -1,6 +1,9 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useBrandEmployeeGendersQuery } from '@symbiot-core-apps/api';
+import {
+  gendersWithoutEmptyOption,
+  useBrandEmployeeGendersQuery,
+} from '@symbiot-core-apps/api';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 
 export function BrandEmployeeGenderController<T extends FieldValues>(props: {
@@ -8,6 +11,7 @@ export function BrandEmployeeGenderController<T extends FieldValues>(props: {
   control: Control<T>;
   disabled?: boolean;
   required?: boolean;
+  includeEmptyOption?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
@@ -17,7 +21,9 @@ export function BrandEmployeeGenderController<T extends FieldValues>(props: {
     <SelectController
       label={t('brand_employee.form.gender.label')}
       placeholder={t('brand_employee.form.gender.placeholder')}
-      options={data}
+      options={
+        !props.includeEmptyOption ? gendersWithoutEmptyOption(data) : data
+      }
       optionsLoading={isPending}
       optionsError={error}
       rules={{

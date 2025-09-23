@@ -10,8 +10,8 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { useTranslation } from 'react-i18next';
 import {
   DateFrom,
-  SingleStringArrayForm,
-  StringForm,
+  SingleElementToArrayForm,
+  SingeElementForm,
 } from '@symbiot-core-apps/form-controller';
 import { AccountFirstnameController } from './controller/account-firstname-controller';
 import { AccountLastnameController } from './controller/account-lastname-controller';
@@ -67,19 +67,19 @@ export const UpdateAccount = () => {
             label={t('shared.account.form.email.label')}
           />
 
-          <StringForm
+          <SingeElementForm
             name="firstname"
             value={me.firstname}
             onUpdate={update}
             Controller={AccountFirstnameController}
           />
-          <StringForm
+          <SingeElementForm
             name="lastname"
             value={me.lastname}
             onUpdate={update}
             Controller={AccountLastnameController}
           />
-          <StringForm
+          <SingeElementForm
             name="gender"
             value={me.gender?.value}
             onUpdate={update}
@@ -91,13 +91,13 @@ export const UpdateAccount = () => {
             onUpdate={update}
             Controller={AccountBirthdayController}
           />
-          <SingleStringArrayForm
+          <SingleElementToArrayForm
             name="phones"
             value={me.phones || []}
             onUpdate={update}
             Controller={AccountPhoneController}
           />
-          <SingleStringArrayForm
+          <SingleElementToArrayForm
             name="instagrams"
             value={me.instagrams || []}
             onUpdate={update}

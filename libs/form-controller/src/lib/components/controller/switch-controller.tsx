@@ -7,29 +7,39 @@ export function SwitchController<T extends FieldValues>({
   label,
   description,
   rules,
+  disabled,
   required,
+  loading,
   control,
+  onChange: onPropsChange,
 }: {
   name: Path<T>;
   control: Control<T>;
   label: string;
   description: string;
   required?: boolean;
+  disabled?: boolean;
+  loading?: boolean;
   rules?: ControllerProps<T>['rules'];
-  onBlur?: () => void;
+  onChange?: (value: boolean) => void;
 }) {
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
-      render={({ field: { value, onChange }, fieldState: { error } }) => (
+      render={({ field: { value, onChange } }) => (
         <Switch
           label={label}
           description={description}
           required={required}
+          loading={loading}
+          disabled={disabled}
           checked={!!value}
-          onChange={onChange}
+          onChange={(value) => {
+            onChange(value);
+            onPropsChange?.(value);
+          }}
         />
       )}
     />

@@ -14,7 +14,8 @@ export * from './lib/components/controller/timezone-controller';
 export * from './lib/components/controller/toggle-controller';
 export * from './lib/components/controller/website-controller';
 
-export * from './lib/components/form/date-form';
-export * from './lib/components/form/single-string-array-form';
 export * from './lib/components/form/array-form';
-export * from './lib/components/form/string-form';
+export * from './lib/components/form/date-form';
+export * from './lib/components/form/multi-elements-form';
+export * from './lib/components/form/singe-element-form';
+export * from './lib/components/form/single-element-to-array-form';

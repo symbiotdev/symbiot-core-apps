@@ -7,6 +7,7 @@ export function StringController<T extends FieldValues>({
   label,
   placeholder,
   rules,
+  maxLength,
   required,
   control,
   onBlur,
@@ -16,6 +17,7 @@ export function StringController<T extends FieldValues>({
   label: string;
   placeholder: string;
   required?: boolean;
+  maxLength?: number;
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
 }) {
@@ -30,6 +32,7 @@ export function StringController<T extends FieldValues>({
           enterKeyHint="done"
           required={required}
           value={value}
+          maxLength={maxLength}
           error={error?.message}
           label={label}
           placeholder={placeholder}

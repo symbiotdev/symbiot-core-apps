@@ -30,6 +30,7 @@ import { BrandEmployeeRoleController } from './controller/brand-employee-role-co
 import { BrandEmployeeProviderController } from './controller/brand-employee-provider-controller';
 import { BrandEmployeePermissionsController } from './controller/brand-employee-permissions-controller';
 import { BrandEmployeeAboutController } from './controller/brand-employee-about-controller';
+import { defaultEmployeeSchedule } from '../utils/schedule';
 
 export const CreateBrandEmployee = () => {
   const { t } = useTranslation();
@@ -97,23 +98,7 @@ export const CreateBrandEmployee = () => {
     defaultValues: {
       location: null,
       customSchedule: false,
-      schedule: [
-        ...Array.from({ length: 5 }).map((_, index) => ({
-          day: index + 1,
-          start: 540,
-          end: 1080,
-        })),
-        {
-          day: 0,
-          start: 0,
-          end: 0,
-        },
-        {
-          day: 6,
-          start: 0,
-          end: 0,
-        },
-      ],
+      schedule: defaultEmployeeSchedule,
     },
   });
 
@@ -272,6 +257,7 @@ export const CreateBrandEmployee = () => {
         />
         <BrandEmployeeGenderController
           required
+          includeEmptyOption
           name="gender"
           control={personalityControl}
         />
@@ -387,7 +373,6 @@ export const CreateBrandEmployee = () => {
         subtitle={t('brand_employee.create.steps.about.subtitle')}
       >
         <BrandEmployeeAboutController
-          noLabel
           required
           name="about"
           control={aboutControl}

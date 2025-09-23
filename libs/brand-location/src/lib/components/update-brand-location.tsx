@@ -29,8 +29,8 @@ import { BrandLocationTimezoneForm } from './form/brand-location-timezone-form';
 import { PhoneNumber } from 'react-native-phone-input/dist';
 import {
   ArrayForm,
-  SingleStringArrayForm,
-  StringForm,
+  SingleElementToArrayForm,
+  SingeElementForm,
 } from '@symbiot-core-apps/form-controller';
 import { BrandLocationAddressController } from './controller/brand-location-address-controller';
 import { BrandLocationCurrencyController } from './controller/brand-location-currency-controller';
@@ -87,7 +87,7 @@ const Name = ({ location }: { location: BrandLocation }) => {
   );
 
   return (
-    <StringForm
+    <SingeElementForm
       name="name"
       value={location.name}
       onUpdate={updateValue}
@@ -135,25 +135,25 @@ const Address = ({ location }: { location: BrandLocation }) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <StringForm
+          <SingeElementForm
             name="address"
             value={value.address}
             onUpdate={updateValue}
             Controller={BrandLocationAddressController}
           />
-          <StringForm
+          <SingeElementForm
             name="entrance"
             value={value.entrance}
             onUpdate={updateValue}
             Controller={BrandLocationEntranceController}
           />
-          <StringForm
+          <SingeElementForm
             name="floor"
             value={value.floor}
             onUpdate={updateValue}
             Controller={BrandLocationFloorController}
           />
-          <StringForm
+          <SingeElementForm
             name="remark"
             value={value.remark}
             onUpdate={updateValue}
@@ -306,7 +306,7 @@ const Locale = ({ location }: { location: BrandLocation }) => {
           )}
 
           {canChangeCurrencies && (
-            <SingleStringArrayForm
+            <SingleElementToArrayForm
               name="currencies"
               value={value.currencies}
               onUpdate={updateValue}
@@ -401,8 +401,7 @@ const Contact = ({ location }: { location: BrandLocation }) => {
         label={t('brand_location.update.groups.contact.title')}
         text={
           [
-            value.phones
-              ?.map((phone) =>
+            value.phones.map((phone) =>
                 PhoneNumber.format(
                   phone,
                   PhoneNumber.getCountryCodeOfNumber(phone),
@@ -426,19 +425,19 @@ const Contact = ({ location }: { location: BrandLocation }) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <SingleStringArrayForm
+          <SingleElementToArrayForm
             name="phones"
             value={value.phones}
             onUpdate={updateValue}
             Controller={BrandLocationPhoneController}
           />
-          <SingleStringArrayForm
+          <SingleElementToArrayForm
             name="emails"
             value={value.emails}
             onUpdate={updateValue}
             Controller={BrandLocationEmailController}
           />
-          <SingleStringArrayForm
+          <SingleElementToArrayForm
             name="instagrams"
             value={value.instagrams}
             onUpdate={updateValue}

@@ -1,11 +1,12 @@
 import { Control, Path, useForm } from 'react-hook-form';
 import { ComponentType, useEffect } from 'react';
+import { isEqual } from '@symbiot-core-apps/shared';
 
-type FormValue = Record<string, string[]>;
+type FormValue = Record<string, unknown[]>;
 
-type InternalValue = { str: string };
+type InternalValue = { str: unknown };
 
-export const SingleStringArrayForm = ({
+export const SingleElementToArrayForm = ({
   name,
   value,
   disabled,
@@ -13,7 +14,7 @@ export const SingleStringArrayForm = ({
   onUpdate,
 }: {
   name: string;
-  value: string[];
+  value: unknown[];
   disabled?: boolean;
   onUpdate: (value: FormValue) => void;
   Controller: ComponentType<{
@@ -40,7 +41,7 @@ export const SingleStringArrayForm = ({
       disabled={disabled}
       onBlur={handleSubmit(
         (currentValue: InternalValue) =>
-          value[0] !== currentValue.str &&
+          !isEqual(value[0], currentValue.str) &&
           onUpdate({ [name]: [currentValue.str].filter(Boolean) }),
       )}
     />

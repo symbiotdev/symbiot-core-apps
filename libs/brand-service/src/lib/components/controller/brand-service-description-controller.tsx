@@ -8,14 +8,14 @@ export function BrandServiceDescriptionController<
   name: Path<T>;
   control: Control<T>;
   required?: boolean;
-  showLabel?: boolean;
+  noLabel?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
 
   return (
     <TextController
-      label={props.showLabel ? t('brand_service.form.description.label') : ''}
+      label={!props.noLabel ? t('brand_service.form.description.label') : ''}
       placeholder={t('brand_service.form.description.placeholder')}
       rules={{
         required: {

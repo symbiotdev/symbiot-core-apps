@@ -2,7 +2,7 @@ import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ToggleController } from '@symbiot-core-apps/form-controller';
 import { DateHelper, minutesInDay } from '@symbiot-core-apps/shared';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 export function BrandServiceRemindersController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -10,6 +10,7 @@ export function BrandServiceRemindersController<T extends FieldValues>(props: {
   noLabel?: boolean;
   required?: boolean;
   disabled?: boolean;
+  onBlur?: () => void;
 }) {
   const { t } = useTranslation();
 
@@ -25,6 +26,12 @@ export function BrandServiceRemindersController<T extends FieldValues>(props: {
       ),
     [t],
   );
+
+  useEffect(() => {
+    return () => {
+      props.onBlur?.();
+    };
+  }, [props]);
 
   return (
     <ToggleController

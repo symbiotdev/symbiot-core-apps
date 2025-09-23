@@ -6,7 +6,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useBrandServiceDetailedByIdQuery } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import { BrandServiceForm } from '@symbiot-core-apps/brand-service';
+import { UpdateBrandService } from '@symbiot-core-apps/brand-service';
 import { useTranslation } from 'react-i18next';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
 
@@ -47,5 +47,5 @@ export default () => {
     return <InitView loading={isPending} error={error} />;
   }
 
-  return <BrandServiceForm service={service} />;
+  return <UpdateBrandService service={service} />;
 };

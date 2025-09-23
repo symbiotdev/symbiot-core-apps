@@ -7,14 +7,20 @@ type FormValue = Record<string, unknown>;
 export function SingeElementForm({
   name,
   value,
+  disabled,
+  loading,
   Controller,
   onUpdate,
 }: {
   name: string;
   value: unknown;
+  disabled?: boolean;
+  loading?: boolean;
   onUpdate: (value: FormValue) => void;
   Controller: ComponentType<{
     name: Path<FormValue>;
+    disabled?: boolean;
+    loading?: boolean;
     control: Control<FormValue>;
     onBlur: () => void;
   }>;
@@ -32,6 +38,8 @@ export function SingeElementForm({
   return (
     <Controller
       name={name}
+      disabled={disabled}
+      loading={loading}
       control={control}
       onBlur={handleSubmit(
         (currentValue: FormValue) =>

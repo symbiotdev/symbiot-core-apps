@@ -82,14 +82,23 @@ export const CurrentBrandServices = ({
 
           {item.price ? (
             <XStack gap="$2" alignItems="center">
-              <RegularText>{formatBrandServicePrice(item)}</RegularText>
+              <RegularText>
+                {formatBrandServicePrice({
+                  price: item.price,
+                  currency: item.currency,
+                })}
+              </RegularText>
 
               {!!item.discount && (
                 <RegularText
                   textDecorationLine="line-through"
                   color="$placeholderColor"
                 >
-                  {formatBrandServicePrice(item, true)}
+                  {formatBrandServicePrice({
+                    price: item.price,
+                    discount: item.discount,
+                    currency: item.currency,
+                  })}
                 </RegularText>
               )}
             </XStack>

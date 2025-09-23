@@ -15,6 +15,7 @@ type ControllerProps<T extends FieldValues> = {
   noLabel?: boolean;
   required?: boolean;
   disabled?: boolean;
+  onBlur?: () => void;
 };
 
 export function BrandServiceEmployeesController<T extends FieldValues>(
@@ -101,10 +102,10 @@ function EmployeesController<T extends FieldValues>(
   return (
     <ToggleController
       {...props}
-      label={!props.noLabel ? t('brand_service.form.reminders.label') : ''}
+      label={!props.noLabel ? t('brand_service.form.providers.label') : ''}
       items={items}
       errors={{
-        required: t('brand_service.form.reminders.error.required'),
+        required: t('brand_service.form.providers.error.required'),
       }}
     />
   );

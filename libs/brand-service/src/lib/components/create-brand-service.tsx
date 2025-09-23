@@ -34,9 +34,7 @@ export const CreateBrandService = () => {
   const { height } = useWindowDimensions();
   const { mutateAsync, isPending } = useCreateBrandServiceQuery();
   const navigation = useNavigation();
-  const {
-    data: formats,
-  } = useBrandServiceFormatsQuery();
+  const { data: formats } = useBrandServiceFormatsQuery();
 
   const createdRef = useRef(false);
 
@@ -240,7 +238,6 @@ export const CreateBrandService = () => {
         />
         <BrandServiceNameController name="name" control={aboutControl} />
         <BrandServiceDescriptionController
-          showLabel
           name="description"
           control={aboutControl}
         />

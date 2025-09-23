@@ -47,6 +47,7 @@ export type IconName =
   | 'Maximize'
   | 'MenuDotsCircle'
   | 'Minimize'
+  | 'MoneyBag'
   | 'Moon'
   | 'MusicLibrary2'
   | 'PaperclipRounded'

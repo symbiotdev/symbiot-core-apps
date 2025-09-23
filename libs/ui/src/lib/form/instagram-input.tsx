@@ -1,7 +1,6 @@
 import { Input, InputValue, onChangeInput } from './input';
 import { useCallback } from 'react';
 import { TextInputProps } from 'react-native';
-import { APP_LINK } from './app-link-input';
 
 export const getNicknameFromUrl = (input?: InputValue) => {
   if (!input) return '';
@@ -50,7 +49,7 @@ export const InstagramInput = ({
 }) => {
   const onInputChange = useCallback(
     (value: string) => {
-      onChange(!value ? null : `${APP_LINK.instagram.domain}${value}`);
+      onChange(!value ? null : `https://www.instagram.com/${value}`);
     },
     [onChange],
   );

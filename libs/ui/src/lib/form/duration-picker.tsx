@@ -38,6 +38,7 @@ export const DurationPicker = ({
   monthsInterval,
   yearsInterval,
   onChange,
+  onBlur,
   ...viewProps
 }: Omit<ViewProps, 'onPress'> & {
   units: DurationPickerUnit[];
@@ -52,6 +53,7 @@ export const DurationPicker = ({
   monthsInterval?: number;
   yearsInterval?: number;
   onChange?: (value: number) => void;
+  onBlur?: () => void;
 }) => {
   const { t } = useTranslation();
 
@@ -146,6 +148,7 @@ export const DurationPicker = ({
             </RegularText>
           </InputFieldView>
         }
+        onClose={onBlur}
       >
         <XStack justifyContent="center" gap={Platform.OS === 'ios' ? 0 : 5}>
           {units.includes('years') && (

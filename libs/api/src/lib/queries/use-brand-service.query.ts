@@ -170,3 +170,18 @@ export const useUpdateBrandServiceQuery = () =>
       return service;
     },
   });
+
+export const useRemoveBrandServiceQuery = () =>
+  useMutation<void, string, { id: string }>({
+    mutationFn: async ({ id }) => {
+      const response = await requestWithAlertOnError<void>(
+        axios.delete(`/api/brand-service/${id}`),
+      );
+
+      await refetchQueriesByServiceChanges({
+        id,
+      });
+
+      return response;
+    },
+  });

@@ -87,7 +87,7 @@ export const UpdateBrandEmployee = ({
           <Personality employee={employee} />
           <Professionality employee={employee} />
           <About employee={employee} />
-          <Locations employee={employee} />
+          <Location employee={employee} />
           <Contact employee={employee} />
           <Identification employee={employee} />
 
@@ -281,7 +281,7 @@ const About = ({ employee }: { employee: BrandEmployee }) => {
   );
 };
 
-const Locations = ({ employee }: { employee: BrandEmployee }) => {
+const Location = ({ employee }: { employee: BrandEmployee }) => {
   const { t } = useTranslation();
   const dynamicLocation = useDynamicBrandLocation();
   const { value, modalVisible, openModal, closeModal, updateValue } =

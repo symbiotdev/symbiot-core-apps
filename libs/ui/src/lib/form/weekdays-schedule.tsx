@@ -1,7 +1,6 @@
 import { XStack } from 'tamagui';
 import { DateHelper, Weekday } from '@symbiot-core-apps/shared';
 import { useCallback, useMemo, useState } from 'react';
-import * as yup from 'yup';
 import { MediumText, RegularText } from '../text/text';
 import { InputFieldView } from '../view/input-field-view';
 import { AdaptivePopover } from '../popover/adaptive-popover';
@@ -22,19 +21,6 @@ export type WeekdaySchedule = {
 };
 
 type MinutesOptions = { label: string; value: number }[];
-
-export const getWeekdayScheduleScheme = (error: string) => {
-  return yup
-    .array()
-    .of(
-      yup.object().shape({
-        day: yup.number().required(),
-        start: yup.number().required(),
-        end: yup.number().required(),
-      }),
-    )
-    .required(error);
-};
 
 const minutesInterval = 15;
 

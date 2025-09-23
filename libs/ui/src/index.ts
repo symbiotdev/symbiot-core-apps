@@ -16,8 +16,6 @@ export * from './lib/devider/br';
 export * from './lib/form/avatar-picker';
 export * from './lib/form/checkbox';
 export * from './lib/form/code-input';
-export * from './lib/form/country-picker';
-export * from './lib/form/currency-picker';
 export * from './lib/form/date-picker';
 export * from './lib/form/document-picker';
 export * from './lib/form/duration-picker';
@@ -34,7 +32,6 @@ export * from './lib/form/switch';
 export * from './lib/form/textarea';
 export * from './lib/form/timezone-picker';
 export * from './lib/form/toggle-group';
-export * from './lib/form/us-state-picker';
 export * from './lib/form/website-input';
 export * from './lib/form/weekdays-schedule';
 

@@ -1,11 +1,11 @@
 import { AvatarPicker, Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useCreateBrandClientQuery } from '@symbiot-core-apps/api';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { router, useNavigation } from 'expo-router';
 import { EventArg, NavigationAction } from '@react-navigation/native';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
 import { useTranslation } from 'react-i18next';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { BrandClientFirstnameController } from './controller/brand-client-firstname-controller';
 import { BrandClientLastnameController } from './controller/brand-client-lastname-controller';
 import { BrandClientGenderController } from './controller/brand-client-gender-controller';
@@ -22,6 +22,8 @@ export const CreateBrandClient = () => {
   const navigation = useNavigation();
 
   const createdRef = useRef(false);
+
+  const [avatar, setAvatar] = useState<ImagePickerAsset>();
 
   const {
     control: personalityControl,
@@ -59,12 +61,6 @@ export const CreateBrandClient = () => {
   });
 
   const {
-    control: avatarControl,
-    getValues: avatarGetValues,
-    formState: avatarFormState,
-  } = useForm<{ avatar: ImagePickerAsset }>();
-
-  const {
     control: noteControl,
     getValues: noteGetValues,
     formState: noteFormState,
@@ -77,15 +73,9 @@ export const CreateBrandClient = () => {
   });
 
   const onFinish = useCallback(async () => {
-    const firstname = personalityGetValues('firstname');
-    const lastname = personalityGetValues('lastname');
-    const gender = personalityGetValues('gender');
-    const birthday = personalityGetValues('birthday');
-    const phone = contactGetValues('phone');
-    const email = contactGetValues('email');
-    const address = contactGetValues('address');
-    const avatar = avatarGetValues('avatar');
-    const note = noteGetValues('note');
+    const { firstname, lastname, gender, birthday } = personalityGetValues();
+    const { phone, email, address } = contactGetValues();
+    const { note } = noteGetValues();
 
     const client = await mutateAsync({
       avatar,
@@ -103,7 +93,7 @@ export const CreateBrandClient = () => {
 
     router.replace(`/clients/${client.id}/profile`);
   }, [
-    avatarGetValues,
+    avatar,
     contactGetValues,
     mutateAsync,
     noteGetValues,
@@ -175,37 +165,32 @@ export const CreateBrandClient = () => {
         title={t('brand_client.create.steps.contact.title')}
         subtitle={t('brand_client.create.steps.contact.subtitle')}
       >
-        <BrandClientPhoneController required name="phone" control={contactControl} />
+        <BrandClientPhoneController
+          required
+          name="phone"
+          control={contactControl}
+        />
         <BrandClientEmailController name="email" control={contactControl} />
         <BrandClientAddressController name="address" control={contactControl} />
       </SurveyStep>
 
       <SurveyStep
         skippable
-        canGoNext={avatarFormState.isValid}
+        canGoNext={!!avatar}
         title={t('brand_client.create.steps.avatar.title')}
         subtitle={t('brand_client.create.steps.avatar.subtitle')}
       >
-        <Controller
-          control={avatarControl}
-          name="avatar"
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, value } }) => (
-            <AvatarPicker
-              allowsEditing
-              removable={!!value}
-              alignSelf="center"
-              marginTop="$5"
-              url={value}
-              name={`${firstname} ${lastname}`}
-              color="$placeholderColor"
-              size={140}
-              onAttach={onChange}
-              onRemove={() => onChange(undefined)}
-            />
-          )}
+        <AvatarPicker
+          allowsEditing
+          removable={!!avatar}
+          alignSelf="center"
+          marginTop="$5"
+          url={avatar}
+          name={`${firstname} ${lastname}`}
+          color="$placeholderColor"
+          size={140}
+          onAttach={setAvatar}
+          onRemove={() => setAvatar(undefined)}
         />
       </SurveyStep>
 

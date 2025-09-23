@@ -120,19 +120,13 @@ export const CreateBrandLocation = () => {
   });
 
   const onFinish = useCallback(async () => {
-    const name = nameGetValues('name');
-    const country = countryGetValues('country');
-    const usState = countryGetValues('usState');
-    const currency = currencyGetValues('currency');
-    const address = addressGetValues('address');
-    const entrance = addressGetValues('entrance');
-    const floor = addressGetValues('floor');
-    const remark = addressGetValues('remark');
-    const schedules = scheduleGetValues('schedule');
-    const advantages = advantagesGetValues('advantages');
-    const phone = contactGetValues('phone');
-    const email = contactGetValues('email');
-    const instagram = contactGetValues('instagram');
+    const { name } = nameGetValues();
+    const { country, usState } = countryGetValues();
+    const { currency } = currencyGetValues();
+    const { address, entrance, floor, remark } = addressGetValues();
+    const { schedule } = scheduleGetValues();
+    const { advantages } = advantagesGetValues();
+    const { phone, email, instagram } = contactGetValues();
 
     await mutateAsync({
       name,
@@ -142,8 +136,8 @@ export const CreateBrandLocation = () => {
       entrance,
       floor,
       remark,
-      schedules,
       advantages,
+      schedules: schedule,
       currencies: currency ? [currency] : [],
       phones: phone ? [phone] : [],
       emails: email ? [email] : [],

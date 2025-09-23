@@ -2,7 +2,7 @@ import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { PhoneController } from '@symbiot-core-apps/form-controller';
 
-export function BrandClientPhoneController<T extends FieldValues>(props: {
+export function BrandEmployeePhoneController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   disabled?: boolean;
@@ -13,11 +13,12 @@ export function BrandClientPhoneController<T extends FieldValues>(props: {
 
   return (
     <PhoneController
-      label={t('brand_client.form.phone.label')}
-      placeholder={t('brand_client.form.phone.placeholder')}
+      required={props.required}
+      label={t('brand_employee.form.phone.label')}
+      placeholder={t('brand_employee.form.phone.placeholder')}
       errors={{
-        required: t('brand_client.form.phone.error.required'),
-        validation: t('brand_client.form.phone.error.validation'),
+        required: t('brand_employee.form.phone.error.required'),
+        validation: t('brand_employee.form.phone.error.validation'),
       }}
       {...props}
     />

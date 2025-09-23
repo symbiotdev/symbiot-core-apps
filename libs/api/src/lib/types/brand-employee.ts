@@ -13,8 +13,8 @@ export type BrandEmployee = {
   firstname: string;
   lastname: string;
   birthday: string;
-  email: string;
-  address: string;
+  emails: string[];
+  addresses: string[];
   role: string;
   passport: string;
   taxId: string;
@@ -47,13 +47,13 @@ export type BrandEmployeePermission = {
 };
 
 export type CreateBrandEmployee = {
-  avatar: ImagePickerAsset;
+  avatar?: ImagePickerAsset;
   provider: boolean;
   about: string;
   firstname: string;
   lastname: string;
-  email: string;
-  address: string;
+  emails: string[];
+  addresses: string[];
   passport: string;
   taxId: string;
   birthday: string | null;

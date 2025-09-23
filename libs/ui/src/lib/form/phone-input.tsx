@@ -5,21 +5,6 @@ import PhoneInputUI from 'react-native-phone-input';
 import { useScheme } from '@symbiot-core-apps/state';
 import { useTheme } from 'tamagui';
 import { InputFieldView } from '../view/input-field-view';
-import { PhoneNumber } from 'react-native-phone-input/dist';
-
-export const validatePhone = (
-  value: string,
-  error: string,
-  required = false,
-) =>
-  !required && !value
-    ? true
-    : PhoneNumber.isValidNumber(
-          PhoneNumber.getNumeric(value),
-          PhoneNumber.getCountryCodeOfNumber(value),
-        )
-      ? true
-      : error;
 
 export const PhoneInput = ({
   value,

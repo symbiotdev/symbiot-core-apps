@@ -22,7 +22,7 @@ export function BrandLocationAdvantagesController<
       itemsLoading={isPending}
       itemsError={error}
       errors={{
-        required: t('brand.form.advantages.error.required'),
+        required: t('brand_location.form.advantages.error.required'),
       }}
       {...props}
     />

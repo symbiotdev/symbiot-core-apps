@@ -16,7 +16,7 @@ export type BrandClient = {
 };
 
 export type CreateBrandClient = {
-  avatar: ImagePickerAsset;
+  avatar?: ImagePickerAsset;
   firstname: string;
   lastname: string;
   birthday: string | null;

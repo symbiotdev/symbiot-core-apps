@@ -91,13 +91,13 @@ export const CreateBrand = () => {
   });
 
   const onFinish = useCallback(async () => {
-    const name = nameGetValues('name');
-    const promoCode = promoCodeGetValues('promoCode');
-    const country = countryGetValues('country');
-    const industry = industryGetValues('industry');
-    const website = websiteGetValues('website');
-    const competitorSource = competitorSourceGetValues('competitorSource');
-    const referralSource = referralSourceGetValues('referralSource');
+    const { name } = nameGetValues();
+    const { promoCode } = promoCodeGetValues();
+    const { country } = countryGetValues();
+    const { industry } = industryGetValues();
+    const { website } = websiteGetValues();
+    const { competitorSource } = competitorSourceGetValues();
+    const { referralSource } = referralSourceGetValues();
 
     const brand = await mutateAsync({
       name,

@@ -8,16 +8,17 @@ export function BrandLocationAdvantagesController<
 >(props: {
   name: Path<T>;
   control: Control<T>;
-  noLabel?: boolean;
+  showLabel?: boolean;
   required?: boolean;
   disabled?: boolean;
+  onBlur?: () => void;
 }) {
   const { t } = useTranslation();
   const { data, isPending, error } = useBrandLocationAdvantages();
 
   return (
     <ToggleController
-      label={!props.noLabel ? t('brand_location.form.advantages.label') : ''}
+      label={props.showLabel ? t('brand_location.form.advantages.label') : ''}
       items={data}
       itemsLoading={isPending}
       itemsError={error}

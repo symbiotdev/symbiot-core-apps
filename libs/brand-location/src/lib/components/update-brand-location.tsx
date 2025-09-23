@@ -24,8 +24,6 @@ import {
   useCurrentAccount,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { BrandLocationCountryForm } from './form/brand-location-country-form';
-import { BrandLocationTimezoneForm } from './form/brand-location-timezone-form';
 import { PhoneNumber } from 'react-native-phone-input/dist';
 import {
   ArrayForm,
@@ -41,7 +39,10 @@ import { BrandLocationNameController } from './controller/brand-location-name-co
 import { BrandLocationPhoneController } from './controller/brand-location-phone-controller';
 import { BrandLocationRemarkController } from './controller/brand-location-remark-controller';
 import { BrandLocationScheduleController } from './controller/brand-location-schedule-controller';
-import { BrandLocationAdvantagesForm } from './form/brand-location-advantages-form';
+import { BrandLocationAdvantagesController } from './controller/brand-location-advantages-controller';
+import { BrandLocationTimezoneController } from './controller/brand-location-timezone-controller';
+import { BrandLocationCountryController } from './controller/brand-location-country-controller';
+import { BrandLocationUsStateController } from './controller/brand-location-us-state-controller';
 
 export const UpdateBrandLocation = ({
   location,
@@ -244,6 +245,13 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
   );
 };
 
+const TimezoneForm = SingeElementForm<{
+  country?: string;
+}>;
+const NoDragForm = SingeElementForm<{
+  disableDrag: true;
+}>;
+
 const Locale = ({ location }: { location: BrandLocation }) => {
   const { t } = useTranslation();
   const { brand } = useCurrentBrandState();
@@ -275,10 +283,7 @@ const Locale = ({ location }: { location: BrandLocation }) => {
         iconAfter={<Icon name="ArrowRight" />}
         label={t('brand_location.update.groups.locale.title')}
         text={
-          [
-            canChangeCountry ? value.country : '',
-            value.timezone,
-          ]
+          [canChangeCountry ? value.country : '', value.timezone]
             .filter(Boolean)
             .join(' · ') || t('shared.not_specified')
         }
@@ -293,17 +298,39 @@ const Locale = ({ location }: { location: BrandLocation }) => {
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           {canChangeCountry && (
-            <BrandLocationCountryForm
-              country={value.country}
-              usState={value.usState}
-              onUpdate={updateValue}
-            />
+            <>
+              <NoDragForm
+                name="country"
+                value={value.country}
+                controllerProps={{
+                  disableDrag: true,
+                }}
+                onUpdate={updateValue}
+                Controller={BrandLocationCountryController}
+              />
+
+              {value.country?.toLowerCase() === 'us' && (
+                <NoDragForm
+                  name="usState"
+                  value={location.usState?.abbreviation}
+                  controllerProps={{
+                    disableDrag: true,
+                  }}
+                  onUpdate={updateValue}
+                  Controller={BrandLocationUsStateController}
+                />
+              )}
+            </>
           )}
 
-          <BrandLocationTimezoneForm
-            country={value.country}
-            timezone={value.timezone}
+          <TimezoneForm
+            name="timezone"
+            value={value.timezone}
             onUpdate={updateValue}
+            controllerProps={{
+              country: value.country,
+            }}
+            Controller={BrandLocationTimezoneController}
           />
         </FormView>
       </SlideSheetModal>
@@ -348,9 +375,11 @@ const Advantages = ({ location }: { location: BrandLocation }) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <BrandLocationAdvantagesForm
-            advantages={value.advantages}
+          <ArrayForm
+            name="advantages"
+            value={value.advantages}
             onUpdate={updateValue}
+            Controller={BrandLocationAdvantagesController}
           />
         </FormView>
       </SlideSheetModal>

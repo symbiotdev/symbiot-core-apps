@@ -86,6 +86,7 @@ export const CurrentBrandServices = ({
                 {formatBrandServicePrice({
                   price: item.price,
                   currency: item.currency,
+                  discount: item.discount,
                 })}
               </RegularText>
 
@@ -96,7 +97,6 @@ export const CurrentBrandServices = ({
                 >
                   {formatBrandServicePrice({
                     price: item.price,
-                    discount: item.discount,
                     currency: item.currency,
                   })}
                 </RegularText>

@@ -4,16 +4,16 @@ import { arraysOfObjectsEqual } from '@symbiot-core-apps/shared';
 
 type FormValue = Record<string, unknown[]>;
 
-export const MultiElementsForm = ({
+export function MultiElementsForm<CP>({
   name,
   value,
-  disabled,
+  controllerProps,
   Controller,
   onUpdate,
 }: {
   name: string;
   value: unknown[];
-  disabled?: boolean;
+  controllerProps?: CP;
   onUpdate: (value: FormValue) => void;
   Controller: ComponentType<{
     name: Path<FormValue>;
@@ -21,7 +21,7 @@ export const MultiElementsForm = ({
     control: Control<FormValue>;
     onBlur: () => void;
   }>;
-}) => {
+}) {
   const { control, handleSubmit, setValue } = useForm<FormValue>({
     defaultValues: {
       [name]: value,
@@ -34,9 +34,9 @@ export const MultiElementsForm = ({
 
   return (
     <Controller
+      {...controllerProps}
       name={name}
       control={control}
-      disabled={disabled}
       onBlur={handleSubmit(
         (currentValue: FormValue) =>
           !arraysOfObjectsEqual(value, currentValue[name]) &&
@@ -44,4 +44,4 @@ export const MultiElementsForm = ({
       )}
     />
   );
-};
+}

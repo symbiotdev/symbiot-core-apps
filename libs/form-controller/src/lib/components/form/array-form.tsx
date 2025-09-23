@@ -4,14 +4,16 @@ import { arraysOfObjectsEqual } from '@symbiot-core-apps/shared';
 
 type FormValue = Record<string, unknown[]>;
 
-export function ArrayForm({
+export function ArrayForm<CP>({
   name,
   value,
+  controllerProps,
   Controller,
   onUpdate,
 }: {
   name: string;
   value: unknown[];
+  controllerProps?: CP;
   onUpdate: (value: FormValue) => void;
   Controller: ComponentType<{
     name: Path<FormValue>;
@@ -31,6 +33,7 @@ export function ArrayForm({
 
   return (
     <Controller
+      {...controllerProps}
       name={name}
       control={control}
       onBlur={handleSubmit(

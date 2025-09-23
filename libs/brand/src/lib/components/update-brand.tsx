@@ -27,8 +27,8 @@ import { useTranslation } from 'react-i18next';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import {
   DateFrom,
-  SingleElementToArrayForm,
   SingeElementForm,
+  SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
 import { BrandAboutController } from './contoller/brand-about-controller';
 import { BrandBirthdayController } from './contoller/brand-birthday-controller';
@@ -160,6 +160,10 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
   );
 };
 
+const DeactivatableForm = SingleElementToArrayForm<{
+  disabled: boolean;
+}>;
+
 const Localization = ({ brand, onUpdated }: GroupProps) => {
   const { t } = useTranslation();
 
@@ -196,17 +200,21 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <SingleElementToArrayForm
+          <DeactivatableForm
             name="countries"
             value={value.countries}
-            disabled={updating}
+            controllerProps={{
+              disabled: updating,
+            }}
             onUpdate={updateValue}
             Controller={BrandCountryController}
           />
-          <SingleElementToArrayForm
+          <DeactivatableForm
             name="currencies"
-            disabled={updating}
             value={value.currencies}
+            controllerProps={{
+              disabled: updating,
+            }}
             onUpdate={updateValue}
             Controller={BrandCurrencyController}
           />

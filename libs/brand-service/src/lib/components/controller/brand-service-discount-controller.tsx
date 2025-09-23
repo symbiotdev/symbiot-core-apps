@@ -9,6 +9,7 @@ export function BrandServiceDiscountController<T extends FieldValues>(props: {
   noLabel?: boolean;
   disabled?: boolean;
   required?: boolean;
+  max?: number;
   currency?: Currency;
   onBlur?: () => void;
 }) {

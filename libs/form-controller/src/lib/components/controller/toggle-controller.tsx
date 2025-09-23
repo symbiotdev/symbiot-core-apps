@@ -4,6 +4,7 @@ import {
   ToggleGroupItem,
 } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { useEffect } from 'react';
 
 export function ToggleController<T extends FieldValues>({
   name,
@@ -15,6 +16,7 @@ export function ToggleController<T extends FieldValues>({
   items,
   itemsLoading,
   itemsError,
+  onBlur,
 }: {
   name: Path<T>;
   control: Control<T>;
@@ -27,7 +29,14 @@ export function ToggleController<T extends FieldValues>({
     required: string;
   };
   disabled?: boolean;
+  onBlur?: () => void;
 }) {
+  useEffect(() => {
+    return () => {
+      onBlur?.();
+    };
+  }, [onBlur]);
+
   return (
     <Controller
       control={control}

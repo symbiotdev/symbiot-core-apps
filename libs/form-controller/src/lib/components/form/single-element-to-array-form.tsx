@@ -6,16 +6,16 @@ type FormValue = Record<string, unknown[]>;
 
 type InternalValue = { str: unknown };
 
-export const SingleElementToArrayForm = ({
+export function SingleElementToArrayForm<CP>({
   name,
   value,
-  disabled,
+  controllerProps,
   Controller,
   onUpdate,
 }: {
   name: string;
   value: unknown[];
-  disabled?: boolean;
+  controllerProps?: CP;
   onUpdate: (value: FormValue) => void;
   Controller: ComponentType<{
     name: Path<InternalValue>;
@@ -23,7 +23,7 @@ export const SingleElementToArrayForm = ({
     control: Control<InternalValue>;
     onBlur: () => void;
   }>;
-}) => {
+}) {
   const { control, handleSubmit, setValue } = useForm<InternalValue>({
     defaultValues: {
       str: value[0],
@@ -36,9 +36,9 @@ export const SingleElementToArrayForm = ({
 
   return (
     <Controller
+      {...controllerProps}
       name="str"
       control={control}
-      disabled={disabled}
       onBlur={handleSubmit(
         (currentValue: InternalValue) =>
           !isEqual(value[0], currentValue.str) &&
@@ -46,4 +46,4 @@ export const SingleElementToArrayForm = ({
       )}
     />
   );
-};
+}

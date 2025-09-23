@@ -1,5 +1,6 @@
 import {
   BrandService,
+  Currency,
   UpdateBrandService as TUpdateBrandService,
   useBrandServiceFormatsQuery,
   useModalUpdateByIdForm,
@@ -18,7 +19,7 @@ import {
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import { useWindowDimensions } from 'react-native';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { useTranslation } from 'react-i18next';
 import {
@@ -32,7 +33,7 @@ import { BrandServiceTypeController } from './controller/brand-service-type-cont
 import { BrandServiceFormatController } from './controller/brand-service-format-controller';
 import { BrandServicePlacesController } from './controller/brand-service-places-controller';
 import { BrandServiceGenderController } from './controller/brand-service-gender-controller';
-import { arraysOfObjectsEqual, DateHelper } from '@symbiot-core-apps/shared';
+import { DateHelper } from '@symbiot-core-apps/shared';
 import { BrandServiceDurationController } from './controller/brand-service-duration-controller';
 import { BrandServiceRemindersController } from './controller/brand-service-reminders-controller';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
@@ -41,7 +42,6 @@ import {
   formatBrandServicePrice,
 } from '../utils/price';
 import { BrandServiceCurrencyController } from './controller/brand-service-currency-controller';
-import { useForm } from 'react-hook-form';
 import { BrandServicePriceController } from './controller/brand-service-price-controller';
 import { BrandServiceDiscountController } from './controller/brand-service-discount-controller';
 import { BrandServiceNoteController } from './controller/brand-service-note-controller';
@@ -95,6 +95,11 @@ export const UpdateBrandService = ({ service }: { service: BrandService }) => {
   );
 };
 
+const LoadingForm = SingeElementForm<{
+  disabled: boolean;
+  loading: boolean;
+}>;
+
 const Availability = ({ service }: { service: BrandService }) => {
   const { mutateAsync, isPending } = useUpdateBrandServiceQuery();
 
@@ -111,17 +116,28 @@ const Availability = ({ service }: { service: BrandService }) => {
 
   return (
     <FormView>
-      <SingeElementForm
+      <LoadingForm
         name="hidden"
-        disabled={isPending}
-        loading={isPending}
         value={!service.hidden}
+        controllerProps={{
+          disabled: isPending,
+          loading: isPending,
+        }}
         onUpdate={onUpdate}
         Controller={BrandServiceAvailabilityController}
       />
     </FormView>
   );
 };
+
+const PriceForm = SingeElementForm<{
+  currency?: Currency;
+}>;
+
+const DiscountForm = SingeElementForm<{
+  currency?: Currency;
+  max: number;
+}>;
 
 const Pricing = ({ service }: { service: BrandService }) => {
   const { brand } = useCurrentBrandState();
@@ -145,37 +161,9 @@ const Pricing = ({ service }: { service: BrandService }) => {
       },
     });
 
-  const {
-    control: priceControl,
-    handleSubmit: priceHandleSubmit,
-    setValue: priceSetValue,
-  } = useForm<{
-    price: number;
-  }>({
-    defaultValues: { price: value.price },
-  });
-
-  const {
-    control: discountControl,
-    handleSubmit: discountHandleSubmit,
-    setValue: discountSetValue,
-  } = useForm<{
-    discount: number;
-  }>({
-    defaultValues: { discount: value.discount },
-  });
-
   const priceCurrency = value.currency
     ? brand?.currencies?.find((currency) => currency.value === value.currency)
     : brand?.currencies?.[0];
-
-  useEffect(() => {
-    priceSetValue('price', service.price);
-  }, [priceSetValue, service.price]);
-
-  useEffect(() => {
-    discountSetValue('discount', service.discount);
-  }, [discountSetValue, service.discount]);
 
   return (
     <>
@@ -220,24 +208,35 @@ const Pricing = ({ service }: { service: BrandService }) => {
             />
           )}
 
-          <BrandServicePriceController
+          <PriceForm
             name="price"
-            currency={priceCurrency}
-            control={priceControl}
-            onBlur={priceHandleSubmit(updateValue)}
+            value={service.price}
+            controllerProps={{
+              currency: priceCurrency,
+            }}
+            onUpdate={updateValue}
+            Controller={BrandServicePriceController}
           />
 
-          <BrandServiceDiscountController
+          <DiscountForm
             name="discount"
-            currency={priceCurrency}
-            control={discountControl}
-            onBlur={discountHandleSubmit(updateValue)}
+            value={service.discount}
+            controllerProps={{
+              currency: priceCurrency,
+              max: value.price,
+            }}
+            onUpdate={updateValue}
+            Controller={BrandServiceDiscountController}
           />
         </FormView>
       </SlideSheetModal>
     </>
   );
 };
+
+const EmployeesForm = SingeElementForm<{
+  location: string | null;
+}>;
 
 const LocationProviders = ({ service }: { service: BrandService }) => {
   const { t } = useTranslation();
@@ -258,29 +257,6 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
     () => service.employees.map(({ id }) => id) || [],
     [service.employees],
   );
-
-  const {
-    control: employeesControl,
-    getValues: employeesGetValue,
-    setValue: employeesSetValue,
-  } = useForm({
-    defaultValues: {
-      employees,
-    },
-  });
-
-  const onUpdateEmployees = useCallback(() => {
-    const selectedEmployees = employeesGetValue('employees');
-
-    !arraysOfObjectsEqual(employees, selectedEmployees) &&
-      updateValue({
-        employees: selectedEmployees,
-      });
-  }, [employeesGetValue, employees, updateValue]);
-
-  useEffect(() => {
-    employeesSetValue('employees', employees);
-  }, [employees, employeesSetValue]);
 
   return (
     <>
@@ -312,14 +288,15 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
             onUpdate={updateValue}
             Controller={BrandServiceLocationController}
           />
-
           {!updating ? (
-            <BrandServiceEmployeesController
-              required
+            <EmployeesForm
               name="employees"
-              location={service.location?.id || null}
-              control={employeesControl}
-              onBlur={onUpdateEmployees}
+              value={employees}
+              onUpdate={updateValue}
+              controllerProps={{
+                location: service.location?.id || null,
+              }}
+              Controller={BrandServiceEmployeesController}
             />
           ) : (
             <LoadingView />

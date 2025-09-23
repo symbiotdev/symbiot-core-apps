@@ -7,6 +7,7 @@ export function PriceController<T extends FieldValues>({
   name,
   label,
   placeholder,
+  max,
   rules,
   required,
   disabled,
@@ -18,6 +19,7 @@ export function PriceController<T extends FieldValues>({
   control: Control<T>;
   label: string;
   placeholder: string;
+  max?: number;
   required?: boolean;
   disabled?: boolean;
   currency?: Currency;
@@ -33,8 +35,9 @@ export function PriceController<T extends FieldValues>({
         <PriceInput
           symbol={currency?.symbol}
           label={label}
-          disabled={disabled}
           placeholder={placeholder}
+          max={max}
+          disabled={disabled}
           required={required}
           value={value}
           error={error?.message}

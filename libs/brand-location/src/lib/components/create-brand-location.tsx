@@ -247,7 +247,6 @@ export const CreateBrandLocation = () => {
         subtitle={t('brand_location.create.steps.advantages.subtitle')}
       >
         <BrandLocationAdvantagesController
-          noLabel
           required
           name="advantages"
           control={advantagesControl}

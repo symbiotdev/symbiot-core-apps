@@ -4,21 +4,23 @@ import { DateHelper } from '@symbiot-core-apps/shared';
 
 type FormValue = Record<string, Date | string | null>;
 
-export const DateFrom = ({
+export function DateFrom<CP>({
   name,
   value,
+  controllerProps,
   Controller,
   onUpdate,
 }: {
   name: string;
   value: string | null;
+  controllerProps?: CP;
   onUpdate: (value: FormValue) => void;
   Controller: ComponentType<{
     name: Path<FormValue>;
     control: Control<FormValue>;
     onBlur: () => void;
   }>;
-}) => {
+}) {
   const { control, handleSubmit, setValue } = useForm<FormValue>({
     defaultValues: {
       [name]: value,
@@ -36,6 +38,7 @@ export const DateFrom = ({
 
   return (
     <Controller
+      {...controllerProps}
       name={name}
       control={control}
       onBlur={handleSubmit((currentValue: FormValue) => {
@@ -49,4 +52,4 @@ export const DateFrom = ({
       })}
     />
   );
-};
+}

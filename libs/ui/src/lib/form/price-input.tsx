@@ -14,6 +14,7 @@ export const priceMaskOptions: MaskedTextInputProps['options'] = {
 
 export const PriceInput = ({
   value,
+  max,
   label,
   symbol,
   placeholder,
@@ -25,6 +26,7 @@ export const PriceInput = ({
   onChange,
 }: {
   value?: number;
+  max?: number;
   label?: string;
   symbol?: string;
   placeholder?: string;
@@ -40,9 +42,15 @@ export const PriceInput = ({
 
   const onChangeText = useCallback(
     (formatted: string, extracted?: string) => {
-      onChange?.(extracted ? Number(extracted) : null);
+      onChange?.(
+        extracted
+          ? max
+            ? Math.min(Number(extracted), max)
+            : Number(extracted)
+          : null,
+      );
     },
-    [onChange],
+    [max, onChange],
   );
 
   return (

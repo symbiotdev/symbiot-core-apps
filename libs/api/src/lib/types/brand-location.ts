@@ -2,6 +2,7 @@ import { Schedule } from './schedule';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { Attachment } from './attachment';
 import { BrandCountry } from './brand';
+import { Currency } from './currency';
 
 export type BrandLocationAdvantage = {
   label: string;
@@ -18,8 +19,6 @@ export type BrandLocationUsState = {
 export type BrandLocation = {
   id: string;
   name: string;
-  currencies: string[];
-  currency: string;
   address: string;
   timezone: string;
   remark: string;
@@ -27,9 +26,10 @@ export type BrandLocation = {
   entrance: string;
   avatarUrl: string;
   avatarXsUrl: string;
-  instagrams: string[];
   phones: string[];
   emails: string[];
+  instagrams: string[];
+  currencies: Currency[];
   country: BrandCountry;
   usState: BrandLocationUsState;
   schedules: Schedule[];

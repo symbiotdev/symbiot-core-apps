@@ -1,15 +1,10 @@
 import { ImagePickerAsset } from 'expo-image-picker';
 import { Account } from './account';
 import { BrandLocation } from './brand-location';
+import { Currency } from './currency';
 
 export type BrandCountry = {
   flag: string;
-  label: string;
-  value: string;
-};
-
-export type BrandCurrency = {
-  symbol: string;
   label: string;
   value: string;
 };
@@ -36,7 +31,7 @@ export type Brand = {
   owner: Account;
   industries: BrandIndustry[];
   countries: BrandCountry[];
-  currencies: BrandCurrency[];
+  currencies: Currency[];
   locations: BrandLocation[];
   instagrams: string[];
   websites: string[];

@@ -29,8 +29,8 @@ import { BrandLocationTimezoneForm } from './form/brand-location-timezone-form';
 import { PhoneNumber } from 'react-native-phone-input/dist';
 import {
   ArrayForm,
-  SingleElementToArrayForm,
   SingeElementForm,
+  SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
 import { BrandLocationAddressController } from './controller/brand-location-address-controller';
 import { BrandLocationCurrencyController } from './controller/brand-location-currency-controller';
@@ -264,7 +264,7 @@ const Locale = ({ location }: { location: BrandLocation }) => {
       initialValue: {
         country: location.country?.value,
         usState: location.usState?.abbreviation,
-        currencies: location.currencies,
+        currencies: location.currencies?.map(({ value }) => value) || [],
         timezone: location.timezone,
       },
     });
@@ -401,7 +401,8 @@ const Contact = ({ location }: { location: BrandLocation }) => {
         label={t('brand_location.update.groups.contact.title')}
         text={
           [
-            value.phones.map((phone) =>
+            value.phones
+              .map((phone) =>
                 PhoneNumber.format(
                   phone,
                   PhoneNumber.getCountryCodeOfNumber(phone),

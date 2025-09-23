@@ -27,14 +27,17 @@ export function BrandEmployeeLocationController<T extends FieldValues>(props: {
       ],
     [dynamicLocation, data],
   );
+
+
   return (
     <SelectController
+      {...props}
+      disabled={!data?.items?.length}
       label={t('brand_employee.form.location.label')}
       placeholder={t('brand_employee.form.location.placeholder')}
       options={options}
       optionsLoading={isPending}
       optionsError={error}
-      {...props}
     />
   );
 }

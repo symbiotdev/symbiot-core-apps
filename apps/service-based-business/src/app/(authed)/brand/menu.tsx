@@ -68,7 +68,7 @@ export default () => {
 
             {hasPermission('employeesAll') && (
               <ListItem
-                label={t('brand.employees.title')}
+                label={t('brand_employee.title')}
                 icon={<Icon name="UsersGroupRounded" />}
                 onPress={onEmployeesPress}
               />

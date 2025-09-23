@@ -88,7 +88,7 @@ export default () => {
       <Button
         type="clear"
         icon={<Icon name="UsersGroupRounded" />}
-        label={t('brand.employees.title')}
+        label={t('brand_employee.title')}
         onPress={() => router.push(`/employees`)}
       />
 

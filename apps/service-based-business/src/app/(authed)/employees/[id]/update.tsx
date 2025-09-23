@@ -6,7 +6,7 @@ import {
   Icon,
   InitView,
 } from '@symbiot-core-apps/ui';
-import { BrandEmployeeForm } from '@symbiot-core-apps/brand-employee';
+import { UpdateBrandEmployee } from '@symbiot-core-apps/brand-employee';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -31,7 +31,7 @@ export default () => {
       ...(brand?.owner?.id !== id && currentEmployee?.id !== id
         ? [
             {
-              label: t('brand.employees.update.context_menu.remove.label'),
+              label: t('brand_employee.update.context_menu.remove.label'),
               icon: <Icon name="TrashBinMinimalistic" />,
               color: '$error',
               onPress: () => router.push(`/employees/${id}/remove`),
@@ -57,5 +57,5 @@ export default () => {
     return <InitView loading={isPending} error={error} />;
   }
 
-  return <BrandEmployeeForm employee={employee} />;
+  return <UpdateBrandEmployee employee={employee} />;
 };

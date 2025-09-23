@@ -253,7 +253,7 @@ export default () => {
                     <Stack.Screen
                       name="employees/[id]/analytics"
                       options={{
-                        headerTitle: t('brand.employees.analytics.title'),
+                        headerTitle: t('brand_employee.analytics.title'),
                       }}
                     />
                   </Stack.Protected>
@@ -261,7 +261,7 @@ export default () => {
                   <Stack.Screen
                     name="employees/[id]/create"
                     options={{
-                      headerTitle: t('brand.employees.new_employee'),
+                      headerTitle: t('brand_employee.create.new_employee'),
                       ...(drawerVisible && {
                         animation: 'none',
                       }),
@@ -270,13 +270,13 @@ export default () => {
                   <Stack.Screen
                     name="employees/[id]/update"
                     options={{
-                      headerTitle: t('brand.employees.update.title'),
+                      headerTitle: t('brand_employee.update.title'),
                     }}
                   />
                   <Stack.Screen
                     name="employees/[id]/profile"
                     options={{
-                      headerTitle: t('brand.employees.profile.title'),
+                      headerTitle: t('brand_employee.profile.title'),
                     }}
                   />
 
@@ -284,7 +284,7 @@ export default () => {
                   <Stack.Screen
                     name="employees/preferences/index"
                     options={{
-                      headerTitle: t('brand.employees.title'),
+                      headerTitle: t('brand_employee.title'),
                     }}
                   />
                   <Stack.Screen
@@ -293,7 +293,7 @@ export default () => {
                       ...(drawerVisible && {
                         animation: 'none',
                       }),
-                      headerTitle: t('brand.employees.title'),
+                      headerTitle: t('brand_employee.title'),
                     }}
                   />
                 </Stack.Protected>

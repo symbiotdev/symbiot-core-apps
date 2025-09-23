@@ -33,7 +33,6 @@ import {
   SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
 import { BrandLocationAddressController } from './controller/brand-location-address-controller';
-import { BrandLocationCurrencyController } from './controller/brand-location-currency-controller';
 import { BrandLocationEmailController } from './controller/brand-location-email-controller';
 import { BrandLocationEntranceController } from './controller/brand-location-entrance-controller';
 import { BrandLocationFloorController } from './controller/brand-location-floor-controller';
@@ -254,7 +253,6 @@ const Locale = ({ location }: { location: BrandLocation }) => {
       {
         country: string;
         usState: string | null;
-        currencies: string[];
         timezone: string;
       },
       TUpdateBrandLocation
@@ -264,13 +262,11 @@ const Locale = ({ location }: { location: BrandLocation }) => {
       initialValue: {
         country: location.country?.value,
         usState: location.usState?.abbreviation,
-        currencies: location.currencies?.map(({ value }) => value) || [],
         timezone: location.timezone,
       },
     });
 
   const canChangeCountry = brand?.countries && brand.countries?.length > 1;
-  const canChangeCurrencies = brand?.currencies && brand.currencies?.length > 1;
 
   return (
     <>
@@ -281,7 +277,6 @@ const Locale = ({ location }: { location: BrandLocation }) => {
         text={
           [
             canChangeCountry ? value.country : '',
-            canChangeCurrencies ? value.currencies.join(', ') : '',
             value.timezone,
           ]
             .filter(Boolean)
@@ -302,15 +297,6 @@ const Locale = ({ location }: { location: BrandLocation }) => {
               country={value.country}
               usState={value.usState}
               onUpdate={updateValue}
-            />
-          )}
-
-          {canChangeCurrencies && (
-            <SingleElementToArrayForm
-              name="currencies"
-              value={value.currencies}
-              onUpdate={updateValue}
-              Controller={BrandLocationCurrencyController}
             />
           )}
 

@@ -23,7 +23,7 @@ export default () => {
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [
       {
-        label: t('brand.services.update.context_menu.remove.label'),
+        label: t('brand_service.update.context_menu.remove.label'),
         icon: <Icon name="TrashBinMinimalistic" />,
         color: '$error',
         onPress: () => router.push(`/services/${id}/remove`),

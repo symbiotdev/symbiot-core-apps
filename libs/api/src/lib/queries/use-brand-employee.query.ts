@@ -23,6 +23,8 @@ export enum BrandEmployeesQueryKey {
   current = 'brand-employee-current',
   permissions = 'brand-employee-permissions',
   currentList = 'brand-employee-current-list',
+  providers = 'brand-employee-providers',
+  locationProviders = 'brand-employee-location-providers',
   profileById = 'brand-employee-profile-by-id',
   providerById = 'brand-employee-provider-by-id',
   detailedById = 'brand-employee-detailed-by-id',
@@ -44,7 +46,11 @@ const refetchQueriesByEmployeeChanges = async (
         BrandEmployeesQueryKey.providerById,
         BrandEmployeesQueryKey.detailedById,
       ],
-      list: [BrandEmployeesQueryKey.currentList],
+      list: [
+        BrandEmployeesQueryKey.currentList,
+        BrandEmployeesQueryKey.providers,
+        BrandEmployeesQueryKey.locationProviders,
+      ],
     },
   });
 
@@ -154,7 +160,7 @@ export const useCurrentBrandEmployeeListQuery = (props?: {
   setInitialState?: (state: PaginationList<BrandEmployee>) => void;
   params?: PaginationListParams;
 }) =>
-  useInfiniteQueryWrapper({
+  useInfiniteQueryWrapper<BrandEmployee>({
     apUrl: '/api/brand-employee',
     queryKey: [BrandEmployeesQueryKey.currentList, props?.params],
     ...props,
@@ -165,10 +171,21 @@ export const useCurrentBrandEmployeeProvidersListQuery = (props?: {
   setInitialState?: (state: PaginationList<BrandEmployee>) => void;
   params?: PaginationListParams;
 }) =>
-  useInfiniteQueryWrapper({
+  useInfiniteQueryWrapper<BrandEmployee>({
     refetchOnMount: true,
     apUrl: '/api/brand-employee/providers',
-    queryKey: [BrandEmployeesQueryKey.currentList, props?.params],
+    queryKey: [BrandEmployeesQueryKey.providers, props?.params],
+    ...props,
+  });
+
+export const useCurrentBrandEmployeeProvidersByLocationListQuery = (props: {
+  location: string;
+  params?: PaginationListParams;
+}) =>
+  useInfiniteQueryWrapper<BrandEmployee>({
+    refetchOnMount: true,
+    apUrl: `/api/brand-employee/location/${props.location}/providers`,
+    queryKey: [BrandEmployeesQueryKey.locationProviders, props],
     ...props,
   });
 

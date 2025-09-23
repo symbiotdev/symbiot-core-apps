@@ -48,13 +48,6 @@ const refetchQueriesByServiceChanges = async (
     },
   });
 
-export const useBrandServiceTypesQuery = () =>
-  useQuery<BrandServiceType[], string>({
-    queryKey: [BrandServiceQueryKey.types],
-    queryFn: () =>
-      requestWithStringError(axios.get('/api/brand-service/types')),
-  });
-
 export const useBrandServiceProfileByIdQuery = (id: string, enabled = true) => {
   const queryKey = [BrandServiceQueryKey.profileById, id];
 
@@ -91,19 +84,38 @@ export const useBrandServiceDetailedByIdQuery = (
   });
 };
 
-export const useBrandServiceFormatsQuery = () =>
-  useQuery<BrandServiceFormat[], string>({
-    queryKey: [BrandServiceQueryKey.formats],
+export const useBrandServiceTypesQuery = (enabled?: boolean) => {
+  const queryKey = [BrandServiceQueryKey.types];
+
+  return useQuery<BrandServiceType[], string>({
+    queryKey,
+    enabled: enabled || !queryClient.getQueryData(queryKey),
+    queryFn: () =>
+      requestWithStringError(axios.get('/api/brand-service/types')),
+  });
+}
+
+export const useBrandServiceFormatsQuery = (enabled?: boolean) => {
+  const queryKey = [BrandServiceQueryKey.formats];
+
+  return useQuery<BrandServiceFormat[], string>({
+    queryKey,
+    enabled: enabled || !queryClient.getQueryData(queryKey),
     queryFn: () =>
       requestWithStringError(axios.get('/api/brand-service/formats')),
   });
+};
 
-export const useBrandServiceGendersQuery = () =>
-  useQuery<Gender[], string>({
-    queryKey: [BrandServiceQueryKey.genders],
+export const useBrandServiceGendersQuery = (enabled?: boolean) => {
+  const queryKey = [BrandServiceQueryKey.genders];
+
+  return useQuery<Gender[], string>({
+    queryKey,
+    enabled: enabled || !queryClient.getQueryData(queryKey),
     queryFn: () =>
       requestWithStringError(axios.get('/api/brand-service/genders')),
   });
+}
 
 export const useCurrentBrandServiceListQuery = (props?: {
   initialState?: PaginationList<BrandService>;

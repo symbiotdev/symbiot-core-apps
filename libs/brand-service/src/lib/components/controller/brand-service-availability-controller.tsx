@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { SwitchController } from '@symbiot-core-apps/form-controller';
 import { Card } from '@symbiot-core-apps/ui';
 
-export function BrandEmployeeProviderController<T extends FieldValues>(props: {
+export function BrandServiceAvailabilityController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   onBlur?: () => void;
@@ -13,9 +13,8 @@ export function BrandEmployeeProviderController<T extends FieldValues>(props: {
   return (
     <Card>
       <SwitchController
-        label={t('brand_employee.form.provider.label')}
-        description={t('brand_employee.form.provider.description')}
-        onChange={props.onBlur}
+        label={t('brand_service.form.available.label')}
+        description={''}
         {...props}
       />
     </Card>

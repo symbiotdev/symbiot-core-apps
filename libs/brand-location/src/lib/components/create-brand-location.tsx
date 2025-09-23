@@ -16,7 +16,6 @@ import { BrandLocationScheduleController } from './controller/brand-location-sch
 import { BrandLocationInstagramController } from './controller/brand-location-instagram-controller';
 import { BrandLocationEmailController } from './controller/brand-location-email-controller';
 import { BrandLocationPhoneController } from './controller/brand-location-phone-controller';
-import { BrandLocationCurrencyController } from './controller/brand-location-currency-controller';
 import { router, useNavigation } from 'expo-router';
 import { EventArg, NavigationAction } from '@react-navigation/native';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
@@ -44,14 +43,6 @@ export const CreateBrandLocation = () => {
     watch: countryWatch,
   } = useForm<{ country: string; usState: string | null }>({
     defaultValues: { country: brand?.countries?.[0]?.value, usState: null },
-  });
-
-  const {
-    control: currencyControl,
-    getValues: currencyGetValues,
-    formState: currencyFormState,
-  } = useForm<{ currency: string }>({
-    defaultValues: { currency: brand?.currencies?.[0]?.value },
   });
 
   const { country } = countryWatch();
@@ -122,7 +113,6 @@ export const CreateBrandLocation = () => {
   const onFinish = useCallback(async () => {
     const { name } = nameGetValues();
     const { country, usState } = countryGetValues();
-    const { currency } = currencyGetValues();
     const { address, entrance, floor, remark } = addressGetValues();
     const { schedule } = scheduleGetValues();
     const { advantages } = advantagesGetValues();
@@ -138,7 +128,6 @@ export const CreateBrandLocation = () => {
       remark,
       advantages,
       schedules: schedule,
-      currencies: currency ? [currency] : [],
       phones: phone ? [phone] : [],
       emails: email ? [email] : [],
       instagrams: instagram ? [instagram] : [],
@@ -152,7 +141,6 @@ export const CreateBrandLocation = () => {
     advantagesGetValues,
     contactGetValues,
     countryGetValues,
-    currencyGetValues,
     mutateAsync,
     nameGetValues,
     scheduleGetValues,
@@ -220,20 +208,6 @@ export const CreateBrandLocation = () => {
               control={countryControl}
             />
           )}
-        </SurveyStep>
-      )}
-
-      {brand?.currencies && brand.currencies.length > 1 && (
-        <SurveyStep
-          canGoNext={currencyFormState.isValid}
-          title={t('brand_location.create.steps.currency.title')}
-          subtitle={t('brand_location.create.steps.currency.subtitle')}
-        >
-          <BrandLocationCurrencyController
-            noLabel
-            name="currency"
-            control={currencyControl}
-          />
         </SurveyStep>
       )}
 

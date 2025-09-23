@@ -379,7 +379,7 @@ export default () => {
                     <Stack.Screen
                       name="services/[id]/analytics"
                       options={{
-                        headerTitle: t('brand.services.analytics.title'),
+                        headerTitle: t('brand_service.analytics.title'),
                       }}
                     />
                   </Stack.Protected>
@@ -387,25 +387,25 @@ export default () => {
                   <Stack.Screen
                     name="services/[id]/update"
                     options={{
-                      headerTitle: t('brand.services.update.title'),
+                      headerTitle: t('brand_service.update.title'),
                     }}
                   />
                   <Stack.Screen
                     name="services/[id]/profile"
                     options={{
-                      headerTitle: t('brand.services.profile.title'),
+                      headerTitle: t('brand_service.profile.title'),
                     }}
                   />
                   <Stack.Screen
                     name="services/preferences/index"
                     options={{
-                      headerTitle: t('brand.services.title'),
+                      headerTitle: t('brand_service.title'),
                     }}
                   />
                   <Stack.Screen
                     name="services/create"
                     options={{
-                      headerTitle: t('brand.services.new_service'),
+                      headerTitle: t('brand_service.create.new_service'),
                     }}
                   />
                   <Stack.Screen
@@ -414,7 +414,7 @@ export default () => {
                       ...(drawerVisible && {
                         animation: 'none',
                       }),
-                      headerTitle: t('brand.services.title'),
+                      headerTitle: t('brand_service.title'),
                     }}
                   />
                 </Stack.Protected>

@@ -34,6 +34,7 @@ export * from './lib/types/brand-client';
 export * from './lib/types/brand-employee';
 export * from './lib/types/brand-location';
 export * from './lib/types/brand-service';
+export * from './lib/types/currency';
 
 export * from './lib/types/faq';
 export * from './lib/types/gender';

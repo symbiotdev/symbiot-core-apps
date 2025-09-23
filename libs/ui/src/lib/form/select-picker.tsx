@@ -91,8 +91,6 @@ export function SelectPicker({
     [onBlur, onChange],
   );
 
-  console.log('disabled', disabled);
-
   return (
     <FormField label={label} error={error} required={required}>
       <AdaptivePopover

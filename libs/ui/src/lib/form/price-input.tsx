@@ -4,6 +4,7 @@ import { useTheme } from 'tamagui';
 import { useScheme } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
 import { MaskedTextInput, MaskedTextInputProps } from 'react-native-mask-text';
+import { MediumText } from '../text/text';
 
 export const priceMaskOptions: MaskedTextInputProps['options'] = {
   decimalSeparator: '.',
@@ -14,6 +15,7 @@ export const priceMaskOptions: MaskedTextInputProps['options'] = {
 export const PriceInput = ({
   value,
   label,
+  symbol,
   placeholder,
   error,
   disabled,
@@ -24,6 +26,7 @@ export const PriceInput = ({
 }: {
   value?: number;
   label?: string;
+  symbol?: string;
   placeholder?: string;
   error?: string;
   disabled?: boolean;
@@ -44,7 +47,11 @@ export const PriceInput = ({
 
   return (
     <FormField label={label} error={error} required={required}>
-      <InputFieldView>
+      <InputFieldView gap="$3">
+        {!!symbol && (
+          <MediumText color="$placeholderColor">{symbol}</MediumText>
+        )}
+
         <MaskedTextInput
           type="currency"
           options={priceMaskOptions}

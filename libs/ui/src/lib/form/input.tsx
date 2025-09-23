@@ -109,11 +109,7 @@ export const Input = forwardRef(
         }
 
         if (type === 'numeric') {
-          const numValue = text ? Number(text) : null;
-
-          if (numValue !== null) {
-            nextValue = isNaN(numValue) ? 0 : numValue;
-          }
+          nextValue = isNaN(Number(text)) ? null : text;
         }
 
         onDebounceChange(nextValue);

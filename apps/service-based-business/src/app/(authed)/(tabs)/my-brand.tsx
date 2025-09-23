@@ -102,7 +102,7 @@ export default () => {
       <Button
         type="clear"
         icon={<Icon name={icons.Service} />}
-        label={t('brand.services.title')}
+        label={t('brand_service.title')}
         onPress={() => router.push(`/services`)}
       />
     </TabsPageView>

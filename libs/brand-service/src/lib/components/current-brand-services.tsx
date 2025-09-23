@@ -94,7 +94,7 @@ export const CurrentBrandServices = ({
               )}
             </XStack>
           ) : (
-            <RegularText>{t('brand.services.free')}</RegularText>
+            <RegularText>{t('brand_service.free')}</RegularText>
           )}
         </XStack>
 
@@ -172,7 +172,7 @@ export const CurrentBrandServices = ({
         <Search
           value={search}
           debounce={300}
-          placeholder={t('brand.services.search.placeholder')}
+          placeholder={t('brand_service.search.placeholder')}
           inputFieldProps={{ backgroundColor: '$background' }}
           onChange={setSearch}
         />
@@ -205,11 +205,11 @@ const Intro = ({
         <EmptyView
           padding={0}
           iconName={icons.Service}
-          title={t('brand.services.upsert.intro.title')}
-          message={t('brand.services.upsert.intro.subtitle')}
+          title={t('brand_service.create.intro.title')}
+          message={t('brand_service.create.intro.subtitle')}
         >
           <Button
-            label={t('brand.services.upsert.intro.button.label')}
+            label={t('brand_service.create.intro.button.label')}
             onPress={() => router.push('/services/create')}
           />
         </EmptyView>

@@ -83,11 +83,15 @@ export default () => {
             onPress={onServicesPress}
           />
           <ListItem
-            label={t('brand_package.title')}
-            icon={<Icon name={icons.Package} />}
+            label={t('brand_membership.title')}
+            icon={<Icon name={icons.Membership} />}
           />
+          {/*<ListItem*/}
+          {/*  label={t('brand_package.title')}*/}
+          {/*  icon={<Icon name={icons.Package} />}*/}
+          {/*/>*/}
           <ListItem
-            label={t('gift_cards.title')}
+            label={t('brand_gift_card.title')}
             icon={<Icon name="Gift" />}
             iconAfter={
               <View>

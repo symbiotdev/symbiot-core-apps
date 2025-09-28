@@ -26,6 +26,9 @@
       "@symbiot-core-apps/brand-client": ["libs/brand-client/src/index.ts"],
       "@symbiot-core-apps/brand-employee": ["libs/brand-employee/src/index.ts"],
       "@symbiot-core-apps/brand-location": ["libs/brand-location/src/index.ts"],
+      "@symbiot-core-apps/brand-membership": [
+        "libs/brand-membership/src/index.ts"
+      ],
       "@symbiot-core-apps/brand-service": ["libs/brand-service/src/index.ts"],
       "@symbiot-core-apps/faq": ["libs/faq/src/index.ts"],
       "@symbiot-core-apps/form-controller": [

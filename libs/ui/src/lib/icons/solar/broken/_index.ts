@@ -70,6 +70,7 @@ import { Library } from './Library';
 import { Close } from './Close';
 import { ArrowToTopLeft } from './ArrowToTopLeft';
 import { MoneyBag } from './MoneyBag';
+import { Card2 } from './Card2';
 
 export const Map: IconMap = {
   AddCircle,
@@ -85,6 +86,7 @@ export const Map: IconMap = {
   Calendar,
   CalendarMinimalistic,
   Camera,
+  Card2,
   ChartSquare,
   ChatRoundDots,
   ChecklistMinimalistic,

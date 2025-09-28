@@ -108,7 +108,7 @@ export const CurrentBrandMemberships = ({
 
         {item.price ? (
           <XStack gap="$2" alignItems="center" alignSelf="flex-end">
-            <RegularText color="white" fontSize={18}>
+            <RegularText color="white">
               {formatPrice({
                 price: item.price,
                 discount: item.discount,

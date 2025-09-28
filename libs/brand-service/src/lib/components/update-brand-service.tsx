@@ -100,6 +100,19 @@ const LoadingForm = SingeElementForm<{
   loading: boolean;
 }>;
 
+const PriceForm = SingeElementForm<{
+  currency?: Currency;
+}>;
+
+const DiscountForm = SingeElementForm<{
+  currency?: Currency;
+  max: number;
+}>;
+
+const EmployeesForm = SingeElementForm<{
+  location: string | null;
+}>;
+
 const Availability = ({ service }: { service: BrandService }) => {
   const { mutateAsync, isPending } = useUpdateBrandServiceQuery();
 
@@ -129,15 +142,6 @@ const Availability = ({ service }: { service: BrandService }) => {
     </FormView>
   );
 };
-
-const PriceForm = SingeElementForm<{
-  currency?: Currency;
-}>;
-
-const DiscountForm = SingeElementForm<{
-  currency?: Currency;
-  max: number;
-}>;
 
 const Pricing = ({ service }: { service: BrandService }) => {
   const { brand } = useCurrentBrandState();
@@ -232,10 +236,6 @@ const Pricing = ({ service }: { service: BrandService }) => {
   );
 };
 
-const EmployeesForm = SingeElementForm<{
-  location: string | null;
-}>;
-
 const LocationProviders = ({ service }: { service: BrandService }) => {
   const { t } = useTranslation();
   const { value, modalVisible, openModal, closeModal, updateValue, updating } =
@@ -286,14 +286,20 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
             onUpdate={updateValue}
             Controller={BrandServiceLocationController}
           />
+
           {!updating ? (
             <EmployeesForm
               name="employees"
               value={employees}
-              onUpdate={updateValue}
               controllerProps={{
                 location: service.location?.id || null,
               }}
+              onUpdate={({ employees }: TUpdateBrandService) =>
+                !modalVisible &&
+                updateValue({
+                  employees,
+                })
+              }
               Controller={BrandServiceEmployeesController}
             />
           ) : (

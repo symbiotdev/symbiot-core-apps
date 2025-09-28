@@ -4,7 +4,7 @@ import { BrandService } from './brand-service';
 
 export type BrandMembershipValidity = {
   label: string;
-  value: string;
+  value: number;
 };
 
 export type BrandMembership = {

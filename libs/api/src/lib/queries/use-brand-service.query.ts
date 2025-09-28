@@ -23,6 +23,8 @@ export enum BrandServiceQueryKey {
   formats = 'brand-service-formats',
   genders = 'brand-service-genders',
   currentList = 'brand-service-current-list',
+  services = 'brand-services',
+  locationServices = 'brand-service-location-services',
   profileById = 'brand-service-profile-by-id',
   viewById = 'brand-service-view-by-id',
   detailedById = 'brand-service-detailed-by-id',
@@ -44,7 +46,11 @@ const refetchQueriesByServiceChanges = async (
         BrandServiceQueryKey.viewById,
         BrandServiceQueryKey.detailedById,
       ],
-      list: [BrandServiceQueryKey.currentList],
+      list: [
+        BrandServiceQueryKey.currentList,
+        BrandServiceQueryKey.services,
+        BrandServiceQueryKey.locationServices,
+      ],
     },
   });
 
@@ -93,7 +99,7 @@ export const useBrandServiceTypesQuery = (enabled?: boolean) => {
     queryFn: () =>
       requestWithStringError(axios.get('/api/brand-service/types')),
   });
-}
+};
 
 export const useBrandServiceFormatsQuery = (enabled?: boolean) => {
   const queryKey = [BrandServiceQueryKey.formats];
@@ -115,16 +121,35 @@ export const useBrandServiceGendersQuery = (enabled?: boolean) => {
     queryFn: () =>
       requestWithStringError(axios.get('/api/brand-service/genders')),
   });
-}
+};
 
 export const useCurrentBrandServiceListQuery = (props?: {
   initialState?: PaginationList<BrandService>;
   setInitialState?: (state: PaginationList<BrandService>) => void;
   params?: PaginationListParams;
 }) =>
-  useInfiniteQueryWrapper({
+  useInfiniteQueryWrapper<BrandService>({
     apUrl: '/api/brand-service',
     queryKey: [BrandServiceQueryKey.currentList, props?.params],
+    ...props,
+  });
+
+export const useServicesQuery = (props?: { params?: PaginationListParams }) =>
+  useInfiniteQueryWrapper<BrandService>({
+    refetchOnMount: true,
+    apUrl: `/api/brand-service/services`,
+    queryKey: [BrandServiceQueryKey.services, props],
+    ...props,
+  });
+
+export const useServicesListByLocationQuery = (props: {
+  location: string;
+  params?: PaginationListParams;
+}) =>
+  useInfiniteQueryWrapper<BrandService>({
+    refetchOnMount: true,
+    apUrl: `/api/brand-service/location/${props.location}/services`,
+    queryKey: [BrandServiceQueryKey.locationServices, props],
     ...props,
   });
 

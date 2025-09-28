@@ -90,7 +90,7 @@ export const useNotificationsListQuery = (
     setInitialState?: (state: PaginationList<Notification>) => void;
   } = {},
 ) =>
-  useInfiniteQueryWrapper({
+  useInfiniteQueryWrapper<Notification>({
     apUrl: '/api/notification',
     queryKey: [NotificationQueryKey.getList],
     ...props,

@@ -85,7 +85,7 @@ export const useCurrentBrandMembershipListQuery = (props?: {
   setInitialState?: (state: PaginationList<BrandMembership>) => void;
   params?: PaginationListParams;
 }) =>
-  useInfiniteQueryWrapper({
+  useInfiniteQueryWrapper<BrandMembership>({
     apUrl: '/api/brand-membership',
     queryKey: [BrandMembershipQueryKey.currentList, props?.params],
     ...props,

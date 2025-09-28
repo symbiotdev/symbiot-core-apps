@@ -43,6 +43,11 @@ export default () => {
     [],
   );
 
+  const onMembershipsPress = useCallback(
+    () => router.push('/memberships/preferences'),
+    [],
+  );
+
   return (
     <PageView scrollable withHeaderHeight>
       <FormView gap="$3">
@@ -90,6 +95,7 @@ export default () => {
               <ListItem
                 label={t('brand_membership.title')}
                 icon={<Icon name={icons.Membership} />}
+                onPress={onMembershipsPress}
               />
             )}
             {/*<ListItem*/}

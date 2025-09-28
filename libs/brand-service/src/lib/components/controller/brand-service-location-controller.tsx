@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useCurrentBrandLocationsQuery } from '@symbiot-core-apps/api';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 import { useMemo } from 'react';
-import { useAnyBrandLocation } from '../../hooks/use-any-brand-location';
+import { useAnyBrandLocation } from '@symbiot-core-apps/brand-location';
 
 export function BrandServiceLocationController<T extends FieldValues>(props: {
   name: Path<T>;

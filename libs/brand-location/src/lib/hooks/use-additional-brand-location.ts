@@ -13,3 +13,17 @@ export const useDynamicBrandLocation = () => {
     [t],
   );
 };
+
+export const useAnyBrandLocation = () => {
+  const { t } = useTranslation();
+
+  return useMemo(
+    () => ({
+      label: t('brand_service.form.any_location.label'),
+      description: t('brand_service.form.any_location.placeholder'),
+      value: null,
+    }),
+    [t],
+  );
+};
+

@@ -354,6 +354,53 @@ export default () => {
                   />
                 </Stack.Protected>
 
+                {/*MEMBERSHIPS*/}
+
+                <Stack.Protected guard={hasPermission('membershipsAll')}>
+                  <Stack.Protected guard={hasPermission('analyticsAll')}>
+                    <Stack.Screen
+                      name="memberships/[id]/analytics"
+                      options={{
+                        headerTitle: t('brand_membership.analytics.title'),
+                      }}
+                    />
+                  </Stack.Protected>
+                  <Stack.Screen name="memberships/[id]/remove" />
+                  <Stack.Screen
+                    name="memberships/[id]/update"
+                    options={{
+                      headerTitle: t('brand_membership.update.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="memberships/[id]/profile"
+                    options={{
+                      headerTitle: t('brand_membership.profile.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="memberships/preferences/index"
+                    options={{
+                      headerTitle: t('brand_membership.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="memberships/create"
+                    options={{
+                      headerTitle: t('brand_membership.create.new_membership'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="memberships/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                      headerTitle: t('brand_membership.title'),
+                    }}
+                  />
+                </Stack.Protected>
+
                 {/*NOTIFICATIONS*/}
 
                 <Stack.Screen

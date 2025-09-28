@@ -76,32 +76,41 @@ export default () => {
           </ListItemGroup>
         )}
 
-        <ListItemGroup title={t('shared.catalog')}>
-          <ListItem
-            label={t('brand_service.title')}
-            icon={<Icon name={icons.Service} />}
-            onPress={onServicesPress}
-          />
-          <ListItem
-            label={t('brand_membership.title')}
-            icon={<Icon name={icons.Membership} />}
-          />
-          {/*<ListItem*/}
-          {/*  label={t('brand_package.title')}*/}
-          {/*  icon={<Icon name={icons.Package} />}*/}
-          {/*/>*/}
-          <ListItem
-            label={t('brand_gift_card.title')}
-            icon={<Icon name="Gift" />}
-            iconAfter={
-              <View>
-                <RegularText color="$placeholderColor" fontSize={12}>
-                  {t('shared.coming_soon')}
-                </RegularText>
-              </View>
-            }
-          />
-        </ListItemGroup>
+        {hasAnyOfPermissions(['servicesAll', 'membershipsAll', 'giftsAll']) && (
+          <ListItemGroup title={t('shared.catalog')}>
+            {hasPermission('servicesAll') && (
+              <ListItem
+                label={t('brand_service.title')}
+                icon={<Icon name={icons.Service} />}
+                onPress={onServicesPress}
+              />
+            )}
+
+            {hasPermission('membershipsAll') && (
+              <ListItem
+                label={t('brand_membership.title')}
+                icon={<Icon name={icons.Membership} />}
+              />
+            )}
+            {/*<ListItem*/}
+            {/*  label={t('brand_package.title')}*/}
+            {/*  icon={<Icon name={icons.Package} />}*/}
+            {/*/>*/}
+            {hasPermission('giftsAll') && (
+              <ListItem
+                label={t('brand_gift_card.title')}
+                icon={<Icon name="Gift" />}
+                iconAfter={
+                  <View>
+                    <RegularText color="$placeholderColor" fontSize={12}>
+                      {t('shared.coming_soon')}
+                    </RegularText>
+                  </View>
+                }
+              />
+            )}
+          </ListItemGroup>
+        )}
 
         {hasPermission('clientsAll') && (
           <ListItemGroup title={t('brand.stakeholders')}>

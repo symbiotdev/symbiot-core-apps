@@ -94,7 +94,7 @@ export const DrawerMenu = () => {
   const { top, bottom, left } = useSafeAreaInsets();
   const { compressed, toggleCompressed } = useDrawerState();
   const { brand: currentBrand } = useCurrentBrandState();
-  const { hasPermission } = useCurrentBrandEmployee();
+  const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
   const { stats } = useCurrentAccount();
 
   const animatedStyle = useAnimatedStyle(
@@ -206,7 +206,12 @@ export const DrawerMenu = () => {
           />
         )}
 
-        <Br marginHorizontal={defaultPageHorizontalPadding} />
+        {hasAnyOfPermissions([
+          'analyticsAll',
+          'clientsAll',
+          'locationsAll',
+          'employeesAll',
+        ]) && <Br marginHorizontal={defaultPageHorizontalPadding} />}
 
         {hasPermission('analyticsAll') && (
           <MenuItem
@@ -221,7 +226,7 @@ export const DrawerMenu = () => {
             route="/clients"
             label={t('navigation.drawer.clients.label')}
             icon="SmileCircle"
-            additionalRoutes={['/clients/survey']}
+            additionalRoutes={['/clients']}
           />
         )}
 
@@ -230,7 +235,7 @@ export const DrawerMenu = () => {
             route="/locations"
             label={t('navigation.drawer.locations.label')}
             icon="MapPointWave"
-            additionalRoutes={['/locations/survey']}
+            additionalRoutes={['/locations']}
           />
         )}
 
@@ -239,8 +244,12 @@ export const DrawerMenu = () => {
             route="/employees"
             label={t('navigation.drawer.employees.label')}
             icon="UsersGroupRounded"
-            additionalRoutes={['/employees/survey']}
+            additionalRoutes={['/employees']}
           />
+        )}
+
+        {hasAnyOfPermissions(['servicesAll', 'membershipsAll']) && (
+          <Br marginHorizontal={defaultPageHorizontalPadding} />
         )}
 
         {hasPermission('servicesAll') && (
@@ -248,7 +257,16 @@ export const DrawerMenu = () => {
             route="/services"
             label={t('navigation.drawer.services.label')}
             icon={icons.Service}
-            additionalRoutes={['/services/survey']}
+            additionalRoutes={['/services']}
+          />
+        )}
+
+        {hasPermission('membershipsAll') && (
+          <MenuItem
+            route="/memberships"
+            label={t('navigation.drawer.memberships.label')}
+            icon={icons.Membership}
+            additionalRoutes={['/memberships']}
           />
         )}
 

@@ -39,6 +39,7 @@ export type BrandEmployeePermissions = {
   employeesAll: boolean;
   locationsAll: boolean;
   membershipsAll: boolean;
+  giftsAll: boolean;
 };
 
 export type BrandEmployeePermission = {

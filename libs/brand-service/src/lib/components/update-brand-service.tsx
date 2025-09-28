@@ -33,14 +33,14 @@ import { BrandServiceTypeController } from './controller/brand-service-type-cont
 import { BrandServiceFormatController } from './controller/brand-service-format-controller';
 import { BrandServicePlacesController } from './controller/brand-service-places-controller';
 import { BrandServiceGenderController } from './controller/brand-service-gender-controller';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import {
+  DateHelper,
+  formatDiscount,
+  formatPrice,
+} from '@symbiot-core-apps/shared';
 import { BrandServiceDurationController } from './controller/brand-service-duration-controller';
 import { BrandServiceRemindersController } from './controller/brand-service-reminders-controller';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
-import {
-  formatBrandServiceDiscount,
-  formatBrandServicePrice,
-} from '../utils/price';
 import { BrandServiceCurrencyController } from './controller/brand-service-currency-controller';
 import { BrandServicePriceController } from './controller/brand-service-price-controller';
 import { BrandServiceDiscountController } from './controller/brand-service-discount-controller';
@@ -173,18 +173,16 @@ const Pricing = ({ service }: { service: BrandService }) => {
         label={t('brand_service.update.groups.pricing.title')}
         text={[
           value.price
-            ? formatBrandServicePrice({
+            ? formatPrice({
                 price: service.price,
-                currency: service.currency,
+                symbol: service.currency?.symbol,
               })
             : t('brand_service.free'),
           value.discount
-            ? `${t('brand_service.form.discount.label')} ${formatBrandServiceDiscount(
-                {
-                  discount: service.discount,
-                  currency: service.currency,
-                },
-              )}`
+            ? `${t('brand_service.form.discount.label')} ${formatDiscount({
+                discount: service.discount,
+                symbol: service.currency?.symbol,
+              })}`
             : '',
         ]
           .filter(Boolean)

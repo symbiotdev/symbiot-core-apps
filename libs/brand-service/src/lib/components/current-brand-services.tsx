@@ -26,9 +26,8 @@ import {
   useCurrentBrandServiceListQuery,
 } from '@symbiot-core-apps/api';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
-import { DateHelper, emitHaptic } from '@symbiot-core-apps/shared';
+import { DateHelper, emitHaptic, formatPrice } from '@symbiot-core-apps/shared';
 import { XStack } from 'tamagui';
-import { formatBrandServicePrice } from '../utils/price';
 
 export const CurrentBrandServices = ({
   navigateTo,
@@ -83,10 +82,10 @@ export const CurrentBrandServices = ({
           {item.price ? (
             <XStack gap="$2" alignItems="center">
               <RegularText>
-                {formatBrandServicePrice({
+                {formatPrice({
                   price: item.price,
-                  currency: item.currency,
                   discount: item.discount,
+                  symbol: item.currency?.symbol,
                 })}
               </RegularText>
 
@@ -95,9 +94,9 @@ export const CurrentBrandServices = ({
                   textDecorationLine="line-through"
                   color="$placeholderColor"
                 >
-                  {formatBrandServicePrice({
+                  {formatPrice({
                     price: item.price,
-                    currency: item.currency,
+                    symbol: item.currency?.symbol,
                   })}
                 </RegularText>
               )}

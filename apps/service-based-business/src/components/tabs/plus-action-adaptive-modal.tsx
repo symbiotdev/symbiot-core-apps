@@ -50,12 +50,10 @@ export const PlusActionAdaptiveModal = ({
     router.push('/services/create');
   }, []);
 
-  const hasClientsPermission = hasPermission('clientsAll');
-  const hasServicesPermission = hasPermission('servicesAll');
-  const hasInfrastructurePermissions = hasAnyOfPermissions([
-    'employeesAll',
-    'locationsAll',
-  ]);
+  const addMembership = useCallback(() => {
+    popoverRef.current?.close();
+    router.push('/memberships/create');
+  }, []);
 
   return (
     <AdaptivePopover
@@ -66,7 +64,7 @@ export const PlusActionAdaptiveModal = ({
       trigger={trigger}
     >
       <View gap="$3">
-        {hasInfrastructurePermissions && (
+        {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && (
           <View gap="$1">
             {hasPermission('locationsAll') && (
               <ListItem
@@ -86,20 +84,36 @@ export const PlusActionAdaptiveModal = ({
           </View>
         )}
 
-        {hasInfrastructurePermissions && hasServicesPermission && <Br />}
+        {hasAnyOfPermissions(['servicesAll', 'membershipsAll']) && (
+          <>
+            {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && <Br />}
 
-        {hasServicesPermission && (
-          <ListItem
-            icon={<Icon name={icons.Service} />}
-            label={t('navigation.tabs.plus.actions.add_service.label')}
-            onPress={addService}
-          />
+            {hasPermission('servicesAll') && (
+              <ListItem
+                icon={<Icon name={icons.Service} />}
+                label={t('navigation.tabs.plus.actions.add_service.label')}
+                onPress={addService}
+              />
+            )}
+
+            {hasPermission('membershipsAll') && (
+              <ListItem
+                icon={<Icon name={icons.Membership} />}
+                label={t('navigation.tabs.plus.actions.add_membership.label')}
+                onPress={addMembership}
+              />
+            )}
+          </>
         )}
 
-        {(hasInfrastructurePermissions || hasServicesPermission) &&
-          hasClientsPermission && <Br />}
+        {hasAnyOfPermissions([
+          'employeesAll',
+          'locationsAll',
+          'servicesAll',
+          'membershipsAll',
+        ]) && <Br />}
 
-        {hasClientsPermission && (
+        {hasPermission('clientsAll') && (
           <View gap="$1">
             <ListItem
               icon={<Icon name="Import" />}

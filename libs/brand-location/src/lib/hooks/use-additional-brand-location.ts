@@ -27,3 +27,16 @@ export const useAnyBrandLocation = () => {
   );
 };
 
+export const useAllBrandLocation = () => {
+  const { t } = useTranslation();
+
+  return useMemo(
+    () => ({
+      label: t('brand_location.form.all.label'),
+      description: t('brand_location.form.all.placeholder'),
+      value: null,
+    }),
+    [t],
+  );
+};
+

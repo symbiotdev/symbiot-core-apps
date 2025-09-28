@@ -2,17 +2,13 @@ import { useTranslation } from 'react-i18next';
 import {
   AnimatedList,
   Button,
-  Chip,
   ContainerView,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   EmptyView,
-  FormView,
   InitView,
-  MediumText,
   NavigationBackground,
   PageView,
-  RegularText,
   Search,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
@@ -21,13 +17,9 @@ import { useApp } from '@symbiot-core-apps/app';
 import { useCurrentBrandServiceState } from '@symbiot-core-apps/state';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCallback, useState } from 'react';
-import {
-  BrandService,
-  useCurrentBrandServiceListQuery,
-} from '@symbiot-core-apps/api';
+import { useCurrentBrandServiceListQuery } from '@symbiot-core-apps/api';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
-import { DateHelper, emitHaptic, formatPrice } from '@symbiot-core-apps/shared';
-import { XStack } from 'tamagui';
+import { BrandServiceItem } from '@symbiot-core-apps/brand';
 
 export const CurrentBrandServices = ({
   navigateTo,
@@ -59,74 +51,6 @@ export const CurrentBrandServices = ({
     },
   });
 
-  const renderItem = useCallback(
-    ({ item }: { item: BrandService }) => (
-      <FormView
-        backgroundColor="$background1"
-        borderRadius="$10"
-        padding="$4"
-        gap="$2"
-        cursor="pointer"
-        opacity={item.hidden ? 0.7 : 1}
-        pressStyle={{ opacity: 0.8 }}
-        onPress={() => {
-          emitHaptic();
-          router.push(`/services/${item.id}/${navigateTo}`);
-        }}
-      >
-        <XStack flex={1}>
-          <MediumText numberOfLines={2} flex={1}>
-            {item.name}
-          </MediumText>
-
-          {item.price ? (
-            <XStack gap="$2" alignItems="center">
-              <RegularText>
-                {formatPrice({
-                  price: item.price,
-                  discount: item.discount,
-                  symbol: item.currency?.symbol,
-                })}
-              </RegularText>
-
-              {!!item.discount && (
-                <RegularText
-                  textDecorationLine="line-through"
-                  color="$placeholderColor"
-                >
-                  {formatPrice({
-                    price: item.price,
-                    symbol: item.currency?.symbol,
-                  })}
-                </RegularText>
-              )}
-            </XStack>
-          ) : (
-            <RegularText>{t('brand_service.free')}</RegularText>
-          )}
-        </XStack>
-
-        <XStack flex={1} flexWrap="wrap" gap="$1">
-          {item.duration && (
-            <Chip
-              label={DateHelper.formatDuration(item.duration, true)}
-              size="small"
-            />
-          )}
-
-          {item.type?.value && <Chip label={item.type.label} size="small" />}
-          {item.format?.value && (
-            <Chip label={item.format.label} size="small" />
-          )}
-          {item.gender?.value && (
-            <Chip label={item.gender.label} size="small" />
-          )}
-        </XStack>
-      </FormView>
-    ),
-    [navigateTo, t],
-  );
-
   const ListEmptyComponent = useCallback(
     () => <EmptyView iconName="Magnifer" message={t('shared.nothing_found')} />,
     [t],
@@ -153,7 +77,15 @@ export const CurrentBrandServices = ({
           }}
           keyExtractor={(item) => item.id}
           ListEmptyComponent={ListEmptyComponent}
-          renderItem={renderItem}
+          renderItem={({ item }) => (
+            <BrandServiceItem
+              backgroundColor="$background1"
+              borderRadius="$10"
+              padding="$4"
+              service={item}
+              navigateTo={navigateTo}
+            />
+          )}
           onRefresh={onRefresh}
           onEndReached={onEndReached}
         />

@@ -32,7 +32,7 @@ import { BrandMembershipDescriptionController } from './controller/brand-members
 import { BrandMembershipNoteController } from './controller/brand-membership-note-controller';
 import { BrandMembershipLocationController } from './controller/brand-membership-location-controller';
 import { BrandMembershipServicesController } from './controller/brand-membership-services-controller';
-import { useAllBrandLocation } from '@symbiot-core-apps/brand-location';
+import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 
 export const UpdateBrandMembership = ({
   membership,

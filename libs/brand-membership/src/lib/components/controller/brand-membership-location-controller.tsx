@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useCurrentBrandLocationsQuery } from '@symbiot-core-apps/api';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 import { useMemo } from 'react';
-import { useAllBrandLocation } from '@symbiot-core-apps/brand-location';
+import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 
 export function BrandMembershipLocationController<
   T extends FieldValues,

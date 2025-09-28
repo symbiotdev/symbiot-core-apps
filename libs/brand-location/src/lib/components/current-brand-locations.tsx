@@ -1,26 +1,17 @@
 import {
   AnimatedList,
-  Avatar,
   Button,
   EmptyView,
-  FormView,
-  Icon,
   InitView,
   PageView,
-  RegularText,
-  SemiBoldText,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
-import { View } from 'tamagui';
-import { emitHaptic } from '@symbiot-core-apps/shared';
-import {
-  BrandLocation,
-  useCurrentBrandLocationsQuery,
-} from '@symbiot-core-apps/api';
+import { useCurrentBrandLocationsQuery } from '@symbiot-core-apps/api';
 import { router } from 'expo-router';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { BrandLocationItem } from '@symbiot-core-apps/brand';
 
 export const CurrentBrandLocations = ({
   navigateTo,
@@ -36,42 +27,6 @@ export const CurrentBrandLocations = ({
     () => data?.items || brand?.locations,
     [data?.items, brand?.locations],
   );
-
-  const renderItem = useCallback(
-    ({ item }: { item: BrandLocation }) => (
-      <FormView
-        alignItems="center"
-        backgroundColor="$background1"
-        borderRadius="$10"
-        padding="$4"
-        gap="$4"
-        cursor="pointer"
-        flexDirection="row"
-        pressStyle={{ opacity: 0.8 }}
-        onPress={() => {
-          emitHaptic();
-          router.push(`/locations/${item.id}/${navigateTo}`);
-        }}
-      >
-        <Avatar
-          name={item.name}
-          size={40}
-          url={item.avatarXsUrl || brand?.avatarXsUrl}
-        />
-
-        <View gap="$1" flex={1}>
-          <SemiBoldText numberOfLines={1}>{item.name}</SemiBoldText>
-          <RegularText color="$placeholderColor" numberOfLines={1}>
-            {item.address}
-          </RegularText>
-        </View>
-
-        <Icon name="ArrowRight" />
-      </FormView>
-    ),
-    [brand?.avatarXsUrl, navigateTo],
-  );
-
   if (!locations?.length) {
     return <Intro loading={isLoading} error={error} />;
   }
@@ -88,7 +43,16 @@ export const CurrentBrandLocations = ({
           paddingBottom: 100,
         }}
         keyExtractor={(item) => item.id}
-        renderItem={renderItem}
+        renderItem={({ item }) => (
+          <BrandLocationItem
+            backgroundColor="$background1"
+            borderRadius="$10"
+            padding="$4"
+            location={item}
+            brand={brand}
+            navigateTo={navigateTo}
+          />
+        )}
         onRefresh={refetch}
       />
     </PageView>

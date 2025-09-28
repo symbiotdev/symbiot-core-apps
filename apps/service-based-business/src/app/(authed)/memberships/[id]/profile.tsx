@@ -1,9 +1,10 @@
-import { HeaderButton, InitView, PageView } from '@symbiot-core-apps/ui';
+import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
 import { useBrandMembershipProfileByIdQuery } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
 import { XStack } from 'tamagui';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
+import { BrandMembershipProfile } from '@symbiot-core-apps/brand-membership';
 
 export default () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -40,5 +41,5 @@ export default () => {
     return <InitView loading={isPending} error={error} />;
   }
 
-  return <PageView />;
+  return <BrandMembershipProfile membership={membership} />;
 };

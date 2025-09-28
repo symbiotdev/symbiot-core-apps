@@ -8,7 +8,7 @@ import {
   ListItemGroup,
   PageView,
   SlideSheetModal,
-  Switch
+  Switch,
 } from '@symbiot-core-apps/ui';
 import {
   BrandEmployee,
@@ -17,18 +17,21 @@ import {
   UpdateBrandEmployee as TUpdateBrandEmployee,
   useBrandEmployeePermissionsQuery,
   useModalUpdateByIdForm,
-  useUpdateBrandEmployeeQuery
+  useUpdateBrandEmployeeQuery,
 } from '@symbiot-core-apps/api';
 import React, { useCallback, useState } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { useTranslation } from 'react-i18next';
-import { useCurrentAccount, useCurrentBrandState } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccount,
+  useCurrentBrandState,
+} from '@symbiot-core-apps/state';
 import {
   DateFrom,
   MultiElementsForm,
   SingeElementForm,
-  SingleElementToArrayForm
+  SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
 import { BrandEmployeeFirstnameController } from './controller/brand-employee-firstname-controller';
 import { BrandEmployeeLastnameController } from './controller/brand-employee-lastname-controller';
@@ -37,7 +40,6 @@ import { BrandEmployeeGenderController } from './controller/brand-employee-gende
 import { BrandEmployeeRoleController } from './controller/brand-employee-role-controller';
 import { BrandEmployeeProviderController } from './controller/brand-employee-provider-controller';
 import { BrandEmployeeAboutController } from './controller/brand-employee-about-controller';
-import { useDynamicBrandLocation } from '@symbiot-core-apps/brand-location';
 import { BrandEmployeeLocationController } from './controller/brand-employee-location-controller';
 import { defaultEmployeeSchedule } from '../utils/schedule';
 import { BrandEmployeeLocationScheduleController } from './controller/brand-employee-location-schedule-controller';
@@ -49,10 +51,11 @@ import { BrandEmployeePassportController } from './controller/brand-employee-pas
 import { BrandEmployeeTaxIdController } from './controller/brand-employee-tax-id-controller';
 import { BrandEmployeePermissionsController } from './controller/brand-employee-permissions-controller';
 import { useForm } from 'react-hook-form';
+import { useDynamicBrandLocation } from '@symbiot-core-apps/brand';
 
 export const UpdateBrandEmployee = ({
-                                      employee
-                                    }: {
+  employee,
+}: {
   employee: BrandEmployee;
 }) => {
   const { brand } = useCurrentBrandState();
@@ -64,10 +67,10 @@ export const UpdateBrandEmployee = ({
       updateAvatar({
         id: employee.id,
         data: {
-          avatar
-        }
+          avatar,
+        },
       }),
-    [employee.id, updateAvatar]
+    [employee.id, updateAvatar],
   );
 
   return (
@@ -120,8 +123,8 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
         firstname: employee.firstname,
         lastname: employee.lastname,
         gender: employee.gender?.value,
-        birthday: employee.birthday
-      }
+        birthday: employee.birthday,
+      },
     });
 
   return (
@@ -133,8 +136,8 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
         text={[
           `${value.firstname} ${value.lastname}`,
           value.birthday &&
-          DateHelper.format(value.birthday, me?.preferences?.dateFormat),
-          employee.gender?.label
+            DateHelper.format(value.birthday, me?.preferences?.dateFormat),
+          employee.gender?.label,
         ]
           .filter(Boolean)
           .join(' · ')}
@@ -193,8 +196,8 @@ const Professionality = ({ employee }: { employee: BrandEmployee }) => {
       query: useUpdateBrandEmployeeQuery,
       initialValue: {
         provider: employee.provider,
-        role: employee.role
-      }
+        role: employee.role,
+      },
     });
 
   return (
@@ -245,8 +248,8 @@ const About = ({ employee }: { employee: BrandEmployee }) => {
       id: employee.id,
       query: useUpdateBrandEmployeeQuery,
       initialValue: {
-        about: employee.about
-      }
+        about: employee.about,
+      },
     });
 
   return (
@@ -297,16 +300,16 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
       query: useUpdateBrandEmployeeQuery,
       initialValue: {
         locations: employee.locations?.map(({ id }) => id) || [],
-        schedules: employee.schedules || defaultEmployeeSchedule
-      }
+        schedules: employee.schedules || defaultEmployeeSchedule,
+      },
     });
 
   const onChangeSchedule = useCallback(
     (checked: boolean) =>
       updateValue({
-        schedules: !checked ? [] : defaultEmployeeSchedule
+        schedules: !checked ? [] : defaultEmployeeSchedule,
       }),
-    [updateValue]
+    [updateValue],
   );
 
   return (
@@ -317,12 +320,12 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
         label={t('brand_employee.update.groups.location.title')}
         text={[
           employee.locations?.map(({ name }) => name).join(' · ') ||
-          dynamicLocation.label,
+            dynamicLocation.label,
           employee.schedules?.length
             ? employee.locations?.length
               ? t('brand_employee.form.location_custom_schedule.description')
               : t('brand_employee.form.employee_schedule.description')
-            : ''
+            : '',
         ]
           .filter(Boolean)
           .join(' · ')}
@@ -350,12 +353,12 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
               label={t(
                 value.locations.length
                   ? 'brand_employee.form.location_custom_schedule.label'
-                  : 'brand_employee.form.employee_schedule.label'
+                  : 'brand_employee.form.employee_schedule.label',
               )}
               description={t(
                 value.locations.length
                   ? 'brand_employee.form.location_custom_schedule.description'
-                  : 'brand_employee.form.employee_schedule.description'
+                  : 'brand_employee.form.employee_schedule.description',
               )}
               checked={!!value.schedules.length}
               onChange={onChangeSchedule}
@@ -393,8 +396,8 @@ const Contact = ({ employee }: { employee: BrandEmployee }) => {
       initialValue: {
         phones: employee.phones || [],
         emails: employee.emails || [],
-        addresses: employee.addresses || []
-      }
+        addresses: employee.addresses || [],
+      },
     });
 
   return (
@@ -409,13 +412,13 @@ const Contact = ({ employee }: { employee: BrandEmployee }) => {
               .map((phone) =>
                 PhoneNumber.format(
                   phone,
-                  PhoneNumber.getCountryCodeOfNumber(phone)
-                )
+                  PhoneNumber.getCountryCodeOfNumber(phone),
+                ),
               )
               .filter(Boolean)
               .join(', '),
             value.emails.join(', '),
-            value.addresses.join(', ')
+            value.addresses.join(', '),
           ]
             .filter(Boolean)
             .join(' · ') || t('shared.not_specified')
@@ -469,8 +472,8 @@ const Identification = ({ employee }: { employee: BrandEmployee }) => {
       query: useUpdateBrandEmployeeQuery,
       initialValue: {
         passport: employee.passport,
-        taxId: employee.taxId
-      }
+        taxId: employee.taxId,
+      },
     });
 
   return (
@@ -525,14 +528,14 @@ const Permissions = ({ employee }: { employee: BrandEmployee }) => {
       id: employee.id,
       query: useUpdateBrandEmployeeQuery,
       initialValue: {
-        permissions: employee.permissions || {}
-      }
+        permissions: employee.permissions || {},
+      },
     });
 
   const { control } = useForm<{
     permissions: BrandEmployeePermissions;
   }>({
-    defaultValues: { permissions: value.permissions }
+    defaultValues: { permissions: value.permissions },
   });
 
   const [updatingKey, setUpdatingKey] =
@@ -545,14 +548,14 @@ const Permissions = ({ employee }: { employee: BrandEmployee }) => {
       try {
         await updateValue({
           permissions: {
-            [key]: checked
-          }
+            [key]: checked,
+          },
         });
       } finally {
         setUpdatingKey(undefined);
       }
     },
-    [updateValue]
+    [updateValue],
   );
 
   return (
@@ -565,9 +568,9 @@ const Permissions = ({ employee }: { employee: BrandEmployee }) => {
           !data && !error
             ? t('shared.syncing')
             : data
-            ?.filter((permission) => value.permissions[permission.key])
-            ?.map((permission) => permission.title)
-            .join(' · ') || t('shared.not_specified')
+                ?.filter((permission) => value.permissions[permission.key])
+                ?.map((permission) => permission.title)
+                .join(' · ') || t('shared.not_specified')
         }
         onPress={openModal}
       />

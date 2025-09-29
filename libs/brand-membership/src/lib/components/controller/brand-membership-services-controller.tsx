@@ -90,10 +90,10 @@ function ServicesController<T extends FieldValues>(
   return (
     <ToggleController
       {...props}
-      label={!props.noLabel ? t('brand_membership.form.providers.label') : ''}
+      label={!props.noLabel ? t('brand_membership.form.services.label') : ''}
       items={items}
       errors={{
-        required: t('brand_membership.form.providers.error.required'),
+        required: t('brand_membership.form.services.error.required'),
       }}
     />
   );

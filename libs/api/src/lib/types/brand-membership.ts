@@ -16,7 +16,7 @@ export type BrandMembership = {
   discount: number;
   hidden: boolean;
   currency: Currency;
-  location: BrandLocation;
+  locations: BrandLocation[];
   services: BrandService[];
   period: BrandMembershipPeriod;
 };
@@ -30,7 +30,7 @@ export type CreateBrandMembership = {
   hidden: boolean;
   currency: string;
   period: string;
-  location: string | null;
+  locations: string[];
   services: string[];
 };
 

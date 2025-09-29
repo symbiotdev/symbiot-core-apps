@@ -64,14 +64,17 @@ export const BrandMembershipProfile = ({
         <ListItemGroup
           paddingVertical="$4"
           title={t('brand_membership.profile.location')}
-          disabled={!membership.location}
+          disabled={!membership.locations}
         >
-          {membership.location ? (
-            <BrandLocationItem
-              location={membership.location}
-              brand={brand}
-              navigateTo="profile"
-            />
+          {membership.locations?.length ? (
+            membership.locations.map((location) => (
+              <BrandLocationItem
+                key={location.id}
+                location={location}
+                brand={brand}
+                navigateTo="profile"
+              />
+            ))
           ) : (
             <RegularText>{allLocations.label}</RegularText>
           )}

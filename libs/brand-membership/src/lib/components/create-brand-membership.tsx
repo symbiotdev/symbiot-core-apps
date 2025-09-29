@@ -109,7 +109,7 @@ export const CreateBrandMembership = () => {
       hidden: !available,
       name,
       description,
-      location,
+      locations: location ? [location] : [],
       services,
       price,
       discount,

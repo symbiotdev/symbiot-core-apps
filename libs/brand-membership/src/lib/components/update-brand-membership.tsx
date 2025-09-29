@@ -18,7 +18,10 @@ import {
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import React, { useCallback, useMemo } from 'react';
-import { SingeElementForm } from '@symbiot-core-apps/form-controller';
+import {
+  SingeElementForm,
+  SingleElementToArrayForm,
+} from '@symbiot-core-apps/form-controller';
 import { BrandMembershipAvailabilityController } from './controller/brand-membership-availability-controller';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
@@ -101,11 +104,7 @@ const Availability = ({ membership }: { membership: BrandMembership }) => {
   );
 };
 
-const PricingAndPeriod = ({
-  membership,
-}: {
-  membership: BrandMembership;
-}) => {
+const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
   const { brand } = useCurrentBrandState();
   const { t } = useTranslation();
   const { value, modalVisible, openModal, closeModal, updateValue } =
@@ -220,7 +219,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
       id: membership.id,
       query: useUpdateBrandMembershipQuery,
       initialValue: {
-        location: membership.location?.id || null,
+        locations: membership.locations?.map(({ id }) => id) || [],
       },
     });
 
@@ -237,7 +236,8 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
         label={t('brand_membership.update.groups.location_services.title')}
         text={
           [
-            membership.location?.name || allLocations.label,
+            membership.locations?.map(({ name }) => name).join(', ') ||
+              allLocations.label,
             membership.services?.map(({ name }) => name)?.join(', '),
           ]
             .filter(Boolean)
@@ -254,9 +254,9 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <SingeElementForm
-            name="location"
-            value={value.location}
+          <SingleElementToArrayForm
+            name="locations"
+            value={value.locations || []}
             onUpdate={updateValue}
             Controller={BrandMembershipLocationController}
           />
@@ -266,7 +266,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
               name="services"
               value={services}
               controllerProps={{
-                location: membership.location?.id || null,
+                location: membership.locations?.[0]?.id,
               }}
               onUpdate={({ services }: TUpdateBrandMembership) =>
                 !modalVisible &&

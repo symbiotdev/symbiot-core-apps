@@ -58,11 +58,10 @@ export const BrandMembershipItem = ({
         <H3 numberOfLines={2} color="white" zIndex={1}>
           {membership.name}
         </H3>
-        {membership.location !== undefined && (
-          <RegularText color="$placeholderColor">
-            {membership.location?.name || allLocations.label}
-          </RegularText>
-        )}
+        <RegularText color="$placeholderColor">
+          {membership.locations?.map(({ name }) => name).join(', ') ||
+            allLocations.label}
+        </RegularText>
       </View>
 
       {membership.price ? (

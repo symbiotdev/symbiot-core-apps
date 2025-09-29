@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useCurrentBrandLocationsQuery } from '@symbiot-core-apps/api';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 import { useMemo } from 'react';
-import { useAnyBrandLocation } from '@symbiot-core-apps/brand';
+import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 
 export function BrandServiceLocationController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -14,19 +14,19 @@ export function BrandServiceLocationController<T extends FieldValues>(props: {
 }) {
   const { t } = useTranslation();
   const { data, isPending, error } = useCurrentBrandLocationsQuery();
-  const anyLocation = useAnyBrandLocation();
+  const allLocations = useAllBrandLocation();
 
   const options = useMemo(
     () =>
       data && [
-        anyLocation,
+        allLocations,
         ...data.items.map((location) => ({
           label: location.name,
           description: location.address,
           value: location.id,
         })),
       ],
-    [anyLocation, data],
+    [allLocations, data],
   );
 
   return (

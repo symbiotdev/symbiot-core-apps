@@ -163,7 +163,7 @@ export const CreateBrandService = () => {
       gender,
       duration,
       reminders,
-      location,
+      locations: location ? [location] : [],
       employees,
       currency,
       price,

@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 import {
   ArrayForm,
   SingeElementForm,
+  SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
 import { BrandServiceNameController } from './controller/brand-service-name-controller';
 import { BrandServiceDescriptionController } from './controller/brand-service-description-controller';
@@ -47,6 +48,7 @@ import { BrandServiceDiscountController } from './controller/brand-service-disco
 import { BrandServiceNoteController } from './controller/brand-service-note-controller';
 import { BrandServiceLocationController } from './controller/brand-service-location-controller';
 import { BrandServiceEmployeesController } from './controller/brand-service-employees-controller';
+import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 
 export const UpdateBrandService = ({ service }: { service: BrandService }) => {
   const { height } = useWindowDimensions();
@@ -238,6 +240,7 @@ const Pricing = ({ service }: { service: BrandService }) => {
 
 const LocationProviders = ({ service }: { service: BrandService }) => {
   const { t } = useTranslation();
+  const allLocations = useAllBrandLocation();
   const { value, modalVisible, openModal, closeModal, updateValue, updating } =
     useModalUpdateByIdForm<
       BrandService,
@@ -247,7 +250,7 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
       id: service.id,
       query: useUpdateBrandServiceQuery,
       initialValue: {
-        location: service.location?.id || null,
+        locations: service.locations?.map(({ id }) => id) || [],
       },
     });
 
@@ -264,7 +267,8 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
         label={t('brand_service.update.groups.location_providers.title')}
         text={
           [
-            service.location?.name,
+            service.locations?.map(({ name }) => name).join(', ') ||
+              allLocations.label,
             service.employees?.map(({ name }) => name)?.join(', '),
           ]
             .filter(Boolean)
@@ -280,9 +284,11 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <SingeElementForm
-            name="location"
-            value={value.location}
+          <SingleElementToArrayForm
+            name="locations"
+            value={
+              value.locations?.length ? value.locations : [allLocations.value]
+            }
             onUpdate={updateValue}
             Controller={BrandServiceLocationController}
           />
@@ -292,7 +298,7 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
               name="employees"
               value={employees}
               controllerProps={{
-                location: service.location?.id || null,
+                location: service.locations?.[0]?.id,
               }}
               onUpdate={({ employees }: TUpdateBrandService) =>
                 !modalVisible &&

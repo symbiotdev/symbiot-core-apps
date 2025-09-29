@@ -33,7 +33,7 @@ export type BrandService = {
   gender: Gender;
   type: BrandServiceType;
   format: BrandServiceFormat;
-  location: BrandLocation;
+  locations: BrandLocation[];
   employees: BrandEmployee[];
 };
 
@@ -49,8 +49,8 @@ export type CreateBrandService = {
   note?: string;
   currency?: string;
   gender?: string | null;
-  location?: string | null;
   description?: string;
+  locations?: string[];
   employees?: string[];
   reminders?: number[];
   avatar?: ImagePickerAsset;

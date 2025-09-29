@@ -82,7 +82,7 @@ export const CreateBrandTicket = () => {
       currency: brand?.currencies?.[0]?.value,
       price: 0,
       discount: 0,
-      visits: 1,
+      visits: 10,
     },
   });
 

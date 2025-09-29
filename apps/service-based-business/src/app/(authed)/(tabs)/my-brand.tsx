@@ -112,6 +112,13 @@ export default () => {
         label={t('brand_membership.title')}
         onPress={() => router.push(`/memberships`)}
       />
+
+      <Button
+        type="clear"
+        icon={<Icon name={icons.Ticket} />}
+        label={t('brand_ticket.title')}
+        onPress={() => router.push(`/tickets`)}
+      />
     </TabsPageView>
   );
 };

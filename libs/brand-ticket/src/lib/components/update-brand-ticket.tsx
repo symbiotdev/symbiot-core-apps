@@ -132,7 +132,7 @@ const PricingAndVisits = ({ ticket }: { ticket: BrandTicket }) => {
       <ListItem
         icon={<Icon name="MoneyBag" />}
         iconAfter={<Icon name="ArrowRight" />}
-        label={t('brand_ticket.update.groups.pricing_period.title')}
+        label={t('brand_ticket.update.groups.pricing_visits.title')}
         text={[
           value.price
             ? formatPrice({
@@ -155,7 +155,7 @@ const PricingAndVisits = ({ ticket }: { ticket: BrandTicket }) => {
 
       <SlideSheetModal
         scrollable
-        headerTitle={t('brand_ticket.update.groups.pricing_period.title')}
+        headerTitle={t('brand_ticket.update.groups.pricing_visits.title')}
         visible={modalVisible}
         onClose={closeModal}
       >

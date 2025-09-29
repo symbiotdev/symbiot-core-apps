@@ -48,6 +48,11 @@ export default () => {
     [],
   );
 
+  const onTicketsPress = useCallback(
+    () => router.push('/tickets/preferences'),
+    [],
+  );
+
   return (
     <PageView scrollable withHeaderHeight>
       <FormView gap="$3">
@@ -81,7 +86,7 @@ export default () => {
           </ListItemGroup>
         )}
 
-        {hasAnyOfPermissions(['servicesAll', 'membershipsAll', 'giftsAll']) && (
+        {hasAnyOfPermissions(['servicesAll', 'membershipsAll', 'ticketsAll', 'giftsAll']) && (
           <ListItemGroup title={t('shared.catalog')}>
             {hasPermission('servicesAll') && (
               <ListItem
@@ -96,6 +101,14 @@ export default () => {
                 label={t('brand_membership.title')}
                 icon={<Icon name={icons.Membership} />}
                 onPress={onMembershipsPress}
+              />
+            )}
+
+            {hasPermission('ticketsAll') && (
+              <ListItem
+                label={t('brand_ticket.title')}
+                icon={<Icon name={icons.Ticket} />}
+                onPress={onTicketsPress}
               />
             )}
             {/*<ListItem*/}

@@ -219,7 +219,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
       id: membership.id,
       query: useUpdateBrandMembershipQuery,
       initialValue: {
-        locations: membership.locations?.map(({ id }) => id) || [null],
+        locations: membership.locations?.map(({ id }) => id) || [],
       },
     });
 
@@ -256,7 +256,9 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="locations"
-            value={value.locations?.length ? value.locations : [null]}
+            value={
+              value.locations?.length ? value.locations : [allLocations.value]
+            }
             onUpdate={updateValue}
             Controller={BrandMembershipLocationController}
           />

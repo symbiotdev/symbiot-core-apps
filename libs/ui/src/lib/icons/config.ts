@@ -63,6 +63,7 @@ export type IconName =
   | 'SmileCircle'
   | 'Suitcase'
   | 'Sun'
+  | 'Ticket'
   | 'TicketStar'
   | 'TrashBinMinimalistic'
   | 'Tuning2'

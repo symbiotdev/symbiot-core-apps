@@ -17,6 +17,7 @@ export * from './lib/queries/use-brand-employee.query';
 export * from './lib/queries/use-brand-location.query';
 export * from './lib/queries/use-brand-membership.query';
 export * from './lib/queries/use-brand-service.query';
+export * from './lib/queries/use-brand-ticket.query';
 
 export * from './lib/queries/use-location.query';
 
@@ -36,6 +37,7 @@ export * from './lib/types/brand-employee';
 export * from './lib/types/brand-location';
 export * from './lib/types/brand-membership';
 export * from './lib/types/brand-service';
+export * from './lib/types/brand-ticket';
 export * from './lib/types/currency';
 
 export * from './lib/types/faq';

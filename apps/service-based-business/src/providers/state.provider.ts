@@ -6,6 +6,7 @@ import {
   useCurrentBrandMembershipState,
   useCurrentBrandServiceState,
   useCurrentBrandState,
+  useCurrentBrandTicketState,
   useFaqState,
   useNotificationsState,
 } from '@symbiot-core-apps/state';
@@ -20,6 +21,7 @@ export const StateProvider = ({ children }: PropsWithChildren) => {
     useCurrentBrandServiceState();
   const { clear: clearCurrentBrandMembershipState } =
     useCurrentBrandMembershipState();
+  const { clear: clearCurrentBrandTicketState } = useCurrentBrandTicketState();
   const { clear: clearFaq } = useFaqState();
   const { clear: clearNotificationsState } = useNotificationsState();
 
@@ -31,6 +33,7 @@ export const StateProvider = ({ children }: PropsWithChildren) => {
       clearCurrentBrandClientState();
       clearCurrentBrandServiceState();
       clearCurrentBrandMembershipState();
+      clearCurrentBrandTicketState();
       clearFaq();
       clearNotificationsState();
     };
@@ -41,6 +44,7 @@ export const StateProvider = ({ children }: PropsWithChildren) => {
     clearCurrentBrandClientState,
     clearCurrentBrandServiceState,
     clearCurrentBrandMembershipState,
+    clearCurrentBrandTicketState,
     clearFaq,
     clearNotificationsState,
   ]);

@@ -248,7 +248,7 @@ export const DrawerMenu = () => {
           />
         )}
 
-        {hasAnyOfPermissions(['servicesAll', 'membershipsAll']) && (
+        {hasAnyOfPermissions(['servicesAll', 'membershipsAll', 'ticketsAll']) && (
           <Br marginHorizontal={defaultPageHorizontalPadding} />
         )}
 
@@ -267,6 +267,15 @@ export const DrawerMenu = () => {
             label={t('navigation.drawer.memberships.label')}
             icon={icons.Membership}
             additionalRoutes={['/memberships']}
+          />
+        )}
+
+        {hasPermission('ticketsAll') && (
+          <MenuItem
+            route="/tickets"
+            label={t('navigation.drawer.tickets.label')}
+            icon={icons.Ticket}
+            additionalRoutes={['/tickets']}
           />
         )}
 

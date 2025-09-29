@@ -465,6 +465,53 @@ export default () => {
                     }}
                   />
                 </Stack.Protected>
+
+                {/*TICKETS*/}
+
+                <Stack.Protected guard={hasPermission('ticketsAll')}>
+                  <Stack.Protected guard={hasPermission('analyticsAll')}>
+                    <Stack.Screen
+                      name="tickets/[id]/analytics"
+                      options={{
+                        headerTitle: t('brand_ticket.analytics.title'),
+                      }}
+                    />
+                  </Stack.Protected>
+                  <Stack.Screen name="tickets/[id]/remove" />
+                  <Stack.Screen
+                    name="tickets/[id]/update"
+                    options={{
+                      headerTitle: t('brand_ticket.update.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="tickets/[id]/profile"
+                    options={{
+                      headerTitle: t('brand_ticket.profile.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="tickets/preferences/index"
+                    options={{
+                      headerTitle: t('brand_ticket.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="tickets/create"
+                    options={{
+                      headerTitle: t('brand_ticket.create.new_ticket'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="tickets/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                      headerTitle: t('brand_ticket.title'),
+                    }}
+                  />
+                </Stack.Protected>
               </Stack>
             )}
 

@@ -41,6 +41,7 @@ export type AppConfigIconName =
   | 'Service'
   | 'Package'
   | 'Membership'
+  | 'Ticket'
   | 'More';
 
 export type AppConfigFunctionality = {

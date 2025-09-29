@@ -1,9 +1,9 @@
 import {
-  BrandMembership,
+  BrandTicket,
   Currency,
-  UpdateBrandMembership as TUpdateBrandMembership,
+  UpdateBrandTicket as TUpdateBrandTicket,
   useModalUpdateByIdForm,
-  useUpdateBrandMembershipQuery,
+  useUpdateBrandTicketQuery,
 } from '@symbiot-core-apps/api';
 import {
   defaultPageVerticalPadding,
@@ -21,35 +21,31 @@ import {
   SingeElementForm,
   SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
-import { BrandMembershipAvailabilityController } from './controller/brand-membership-availability-controller';
+import { BrandTicketAvailabilityController } from './controller/brand-ticket-availability-controller';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 import { formatDiscount, formatPrice } from '@symbiot-core-apps/shared';
-import { BrandMembershipCurrencyController } from './controller/brand-membership-currency-controller';
-import { BrandMembershipPriceController } from './controller/brand-membership-price-controller';
-import { BrandMembershipDiscountController } from './controller/brand-membership-discount-controller';
-import { BrandMembershipPeriodController } from './controller/brand-membership-period-controller';
-import { BrandMembershipNameController } from './controller/brand-membership-name-controller';
-import { BrandMembershipDescriptionController } from './controller/brand-membership-description-controller';
-import { BrandMembershipNoteController } from './controller/brand-membership-note-controller';
-import { BrandMembershipLocationController } from './controller/brand-membership-location-controller';
-import { BrandMembershipServicesController } from './controller/brand-membership-services-controller';
+import { BrandTicketCurrencyController } from './controller/brand-ticket-currency-controller';
+import { BrandTicketPriceController } from './controller/brand-ticket-price-controller';
+import { BrandTicketDiscountController } from './controller/brand-ticket-discount-controller';
+import { BrandTicketNameController } from './controller/brand-ticket-name-controller';
+import { BrandTicketDescriptionController } from './controller/brand-ticket-description-controller';
+import { BrandTicketNoteController } from './controller/brand-ticket-note-controller';
+import { BrandTicketLocationController } from './controller/brand-ticket-location-controller';
+import { BrandTicketServicesController } from './controller/brand-ticket-services-controller';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
+import { BrandTicketVisitsController } from './controller/brand-ticket-visits-controller';
 
-export const UpdateBrandMembership = ({
-  membership,
-}: {
-  membership: BrandMembership;
-}) => {
+export const UpdateBrandTicket = ({ ticket }: { ticket: BrandTicket }) => {
   return (
     <PageView scrollable withHeaderHeight withKeyboard gap="$5">
-      <Availability membership={membership} />
+      <Availability ticket={ticket} />
 
       <ListItemGroup style={formViewStyles}>
-        <PricingAndPeriod membership={membership} />
-        <About membership={membership} />
-        <LocationServices membership={membership} />
-        <Note membership={membership} />
+        <PricingAndVisits ticket={ticket} />
+        <About ticket={ticket} />
+        <LocationServices ticket={ticket} />
+        <Note ticket={ticket} />
       </ListItemGroup>
     </PageView>
   );
@@ -73,57 +69,57 @@ const ServicesForm = SingeElementForm<{
   location: string | null;
 }>;
 
-const Availability = ({ membership }: { membership: BrandMembership }) => {
-  const { mutateAsync, isPending } = useUpdateBrandMembershipQuery();
+const Availability = ({ ticket }: { ticket: BrandTicket }) => {
+  const { mutateAsync, isPending } = useUpdateBrandTicketQuery();
 
   const onUpdate = useCallback(
     () =>
       mutateAsync({
-        id: membership.id,
+        id: ticket.id,
         data: {
-          hidden: !membership.hidden,
+          hidden: !ticket.hidden,
         },
       }),
-    [mutateAsync, membership.hidden, membership.id],
+    [mutateAsync, ticket.hidden, ticket.id],
   );
 
   return (
     <FormView>
       <LoadingForm
         name="hidden"
-        value={!membership.hidden}
+        value={!ticket.hidden}
         controllerProps={{
           disabled: isPending,
           loading: isPending,
         }}
         onUpdate={onUpdate}
-        Controller={BrandMembershipAvailabilityController}
+        Controller={BrandTicketAvailabilityController}
       />
     </FormView>
   );
 };
 
-const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
+const PricingAndVisits = ({ ticket }: { ticket: BrandTicket }) => {
   const { brand } = useCurrentBrandState();
   const { t } = useTranslation();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
-      BrandMembership,
+      BrandTicket,
       {
         currency: string;
         price: number;
         discount: number;
-        period: string;
+        visits: number;
       },
-      TUpdateBrandMembership
+      TUpdateBrandTicket
     >({
-      id: membership.id,
-      query: useUpdateBrandMembershipQuery,
+      id: ticket.id,
+      query: useUpdateBrandTicketQuery,
       initialValue: {
-        currency: membership.currency?.value,
-        price: membership.price,
-        discount: membership.discount,
-        period: membership.period?.value,
+        currency: ticket.currency?.value,
+        price: ticket.price,
+        discount: ticket.discount,
+        visits: ticket.visits,
       },
     });
 
@@ -136,21 +132,21 @@ const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
       <ListItem
         icon={<Icon name="MoneyBag" />}
         iconAfter={<Icon name="ArrowRight" />}
-        label={t('brand_membership.update.groups.pricing_period.title')}
+        label={t('brand_ticket.update.groups.pricing_period.title')}
         text={[
           value.price
             ? formatPrice({
-                price: membership.price,
-                symbol: membership.currency?.symbol,
+                price: ticket.price,
+                symbol: ticket.currency?.symbol,
               })
-            : t('brand_membership.free'),
+            : t('brand_ticket.free'),
           value.discount
-            ? `${t('brand_membership.form.discount.label')} ${formatDiscount({
-                discount: membership.discount,
-                symbol: membership.currency?.symbol,
+            ? `${t('brand_ticket.form.discount.label')} ${formatDiscount({
+                discount: ticket.discount,
+                symbol: ticket.currency?.symbol,
               })}`
             : '',
-          membership.period?.label,
+          ticket.visits,
         ]
           .filter(Boolean)
           .join(' · ')}
@@ -159,7 +155,7 @@ const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
 
       <SlideSheetModal
         scrollable
-        headerTitle={t('brand_membership.update.groups.pricing_period.title')}
+        headerTitle={t('brand_ticket.update.groups.pricing_period.title')}
         visible={modalVisible}
         onClose={closeModal}
       >
@@ -169,36 +165,36 @@ const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
               name="currency"
               value={value.currency}
               onUpdate={updateValue}
-              Controller={BrandMembershipCurrencyController}
+              Controller={BrandTicketCurrencyController}
             />
           )}
 
           <PriceForm
             name="price"
-            value={membership.price}
+            value={ticket.price}
             controllerProps={{
               currency: priceCurrency,
             }}
             onUpdate={updateValue}
-            Controller={BrandMembershipPriceController}
+            Controller={BrandTicketPriceController}
           />
 
           <DiscountForm
             name="discount"
-            value={membership.discount}
+            value={ticket.discount}
             controllerProps={{
               currency: priceCurrency,
               max: value.price,
             }}
             onUpdate={updateValue}
-            Controller={BrandMembershipDiscountController}
+            Controller={BrandTicketDiscountController}
           />
 
           <SingeElementForm
-            name="period"
-            value={value.period}
+            name="visits"
+            value={value.visits}
             onUpdate={updateValue}
-            Controller={BrandMembershipPeriodController}
+            Controller={BrandTicketVisitsController}
           />
         </FormView>
       </SlideSheetModal>
@@ -206,25 +202,23 @@ const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
   );
 };
 
-const LocationServices = ({ membership }: { membership: BrandMembership }) => {
+const LocationServices = ({ ticket }: { ticket: BrandTicket }) => {
   const { t } = useTranslation();
   const allLocations = useAllBrandLocation();
   const { value, modalVisible, openModal, closeModal, updateValue, updating } =
-    useModalUpdateByIdForm<
-      BrandMembership,
-      TUpdateBrandMembership,
-      TUpdateBrandMembership
-    >({
-      id: membership.id,
-      query: useUpdateBrandMembershipQuery,
-      initialValue: {
-        locations: membership.locations?.map(({ id }) => id) || [],
+    useModalUpdateByIdForm<BrandTicket, TUpdateBrandTicket, TUpdateBrandTicket>(
+      {
+        id: ticket.id,
+        query: useUpdateBrandTicketQuery,
+        initialValue: {
+          locations: ticket.locations?.map(({ id }) => id) || [],
+        },
       },
-    });
+    );
 
   const services = useMemo(
-    () => membership.services?.map(({ id }) => id) || [],
-    [membership.services],
+    () => ticket.services?.map(({ id }) => id) || [],
+    [ticket.services],
   );
 
   return (
@@ -232,12 +226,12 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
       <ListItem
         icon={<Icon name="MapPoint" />}
         iconAfter={<Icon name="ArrowRight" />}
-        label={t('brand_membership.update.groups.location_services.title')}
+        label={t('brand_ticket.update.groups.location_services.title')}
         text={
           [
-            membership.locations?.map(({ name }) => name).join(', ') ||
+            ticket.locations?.map(({ name }) => name).join(', ') ||
               allLocations.label,
-            membership.services?.map(({ name }) => name)?.join(', '),
+            ticket.services?.map(({ name }) => name)?.join(', '),
           ]
             .filter(Boolean)
             .join(' · ') || t('shared.not_specified')
@@ -246,9 +240,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
       />
       <SlideSheetModal
         scrollable
-        headerTitle={t(
-          'brand_membership.update.groups.location_services.title',
-        )}
+        headerTitle={t('brand_ticket.update.groups.location_services.title')}
         visible={modalVisible}
         onClose={closeModal}
       >
@@ -259,7 +251,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
               value.locations?.length ? value.locations : [allLocations.value]
             }
             onUpdate={updateValue}
-            Controller={BrandMembershipLocationController}
+            Controller={BrandTicketLocationController}
           />
 
           {!updating ? (
@@ -267,15 +259,15 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
               name="services"
               value={services}
               controllerProps={{
-                location: membership.locations?.[0]?.id,
+                location: ticket.locations?.[0]?.id,
               }}
-              onUpdate={({ services }: TUpdateBrandMembership) =>
+              onUpdate={({ services }: TUpdateBrandTicket) =>
                 !modalVisible &&
                 updateValue({
                   services,
                 })
               }
-              Controller={BrandMembershipServicesController}
+              Controller={BrandTicketServicesController}
             />
           ) : (
             <LoadingView />
@@ -286,22 +278,22 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
   );
 };
 
-const About = ({ membership }: { membership: BrandMembership }) => {
+const About = ({ ticket }: { ticket: BrandTicket }) => {
   const { t } = useTranslation();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
-      BrandMembership,
+      BrandTicket,
       {
         name: string;
         description: string;
       },
-      TUpdateBrandMembership
+      TUpdateBrandTicket
     >({
-      id: membership.id,
-      query: useUpdateBrandMembershipQuery,
+      id: ticket.id,
+      query: useUpdateBrandTicketQuery,
       initialValue: {
-        name: membership.name,
-        description: membership.description,
+        name: ticket.name,
+        description: ticket.description,
       },
     });
 
@@ -310,7 +302,7 @@ const About = ({ membership }: { membership: BrandMembership }) => {
       <ListItem
         icon={<Icon name="InfoCircle" />}
         iconAfter={<Icon name="ArrowRight" />}
-        label={t('brand_membership.update.groups.about.title')}
+        label={t('brand_ticket.update.groups.about.title')}
         text={[value.name, value.description?.replace(/\n/gi, ' ')]
           .filter(Boolean)
           .join(' · ')}
@@ -319,7 +311,7 @@ const About = ({ membership }: { membership: BrandMembership }) => {
 
       <SlideSheetModal
         scrollable
-        headerTitle={t('brand_membership.update.groups.about.title')}
+        headerTitle={t('brand_ticket.update.groups.about.title')}
         visible={modalVisible}
         onClose={closeModal}
       >
@@ -328,13 +320,13 @@ const About = ({ membership }: { membership: BrandMembership }) => {
             name="name"
             value={value.name}
             onUpdate={updateValue}
-            Controller={BrandMembershipNameController}
+            Controller={BrandTicketNameController}
           />
           <SingeElementForm
             name="description"
             value={value.description}
             onUpdate={updateValue}
-            Controller={BrandMembershipDescriptionController}
+            Controller={BrandTicketDescriptionController}
           />
         </FormView>
       </SlideSheetModal>
@@ -342,20 +334,20 @@ const About = ({ membership }: { membership: BrandMembership }) => {
   );
 };
 
-const Note = ({ membership }: { membership: BrandMembership }) => {
+const Note = ({ ticket }: { ticket: BrandTicket }) => {
   const { t } = useTranslation();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
-      BrandMembership,
+      BrandTicket,
       {
         note: string;
       },
-      TUpdateBrandMembership
+      TUpdateBrandTicket
     >({
-      id: membership.id,
-      query: useUpdateBrandMembershipQuery,
+      id: ticket.id,
+      query: useUpdateBrandTicketQuery,
       initialValue: {
-        note: membership.note,
+        note: ticket.note,
       },
     });
 
@@ -364,14 +356,14 @@ const Note = ({ membership }: { membership: BrandMembership }) => {
       <ListItem
         icon={<Icon name="ChatRoundDots" />}
         iconAfter={<Icon name="ArrowRight" />}
-        label={t('brand_membership.update.groups.note.title')}
+        label={t('brand_ticket.update.groups.note.title')}
         text={value.note?.replace(/\n/gi, ' ') || t('shared.not_specified')}
         onPress={openModal}
       />
 
       <SlideSheetModal
         scrollable
-        headerTitle={t('brand_membership.update.groups.note.title')}
+        headerTitle={t('brand_ticket.update.groups.note.title')}
         visible={modalVisible}
         onClose={closeModal}
       >
@@ -380,7 +372,7 @@ const Note = ({ membership }: { membership: BrandMembership }) => {
             name="note"
             value={value.note}
             onUpdate={updateValue}
-            Controller={BrandMembershipNoteController}
+            Controller={BrandTicketNoteController}
           />
         </FormView>
       </SlideSheetModal>

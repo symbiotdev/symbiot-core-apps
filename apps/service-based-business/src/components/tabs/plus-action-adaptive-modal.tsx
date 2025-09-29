@@ -55,6 +55,11 @@ export const PlusActionAdaptiveModal = ({
     router.push('/memberships/create');
   }, []);
 
+  const addTicket = useCallback(() => {
+    popoverRef.current?.close();
+    router.push('/tickets/create');
+  }, []);
+
   return (
     <AdaptivePopover
       ref={popoverRef}
@@ -84,7 +89,11 @@ export const PlusActionAdaptiveModal = ({
           </View>
         )}
 
-        {hasAnyOfPermissions(['servicesAll', 'membershipsAll']) && (
+        {hasAnyOfPermissions([
+          'servicesAll',
+          'membershipsAll',
+          'ticketsAll',
+        ]) && (
           <>
             {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && <Br />}
 
@@ -103,6 +112,14 @@ export const PlusActionAdaptiveModal = ({
                 onPress={addMembership}
               />
             )}
+
+            {hasPermission('ticketsAll') && (
+              <ListItem
+                icon={<Icon name={icons.Ticket} />}
+                label={t('navigation.tabs.plus.actions.add_ticket.label')}
+                onPress={addTicket}
+              />
+            )}
           </>
         )}
 
@@ -111,6 +128,7 @@ export const PlusActionAdaptiveModal = ({
           'locationsAll',
           'servicesAll',
           'membershipsAll',
+          'ticketsAll',
         ]) && <Br />}
 
         {hasPermission('clientsAll') && (

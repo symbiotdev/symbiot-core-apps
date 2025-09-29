@@ -49,8 +49,8 @@ export const BrandMembershipItem = ({
       />
 
       <XStack>
-        {!!membership.validity && (
-          <Chip label={membership.validity?.label} size="small" />
+        {!!membership.period && (
+          <Chip label={membership.period?.label} size="small" />
         )}
       </XStack>
 

@@ -10,13 +10,13 @@ import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { queryClient } from '../utils/client';
 import {
   BrandMembership,
-  BrandMembershipValidity,
+  BrandMembershipPeriod,
   CreateBrandMembership,
   UpdateBrandMembership,
 } from '../types/brand-membership';
 
 export enum BrandMembershipQueryKey {
-  validities = 'brand-membership-validities',
+  periods = 'brand-membership-periods',
   currentList = 'brand-membership-current-list',
   profileById = 'brand-membership-profile-by-id',
   viewById = 'brand-membership-view-by-id',
@@ -43,14 +43,14 @@ const refetchQueriesByMembershipChanges = async (
     },
   });
 
-export const useBrandMembershipValiditiesQuery = (enabled?: boolean) => {
-  const queryKey = [BrandMembershipQueryKey.validities];
+export const useBrandMembershipPeriodsQuery = (enabled?: boolean) => {
+  const queryKey = [BrandMembershipQueryKey.periods];
 
-  return useQuery<BrandMembershipValidity[], string>({
+  return useQuery<BrandMembershipPeriod[], string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
     queryFn: () =>
-      requestWithStringError(axios.get('/api/brand-membership/validities')),
+      requestWithStringError(axios.get('/api/brand-membership/periods')),
   });
 };
 

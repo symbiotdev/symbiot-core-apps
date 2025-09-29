@@ -26,7 +26,7 @@ import { formatDiscount, formatPrice } from '@symbiot-core-apps/shared';
 import { BrandMembershipCurrencyController } from './controller/brand-membership-currency-controller';
 import { BrandMembershipPriceController } from './controller/brand-membership-price-controller';
 import { BrandMembershipDiscountController } from './controller/brand-membership-discount-controller';
-import { BrandMembershipValidityController } from './controller/brand-membership-validity-controller';
+import { BrandMembershipPeriodController } from './controller/brand-membership-period-controller';
 import { BrandMembershipNameController } from './controller/brand-membership-name-controller';
 import { BrandMembershipDescriptionController } from './controller/brand-membership-description-controller';
 import { BrandMembershipNoteController } from './controller/brand-membership-note-controller';
@@ -44,7 +44,7 @@ export const UpdateBrandMembership = ({
       <Availability membership={membership} />
 
       <ListItemGroup style={formViewStyles}>
-        <PricingAndValidity membership={membership} />
+        <PricingAndPeriod membership={membership} />
         <About membership={membership} />
         <LocationServices membership={membership} />
         <Note membership={membership} />
@@ -101,7 +101,7 @@ const Availability = ({ membership }: { membership: BrandMembership }) => {
   );
 };
 
-const PricingAndValidity = ({
+const PricingAndPeriod = ({
   membership,
 }: {
   membership: BrandMembership;
@@ -115,7 +115,7 @@ const PricingAndValidity = ({
         currency: string;
         price: number;
         discount: number;
-        validity: number | null;
+        period: string;
       },
       TUpdateBrandMembership
     >({
@@ -125,7 +125,7 @@ const PricingAndValidity = ({
         currency: membership.currency?.value,
         price: membership.price,
         discount: membership.discount,
-        validity: membership.validity?.value,
+        period: membership.period?.value,
       },
     });
 
@@ -138,7 +138,7 @@ const PricingAndValidity = ({
       <ListItem
         icon={<Icon name="MoneyBag" />}
         iconAfter={<Icon name="ArrowRight" />}
-        label={t('brand_membership.update.groups.pricing_validity.title')}
+        label={t('brand_membership.update.groups.pricing_period.title')}
         text={[
           value.price
             ? formatPrice({
@@ -152,7 +152,7 @@ const PricingAndValidity = ({
                 symbol: membership.currency?.symbol,
               })}`
             : '',
-          membership.validity?.label,
+          membership.period?.label,
         ]
           .filter(Boolean)
           .join(' · ')}
@@ -161,7 +161,7 @@ const PricingAndValidity = ({
 
       <SlideSheetModal
         scrollable
-        headerTitle={t('brand_membership.update.groups.pricing_validity.title')}
+        headerTitle={t('brand_membership.update.groups.pricing_period.title')}
         visible={modalVisible}
         onClose={closeModal}
       >
@@ -197,10 +197,10 @@ const PricingAndValidity = ({
           />
 
           <SingeElementForm
-            name="validity"
-            value={value.validity}
+            name="period"
+            value={value.period}
             onUpdate={updateValue}
-            Controller={BrandMembershipValidityController}
+            Controller={BrandMembershipPeriodController}
           />
         </FormView>
       </SlideSheetModal>

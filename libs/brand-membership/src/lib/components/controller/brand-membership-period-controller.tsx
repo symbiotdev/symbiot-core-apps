@@ -1,9 +1,9 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useBrandMembershipValiditiesQuery } from '@symbiot-core-apps/api';
+import { useBrandMembershipPeriodsQuery } from '@symbiot-core-apps/api';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 
-export function BrandMembershipValidityController<
+export function BrandMembershipPeriodController<
   T extends FieldValues,
 >(props: {
   name: Path<T>;
@@ -14,13 +14,13 @@ export function BrandMembershipValidityController<
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
-  const { data, isPending, error } = useBrandMembershipValiditiesQuery();
+  const { data, isPending, error } = useBrandMembershipPeriodsQuery();
 
   return (
     <SelectController
       {...props}
-      label={t('brand_membership.form.validity.label')}
-      placeholder={t('brand_membership.form.validity.placeholder')}
+      label={t('brand_membership.form.period.label')}
+      placeholder={t('brand_membership.form.period.placeholder')}
       options={data}
       optionsLoading={isPending}
       optionsError={error}

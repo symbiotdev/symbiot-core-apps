@@ -10,13 +10,13 @@ import { useForm } from 'react-hook-form';
 import { BrandMembershipAvailabilityController } from './controller/brand-membership-availability-controller';
 import { BrandMembershipNameController } from './controller/brand-membership-name-controller';
 import { BrandMembershipDescriptionController } from './controller/brand-membership-description-controller';
-import { BrandServiceLocationController } from '../../../../brand-service/src/lib/components/controller/brand-service-location-controller';
 import { BrandMembershipServicesController } from './controller/brand-membership-services-controller';
 import { BrandMembershipCurrencyController } from './controller/brand-membership-currency-controller';
 import { BrandMembershipPriceController } from './controller/brand-membership-price-controller';
 import { BrandMembershipDiscountController } from './controller/brand-membership-discount-controller';
-import { BrandMembershipValidityController } from './controller/brand-membership-validity-controller';
+import { BrandMembershipPeriodController } from './controller/brand-membership-period-controller';
 import { BrandMembershipNoteController } from './controller/brand-membership-note-controller';
+import { BrandMembershipLocationController } from './controller/brand-membership-location-controller';
 
 export const CreateBrandMembership = () => {
   const { brand } = useCurrentBrandState();
@@ -30,7 +30,6 @@ export const CreateBrandMembership = () => {
     control: aboutControl,
     getValues: aboutGetValues,
     formState: aboutFormState,
-    watch: aboutWatch,
   } = useForm<{
     available: boolean;
     name: string;
@@ -77,13 +76,13 @@ export const CreateBrandMembership = () => {
     currency: string;
     price: number;
     discount: number;
-    validity: number | null;
+    period: string;
   }>({
     defaultValues: {
       currency: brand?.currencies?.[0]?.value,
       price: 0,
       discount: 0,
-      validity: 1,
+      period: '1-month',
     },
   });
 
@@ -103,7 +102,7 @@ export const CreateBrandMembership = () => {
     const { name, description, available } = aboutGetValues();
     const { location } = locationGetValues();
     const { services } = servicesGetValues();
-    const { price, discount, validity, currency } = pricingGetValues();
+    const { price, discount, period, currency } = pricingGetValues();
     const { note } = noteGetValues();
 
     const membership = await mutateAsync({
@@ -114,7 +113,7 @@ export const CreateBrandMembership = () => {
       services,
       price,
       discount,
-      validity,
+      period,
       currency,
       note,
     });
@@ -191,7 +190,7 @@ export const CreateBrandMembership = () => {
         title={t('brand_membership.create.steps.location.title')}
         subtitle={t('brand_membership.create.steps.location.subtitle')}
       >
-        <BrandServiceLocationController
+        <BrandMembershipLocationController
           noLabel
           name="location"
           control={locationControl}
@@ -235,8 +234,8 @@ export const CreateBrandMembership = () => {
           currency={priceCurrency}
           control={pricingControl}
         />
-        <BrandMembershipValidityController
-          name="validity"
+        <BrandMembershipPeriodController
+          name="period"
           control={pricingControl}
         />
       </SurveyStep>

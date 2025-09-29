@@ -1,4 +1,4 @@
-import { Pressable } from 'react-native';
+import { Platform, Pressable } from 'react-native';
 import { useTheme, View, ViewProps, XStack } from 'tamagui';
 import {
   NativeStackHeaderProps,
@@ -52,7 +52,9 @@ export const useStackScreenHeaderOptions = () => {
 
   return {
     ...headerOptions,
-    animation: 'ios_from_right',
+    ...(Platform.OS === 'android' && {
+      animation: 'ios_from_right',
+    }),
   } as NativeStackNavigationOptions;
 };
 
@@ -230,7 +232,9 @@ export const ModalHeader = memo(
         )}
 
         {typeof headerTitle === 'function' && (
-          <View flex={4} alignItems="center">{headerTitle()}</View>
+          <View flex={4} alignItems="center">
+            {headerTitle()}
+          </View>
         )}
 
         <SideElement

@@ -2,9 +2,9 @@ import { BrandLocation } from './brand-location';
 import { Currency } from './currency';
 import { BrandService } from './brand-service';
 
-export type BrandMembershipValidity = {
+export type BrandMembershipPeriod = {
   label: string;
-  value: number;
+  value: string;
 };
 
 export type BrandMembership = {
@@ -18,7 +18,7 @@ export type BrandMembership = {
   currency: Currency;
   location: BrandLocation;
   services: BrandService[];
-  validity: BrandMembershipValidity;
+  period: BrandMembershipPeriod;
 };
 
 export type CreateBrandMembership = {
@@ -29,7 +29,7 @@ export type CreateBrandMembership = {
   discount: number;
   hidden: boolean;
   currency: string;
-  validity: number | null;
+  period: string;
   location: string | null;
   services: string[];
 };

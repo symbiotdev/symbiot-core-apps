@@ -61,12 +61,10 @@ export const BrandTicketItem = ({
         backgroundColor="$background1"
         width="100%"
         height={140}
-        justifyContent="space-between"
-        alignItems="center"
         gap="$2"
         padding={defaultPageHorizontalPadding}
       >
-        <View gap="$2">
+        <View gap="$2" flex={1} alignItems="center" justifyContent="center">
           <H3 textAlign="center" numberOfLines={2}>
             {ticket.name}
           </H3>
@@ -82,7 +80,7 @@ export const BrandTicketItem = ({
         </View>
 
         {ticket.price ? (
-          <XStack gap="$2" alignItems="center">
+          <XStack gap="$2" justifyContent="center">
             <RegularText>
               {formatPrice({
                 price: ticket.price,

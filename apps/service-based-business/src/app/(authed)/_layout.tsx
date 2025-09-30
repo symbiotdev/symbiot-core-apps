@@ -203,6 +203,14 @@ export default () => {
                     />
                   </Stack.Protected>
 
+                  <Stack.Protected guard={hasPermission('membershipsAll')}>
+                    <Stack.Screen name="clients/[id]/memberships" />
+                  </Stack.Protected>
+
+                  <Stack.Protected guard={hasPermission('ticketsAll')}>
+                    <Stack.Screen name="clients/[id]/tickets" />
+                  </Stack.Protected>
+
                   <Stack.Screen name="clients/[id]/remove" />
                   <Stack.Screen
                     name="clients/[id]/update"

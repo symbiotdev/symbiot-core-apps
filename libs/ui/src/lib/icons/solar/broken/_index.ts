@@ -72,6 +72,7 @@ import { ArrowToTopLeft } from './ArrowToTopLeft';
 import { MoneyBag } from './MoneyBag';
 import { Card2 } from './Card2';
 import { Ticket } from './Ticket';
+import { Phone } from './Phone';
 
 export const Map: IconMap = {
   AddCircle,
@@ -125,6 +126,7 @@ export const Map: IconMap = {
   MusicLibrary2,
   PaperclipRounded,
   Pen,
+  Phone,
   Plate,
   QrCode,
   QuestionCircle,

@@ -53,6 +53,7 @@ export type IconName =
   | 'MusicLibrary2'
   | 'PaperclipRounded'
   | 'Pen'
+  | 'Phone'
   | 'Plate'
   | 'QrCode'
   | 'QuestionCircle'

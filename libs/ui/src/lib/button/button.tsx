@@ -5,6 +5,7 @@ import { Spinner } from '../loading/spinner';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { Icon } from '../icons';
 import { IconName } from '../icons/config';
+import { ViewStyle } from 'react-native';
 
 export const ButtonTheme = {
   default: {
@@ -108,6 +109,7 @@ export const Button = memo(
 export const ButtonIcon = ({
   iconName,
   iconSize = 18,
+  iconStyle,
   hapticable = true,
   loading,
   size = 30,
@@ -117,6 +119,7 @@ export const ButtonIcon = ({
 }: ViewProps & {
   iconName: IconName;
   iconSize?: number;
+  iconStyle?: ViewStyle;
   loading?: boolean;
   hapticable?: boolean;
   size?: number;
@@ -137,6 +140,11 @@ export const ButtonIcon = ({
       pressStyle={{ opacity: 0.8 }}
       backgroundColor={ButtonTheme[type].backgroundColor}
       borderWidth={ButtonTheme[type].borderWidth}
+      disabledStyle={{
+        cursor: 'auto',
+        opacity: 0.8,
+        backgroundColor: '$disabled',
+      }}
       {...viewProps}
       disabled={disabled}
       onPress={(e) => {
@@ -147,7 +155,7 @@ export const ButtonIcon = ({
       {loading ? (
         <Spinner color={color} size="small" />
       ) : (
-        <Icon color={color} name={iconName} size={iconSize} />
+        <Icon color={color} name={iconName} size={iconSize} style={iconStyle} />
       )}
     </View>
   );

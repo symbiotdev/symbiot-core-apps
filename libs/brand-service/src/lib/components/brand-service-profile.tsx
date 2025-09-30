@@ -35,7 +35,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
         }}
       />
 
-      <FormView marginTop="$5" gap="$5">
+      <FormView marginTop="$3" gap="$2">
         <BrandServiceItem
           backgroundColor="$background1"
           borderRadius="$10"

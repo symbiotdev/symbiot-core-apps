@@ -20,7 +20,7 @@ export const BrandServiceItem = ({
   return (
     <FormView
       {...viewProps}
-      gap="$2"
+      gap="$3"
       cursor="pointer"
       opacity={service.hidden ? 0.7 : 1}
       pressStyle={{ opacity: 0.8 }}
@@ -65,24 +65,30 @@ export const BrandServiceItem = ({
         )}
       </XStack>
 
-      <XStack flex={1} flexWrap="wrap" gap="$1">
-        {service.duration && (
-          <Chip
-            label={DateHelper.formatDuration(service.duration, true)}
-            size="small"
-          />
-        )}
-
-        {service.type?.value && (
-          <Chip label={service.type.label} size="small" />
-        )}
-        {service.format?.value && (
-          <Chip label={service.format.label} size="small" />
-        )}
-        {service.gender?.value && (
-          <Chip label={service.gender.label} size="small" />
-        )}
-      </XStack>
+      <BrandServiceItemChips service={service} />
     </FormView>
   );
 };
+
+export const BrandServiceItemChips = ({
+  service,
+}: {
+  service: BrandService;
+}) => (
+  <XStack flex={1} flexWrap="wrap" gap="$1">
+    {service.duration && (
+      <Chip
+        label={DateHelper.formatDuration(service.duration, true)}
+        size="small"
+      />
+    )}
+
+    {service.type?.value && <Chip label={service.type.label} size="small" />}
+    {service.format?.value && (
+      <Chip label={service.format.label} size="small" />
+    )}
+    {service.gender?.value && (
+      <Chip label={service.gender.label} size="small" />
+    )}
+  </XStack>
+);

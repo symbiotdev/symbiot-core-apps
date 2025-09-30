@@ -16,10 +16,10 @@ import {
 } from '@symbiot-core-apps/brand';
 
 export const BrandTicketProfile = ({ ticket }: { ticket: BrandTicket }) => {
+  const { brand } = useCurrentBrandState();
   const { t } = useTranslation();
   const anyService = useAnyBrandService();
   const allLocations = useAllBrandLocation();
-  const { brand } = useCurrentBrandState();
 
   return (
     <PageView scrollable withHeaderHeight>

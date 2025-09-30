@@ -1,3 +1,4 @@
+export * from './lib/components/items/brand-employee-item';
 export * from './lib/components/items/brand-location-item';
 export * from './lib/components/items/brand-membership-item';
 export * from './lib/components/items/brand-service-item';

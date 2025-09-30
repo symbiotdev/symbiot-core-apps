@@ -1,31 +1,21 @@
 import {
   AnimatedList,
-  Avatar,
   ContainerView,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   EmptyView,
-  FormView,
-  Icon,
   InitView,
-  MediumText,
   NavigationBackground,
-  RegularText,
   Search,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
-import {
-  BrandEmployee,
-  useCurrentBrandEmployeeListQuery,
-} from '@symbiot-core-apps/api';
+import { useCurrentBrandEmployeeListQuery } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
-import { emitHaptic } from '@symbiot-core-apps/shared';
-import { View } from 'tamagui';
-import { router } from 'expo-router';
 import { useCurrentBrandEmployeeState } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
 
 export const CurrentBrandEmployees = ({
   navigateTo,
@@ -57,46 +47,6 @@ export const CurrentBrandEmployees = ({
     },
   });
 
-  const renderItem = useCallback(
-    ({ item }: { item: BrandEmployee }) => (
-      <FormView
-        alignItems="center"
-        backgroundColor="$background1"
-        borderRadius="$10"
-        padding="$4"
-        gap="$4"
-        cursor="pointer"
-        flexDirection="row"
-        pressStyle={{ opacity: 0.8 }}
-        onPress={() => {
-          emitHaptic();
-          router.push(`/employees/${item.id}/${navigateTo}`);
-        }}
-      >
-        <Avatar
-          name={item.name}
-          size={40}
-          url={item.avatarXsUrl}
-          color={item.avatarColor}
-        />
-
-        <View gap="$1" flex={1}>
-          <MediumText numberOfLines={1}>{item.name}</MediumText>
-          <RegularText
-            color="$placeholderColor"
-            numberOfLines={1}
-            lineHeight={20}
-          >
-            {item.role}
-          </RegularText>
-        </View>
-
-        <Icon name="ArrowRight" />
-      </FormView>
-    ),
-    [navigateTo],
-  );
-
   const ListEmptyComponent = useCallback(
     () => <EmptyView iconName="Magnifer" message={t('shared.nothing_found')} />,
     [t],
@@ -122,7 +72,15 @@ export const CurrentBrandEmployees = ({
           }}
           keyExtractor={(item) => item.id}
           ListEmptyComponent={ListEmptyComponent}
-          renderItem={renderItem}
+          renderItem={({ item }) => (
+            <BrandEmployeeItem
+              backgroundColor="$background1"
+              borderRadius="$10"
+              padding="$4"
+              employee={item}
+              navigateTo={navigateTo}
+            />
+          )}
           onRefresh={onRefresh}
           onEndReached={onEndReached}
         />

@@ -1,21 +1,23 @@
-import { Checkbox, Input, Link, RegularText } from '@symbiot-core-apps/ui';
+import { Link, RegularText } from '@symbiot-core-apps/ui';
 import {
   AccountSignUpData,
   useAccountAuthSignUpQuery,
 } from '@symbiot-core-apps/api';
-import { Controller, useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { PasswordPattern } from '@symbiot-core-apps/shared';
+import { useForm } from 'react-hook-form';
 import { AuthFormView } from './auth-form-view';
 import { ReactElement, useCallback } from 'react';
-import { XStack } from 'tamagui';
 import {
   openBrowserAsync,
   WebBrowserPresentationStyle,
 } from 'expo-web-browser';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import {
+  CheckboxController,
+  EmailController,
+  PasswordController,
+  StringController,
+} from '@symbiot-core-apps/form-controller';
 
 export const SignUp = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
@@ -26,6 +28,7 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
     control,
     handleSubmit,
     formState: { isSubmitting },
+    watch,
   } = useForm<
     AccountSignUpData & { confirmPassword: string; agreement: boolean }
   >({
@@ -37,49 +40,6 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
       confirmPassword: '',
       agreement: false,
     },
-    resolver: yupResolver(
-      yup
-        .object()
-        .shape({
-          firstname: yup
-            .string()
-            .required(t('shared.auth.sign_up.form.firstname.error.required')),
-          lastname: yup
-            .string()
-            .required(t('shared.auth.sign_up.form.lastname.error.required')),
-          email: yup
-            .string()
-            .required(t('shared.auth.sign_up.form.email.error.required'))
-            .email(t('shared.auth.sign_up.form.email.error.validation')),
-          password: yup
-            .string()
-            .required(t('shared.auth.sign_up.form.password.error.required'))
-            .matches(
-              PasswordPattern,
-              t('shared.auth.sign_up.form.password.error.validation'),
-            ),
-          confirmPassword: yup
-            .string()
-            .required(
-              t('shared.auth.sign_up.form.confirm_password.error.required'),
-            )
-            .oneOf(
-              [yup.ref('password')],
-              t('shared.auth.sign_up.form.confirm_password.error.match'),
-            ),
-          agreement: yup
-            .boolean()
-            .test(
-              'validate-agreement',
-              t('shared.auth.sign_up.form.agreement.error.required'),
-              function (value) {
-                return !!value;
-              },
-            )
-            .required(),
-        })
-        .required(),
-    ),
   });
 
   const onSubmit = useCallback(
@@ -116,6 +76,8 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
     router.push('/sign-in');
   }, []);
 
+  const { password } = watch();
+
   return (
     <AuthFormView
       title={t('shared.auth.sign_up.title')}
@@ -135,136 +97,91 @@ export const SignUp = ({ logo }: { logo: ReactElement }) => {
       }
       onButtonPress={handleSubmit(onSubmit)}
     >
-      <Controller
-        control={control}
+      <StringController
+        required
         name="firstname"
-        render={({
-          field: { value, onBlur, onChange },
-          fieldState: { error },
-        }) => (
-          <Input
-            value={value}
-            error={error?.message}
-            enterKeyHint="next"
-            autoCapitalize="sentences"
-            disabled={isSubmitting}
-            label={t('shared.auth.sign_up.form.firstname.label')}
-            placeholder={t('shared.auth.sign_up.form.firstname.placeholder')}
-            onChange={onChange}
-            onBlur={onBlur}
-          />
-        )}
+        control={control}
+        label={t('shared.auth.sign_up.form.firstname.label')}
+        placeholder={t('shared.auth.sign_up.form.firstname.placeholder')}
+        rules={{
+          required: t('shared.auth.sign_up.form.firstname.error.required'),
+        }}
       />
 
-      <Controller
-        control={control}
+      <StringController
+        required
         name="lastname"
-        render={({
-          field: { value, onBlur, onChange },
-          fieldState: { error },
-        }) => (
-          <Input
-            value={value}
-            error={error?.message}
-            enterKeyHint="next"
-            autoCapitalize="sentences"
-            disabled={isSubmitting}
-            label={t('shared.auth.sign_up.form.lastname.label')}
-            placeholder={t('shared.auth.sign_up.form.lastname.placeholder')}
-            onChange={onChange}
-            onBlur={onBlur}
-          />
-        )}
+        control={control}
+        label={t('shared.auth.sign_up.form.lastname.label')}
+        placeholder={t('shared.auth.sign_up.form.lastname.placeholder')}
+        rules={{
+          required: t('shared.auth.sign_up.form.lastname.error.required'),
+        }}
       />
 
-      <Controller
-        control={control}
+      <EmailController
+        required
         name="email"
-        render={({
-          field: { value, onBlur, onChange },
-          fieldState: { error },
-        }) => (
-          <Input
-            value={value}
-            error={error?.message}
-            enterKeyHint="next"
-            type="email"
-            keyboardType="email-address"
-            disabled={isSubmitting}
-            label={t('shared.auth.sign_up.form.email.label')}
-            placeholder={t('shared.auth.sign_up.form.email.placeholder')}
-            onChange={onChange}
-            onBlur={onBlur}
-          />
-        )}
+        control={control}
+        label={t('shared.auth.sign_up.form.email.label')}
+        placeholder={t('shared.auth.sign_up.form.email.placeholder')}
+        errors={{
+          required: t('shared.auth.sign_up.form.email.error.required'),
+          validation: t('shared.auth.sign_up.form.email.error.validation'),
+        }}
       />
 
-      <Controller
-        control={control}
+      <PasswordController
+        required
         name="password"
-        render={({
-          field: { value, onBlur, onChange },
-          fieldState: { error },
-        }) => (
-          <Input
-            value={value}
-            error={error?.message}
-            enterKeyHint="next"
-            type="password"
-            disabled={isSubmitting}
-            label={t('shared.auth.sign_up.form.password.label')}
-            placeholder={t('shared.auth.sign_up.form.password.placeholder')}
-            onChange={onChange}
-            onBlur={onBlur}
-          />
-        )}
+        control={control}
+        label={t('shared.auth.sign_up.form.password.label')}
+        placeholder={t('shared.auth.sign_up.form.password.placeholder')}
+        errors={{
+          required: t('shared.auth.sign_up.form.password.error.required'),
+          validation: t('shared.auth.sign_up.form.password.error.validation'),
+        }}
       />
 
-      <Controller
-        control={control}
+      <PasswordController
+        required
         name="confirmPassword"
-        render={({
-          field: { value, onBlur, onChange },
-          fieldState: { error },
-        }) => (
-          <Input
-            value={value}
-            error={error?.message}
-            enterKeyHint="done"
-            type="password"
-            disabled={isSubmitting}
-            label={t('shared.auth.sign_up.form.confirm_password.label')}
-            placeholder={t('shared.auth.sign_up.form.confirm_password.placeholder')}
-            onChange={onChange}
-            onBlur={onBlur}
-          />
-        )}
+        matchTo={password}
+        control={control}
+        label={t('shared.auth.sign_up.form.confirm_password.label')}
+        placeholder={t('shared.auth.sign_up.form.confirm_password.placeholder')}
+        errors={{
+          required: t(
+            'shared.auth.sign_up.form.confirm_password.error.required',
+          ),
+          validation: t(
+            'shared.auth.sign_up.form.confirm_password.error.validation',
+          ),
+          match: t('shared.auth.sign_up.form.confirm_password.error.match'),
+        }}
       />
 
-      <Controller
-        control={control}
+      <CheckboxController
         name="agreement"
-        render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <XStack gap="$3" alignItems="center">
-            <Checkbox
-              value={value}
-              error={error?.message}
-              label={
-                <RegularText>
-                  {t('shared.auth.sign_up.form.agreement.prefix')}
-                  <Link onPress={openPrivacyPolicy}>
-                    {t('shared.docs.privacy_policy')}
-                  </Link>{' '}
-                  {t('and')}{' '}
-                  <Link onPress={openTermsConditions}>
-                    {t('shared.docs.terms_conditions')}
-                  </Link>
-                </RegularText>
-              }
-              onChange={onChange}
-            />
-          </XStack>
-        )}
+        control={control}
+        rules={{
+          validate: (value) =>
+            value
+              ? true
+              : t('shared.auth.sign_up.form.agreement.error.required'),
+        }}
+        label={
+          <RegularText>
+            {t('shared.auth.sign_up.form.agreement.prefix')}
+            <Link onPress={openPrivacyPolicy}>
+              {t('shared.docs.privacy_policy')}
+            </Link>{' '}
+            {t('and')}{' '}
+            <Link onPress={openTermsConditions}>
+              {t('shared.docs.terms_conditions')}
+            </Link>
+          </RegularText>
+        }
       />
     </AuthFormView>
   );

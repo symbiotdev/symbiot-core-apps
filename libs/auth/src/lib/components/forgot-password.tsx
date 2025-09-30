@@ -1,15 +1,14 @@
-import { Input, Link, RegularText } from '@symbiot-core-apps/ui';
+import { Link, RegularText } from '@symbiot-core-apps/ui';
 import { AuthFormView } from './auth-form-view';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
   AccountForgotPasswordData,
   useAccountAuthForgotPasswordQuery,
 } from '@symbiot-core-apps/api';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { ReactElement, useCallback } from 'react';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { EmailController } from '@symbiot-core-apps/form-controller';
 
 export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
@@ -23,21 +22,6 @@ export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
     defaultValues: {
       email: '',
     },
-    resolver: yupResolver(
-      yup
-        .object()
-        .shape({
-          email: yup
-            .string()
-            .required(
-              t('shared.auth.forgot_password.form.email.error.required'),
-            )
-            .email(
-              t('shared.auth.forgot_password.form.email.error.validation'),
-            ),
-        })
-        .required(),
-    ),
   });
 
   const onSubmit = useCallback(
@@ -77,28 +61,18 @@ export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
       }
       onButtonPress={handleSubmit(onSubmit)}
     >
-      <Controller
-        control={control}
+      <EmailController
+        required
         name="email"
-        render={({
-          field: { value, onBlur, onChange },
-          fieldState: { error },
-        }) => (
-          <Input
-            value={value}
-            error={error?.message}
-            enterKeyHint="done"
-            type="email"
-            keyboardType="email-address"
-            disabled={isSubmitting}
-            label={t('shared.auth.forgot_password.form.email.label')}
-            placeholder={t(
-              'shared.auth.forgot_password.form.email.placeholder',
-            )}
-            onChange={onChange}
-            onBlur={onBlur}
-          />
-        )}
+        control={control}
+        label={t('shared.auth.forgot_password.form.email.label')}
+        placeholder={t('shared.auth.forgot_password.form.email.placeholder')}
+        errors={{
+          required: t('shared.auth.forgot_password.form.email.error.required'),
+          validation: t(
+            'shared.auth.forgot_password.form.email.error.validation',
+          ),
+        }}
       />
     </AuthFormView>
   );

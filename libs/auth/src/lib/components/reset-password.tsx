@@ -1,16 +1,13 @@
 import { AuthFormView } from './auth-form-view';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
   AccountResetPasswordData,
   useAccountAuthResetPasswordQuery,
 } from '@symbiot-core-apps/api';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { PasswordPattern } from '@symbiot-core-apps/shared';
 import { ReactElement, useCallback } from 'react';
-import { Input } from '@symbiot-core-apps/ui';
 import { useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { PasswordController } from '@symbiot-core-apps/form-controller';
 
 export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
@@ -25,40 +22,12 @@ export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
     control,
     handleSubmit,
     formState: { isSubmitting },
+    watch,
   } = useForm<AccountResetPasswordData & { confirmPassword: string }>({
     defaultValues: {
       password: '',
       confirmPassword: '',
     },
-    resolver: yupResolver(
-      yup
-        .object()
-        .shape({
-          password: yup
-            .string()
-            .required(
-              t('shared.auth.reset_password.form.password.error.required'),
-            )
-            .matches(
-              PasswordPattern,
-              t(
-                'shared.auth.reset_password.form.password.error.validation',
-              ),
-            ),
-          confirmPassword: yup
-            .string()
-            .required(
-              t(
-                'shared.auth.reset_password.form.confirm_password.error.required',
-              ),
-            )
-            .oneOf(
-              [yup.ref('password')],
-              t('shared.auth.reset_password.form.confirm_password.error.match'),
-            ),
-        })
-        .required(),
-    ),
   });
 
   const onSubmit = useCallback(
@@ -72,6 +41,8 @@ export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
     [code, email, mutateAsync, secret],
   );
 
+  const { password } = watch();
+
   return (
     <AuthFormView
       title={t('shared.auth.reset_password.title')}
@@ -83,50 +54,42 @@ export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
       error={error}
       onButtonPress={handleSubmit(onSubmit)}
     >
-      <Controller
-        control={control}
+      <PasswordController
+        required
         name="password"
-        render={({
-          field: { value, onBlur, onChange },
-          fieldState: { error },
-        }) => (
-          <Input
-            value={value}
-            error={error?.message}
-            enterKeyHint="done"
-            type="password"
-            disabled={isSubmitting}
-            label={t('shared.auth.reset_password.form.password.label')}
-            placeholder={t(
-              'shared.auth.reset_password.form.password.placeholder',
-            )}
-            onChange={onChange}
-            onBlur={onBlur}
-          />
-        )}
+        control={control}
+        label={t('shared.auth.reset_password.form.password.label')}
+        placeholder={t('shared.auth.reset_password.form.password.placeholder')}
+        errors={{
+          required: t(
+            'shared.auth.reset_password.form.password.error.required',
+          ),
+          validation: t(
+            'shared.auth.reset_password.form.password.error.validation',
+          ),
+        }}
       />
 
-      <Controller
-        control={control}
+      <PasswordController
+        required
         name="confirmPassword"
-        render={({
-          field: { value, onBlur, onChange },
-          fieldState: { error },
-        }) => (
-          <Input
-            value={value}
-            error={error?.message}
-            enterKeyHint="done"
-            type="password"
-            disabled={isSubmitting}
-            label={t('shared.auth.reset_password.form.confirm_password.label')}
-            placeholder={t(
-              'shared.auth.reset_password.form.confirm_password.placeholder',
-            )}
-            onChange={onChange}
-            onBlur={onBlur}
-          />
+        matchTo={password}
+        control={control}
+        label={t('shared.auth.reset_password.form.confirm_password.label')}
+        placeholder={t(
+          'shared.auth.reset_password.form.confirm_password.placeholder',
         )}
+        errors={{
+          required: t(
+            'shared.auth.reset_password.form.confirm_password.error.required',
+          ),
+          validation: t(
+            'shared.auth.reset_password.form.confirm_password.error.validation',
+          ),
+          match: t(
+            'shared.auth.reset_password.form.confirm_password.error.match',
+          ),
+        }}
       />
     </AuthFormView>
   );

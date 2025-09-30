@@ -1,16 +1,17 @@
 import { AuthFormView } from './auth-form-view';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
   AccountSignInData,
   useAccountAuthSignInQuery,
 } from '@symbiot-core-apps/api';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { PasswordPattern } from '@symbiot-core-apps/shared';
 import { ReactElement, useCallback } from 'react';
-import { Input, Link, RegularText } from '@symbiot-core-apps/ui';
+import { Link, RegularText } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import {
+  EmailController,
+  PasswordController,
+} from '@symbiot-core-apps/form-controller';
 
 export const SignIn = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
@@ -25,24 +26,6 @@ export const SignIn = ({ logo }: { logo: ReactElement }) => {
       email: '',
       password: '',
     },
-    resolver: yupResolver(
-      yup
-        .object()
-        .shape({
-          email: yup
-            .string()
-            .required(t('shared.auth.sign_in.form.email.error.required'))
-            .email(t('shared.auth.sign_in.form.email.error.validation')),
-          password: yup
-            .string()
-            .required(t('shared.auth.sign_in.form.password.error.required'))
-            .matches(
-              PasswordPattern,
-              t('shared.auth.sign_in.form.password.error.validation'),
-            ),
-        })
-        .required(),
-    ),
   });
 
   const onSubmit = useCallback(
@@ -77,47 +60,28 @@ export const SignIn = ({ logo }: { logo: ReactElement }) => {
       }
       onButtonPress={handleSubmit(onSubmit)}
     >
-      <Controller
-        control={control}
+      <EmailController
+        required
         name="email"
-        render={({
-          field: { value, onBlur, onChange },
-          fieldState: { error },
-        }) => (
-          <Input
-            value={value}
-            error={error?.message}
-            enterKeyHint="next"
-            type="email"
-            keyboardType="email-address"
-            disabled={isSubmitting}
-            label={t('shared.auth.sign_in.form.email.label')}
-            placeholder={t('shared.auth.sign_in.form.email.placeholder')}
-            onChange={onChange}
-            onBlur={onBlur}
-          />
-        )}
+        control={control}
+        label={t('shared.auth.sign_in.form.email.label')}
+        placeholder={t('shared.auth.sign_in.form.email.placeholder')}
+        errors={{
+          required: t('shared.auth.sign_in.form.email.error.required'),
+          validation: t('shared.auth.sign_in.form.email.error.validation'),
+        }}
       />
 
-      <Controller
-        control={control}
+      <PasswordController
+        required
         name="password"
-        render={({
-          field: { value, onBlur, onChange },
-          fieldState: { error },
-        }) => (
-          <Input
-            value={value}
-            error={error?.message}
-            enterKeyHint="next"
-            type="password"
-            disabled={isSubmitting}
-            label={t('shared.auth.sign_in.form.password.label')}
-            placeholder={t('shared.auth.sign_in.form.password.placeholder')}
-            onChange={onChange}
-            onBlur={onBlur}
-          />
-        )}
+        control={control}
+        label={t('shared.auth.sign_in.form.password.label')}
+        placeholder={t('shared.auth.sign_in.form.password.placeholder')}
+        errors={{
+          required: t('shared.auth.sign_in.form.password.error.required'),
+          validation: t('shared.auth.sign_in.form.password.error.validation'),
+        }}
       />
 
       <Link

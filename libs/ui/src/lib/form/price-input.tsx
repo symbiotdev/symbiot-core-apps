@@ -1,7 +1,7 @@
 import { FormField } from './form-field';
 import { InputFieldView } from '../view/input-field-view';
 import { useTheme } from 'tamagui';
-import { useAppSchemeState } from '@symbiot-core-apps/state';
+import { useScheme } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
 import { MaskedTextInput } from 'react-native-mask-text';
 import { MediumText } from '../text/text';
@@ -33,7 +33,7 @@ export const PriceInput = ({
   onChange?: (value: number | null) => void;
 }) => {
   const theme = useTheme();
-  const { scheme } = useAppSchemeState();
+  const { scheme } = useScheme();
 
   const onChangeText = useCallback(
     (formatted: string, extracted?: string) => {

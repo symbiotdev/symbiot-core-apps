@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import { Image, ImageStyle } from 'expo-image';
-import { useAppSchemeState } from '@symbiot-core-apps/state';
+import { useScheme } from '@symbiot-core-apps/state';
 
 export const AdaptiveLogo = memo(
   ({ width = 180, style }: { width?: number; style?: ImageStyle }) => {
-    const { scheme } = useAppSchemeState();
+    const { scheme } = useScheme();
 
     return (
       <Image

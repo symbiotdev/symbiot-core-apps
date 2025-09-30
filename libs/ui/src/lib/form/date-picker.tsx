@@ -12,7 +12,7 @@ import { RegularText } from '../text/text';
 import { FormField } from './form-field';
 import { DateHelper, emitHaptic, Weekday } from '@symbiot-core-apps/shared';
 import { Platform } from 'react-native';
-import { useAppSchemeState } from '@symbiot-core-apps/state';
+import { useScheme } from '@symbiot-core-apps/state';
 import { InputFieldView } from '../view/input-field-view';
 import { Icon } from '../icons';
 import RNDatepicker from 'react-native-date-picker';
@@ -48,7 +48,7 @@ export const DatePicker = ({
   onBlur?: () => void;
 }) => {
   const theme = useTheme();
-  const { scheme } = useAppSchemeState();
+  const { scheme } = useScheme();
   const { i18n } = useTranslation();
   const defaultStyles = useDefaultStyles(scheme);
 
@@ -59,7 +59,7 @@ export const DatePicker = ({
       popoverRef.current?.close();
 
       onChange?.(DateHelper.toDate(date as Date));
-      onBlur?.();
+      onBlur?.()
 
       emitHaptic();
     },

@@ -237,6 +237,9 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
             name="schedules"
             value={value.schedules}
             onUpdate={updateValue}
+            controllerProps={{
+              disableDrag: true,
+            }}
             Controller={BrandLocationScheduleController}
           />
         </FormView>
@@ -247,6 +250,7 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
 
 const TimezoneForm = SingeElementForm<{
   country?: string;
+  disableDrag: true;
 }>;
 const NoDragForm = SingeElementForm<{
   disableDrag: true;
@@ -329,6 +333,7 @@ const Locale = ({ location }: { location: BrandLocation }) => {
             onUpdate={updateValue}
             controllerProps={{
               country: value.country,
+              disableDrag: true,
             }}
             Controller={BrandLocationTimezoneController}
           />

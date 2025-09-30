@@ -145,6 +145,9 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
           <DateFrom
             name="birthday"
             value={brand.birthday}
+            controllerProps={{
+              disableDrag: true,
+            }}
             onUpdate={updateValue}
             Controller={BrandBirthdayController}
           />
@@ -160,8 +163,9 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
   );
 };
 
-const DeactivatableForm = SingleElementToArrayForm<{
+const NoDragForm = SingleElementToArrayForm<{
   disabled: boolean;
+  disableDrag: true;
 }>;
 
 const Localization = ({ brand, onUpdated }: GroupProps) => {
@@ -200,20 +204,22 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <DeactivatableForm
+          <NoDragForm
             name="countries"
             value={value.countries}
             controllerProps={{
               disabled: updating,
+              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandCountryController}
           />
-          <DeactivatableForm
+          <NoDragForm
             name="currencies"
             value={value.currencies}
             controllerProps={{
               disabled: updating,
+              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandCurrencyController}

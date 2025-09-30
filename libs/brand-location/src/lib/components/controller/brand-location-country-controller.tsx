@@ -26,6 +26,7 @@ export function BrandLocationCountryController<T extends FieldValues>(props: {
 
   return (
     <SelectController
+      {...props}
       label={!props.noLabel ? t('brand_location.form.country.label') : ''}
       placeholder={t('brand_location.form.country.placeholder')}
       options={options}
@@ -35,7 +36,6 @@ export function BrandLocationCountryController<T extends FieldValues>(props: {
           message: t('brand_location.form.countries.error.required'),
         },
       }}
-      {...props}
     />
   );
 }

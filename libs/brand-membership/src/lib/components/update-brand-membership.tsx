@@ -197,6 +197,9 @@ const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
           <SingeElementForm
             name="period"
             value={value.period}
+            controllerProps={{
+              disableDrag: true
+            }}
             onUpdate={updateValue}
             Controller={BrandMembershipPeriodController}
           />
@@ -258,6 +261,9 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
             value={
               value.locations?.length ? value.locations : [allLocations.value]
             }
+            controllerProps={{
+              disableDrag: true
+            }}
             onUpdate={updateValue}
             Controller={BrandMembershipLocationController}
           />

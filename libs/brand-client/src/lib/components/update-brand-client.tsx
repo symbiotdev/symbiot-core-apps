@@ -135,12 +135,18 @@ const Personality = ({ client }: { client: BrandClient }) => {
           <SingeElementForm
             name="gender"
             value={value.gender}
+            controllerProps={{
+              disableDrag: true
+            }}
             onUpdate={updateValue}
             Controller={BrandClientGenderController}
           />
           <DateFrom
             name="birthday"
             value={value.birthday}
+            controllerProps={{
+              disableDrag: true
+            }}
             onUpdate={updateValue}
             Controller={BrandClientBirthdayController}
           />

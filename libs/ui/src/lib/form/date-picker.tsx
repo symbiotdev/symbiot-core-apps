@@ -22,6 +22,7 @@ export const DatePicker = ({
   value,
   disabled,
   required,
+                             disableDrag,
   label,
   error,
   placeholder,
@@ -40,6 +41,7 @@ export const DatePicker = ({
   placeholder?: string;
   formatStr?: string;
   required?: boolean;
+  disableDrag?: boolean;
   weekStartsOn?: Weekday;
   startDate?: Date;
   minDate?: Date;
@@ -71,6 +73,7 @@ export const DatePicker = ({
       <AdaptivePopover
         ref={popoverRef}
         disabled={disabled}
+        disableDrag={disableDrag}
         triggerType="child"
         sheetTitle={label}
         trigger={

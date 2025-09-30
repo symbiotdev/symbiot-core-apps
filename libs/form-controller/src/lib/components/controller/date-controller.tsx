@@ -10,6 +10,7 @@ export function DateController<T extends FieldValues>({
   label,
   placeholder,
   disabled,
+                                                        disableDrag,
   required,
   rules,
   onBlur,
@@ -19,6 +20,7 @@ export function DateController<T extends FieldValues>({
   label: string;
   placeholder: string;
   disabled?: boolean;
+  disableDrag?: boolean;
   required?: boolean;
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
@@ -34,6 +36,7 @@ export function DateController<T extends FieldValues>({
         <DatePicker
           required={required}
           disabled={disabled}
+          disableDrag={disableDrag}
           value={value}
           error={error?.message}
           formatStr={me?.preferences?.dateFormat}

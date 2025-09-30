@@ -8,6 +8,7 @@ export function SelectController<T extends FieldValues>({
   label,
   placeholder,
   disabled,
+  disableDrag,
   required,
   rules,
   options,
@@ -23,6 +24,7 @@ export function SelectController<T extends FieldValues>({
   optionsLoading?: boolean;
   optionsError?: string | null;
   disabled?: boolean;
+  disableDrag?: boolean;
   required?: boolean;
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
@@ -36,6 +38,7 @@ export function SelectController<T extends FieldValues>({
         <SelectPicker
           required={required}
           disabled={disabled}
+          disableDrag={disableDrag}
           value={value}
           error={error?.message}
           options={options}

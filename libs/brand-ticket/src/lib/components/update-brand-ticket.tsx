@@ -193,6 +193,9 @@ const PricingAndVisits = ({ ticket }: { ticket: BrandTicket }) => {
           <SingeElementForm
             name="visits"
             value={value.visits}
+            controllerProps={{
+              disableDrag: true
+            }}
             onUpdate={updateValue}
             Controller={BrandTicketVisitsController}
           />
@@ -250,6 +253,9 @@ const LocationServices = ({ ticket }: { ticket: BrandTicket }) => {
             value={
               value.locations?.length ? value.locations : [allLocations.value]
             }
+            controllerProps={{
+              disableDrag: true
+            }}
             onUpdate={updateValue}
             Controller={BrandTicketLocationController}
           />

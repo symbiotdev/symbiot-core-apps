@@ -24,7 +24,7 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { useTranslation } from 'react-i18next';
 import {
-  useCurrentAccount,
+  useCurrentAccountState,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import {
@@ -104,8 +104,8 @@ export const UpdateBrandEmployee = ({
 };
 
 const Personality = ({ employee }: { employee: BrandEmployee }) => {
+  const { me } = useCurrentAccountState();
   const { t } = useTranslation();
-  const { me } = useCurrentAccount();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandEmployee,

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useApp } from '@symbiot-core-apps/app';
 import {
-  useCurrentAccount,
+  useCurrentAccountState,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useCallback, useState } from 'react';
@@ -21,10 +21,10 @@ import { MyBrandsSelectionList } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
 
 export const InitialAction = () => {
+  const { me } = useCurrentAccountState();
+  const { brands: currentBrands } = useCurrentBrandState();
   const { t } = useTranslation();
   const { icons } = useApp();
-  const { me } = useCurrentAccount();
-  const { brands: currentBrands } = useCurrentBrandState();
 
   const [qrCodeVisible, setQrCodeVisible] = useState(false);
 

@@ -10,7 +10,7 @@ import {
   useTabsScreenOptions,
 } from '@symbiot-core-apps/ui';
 import {
-  useCurrentAccount,
+  useCurrentAccountState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
@@ -36,7 +36,7 @@ export default () => {
   const { icons } = useApp();
   const segments = useSegments();
   const { visible: drawerVisible } = useDrawer();
-  const { stats, setMeStats } = useCurrentAccount();
+  const { stats, setMeStats } = useCurrentAccountState();
   const { data: countNewNotifications } = useCountNewNotifications();
   const { hasAnyOfPermissions } = useCurrentBrandEmployee();
   const screenOptions = useTabsScreenOptions();

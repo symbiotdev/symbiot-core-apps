@@ -1,9 +1,9 @@
 import { BrandEmployee } from '@symbiot-core-apps/api';
 import {
-  APP_LINK,
   Avatar,
   Card,
   FormView,
+  getNicknameFromUrl,
   H3,
   Link,
   ListItemGroup,
@@ -20,7 +20,7 @@ import {
   emitHaptic,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
-import { useCurrentAccount } from '@symbiot-core-apps/state';
+import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 import { openBrowserAsync } from 'expo-web-browser';
 
@@ -31,8 +31,8 @@ export const BrandEmployeeProfile = ({
 }: {
   employee: BrandEmployee;
 }) => {
+  const { me } = useCurrentAccountState();
   const { t } = useTranslation();
-  const { me } = useCurrentAccount();
   const { now } = useNativeNow();
 
   const instagram = useMemo(
@@ -81,7 +81,7 @@ export const BrandEmployeeProfile = ({
                 lineHeight={18}
                 numberOfLines={1}
               >
-                {APP_LINK.instagram.getNicknameFromUrl(instagram)}
+                {getNicknameFromUrl(instagram)}
               </Link>
             </XStack>
           )}

@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import {
-  useCurrentAccount,
+  useCurrentAccountState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useBrandAuthState } from '@symbiot-core-apps/brand';
 
 export const useInitializing = () => {
-  const { me } = useCurrentAccount();
+  const { me } = useCurrentAccountState();
   const { processing: authProcessing } = useBrandAuthState();
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
   const { currentEmployee } = useCurrentBrandEmployee();
@@ -17,6 +17,6 @@ export const useInitializing = () => {
       !me ||
       !((currentBrand && currentEmployee) || currentBrands) ||
       authProcessing,
-    [me, currentBrand, currentEmployee, currentBrands],
+    [me, currentBrand, currentEmployee, currentBrands, authProcessing],
   );
 };

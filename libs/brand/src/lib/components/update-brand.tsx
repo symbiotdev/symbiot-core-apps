@@ -12,7 +12,7 @@ import {
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import {
-  useCurrentAccount,
+  useCurrentAccountState,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import {
@@ -100,8 +100,8 @@ const Name = ({ brand, onUpdated }: GroupProps) => {
 };
 
 const Information = ({ brand, onUpdated }: GroupProps) => {
+  const { me } = useCurrentAccountState();
   const { t } = useTranslation();
-  const { me } = useCurrentAccount();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateForm<
       Brand,

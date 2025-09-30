@@ -7,14 +7,16 @@ import {
   PageView,
   RegularText,
 } from '@symbiot-core-apps/ui';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Linking } from 'react-native';
-import { useFaq } from '@symbiot-core-apps/state';
+import { useFaqState } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 
 export const Faq = () => {
   const { t } = useTranslation();
-  const { sortedFaq } = useFaq();
+  const { faq } = useFaqState();
+
+  const sortedFaq = useMemo(() => faq?.sort((a, b) => b.rate - a.rate), [faq]);
 
   const openMail = useCallback(
     () => Linking.openURL(`mailto:${process.env.EXPO_PUBLIC_SUPPORT_EMAIL}`),

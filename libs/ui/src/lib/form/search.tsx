@@ -3,7 +3,7 @@ import { TextInputProps } from 'react-native';
 import { Input as InputUi, InputProps, XStackProps } from 'tamagui';
 import { Icon } from '../icons';
 import { InputCursorPosition, useInputSelection } from './input';
-import { useScheme } from '@symbiot-core-apps/state';
+import { useAppSchemeState } from '@symbiot-core-apps/state';
 import { useDebounceCallback } from '@symbiot-core-apps/shared';
 import { forwardRef, Ref, useCallback, useMemo, useState } from 'react';
 import { FormField } from './form-field';
@@ -51,7 +51,7 @@ export const Search = forwardRef(
     },
     ref: Ref<InputUi>,
   ) => {
-    const { scheme } = useScheme();
+    const { scheme } = useAppSchemeState();
 
     const [adjustedValue, setAdjustedValue] = useState(value || '');
 

@@ -7,7 +7,7 @@ import {
   TextInputKeyPressEventData,
   TextInputProps,
 } from 'react-native';
-import { useScheme } from '@symbiot-core-apps/state';
+import { useAppSchemeState } from '@symbiot-core-apps/state';
 import { useDebounceCallback } from '@symbiot-core-apps/shared';
 import { MediumText } from '../text/text';
 import { InputCursorPosition, useInputSelection } from './input';
@@ -60,7 +60,7 @@ export const Textarea = forwardRef(
     },
     ref: Ref<Input>,
   ) => {
-    const { scheme } = useScheme();
+    const { scheme } = useAppSchemeState();
 
     const selection = useInputSelection(cursorAlwaysOn, value);
     const onDebounceChange = useDebounceCallback(

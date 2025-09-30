@@ -7,7 +7,7 @@ import {
   useDrawer,
 } from '@symbiot-core-apps/ui';
 import {
-  useCurrentAccount,
+  useCurrentAccountState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
@@ -19,10 +19,10 @@ import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
 
 export default () => {
+  const { me, stats } = useCurrentAccountState();
   const { brand: currentBrand } = useCurrentBrandState();
   const { icons } = useApp();
   const { t } = useTranslation();
-  const { me, stats } = useCurrentAccount();
   const { currentEmployee } = useCurrentBrandEmployee();
   const navigation = useNavigation();
   const { visible: drawerVisible } = useDrawer();

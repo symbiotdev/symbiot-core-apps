@@ -1,5 +1,5 @@
 import { AvatarPicker, FormView, Input, PageView } from '@symbiot-core-apps/ui';
-import { useCurrentAccount } from '@symbiot-core-apps/state';
+import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import {
   UpdateAccountData,
   useAccountMeRemoveAvatar,
@@ -10,8 +10,8 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { useTranslation } from 'react-i18next';
 import {
   DateFrom,
-  SingleElementToArrayForm,
   SingeElementForm,
+  SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
 import { AccountFirstnameController } from './controller/account-firstname-controller';
 import { AccountLastnameController } from './controller/account-lastname-controller';
@@ -21,8 +21,8 @@ import { AccountInstagramController } from './controller/account-instagram-contr
 import { AccountPhoneController } from './controller/account-phone-controller';
 
 export const UpdateAccount = () => {
+  const { me, setMe } = useCurrentAccountState();
   const { t } = useTranslation();
-  const { me, updateMe } = useCurrentAccount();
   const { mutateAsync } = useAccountMeUpdate();
   const { mutateAsync: uploadAvatar, isPending: avatarUploading } =
     useAccountMeUpdate();
@@ -30,19 +30,18 @@ export const UpdateAccount = () => {
     useAccountMeRemoveAvatar();
 
   const onAttach = useCallback(
-    async (avatar: ImagePickerAsset) =>
-      updateMe(await uploadAvatar({ avatar })),
-    [uploadAvatar, updateMe],
+    async (avatar: ImagePickerAsset) => setMe(await uploadAvatar({ avatar })),
+    [uploadAvatar, setMe],
   );
 
   const onRemove = useCallback(
-    async () => updateMe(await removeAvatar()),
-    [removeAvatar, updateMe],
+    async () => setMe(await removeAvatar()),
+    [removeAvatar, setMe],
   );
 
   const update = useCallback(
-    async (data: UpdateAccountData) => updateMe(await mutateAsync(data)),
-    [updateMe, mutateAsync],
+    async (data: UpdateAccountData) => setMe(await mutateAsync(data)),
+    [setMe, mutateAsync],
   );
 
   return (

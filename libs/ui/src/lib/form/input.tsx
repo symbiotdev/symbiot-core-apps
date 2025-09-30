@@ -3,7 +3,7 @@ import { forwardRef, Ref, useCallback, useMemo } from 'react';
 import { Input as InputUi, InputProps } from 'tamagui';
 import { FormField } from './form-field';
 import { useDebounceCallback } from '@symbiot-core-apps/shared';
-import { useScheme } from '@symbiot-core-apps/state';
+import { useAppSchemeState } from '@symbiot-core-apps/state';
 
 export type InputValue = string | number | null;
 export type onChangeInput = (value: InputValue) => void;
@@ -76,7 +76,7 @@ export const Input = forwardRef(
     },
     ref: Ref<InputUi>,
   ) => {
-    const { scheme } = useScheme();
+    const { scheme } = useAppSchemeState();
 
     const selection = useInputSelection(cursorAlwaysOn, value);
     const onDebounceChange = useDebounceCallback(

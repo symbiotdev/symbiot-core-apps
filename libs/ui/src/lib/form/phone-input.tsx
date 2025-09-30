@@ -2,7 +2,7 @@ import { TextInput, TextInputProps } from 'react-native';
 import { FormField } from './form-field';
 import { useCallback, useEffect, useRef } from 'react';
 import PhoneInputUI from 'react-native-phone-input';
-import { useScheme } from '@symbiot-core-apps/state';
+import { useAppSchemeState } from '@symbiot-core-apps/state';
 import { useTheme } from 'tamagui';
 import { InputFieldView } from '../view/input-field-view';
 
@@ -31,7 +31,7 @@ export const PhoneInput = ({
   onBlur?: () => void;
   onChange?: (phone: string) => void;
 }) => {
-  const { scheme } = useScheme();
+  const { scheme } = useAppSchemeState();
   const theme = useTheme();
 
   const phoneRef = useRef<PhoneInputUI<typeof TextInput>>(null);

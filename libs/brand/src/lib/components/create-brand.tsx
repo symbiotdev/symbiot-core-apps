@@ -10,7 +10,7 @@ import { useAuthBrand, useBrandAuthState } from '../hooks/use-brand-auth';
 import { useBrandCreateQuery } from '@symbiot-core-apps/api';
 import { useApp } from '@symbiot-core-apps/app';
 import { BrandWebsiteController } from './contoller/brand-website-controller';
-import { useCurrentAccount } from '@symbiot-core-apps/state';
+import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { BrandReferralSourceController } from './contoller/brand-referral-source-controller';
 import { BrandCompetitorController } from './contoller/brand-competitor-controller';
 import { BrandPromoCodeController } from './contoller/brand-promo-code-controller';
@@ -24,10 +24,10 @@ const defaultCountryCode = Intl?.DateTimeFormat()
   ?.locale?.split('-')?.[1];
 
 export const CreateBrand = () => {
+  const { me } = useCurrentAccountState();
   const { processing: authProcessing } = useBrandAuthState();
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const { me } = useCurrentAccount();
   const { functionality } = useApp();
   const { mutateAsync, isPending } = useBrandCreateQuery();
   const switchBrand = useAuthBrand();

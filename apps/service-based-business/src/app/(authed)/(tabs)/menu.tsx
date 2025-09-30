@@ -6,7 +6,7 @@ import {
   useShareApp,
 } from '@symbiot-core-apps/shared';
 import {
-  useCurrentAccount,
+  useCurrentAccountState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
@@ -36,11 +36,11 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { useAccountAuthSignOutQuery } from '@symbiot-core-apps/api';
 
 export default () => {
+  const { me } = useCurrentAccountState();
+  const { brand: currentBrand } = useCurrentBrandState();
   const share = useShareApp();
   const { t } = useTranslation();
   const { languages } = useApp();
-  const { me } = useCurrentAccount();
-  const { brand: currentBrand } = useCurrentBrandState();
   const { currentEmployee } = useCurrentBrandEmployee();
   const { visible: drawerVisible } = useDrawer();
   const { mutate: signOut } = useAccountAuthSignOutQuery();

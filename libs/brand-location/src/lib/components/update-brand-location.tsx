@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 import { useCallback, useMemo } from 'react';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import {
-  useCurrentAccount,
+  useCurrentAccountState,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { PhoneNumber } from 'react-native-phone-input/dist';
@@ -166,8 +166,8 @@ const Address = ({ location }: { location: BrandLocation }) => {
 };
 
 const Schedule = ({ location }: { location: BrandLocation }) => {
+  const { me } = useCurrentAccountState();
   const { t } = useTranslation();
-  const { me } = useCurrentAccount();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandLocation,

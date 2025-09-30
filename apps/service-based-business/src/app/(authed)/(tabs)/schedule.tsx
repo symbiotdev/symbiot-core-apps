@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { TimeGridRef } from '@symbiot.dev/react-native-timegrid-pro';
 import { useNavigation } from 'expo-router';
-import { useCurrentAccount } from '@symbiot-core-apps/state';
+import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import {
   DateHelper,
   emitHaptic,
@@ -23,9 +23,9 @@ import { Platform } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 export default () => {
+  const { me } = useCurrentAccountState();
   const timeGridRef = useRef<TimeGridRef>(null);
   const navigation = useNavigation();
-  const { me } = useCurrentAccount();
   const { now } = useNativeNow();
   const { i18n, t } = useTranslation();
   const bottomTabBarHeight = useBottomTabBarHeight();

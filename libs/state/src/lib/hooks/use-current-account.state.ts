@@ -10,9 +10,10 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { useCallback } from 'react';
 import { Scheme, schemes } from '@symbiot-core-apps/shared';
-import { useScheme } from './use-app-theme.state';
+import { useAppSchemeState } from './use-app-theme.state';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
+import { Appearance, Platform } from 'react-native';
 
 type AccountStats = {
   newNotifications?: number;
@@ -72,7 +73,7 @@ export const useCurrentAccountState = create<CurrentAccountState>()(
 
 export const useCurrentAccount = () => {
   const { me, stats, setMe, setMeStats } = useCurrentAccountState();
-  const { setScheme } = useScheme();
+  const { setScheme, removeScheme } = useAppSchemeState();
   const { setMePreferences } = useCurrentAccountState();
 
   const updateMePreferences = useCallback(
@@ -80,14 +81,22 @@ export const useCurrentAccount = () => {
       setMePreferences(preferences);
 
       if (preferences.scheme) {
-        setScheme(
-          schemes.includes(preferences.scheme as Scheme)
-            ? (preferences.scheme as Scheme)
-            : undefined,
-        );
+        const scheme = schemes.includes(preferences.scheme as Scheme)
+          ? (preferences.scheme as Scheme)
+          : undefined;
+
+        if (Platform.OS === 'web') {
+          if (scheme) {
+            setScheme(scheme);
+          } else {
+            removeScheme();
+          }
+        } else {
+          Appearance.setColorScheme(scheme);
+        }
       }
     },
-    [setMePreferences, setScheme],
+    [removeScheme, setMePreferences, setScheme],
   );
 
   return {

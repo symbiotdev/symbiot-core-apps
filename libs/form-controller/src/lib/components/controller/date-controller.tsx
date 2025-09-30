@@ -1,7 +1,7 @@
 import { DatePicker } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { DateHelper } from '@symbiot-core-apps/shared';
-import { useCurrentAccount } from '@symbiot-core-apps/state';
+import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import type { ControllerProps } from 'react-hook-form/dist/types';
 
 export function DateController<T extends FieldValues>({
@@ -23,7 +23,7 @@ export function DateController<T extends FieldValues>({
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
 }) {
-  const { me } = useCurrentAccount();
+  const { me } = useCurrentAccountState();
 
   return (
     <Controller

@@ -14,13 +14,13 @@ import {
   PageView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
-import { useCurrentAccount } from '@symbiot-core-apps/state';
+import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { useTranslation } from 'react-i18next';
 import {
   DateFrom,
-  SingleElementToArrayForm,
   SingeElementForm,
+  SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
 import { BrandClientAddressController } from './controller/brand-client-address-controller';
 import { useCallback } from 'react';
@@ -73,8 +73,8 @@ export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
 };
 
 const Personality = ({ client }: { client: BrandClient }) => {
+  const { me } = useCurrentAccountState();
   const { t } = useTranslation();
-  const { me } = useCurrentAccount();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandClient,
@@ -179,12 +179,13 @@ const Contact = ({ client }: { client: BrandClient }) => {
         label={t('brand_client.update.groups.contact.title')}
         text={
           [
-            value.phones.map((phone) =>
-              PhoneNumber.format(
-                phone,
-                PhoneNumber.getCountryCodeOfNumber(phone),
-              ),
-            )
+            value.phones
+              .map((phone) =>
+                PhoneNumber.format(
+                  phone,
+                  PhoneNumber.getCountryCodeOfNumber(phone),
+                ),
+              )
               .filter(Boolean)
               .join(', '),
             value.emails.join(', '),
@@ -250,10 +251,7 @@ const Note = ({ client }: { client: BrandClient }) => {
         icon={<Icon name="Document" />}
         iconAfter={<Icon name="ArrowRight" />}
         label={t('brand_client.update.groups.note.title')}
-        text={
-          value.note?.replace(/\n/gi, ' ') ||
-          t('shared.not_specified')
-        }
+        text={value.note?.replace(/\n/gi, ' ') || t('shared.not_specified')}
         onPress={openModal}
       />
 

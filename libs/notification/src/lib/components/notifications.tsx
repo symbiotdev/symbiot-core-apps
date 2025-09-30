@@ -10,7 +10,7 @@ import {
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import {
-  useCurrentAccount,
+  useCurrentAccountState,
   useNotificationsState,
 } from '@symbiot-core-apps/state';
 import { useCallback, useEffect } from 'react';
@@ -27,7 +27,7 @@ export const Notifications = ({
 }: {
   onPressNotification: (notification: Notification) => void;
 }) => {
-  const { me, setMeStats } = useCurrentAccount();
+  const { me, setMeStats } = useCurrentAccountState();
   const headerHeight = useScreenHeaderHeight();
   const { mutateAsync: readAll } = useNotificationsReadQuery();
   const {

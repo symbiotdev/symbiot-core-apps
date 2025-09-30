@@ -23,7 +23,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {
-  useCurrentAccount,
+  useCurrentAccountState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
@@ -88,14 +88,14 @@ const MenuItem = memo(
 );
 
 export const DrawerMenu = () => {
-  const { t } = useTranslation();
+  const { stats } = useCurrentAccountState();
+  const { brand: currentBrand } = useCurrentBrandState();
+  const { compressed, toggleCompressed } = useDrawerState();
   const { icons } = useApp();
+  const { t } = useTranslation();
   const { permanent } = useDrawer();
   const { top, bottom, left } = useSafeAreaInsets();
-  const { compressed, toggleCompressed } = useDrawerState();
-  const { brand: currentBrand } = useCurrentBrandState();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
-  const { stats } = useCurrentAccount();
 
   const animatedStyle = useAnimatedStyle(
     () => ({
@@ -248,9 +248,11 @@ export const DrawerMenu = () => {
           />
         )}
 
-        {hasAnyOfPermissions(['servicesAll', 'membershipsAll', 'ticketsAll']) && (
-          <Br marginHorizontal={defaultPageHorizontalPadding} />
-        )}
+        {hasAnyOfPermissions([
+          'servicesAll',
+          'membershipsAll',
+          'ticketsAll',
+        ]) && <Br marginHorizontal={defaultPageHorizontalPadding} />}
 
         {hasPermission('servicesAll') && (
           <MenuItem

@@ -70,7 +70,7 @@ export const CurrentBrandTickets = ({
           data={tickets}
           progressViewOffset={headerHeight}
           contentContainerStyle={{
-            gap: 2,
+            gap: 8,
             paddingTop: headerHeight,
             paddingHorizontal: defaultPageHorizontalPadding,
             paddingBottom: 100,
@@ -78,7 +78,11 @@ export const CurrentBrandTickets = ({
           keyExtractor={(item) => item.id}
           ListEmptyComponent={ListEmptyComponent}
           renderItem={({ item }) => (
-            <BrandTicketItem ticket={item} navigateTo={navigateTo} />
+            <BrandTicketItem
+              alignSelf="center"
+              ticket={item}
+              navigateTo={navigateTo}
+            />
           )}
           onRefresh={onRefresh}
           onEndReached={onEndReached}

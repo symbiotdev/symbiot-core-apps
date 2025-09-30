@@ -70,7 +70,7 @@ export const CurrentBrandMemberships = ({
           data={memberships}
           progressViewOffset={headerHeight}
           contentContainerStyle={{
-            gap: 2,
+            gap: 8,
             paddingTop: headerHeight,
             paddingHorizontal: defaultPageHorizontalPadding,
             paddingBottom: 100,

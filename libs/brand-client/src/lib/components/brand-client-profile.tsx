@@ -10,11 +10,12 @@ import {
   Card,
   defaultPageVerticalPadding,
   FormView,
-  formViewStyles,
   H3,
   Icon,
+  Link,
   ListItem,
   ListItemGroup,
+  MapsTrigger,
   PageView,
   RegularText,
   SlideSheetModal,
@@ -32,11 +33,13 @@ import { router } from 'expo-router';
 
 export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
   return (
-    <PageView scrollable withHeaderHeight gap="$5">
-      <Header client={client} />
-      <Note client={client} />
-      <Balance client={client} />
-      <History client={client} />
+    <PageView scrollable withHeaderHeight>
+      <FormView gap="$5">
+        <Header client={client} />
+        <Note client={client} />
+        <Balance client={client} />
+        <History client={client} />
+      </FormView>
     </PageView>
   );
 };
@@ -57,7 +60,7 @@ const Header = ({ client }: { client: BrandClient }) => {
   const name = `${client.firstname} ${client.lastname}`;
 
   return (
-    <Card style={formViewStyles} alignItems="center" gap="$3">
+    <Card alignItems="center" gap="$3">
       <Avatar
         color="$background"
         name={name}
@@ -79,6 +82,14 @@ const Header = ({ client }: { client: BrandClient }) => {
             .join(' · ')}
         </RegularText>
       )}
+
+      {client.addresses?.map((address, index) => (
+        <MapsTrigger
+          key={index}
+          address={address}
+          trigger={<Link>{address}</Link>}
+        />
+      ))}
 
       <XStack justifyContent="center" gap="$2">
         <ButtonIcon

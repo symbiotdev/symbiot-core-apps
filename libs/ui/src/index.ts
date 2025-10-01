@@ -44,6 +44,8 @@ export * from './lib/list/list-item';
 export * from './lib/loading/progress';
 export * from './lib/loading/spinner';
 
+export * from './lib/maps/maps-trigger';
+
 export * from './lib/media/avatar';
 export * from './lib/media/file-chip';
 

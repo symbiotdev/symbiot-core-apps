@@ -1,10 +1,11 @@
 import { CurrentBrandMemberships } from '@symbiot-core-apps/brand-membership';
 import React, { useLayoutEffect } from 'react';
-import { HeaderButton } from '@symbiot-core-apps/ui';
+import { HeaderButton, useScreenHeaderHeight } from '@symbiot-core-apps/ui';
 import { router, useNavigation } from 'expo-router';
 
 export default () => {
   const navigation = useNavigation();
+  const headerHeight = useScreenHeaderHeight();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -19,6 +20,7 @@ export default () => {
 
   return (
     <CurrentBrandMemberships
+      offsetTop={headerHeight}
       onMembershipPress={(membership) =>
         router.push(`/memberships/${membership.id}/update`)
       }

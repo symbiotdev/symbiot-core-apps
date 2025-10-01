@@ -10,7 +10,6 @@ import {
   NavigationBackground,
   PageView,
   Search,
-  useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useApp } from '@symbiot-core-apps/app';
@@ -25,14 +24,15 @@ import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
 
 export const CurrentBrandMemberships = ({
+  offsetTop,
   onMembershipPress,
 }: {
+  offsetTop?: number;
   onMembershipPress: (membership: BrandMembership) => void;
 }) => {
   const { currentList, setCurrentList } = useCurrentBrandMembershipState();
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
-  const headerHeight = useScreenHeaderHeight();
 
   const [search, setSearch] = useState('');
 
@@ -55,7 +55,12 @@ export const CurrentBrandMemberships = ({
   });
 
   const ListEmptyComponent = useCallback(
-    () => <EmptyView iconName="Magnifer" message={t('shared.nothing_found')} />,
+    () => (
+      <EmptyView
+        iconName="Magnifer"
+        message={t('shared.nothing_found')}
+      />
+    ),
     [t],
   );
 
@@ -71,10 +76,10 @@ export const CurrentBrandMemberships = ({
           refreshing={isRefetching && !isLoading}
           expanding={isFetchingNextPage}
           data={memberships}
-          progressViewOffset={headerHeight}
+          progressViewOffset={offsetTop}
           contentContainerStyle={{
             gap: 8,
-            paddingTop: headerHeight,
+            paddingTop: offsetTop,
             paddingHorizontal: defaultPageHorizontalPadding,
             paddingBottom: 100,
           }}

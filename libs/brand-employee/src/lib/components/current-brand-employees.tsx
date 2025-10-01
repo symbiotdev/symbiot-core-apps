@@ -7,7 +7,6 @@ import {
   InitView,
   NavigationBackground,
   Search,
-  useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import {
   BrandEmployee,
@@ -21,14 +20,15 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
 
 export const CurrentBrandEmployees = ({
+  offsetTop,
   onEmployeePress,
 }: {
+  offsetTop?: number;
   onEmployeePress: (employee: BrandEmployee) => void;
 }) => {
   const { currentList, setCurrentList } = useCurrentBrandEmployeeState();
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
-  const headerHeight = useScreenHeaderHeight();
 
   const [search, setSearch] = useState('');
 
@@ -66,10 +66,10 @@ export const CurrentBrandEmployees = ({
           refreshing={isRefetching && !isLoading}
           expanding={isFetchingNextPage}
           data={employees}
-          progressViewOffset={headerHeight}
+          progressViewOffset={offsetTop}
           contentContainerStyle={{
             gap: 2,
-            paddingTop: headerHeight,
+            paddingTop: offsetTop,
             paddingHorizontal: defaultPageHorizontalPadding,
             paddingBottom: 100,
           }}

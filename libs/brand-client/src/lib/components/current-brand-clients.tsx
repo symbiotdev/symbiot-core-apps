@@ -13,7 +13,6 @@ import {
   NavigationBackground,
   PageView,
   Search,
-  useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { useCurrentBrandClientState } from '@symbiot-core-apps/state';
 import {
@@ -28,14 +27,15 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 
 export const CurrentBrandClients = ({
+  offsetTop,
   onClientPress,
 }: {
+  offsetTop?: number;
   onClientPress: (client: BrandClient) => void;
 }) => {
   const { currentList, setCurrentList } = useCurrentBrandClientState();
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
-  const headerHeight = useScreenHeaderHeight();
 
   const [search, setSearch] = useState('');
 
@@ -106,10 +106,10 @@ export const CurrentBrandClients = ({
           refreshing={isRefetching && !isLoading}
           expanding={isFetchingNextPage}
           data={clients}
-          progressViewOffset={headerHeight}
+          progressViewOffset={offsetTop}
           contentContainerStyle={{
             gap: 2,
-            paddingTop: headerHeight,
+            paddingTop: offsetTop,
             paddingHorizontal: defaultPageHorizontalPadding,
             paddingBottom: 100,
           }}

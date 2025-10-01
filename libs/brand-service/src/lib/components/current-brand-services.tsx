@@ -10,7 +10,6 @@ import {
   NavigationBackground,
   PageView,
   Search,
-  useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useApp } from '@symbiot-core-apps/app';
@@ -25,14 +24,15 @@ import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandServiceItem } from '@symbiot-core-apps/brand';
 
 export const CurrentBrandServices = ({
+  offsetTop,
   onServicePress,
 }: {
+  offsetTop?: number;
   onServicePress: (service: BrandService) => void;
 }) => {
   const { currentList, setCurrentList } = useCurrentBrandServiceState();
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
-  const headerHeight = useScreenHeaderHeight();
 
   const [search, setSearch] = useState('');
 
@@ -71,10 +71,10 @@ export const CurrentBrandServices = ({
           refreshing={isRefetching && !isLoading}
           expanding={isFetchingNextPage}
           data={services}
-          progressViewOffset={headerHeight}
+          progressViewOffset={offsetTop}
           contentContainerStyle={{
             gap: 2,
-            paddingTop: headerHeight,
+            paddingTop: offsetTop,
             paddingHorizontal: defaultPageHorizontalPadding,
             paddingBottom: 100,
           }}

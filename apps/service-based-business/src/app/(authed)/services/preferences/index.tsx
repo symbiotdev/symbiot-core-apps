@@ -1,10 +1,11 @@
 import { CurrentBrandServices } from '@symbiot-core-apps/brand-service';
 import { router, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
-import { HeaderButton } from '@symbiot-core-apps/ui';
+import { HeaderButton, useScreenHeaderHeight } from '@symbiot-core-apps/ui';
 
 export default () => {
   const navigation = useNavigation();
+  const headerHeight = useScreenHeaderHeight();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -19,6 +20,7 @@ export default () => {
 
   return (
     <CurrentBrandServices
+      offsetTop={headerHeight}
       onServicePress={(service) =>
         router.push(`/services/${service.id}/update`)
       }

@@ -12,12 +12,14 @@ export const SlideSheetModal = ({
   headerLeft,
   headerTitle,
   headerRight,
+  withKeyboard = true,
   onClose,
   ...viewProps
 }: PropsWithChildren<
   ViewProps & {
     visible: boolean;
     scrollable?: boolean;
+    withKeyboard?: boolean;
     headerLeft?: () => ReactElement;
     headerTitle?: string | (() => ReactElement);
     headerRight?: () => ReactElement;
@@ -42,7 +44,7 @@ export const SlideSheetModal = ({
 
         <PageView
           ignoreTopSafeArea
-          withKeyboard
+          withKeyboard={withKeyboard}
           withHeaderHeight={isTablet}
           scrollable={scrollable}
           paddingTop={isTablet ? undefined : headerHeight}

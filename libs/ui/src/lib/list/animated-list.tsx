@@ -1,7 +1,7 @@
 import React, { ForwardedRef } from 'react';
 import { FlatList, Platform } from 'react-native';
 import Animated, {
-  EntryExitTransition,
+  FadingTransition,
   FlatListPropsWithLayout,
 } from 'react-native-reanimated';
 import { Refresher } from '../loading/refresher';
@@ -30,9 +30,7 @@ export function AnimatedList<T>({
       ref={listRef}
       keyExtractor={(_, index) => String(index)}
       itemLayoutAnimation={
-        Platform.OS === 'web' || ignoreAnimation
-          ? undefined
-          : EntryExitTransition
+        Platform.OS === 'web' || ignoreAnimation ? undefined : FadingTransition
       }
       onEndReachedThreshold={0.3}
       keyboardShouldPersistTaps="handled"

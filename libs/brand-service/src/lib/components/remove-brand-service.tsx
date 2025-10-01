@@ -12,7 +12,7 @@ export const RemoveBrandService = ({ service }: { service: BrandService }) => {
   const { t } = useTranslation();
   const { mutateAsync, isPending } = useRemoveBrandServiceQuery();
 
-  const onActionPress = useCallback(
+  const onPress = useCallback(
     () =>
       ConfirmAlert({
         title: t('brand_service.remove.confirm_dialog.title'),
@@ -39,7 +39,7 @@ export const RemoveBrandService = ({ service }: { service: BrandService }) => {
           buttonIcon={<Icon name="TrashBinMinimalistic" />}
           buttonLoading={isPending}
           buttonType="danger"
-          onActionPress={onActionPress}
+          onPress={onPress}
         />
       </FormView>
     </PageView>

@@ -10,7 +10,6 @@ import {
   NavigationBackground,
   PageView,
   Search,
-  useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useApp } from '@symbiot-core-apps/app';
@@ -25,14 +24,15 @@ import {
 } from '@symbiot-core-apps/api';
 
 export const CurrentBrandTickets = ({
+  offsetTop,
   onTicketPress,
 }: {
+  offsetTop?: number;
   onTicketPress: (ticket: BrandTicket) => void;
 }) => {
   const { currentList, setCurrentList } = useCurrentBrandTicketState();
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
-  const headerHeight = useScreenHeaderHeight();
 
   const [search, setSearch] = useState('');
 
@@ -71,10 +71,10 @@ export const CurrentBrandTickets = ({
           refreshing={isRefetching && !isLoading}
           expanding={isFetchingNextPage}
           data={tickets}
-          progressViewOffset={headerHeight}
+          progressViewOffset={offsetTop}
           contentContainerStyle={{
             gap: 8,
-            paddingTop: headerHeight,
+            paddingTop: offsetTop,
             paddingHorizontal: defaultPageHorizontalPadding,
             paddingBottom: 100,
           }}

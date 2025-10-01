@@ -1,11 +1,11 @@
 import { Platform, StyleSheet } from 'react-native';
-import { ReactElement, useCallback, useState } from 'react';
+import { ReactElement } from 'react';
 import { PageView } from '../view/page-view';
 import { QrCode } from './qr-code';
 import { Card } from '../card/card';
-import { H4, H5 } from '../text/heading';
+import { H4 } from '../text/heading';
 import { Blur } from '../blur/blur';
-import { emitHaptic } from '@symbiot-core-apps/shared';
+import { emitHaptic, useModal } from '@symbiot-core-apps/shared';
 import { FullScreenTransparentModal } from '../modal/full-screen-transparent-modal';
 import { View } from 'tamagui';
 
@@ -22,20 +22,13 @@ export const QrCodeModalWithTrigger = ({
   qrContent?: ReactElement;
   title?: string;
 }) => {
-  const [visible, setVisible] = useState(false);
-
-  const onOpen = useCallback(() => {
-    emitHaptic();
-    setVisible(true);
-  }, []);
-  const onClose = useCallback(() => {
-    emitHaptic();
-    setVisible(false);
-  }, []);
-
+  const { visible, open, close } = useModal({
+    onOpen: emitHaptic,
+    onClose: emitHaptic,
+  });
   return (
     <>
-      <View cursor="pointer" onPress={onOpen}>
+      <View cursor="pointer" onPress={open}>
         {trigger}
       </View>
 
@@ -45,7 +38,7 @@ export const QrCodeModalWithTrigger = ({
         qrValue={qrValue}
         qrContent={qrContent}
         title={title}
-        onClose={onClose}
+        onClose={close}
       />
     </>
   );

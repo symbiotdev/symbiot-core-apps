@@ -1,5 +1,9 @@
 import { useCallback, useRef, useState } from 'react';
-import { arraysOfObjectsEqual, isEqual } from '@symbiot-core-apps/shared';
+import {
+  arraysOfObjectsEqual,
+  isEqual,
+  useModal,
+} from '@symbiot-core-apps/shared';
 import { UseMutationResult } from '@tanstack/react-query';
 
 export function useModalUpdateForm<T, FV, UV>({
@@ -61,12 +65,13 @@ export function useUpdateForm<T, FV, UV>(
   onUpdated?: (value: T) => void,
 ) {
   const valueRef = useRef<FV>(initialValue);
+  const {
+    visible: modalVisible,
+    open: openModal,
+    close: closeModal,
+  } = useModal();
 
-  const [modalVisible, setModalVisible] = useState(false);
   const [value, setValue] = useState<FV>(initialValue);
-
-  const openModal = useCallback(() => setModalVisible(true), []);
-  const closeModal = useCallback(() => setModalVisible(false), []);
 
   const hasChanges = useCallback((data: Partial<FV>) => {
     const dataKeys = Object.keys(data) as (keyof FV)[];

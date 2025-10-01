@@ -81,7 +81,7 @@ export const BrandTicketItemView = ({
       borderRadius="$10"
       maxWidth={400}
       width="100%"
-      pressStyle={{ opacity: 0.8 }}
+      pressStyle={onPress && { opacity: 0.8 }}
       cursor="pointer"
       onPress={(e) => {
         emitHaptic();

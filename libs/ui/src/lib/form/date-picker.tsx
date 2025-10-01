@@ -74,7 +74,6 @@ export const DatePicker = ({
         ref={popoverRef}
         disabled={disabled}
         disableDrag={disableDrag}
-        triggerType="child"
         sheetTitle={label}
         trigger={
           <InputFieldView

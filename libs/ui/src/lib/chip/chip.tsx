@@ -51,7 +51,6 @@ export const Chip = ({
       borderRadius="$10"
     >
       <RegularText
-        flex={1}
         numberOfLines={1}
         fontSize={sizeConfig.fontSize}
         color={typeConfig.textColor}

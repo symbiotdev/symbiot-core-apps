@@ -49,7 +49,6 @@ export const MapsTrigger = ({
     <AdaptivePopover
       ref={popoverRef}
       disableDrag={disableDrag}
-      triggerType="child"
       placement="bottom"
       sheetTitle={t('shared.maps.open.title')}
       trigger={trigger}

@@ -3,6 +3,7 @@ import { ReactElement } from 'react';
 import { RegularText, SemiBoldText } from '../text/text';
 import { Button, ButtonType } from '../button/button';
 import { ViewProps } from 'tamagui';
+import { GestureResponderEvent } from 'react-native';
 
 export const ActionCard = ({
   title,
@@ -20,7 +21,7 @@ export const ActionCard = ({
   buttonIcon: ReactElement<{ color?: string; size?: number }>;
   buttonType?: ButtonType;
   buttonLoading?: boolean;
-  onActionPress: () => void;
+  onActionPress: (e: GestureResponderEvent) => void;
 }) => {
   return (
     <Card gap="$2" width="100%" {...viewProps}>

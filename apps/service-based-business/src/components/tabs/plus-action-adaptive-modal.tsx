@@ -63,7 +63,6 @@ export const PlusActionAdaptiveModal = ({
   return (
     <AdaptivePopover
       ref={popoverRef}
-      triggerType="child"
       placement={placement}
       ignoreHapticOnOpen
       trigger={trigger}

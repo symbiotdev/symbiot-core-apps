@@ -71,7 +71,7 @@ export const AdaptivePopover = forwardRef(
       ignoreHapticOnOpen?: boolean;
       ignoreHapticOnClose?: boolean;
       sheetTitle?: string;
-      triggerType?: 'child' | 'manual';
+      triggerType?: 'manual';
       minWidth?: number;
       maxWidth?: number;
       maxHeight?: number;
@@ -164,13 +164,9 @@ export const AdaptivePopover = forwardRef(
         open={opened}
         onOpenChange={onOpenChange}
       >
-        {triggerType === 'manual' || disabled ? (
-          trigger
-        ) : (
-          <Popover.Trigger asChild disabled={disabled}>
-            {trigger}
-          </Popover.Trigger>
-        )}
+        <Popover.Trigger asChild={triggerType !== 'manual'} disabled={disabled}>
+          {trigger}
+        </Popover.Trigger>
 
         <Popover.Content
           animation="quick"

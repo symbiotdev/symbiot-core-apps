@@ -154,7 +154,6 @@ export const MediaPicker = ({
   return (
     <AdaptivePopover
       placement="bottom"
-      triggerType="child"
       minWidth={250}
       ref={popoverRef}
       disabled={processing}

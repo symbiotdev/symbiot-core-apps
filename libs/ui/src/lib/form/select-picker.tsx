@@ -100,7 +100,6 @@ export function SelectPicker({
         disableDrag={disableDrag}
         sheetTitle={sheetLabel}
         minWidth={200}
-        triggerType="child"
         trigger={
           <View gap="$2" pressStyle={{ opacity: 0.8 }}>
             <InputFieldView disabled={disabled}>

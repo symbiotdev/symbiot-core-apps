@@ -131,7 +131,6 @@ export const DurationPicker = ({
       <AdaptivePopover
         ref={popoverRef}
         disabled={disabled}
-        triggerType="child"
         sheetTitle={label}
         trigger={
           <InputFieldView

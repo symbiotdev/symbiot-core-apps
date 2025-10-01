@@ -211,7 +211,6 @@ const WeekdayScheduleElement = ({
       ignoreScroll
       disableDrag={disableDrag}
       key={`weekday${weekday.value}`}
-      triggerType="child"
       placement="bottom"
       maxHeight={300}
       minWidth={250}

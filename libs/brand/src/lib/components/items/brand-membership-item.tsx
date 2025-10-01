@@ -82,7 +82,7 @@ export const BrandMembershipItemView = ({
       justifyContent="space-between"
       position="relative"
       cursor="pointer"
-      pressStyle={{ opacity: 0.8 }}
+      pressStyle={onPress && { opacity: 0.8 }}
       onPress={(e) => {
         emitHaptic();
         onPress?.(e);

@@ -1,7 +1,6 @@
 import { BrandEmployee } from '@symbiot-core-apps/api';
 import {
   Avatar,
-  Card,
   FormView,
   getNicknameFromUrl,
   H3,
@@ -59,7 +58,7 @@ export const BrandEmployeeProfile = ({
   return (
     <PageView scrollable withHeaderHeight>
       <FormView alignItems="center" gap="$5">
-        <Card width="100%" gap="$3" alignItems="center">
+        <View gap="$3" alignItems="center">
           <Avatar
             name={employee.name}
             size={100}
@@ -67,11 +66,11 @@ export const BrandEmployeeProfile = ({
             color={employee.avatarColor}
           />
 
+          <H3 textAlign="center">{employee.name}</H3>
+
           <RegularText color="$placeholderColor" textAlign="center">
             {employee.role}
           </RegularText>
-
-          <H3 textAlign="center">{employee.name}</H3>
 
           {!!instagram && (
             <XStack justifyContent="center" gap="$2" flex={1} maxWidth="80%">
@@ -85,7 +84,7 @@ export const BrandEmployeeProfile = ({
               </Link>
             </XStack>
           )}
-        </Card>
+        </View>
 
         {!!employee.about && (
           <ListItemGroup

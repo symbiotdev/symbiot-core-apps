@@ -61,7 +61,8 @@ export const useStackScreenHeaderOptions = () => {
 const SideElement = memo((props: ViewProps) => (
   <View
     zIndex={1}
-    minWidth={headerButtonSize}
+    width={60}
+    minWidth={60}
     height={headerButtonSize}
     justifyContent="center"
     {...props}

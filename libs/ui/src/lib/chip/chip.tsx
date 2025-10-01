@@ -1,7 +1,7 @@
 import { View } from 'tamagui';
 import { RegularText } from '../text/text';
 
-const sizeConfig = {
+const _sizeConfig = {
   small: {
     fontSize: 12,
     paddingHorizontal: 6,
@@ -19,23 +19,44 @@ const sizeConfig = {
   },
 };
 
+const _typeConfig = {
+  default: {
+    backgroundColor: '$background',
+    textColor: '$color',
+  },
+  danger: {
+    backgroundColor: '$background1',
+    textColor: '$error',
+  },
+};
+
 export const Chip = ({
   label,
   size = 'medium',
+  type = 'default',
 }: {
   label: string;
-  size?: keyof typeof sizeConfig;
+  size?: keyof typeof _sizeConfig;
+  type?: keyof typeof _typeConfig;
 }) => {
-  const config = sizeConfig[size];
+  const sizeConfig = _sizeConfig[size];
+  const typeConfig = _typeConfig[type];
 
   return (
     <View
-      backgroundColor="$background"
-      paddingHorizontal={config.paddingHorizontal}
-      paddingVertical={config.paddingVertical}
+      flex={0}
+      backgroundColor={typeConfig.backgroundColor}
+      paddingHorizontal={sizeConfig.paddingHorizontal}
+      paddingVertical={sizeConfig.paddingVertical}
       borderRadius="$10"
     >
-      <RegularText fontSize={config.fontSize} opacity={0.5}>
+      <RegularText
+        flex={1}
+        numberOfLines={1}
+        fontSize={sizeConfig.fontSize}
+        color={typeConfig.textColor}
+        opacity={0.5}
+      >
         {label}
       </RegularText>
     </View>

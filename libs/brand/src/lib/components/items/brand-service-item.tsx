@@ -78,7 +78,9 @@ export const BrandServiceItemChips = ({
   <XStack flex={1} flexWrap="wrap" gap="$1">
     {service.duration && (
       <Chip
-        label={DateHelper.formatDuration(service.duration, true)}
+        label={DateHelper.formatDuration(service.duration, {
+          shortFormat: true,
+        })}
         size="small"
       />
     )}

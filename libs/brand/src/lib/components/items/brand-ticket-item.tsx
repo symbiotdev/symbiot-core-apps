@@ -1,4 +1,4 @@
-import { BrandTicket } from '@symbiot-core-apps/api';
+import { BrandTicket, Currency } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { useAllBrandLocation } from '../../hooks/use-additional-brand-location';
@@ -34,11 +34,47 @@ export const BrandTicketItem = ({
   ticket: BrandTicket;
   navigateTo?: 'update' | 'profile';
 }) => {
+  return (
+    <BrandTicketItemView
+      {...viewProps}
+      name={ticket.name}
+      visits={ticket.visits}
+      price={ticket.price}
+      discount={ticket.discount}
+      currency={ticket.currency}
+      locations={ticket.locations?.map(({ name }) => name)}
+      opacity={ticket.hidden ? 0.7 : 1}
+      disabled={!navigateTo}
+      onPress={() =>
+        router.push(`/tickets/${ticket.id}/${navigateTo || 'profile'}`)
+      }
+    />
+  );
+};
+
+export const BrandTicketItemView = ({
+  name,
+  visits,
+  price,
+  discount,
+  currency,
+  locations,
+  onPress,
+  ...viewProps
+}: ViewProps & {
+  name: string;
+  visits: number;
+  price: number;
+  discount: number;
+  currency: Currency;
+  locations?: string[];
+}) => {
   const { t } = useTranslation();
   const allLocations = useAllBrandLocation();
 
   return (
     <View
+      {...viewProps}
       backgroundColor="$background"
       overflow="hidden"
       position="relative"
@@ -47,12 +83,10 @@ export const BrandTicketItem = ({
       width="100%"
       pressStyle={{ opacity: 0.8 }}
       cursor="pointer"
-      disabled={!navigateTo}
-      onPress={() => {
+      onPress={(e) => {
         emitHaptic();
-        router.push(`/tickets/${ticket.id}/${navigateTo || 'profile'}`);
+        onPress?.(e);
       }}
-      {...viewProps}
     >
       <CutDown right={-cutoutSize / 1.5} />
       <CutDown left={-cutoutSize / 1.5} />
@@ -60,13 +94,13 @@ export const BrandTicketItem = ({
       <View
         backgroundColor="$background1"
         width="100%"
-        height={140}
+        minHeight={140}
         gap="$2"
         padding={defaultPageHorizontalPadding}
       >
         <View gap="$2" flex={1} alignItems="center" justifyContent="center">
           <H3 textAlign="center" numberOfLines={2}>
-            {ticket.name}
+            {name}
           </H3>
 
           <RegularText
@@ -74,29 +108,28 @@ export const BrandTicketItem = ({
             textAlign="center"
             numberOfLines={2}
           >
-            {ticket.locations?.map(({ name }) => name).join(', ') ||
-              allLocations.label}
+            {locations?.join(', ') || allLocations.label}
           </RegularText>
         </View>
 
-        {ticket.price ? (
+        {price ? (
           <XStack gap="$2" justifyContent="center">
             <RegularText>
               {formatPrice({
-                price: ticket.price,
-                discount: ticket.discount,
-                symbol: ticket.currency?.symbol,
+                price,
+                discount,
+                symbol: currency?.symbol,
               })}
             </RegularText>
 
-            {!!ticket.discount && (
+            {!!discount && (
               <RegularText
                 textDecorationLine="line-through"
                 color="$placeholderColor"
               >
                 {formatPrice({
-                  price: ticket.price,
-                  symbol: ticket.currency?.symbol,
+                  price,
+                  symbol: currency?.symbol,
                 })}
               </RegularText>
             )}
@@ -124,7 +157,7 @@ export const BrandTicketItem = ({
       >
         <RegularText textAlign="center">
           {t('brand_ticket.count_visits', {
-            count: ticket.visits,
+            count: visits,
           })}
         </RegularText>
       </View>

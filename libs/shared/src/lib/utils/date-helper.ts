@@ -60,20 +60,38 @@ export const DateHelper = {
   differenceInYears,
   intervalToDuration,
   eachDayOfInterval,
-  formatDuration: (totalMinutes: number, shortFormat?: boolean) => {
+  formatDuration: (
+    totalMinutes: number,
+    params?: {
+      shortFormat?: boolean;
+      onlyHighestValue?: boolean;
+    },
+  ) => {
     const years = Math.floor(totalMinutes / minutesInYear);
     const remainingMinutesAfterYears = totalMinutes % minutesInYear;
 
-    const months = Math.floor(remainingMinutesAfterYears / minutesInMonth);
+    const months =
+      params?.onlyHighestValue && years
+        ? 0
+        : Math.floor(remainingMinutesAfterYears / minutesInMonth);
     const remainingMinutesAfterMonths =
       remainingMinutesAfterYears % minutesInMonth;
 
-    const days = Math.floor(remainingMinutesAfterMonths / minutesInDay);
+    const days =
+      params?.onlyHighestValue && (years || months)
+        ? 0
+        : Math.floor(remainingMinutesAfterMonths / minutesInDay);
     const remainingMinutesAfterDays =
       remainingMinutesAfterMonths % minutesInDay;
 
-    const hours = Math.floor(remainingMinutesAfterDays / 60);
-    const minutes = remainingMinutesAfterDays % 60;
+    const hours =
+      params?.onlyHighestValue && (years || months || days)
+        ? 0
+        : Math.floor(remainingMinutesAfterDays / 60);
+    const minutes =
+      params?.onlyHighestValue && (years || months || days || hours)
+        ? 0
+        : remainingMinutesAfterDays % 60;
 
     const duration: Record<string, number> = {
       years,
@@ -83,7 +101,7 @@ export const DateHelper = {
       minutes,
     };
 
-    if (shortFormat) {
+    if (params?.shortFormat) {
       return Object.keys(duration)
         .filter((key) => duration[key])
         .map(

@@ -14,6 +14,7 @@ import {
   useAllBrandLocation,
   useAnyBrandService,
 } from '@symbiot-core-apps/brand';
+import { router } from 'expo-router';
 
 export const BrandMembershipProfile = ({
   membership,
@@ -53,7 +54,7 @@ export const BrandMembershipProfile = ({
                 hidePricing
                 key={service.id}
                 service={service}
-                navigateTo="profile"
+                onPress={() => router.push(`/services/${service.id}/profile`)}
               />
             ))
           ) : (
@@ -72,7 +73,7 @@ export const BrandMembershipProfile = ({
                 key={location.id}
                 location={location}
                 brand={brand}
-                navigateTo="profile"
+                onPress={() => router.push(`/locations/${location.id}/profile`)}
               />
             ))
           ) : (

@@ -41,7 +41,7 @@ export const Faq = () => {
             subtitle={t('shared.faq.contact_us.subtitle')}
             buttonLabel={t('shared.faq.contact_us.button.label')}
             buttonIcon={<Icon name="Letter" />}
-            onActionPress={openMail}
+            onPress={openMail}
           />
         </FormView>
       )}

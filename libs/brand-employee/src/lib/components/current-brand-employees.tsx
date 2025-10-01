@@ -9,7 +9,10 @@ import {
   Search,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
-import { useCurrentBrandEmployeeListQuery } from '@symbiot-core-apps/api';
+import {
+  BrandEmployee,
+  useCurrentBrandEmployeeListQuery,
+} from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
 import { useCurrentBrandEmployeeState } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
@@ -18,9 +21,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
 
 export const CurrentBrandEmployees = ({
-  navigateTo,
+  onEmployeePress,
 }: {
-  navigateTo: 'update' | 'profile';
+  onEmployeePress: (employee: BrandEmployee) => void;
 }) => {
   const { currentList, setCurrentList } = useCurrentBrandEmployeeState();
   const { t } = useTranslation();
@@ -78,7 +81,7 @@ export const CurrentBrandEmployees = ({
               borderRadius="$10"
               padding="$4"
               employee={item}
-              navigateTo={navigateTo}
+              onPress={() => onEmployeePress(item)}
             />
           )}
           onRefresh={onRefresh}

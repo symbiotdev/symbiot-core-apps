@@ -19,12 +19,15 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React, { useCallback, useState } from 'react';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandTicketItem } from '@symbiot-core-apps/brand';
-import { useCurrentBrandTicketListQuery } from '@symbiot-core-apps/api';
+import {
+  BrandTicket,
+  useCurrentBrandTicketListQuery,
+} from '@symbiot-core-apps/api';
 
 export const CurrentBrandTickets = ({
-  navigateTo,
+  onTicketPress,
 }: {
-  navigateTo: 'update' | 'profile';
+  onTicketPress: (ticket: BrandTicket) => void;
 }) => {
   const { currentList, setCurrentList } = useCurrentBrandTicketState();
   const { t } = useTranslation();
@@ -81,7 +84,7 @@ export const CurrentBrandTickets = ({
             <BrandTicketItem
               alignSelf="center"
               ticket={item}
-              navigateTo={navigateTo}
+              onPress={() => onTicketPress(item)}
             />
           )}
           onRefresh={onRefresh}

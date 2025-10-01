@@ -15,6 +15,7 @@ import {
 } from '@symbiot-core-apps/brand';
 import { useTranslation } from 'react-i18next';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
+import { router } from 'expo-router';
 
 export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
   const { brand } = useCurrentBrandState();
@@ -62,7 +63,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
               <BrandEmployeeItem
                 key={employee.id}
                 employee={employee}
-                navigateTo="profile"
+                onPress={() => router.push(`/employees/${employee.id}/profile`)}
               />
             ))}
           </ListItemGroup>
@@ -79,7 +80,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
                 key={location.id}
                 location={location}
                 brand={brand}
-                navigateTo="profile"
+                onPress={() => router.push(`/locations/${location.id}/profile`)}
               />
             ))
           ) : (

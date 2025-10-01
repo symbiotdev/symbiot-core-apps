@@ -17,5 +17,11 @@ export default () => {
     });
   }, [navigation]);
 
-  return <CurrentBrandLocations navigateTo="update" />;
+  return (
+    <CurrentBrandLocations
+      onLocationPress={(location) =>
+        router.push(`/locations/${location.id}/update`)
+      }
+    />
+  );
 };

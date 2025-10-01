@@ -223,7 +223,7 @@ export const ImportBrandClient = () => {
             buttonLabel={t('brand_client.import.template.button.label')}
             buttonLoading={templateLoading || sharing}
             buttonIcon={<Icon name="Import" />}
-            onActionPress={downloadTemplate}
+            onPress={downloadTemplate}
           />
         </FormView>
       )}

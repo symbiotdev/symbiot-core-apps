@@ -17,5 +17,11 @@ export default () => {
     });
   }, [navigation]);
 
-  return <CurrentBrandServices navigateTo="update" />;
+  return (
+    <CurrentBrandServices
+      onServicePress={(service) =>
+        router.push(`/services/${service.id}/update`)
+      }
+    />
+  );
 };

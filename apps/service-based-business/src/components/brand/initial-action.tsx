@@ -56,7 +56,7 @@ export const InitialAction = () => {
               subtitle={t('initial_actions.create_workspace.subtitle')}
               buttonLabel={t('initial_actions.create_workspace.button.label')}
               buttonIcon={<Icon name={icons.Workspace} />}
-              onActionPress={createBrand}
+              onPress={createBrand}
             />
 
             <H4 textAlign="center" textTransform="uppercase">
@@ -68,7 +68,7 @@ export const InitialAction = () => {
               subtitle={t('initial_actions.join_workspace.subtitle')}
               buttonLabel={t('initial_actions.join_workspace.button.label')}
               buttonIcon={<Icon name="QrCode" />}
-              onActionPress={onOpenQrCodeModal}
+              onPress={onOpenQrCodeModal}
             />
           </FormView>
         )}

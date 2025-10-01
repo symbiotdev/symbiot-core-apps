@@ -17,5 +17,9 @@ export default () => {
     });
   }, [navigation]);
 
-  return <CurrentBrandTickets navigateTo="update" />;
+  return (
+    <CurrentBrandTickets
+      onTicketPress={(ticket) => router.push(`/tickets/${ticket.id}/update`)}
+    />
+  );
 };

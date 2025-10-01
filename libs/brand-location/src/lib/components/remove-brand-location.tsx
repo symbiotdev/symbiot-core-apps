@@ -43,7 +43,7 @@ export const RemoveBrandLocation = ({
           buttonIcon={<Icon name="TrashBinMinimalistic" />}
           buttonLoading={isPending}
           buttonType="danger"
-          onActionPress={onActionPress}
+          onPress={onActionPress}
         />
       </FormView>
     </PageView>

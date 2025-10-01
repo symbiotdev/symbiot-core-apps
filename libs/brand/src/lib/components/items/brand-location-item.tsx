@@ -1,6 +1,5 @@
 import { Brand, BrandLocation } from '@symbiot-core-apps/api';
 import { emitHaptic } from '@symbiot-core-apps/shared';
-import { router } from 'expo-router';
 import {
   Avatar,
   FormView,
@@ -13,24 +12,23 @@ import { View, ViewProps } from 'tamagui';
 export const BrandLocationItem = ({
   location,
   brand,
-  navigateTo,
+  onPress,
   ...viewProps
 }: ViewProps & {
   location: BrandLocation;
   brand?: Brand;
-  navigateTo?: 'update' | 'profile';
 }) => {
   return (
     <FormView
       {...viewProps}
       alignItems="center"
       gap="$4"
-      cursor="pointer"
       flexDirection="row"
-      pressStyle={{ opacity: 0.8 }}
-      onPress={() => {
-        emitHaptic();
-        router.push(`/locations/${location.id}/${navigateTo || 'profile'}`);
+      cursor={onPress ? 'pointer' : undefined}
+      pressStyle={onPress && { opacity: 0.8 }}
+      onPress={(e) => {
+        onPress && emitHaptic();
+        onPress?.(e);
       }}
     >
       <Avatar

@@ -14,6 +14,7 @@ import {
   useAllBrandLocation,
   useAnyBrandService,
 } from '@symbiot-core-apps/brand';
+import { router } from 'expo-router';
 
 export const BrandTicketProfile = ({ ticket }: { ticket: BrandTicket }) => {
   const { brand } = useCurrentBrandState();
@@ -23,11 +24,7 @@ export const BrandTicketProfile = ({ ticket }: { ticket: BrandTicket }) => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <BrandTicketItem
-        alignSelf="center"
-        navigateTo="profile"
-        ticket={ticket}
-      />
+      <BrandTicketItem alignSelf="center" ticket={ticket} />
 
       <FormView gap="$5" marginVertical="$5">
         {!!ticket.description && (
@@ -53,7 +50,7 @@ export const BrandTicketProfile = ({ ticket }: { ticket: BrandTicket }) => {
                 hidePricing
                 key={service.id}
                 service={service}
-                navigateTo="profile"
+                onPress={() => router.push(`/services/${service.id}/profile`)}
               />
             ))
           ) : (
@@ -72,7 +69,7 @@ export const BrandTicketProfile = ({ ticket }: { ticket: BrandTicket }) => {
                 key={location.id}
                 location={location}
                 brand={brand}
-                navigateTo="profile"
+                onPress={() => router.push(`/locations/${location.id}/profile`)}
               />
             ))
           ) : (

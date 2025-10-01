@@ -17,5 +17,9 @@ export default () => {
     });
   }, [navigation]);
 
-  return <CurrentBrandClients navigateTo="update" />;
+  return (
+    <CurrentBrandClients
+      onClientPress={(client) => router.push(`/clients/${client.id}/update`)}
+    />
+  );
 };

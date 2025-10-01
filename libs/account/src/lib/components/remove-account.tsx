@@ -10,7 +10,7 @@ export const RemoveAccount = () => {
   const { me } = useCurrentAccountState();
   const { mutateAsync, isPending } = useAccountRemoveMe();
 
-  const onActionPress = useCallback(
+  const onPress = useCallback(
     () =>
       ConfirmAlert({
         title: t('shared.account.remove.confirm_dialog.title'),
@@ -32,7 +32,7 @@ export const RemoveAccount = () => {
           buttonIcon={<Icon name="TrashBinMinimalistic" />}
           buttonLoading={isPending}
           buttonType="danger"
-          onActionPress={onActionPress}
+          onPress={onPress}
         />
       </FormView>
     </PageView>

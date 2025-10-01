@@ -9,7 +9,6 @@ import {
   RegularText,
 } from '@symbiot-core-apps/ui';
 import { emitHaptic, formatPrice } from '@symbiot-core-apps/shared';
-import { router } from 'expo-router';
 
 const cutoutSize = 40;
 
@@ -28,11 +27,9 @@ const CutDown = (props: ViewProps) => (
 
 export const BrandTicketItem = ({
   ticket,
-  navigateTo,
   ...viewProps
 }: ViewProps & {
   ticket: BrandTicket;
-  navigateTo?: 'update' | 'profile';
 }) => {
   return (
     <BrandTicketItemView
@@ -44,10 +41,6 @@ export const BrandTicketItem = ({
       currency={ticket.currency}
       locations={ticket.locations?.map(({ name }) => name)}
       opacity={ticket.hidden ? 0.7 : 1}
-      disabled={!navigateTo}
-      onPress={() =>
-        router.push(`/tickets/${ticket.id}/${navigateTo || 'profile'}`)
-      }
     />
   );
 };
@@ -81,10 +74,10 @@ export const BrandTicketItemView = ({
       borderRadius="$10"
       maxWidth={400}
       width="100%"
+      cursor={onPress ? 'pointer' : undefined}
       pressStyle={onPress && { opacity: 0.8 }}
-      cursor="pointer"
       onPress={(e) => {
-        emitHaptic();
+        onPress && emitHaptic();
         onPress?.(e);
       }}
     >

@@ -17,14 +17,17 @@ import { useApp } from '@symbiot-core-apps/app';
 import { useCurrentBrandServiceState } from '@symbiot-core-apps/state';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCallback, useState } from 'react';
-import { useCurrentBrandServiceListQuery } from '@symbiot-core-apps/api';
+import {
+  BrandService,
+  useCurrentBrandServiceListQuery,
+} from '@symbiot-core-apps/api';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandServiceItem } from '@symbiot-core-apps/brand';
 
 export const CurrentBrandServices = ({
-  navigateTo,
+  onServicePress,
 }: {
-  navigateTo: 'update' | 'profile';
+  onServicePress: (service: BrandService) => void;
 }) => {
   const { currentList, setCurrentList } = useCurrentBrandServiceState();
   const { t } = useTranslation();
@@ -83,7 +86,7 @@ export const CurrentBrandServices = ({
               borderRadius="$10"
               padding="$4"
               service={item}
-              navigateTo={navigateTo}
+              onPress={() => onServicePress(item)}
             />
           )}
           onRefresh={onRefresh}

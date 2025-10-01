@@ -9,7 +9,6 @@ import {
   formatPrice,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
-import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet } from 'react-native';
 import { View, ViewProps, XStack } from 'tamagui';
@@ -20,11 +19,9 @@ import { useAllBrandLocation } from '../../hooks/use-additional-brand-location';
 
 export const BrandMembershipItem = ({
   membership,
-  navigateTo,
   ...viewProps
 }: ViewProps & {
   membership: BrandMembership;
-  navigateTo?: 'update' | 'profile';
 }) => {
   return (
     <BrandMembershipItemView
@@ -36,10 +33,6 @@ export const BrandMembershipItem = ({
       currency={membership.currency}
       locations={membership.locations?.map(({ name }) => name)}
       opacity={membership.hidden ? 0.7 : 1}
-      disabled={!navigateTo}
-      onPress={() => {
-        router.push(`/memberships/${membership.id}/${navigateTo || 'profile'}`);
-      }}
     />
   );
 };
@@ -81,10 +74,10 @@ export const BrandMembershipItemView = ({
       gap="$2"
       justifyContent="space-between"
       position="relative"
-      cursor="pointer"
+      cursor={onPress ? 'pointer' : undefined}
       pressStyle={onPress && { opacity: 0.8 }}
       onPress={(e) => {
-        emitHaptic();
+        onPress && emitHaptic();
         onPress?.(e);
       }}
     >

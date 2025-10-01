@@ -9,7 +9,7 @@ export const RemoveBrandClient = ({ client }: { client: BrandClient }) => {
   const { t } = useTranslation();
   const { mutateAsync, isPending } = useRemoveBrandClientQuery();
 
-  const onActionPress = useCallback(
+  const onPress = useCallback(
     () =>
       ConfirmAlert({
         title: t('brand_client.remove.confirm_dialog.title'),
@@ -36,7 +36,7 @@ export const RemoveBrandClient = ({ client }: { client: BrandClient }) => {
           buttonIcon={<Icon name="TrashBinMinimalistic" />}
           buttonLoading={isPending}
           buttonType="danger"
-          onActionPress={onActionPress}
+          onPress={onPress}
         />
       </FormView>
     </PageView>

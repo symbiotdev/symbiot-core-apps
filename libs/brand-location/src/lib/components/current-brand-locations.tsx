@@ -7,16 +7,19 @@ import {
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
-import { useCurrentBrandLocationsQuery } from '@symbiot-core-apps/api';
+import {
+  BrandLocation,
+  useCurrentBrandLocationsQuery,
+} from '@symbiot-core-apps/api';
 import { router } from 'expo-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrandLocationItem } from '@symbiot-core-apps/brand';
 
 export const CurrentBrandLocations = ({
-  navigateTo,
+  onLocationPress,
 }: {
-  navigateTo: 'update' | 'profile';
+  onLocationPress: (location: BrandLocation) => void;
 }) => {
   const { brand } = useCurrentBrandState();
   const headerHeight = useScreenHeaderHeight();
@@ -50,7 +53,7 @@ export const CurrentBrandLocations = ({
             padding="$4"
             location={item}
             brand={brand}
-            navigateTo={navigateTo}
+            onPress={() => onLocationPress(item)}
           />
         )}
         onRefresh={refetch}

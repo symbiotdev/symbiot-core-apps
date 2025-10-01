@@ -17,5 +17,11 @@ export default () => {
     });
   }, [navigation]);
 
-  return <CurrentBrandMemberships navigateTo="update" />;
+  return (
+    <CurrentBrandMemberships
+      onMembershipPress={(membership) =>
+        router.push(`/memberships/${membership.id}/update`)
+      }
+    />
+  );
 };

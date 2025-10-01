@@ -124,7 +124,7 @@ export default () => {
               subtitle={t('subscription.card.subtitle')}
               buttonLabel={t('subscription.card.button.label')}
               buttonIcon={<Icon name="Rocket" />}
-              onActionPress={() => {
+              onPress={() => {
                 alert('get pro');
               }}
             />

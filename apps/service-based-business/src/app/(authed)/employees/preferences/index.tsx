@@ -17,5 +17,11 @@ export default () => {
     });
   }, [navigation]);
 
-  return <CurrentBrandEmployees navigateTo="update" />;
+  return (
+    <CurrentBrandEmployees
+      onEmployeePress={(employee) =>
+        router.push(`/employees/${employee.id}/update`)
+      }
+    />
+  );
 };

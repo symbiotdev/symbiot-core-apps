@@ -16,7 +16,7 @@ export const RemoveBrandMembership = ({
   const { t } = useTranslation();
   const { mutateAsync, isPending } = useRemoveBrandMembershipQuery();
 
-  const onActionPress = useCallback(
+  const onPress = useCallback(
     () =>
       ConfirmAlert({
         title: t('brand_membership.remove.confirm_dialog.title'),
@@ -43,7 +43,7 @@ export const RemoveBrandMembership = ({
           buttonIcon={<Icon name="TrashBinMinimalistic" />}
           buttonLoading={isPending}
           buttonType="danger"
-          onActionPress={onActionPress}
+          onPress={onPress}
         />
       </FormView>
     </PageView>

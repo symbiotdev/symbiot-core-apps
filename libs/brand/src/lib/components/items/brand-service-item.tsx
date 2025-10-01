@@ -1,5 +1,4 @@
 import { DateHelper, emitHaptic, formatPrice } from '@symbiot-core-apps/shared';
-import { router } from 'expo-router';
 import { ViewProps, XStack } from 'tamagui';
 import { Chip, FormView, MediumText, RegularText } from '@symbiot-core-apps/ui';
 import { BrandService } from '@symbiot-core-apps/api';
@@ -7,12 +6,11 @@ import { useTranslation } from 'react-i18next';
 
 export const BrandServiceItem = ({
   service,
-  navigateTo,
   hidePricing,
+  onPress,
   ...viewProps
 }: ViewProps & {
   service: BrandService;
-  navigateTo?: 'update' | 'profile';
   hidePricing?: boolean;
 }) => {
   const { t } = useTranslation();
@@ -21,12 +19,12 @@ export const BrandServiceItem = ({
     <FormView
       {...viewProps}
       gap="$3"
-      cursor="pointer"
       opacity={service.hidden ? 0.7 : 1}
-      pressStyle={{ opacity: 0.8 }}
-      onPress={() => {
-        emitHaptic();
-        router.push(`/services/${service.id}/${navigateTo || 'profile'}`);
+      cursor={onPress ? 'pointer' : undefined}
+      pressStyle={onPress && { opacity: 0.8 }}
+      onPress={(e) => {
+        onPress && emitHaptic();
+        onPress?.(e);
       }}
     >
       <XStack flex={1}>

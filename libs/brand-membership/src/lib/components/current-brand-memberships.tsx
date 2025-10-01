@@ -17,14 +17,17 @@ import { useApp } from '@symbiot-core-apps/app';
 import { useCurrentBrandMembershipState } from '@symbiot-core-apps/state';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React, { useCallback, useState } from 'react';
-import { useCurrentBrandMembershipListQuery } from '@symbiot-core-apps/api';
+import {
+  BrandMembership,
+  useCurrentBrandMembershipListQuery,
+} from '@symbiot-core-apps/api';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
 
 export const CurrentBrandMemberships = ({
-  navigateTo,
+  onMembershipPress,
 }: {
-  navigateTo: 'update' | 'profile';
+  onMembershipPress: (membership: BrandMembership) => void;
 }) => {
   const { currentList, setCurrentList } = useCurrentBrandMembershipState();
   const { t } = useTranslation();
@@ -78,7 +81,10 @@ export const CurrentBrandMemberships = ({
           keyExtractor={(item) => item.id}
           ListEmptyComponent={ListEmptyComponent}
           renderItem={({ item }) => (
-            <BrandMembershipItem membership={item} navigateTo={navigateTo} />
+            <BrandMembershipItem
+              membership={item}
+              onPress={() => onMembershipPress(item)}
+            />
           )}
           onRefresh={onRefresh}
           onEndReached={onEndReached}

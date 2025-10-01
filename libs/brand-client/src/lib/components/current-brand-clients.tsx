@@ -28,9 +28,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 
 export const CurrentBrandClients = ({
-  navigateTo,
+  onClientPress,
 }: {
-  navigateTo: 'update' | 'profile';
+  onClientPress: (client: BrandClient) => void;
 }) => {
   const { currentList, setCurrentList } = useCurrentBrandClientState();
   const { t } = useTranslation();
@@ -70,7 +70,7 @@ export const CurrentBrandClients = ({
         pressStyle={{ opacity: 0.8 }}
         onPress={() => {
           emitHaptic();
-          router.push(`/clients/${item.id}/${navigateTo}`);
+          onClientPress(item);
         }}
       >
         <Avatar
@@ -86,7 +86,7 @@ export const CurrentBrandClients = ({
         <Icon name="ArrowRight" />
       </FormView>
     ),
-    [navigateTo],
+    [onClientPress],
   );
 
   const ListEmptyComponent = useCallback(

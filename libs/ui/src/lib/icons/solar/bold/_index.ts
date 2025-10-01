@@ -73,6 +73,7 @@ import { MoneyBag } from './MoneyBag';
 import { Card2 } from './Card2';
 import { Ticket } from './Ticket';
 import { Phone } from './Phone';
+import { Wallet } from './Wallet';
 
 export const Map: IconMap = {
   AddCircle,
@@ -147,6 +148,7 @@ export const Map: IconMap = {
   UserCircle,
   UserId,
   UsersGroupRounded,
+  Wallet,
   Widget,
   Widget3,
 };

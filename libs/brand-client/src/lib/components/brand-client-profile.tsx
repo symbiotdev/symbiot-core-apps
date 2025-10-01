@@ -5,6 +5,7 @@ import {
   useUpdateBrandClientQuery,
 } from '@symbiot-core-apps/api';
 import {
+  ActionCard,
   Avatar,
   ButtonIcon,
   Card,
@@ -22,8 +23,8 @@ import {
 } from '@symbiot-core-apps/ui';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
-import { XStack } from 'tamagui';
-import { useCallback } from 'react';
+import { View, XStack } from 'tamagui';
+import React, { useCallback } from 'react';
 import { Linking } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SingeElementForm } from '@symbiot-core-apps/form-controller';
@@ -32,19 +33,29 @@ import { useApp } from '@symbiot-core-apps/app';
 import { router } from 'expo-router';
 
 export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
+  const topUpBalance = useCallback(() => {
+    alert('Top Up Balance');
+  }, []);
+
   return (
     <PageView scrollable withHeaderHeight>
       <FormView gap="$5">
-        <Header client={client} />
+        <Header client={client} topUpBalance={topUpBalance} />
         <Note client={client} />
-        <Balance client={client} />
+        <Balance client={client} topUpBalance={topUpBalance} />
         <History client={client} />
       </FormView>
     </PageView>
   );
 };
 
-const Header = ({ client }: { client: BrandClient }) => {
+const Header = ({
+  client,
+  topUpBalance,
+}: {
+  client: BrandClient;
+  topUpBalance: () => void;
+}) => {
   const { me } = useCurrentAccountState();
 
   const onPhonePress = useCallback(
@@ -108,6 +119,13 @@ const Header = ({ client }: { client: BrandClient }) => {
           disabled={!client.emails?.length}
           onPress={onEmailPress}
         />
+
+        <ButtonIcon
+          iconName="Wallet"
+          size={40}
+          iconSize={20}
+          onPress={topUpBalance}
+        />
       </XStack>
     </Card>
   );
@@ -166,16 +184,25 @@ const Note = ({ client }: { client: BrandClient }) => {
   );
 };
 
-const Balance = ({ client }: { client: BrandClient }) => {
+const Balance = ({
+  client,
+  topUpBalance,
+}: {
+  client: BrandClient;
+  topUpBalance: () => void;
+}) => {
   const { t } = useTranslation();
-  const { icons } = useApp();
 
   return (
-    <ListItemGroup title={t('brand_client.profile.balance')}>
-      <RegularText color="$disabled" textAlign="center" paddingVertical="$2">
-        {t('shared.its_empty')}
-      </RegularText>
-    </ListItemGroup>
+    <View gap="$2">
+      <ActionCard
+        title={t('brand_client.profile.extend_balance.title')}
+        subtitle={t('brand_client.profile.extend_balance.subtitle')}
+        buttonLabel={t('brand_client.profile.extend_balance.button.label')}
+        buttonIcon={<Icon name="Wallet" />}
+        onActionPress={topUpBalance}
+      />
+    </View>
   );
 };
 

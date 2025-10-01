@@ -74,6 +74,7 @@ export type IconName =
   | 'UserCircle'
   | 'UserId'
   | 'UsersGroupRounded'
+  | 'Wallet'
   | 'Widget'
   | 'Widget3';
 export type IconMap = Record<IconName, (props: IconProps) => ReactElement>;

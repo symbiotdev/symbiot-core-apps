@@ -1,5 +1,6 @@
 import {
   Avatar,
+  EmptyView,
   FormView,
   H3,
   HeaderButton,
@@ -7,8 +8,8 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
-  PageView,
   RegularText,
+  TabsPageView,
   useDrawer,
 } from '@symbiot-core-apps/ui';
 import {
@@ -30,7 +31,6 @@ export default () => {
   const { icons } = useApp();
   const { t } = useTranslation();
   const { visible: drawerVisible } = useDrawer();
-  const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
   const navigation = useNavigation();
 
   const headerLeft = useCallback(() => {
@@ -78,13 +78,6 @@ export default () => {
     [drawerVisible, icons.Notifications, stats.newNotifications],
   );
 
-  const onLocationsPress = useCallback(() => router.push('/locations'), []);
-  const onEmployeesPress = useCallback(() => router.push('/employees'), []);
-  const onClientsPress = useCallback(() => router.push('/clients'), []);
-  const onServicesPress = useCallback(() => router.push('/services'), []);
-  const onMembershipsPress = useCallback(() => router.push('/memberships'), []);
-  const onTicketsPress = useCallback(() => router.push('/tickets'), []);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft,
@@ -96,9 +89,29 @@ export default () => {
     return <InitialAction />;
   }
 
+  return <BrandHome />;
+};
+
+const BrandHome = () => {
+  const { icons } = useApp();
+  const { t } = useTranslation();
+  const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
+
+  const onLocationsPress = useCallback(() => router.push('/locations'), []);
+  const onEmployeesPress = useCallback(() => router.push('/employees'), []);
+  const onClientsPress = useCallback(() => router.push('/clients'), []);
+  const onServicesPress = useCallback(() => router.push('/services'), []);
+  const onMembershipsPress = useCallback(() => router.push('/memberships'), []);
+  const onTicketsPress = useCallback(() => router.push('/tickets'), []);
+
   return (
-    <PageView scrollable withHeaderHeight>
+    <TabsPageView scrollable withHeaderHeight>
       <FormView gap="$3">
+        <EmptyView
+          iconName="MagicStick"
+          message="Сьогодні у вас немає запланованих тренувань. Відпочиньте або проведіть час із користю для відновлення!"
+        />
+
         {hasPermission('clientsAll') && (
           <ListItemGroup title={t('brand.stakeholders')}>
             <ListItem
@@ -176,6 +189,6 @@ export default () => {
           </ListItemGroup>
         )}
       </FormView>
-    </PageView>
+    </TabsPageView>
   );
 };

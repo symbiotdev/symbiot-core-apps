@@ -21,7 +21,7 @@ export default () => {
           {!drawerVisible && hasPermission('analyticsAll') && (
             <HeaderButton
               iconName="ChartSquare"
-              onPress={() => router.push(`/analytics`)}
+              onPress={() => router.push(`/brand/analytics`)}
             />
           )}
 

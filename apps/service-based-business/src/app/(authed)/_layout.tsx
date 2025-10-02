@@ -204,6 +204,10 @@ export default () => {
                     <Stack.Screen name="clients/[id]/tickets" />
                   </Stack.Protected>
 
+                  <Stack.Protected guard={hasPermission('financesAll')}>
+                    <Stack.Screen name="clients/[id]/transactions" />
+                  </Stack.Protected>
+
                   <Stack.Screen name="clients/[id]/remove" />
                   <Stack.Screen
                     name="clients/[id]/update"
@@ -230,14 +234,6 @@ export default () => {
                       headerTitle: t('brand_client.import.title'),
                     }}
                   />
-                  <Stack.Protected guard={hasPermission('financesAll')}>
-                    <Stack.Screen
-                      name="clients/transactions"
-                      options={{
-                        headerTitle: t('brand_client.transactions.title'),
-                      }}
-                    />
-                  </Stack.Protected>
                   <Stack.Screen
                     name="clients/index"
                     options={{

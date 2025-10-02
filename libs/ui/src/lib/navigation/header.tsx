@@ -12,6 +12,7 @@ import { IconName } from '../icons/config';
 import { emitHaptic, isTablet } from '@symbiot-core-apps/shared';
 import { AttentionView } from '../view/attention-view';
 import { NavigationBackground } from './background';
+import { MediumText } from '../text/text';
 
 export const headerHeight = 50;
 export const headerButtonSize = 24;
@@ -153,7 +154,7 @@ export const ScreenHeader = memo(
         />
 
         {typeof options.headerTitle === 'string' && (
-          <H4
+          <MediumText
             flex={4}
             zIndex={1}
             numberOfLines={2}
@@ -161,7 +162,7 @@ export const ScreenHeader = memo(
             lineHeight={headerButtonSize}
           >
             {options.headerTitle}
-          </H4>
+          </MediumText>
         )}
 
         {typeof options.headerTitle === 'function' && (

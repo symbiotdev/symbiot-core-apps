@@ -61,90 +61,99 @@ export const PlusActionAdaptiveModal = ({
   }, []);
 
   return (
-    <AdaptivePopover
-      ref={popoverRef}
-      placement={placement}
-      ignoreHapticOnOpen
-      trigger={trigger}
-    >
-      <View gap="$3">
-        {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && (
-          <View gap="$1">
-            {hasPermission('locationsAll') && (
+    hasAnyOfPermissions([
+      'employeesAll',
+      'locationsAll',
+      'servicesAll',
+      'membershipsAll',
+      'ticketsAll',
+      'clientsAll',
+    ]) && (
+      <AdaptivePopover
+        ref={popoverRef}
+        placement={placement}
+        ignoreHapticOnOpen
+        trigger={trigger}
+      >
+        <View gap="$3">
+          {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && (
+            <View gap="$1">
+              {hasPermission('locationsAll') && (
+                <ListItem
+                  icon={<Icon name="MapPointWave" />}
+                  label={t('navigation.tabs.plus.actions.add_location.label')}
+                  onPress={addLocation}
+                />
+              )}
+
+              {hasPermission('employeesAll') && (
+                <ListItem
+                  icon={<Icon name="UsersGroupRounded" />}
+                  label={t('navigation.tabs.plus.actions.add_employee.label')}
+                  onPress={addEmployee}
+                />
+              )}
+            </View>
+          )}
+
+          {hasAnyOfPermissions([
+            'servicesAll',
+            'membershipsAll',
+            'ticketsAll',
+          ]) && (
+            <>
+              {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && <Br />}
+
+              {hasPermission('servicesAll') && (
+                <ListItem
+                  icon={<Icon name={icons.Service} />}
+                  label={t('navigation.tabs.plus.actions.add_service.label')}
+                  onPress={addService}
+                />
+              )}
+
+              {hasPermission('membershipsAll') && (
+                <ListItem
+                  icon={<Icon name={icons.Membership} />}
+                  label={t('navigation.tabs.plus.actions.add_membership.label')}
+                  onPress={addMembership}
+                />
+              )}
+
+              {hasPermission('ticketsAll') && (
+                <ListItem
+                  icon={<Icon name={icons.Ticket} />}
+                  label={t('navigation.tabs.plus.actions.add_ticket.label')}
+                  onPress={addTicket}
+                />
+              )}
+            </>
+          )}
+
+          {hasAnyOfPermissions([
+            'employeesAll',
+            'locationsAll',
+            'servicesAll',
+            'membershipsAll',
+            'ticketsAll',
+          ]) && <Br />}
+
+          {hasPermission('clientsAll') && (
+            <View gap="$1">
               <ListItem
-                icon={<Icon name="MapPointWave" />}
-                label={t('navigation.tabs.plus.actions.add_location.label')}
-                onPress={addLocation}
+                icon={<Icon name="Import" />}
+                label={t('navigation.tabs.plus.actions.import_client.label')}
+                onPress={importClients}
               />
-            )}
-
-            {hasPermission('employeesAll') && (
               <ListItem
-                icon={<Icon name="UsersGroupRounded" />}
-                label={t('navigation.tabs.plus.actions.add_employee.label')}
-                onPress={addEmployee}
+                icon={<Icon name="SmileCircle" />}
+                label={t('navigation.tabs.plus.actions.add_client.label')}
+                onPress={addClient}
               />
-            )}
-          </View>
-        )}
-
-        {hasAnyOfPermissions([
-          'servicesAll',
-          'membershipsAll',
-          'ticketsAll',
-        ]) && (
-          <>
-            {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && <Br />}
-
-            {hasPermission('servicesAll') && (
-              <ListItem
-                icon={<Icon name={icons.Service} />}
-                label={t('navigation.tabs.plus.actions.add_service.label')}
-                onPress={addService}
-              />
-            )}
-
-            {hasPermission('membershipsAll') && (
-              <ListItem
-                icon={<Icon name={icons.Membership} />}
-                label={t('navigation.tabs.plus.actions.add_membership.label')}
-                onPress={addMembership}
-              />
-            )}
-
-            {hasPermission('ticketsAll') && (
-              <ListItem
-                icon={<Icon name={icons.Ticket} />}
-                label={t('navigation.tabs.plus.actions.add_ticket.label')}
-                onPress={addTicket}
-              />
-            )}
-          </>
-        )}
-
-        {hasAnyOfPermissions([
-          'employeesAll',
-          'locationsAll',
-          'servicesAll',
-          'membershipsAll',
-          'ticketsAll',
-        ]) && <Br />}
-
-        {hasPermission('clientsAll') && (
-          <View gap="$1">
-            <ListItem
-              icon={<Icon name="Import" />}
-              label={t('navigation.tabs.plus.actions.import_client.label')}
-              onPress={importClients}
-            />
-            <ListItem
-              icon={<Icon name="SmileCircle" />}
-              label={t('navigation.tabs.plus.actions.add_client.label')}
-              onPress={addClient}
-            />
-          </View>
-        )}
-      </View>
-    </AdaptivePopover>
+            </View>
+          )}
+        </View>
+      </AdaptivePopover>
+    )
   );
 };

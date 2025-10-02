@@ -10,7 +10,6 @@ import {
 } from '@symbiot-core-apps/ui';
 import {
   useCurrentAccountState,
-  useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import React, { useEffect } from 'react';
@@ -25,7 +24,6 @@ export default () => {
   const { visible: drawerVisible } = useDrawer();
   const { stats, setMeStats } = useCurrentAccountState();
   const { data: countNewNotifications } = useCountNewNotifications();
-  const { hasAnyPermission } = useCurrentBrandEmployee();
   const screenOptions = useTabsScreenOptions();
 
   useEffect(() => {
@@ -49,21 +47,19 @@ export default () => {
           {...props}
           hidden={drawerVisible || segments.includes('(stack)')}
           DynamicButton={
-            hasAnyPermission ? (
-              <PlusActionAdaptiveModal
-                trigger={
-                  <Button
-                    label="+"
-                    fontSize={20}
-                    boxShadow="0 0 10px rgba(0, 0, 0, 0.05)"
-                    paddingHorizontal={0}
-                    borderRadius={50}
-                    width={45}
-                    height={45}
-                  />
-                }
-              />
-            ) : undefined
+            <PlusActionAdaptiveModal
+              trigger={
+                <Button
+                  label="+"
+                  fontSize={20}
+                  boxShadow="0 0 10px rgba(0, 0, 0, 0.05)"
+                  paddingHorizontal={0}
+                  borderRadius={50}
+                  width={45}
+                  height={45}
+                />
+              }
+            />
           }
         />
       )}

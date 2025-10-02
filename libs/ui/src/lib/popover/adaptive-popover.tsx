@@ -284,10 +284,6 @@ export const AdaptivePopover = forwardRef(
                     showsVerticalScrollIndicator={false}
                     style={{ maxHeight: adjustedMaxHeight }}
                     contentContainerStyle={{
-                      paddingTop:
-                        sheetTitle || topFixedContent
-                          ? 0
-                          : defaultPageHorizontalPadding,
                       paddingBottom: bottom + defaultPageHorizontalPadding,
                       paddingHorizontal: defaultPageHorizontalPadding,
                     }}

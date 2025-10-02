@@ -56,6 +56,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
         {!!service.employees?.length && (
           <ListItemGroup
             paddingVertical="$4"
+            gap="$3"
             title={t('brand_service.profile.employees')}
             disabled={!service.locations}
           >
@@ -71,6 +72,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
 
         <ListItemGroup
           paddingVertical="$4"
+          gap="$3"
           title={t('brand_service.profile.location')}
           disabled={!service.locations}
         >

@@ -4,6 +4,7 @@ export * from './lib/components/items/brand-membership-item';
 export * from './lib/components/items/brand-service-item';
 export * from './lib/components/items/brand-ticket-item';
 
+export * from './lib/components/brand-profile';
 export * from './lib/components/create-brand';
 export * from './lib/components/create-brand-intro';
 export * from './lib/components/my-brands-selection-list';

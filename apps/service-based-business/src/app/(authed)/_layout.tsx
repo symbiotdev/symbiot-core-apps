@@ -150,15 +150,8 @@ export default () => {
                   />
                 </Stack.Protected>
 
-                <Stack.Protected guard={hasAnyPermission()}>
-                  <Stack.Screen
-                    name="brand/menu"
-                    options={{
-                      headerTitle: currentBrand?.name,
-                    }}
-                  />
-                </Stack.Protected>
                 <Stack.Protected guard={!!currentBrand}>
+                  <Stack.Screen name="brand/profile" />
 
                   <Stack.Protected guard={hasPermission('analyticsAll')}>
                     <Stack.Screen

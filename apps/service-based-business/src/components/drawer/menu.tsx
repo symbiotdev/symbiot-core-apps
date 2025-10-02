@@ -165,7 +165,7 @@ export const DrawerMenu = () => {
         {currentBrand && (
           <>
             <MenuItem
-              route="/my-brand"
+              route="/brand/profile"
               additionalRoutes={['/brand/create']}
               label={currentBrand.name}
               icon={

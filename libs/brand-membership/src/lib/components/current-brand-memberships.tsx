@@ -78,7 +78,7 @@ export const CurrentBrandMemberships = ({
           data={memberships}
           progressViewOffset={offsetTop}
           contentContainerStyle={{
-            gap: 8,
+            gap: 4,
             paddingTop: offsetTop,
             paddingHorizontal: defaultPageHorizontalPadding,
             paddingBottom: 100,

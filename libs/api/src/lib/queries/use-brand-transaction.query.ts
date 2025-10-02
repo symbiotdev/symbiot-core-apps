@@ -13,6 +13,7 @@ export const useCurrentBrandTransactionListQuery = (props?: {
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandTransaction>({
+    refetchOnMount: true,
     apUrl: '/api/brand-transaction',
     queryKey: [BrandTransactionQueryKey.currentList, props?.params],
     ...props,
@@ -23,6 +24,7 @@ export const useBrandClientTransactionListQuery = (
   params?: PaginationListParams,
 ) =>
   useInfiniteQueryWrapper<BrandTransaction>({
+    refetchOnMount: true,
     apUrl: `/api/brand-transaction/client/${clientId}`,
     queryKey: [BrandTransactionQueryKey.clientList, params],
   });

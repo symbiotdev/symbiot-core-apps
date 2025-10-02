@@ -2,6 +2,8 @@ import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { PaginationList, PaginationListParams } from '../types/pagination';
 import {
   BrandClient,
+  BrandClientMembership,
+  BrandClientTicket,
   CreateBrandClient,
   ImportBrandClient,
   UpdateBrandClient,
@@ -159,4 +161,56 @@ export const useBrandClientImportTemplateQuery = () =>
           responseType: 'arraybuffer',
         }),
       ),
+  });
+
+export const useBrandClientAddMembershipQuery = () =>
+  useMutation<
+    BrandClientMembership,
+    string,
+    { clientId: string; membershipId: string }
+  >({
+    mutationFn: async ({ clientId, membershipId }) => {
+      const membership = await requestWithAlertOnError<BrandClientMembership>(
+        axios.post(
+          `/api/brand-client/${clientId}/membership/${membershipId}/add`,
+        ),
+      );
+
+      const clientQueryKey = [BrandClientQueryKey.detailedById, clientId];
+      const client = queryClient.getQueryData<BrandClient>(clientQueryKey);
+
+      if (client) {
+        queryClient.setQueryData(clientQueryKey, {
+          ...client,
+          memberships: [...(client.memberships || []), membership],
+        });
+      }
+
+      return membership;
+    },
+  });
+
+export const useBrandClientAddTicketQuery = () =>
+  useMutation<
+    BrandClientTicket,
+    string,
+    { clientId: string; ticketId: string }
+  >({
+    mutationFn: async ({ clientId, ticketId }) => {
+      const ticket = await requestWithAlertOnError<BrandClientTicket>(
+        axios.post(`/api/brand-client/${clientId}/ticket/${ticketId}/add`),
+      );
+
+      const clientQueryKey = [BrandClientQueryKey.detailedById, clientId];
+      const client = queryClient.getQueryData<BrandClient>(clientQueryKey);
+
+      if (client) {
+        queryClient.setQueryData(clientQueryKey, {
+          ...client,
+          tickets: [...(client.tickets || []), ticket],
+        });
+      }
+
+      return ticket;
+    },
   });

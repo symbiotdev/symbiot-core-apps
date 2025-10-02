@@ -1,6 +1,5 @@
 import {
   AvatarPicker,
-  defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   FormView,
   getNicknameFromUrl,
@@ -67,7 +66,7 @@ export const UpdateBrand = () => {
           onAttach={updateAvatar$}
         />
 
-        <FormView paddingHorizontal={defaultPageHorizontalPadding}>
+        <FormView>
           <Name brand={brand} onUpdated={setBrand} />
 
           <ListItemGroup>

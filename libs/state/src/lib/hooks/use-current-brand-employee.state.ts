@@ -6,7 +6,7 @@ import {
 import { create } from 'zustand/index';
 import { devtools, persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 type CurrentBrandEmployeeState = {
   currentEmployee?: BrandEmployee;
@@ -41,24 +41,18 @@ export const useCurrentBrandEmployee = () => {
   const { currentEmployee, setCurrentEmployee } =
     useCurrentBrandEmployeeState();
 
+  const hasAnyPermission = useMemo(
+    () =>
+      !!currentEmployee?.permissions &&
+      !!Object.values(currentEmployee.permissions).filter(Boolean).length,
+    [currentEmployee?.permissions],
+  );
+
   const hasAnyOfPermissions = useCallback(
     (permissions: (keyof BrandEmployeePermissions)[]) =>
       !!currentEmployee?.permissions &&
       permissions.some((key) => currentEmployee.permissions[key]),
     [currentEmployee?.permissions],
-  );
-
-  const hasAnyPermission = useCallback(
-    () =>
-      hasAnyOfPermissions([
-        'brandAll',
-        'employeesAll',
-        'analyticsAll',
-        'clientsAll',
-        'servicesAll',
-        'locationsAll',
-      ]),
-    [hasAnyOfPermissions],
   );
 
   const hasPermission = useCallback(

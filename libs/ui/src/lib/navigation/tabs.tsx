@@ -1,13 +1,11 @@
 import {
-  BottomTabBar,
-  BottomTabBarButtonProps,
   BottomTabBarProps,
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs';
-import { GestureResponderEvent, Platform } from 'react-native';
-import { useCallback, useMemo } from 'react';
-import { HeaderOptions, PlatformPressable } from '@react-navigation/elements';
-import { useTheme } from 'tamagui';
+import { Platform } from 'react-native';
+import { ReactElement, useMemo } from 'react';
+import { HeaderOptions } from '@react-navigation/elements';
+import { useTheme, View, XStack } from 'tamagui';
 import { useScreenHeaderOptions } from './header';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { emitHaptic } from '@symbiot-core-apps/shared';
@@ -16,35 +14,23 @@ import Animated, {
   Easing,
   useAnimatedStyle,
   withDelay,
-  withTiming
+  withTiming,
 } from 'react-native-reanimated';
+import { defaultPageVerticalPadding } from '../view/page-view';
+import { router, usePathname } from 'expo-router';
 
-export const HapticTabBarButton = (props: BottomTabBarButtonProps) => {
-  const onPressIn = useCallback(
-    (e: GestureResponderEvent) => {
-      emitHaptic();
-
-      props.onPressIn?.(e);
-    },
-    [props],
-  );
-
-  return (
-    <PlatformPressable
-      {...props}
-      style={{ paddingTop: 10, alignItems: 'center' }}
-      android_ripple={{ color: null }}
-      onPressIn={onPressIn}
-    />
-  );
-};
-
-export const AnimatedTabBar = ({
+export const CustomTabBar = ({
   hidden,
-  ...tabBarProps
+  insets,
+  DynamicButton,
+  descriptors,
 }: BottomTabBarProps & {
-  hidden: boolean;
+  hidden?: boolean;
+  DynamicButton?: ReactElement;
 }) => {
+  const pathname = usePathname();
+  const theme = useTheme();
+
   const animatedStyle = useAnimatedStyle(
     () => ({
       transform: [
@@ -53,7 +39,7 @@ export const AnimatedTabBar = ({
             hidden ? 200 : 0,
             withTiming(hidden ? 250 : 0, {
               duration: 250,
-              easing: Easing.inOut(Easing.ease)
+              easing: Easing.inOut(Easing.ease),
             }),
           ),
         },
@@ -63,45 +49,79 @@ export const AnimatedTabBar = ({
   );
 
   return (
-    <Animated.View style={animatedStyle}>
-      <BottomTabBar {...tabBarProps} />
+    <Animated.View
+      style={[
+        animatedStyle,
+        {
+          position: 'absolute',
+          left: insets.left,
+          right: insets.right,
+          bottom:
+            insets.bottom + (insets.bottom ? 0 : defaultPageVerticalPadding),
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'row',
+          gap: 10,
+        },
+      ]}
+    >
+      <XStack
+        position="relative"
+        justifyContent="center"
+        alignItems="center"
+        borderRadius={100}
+        paddingHorizontal="$2"
+        boxShadow="0 0 10px rgba(0, 0, 0, 0.05)"
+        overflow="hidden"
+      >
+        <NavigationBackground />
+
+        {Object.values(descriptors).map((descriptor) => {
+          const path = `/${descriptor.route.name}`;
+          const focused = pathname === path;
+
+          return (
+            <View
+              key={descriptor.route.key}
+              height={55}
+              width={55}
+              cursor="pointer"
+              justifyContent="center"
+              alignItems="center"
+              pressStyle={{ opacity: 0.8 }}
+              onPress={() => {
+                emitHaptic();
+                router.navigate(path);
+              }}
+            >
+              {descriptor.options.tabBarIcon?.({
+                focused,
+                size: 22,
+                color: focused
+                  ? theme.tabBarActiveTintColor?.val
+                  : theme.tabBarInactiveTintColor?.val,
+              })}
+            </View>
+          );
+        })}
+      </XStack>
+
+      {DynamicButton}
     </Animated.View>
   );
 };
 
 export const useTabsScreenOptions = () => {
-  const theme = useTheme();
   const headerOptions = useScreenHeaderOptions();
 
   return useMemo(
     () =>
       ({
         ...headerOptions,
-        title: '',
         animation: Platform.OS === 'web' ? 'fade' : 'shift',
-        tabBarStyle: {
-          borderTopWidth: 0,
-          ...(Platform.OS !== 'android' && {
-            position: 'absolute',
-            backgroundColor: 'transparent',
-          }),
-        },
-        tabBarActiveTintColor: theme.tabBarActiveTintColor?.val,
-        tabBarInactiveTintColor: theme.tabBarInactiveTintColor?.val,
-        tabBarButton: HapticTabBarButton,
-        tabBarBackground: () => (
-          <NavigationBackground
-            borderTopWidth={1}
-            borderTopColor="$background1"
-          />
-        ),
       }) as HeaderOptions &
         BottomTabNavigationOptions &
         Omit<NativeStackNavigationOptions, 'animation'>,
-    [
-      headerOptions,
-      theme.tabBarActiveTintColor?.val,
-      theme.tabBarInactiveTintColor?.val,
-    ],
+    [headerOptions],
   );
 };

@@ -45,10 +45,12 @@ export const InitialAction = () => {
         {currentBrands?.length ? (
           <MyBrandsSelectionList />
         ) : (
-          <FormView gap="$6">
+          <FormView gap="$6" marginVertical="auto">
             <View gap="$2">
-              <H2>{t('initial_actions.title')}</H2>
-              <RegularText>{t('initial_actions.subtitle')}</RegularText>
+              <H2 textAlign="center">{t('initial_actions.title')}</H2>
+              <RegularText textAlign="center">
+                {t('initial_actions.subtitle')}
+              </RegularText>
             </View>
 
             <ActionCard
@@ -59,9 +61,7 @@ export const InitialAction = () => {
               onPress={createBrand}
             />
 
-            <H4 textAlign="center" textTransform="uppercase">
-              {t('shared.or')}
-            </H4>
+            <H4 textAlign="center">{t('shared.or')}</H4>
 
             <ActionCard
               title={t('initial_actions.join_workspace.title')}

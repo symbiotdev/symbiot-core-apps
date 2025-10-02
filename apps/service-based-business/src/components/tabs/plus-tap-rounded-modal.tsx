@@ -9,7 +9,6 @@ import { AnimatePresence, ScrollView, View } from 'tamagui';
 import {
   FormView,
   FullScreenTransparentModal,
-  HapticTabBarButton,
   Icon,
 } from '@symbiot-core-apps/ui';
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
@@ -59,9 +58,9 @@ export const PlusTapRoundedModal = (props: BottomTabBarButtonProps) => {
 
   return (
     <>
-      <HapticTabBarButton onPressIn={openModal}>
-        {props.children}
-      </HapticTabBarButton>
+      {/*<HapticTabBarButton onPressIn={openModal}>*/}
+      {/*  {props.children}*/}
+      {/*</HapticTabBarButton>*/}
 
       <FullScreenTransparentModal
         visible={state.modalVisible}

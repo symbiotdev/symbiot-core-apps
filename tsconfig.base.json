@@ -31,6 +31,9 @@
       ],
       "@symbiot-core-apps/brand-service": ["libs/brand-service/src/index.ts"],
       "@symbiot-core-apps/brand-ticket": ["libs/brand-ticket/src/index.ts"],
+      "@symbiot-core-apps/brand-transaction": [
+        "libs/brand-transaction/src/index.ts"
+      ],
       "@symbiot-core-apps/faq": ["libs/faq/src/index.ts"],
       "@symbiot-core-apps/form-controller": [
         "libs/form-controller/src/index.ts"

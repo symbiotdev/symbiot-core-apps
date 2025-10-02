@@ -10,14 +10,31 @@ export const formatPrice = (props: {
   price: number;
   discount?: number;
   symbol?: string;
-}) =>
-  mask(props.price - (props.discount || 0), undefined, 'currency', {
-    ...priceMaskOptions,
-    prefix: props.symbol,
-  });
+}) => {
+  const value = props.price - (props.discount || 0);
 
-export const formatDiscount = (props: { discount: number; symbol?: string }) =>
-  mask(props.discount, undefined, 'currency', {
-    ...priceMaskOptions,
-    prefix: props.symbol,
-  });
+  return `${value < 0 ? '-' : ''}${mask(
+    Math.abs(value),
+    undefined,
+    'currency',
+    {
+      ...priceMaskOptions,
+      prefix: props.symbol,
+    },
+  )}`;
+};
+
+export const formatDiscount = (props: {
+  discount: number;
+  symbol?: string;
+}) => {
+  return `${props.discount < 0 ? '-' : ''}${mask(
+    Math.abs(props.discount),
+    undefined,
+    'currency',
+    {
+      ...priceMaskOptions,
+      prefix: props.symbol,
+    },
+  )}`;
+};

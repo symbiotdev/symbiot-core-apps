@@ -103,6 +103,10 @@ const BrandHome = () => {
   const onServicesPress = useCallback(() => router.push('/services'), []);
   const onMembershipsPress = useCallback(() => router.push('/memberships'), []);
   const onTicketsPress = useCallback(() => router.push('/tickets'), []);
+  const onTransactionPress = useCallback(
+    () => router.push('/transactions'),
+    [],
+  );
 
   return (
     <TabsPageView scrollable withHeaderHeight>
@@ -113,7 +117,7 @@ const BrandHome = () => {
         />
 
         {hasPermission('clientsAll') && (
-          <ListItemGroup title={t('brand.stakeholders')}>
+          <ListItemGroup title={t('brand.profile.stakeholders')}>
             <ListItem
               label={t('brand_client.title')}
               icon={<Icon name="SmileCircle" />}
@@ -170,7 +174,7 @@ const BrandHome = () => {
         )}
 
         {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && (
-          <ListItemGroup title={t('brand.infrastructure')}>
+          <ListItemGroup title={t('brand.profile.infrastructure')}>
             {hasPermission('locationsAll') && (
               <ListItem
                 label={t('brand_location.title')}
@@ -186,6 +190,16 @@ const BrandHome = () => {
                 onPress={onEmployeesPress}
               />
             )}
+          </ListItemGroup>
+        )}
+
+        {hasAnyOfPermissions(['financesAll']) && (
+          <ListItemGroup title={t('brand.profile.finance')}>
+            <ListItem
+              label={t('brand_transaction.title')}
+              icon={<Icon name="Bill" />}
+              onPress={onTransactionPress}
+            />
           </ListItemGroup>
         )}
       </FormView>

@@ -211,19 +211,10 @@ export const DrawerMenu = () => {
         )}
 
         {hasAnyOfPermissions([
-          'analyticsAll',
           'clientsAll',
           'locationsAll',
           'employeesAll',
         ]) && <Br marginHorizontal={defaultPageHorizontalPadding} />}
-
-        {hasPermission('analyticsAll') && (
-          <MenuItem
-            route="/brand/analytics"
-            label={t('navigation.drawer.analytics.label')}
-            icon="ChartSquare"
-          />
-        )}
 
         {hasPermission('clientsAll') && (
           <MenuItem
@@ -282,6 +273,26 @@ export const DrawerMenu = () => {
             label={t('navigation.drawer.tickets.label')}
             icon={icons.Ticket}
             additionalRoutes={['/tickets']}
+          />
+        )}
+
+        {hasAnyOfPermissions(['analyticsAll', 'financesAll']) && (
+          <Br marginHorizontal={defaultPageHorizontalPadding} />
+        )}
+
+        {hasPermission('analyticsAll') && (
+          <MenuItem
+            route="/brand/analytics"
+            label={t('navigation.drawer.analytics.label')}
+            icon="ChartSquare"
+          />
+        )}
+
+        {hasPermission('financesAll') && (
+          <MenuItem
+            route="/transactions"
+            label={t('navigation.drawer.transactions.label')}
+            icon="Bill"
           />
         )}
 

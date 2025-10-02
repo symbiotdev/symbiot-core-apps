@@ -1,5 +1,5 @@
 import { Notification, PaginationList } from '@symbiot-core-apps/api';
-import { create } from 'zustand/index';
+import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 

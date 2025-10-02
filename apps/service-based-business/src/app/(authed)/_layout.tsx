@@ -230,6 +230,14 @@ export default () => {
                       headerTitle: t('brand_client.import.title'),
                     }}
                   />
+                  <Stack.Protected guard={hasPermission('financesAll')}>
+                    <Stack.Screen
+                      name="clients/transactions"
+                      options={{
+                        headerTitle: t('brand_client.transactions.title'),
+                      }}
+                    />
+                  </Stack.Protected>
                   <Stack.Screen
                     name="clients/index"
                     options={{
@@ -474,6 +482,20 @@ export default () => {
                         animation: 'none',
                       }),
                       headerTitle: t('brand_ticket.title'),
+                    }}
+                  />
+                </Stack.Protected>
+
+                {/*TICKETS*/}
+
+                <Stack.Protected guard={hasPermission('financesAll')}>
+                  <Stack.Screen
+                    name="transactions/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                      headerTitle: t('brand_transaction.title'),
                     }}
                   />
                 </Stack.Protected>

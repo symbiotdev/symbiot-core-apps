@@ -17,7 +17,7 @@ import {
   useAppTranslationsQuery,
 } from '@symbiot-core-apps/api';
 import { IconName } from '@symbiot-core-apps/ui';
-import { create } from 'zustand/index';
+import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 import { isEqual } from '@symbiot-core-apps/shared';

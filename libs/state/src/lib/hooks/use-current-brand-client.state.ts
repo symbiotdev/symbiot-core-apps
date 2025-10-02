@@ -1,5 +1,5 @@
 import { BrandClient, PaginationList } from '@symbiot-core-apps/api';
-import { create } from 'zustand/index';
+import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 

@@ -33,6 +33,7 @@ export type BrandEmployeeSchedule = Schedule & {
 
 export type BrandEmployeePermissions = {
   brandAll: boolean;
+  financesAll: boolean;
   analyticsAll: boolean;
   servicesAll: boolean;
   clientsAll: boolean;

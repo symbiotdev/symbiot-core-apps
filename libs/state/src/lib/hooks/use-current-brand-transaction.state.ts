@@ -1,18 +1,18 @@
-import { BrandMembership, PaginationList } from '@symbiot-core-apps/api';
+import { BrandTransaction, PaginationList } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 
-type CurrentBrandMembershipState = {
-  currentList?: PaginationList<BrandMembership>;
+type CurrentBrandTransactionState = {
+  currentList?: PaginationList<BrandTransaction>;
   clear: () => void;
-  setCurrentList: (list?: PaginationList<BrandMembership>) => void;
+  setCurrentList: (list?: PaginationList<BrandTransaction>) => void;
 };
 
-export const useCurrentBrandMembershipState =
-  create<CurrentBrandMembershipState>()(
+export const useCurrentBrandTransactionState =
+  create<CurrentBrandTransactionState>()(
     devtools(
-      persist<CurrentBrandMembershipState>(
+      persist<CurrentBrandTransactionState>(
         (set) => ({
           clear: () => {
             set({
@@ -22,7 +22,7 @@ export const useCurrentBrandMembershipState =
           setCurrentList: (currentList) => set({ currentList }),
         }),
         {
-          name: 'symbiot-current-brand-membership',
+          name: 'symbiot-current-brand-transaction',
           storage: createZustandStorage(),
         },
       ),

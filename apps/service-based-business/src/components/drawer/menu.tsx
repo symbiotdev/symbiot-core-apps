@@ -77,7 +77,11 @@ const MenuItem = memo(
         label={label}
         icon={
           <AttentionView attention={Boolean(attention)}>
-            {typeof icon === 'string' ? <Icon name={icon} /> : icon}
+            {typeof icon === 'string' ? (
+              <Icon name={icon} type={focused ? 'SolarBold' : undefined} />
+            ) : (
+              icon
+            )}
           </AttentionView>
         }
         onPress={onPress}
@@ -215,7 +219,7 @@ export const DrawerMenu = () => {
 
         {hasPermission('analyticsAll') && (
           <MenuItem
-            route="/analytics"
+            route="/brand/analytics"
             label={t('navigation.drawer.analytics.label')}
             icon="ChartSquare"
           />

@@ -56,7 +56,7 @@ export default () => {
   const { visible: drawerVisible } = useDrawer();
   const screenOptions = useStackScreenHeaderOptions();
   const currentEntitiesLoaded = useCurrentEntitiesLoader();
-  const { hasPermission, hasAnyPermission } = useCurrentBrandEmployee();
+  const { hasPermission } = useCurrentBrandEmployee();
 
   useEffect(() => {
     if (currentEntitiesLoaded) {
@@ -98,20 +98,6 @@ export default () => {
                   }}
                 />
                 <Stack.Screen name="account/remove" />
-
-                {/*ANALYTICS*/}
-
-                <Stack.Protected guard={hasPermission('analyticsAll')}>
-                  <Stack.Screen
-                    name="analytics/index"
-                    options={{
-                      ...(drawerVisible && {
-                        animation: 'none',
-                      }),
-                      headerTitle: t('brand.analytics.title'),
-                    }}
-                  />
-                </Stack.Protected>
 
                 {/*APP*/}
 
@@ -172,14 +158,28 @@ export default () => {
                     }}
                   />
                 </Stack.Protected>
+                <Stack.Protected guard={!!currentBrand}>
 
-                <Stack.Protected guard={hasPermission('brandAll')}>
-                  <Stack.Screen
-                    name="brand/update"
-                    options={{
-                      headerTitle: t('brand.information.title'),
-                    }}
-                  />
+                  <Stack.Protected guard={hasPermission('analyticsAll')}>
+                    <Stack.Screen
+                      name="brand/analytics"
+                      options={{
+                        ...(drawerVisible && {
+                          animation: 'none',
+                        }),
+                        headerTitle: t('brand.analytics.title'),
+                      }}
+                    />
+                  </Stack.Protected>
+
+                  <Stack.Protected guard={hasPermission('brandAll')}>
+                    <Stack.Screen
+                      name="brand/update"
+                      options={{
+                        headerTitle: t('brand.information.title'),
+                      }}
+                    />
+                  </Stack.Protected>
                 </Stack.Protected>
 
                 {/*CALENDAR*/}
@@ -238,12 +238,6 @@ export default () => {
                     }}
                   />
                   <Stack.Screen
-                    name="clients/preferences/index"
-                    options={{
-                      headerTitle: t('brand_client.title'),
-                    }}
-                  />
-                  <Stack.Screen
                     name="clients/index"
                     options={{
                       ...(drawerVisible && {
@@ -289,12 +283,6 @@ export default () => {
                   />
 
                   <Stack.Screen name="employees/create" />
-                  <Stack.Screen
-                    name="employees/preferences/index"
-                    options={{
-                      headerTitle: t('brand_employee.title'),
-                    }}
-                  />
                   <Stack.Screen
                     name="employees/index"
                     options={{
@@ -346,12 +334,6 @@ export default () => {
                     }}
                   />
                   <Stack.Screen
-                    name="locations/preferences/index"
-                    options={{
-                      headerTitle: t('brand_location.title'),
-                    }}
-                  />
-                  <Stack.Screen
                     name="locations/index"
                     options={{
                       ...(drawerVisible && {
@@ -384,12 +366,6 @@ export default () => {
                     name="memberships/[id]/profile"
                     options={{
                       headerTitle: t('brand_membership.profile.title'),
-                    }}
-                  />
-                  <Stack.Screen
-                    name="memberships/preferences/index"
-                    options={{
-                      headerTitle: t('brand_membership.title'),
                     }}
                   />
                   <Stack.Screen
@@ -452,12 +428,6 @@ export default () => {
                     }}
                   />
                   <Stack.Screen
-                    name="services/preferences/index"
-                    options={{
-                      headerTitle: t('brand_service.title'),
-                    }}
-                  />
-                  <Stack.Screen
                     name="services/create"
                     options={{
                       headerTitle: t('brand_service.create.new_service'),
@@ -496,12 +466,6 @@ export default () => {
                     name="tickets/[id]/profile"
                     options={{
                       headerTitle: t('brand_ticket.profile.title'),
-                    }}
-                  />
-                  <Stack.Screen
-                    name="tickets/preferences/index"
-                    options={{
-                      headerTitle: t('brand_ticket.title'),
                     }}
                   />
                   <Stack.Screen

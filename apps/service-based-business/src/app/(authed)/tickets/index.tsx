@@ -1,9 +1,22 @@
+import React, { useLayoutEffect } from 'react';
+import { HeaderButton, useScreenHeaderHeight } from '@symbiot-core-apps/ui';
+import { router, useNavigation } from 'expo-router';
 import { CurrentBrandTickets } from '@symbiot-core-apps/brand-ticket';
-import { router } from 'expo-router';
-import { useScreenHeaderHeight } from '@symbiot-core-apps/ui';
 
 export default () => {
+  const navigation = useNavigation();
   const headerHeight = useScreenHeaderHeight();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderButton
+          iconName="AddCircle"
+          onPress={() => router.push('/tickets/create')}
+        />
+      ),
+    });
+  }, [navigation]);
 
   return (
     <CurrentBrandTickets

@@ -3,6 +3,7 @@ export * from './lib/components/items/brand-location-item';
 export * from './lib/components/items/brand-membership-item';
 export * from './lib/components/items/brand-service-item';
 export * from './lib/components/items/brand-ticket-item';
+export * from './lib/components/items/brand-transaction-item';
 
 export * from './lib/components/brand-profile';
 export * from './lib/components/create-brand';

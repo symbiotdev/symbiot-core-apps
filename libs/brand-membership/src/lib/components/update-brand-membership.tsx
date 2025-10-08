@@ -1,5 +1,8 @@
 import {
+  AnyBrandMembership,
   BrandMembership,
+  BrandPeriodBasedMembership,
+  BrandVisitBasedMembership,
   Currency,
   UpdateBrandMembership as TUpdateBrandMembership,
   useModalUpdateByIdForm,
@@ -35,19 +38,25 @@ import { BrandMembershipNoteController } from './controller/brand-membership-not
 import { BrandMembershipLocationController } from './controller/brand-membership-location-controller';
 import { BrandMembershipServicesController } from './controller/brand-membership-services-controller';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
+import { BrandMembershipVisitsController } from './controller/brand-membership-visits-controller';
 
 export const UpdateBrandMembership = ({
   membership,
 }: {
-  membership: BrandMembership;
+  membership: AnyBrandMembership;
 }) => {
   return (
     <PageView scrollable withHeaderHeight withKeyboard gap="$5">
       <Availability membership={membership} />
 
+      <FormView>
+        {'period' in membership && <Period membership={membership} />}
+        {'visits' in membership && <Visits membership={membership} />}
+      </FormView>
+
       <ListItemGroup style={formViewStyles}>
-        <PricingAndPeriod membership={membership} />
         <About membership={membership} />
+        <Pricing membership={membership} />
         <LocationServices membership={membership} />
         <Note membership={membership} />
       </ListItemGroup>
@@ -103,7 +112,57 @@ const Availability = ({ membership }: { membership: BrandMembership }) => {
   );
 };
 
-const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
+const Period = ({ membership }: { membership: BrandPeriodBasedMembership }) => {
+  const { value, updateValue } = useModalUpdateByIdForm<
+    BrandMembership,
+    {
+      period: string;
+    },
+    TUpdateBrandMembership
+  >({
+    id: membership.id,
+    query: useUpdateBrandMembershipQuery,
+    initialValue: {
+      period: membership.period?.value,
+    },
+  });
+
+  return (
+    <SingeElementForm
+      name="period"
+      value={value.period}
+      onUpdate={updateValue}
+      Controller={BrandMembershipPeriodController}
+    />
+  );
+};
+
+const Visits = ({ membership }: { membership: BrandVisitBasedMembership }) => {
+  const { value, updateValue } = useModalUpdateByIdForm<
+    BrandMembership,
+    {
+      visits: number;
+    },
+    TUpdateBrandMembership
+  >({
+    id: membership.id,
+    query: useUpdateBrandMembershipQuery,
+    initialValue: {
+      visits: membership.visits,
+    },
+  });
+
+  return (
+    <SingeElementForm
+      name="visits"
+      value={value.visits}
+      onUpdate={updateValue}
+      Controller={BrandMembershipVisitsController}
+    />
+  );
+};
+
+const Pricing = ({ membership }: { membership: BrandMembership }) => {
   const { brand } = useCurrentBrandState();
   const { t } = useTranslation();
   const { value, modalVisible, openModal, closeModal, updateValue } =
@@ -113,7 +172,6 @@ const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
         currency: string;
         price: number;
         discount: number;
-        period: string;
       },
       TUpdateBrandMembership
     >({
@@ -123,7 +181,6 @@ const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
         currency: membership.currency?.value,
         price: membership.price,
         discount: membership.discount,
-        period: membership.period?.value,
       },
     });
 
@@ -136,7 +193,7 @@ const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
       <ListItem
         icon={<Icon name="MoneyBag" />}
         iconAfter={<Icon name="ArrowRight" />}
-        label={t('brand_membership.update.groups.pricing_period.title')}
+        label={t('brand_membership.update.groups.pricing.title')}
         text={[
           value.price
             ? formatPrice({
@@ -150,7 +207,6 @@ const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
                 symbol: membership.currency?.symbol,
               })}`
             : '',
-          membership.period?.label,
         ]
           .filter(Boolean)
           .join(' · ')}
@@ -159,7 +215,7 @@ const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
 
       <SlideSheetModal
         scrollable
-        headerTitle={t('brand_membership.update.groups.pricing_period.title')}
+        headerTitle={t('brand_membership.update.groups.pricing.title')}
         visible={modalVisible}
         onClose={closeModal}
       >
@@ -192,16 +248,6 @@ const PricingAndPeriod = ({ membership }: { membership: BrandMembership }) => {
             }}
             onUpdate={updateValue}
             Controller={BrandMembershipDiscountController}
-          />
-
-          <SingeElementForm
-            name="period"
-            value={value.period}
-            controllerProps={{
-              disableDrag: true
-            }}
-            onUpdate={updateValue}
-            Controller={BrandMembershipPeriodController}
           />
         </FormView>
       </SlideSheetModal>
@@ -262,7 +308,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
               value.locations?.length ? value.locations : [allLocations.value]
             }
             controllerProps={{
-              disableDrag: true
+              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandMembershipLocationController}
@@ -385,6 +431,9 @@ const Note = ({ membership }: { membership: BrandMembership }) => {
           <SingeElementForm
             name="note"
             value={value.note}
+            controllerProps={{
+              noLabel: true,
+            }}
             onUpdate={updateValue}
             Controller={BrandMembershipNoteController}
           />

@@ -1,8 +1,8 @@
 export * from './lib/components/items/brand-employee-item';
 export * from './lib/components/items/brand-location-item';
-export * from './lib/components/items/brand-membership-item';
+export * from './lib/components/items/brand-period-based-membership-item';
 export * from './lib/components/items/brand-service-item';
-export * from './lib/components/items/brand-ticket-item';
+export * from './lib/components/items/brand-visit-based-membership-item';
 export * from './lib/components/items/brand-transaction-item';
 
 export * from './lib/components/brand-profile';

@@ -1,36 +1,38 @@
 import { useTranslation } from 'react-i18next';
 import {
   AnimatedList,
-  Button,
   ContainerView,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   EmptyView,
-  InitView,
   NavigationBackground,
-  PageView,
   Search,
 } from '@symbiot-core-apps/ui';
-import { router } from 'expo-router';
-import { useApp } from '@symbiot-core-apps/app';
-import { useCurrentBrandMembershipState } from '@symbiot-core-apps/state';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import React, { useCallback, useState } from 'react';
+import React, {
+  ComponentType,
+  ReactElement,
+  useCallback,
+  useState,
+} from 'react';
 import {
   BrandMembership,
-  useCurrentBrandMembershipListQuery,
+  InfiniteQuery,
+  PaginationListParams,
 } from '@symbiot-core-apps/api';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
-import { BrandMembershipItem } from '@symbiot-core-apps/brand';
 
-export const CurrentBrandMemberships = ({
+export function BrandMembershipsCurrentList<T extends BrandMembership>({
   offsetTop,
-  onMembershipPress,
+  query,
+  renderItem,
+  Intro,
 }: {
   offsetTop?: number;
-  onMembershipPress: (membership: BrandMembership) => void;
-}) => {
-  const { currentList, setCurrentList } = useCurrentBrandMembershipState();
+  query: (props?: { params?: PaginationListParams }) => InfiniteQuery<T>;
+  renderItem: (props: { item: T }) => ReactElement;
+  Intro: ComponentType<{ loading?: boolean; error?: string | null }>;
+}) {
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
 
@@ -44,9 +46,7 @@ export const CurrentBrandMemberships = ({
     error,
     onRefresh,
     onEndReached,
-  } = useCurrentBrandMembershipListQuery({
-    initialState: currentList,
-    setInitialState: setCurrentList,
+  } = query({
     params: {
       ...(!!search && {
         search,
@@ -55,12 +55,7 @@ export const CurrentBrandMemberships = ({
   });
 
   const ListEmptyComponent = useCallback(
-    () => (
-      <EmptyView
-        iconName="Magnifer"
-        message={t('shared.nothing_found')}
-      />
-    ),
+    () => <EmptyView iconName="Magnifer" message={t('shared.nothing_found')} />,
     [t],
   );
 
@@ -85,12 +80,7 @@ export const CurrentBrandMemberships = ({
           }}
           keyExtractor={(item) => item.id}
           ListEmptyComponent={ListEmptyComponent}
-          renderItem={({ item }) => (
-            <BrandMembershipItem
-              membership={item}
-              onPress={() => onMembershipPress(item)}
-            />
-          )}
+          renderItem={renderItem}
           onRefresh={onRefresh}
           onEndReached={onEndReached}
         />
@@ -124,41 +114,4 @@ export const CurrentBrandMemberships = ({
       </KeyboardStickyView>
     </>
   );
-};
-
-const Intro = ({
-  loading,
-  error,
-}: {
-  loading?: boolean;
-  error?: string | null;
-}) => {
-  const { t } = useTranslation();
-  const { icons } = useApp();
-
-  if (loading || error) {
-    return <InitView loading={loading} error={error} />;
-  } else {
-    return (
-      <PageView
-        scrollable
-        animation="medium"
-        opacity={1}
-        enterStyle={{ opacity: 0 }}
-        exitStyle={{ opacity: 0 }}
-      >
-        <EmptyView
-          padding={0}
-          iconName={icons.Membership}
-          title={t('brand_membership.create.intro.title')}
-          message={t('brand_membership.create.intro.subtitle')}
-        >
-          <Button
-            label={t('brand_membership.create.intro.button.label')}
-            onPress={() => router.push('/memberships/create')}
-          />
-        </EmptyView>
-      </PageView>
-    );
-  }
-};
+}

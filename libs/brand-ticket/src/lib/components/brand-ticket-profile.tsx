@@ -10,7 +10,7 @@ import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import {
   BrandLocationItem,
   BrandServiceItem,
-  BrandTicketItem,
+  BrandVisitBasedMembershipItem,
   useAllBrandLocation,
   useAnyBrandService,
 } from '@symbiot-core-apps/brand';
@@ -24,7 +24,7 @@ export const BrandTicketProfile = ({ ticket }: { ticket: BrandTicket }) => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <BrandTicketItem alignSelf="center" ticket={ticket} />
+      <BrandVisitBasedMembershipItem alignSelf="center" membership={ticket} />
 
       <FormView gap="$5" marginVertical="$5">
         {!!ticket.description && (

@@ -1,4 +1,4 @@
-import { BrandTicket, Currency } from '@symbiot-core-apps/api';
+import { BrandVisitBasedMembership, Currency } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { useAllBrandLocation } from '../../hooks/use-additional-brand-location';
@@ -25,27 +25,27 @@ const CutDown = (props: ViewProps) => (
   />
 );
 
-export const BrandTicketItem = ({
-  ticket,
+export const BrandVisitBasedMembershipItem = ({
+  membership,
   ...viewProps
 }: ViewProps & {
-  ticket: BrandTicket;
+  membership: BrandVisitBasedMembership;
 }) => {
   return (
-    <BrandTicketItemView
+    <BrandVisitBasedMembershipItemView
       {...viewProps}
-      name={ticket.name}
-      visits={ticket.visits}
-      price={ticket.price}
-      discount={ticket.discount}
-      currency={ticket.currency}
-      locations={ticket.locations?.map(({ name }) => name)}
-      opacity={ticket.hidden ? 0.7 : 1}
+      name={membership.name}
+      visits={membership.visits}
+      price={membership.price}
+      discount={membership.discount}
+      currency={membership.currency}
+      locations={membership.locations?.map(({ name }) => name)}
+      opacity={membership.hidden ? 0.7 : 1}
     />
   );
 };
 
-export const BrandTicketItemView = ({
+export const BrandVisitBasedMembershipItemView = ({
   name,
   visits,
   price,

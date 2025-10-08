@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
-import { useCreateBrandMembershipQuery } from '@symbiot-core-apps/api';
+import {
+  BrandMembershipType,
+  useCreateBrandPeriodBasedMembershipQuery,
+  useCreateBrandVisitBasedMembershipQuery,
+} from '@symbiot-core-apps/api';
 import { router, useNavigation } from 'expo-router';
 import { EventArg, NavigationAction } from '@react-navigation/native';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
@@ -14,14 +18,26 @@ import { BrandMembershipServicesController } from './controller/brand-membership
 import { BrandMembershipCurrencyController } from './controller/brand-membership-currency-controller';
 import { BrandMembershipPriceController } from './controller/brand-membership-price-controller';
 import { BrandMembershipDiscountController } from './controller/brand-membership-discount-controller';
-import { BrandMembershipPeriodController } from './controller/brand-membership-period-controller';
 import { BrandMembershipNoteController } from './controller/brand-membership-note-controller';
 import { BrandMembershipLocationController } from './controller/brand-membership-location-controller';
+import { BrandMembershipVisitsController } from './controller/brand-membership-visits-controller';
+import { BrandMembershipPeriodController } from './controller/brand-membership-period-controller';
 
-export const CreateBrandMembership = () => {
+export const CreateBrandMembership = ({
+  type,
+}: {
+  type: BrandMembershipType;
+}) => {
   const { brand } = useCurrentBrandState();
   const { t } = useTranslation();
-  const { mutateAsync, isPending } = useCreateBrandMembershipQuery();
+  const {
+    mutateAsync: createPeriodBasedMembership,
+    isPending: isPeriodBasedMembershipLoading,
+  } = useCreateBrandPeriodBasedMembershipQuery();
+  const {
+    mutateAsync: createVisitBasedMembership,
+    isPending: isVisitBasedMembershipLoading,
+  } = useCreateBrandVisitBasedMembershipQuery();
   const navigation = useNavigation();
 
   const createdRef = useRef(false);
@@ -77,12 +93,14 @@ export const CreateBrandMembership = () => {
     price: number;
     discount: number;
     period: string;
+    visits: number;
   }>({
     defaultValues: {
       currency: brand?.currencies?.[0]?.value,
       price: 0,
       discount: 0,
       period: '1-month',
+      visits: 10,
     },
   });
 
@@ -102,10 +120,10 @@ export const CreateBrandMembership = () => {
     const { name, description, available } = aboutGetValues();
     const { location } = locationGetValues();
     const { services } = servicesGetValues();
-    const { price, discount, period, currency } = pricingGetValues();
+    const { price, discount, period, currency, visits } = pricingGetValues();
     const { note } = noteGetValues();
 
-    const membership = await mutateAsync({
+    const data = {
       hidden: !available,
       name,
       description,
@@ -113,10 +131,19 @@ export const CreateBrandMembership = () => {
       services,
       price,
       discount,
-      period,
       currency,
       note,
-    });
+    };
+
+    const membership = await (type === BrandMembershipType.period
+      ? createPeriodBasedMembership({
+          ...data,
+          period,
+        })
+      : createVisitBasedMembership({
+          ...data,
+          visits,
+        }));
 
     createdRef.current = true;
 
@@ -124,10 +151,12 @@ export const CreateBrandMembership = () => {
   }, [
     aboutGetValues,
     locationGetValues,
-    mutateAsync,
-    noteGetValues,
-    pricingGetValues,
     servicesGetValues,
+    pricingGetValues,
+    noteGetValues,
+    type,
+    createPeriodBasedMembership,
+    createVisitBasedMembership,
   ]);
 
   const onLeave = useCallback(
@@ -148,9 +177,14 @@ export const CreateBrandMembership = () => {
   useEffect(() => {
     navigation.setOptions({
       gestureEnabled: false,
-      headerShown: !isPending,
+      headerShown:
+        !isPeriodBasedMembershipLoading && !isVisitBasedMembershipLoading,
     });
-  }, [isPending, navigation]);
+  }, [
+    isPeriodBasedMembershipLoading,
+    isVisitBasedMembershipLoading,
+    navigation,
+  ]);
 
   useEffect(() => {
     navigation.addListener('beforeRemove', onLeave);
@@ -168,7 +202,14 @@ export const CreateBrandMembership = () => {
     : brand?.currencies?.[0];
 
   return (
-    <Survey loading={isPending || createdRef.current} onFinish={onFinish}>
+    <Survey
+      loading={
+        isPeriodBasedMembershipLoading ||
+        isVisitBasedMembershipLoading ||
+        createdRef.current
+      }
+      onFinish={onFinish}
+    >
       <SurveyStep
         canGoNext={aboutFormState.isValid}
         title={t('brand_membership.create.steps.about.title')}
@@ -234,10 +275,20 @@ export const CreateBrandMembership = () => {
           currency={priceCurrency}
           control={pricingControl}
         />
-        <BrandMembershipPeriodController
-          name="period"
-          control={pricingControl}
-        />
+
+        {type === BrandMembershipType.period && (
+          <BrandMembershipPeriodController
+            name="period"
+            control={pricingControl}
+          />
+        )}
+
+        {type === BrandMembershipType.visits && (
+          <BrandMembershipVisitsController
+            name="visits"
+            control={pricingControl}
+          />
+        )}
       </SurveyStep>
 
       <SurveyStep

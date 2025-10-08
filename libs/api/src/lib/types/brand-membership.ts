@@ -2,6 +2,11 @@ import { BrandLocation } from './brand-location';
 import { Currency } from './currency';
 import { BrandService } from './brand-service';
 
+export enum BrandMembershipType {
+  period = 'period',
+  visits = 'visits',
+}
+
 export type BrandMembershipPeriod = {
   label: string;
   value: string;
@@ -18,10 +23,21 @@ export type BrandMembership = {
   currency: Currency;
   locations: BrandLocation[];
   services: BrandService[];
+};
+
+export type BrandPeriodBasedMembership = BrandMembership & {
   period: BrandMembershipPeriod;
 };
 
-export type CreateBrandMembership = {
+export type BrandVisitBasedMembership = BrandMembership & {
+  visits: number;
+};
+
+export type AnyBrandMembership =
+  | BrandPeriodBasedMembership
+  | BrandVisitBasedMembership;
+
+type CreateBrandMembership = {
   name: string;
   description: string;
   note: string;
@@ -29,9 +45,18 @@ export type CreateBrandMembership = {
   discount: number;
   hidden: boolean;
   currency: string;
-  period: string;
   locations: string[];
   services: string[];
 };
 
-export type UpdateBrandMembership = Partial<CreateBrandMembership>;
+export type CreateBrandPeriodBasedMembership = CreateBrandMembership & {
+  period: string;
+};
+
+export type CreateBrandVisitBasedMembership = CreateBrandMembership & {
+  visits: number;
+};
+
+export type UpdateBrandMembership =
+  | Partial<CreateBrandPeriodBasedMembership>
+  | Partial<CreateBrandVisitBasedMembership>;

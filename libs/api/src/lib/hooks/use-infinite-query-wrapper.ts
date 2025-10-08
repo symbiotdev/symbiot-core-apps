@@ -7,12 +7,22 @@ import { queryClient } from '../utils/client';
 import { requestWithStringError } from '../utils/request';
 import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
 import { getInitialQueryDataStoreQueryKey } from '../utils/initial-query-data';
+import type { UseInfiniteQueryResult } from '@tanstack/react-query/src/types';
 
 function getNextPageParam<T>(page: PaginationList<T>) {
   return page.items.length < page.count
     ? page.items[page.items.length - 1]
     : undefined;
 }
+
+export type InfiniteQuery<T> = UseInfiniteQueryResult<
+  InfiniteData<PaginationList<T>, unknown>,
+  string
+> & {
+  items: T[] | undefined;
+  onRefresh: () => void;
+  onEndReached: () => void;
+};
 
 export function useInfiniteQueryWrapper<T>({
   apUrl,

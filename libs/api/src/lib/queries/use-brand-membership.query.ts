@@ -5,22 +5,27 @@ import {
 } from '../utils/request';
 import axios from 'axios';
 import { refetchQueriesByChanges } from '../utils/query';
-import { PaginationList, PaginationListParams } from '../types/pagination';
+import { PaginationListParams } from '../types/pagination';
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { queryClient } from '../utils/client';
 import {
+  AnyBrandMembership,
   BrandMembership,
   BrandMembershipPeriod,
-  CreateBrandMembership,
+  BrandMembershipType,
+  BrandPeriodBasedMembership,
+  BrandVisitBasedMembership,
+  CreateBrandPeriodBasedMembership,
+  CreateBrandVisitBasedMembership,
   UpdateBrandMembership,
 } from '../types/brand-membership';
 
 export enum BrandMembershipQueryKey {
   periods = 'brand-membership-periods',
-  currentList = 'brand-membership-current-list',
   profileById = 'brand-membership-profile-by-id',
-  viewById = 'brand-membership-view-by-id',
   detailedById = 'brand-membership-detailed-by-id',
+  periodBasedCurrentList = 'brand-membership-period-based-current-list',
+  visitBasedCurrentList = 'brand-membership-visit-based-current-list',
 }
 
 const refetchQueriesByMembershipChanges = async (
@@ -36,10 +41,12 @@ const refetchQueriesByMembershipChanges = async (
     queryKeys: {
       byId: [
         BrandMembershipQueryKey.profileById,
-        BrandMembershipQueryKey.viewById,
         BrandMembershipQueryKey.detailedById,
       ],
-      list: [BrandMembershipQueryKey.currentList],
+      list: [
+        BrandMembershipQueryKey.periodBasedCurrentList,
+        BrandMembershipQueryKey.visitBasedCurrentList,
+      ],
     },
   });
 
@@ -60,22 +67,11 @@ export const useBrandMembershipProfileByIdQuery = (
 ) => {
   const queryKey = [BrandMembershipQueryKey.profileById, id];
 
-  return useQuery<BrandMembership, string>({
+  return useQuery<AnyBrandMembership, string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
     queryFn: () =>
       requestWithStringError(axios.get(`/api/brand-membership/profile/${id}`)),
-  });
-};
-
-export const useBrandMembershipViewByIdQuery = (id: string, enabled = true) => {
-  const queryKey = [BrandMembershipQueryKey.viewById, id];
-
-  return useQuery<BrandMembership, string>({
-    queryKey,
-    enabled: enabled || !queryClient.getQueryData(queryKey),
-    queryFn: () =>
-      requestWithStringError(axios.get(`/api/brand-membership/view/${id}`)),
   });
 };
 
@@ -85,7 +81,7 @@ export const useBrandMembershipDetailedByIdQuery = (
 ) => {
   const queryKey = [BrandMembershipQueryKey.detailedById, id];
 
-  return useQuery<BrandMembership, string>({
+  return useQuery<AnyBrandMembership, string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
     queryFn: () =>
@@ -93,23 +89,72 @@ export const useBrandMembershipDetailedByIdQuery = (
   });
 };
 
-export const useCurrentBrandMembershipListQuery = (props?: {
-  initialState?: PaginationList<BrandMembership>;
-  setInitialState?: (state: PaginationList<BrandMembership>) => void;
+export const useBrandPeriodBasedMembershipCurrentListQuery = (props?: {
   params?: PaginationListParams;
 }) =>
-  useInfiniteQueryWrapper<BrandMembership>({
-    apUrl: '/api/brand-membership',
-    queryKey: [BrandMembershipQueryKey.currentList, props?.params],
+  useInfiniteQueryWrapper<BrandPeriodBasedMembership>({
     ...props,
+    storeInitialData: true,
+    apUrl: '/api/brand-membership/list',
+    queryKey: [BrandMembershipQueryKey.periodBasedCurrentList, props?.params],
+    params: {
+      ...props?.params,
+      type: BrandMembershipType.period,
+    },
   });
 
-export const useCreateBrandMembershipQuery = () =>
-  useMutation<BrandMembership, string, CreateBrandMembership>({
+export const useBrandVisitBasedMembershipCurrentListQuery = (props?: {
+  params?: PaginationListParams;
+}) =>
+  useInfiniteQueryWrapper<BrandVisitBasedMembership>({
+    ...props,
+    storeInitialData: true,
+    apUrl: '/api/brand-membership/list',
+    queryKey: [BrandMembershipQueryKey.visitBasedCurrentList, props?.params],
+    params: {
+      ...props?.params,
+      type: BrandMembershipType.visits,
+    },
+  });
+
+export const useCreateBrandPeriodBasedMembershipQuery = () =>
+  useMutation<
+    BrandPeriodBasedMembership,
+    string,
+    CreateBrandPeriodBasedMembership
+  >({
     mutationFn: async (data) => {
-      const membership = await requestWithAlertOnError<BrandMembership>(
-        axios.post(`/api/brand-membership/add`, data),
-      );
+      const membership =
+        await requestWithAlertOnError<BrandPeriodBasedMembership>(
+          axios.post(
+            `/api/brand-membership/${BrandMembershipType.period}/add`,
+            data,
+          ),
+        );
+
+      await refetchQueriesByMembershipChanges({
+        id: membership.id,
+        data: membership,
+      });
+
+      return membership;
+    },
+  });
+
+export const useCreateBrandVisitBasedMembershipQuery = () =>
+  useMutation<
+    BrandVisitBasedMembership,
+    string,
+    CreateBrandVisitBasedMembership
+  >({
+    mutationFn: async (data) => {
+      const membership =
+        await requestWithAlertOnError<BrandVisitBasedMembership>(
+          axios.post(
+            `/api/brand-membership/${BrandMembershipType.visits}/add`,
+            data,
+          ),
+        );
 
       await refetchQueriesByMembershipChanges({
         id: membership.id,
@@ -122,12 +167,12 @@ export const useCreateBrandMembershipQuery = () =>
 
 export const useUpdateBrandMembershipQuery = () =>
   useMutation<
-    BrandMembership,
+    AnyBrandMembership,
     string,
     { id: string; data: UpdateBrandMembership }
   >({
     mutationFn: async ({ id, data }) => {
-      const membership = await requestWithAlertOnError<BrandMembership>(
+      const membership = await requestWithAlertOnError<AnyBrandMembership>(
         axios.put(`/api/brand-membership/${id}`, data),
       );
 

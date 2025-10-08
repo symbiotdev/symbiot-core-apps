@@ -9,17 +9,19 @@ import { useTranslation } from 'react-i18next';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import {
   BrandLocationItem,
-  BrandMembershipItem,
   BrandServiceItem,
   useAllBrandLocation,
   useAnyBrandService,
 } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
+import { ReactElement } from 'react';
 
 export const BrandMembershipProfile = ({
   membership,
+  Item,
 }: {
   membership: BrandMembership;
+  Item: ReactElement;
 }) => {
   const { t } = useTranslation();
   const anyService = useAnyBrandService();
@@ -28,7 +30,7 @@ export const BrandMembershipProfile = ({
 
   return (
     <PageView scrollable withHeaderHeight>
-      <BrandMembershipItem membership={membership} />
+      {Item}
 
       <FormView gap="$5" marginVertical="$5">
         {!!membership.description && (

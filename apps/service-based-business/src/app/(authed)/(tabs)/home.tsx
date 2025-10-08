@@ -112,8 +112,9 @@ const BrandHome = () => {
     <TabsPageView scrollable withHeaderHeight>
       <FormView gap="$3">
         <EmptyView
+          paddingVertical={50}
           iconName="MagicStick"
-          message="Сьогодні у вас немає запланованих тренувань. Відпочиньте або проведіть час із користю для відновлення!"
+          message="Сьогодні немає запланованих тренувань. Відпочиньте або проведіть час із користю для відновлення!"
         />
 
         {hasPermission('clientsAll') && (
@@ -173,6 +174,16 @@ const BrandHome = () => {
           </ListItemGroup>
         )}
 
+        {hasAnyOfPermissions(['financesAll']) && (
+          <ListItemGroup title={t('brand.profile.finance')}>
+            <ListItem
+              label={t('brand_transaction.title')}
+              icon={<Icon name="Bill" />}
+              onPress={onTransactionPress}
+            />
+          </ListItemGroup>
+        )}
+
         {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && (
           <ListItemGroup title={t('brand.profile.infrastructure')}>
             {hasPermission('locationsAll') && (
@@ -190,16 +201,6 @@ const BrandHome = () => {
                 onPress={onEmployeesPress}
               />
             )}
-          </ListItemGroup>
-        )}
-
-        {hasAnyOfPermissions(['financesAll']) && (
-          <ListItemGroup title={t('brand.profile.finance')}>
-            <ListItem
-              label={t('brand_transaction.title')}
-              icon={<Icon name="Bill" />}
-              onPress={onTransactionPress}
-            />
           </ListItemGroup>
         )}
       </FormView>

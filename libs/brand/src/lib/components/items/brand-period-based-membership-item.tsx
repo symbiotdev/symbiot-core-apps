@@ -1,6 +1,6 @@
 import {
-  BrandMembership,
   BrandMembershipPeriod,
+  BrandPeriodBasedMembership,
   Currency,
 } from '@symbiot-core-apps/api';
 import {
@@ -17,14 +17,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAllBrandLocation } from '../../hooks/use-additional-brand-location';
 
-export const BrandMembershipItem = ({
+export const BrandPeriodBasedMembershipItem = ({
   membership,
   ...viewProps
 }: ViewProps & {
-  membership: BrandMembership;
+  membership: BrandPeriodBasedMembership;
 }) => {
   return (
-    <BrandMembershipItemView
+    <BrandPeriodBasedMembershipItemView
       {...viewProps}
       name={membership.name}
       period={membership.period}
@@ -37,7 +37,7 @@ export const BrandMembershipItem = ({
   );
 };
 
-export const BrandMembershipItemView = ({
+export const BrandPeriodBasedMembershipItemView = ({
   name,
   locations,
   price,

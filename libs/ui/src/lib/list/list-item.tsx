@@ -52,12 +52,14 @@ export const ListItem = memo(
 
     const onXStackPress = useCallback(
       (e: GestureResponderEvent) => {
+        if (disabled) return;
+
         if (onPress) {
           onPress?.(e);
           emitHaptic();
         }
       },
-      [onPress],
+      [disabled, onPress],
     );
 
     return (

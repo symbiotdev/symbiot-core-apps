@@ -164,9 +164,14 @@ export const AdaptivePopover = forwardRef(
         open={opened}
         onOpenChange={onOpenChange}
       >
-        <Popover.Trigger asChild={triggerType !== 'manual'} disabled={disabled}>
-          {trigger}
-        </Popover.Trigger>
+        {!!trigger && (
+          <Popover.Trigger
+            asChild={triggerType !== 'manual'}
+            disabled={disabled}
+          >
+            {trigger}
+          </Popover.Trigger>
+        )}
 
         <Popover.Content
           animation="quick"

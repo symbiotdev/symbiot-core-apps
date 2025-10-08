@@ -97,6 +97,7 @@ export const BrandMembershipItemView = ({
                 DateHelper.differenceInMinutes(endAt, now),
                 {
                   onlyHighestValue: true,
+                  onlyDuration: ['days', 'hours', 'minutes'],
                 },
               ),
             })}

@@ -1,4 +1,4 @@
-import { Day } from 'date-fns/types';
+import { Day, Duration } from 'date-fns/types';
 import { startOfWeek } from 'date-fns/startOfWeek';
 import { format } from 'date-fns/format';
 import { addDays } from 'date-fns/addDays';
@@ -65,33 +65,80 @@ export const DateHelper = {
     params?: {
       shortFormat?: boolean;
       onlyHighestValue?: boolean;
+      onlyDuration?: (keyof Duration)[];
     },
   ) => {
-    const years = Math.floor(totalMinutes / minutesInYear);
-    const remainingMinutesAfterYears = totalMinutes % minutesInYear;
+    let years: number;
+    let remainingMinutesAfterYears: number;
+    let months: number;
+    let remainingMinutesAfterMonths: number;
+    let days: number;
+    let remainingMinutesAfterDays: number;
+    let hours: number;
+    let remainingMinutesAfterHours: number;
+    let minutes: number;
 
-    const months =
-      params?.onlyHighestValue && years
-        ? 0
-        : Math.floor(remainingMinutesAfterYears / minutesInMonth);
-    const remainingMinutesAfterMonths =
-      remainingMinutesAfterYears % minutesInMonth;
+    if (
+      !params?.onlyDuration?.length ||
+      params.onlyDuration.includes('years')
+    ) {
+      years = Math.floor(totalMinutes / minutesInYear);
+      remainingMinutesAfterYears = totalMinutes % minutesInYear;
+    } else {
+      years = 0;
+      remainingMinutesAfterYears = totalMinutes;
+    }
 
-    const days =
-      params?.onlyHighestValue && (years || months)
-        ? 0
-        : Math.floor(remainingMinutesAfterMonths / minutesInDay);
-    const remainingMinutesAfterDays =
-      remainingMinutesAfterMonths % minutesInDay;
+    if (
+      !params?.onlyDuration?.length ||
+      params.onlyDuration.includes('months')
+    ) {
+      months =
+        params?.onlyHighestValue && years
+          ? 0
+          : Math.floor(remainingMinutesAfterYears / minutesInMonth);
+      remainingMinutesAfterMonths = remainingMinutesAfterYears % minutesInMonth;
+    } else {
+      months = 0;
+      remainingMinutesAfterMonths = remainingMinutesAfterYears;
+    }
 
-    const hours =
-      params?.onlyHighestValue && (years || months || days)
-        ? 0
-        : Math.floor(remainingMinutesAfterDays / 60);
-    const minutes =
-      params?.onlyHighestValue && (years || months || days || hours)
-        ? 0
-        : remainingMinutesAfterDays % 60;
+    if (!params?.onlyDuration?.length || params.onlyDuration.includes('days')) {
+      days =
+        params?.onlyHighestValue && (years || months)
+          ? 0
+          : Math.floor(remainingMinutesAfterMonths / minutesInDay);
+      remainingMinutesAfterDays = remainingMinutesAfterMonths % minutesInDay;
+    } else {
+      days = 0;
+      remainingMinutesAfterDays = remainingMinutesAfterMonths;
+    }
+
+    if (
+      !params?.onlyDuration?.length ||
+      params.onlyDuration.includes('hours')
+    ) {
+      hours =
+        params?.onlyHighestValue && (years || months || days)
+          ? 0
+          : Math.floor(remainingMinutesAfterDays / 60);
+      remainingMinutesAfterHours = remainingMinutesAfterDays % 60;
+    } else {
+      hours = 0;
+      remainingMinutesAfterHours = remainingMinutesAfterDays;
+    }
+
+    if (
+      !params?.onlyDuration?.length ||
+      params.onlyDuration.includes('minutes')
+    ) {
+      minutes =
+        params?.onlyHighestValue && (years || months || days || hours)
+          ? 0
+          : remainingMinutesAfterHours;
+    } else {
+      minutes = 0;
+    }
 
     const duration: Record<string, number> = {
       years,

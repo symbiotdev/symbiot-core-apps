@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import {
+  clearInitialQueryData,
   NotificationQueryKey,
   queryClient,
   useAuthTokens,
@@ -8,7 +9,6 @@ import {
 import { useCallback } from 'react';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { router } from 'expo-router';
-import { clearInitialInfiniteQueryData } from '../../../../api/src/lib/hooks/use-infinite-query-wrapper';
 
 type BrandAuthState = {
   processing: boolean;
@@ -35,7 +35,7 @@ export const useAuthBrand = () => {
 
         setTokens(tokens);
         setCurrentBrand(brand);
-        clearInitialInfiniteQueryData();
+        clearInitialQueryData();
 
         await new Promise<void>((resolve) => {
           setTimeout(async () => {

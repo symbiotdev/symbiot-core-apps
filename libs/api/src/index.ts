@@ -49,6 +49,7 @@ export * from './lib/types/schedule';
 
 export * from './lib/utils/client';
 export * from './lib/utils/gender';
+export * from './lib/utils/initial-query-data';
 export * from './lib/utils/media';
 export * from './lib/utils/request';
 export * from './lib/utils/socket';

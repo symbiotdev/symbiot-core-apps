@@ -6,27 +6,13 @@ import { PaginationList, PaginationListParams } from '../types/pagination';
 import { queryClient } from '../utils/client';
 import { requestWithStringError } from '../utils/request';
 import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
+import { getInitialQueryDataStoreQueryKey } from '../utils/initial-query-data';
 
 function getNextPageParam<T>(page: PaginationList<T>) {
   return page.items.length < page.count
     ? page.items[page.items.length - 1]
     : undefined;
 }
-
-const storeKeyPrefix = 'initial-infinite-query-data';
-
-const getStoreQueryKey = (queryKey: unknown[]) => {
-  return `${storeKeyPrefix}-${queryKey.map(String).join('/')}`;
-};
-
-export const clearInitialInfiniteQueryData = () => {
-  mmkvGlobalStorage
-    .getAllKeys()
-    .filter((key) => key.indexOf(storeKeyPrefix) === 0)
-    .forEach((key) => {
-      mmkvGlobalStorage.delete(key)
-    });
-};
 
 export function useInfiniteQueryWrapper<T>({
   apUrl,
@@ -72,7 +58,9 @@ export function useInfiniteQueryWrapper<T>({
       return query.data.pages.flatMap((page) => page.items);
     }
 
-    const storedDate = mmkvGlobalStorage.getString(getStoreQueryKey(queryKey));
+    const storedDate = mmkvGlobalStorage.getString(
+      getInitialQueryDataStoreQueryKey(queryKey),
+    );
 
     if (storedDate) {
       try {
@@ -107,7 +95,7 @@ export function useInfiniteQueryWrapper<T>({
   useEffect(() => {
     if (storeInitialData && query.data?.pages?.length) {
       mmkvGlobalStorage.set(
-        getStoreQueryKey(queryKey),
+        getInitialQueryDataStoreQueryKey(queryKey),
         JSON.stringify(query.data.pages[0]),
       );
     }

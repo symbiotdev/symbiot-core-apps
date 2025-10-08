@@ -1,6 +1,7 @@
 import { PropsWithChildren, useCallback, useEffect } from 'react';
 import {
   Brand,
+  clearInitialQueryData,
   Notification,
   queryClient,
   socket,
@@ -51,6 +52,7 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
       setCurrentBrand(undefined);
       setCurrentBrands([]);
       router.replace('/');
+      clearInitialQueryData();
       queryClient.clear();
     },
     [setCurrentEmployee, setCurrentBrand, setCurrentBrands],

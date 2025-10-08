@@ -114,6 +114,7 @@ export const BrandClientTopUpBalance = ({
           query={useBrandVisitBasedMembershipCurrentListQuery}
           renderItem={({ item }) => (
             <BrandMembershipItem
+              alignSelf="center"
               membership={item}
               onPress={() =>
                 onVisitBasedMembershipPress(item as BrandVisitBasedMembership)
@@ -136,6 +137,7 @@ export const BrandClientTopUpBalance = ({
           query={useBrandPeriodBasedMembershipCurrentListQuery}
           renderItem={({ item }) => (
             <BrandMembershipItem
+              alignSelf="center"
               membership={item}
               onPress={() =>
                 onPeriodBasedMembershipPress(item as BrandPeriodBasedMembership)

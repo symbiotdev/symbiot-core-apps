@@ -1,4 +1,5 @@
 import {
+  AnyBrandClientMembership,
   AnyBrandMembership,
   BrandMembershipPeriod,
   BrandMembershipType,
@@ -23,21 +24,6 @@ import {
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAllBrandLocation } from '../../hooks/use-additional-brand-location';
-
-const cutoutSize = 40;
-
-const CutDown = (props: ViewProps) => (
-  <View
-    position="absolute"
-    backgroundColor="$background"
-    borderRadius={100}
-    zIndex={1}
-    top={120}
-    width={cutoutSize}
-    height={cutoutSize}
-    {...props}
-  />
-);
 
 export const BrandMembershipItem = ({
   membership,
@@ -70,7 +56,53 @@ export const BrandMembershipItem = ({
   );
 };
 
-export const BrandPeriodBasedMembershipItemView = ({
+export const BrandClientMembershipItem = ({
+  membership,
+  ...viewProps
+}: ViewProps & {
+  membership: AnyBrandClientMembership;
+}) => {
+  return 'period' in membership ? (
+    <BrandPeriodBasedMembershipItemView
+      {...viewProps}
+      key={membership.id}
+      name={membership.name}
+      period={membership.period}
+      price={membership.price}
+      discount={membership.discount}
+      currency={membership.currency}
+      locations={membership.locations}
+      endAt={membership.endAt}
+    />
+  ) : (
+    <BrandVisitBasedMembershipItemView
+      {...viewProps}
+      key={membership.id}
+      name={membership.name}
+      visits={membership.visits}
+      price={membership.price}
+      discount={membership.discount}
+      currency={membership.currency}
+      locations={membership.locations}
+    />
+  );
+};
+
+const cutoutSize = 40;
+const CutDown = (props: ViewProps) => (
+  <View
+    position="absolute"
+    backgroundColor="$background"
+    borderRadius={100}
+    zIndex={1}
+    top={120}
+    width={cutoutSize}
+    height={cutoutSize}
+    {...props}
+  />
+);
+
+const BrandPeriodBasedMembershipItemView = ({
   name,
   locations,
   price,
@@ -180,7 +212,7 @@ export const BrandPeriodBasedMembershipItemView = ({
   );
 };
 
-export const BrandVisitBasedMembershipItemView = ({
+const BrandVisitBasedMembershipItemView = ({
   name,
   visits,
   price,

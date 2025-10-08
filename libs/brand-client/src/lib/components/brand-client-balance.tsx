@@ -6,13 +6,9 @@ import {
   Icon,
 } from '@symbiot-core-apps/ui';
 import React, { useCallback, useRef } from 'react';
-import {
-  BrandClient,
-  BrandClientMembership,
-  getBrandMembershipType,
-} from '@symbiot-core-apps/api';
+import { AnyBrandClientMembership, BrandClient } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
-import { BrandPeriodBasedMembershipItemView } from '@symbiot-core-apps/brand';
+import { BrandClientMembershipItem } from '@symbiot-core-apps/brand';
 import { BrandClientTopUpBalance } from './brand-client-top-up-balance';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { router } from 'expo-router';
@@ -23,21 +19,14 @@ export const BrandClientBalance = ({ client }: { client: BrandClient }) => {
   const topUpBalancePopoverRef = useRef<AdaptivePopoverRef>(null);
 
   const onPressMembership = useCallback(
-    (membership: BrandClientMembership) => {
+    (membership: AnyBrandClientMembership) => {
       router.push(`/clients/${client.id}/memberships/${membership.id}/profile`);
     },
     [client.id],
   );
 
-  const onPressTicket = useCallback(
-    (ticket: BrandClientTicket) => {
-      router.push(`/clients/${client.id}/tickets/${ticket.id}/profile`);
-    },
-    [client.id],
-  );
-
   return (
-    <View gap="$1" alignItems="center">
+    <View gap="$2" alignItems="center">
       {!client.memberships?.length && (
         <ActionCardWithCustomButton
           title={t('brand_client.balance.extend.title')}
@@ -59,15 +48,10 @@ export const BrandClientBalance = ({ client }: { client: BrandClient }) => {
 
       {hasPermission('catalogAll') &&
         client.memberships?.map((membership) => (
-          <BrandPeriodBasedMembershipItemView
+          <BrandClientMembershipItem
+            alignSelf="center"
             key={membership.id}
-            name={membership.name}
-            period={membership.period}
-            price={membership.price}
-            discount={membership.discount}
-            currency={membership.currency}
-            locations={membership.locations}
-            endAt={membership.endAt}
+            membership={membership}
             onPress={() => onPressMembership(membership)}
           />
         ))}

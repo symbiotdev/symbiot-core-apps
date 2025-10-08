@@ -1,8 +1,8 @@
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { PaginationListParams } from '../types/pagination';
 import {
+  AnyBrandClientMembership,
   BrandClient,
-  BrandClientMembership,
   CreateBrandClient,
   ImportBrandClient,
   UpdateBrandClient,
@@ -120,7 +120,7 @@ export const useBrandClientMembershipByIdQuery = (
 ) => {
   const queryKey = [BrandClientQueryKey.membershipById, clientId, membershipId];
 
-  return useQuery<BrandClientMembership, string>({
+  return useQuery<AnyBrandClientMembership, string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
     queryFn: () =>
@@ -181,16 +181,17 @@ export const useBrandClientImportTemplateQuery = () =>
 
 export const useBrandClientAddMembershipQuery = () =>
   useMutation<
-    BrandClientMembership,
+    AnyBrandClientMembership,
     string,
     { clientId: string; membershipId: string }
   >({
     mutationFn: async ({ clientId, membershipId }) => {
-      const membership = await requestWithAlertOnError<BrandClientMembership>(
-        axios.post(
-          `/api/brand-client/${clientId}/membership/${membershipId}/add`,
-        ),
-      );
+      const membership =
+        await requestWithAlertOnError<AnyBrandClientMembership>(
+          axios.post(
+            `/api/brand-client/${clientId}/membership/${membershipId}/add`,
+          ),
+        );
 
       const clientQueryKey = [BrandClientQueryKey.detailedById, clientId];
       const client = queryClient.getQueryData<BrandClient>(clientQueryKey);

@@ -1,4 +1,4 @@
-import { BrandClient, BrandClientMembership } from './brand-client';
+import { AnyBrandClientMembership, BrandClient } from './brand-client';
 import { Currency } from './currency';
 
 export enum BrandTransactionType {
@@ -17,6 +17,6 @@ export type BrandTransaction = {
   cAt: string;
   currency: Currency;
   client: BrandClient;
-  membership: BrandClientMembership;
+  membership: AnyBrandClientMembership;
   type: BrandTransactionType;
 };

@@ -20,7 +20,7 @@ export type BrandClient = {
   emails: string[];
   phones: string[];
   gender: Gender;
-  memberships: BrandClientMembership[];
+  memberships: AnyBrandClientMembership[];
 };
 
 export type CreateBrandClient = {
@@ -40,7 +40,7 @@ export type ImportBrandClient = Omit<CreateBrandClient, 'avatar' | 'note'> & {
   avatarUrl?: string;
 };
 
-export type BrandClientMembership = {
+type BrandClientMembership = {
   id: string;
   name: string;
   price: number;
@@ -48,8 +48,21 @@ export type BrandClientMembership = {
   endAt: string;
   locations: string[];
   services: string[];
-  type: BrandMembershipType;
   currency: Currency;
-  period: BrandMembershipPeriod;
-  membership: BrandPeriodBasedMembership | BrandVisitBasedMembership;
 };
+
+export type BrandClientPeriodBasedMembership = BrandClientMembership & {
+  type: BrandMembershipType.period;
+  membership: BrandPeriodBasedMembership;
+  period: BrandMembershipPeriod;
+};
+
+export type BrandClientVisitBasedMembership = BrandClientMembership & {
+  type: BrandMembershipType.visits;
+  membership: BrandVisitBasedMembership;
+  visits: number;
+};
+
+export type AnyBrandClientMembership =
+  | BrandClientPeriodBasedMembership
+  | BrandClientVisitBasedMembership;

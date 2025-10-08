@@ -10,10 +10,9 @@ import {
 } from '@symbiot-core-apps/ui';
 import {
   BrandEmployee,
-  useCurrentBrandEmployeeListQuery,
+  useBrandEmployeeCurrentListQuery,
 } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
-import { useCurrentBrandEmployeeState } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -26,7 +25,6 @@ export const CurrentBrandEmployees = ({
   offsetTop?: number;
   onEmployeePress: (employee: BrandEmployee) => void;
 }) => {
-  const { currentList, setCurrentList } = useCurrentBrandEmployeeState();
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
 
@@ -40,9 +38,7 @@ export const CurrentBrandEmployees = ({
     error,
     onRefresh,
     onEndReached,
-  } = useCurrentBrandEmployeeListQuery({
-    initialState: currentList,
-    setInitialState: setCurrentList,
+  } = useBrandEmployeeCurrentListQuery({
     params: {
       ...(!!search && {
         search,

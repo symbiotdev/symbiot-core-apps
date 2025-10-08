@@ -5,7 +5,7 @@ import {
 } from '../utils/request';
 import axios from 'axios';
 import { refetchQueriesByChanges } from '../utils/query';
-import { PaginationList, PaginationListParams } from '../types/pagination';
+import { PaginationListParams } from '../types/pagination';
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { queryClient } from '../utils/client';
 import {
@@ -75,14 +75,13 @@ export const useBrandTicketDetailedByIdQuery = (id: string, enabled = true) => {
 };
 
 export const useCurrentBrandTicketListQuery = (props?: {
-  initialState?: PaginationList<BrandTicket>;
-  setInitialState?: (state: PaginationList<BrandTicket>) => void;
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandTicket>({
+    ...props,
+    storeInitialData: true,
     apUrl: '/api/brand-ticket',
     queryKey: [BrandTicketQueryKey.currentList, props?.params],
-    ...props,
   });
 
 export const useCreateBrandTicketQuery = () =>

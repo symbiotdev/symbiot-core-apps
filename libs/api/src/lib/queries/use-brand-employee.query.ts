@@ -155,20 +155,17 @@ export const useRemoveBrandEmployeeQuery = () =>
     },
   });
 
-export const useCurrentBrandEmployeeListQuery = (props?: {
-  initialState?: PaginationList<BrandEmployee>;
-  setInitialState?: (state: PaginationList<BrandEmployee>) => void;
+export const useBrandEmployeeCurrentListQuery = (props?: {
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandEmployee>({
+    ...props,
     apUrl: '/api/brand-employee',
     queryKey: [BrandEmployeesQueryKey.currentList, props?.params],
-    ...props,
+    storeInitialData: true,
   });
 
 export const useCurrentBrandEmployeeProvidersListQuery = (props?: {
-  initialState?: PaginationList<BrandEmployee>;
-  setInitialState?: (state: PaginationList<BrandEmployee>) => void;
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandEmployee>({

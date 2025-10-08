@@ -1,6 +1,6 @@
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { BrandTransaction } from '../types/brand-transaction';
-import { PaginationList, PaginationListParams } from '../types/pagination';
+import { PaginationListParams } from '../types/pagination';
 
 export enum BrandTransactionQueryKey {
   currentList = 'brand-transaction-current-list',
@@ -8,11 +8,10 @@ export enum BrandTransactionQueryKey {
 }
 
 export const useCurrentBrandTransactionListQuery = (props?: {
-  initialState?: PaginationList<BrandTransaction>;
-  setInitialState?: (state: PaginationList<BrandTransaction>) => void;
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandTransaction>({
+    storeInitialData: true,
     refetchOnMount: true,
     apUrl: '/api/brand-transaction',
     queryKey: [BrandTransactionQueryKey.currentList, props?.params],

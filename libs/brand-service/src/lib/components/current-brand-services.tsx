@@ -13,12 +13,11 @@ import {
 } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useApp } from '@symbiot-core-apps/app';
-import { useCurrentBrandServiceState } from '@symbiot-core-apps/state';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCallback, useState } from 'react';
 import {
   BrandService,
-  useCurrentBrandServiceListQuery,
+  useBrandServiceCurrentListQuery,
 } from '@symbiot-core-apps/api';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandServiceItem } from '@symbiot-core-apps/brand';
@@ -30,7 +29,6 @@ export const CurrentBrandServices = ({
   offsetTop?: number;
   onServicePress: (service: BrandService) => void;
 }) => {
-  const { currentList, setCurrentList } = useCurrentBrandServiceState();
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
 
@@ -44,9 +42,7 @@ export const CurrentBrandServices = ({
     error,
     onRefresh,
     onEndReached,
-  } = useCurrentBrandServiceListQuery({
-    initialState: currentList,
-    setInitialState: setCurrentList,
+  } = useBrandServiceCurrentListQuery({
     params: {
       ...(!!search && {
         search,

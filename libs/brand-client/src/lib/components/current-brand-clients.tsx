@@ -14,10 +14,9 @@ import {
   PageView,
   Search,
 } from '@symbiot-core-apps/ui';
-import { useCurrentBrandClientState } from '@symbiot-core-apps/state';
 import {
   BrandClient,
-  useCurrentBrandClientListQuery,
+  useBrandClientCurrentListQuery,
 } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
 import { emitHaptic } from '@symbiot-core-apps/shared';
@@ -33,7 +32,6 @@ export const CurrentBrandClients = ({
   offsetTop?: number;
   onClientPress: (client: BrandClient) => void;
 }) => {
-  const { currentList, setCurrentList } = useCurrentBrandClientState();
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
 
@@ -47,9 +45,7 @@ export const CurrentBrandClients = ({
     error,
     onRefresh,
     onEndReached,
-  } = useCurrentBrandClientListQuery({
-    initialState: currentList,
-    setInitialState: setCurrentList,
+  } = useBrandClientCurrentListQuery({
     params: {
       ...(!!search && {
         search,

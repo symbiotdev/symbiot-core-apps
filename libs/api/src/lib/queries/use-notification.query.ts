@@ -1,10 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Notification } from '../types/notification';
-import {
-  requestWithAlertOnError,
-  requestWithStringError,
-} from '../utils/request';
+import { requestWithAlertOnError, requestWithStringError } from '../utils/request';
 import type { InfiniteData } from '@tanstack/query-core';
 import { PaginationList } from '../types/pagination';
 import { useCallback } from 'react';
@@ -84,16 +81,11 @@ export const useCountNewNotifications = () =>
       requestWithStringError(axios.get('/api/notification/new/count')),
   });
 
-export const useNotificationsListQuery = (
-  props: {
-    initialState?: PaginationList<Notification>;
-    setInitialState?: (state: PaginationList<Notification>) => void;
-  } = {},
-) =>
+export const useNotificationsListQuery = () =>
   useInfiniteQueryWrapper<Notification>({
+    storeInitialData: true,
     apUrl: '/api/notification',
     queryKey: [NotificationQueryKey.getList],
-    ...props,
   });
 
 export const useNotificationsReadQuery = () => {

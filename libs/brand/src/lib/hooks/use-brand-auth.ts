@@ -6,11 +6,9 @@ import {
   useBrandAuthQuery,
 } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
-import {
-  useCurrentBrandState,
-  useNotificationsState,
-} from '@symbiot-core-apps/state';
+import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { router } from 'expo-router';
+import { clearInitialInfiniteQueryData } from '../../../../api/src/lib/hooks/use-infinite-query-wrapper';
 
 type BrandAuthState = {
   processing: boolean;
@@ -26,7 +24,6 @@ export const useAuthBrand = () => {
   const { mutateAsync } = useBrandAuthQuery();
   const { setProcessing } = useBrandAuthState();
   const { setBrand: setCurrentBrand } = useCurrentBrandState();
-  const { clear: clearNotifications } = useNotificationsState();
   const { setTokens } = useAuthTokens();
 
   return useCallback(
@@ -38,7 +35,7 @@ export const useAuthBrand = () => {
 
         setTokens(tokens);
         setCurrentBrand(brand);
-        clearNotifications();
+        clearInitialInfiniteQueryData();
 
         await new Promise<void>((resolve) => {
           setTimeout(async () => {
@@ -62,12 +59,6 @@ export const useAuthBrand = () => {
         setProcessing(false);
       }
     },
-    [
-      clearNotifications,
-      mutateAsync,
-      setCurrentBrand,
-      setProcessing,
-      setTokens,
-    ],
+    [mutateAsync, setCurrentBrand, setProcessing, setTokens],
   );
 };

@@ -13,7 +13,7 @@ import {
 } from '../types/brand-service';
 import { refetchQueriesByChanges } from '../utils/query';
 import { generateFormData } from '../utils/media';
-import { PaginationList, PaginationListParams } from '../types/pagination';
+import { PaginationListParams } from '../types/pagination';
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { Gender } from '../types/gender';
 import { queryClient } from '../utils/client';
@@ -123,15 +123,14 @@ export const useBrandServiceGendersQuery = (enabled?: boolean) => {
   });
 };
 
-export const useCurrentBrandServiceListQuery = (props?: {
-  initialState?: PaginationList<BrandService>;
-  setInitialState?: (state: PaginationList<BrandService>) => void;
+export const useBrandServiceCurrentListQuery = (props?: {
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandService>({
+    ...props,
+    storeInitialData: true,
     apUrl: '/api/brand-service',
     queryKey: [BrandServiceQueryKey.currentList, props?.params],
-    ...props,
   });
 
 export const useServicesQuery = (props?: { params?: PaginationListParams }) =>

@@ -14,6 +14,7 @@ import { queryClient } from '../utils/client';
 import { useAccountAuthRefreshTokenQuery } from '../queries/use-account-auth.query';
 import { Platform } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { clearInitialInfiniteQueryData } from '../hooks/use-infinite-query-wrapper';
 
 type SocketState = {
   connecting: boolean;
@@ -90,6 +91,7 @@ export const ApiProvider = ({
       socket.connect();
     } else {
       queryClient.clear();
+      clearInitialInfiniteQueryData();
       disconnectSocket();
     }
 

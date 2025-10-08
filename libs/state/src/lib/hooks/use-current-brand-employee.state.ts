@@ -1,7 +1,6 @@
 import {
   BrandEmployee,
   BrandEmployeePermissions,
-  PaginationList,
 } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
@@ -10,10 +9,8 @@ import { useCallback, useMemo } from 'react';
 
 type CurrentBrandEmployeeState = {
   currentEmployee?: BrandEmployee;
-  currentList?: PaginationList<BrandEmployee>;
   clear: () => void;
   setCurrentEmployee: (brandEmployee?: BrandEmployee) => void;
-  setCurrentList: (employees?: PaginationList<BrandEmployee>) => void;
 };
 
 export const useCurrentBrandEmployeeState = create<CurrentBrandEmployeeState>()(
@@ -23,11 +20,9 @@ export const useCurrentBrandEmployeeState = create<CurrentBrandEmployeeState>()(
         clear: () => {
           set({
             currentEmployee: undefined,
-            currentList: undefined,
           });
         },
         setCurrentEmployee: (currentEmployee) => set({ currentEmployee }),
-        setCurrentList: (currentList) => set({ currentList }),
       }),
       {
         name: 'symbiot-current-brand-employee',

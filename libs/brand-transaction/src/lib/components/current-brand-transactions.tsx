@@ -1,4 +1,3 @@
-import { useCurrentBrandTransactionState } from '@symbiot-core-apps/state';
 import { useCurrentBrandTransactionListQuery } from '@symbiot-core-apps/api';
 import { BrandTransactionsList } from './brand-transactions-list';
 
@@ -7,8 +6,6 @@ export const CurrentBrandTransactions = ({
 }: {
   offsetTop?: number;
 }) => {
-  const { currentList, setCurrentList } = useCurrentBrandTransactionState();
-
   const {
     items: transactions,
     isFetchingNextPage,
@@ -17,10 +14,7 @@ export const CurrentBrandTransactions = ({
     error,
     onRefresh,
     onEndReached,
-  } = useCurrentBrandTransactionListQuery({
-    initialState: currentList,
-    setInitialState: setCurrentList,
-  });
+  } = useCurrentBrandTransactionListQuery();
 
   return (
     <BrandTransactionsList

@@ -44,15 +44,14 @@ const refetchQueriesByClientChanges = async (
     },
   });
 
-export const useCurrentBrandClientListQuery = (props?: {
-  initialState?: PaginationList<BrandClient>;
-  setInitialState?: (state: PaginationList<BrandClient>) => void;
+export const useBrandClientCurrentListQuery = (props?: {
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandClient>({
+    ...props,
     apUrl: '/api/brand-client',
     queryKey: [BrandClientQueryKey.currentList, props?.params],
-    ...props,
+    storeInitialData: true,
   });
 
 export const useBrandClientGendersQuery = () =>

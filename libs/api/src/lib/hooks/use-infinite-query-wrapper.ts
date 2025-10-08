@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { PaginationList, PaginationListParams } from '../types/pagination';
 import { queryClient } from '../utils/client';
 import { requestWithStringError } from '../utils/request';
+import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
 
 function getNextPageParam<T>(page: PaginationList<T>) {
   return page.items.length < page.count
@@ -12,20 +13,33 @@ function getNextPageParam<T>(page: PaginationList<T>) {
     : undefined;
 }
 
+const storeKeyPrefix = 'initial-infinite-query-data';
+
+const getStoreQueryKey = (queryKey: unknown[]) => {
+  return `${storeKeyPrefix}-${queryKey.map(String).join('/')}`;
+};
+
+export const clearInitialInfiniteQueryData = () => {
+  mmkvGlobalStorage
+    .getAllKeys()
+    .filter((key) => key.indexOf(storeKeyPrefix) === 0)
+    .forEach((key) => {
+      mmkvGlobalStorage.delete(key)
+    });
+};
+
 export function useInfiniteQueryWrapper<T>({
   apUrl,
   queryKey,
   params,
   refetchOnMount = false,
-  initialState,
-  setInitialState,
+  storeInitialData,
 }: {
   apUrl: string;
   queryKey: unknown[];
   refetchOnMount?: boolean;
-  params?: PaginationListParams;
-  initialState?: PaginationList<T>;
-  setInitialState?: (state: PaginationList<T>) => void;
+  storeInitialData?: boolean;
+  params?: PaginationListParams & Record<string, unknown>;
 }) {
   const query = useInfiniteQuery<
     PaginationList<T>,
@@ -53,13 +67,23 @@ export function useInfiniteQueryWrapper<T>({
       ),
   });
 
-  const items = useMemo(
-    () =>
-      query.data?.pages?.length
-        ? query.data.pages.flatMap((page) => page.items)
-        : initialState?.items,
-    [initialState?.items, query.data?.pages],
-  );
+  const items = useMemo(() => {
+    if (query.data?.pages?.length) {
+      return query.data.pages.flatMap((page) => page.items);
+    }
+
+    const storedDate = mmkvGlobalStorage.getString(getStoreQueryKey(queryKey));
+
+    if (storedDate) {
+      try {
+        return JSON.parse(storedDate)['items'] as T[];
+      } catch {
+        return undefined;
+      }
+    } else {
+      return undefined;
+    }
+  }, [query.data?.pages, queryKey]);
 
   const onRefresh = useCallback(() => {
     queryClient.setQueryData<InfiniteData<PaginationList<T>>>(
@@ -81,10 +105,13 @@ export function useInfiniteQueryWrapper<T>({
   );
 
   useEffect(() => {
-    if (setInitialState && query.data?.pages?.length) {
-      setInitialState(query.data.pages[0]);
+    if (storeInitialData && query.data?.pages?.length) {
+      mmkvGlobalStorage.set(
+        getStoreQueryKey(queryKey),
+        JSON.stringify(query.data.pages[0]),
+      );
     }
-  }, [query.data?.pages, setInitialState]);
+  }, [query.data?.pages, queryKey, storeInitialData]);
 
   return {
     ...query,

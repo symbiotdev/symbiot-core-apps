@@ -9,10 +9,7 @@ import {
   SemiBoldText,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
-import {
-  useCurrentAccountState,
-  useNotificationsState,
-} from '@symbiot-core-apps/state';
+import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { useCallback, useEffect } from 'react';
 import {
   Notification,
@@ -31,10 +28,6 @@ export const Notifications = ({
   const headerHeight = useScreenHeaderHeight();
   const { mutateAsync: readAll } = useNotificationsReadQuery();
   const {
-    notifications: initialNotificationsState,
-    setNotifications: setInitialNotificationsState,
-  } = useNotificationsState();
-  const {
     items: notifications,
     isFetchingNextPage,
     isRefetching,
@@ -42,10 +35,7 @@ export const Notifications = ({
     error,
     onRefresh,
     onEndReached,
-  } = useNotificationsListQuery({
-    initialState: initialNotificationsState,
-    setInitialState: setInitialNotificationsState,
-  });
+  } = useNotificationsListQuery();
 
   const markAllNotificationsAsRead = useCallback(async () => {
     await readAll();

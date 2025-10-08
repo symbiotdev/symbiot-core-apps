@@ -13,11 +13,10 @@ import {
 } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useApp } from '@symbiot-core-apps/app';
-import { useCurrentBrandTicketState } from '@symbiot-core-apps/state';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React, { useCallback, useState } from 'react';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
-import { BrandTicketItem } from '@symbiot-core-apps/brand';
+import { BrandVisitBasedMembershipItem } from '@symbiot-core-apps/brand';
 import {
   BrandTicket,
   useCurrentBrandTicketListQuery,
@@ -30,7 +29,6 @@ export const CurrentBrandTickets = ({
   offsetTop?: number;
   onTicketPress: (ticket: BrandTicket) => void;
 }) => {
-  const { currentList, setCurrentList } = useCurrentBrandTicketState();
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
 
@@ -45,8 +43,6 @@ export const CurrentBrandTickets = ({
     onRefresh,
     onEndReached,
   } = useCurrentBrandTicketListQuery({
-    initialState: currentList,
-    setInitialState: setCurrentList,
     params: {
       ...(!!search && {
         search,
@@ -81,9 +77,9 @@ export const CurrentBrandTickets = ({
           keyExtractor={(item) => item.id}
           ListEmptyComponent={ListEmptyComponent}
           renderItem={({ item }) => (
-            <BrandTicketItem
+            <BrandVisitBasedMembershipItem
               alignSelf="center"
-              ticket={item}
+              membership={item}
               onPress={() => onTicketPress(item)}
             />
           )}

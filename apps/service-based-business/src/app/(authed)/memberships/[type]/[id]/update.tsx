@@ -4,7 +4,10 @@ import {
   Icon,
   InitView,
 } from '@symbiot-core-apps/ui';
-import { useBrandMembershipDetailedByIdQuery } from '@symbiot-core-apps/api';
+import {
+  BrandMembershipType,
+  useBrandMembershipDetailedByIdQuery,
+} from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
@@ -13,7 +16,10 @@ import { UpdateBrandMembership } from '@symbiot-core-apps/brand-membership';
 export default () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, type } = useLocalSearchParams<{
+    id: string;
+    type: BrandMembershipType;
+  }>();
   const {
     data: membership,
     isPending,
@@ -26,10 +32,10 @@ export default () => {
         label: t('brand_membership.update.context_menu.remove.label'),
         icon: <Icon name="TrashBinMinimalistic" />,
         color: '$error',
-        onPress: () => router.push(`/memberships/${id}/remove`),
+        onPress: () => router.push(`/memberships/${type}/${id}/remove`),
       } as ContextMenuItem,
     ],
-    [id, t],
+    [id, type, t],
   );
 
   const headerRight = useCallback(

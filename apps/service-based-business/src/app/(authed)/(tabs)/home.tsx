@@ -24,6 +24,7 @@ import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
 import { emitHaptic } from '@symbiot-core-apps/shared';
+import { BrandMembershipType } from '@symbiot-core-apps/api';
 
 export default () => {
   const { me, stats } = useCurrentAccountState();
@@ -101,8 +102,14 @@ const BrandHome = () => {
   const onEmployeesPress = useCallback(() => router.push('/employees'), []);
   const onClientsPress = useCallback(() => router.push('/clients'), []);
   const onServicesPress = useCallback(() => router.push('/services'), []);
-  const onMembershipsPress = useCallback(() => router.push('/memberships'), []);
-  const onTicketsPress = useCallback(() => router.push('/tickets'), []);
+  const onPeriodBasedMembershipsPress = useCallback(
+    () => router.push(`/memberships/${BrandMembershipType.period}`),
+    [],
+  );
+  const onVisitBasedMembershipsPress = useCallback(
+    () => router.push(`/memberships/${BrandMembershipType.visits}`),
+    [],
+  );
   const onTransactionPress = useCallback(
     () => router.push('/transactions'),
     [],
@@ -145,16 +152,16 @@ const BrandHome = () => {
             {hasPermission('membershipsAll') && (
               <ListItem
                 label={t('brand_membership.title')}
-                icon={<Icon name={icons.Membership} />}
-                onPress={onMembershipsPress}
+                icon={<Icon name={icons.PeriodBasedMembership} />}
+                onPress={onPeriodBasedMembershipsPress}
               />
             )}
 
             {hasPermission('ticketsAll') && (
               <ListItem
                 label={t('brand_ticket.title')}
-                icon={<Icon name={icons.Ticket} />}
-                onPress={onTicketsPress}
+                icon={<Icon name={icons.VisitBasedMembership} />}
+                onPress={onVisitBasedMembershipsPress}
               />
             )}
 

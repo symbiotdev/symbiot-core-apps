@@ -30,7 +30,6 @@
         "libs/brand-membership/src/index.ts"
       ],
       "@symbiot-core-apps/brand-service": ["libs/brand-service/src/index.ts"],
-      "@symbiot-core-apps/brand-ticket": ["libs/brand-ticket/src/index.ts"],
       "@symbiot-core-apps/brand-transaction": [
         "libs/brand-transaction/src/index.ts"
       ],

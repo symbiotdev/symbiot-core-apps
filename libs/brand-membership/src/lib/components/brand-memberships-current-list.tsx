@@ -16,23 +16,25 @@ import React, {
   useState,
 } from 'react';
 import {
-  BrandMembership,
+  AnyBrandMembership,
   InfiniteQuery,
   PaginationListParams,
 } from '@symbiot-core-apps/api';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 
-export function BrandMembershipsCurrentList<T extends BrandMembership>({
+export const BrandMembershipsCurrentList = ({
   offsetTop,
   query,
   renderItem,
   Intro,
 }: {
   offsetTop?: number;
-  query: (props?: { params?: PaginationListParams }) => InfiniteQuery<T>;
-  renderItem: (props: { item: T }) => ReactElement;
+  query: (props?: {
+    params?: PaginationListParams;
+  }) => InfiniteQuery<AnyBrandMembership>;
+  renderItem: (props: { item: AnyBrandMembership }) => ReactElement;
   Intro: ComponentType<{ loading?: boolean; error?: string | null }>;
-}) {
+}) => {
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
 
@@ -114,4 +116,4 @@ export function BrandMembershipsCurrentList<T extends BrandMembership>({
       </KeyboardStickyView>
     </>
   );
-}
+};

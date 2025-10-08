@@ -1,6 +1,6 @@
 import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
 import {
-  BrandPeriodBasedMembership,
+  BrandMembershipType,
   useBrandMembershipProfileByIdQuery,
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
@@ -8,17 +8,20 @@ import React, { useLayoutEffect } from 'react';
 import { XStack } from 'tamagui';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandMembershipProfile } from '@symbiot-core-apps/brand-membership';
-import { BrandPeriodBasedMembershipItem } from '@symbiot-core-apps/brand';
+import { BrandMembershipItem } from '@symbiot-core-apps/brand';
 
 export default () => {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { hasPermission } = useCurrentBrandEmployee();
+  const navigation = useNavigation();
+  const { id, type } = useLocalSearchParams<{
+    id: string;
+    type: BrandMembershipType;
+  }>();
   const {
     data: membership,
     isPending,
     error,
   } = useBrandMembershipProfileByIdQuery(id);
-  const { hasPermission } = useCurrentBrandEmployee();
-  const navigation = useNavigation();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -27,19 +30,21 @@ export default () => {
           {hasPermission('analyticsAll') && (
             <HeaderButton
               iconName="ChartSquare"
-              onPress={() => router.push(`/memberships/${id}/analytics`)}
+              onPress={() =>
+                router.push(`/memberships/${type}/${id}/analytics`)
+              }
             />
           )}
           {hasPermission('membershipsAll') && (
             <HeaderButton
               iconName="SettingsMinimalistic"
-              onPress={() => router.push(`/memberships/${id}/update`)}
+              onPress={() => router.push(`/memberships/${type}/${id}/update`)}
             />
           )}
         </XStack>
       ),
     });
-  }, [hasPermission, id, navigation]);
+  }, [hasPermission, id, type, navigation]);
 
   if (!membership || error) {
     return <InitView loading={isPending} error={error} />;
@@ -48,11 +53,7 @@ export default () => {
   return (
     <BrandMembershipProfile
       membership={membership}
-      Item={
-        <BrandPeriodBasedMembershipItem
-          membership={membership as BrandPeriodBasedMembership}
-        />
-      }
+      Item={<BrandMembershipItem alignSelf="center" membership={membership} />}
     />
   );
 };

@@ -3,15 +3,18 @@ import { useCallback } from 'react';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
 import {
   BrandMembership,
+  BrandMembershipType,
   useRemoveBrandMembershipQuery,
 } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 
 export const RemoveBrandMembership = ({
+  type,
   membership,
 }: {
   membership: BrandMembership;
+  type: BrandMembershipType
 }) => {
   const { t } = useTranslation();
   const { mutateAsync, isPending } = useRemoveBrandMembershipQuery();
@@ -25,10 +28,10 @@ export const RemoveBrandMembership = ({
           await mutateAsync({ id: membership.id });
 
           router.dismissAll();
-          router.push('/memberships');
+          router.push(`/memberships/${type}`);
         },
       }),
-    [membership.id, mutateAsync, t],
+    [membership.id, type, mutateAsync, t],
   );
 
   return (

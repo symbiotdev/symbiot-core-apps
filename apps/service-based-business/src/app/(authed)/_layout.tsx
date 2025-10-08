@@ -346,33 +346,33 @@ export default () => {
                 <Stack.Protected guard={hasPermission('membershipsAll')}>
                   <Stack.Protected guard={hasPermission('analyticsAll')}>
                     <Stack.Screen
-                      name="memberships/[id]/analytics"
+                      name="memberships/[type]/[id]/analytics"
                       options={{
                         headerTitle: t('brand_membership.analytics.title'),
                       }}
                     />
                   </Stack.Protected>
-                  <Stack.Screen name="memberships/[id]/remove" />
+                  <Stack.Screen name="memberships/[type]/[id]/remove" />
                   <Stack.Screen
-                    name="memberships/[id]/update"
+                    name="memberships/[type]/[id]/update"
                     options={{
                       headerTitle: t('brand_membership.update.title'),
                     }}
                   />
                   <Stack.Screen
-                    name="memberships/[id]/profile"
+                    name="memberships/[type]/[id]/profile"
                     options={{
                       headerTitle: t('brand_membership.profile.title'),
                     }}
                   />
                   <Stack.Screen
-                    name="memberships/create"
+                    name="memberships/[type]/create"
                     options={{
                       headerTitle: t('brand_membership.create.new_membership'),
                     }}
                   />
                   <Stack.Screen
-                    name="memberships/index"
+                    name="memberships/[type]/index"
                     options={{
                       ...(drawerVisible && {
                         animation: 'none',
@@ -441,48 +441,7 @@ export default () => {
                   />
                 </Stack.Protected>
 
-                {/*TICKETS*/}
-
-                <Stack.Protected guard={hasPermission('ticketsAll')}>
-                  <Stack.Protected guard={hasPermission('analyticsAll')}>
-                    <Stack.Screen
-                      name="tickets/[id]/analytics"
-                      options={{
-                        headerTitle: t('brand_ticket.analytics.title'),
-                      }}
-                    />
-                  </Stack.Protected>
-                  <Stack.Screen name="tickets/[id]/remove" />
-                  <Stack.Screen
-                    name="tickets/[id]/update"
-                    options={{
-                      headerTitle: t('brand_ticket.update.title'),
-                    }}
-                  />
-                  <Stack.Screen
-                    name="tickets/[id]/profile"
-                    options={{
-                      headerTitle: t('brand_ticket.profile.title'),
-                    }}
-                  />
-                  <Stack.Screen
-                    name="tickets/create"
-                    options={{
-                      headerTitle: t('brand_ticket.create.new_ticket'),
-                    }}
-                  />
-                  <Stack.Screen
-                    name="tickets/index"
-                    options={{
-                      ...(drawerVisible && {
-                        animation: 'none',
-                      }),
-                      headerTitle: t('brand_ticket.title'),
-                    }}
-                  />
-                </Stack.Protected>
-
-                {/*TICKETS*/}
+                {/*TRANSACTIONS*/}
 
                 <Stack.Protected guard={hasPermission('financesAll')}>
                   <Stack.Screen

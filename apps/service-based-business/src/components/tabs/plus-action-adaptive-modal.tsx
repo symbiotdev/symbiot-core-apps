@@ -12,6 +12,7 @@ import { router } from 'expo-router';
 import { View } from 'tamagui';
 import { Placement } from '@floating-ui/react-native';
 import { useApp } from '@symbiot-core-apps/app';
+import { BrandMembershipType } from '@symbiot-core-apps/api';
 
 export const PlusActionAdaptiveModal = ({
   trigger,
@@ -50,14 +51,14 @@ export const PlusActionAdaptiveModal = ({
     router.push('/services/create');
   }, []);
 
-  const addMembership = useCallback(() => {
+  const addPeriodBasedMembership = useCallback(() => {
     popoverRef.current?.close();
-    router.push('/memberships/create');
+    router.push(`/memberships/${BrandMembershipType.period}/create`);
   }, []);
 
-  const addTicket = useCallback(() => {
+  const addVisitBasedMembership = useCallback(() => {
     popoverRef.current?.close();
-    router.push('/tickets/create');
+    router.push(`/memberships/${BrandMembershipType.visits}/create`);
   }, []);
 
   return (
@@ -114,17 +115,17 @@ export const PlusActionAdaptiveModal = ({
 
               {hasPermission('membershipsAll') && (
                 <ListItem
-                  icon={<Icon name={icons.Membership} />}
+                  icon={<Icon name={icons.PeriodBasedMembership} />}
                   label={t('navigation.tabs.plus.actions.add_membership.label')}
-                  onPress={addMembership}
+                  onPress={addPeriodBasedMembership}
                 />
               )}
 
               {hasPermission('ticketsAll') && (
                 <ListItem
-                  icon={<Icon name={icons.Ticket} />}
+                  icon={<Icon name={icons.VisitBasedMembership} />}
                   label={t('navigation.tabs.plus.actions.add_ticket.label')}
-                  onPress={addTicket}
+                  onPress={addVisitBasedMembership}
                 />
               )}
             </>

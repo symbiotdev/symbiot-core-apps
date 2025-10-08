@@ -40,8 +40,8 @@ export type AppConfigIconName =
   | 'Workspace'
   | 'Service'
   | 'Package'
-  | 'Membership'
-  | 'Ticket'
+  | 'PeriodBasedMembership'
+  | 'VisitBasedMembership'
   | 'More';
 
 export type AppConfigFunctionality = {

@@ -147,7 +147,7 @@ export const CreateBrandMembership = ({
 
     createdRef.current = true;
 
-    router.replace(`/memberships/${membership.id}/profile`);
+    router.replace(`/memberships/${type}/${membership.id}/profile`);
   }, [
     aboutGetValues,
     locationGetValues,

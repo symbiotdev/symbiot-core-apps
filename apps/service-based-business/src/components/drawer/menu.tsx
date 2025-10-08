@@ -29,6 +29,7 @@ import {
 } from '@symbiot-core-apps/state';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
+import { BrandMembershipType } from '@symbiot-core-apps/api';
 
 export const drawerMenuMaxWidth = 250;
 export const drawerMenuMinWidth = 68;
@@ -260,19 +261,17 @@ export const DrawerMenu = () => {
 
         {hasPermission('membershipsAll') && (
           <MenuItem
-            route="/memberships"
+            route={`/memberships/${BrandMembershipType.period}`}
             label={t('navigation.drawer.memberships.label')}
-            icon={icons.Membership}
-            additionalRoutes={['/memberships']}
+            icon={icons.PeriodBasedMembership}
           />
         )}
 
         {hasPermission('ticketsAll') && (
           <MenuItem
-            route="/tickets"
+            route={`/memberships/${BrandMembershipType.visits}`}
             label={t('navigation.drawer.tickets.label')}
-            icon={icons.Ticket}
-            additionalRoutes={['/tickets']}
+            icon={icons.VisitBasedMembership}
           />
         )}
 

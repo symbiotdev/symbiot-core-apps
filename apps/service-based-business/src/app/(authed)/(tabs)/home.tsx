@@ -24,7 +24,10 @@ import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
 import { emitHaptic } from '@symbiot-core-apps/shared';
-import { BrandMembershipType } from '@symbiot-core-apps/api';
+import {
+  BrandMembershipType,
+  getTranslateKeyByBrandMembershipType,
+} from '@symbiot-core-apps/api';
 
 export default () => {
   const { me, stats } = useCurrentAccountState();
@@ -151,7 +154,9 @@ const BrandHome = () => {
 
             {hasPermission('membershipsAll') && (
               <ListItem
-                label={t('brand_membership.title')}
+                label={t(
+                  `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.title`,
+                )}
                 icon={<Icon name={icons.PeriodBasedMembership} />}
                 onPress={onPeriodBasedMembershipsPress}
               />
@@ -159,7 +164,9 @@ const BrandHome = () => {
 
             {hasPermission('ticketsAll') && (
               <ListItem
-                label={t('brand_ticket.title')}
+                label={t(
+                  `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.title`,
+                )}
                 icon={<Icon name={icons.VisitBasedMembership} />}
                 onPress={onVisitBasedMembershipsPress}
               />

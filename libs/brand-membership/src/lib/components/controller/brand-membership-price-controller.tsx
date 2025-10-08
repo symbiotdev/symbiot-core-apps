@@ -1,9 +1,14 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { PriceController } from '@symbiot-core-apps/form-controller';
-import { Currency } from '@symbiot-core-apps/api';
+import {
+  BrandMembershipType,
+  Currency,
+  getTranslateKeyByBrandMembershipType,
+} from '@symbiot-core-apps/api';
 
 export function BrandMembershipPriceController<T extends FieldValues>(props: {
+  type?: BrandMembershipType;
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
@@ -13,16 +18,17 @@ export function BrandMembershipPriceController<T extends FieldValues>(props: {
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
+  const tPrefix = getTranslateKeyByBrandMembershipType(props.type);
 
   return (
     <PriceController
       {...props}
-      label={!props.noLabel ? t('brand_membership.form.price.label') : ''}
-      placeholder={t('brand_membership.form.price.placeholder')}
+      label={!props.noLabel ? t(`${tPrefix}.form.price.label`) : ''}
+      placeholder={t(`${tPrefix}.form.price.placeholder`)}
       rules={{
         required: {
           value: Boolean(props.required),
-          message: t('brand_membership.form.price.error.required'),
+          message: t(`${tPrefix}.form.price.error.required`),
         },
       }}
     />

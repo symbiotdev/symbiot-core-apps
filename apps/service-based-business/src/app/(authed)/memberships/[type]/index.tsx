@@ -11,6 +11,7 @@ import {
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import {
   BrandMembershipType,
+  getTranslateKeyByBrandMembershipType,
   useBrandPeriodBasedMembershipCurrentListQuery,
   useBrandVisitBasedMembershipCurrentListQuery,
 } from '@symbiot-core-apps/api';
@@ -19,6 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { useApp } from '@symbiot-core-apps/app';
 
 export default () => {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const headerHeight = useScreenHeaderHeight();
   const { type } = useLocalSearchParams<{
@@ -27,6 +29,7 @@ export default () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      headerTitle: t(`${getTranslateKeyByBrandMembershipType(type)}.title`),
       headerRight: () => (
         <HeaderButton
           iconName="AddCircle"
@@ -34,10 +37,11 @@ export default () => {
         />
       ),
     });
-  }, [type, navigation]);
+  }, [type, navigation, t]);
 
   return (
     <BrandMembershipsCurrentList
+      type={type}
       offsetTop={headerHeight}
       query={
         type === BrandMembershipType.period
@@ -69,10 +73,7 @@ const Intro = ({
     type: BrandMembershipType;
   }>();
 
-  const tPrefix =
-    type === BrandMembershipType.period
-      ? 'brand_period_based_membership.create.intro'
-      : 'brand_visit_based_membership.create.intro';
+  const tPrefix = `${getTranslateKeyByBrandMembershipType(type)}.create.intro`;
 
   if (loading || error) {
     return <InitView loading={loading} error={error} />;

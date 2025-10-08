@@ -2,8 +2,13 @@ import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 import { useMemo } from 'react';
+import {
+  BrandMembershipType,
+  getTranslateKeyByBrandMembershipType,
+} from '@symbiot-core-apps/api';
 
 export function BrandMembershipVisitsController<T extends FieldValues>(props: {
+  type?: BrandMembershipType;
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
@@ -12,6 +17,7 @@ export function BrandMembershipVisitsController<T extends FieldValues>(props: {
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
+  const tPrefix = getTranslateKeyByBrandMembershipType(props.type);
 
   const options = useMemo(
     () =>
@@ -28,13 +34,13 @@ export function BrandMembershipVisitsController<T extends FieldValues>(props: {
 
   return (
     <SelectController
-      label={!props.noLabel ? t('brand_membership.form.visits.label') : ''}
-      placeholder={t('brand_membership.form.visits.placeholder')}
+      label={!props.noLabel ? t(`${tPrefix}.form.visits.label`) : ''}
+      placeholder={t(`${tPrefix}.form.visits.placeholder`)}
       options={options}
       rules={{
         required: {
           value: true,
-          message: t('brand_membership.form.visits.error.required'),
+          message: t(`${tPrefix}.form.visits.error.required`),
         },
       }}
       {...props}

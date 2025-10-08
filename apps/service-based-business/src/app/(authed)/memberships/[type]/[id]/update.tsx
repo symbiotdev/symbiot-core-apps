@@ -6,6 +6,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import {
   BrandMembershipType,
+  getTranslateKeyByBrandMembershipType,
   useBrandMembershipDetailedByIdQuery,
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
@@ -25,17 +26,18 @@ export default () => {
     isPending,
     error,
   } = useBrandMembershipDetailedByIdQuery(id);
+  const tPrefix = getTranslateKeyByBrandMembershipType(type);
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [
       {
-        label: t('brand_membership.update.context_menu.remove.label'),
+        label: t(`${tPrefix}.update.context_menu.remove.label`),
         icon: <Icon name="TrashBinMinimalistic" />,
         color: '$error',
         onPress: () => router.push(`/memberships/${type}/${id}/remove`),
       } as ContextMenuItem,
     ],
-    [id, type, t],
+    [id, type, t, tPrefix],
   );
 
   const headerRight = useCallback(
@@ -46,8 +48,9 @@ export default () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight,
+      headerTitle: t(`${tPrefix}.update.title`),
     });
-  }, [headerRight, navigation]);
+  }, [headerRight, navigation, tPrefix, t]);
 
   if (!membership || error) {
     return <InitView loading={isPending} error={error} />;

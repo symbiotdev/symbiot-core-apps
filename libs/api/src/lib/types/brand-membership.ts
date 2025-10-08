@@ -19,6 +19,7 @@ export type BrandMembership = {
   note: string;
   price: number;
   discount: number;
+  type: BrandMembershipType;
   hidden: boolean;
   currency: Currency;
   locations: BrandLocation[];

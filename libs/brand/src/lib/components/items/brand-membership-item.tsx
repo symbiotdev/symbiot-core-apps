@@ -1,7 +1,9 @@
 import {
   AnyBrandMembership,
   BrandMembershipPeriod,
+  BrandMembershipType,
   Currency,
+  getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
 import {
   DateHelper,
@@ -123,7 +125,7 @@ export const BrandPeriodBasedMembershipItemView = ({
         {!!period && <Chip label={period?.label} size="small" />}
         {!!endAt && (
           <Chip
-            label={t('brand_membership.expires_in', {
+            label={t('shared.expires_in', {
               value: DateHelper.formatDuration(
                 DateHelper.differenceInMinutes(endAt, now),
                 {
@@ -171,7 +173,7 @@ export const BrandPeriodBasedMembershipItemView = ({
         </XStack>
       ) : (
         <View alignSelf="flex-end">
-          <RegularText color="white">{t('brand_membership.free')}</RegularText>
+          <RegularText color="white">{t('shared.free')}</RegularText>
         </View>
       )}
     </View>
@@ -282,9 +284,12 @@ export const BrandVisitBasedMembershipItemView = ({
         height={50}
       >
         <RegularText textAlign="center">
-          {t('brand_ticket.count_visits', {
-            count: visits,
-          })}
+          {t(
+            `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.count_visits`,
+            {
+              count: visits,
+            },
+          )}
         </RegularText>
       </View>
     </View>

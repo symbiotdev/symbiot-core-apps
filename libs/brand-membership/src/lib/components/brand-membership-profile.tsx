@@ -1,4 +1,7 @@
-import { BrandMembership } from '@symbiot-core-apps/api';
+import {
+  BrandMembership,
+  getTranslateKeyByBrandMembership,
+} from '@symbiot-core-apps/api';
 import {
   FormView,
   ListItemGroup,
@@ -26,6 +29,7 @@ export const BrandMembershipProfile = ({
   const { t } = useTranslation();
   const anyService = useAnyBrandService();
   const allLocations = useAllBrandLocation();
+  const tPrefix = getTranslateKeyByBrandMembership(membership);
   const { brand } = useCurrentBrandState();
 
   return (
@@ -36,7 +40,7 @@ export const BrandMembershipProfile = ({
         {!!membership.description && (
           <ListItemGroup
             paddingVertical="$4"
-            title={t('brand_membership.profile.description')}
+            title={t(`${tPrefix}.profile.description`)}
           >
             <RegularText>{membership.description}</RegularText>
           </ListItemGroup>
@@ -45,7 +49,7 @@ export const BrandMembershipProfile = ({
         <ListItemGroup
           gap="$4"
           paddingVertical="$4"
-          title={t('brand_membership.profile.services')}
+          title={t(`${tPrefix}.profile.services`)}
         >
           {membership.services?.length ? (
             membership.services.map((service, index) => (
@@ -66,7 +70,7 @@ export const BrandMembershipProfile = ({
 
         <ListItemGroup
           paddingVertical="$4"
-          title={t('brand_membership.profile.location')}
+          title={t(`${tPrefix}.profile.location`)}
           disabled={!membership.locations}
         >
           {membership.locations?.length ? (

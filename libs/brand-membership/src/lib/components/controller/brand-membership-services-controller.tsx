@@ -2,13 +2,16 @@ import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ToggleController } from '@symbiot-core-apps/form-controller';
 import {
+  BrandMembershipType,
   BrandService,
+  getTranslateKeyByBrandMembershipType,
   useServicesListByLocationQuery,
   useServicesQuery,
 } from '@symbiot-core-apps/api';
 import { useMemo } from 'react';
 
 type ControllerProps<T extends FieldValues> = {
+  type?: BrandMembershipType;
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
@@ -76,6 +79,7 @@ function ServicesController<T extends FieldValues>(
   },
 ) {
   const { t } = useTranslation();
+  const tPrefix = getTranslateKeyByBrandMembershipType(props.type);
 
   const items = useMemo(
     () =>
@@ -90,10 +94,10 @@ function ServicesController<T extends FieldValues>(
   return (
     <ToggleController
       {...props}
-      label={!props.noLabel ? t('brand_membership.form.services.label') : ''}
+      label={!props.noLabel ? t(`${tPrefix}.form.services.label`) : ''}
       items={items}
       errors={{
-        required: t('brand_membership.form.services.error.required'),
+        required: t(`${tPrefix}.form.services.error.required`),
       }}
     />
   );

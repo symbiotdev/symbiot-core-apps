@@ -1,6 +1,7 @@
 import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
 import {
   BrandMembershipType,
+  getTranslateKeyByBrandMembershipType,
   useBrandMembershipProfileByIdQuery,
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
@@ -9,8 +10,10 @@ import { XStack } from 'tamagui';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandMembershipProfile } from '@symbiot-core-apps/brand-membership';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
+import { useTranslation } from 'react-i18next';
 
 export default () => {
+  const { t } = useTranslation();
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
   const { id, type } = useLocalSearchParams<{
@@ -25,6 +28,7 @@ export default () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      headerTitle: t(`${getTranslateKeyByBrandMembershipType(type)}.profile.title`),
       headerRight: () => (
         <XStack gap="$3">
           {hasPermission('analyticsAll') && (
@@ -44,7 +48,7 @@ export default () => {
         </XStack>
       ),
     });
-  }, [hasPermission, id, type, navigation]);
+  }, [hasPermission, id, type, navigation, t]);
 
   if (!membership || error) {
     return <InitView loading={isPending} error={error} />;

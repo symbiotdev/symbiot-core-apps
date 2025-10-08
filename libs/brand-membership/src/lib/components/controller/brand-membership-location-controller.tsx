@@ -1,6 +1,10 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useCurrentBrandLocationsQuery } from '@symbiot-core-apps/api';
+import {
+  BrandMembershipType,
+  getTranslateKeyByBrandMembershipType,
+  useCurrentBrandLocationsQuery,
+} from '@symbiot-core-apps/api';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 import { useMemo } from 'react';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
@@ -8,6 +12,7 @@ import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 export function BrandMembershipLocationController<
   T extends FieldValues,
 >(props: {
+  type?: BrandMembershipType;
   name: Path<T>;
   control: Control<T>;
   disabled?: boolean;
@@ -17,6 +22,7 @@ export function BrandMembershipLocationController<
   const { t } = useTranslation();
   const { data, isPending, error } = useCurrentBrandLocationsQuery();
   const allLocations = useAllBrandLocation();
+  const tPrefix = getTranslateKeyByBrandMembershipType(props.type);
 
   const options = useMemo(
     () =>
@@ -35,8 +41,8 @@ export function BrandMembershipLocationController<
     <SelectController
       {...props}
       disabled={!data?.items?.length}
-      label={!props.noLabel ? t('brand_membership.form.location.label') : ''}
-      placeholder={t('brand_membership.form.location.placeholder')}
+      label={!props.noLabel ? t(`${tPrefix}.form.location.label`) : ''}
+      placeholder={t(`${tPrefix}.form.location.placeholder`)}
       options={options}
       optionsLoading={isPending}
       optionsError={error}

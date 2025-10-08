@@ -17,6 +17,8 @@ import React, {
 } from 'react';
 import {
   AnyBrandMembership,
+  BrandMembershipType,
+  getTranslateKeyByBrandMembershipType,
   InfiniteQuery,
   PaginationListParams,
 } from '@symbiot-core-apps/api';
@@ -24,11 +26,13 @@ import { KeyboardStickyView } from 'react-native-keyboard-controller';
 
 export const BrandMembershipsCurrentList = ({
   offsetTop,
+  type,
   query,
   renderItem,
   Intro,
 }: {
   offsetTop?: number;
+  type: BrandMembershipType;
   query: (props?: {
     params?: PaginationListParams;
   }) => InfiniteQuery<AnyBrandMembership>;
@@ -37,6 +41,7 @@ export const BrandMembershipsCurrentList = ({
 }) => {
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
+  const tPrefix = getTranslateKeyByBrandMembershipType(type);
 
   const [search, setSearch] = useState('');
 
@@ -109,7 +114,7 @@ export const BrandMembershipsCurrentList = ({
         <Search
           value={search}
           debounce={300}
-          placeholder={t('brand_membership.search.placeholder')}
+          placeholder={t(`${tPrefix}.search.placeholder`)}
           inputFieldProps={{ backgroundColor: '$background' }}
           onChange={setSearch}
         />

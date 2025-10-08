@@ -1,9 +1,12 @@
 import {
   AnyBrandMembership,
   BrandMembership,
+  BrandMembershipType,
   BrandPeriodBasedMembership,
   BrandVisitBasedMembership,
   Currency,
+  getBrandMembershipType,
+  getTranslateKeyByBrandMembership,
   UpdateBrandMembership as TUpdateBrandMembership,
   useModalUpdateByIdForm,
   useUpdateBrandMembershipQuery,
@@ -65,20 +68,24 @@ export const UpdateBrandMembership = ({
 };
 
 const LoadingForm = SingeElementForm<{
+  type: BrandMembershipType;
   disabled: boolean;
   loading: boolean;
 }>;
 
 const PriceForm = SingeElementForm<{
+  type: BrandMembershipType;
   currency?: Currency;
 }>;
 
 const DiscountForm = SingeElementForm<{
+  type: BrandMembershipType;
   currency?: Currency;
   max: number;
 }>;
 
 const ServicesForm = SingeElementForm<{
+  type: BrandMembershipType;
   location: string | null;
 }>;
 
@@ -102,6 +109,7 @@ const Availability = ({ membership }: { membership: BrandMembership }) => {
         name="hidden"
         value={!membership.hidden}
         controllerProps={{
+          type: getBrandMembershipType(membership),
           disabled: isPending,
           loading: isPending,
         }}
@@ -131,6 +139,9 @@ const Period = ({ membership }: { membership: BrandPeriodBasedMembership }) => {
     <SingeElementForm
       name="period"
       value={value.period}
+      controllerProps={{
+        type: getBrandMembershipType(membership),
+      }}
       onUpdate={updateValue}
       Controller={BrandMembershipPeriodController}
     />
@@ -156,6 +167,9 @@ const Visits = ({ membership }: { membership: BrandVisitBasedMembership }) => {
     <SingeElementForm
       name="visits"
       value={value.visits}
+      controllerProps={{
+        type: getBrandMembershipType(membership),
+      }}
       onUpdate={updateValue}
       Controller={BrandMembershipVisitsController}
     />
@@ -165,6 +179,8 @@ const Visits = ({ membership }: { membership: BrandVisitBasedMembership }) => {
 const Pricing = ({ membership }: { membership: BrandMembership }) => {
   const { brand } = useCurrentBrandState();
   const { t } = useTranslation();
+  const type = getBrandMembershipType(membership);
+  const tPrefix = getTranslateKeyByBrandMembership(membership);
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandMembership,
@@ -193,16 +209,16 @@ const Pricing = ({ membership }: { membership: BrandMembership }) => {
       <ListItem
         icon={<Icon name="MoneyBag" />}
         iconAfter={<Icon name="ArrowRight" />}
-        label={t('brand_membership.update.groups.pricing.title')}
+        label={t(`${tPrefix}.update.groups.pricing.title`)}
         text={[
           value.price
             ? formatPrice({
                 price: membership.price,
                 symbol: membership.currency?.symbol,
               })
-            : t('brand_membership.free'),
+            : t('shared.free'),
           value.discount
-            ? `${t('brand_membership.form.discount.label')} ${formatDiscount({
+            ? `${t(`${tPrefix}.form.discount.label`)} ${formatDiscount({
                 discount: membership.discount,
                 symbol: membership.currency?.symbol,
               })}`
@@ -215,7 +231,7 @@ const Pricing = ({ membership }: { membership: BrandMembership }) => {
 
       <SlideSheetModal
         scrollable
-        headerTitle={t('brand_membership.update.groups.pricing.title')}
+        headerTitle={t(`${tPrefix}.update.groups.pricing.title`)}
         visible={modalVisible}
         onClose={closeModal}
       >
@@ -224,6 +240,9 @@ const Pricing = ({ membership }: { membership: BrandMembership }) => {
             <SingeElementForm
               name="currency"
               value={value.currency}
+              controllerProps={{
+                type,
+              }}
               onUpdate={updateValue}
               Controller={BrandMembershipCurrencyController}
             />
@@ -233,6 +252,7 @@ const Pricing = ({ membership }: { membership: BrandMembership }) => {
             name="price"
             value={membership.price}
             controllerProps={{
+              type,
               currency: priceCurrency,
             }}
             onUpdate={updateValue}
@@ -243,6 +263,7 @@ const Pricing = ({ membership }: { membership: BrandMembership }) => {
             name="discount"
             value={membership.discount}
             controllerProps={{
+              type,
               currency: priceCurrency,
               max: value.price,
             }}
@@ -257,6 +278,8 @@ const Pricing = ({ membership }: { membership: BrandMembership }) => {
 
 const LocationServices = ({ membership }: { membership: BrandMembership }) => {
   const { t } = useTranslation();
+  const tPrefix = getTranslateKeyByBrandMembership(membership);
+  const type = getBrandMembershipType(membership);
   const allLocations = useAllBrandLocation();
   const { value, modalVisible, openModal, closeModal, updateValue, updating } =
     useModalUpdateByIdForm<
@@ -281,7 +304,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
       <ListItem
         icon={<Icon name="MapPoint" />}
         iconAfter={<Icon name="ArrowRight" />}
-        label={t('brand_membership.update.groups.location_services.title')}
+        label={t(`${tPrefix}.update.groups.location_services.title`)}
         text={
           [
             membership.locations?.map(({ name }) => name).join(', ') ||
@@ -295,9 +318,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
       />
       <SlideSheetModal
         scrollable
-        headerTitle={t(
-          'brand_membership.update.groups.location_services.title',
-        )}
+        headerTitle={t(`${tPrefix}.update.groups.location_services.title`)}
         visible={modalVisible}
         onClose={closeModal}
       >
@@ -308,6 +329,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
               value.locations?.length ? value.locations : [allLocations.value]
             }
             controllerProps={{
+              type,
               disableDrag: true,
             }}
             onUpdate={updateValue}
@@ -319,6 +341,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
               name="services"
               value={services}
               controllerProps={{
+                type,
                 location: membership.locations?.[0]?.id,
               }}
               onUpdate={({ services }: TUpdateBrandMembership) =>
@@ -340,6 +363,8 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
 
 const About = ({ membership }: { membership: BrandMembership }) => {
   const { t } = useTranslation();
+  const tPrefix = getTranslateKeyByBrandMembership(membership);
+  const type = getBrandMembershipType(membership);
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandMembership,
@@ -362,7 +387,7 @@ const About = ({ membership }: { membership: BrandMembership }) => {
       <ListItem
         icon={<Icon name="InfoCircle" />}
         iconAfter={<Icon name="ArrowRight" />}
-        label={t('brand_membership.update.groups.about.title')}
+        label={t(`${tPrefix}.update.groups.about.title`)}
         text={[value.name, value.description?.replace(/\n/gi, ' ')]
           .filter(Boolean)
           .join(' · ')}
@@ -371,7 +396,7 @@ const About = ({ membership }: { membership: BrandMembership }) => {
 
       <SlideSheetModal
         scrollable
-        headerTitle={t('brand_membership.update.groups.about.title')}
+        headerTitle={t(`${tPrefix}.update.groups.about.title`)}
         visible={modalVisible}
         onClose={closeModal}
       >
@@ -379,12 +404,18 @@ const About = ({ membership }: { membership: BrandMembership }) => {
           <SingeElementForm
             name="name"
             value={value.name}
+            controllerProps={{
+              type,
+            }}
             onUpdate={updateValue}
             Controller={BrandMembershipNameController}
           />
           <SingeElementForm
             name="description"
             value={value.description}
+            controllerProps={{
+              type,
+            }}
             onUpdate={updateValue}
             Controller={BrandMembershipDescriptionController}
           />
@@ -396,6 +427,8 @@ const About = ({ membership }: { membership: BrandMembership }) => {
 
 const Note = ({ membership }: { membership: BrandMembership }) => {
   const { t } = useTranslation();
+  const tPrefix = getTranslateKeyByBrandMembership(membership);
+
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandMembership,
@@ -416,14 +449,14 @@ const Note = ({ membership }: { membership: BrandMembership }) => {
       <ListItem
         icon={<Icon name="ChatRoundDots" />}
         iconAfter={<Icon name="ArrowRight" />}
-        label={t('brand_membership.update.groups.note.title')}
+        label={t(`${tPrefix}.update.groups.note.title`)}
         text={value.note?.replace(/\n/gi, ' ') || t('shared.not_specified')}
         onPress={openModal}
       />
 
       <SlideSheetModal
         scrollable
-        headerTitle={t('brand_membership.update.groups.note.title')}
+        headerTitle={t(`${tPrefix}.update.groups.note.title`)}
         visible={modalVisible}
         onClose={closeModal}
       >
@@ -433,6 +466,7 @@ const Note = ({ membership }: { membership: BrandMembership }) => {
             value={value.note}
             controllerProps={{
               noLabel: true,
+              type: getBrandMembershipType(membership),
             }}
             onUpdate={updateValue}
             Controller={BrandMembershipNoteController}

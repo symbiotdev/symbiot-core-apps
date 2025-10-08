@@ -3,6 +3,7 @@ import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 import {
   BrandMembershipType,
+  getTranslateKeyByBrandMembershipType,
   useCreateBrandPeriodBasedMembershipQuery,
   useCreateBrandVisitBasedMembershipQuery,
 } from '@symbiot-core-apps/api';
@@ -39,6 +40,7 @@ export const CreateBrandMembership = ({
     isPending: isVisitBasedMembershipLoading,
   } = useCreateBrandVisitBasedMembershipQuery();
   const navigation = useNavigation();
+  const tPrefix = getTranslateKeyByBrandMembershipType(type);
 
   const createdRef = useRef(false);
 
@@ -166,12 +168,12 @@ export const CreateBrandMembership = ({
       e.preventDefault();
 
       ConfirmAlert({
-        title: t('brand_membership.create.discard.title'),
-        message: t('brand_membership.create.discard.message'),
+        title: t(`${tPrefix}.create.discard.title`),
+        message: t(`${tPrefix}.create.discard.message`),
         callback: () => navigation.dispatch(e.data.action),
       });
     },
-    [t, navigation],
+    [t, navigation, tPrefix],
   );
 
   useEffect(() => {
@@ -212,28 +214,35 @@ export const CreateBrandMembership = ({
     >
       <SurveyStep
         canGoNext={aboutFormState.isValid}
-        title={t('brand_membership.create.steps.about.title')}
-        subtitle={t('brand_membership.create.steps.about.subtitle')}
+        title={t(`${tPrefix}.create.steps.about.title`)}
+        subtitle={t(`${tPrefix}.create.steps.about.subtitle`)}
       >
         <BrandMembershipAvailabilityController
           name="available"
+          type={type}
           control={aboutControl}
         />
-        <BrandMembershipNameController name="name" control={aboutControl} />
+        <BrandMembershipNameController
+          name="name"
+          type={type}
+          control={aboutControl}
+        />
         <BrandMembershipDescriptionController
           name="description"
+          type={type}
           control={aboutControl}
         />
       </SurveyStep>
 
       <SurveyStep
         canGoNext={locationFormState.isValid}
-        title={t('brand_membership.create.steps.location.title')}
-        subtitle={t('brand_membership.create.steps.location.subtitle')}
+        title={t(`${tPrefix}.create.steps.location.title`)}
+        subtitle={t(`${tPrefix}.create.steps.location.subtitle`)}
       >
         <BrandMembershipLocationController
           noLabel
           name="location"
+          type={type}
           control={locationControl}
         />
       </SurveyStep>
@@ -241,13 +250,14 @@ export const CreateBrandMembership = ({
       <SurveyStep
         skippable
         canGoNext={servicesFormState.isValid}
-        title={t('brand_membership.create.steps.services.title')}
-        subtitle={t('brand_membership.create.steps.services.subtitle')}
+        title={t(`${tPrefix}.create.steps.services.title`)}
+        subtitle={t(`${tPrefix}.create.steps.services.subtitle`)}
       >
         <BrandMembershipServicesController
           required
           noLabel
           name="services"
+          type={type}
           location={location}
           control={servicesControl}
         />
@@ -255,23 +265,26 @@ export const CreateBrandMembership = ({
 
       <SurveyStep
         canGoNext={pricingFormState.isValid && discount <= price}
-        title={t('brand_membership.create.steps.pricing.title')}
-        subtitle={t('brand_membership.create.steps.pricing.subtitle')}
+        title={t(`${tPrefix}.create.steps.pricing.title`)}
+        subtitle={t(`${tPrefix}.create.steps.pricing.subtitle`)}
       >
         {brand?.currencies && brand.currencies.length > 1 && (
           <BrandMembershipCurrencyController
             name="currency"
+            type={type}
             control={pricingControl}
           />
         )}
 
         <BrandMembershipPriceController
           name="price"
+          type={type}
           currency={priceCurrency}
           control={pricingControl}
         />
         <BrandMembershipDiscountController
           name="discount"
+          type={type}
           currency={priceCurrency}
           control={pricingControl}
         />
@@ -279,6 +292,7 @@ export const CreateBrandMembership = ({
         {type === BrandMembershipType.period && (
           <BrandMembershipPeriodController
             name="period"
+            type={type}
             control={pricingControl}
           />
         )}
@@ -286,6 +300,7 @@ export const CreateBrandMembership = ({
         {type === BrandMembershipType.visits && (
           <BrandMembershipVisitsController
             name="visits"
+            type={type}
             control={pricingControl}
           />
         )}
@@ -294,13 +309,14 @@ export const CreateBrandMembership = ({
       <SurveyStep
         skippable
         canGoNext={noteFormState.isValid}
-        title={t('brand_membership.create.steps.note.title')}
-        subtitle={t('brand_membership.create.steps.note.subtitle')}
+        title={t(`${tPrefix}.create.steps.note.title`)}
+        subtitle={t(`${tPrefix}.create.steps.note.subtitle`)}
       >
         <BrandMembershipNoteController
           noLabel
           required
           name="note"
+          type={type}
           control={noteControl}
         />
       </SurveyStep>

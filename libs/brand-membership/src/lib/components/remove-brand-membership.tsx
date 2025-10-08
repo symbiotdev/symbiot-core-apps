@@ -4,6 +4,7 @@ import { ConfirmAlert } from '@symbiot-core-apps/shared';
 import {
   BrandMembership,
   BrandMembershipType,
+  getTranslateKeyByBrandMembership,
   useRemoveBrandMembershipQuery,
 } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
@@ -14,16 +15,17 @@ export const RemoveBrandMembership = ({
   membership,
 }: {
   membership: BrandMembership;
-  type: BrandMembershipType
+  type: BrandMembershipType;
 }) => {
   const { t } = useTranslation();
   const { mutateAsync, isPending } = useRemoveBrandMembershipQuery();
+  const tPrefix = getTranslateKeyByBrandMembership(membership);
 
   const onPress = useCallback(
     () =>
       ConfirmAlert({
-        title: t('brand_membership.remove.confirm_dialog.title'),
-        message: t('brand_membership.remove.confirm_dialog.message'),
+        title: t(`${tPrefix}.remove.confirm_dialog.title`),
+        message: t(`${tPrefix}.remove.confirm_dialog.message`),
         callback: async () => {
           await mutateAsync({ id: membership.id });
 
@@ -31,18 +33,18 @@ export const RemoveBrandMembership = ({
           router.push(`/memberships/${type}`);
         },
       }),
-    [membership.id, type, mutateAsync, t],
+    [membership.id, type, mutateAsync, t, tPrefix],
   );
 
   return (
     <PageView scrollable withHeaderHeight>
       <FormView>
         <ActionCard
-          title={t('brand_membership.remove.title')}
-          subtitle={t('brand_membership.remove.subtitle', {
+          title={t(`${tPrefix}.remove.title`)}
+          subtitle={t(`${tPrefix}.remove.subtitle`, {
             name: membership.name,
           })}
-          buttonLabel={t('brand_membership.remove.button.label')}
+          buttonLabel={t(`${tPrefix}.remove.button.label`)}
           buttonIcon={<Icon name="TrashBinMinimalistic" />}
           buttonLoading={isPending}
           buttonType="danger"

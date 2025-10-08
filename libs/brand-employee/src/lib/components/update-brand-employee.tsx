@@ -581,7 +581,7 @@ const Permissions = ({ employee }: { employee: BrandEmployee }) => {
             ? t('shared.syncing')
             : data
                 ?.filter((permission) => value.permissions[permission.key])
-                ?.map((permission) => permission.title)
+                ?.map((permission) => t(permission.title))
                 .join(' · ') || t('shared.not_specified')
         }
         onPress={openModal}

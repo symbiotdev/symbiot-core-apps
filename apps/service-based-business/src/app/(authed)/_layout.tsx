@@ -202,6 +202,7 @@ export default () => {
 
                   <Stack.Protected guard={hasPermission('ticketsAll')}>
                     <Stack.Screen name="clients/[id]/tickets" />
+                  <Stack.Protected guard={hasPermission('catalogAll')}>
                   </Stack.Protected>
 
                   <Stack.Protected guard={hasPermission('financesAll')}>
@@ -343,7 +344,7 @@ export default () => {
 
                 {/*MEMBERSHIPS*/}
 
-                <Stack.Protected guard={hasPermission('membershipsAll')}>
+                <Stack.Protected guard={hasPermission('catalogAll')}>
                   <Stack.Protected guard={hasPermission('analyticsAll')}>
                     <Stack.Screen name="memberships/[type]/[id]/analytics" />
                   </Stack.Protected>
@@ -381,7 +382,7 @@ export default () => {
 
                 {/*SERVICES*/}
 
-                <Stack.Protected guard={hasPermission('servicesAll')}>
+                <Stack.Protected guard={hasPermission('catalogAll')}>
                   <Stack.Protected guard={hasPermission('analyticsAll')}>
                     <Stack.Screen
                       name="services/[id]/analytics"

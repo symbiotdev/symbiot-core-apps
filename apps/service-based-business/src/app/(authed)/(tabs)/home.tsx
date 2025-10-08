@@ -137,54 +137,38 @@ const BrandHome = () => {
           </ListItemGroup>
         )}
 
-        {hasAnyOfPermissions([
-          'servicesAll',
-          'membershipsAll',
-          'ticketsAll',
-          'giftsAll',
-        ]) && (
+        {hasPermission('catalogAll') && (
           <ListItemGroup title={t('shared.catalog')}>
-            {hasPermission('servicesAll') && (
-              <ListItem
-                label={t('brand_service.title')}
-                icon={<Icon name={icons.Service} />}
-                onPress={onServicesPress}
-              />
-            )}
-
-            {hasPermission('membershipsAll') && (
-              <ListItem
-                label={t(
-                  `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.title`,
-                )}
-                icon={<Icon name={icons.PeriodBasedMembership} />}
-                onPress={onPeriodBasedMembershipsPress}
-              />
-            )}
-
-            {hasPermission('ticketsAll') && (
-              <ListItem
-                label={t(
-                  `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.title`,
-                )}
-                icon={<Icon name={icons.VisitBasedMembership} />}
-                onPress={onVisitBasedMembershipsPress}
-              />
-            )}
-
-            {hasPermission('giftsAll') && (
-              <ListItem
-                label={t('brand_gift_card.title')}
-                icon={<Icon name="Gift" />}
-                iconAfter={
-                  <View>
-                    <RegularText color="$placeholderColor" fontSize={12}>
-                      {t('shared.coming_soon')}
-                    </RegularText>
-                  </View>
-                }
-              />
-            )}
+            <ListItem
+              label={t('brand_service.title')}
+              icon={<Icon name={icons.Service} />}
+              onPress={onServicesPress}
+            />
+            <ListItem
+              label={t(
+                `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.title`,
+              )}
+              icon={<Icon name={icons.PeriodBasedMembership} />}
+              onPress={onPeriodBasedMembershipsPress}
+            />
+            <ListItem
+              label={t(
+                `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.title`,
+              )}
+              icon={<Icon name={icons.VisitBasedMembership} />}
+              onPress={onVisitBasedMembershipsPress}
+            />
+            <ListItem
+              label={t('brand_gift_card.title')}
+              icon={<Icon name="Gift" />}
+              iconAfter={
+                <View>
+                  <RegularText color="$placeholderColor" fontSize={12}>
+                    {t('shared.coming_soon')}
+                  </RegularText>
+                </View>
+              }
+            />
           </ListItemGroup>
         )}
 

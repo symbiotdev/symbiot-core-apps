@@ -26,7 +26,7 @@ export default () => {
               onPress={() => router.push(`/services/${id}/analytics`)}
             />
           )}
-          {hasPermission('servicesAll') && (
+          {hasPermission('catalogAll') && (
             <HeaderButton
               iconName="SettingsMinimalistic"
               onPress={() => router.push(`/services/${id}/update`)}

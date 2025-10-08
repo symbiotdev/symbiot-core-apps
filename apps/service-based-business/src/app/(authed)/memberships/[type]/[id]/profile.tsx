@@ -39,7 +39,7 @@ export default () => {
               }
             />
           )}
-          {hasPermission('membershipsAll') && (
+          {hasPermission('catalogAll') && (
             <HeaderButton
               iconName="SettingsMinimalistic"
               onPress={() => router.push(`/memberships/${type}/${id}/update`)}

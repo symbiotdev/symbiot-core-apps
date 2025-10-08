@@ -1,15 +1,18 @@
 import {
   BrandClient,
-  BrandMembership,
-  BrandTicket,
+  BrandMembershipType,
+  BrandPeriodBasedMembership,
+  BrandVisitBasedMembership,
   useBrandClientAddMembershipQuery,
-  useBrandClientAddTicketQuery,
+  useBrandPeriodBasedMembershipCurrentListQuery,
+  useBrandVisitBasedMembershipCurrentListQuery,
 } from '@symbiot-core-apps/api';
 import React, { ReactElement, RefObject, useCallback } from 'react';
 import {
   AdaptivePopover,
   AdaptivePopoverRef,
   Icon,
+  InitView,
   ListItem,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
@@ -17,9 +20,9 @@ import { View } from 'tamagui';
 import { useTranslation } from 'react-i18next';
 import { useApp } from '@symbiot-core-apps/app';
 import { useModal } from '@symbiot-core-apps/shared';
-import { CurrentBrandTickets } from '@symbiot-core-apps/brand-ticket';
-import { CurrentBrandMemberships } from '@symbiot-core-apps/brand-membership';
+import { BrandMembershipsCurrentList } from '@symbiot-core-apps/brand-membership';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
+import { BrandMembershipItem } from '@symbiot-core-apps/brand';
 
 export const BrandClientTopUpBalance = ({
   client,
@@ -32,93 +35,115 @@ export const BrandClientTopUpBalance = ({
 }) => {
   const { icons } = useApp();
   const { t } = useTranslation();
-  const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
-  const {
-    visible: ticketsModalVisible,
-    open: openTicketsModal,
-    close: closeTicketsModal,
-  } = useModal({
-    onOpen: () => popoverRef.current?.close(),
-  });
+  const { hasPermission } = useCurrentBrandEmployee();
   const { mutateAsync: addMembership, isPending: isMembershipLoading } =
     useBrandClientAddMembershipQuery();
-  const { mutateAsync: addTicket, isPending: isTicketLoading } =
-    useBrandClientAddTicketQuery();
-
   const {
-    visible: membershipsModalVisible,
-    open: openMembershipsModal,
-    close: closeMembershipsModal,
+    visible: visitBasedMembershipsModalVisible,
+    open: openVisitBasedMembershipsModal,
+    close: closeVisitBasedMembershipsModal,
+  } = useModal({
+    onOpen: () => popoverRef.current?.close(),
+  });
+  const {
+    visible: periodBasedMembershipsModalVisible,
+    open: openPeriodBasedMembershipsModal,
+    close: closePeriodBasedMembershipsModal,
   } = useModal({
     onOpen: () => popoverRef.current?.close(),
   });
 
-  const onTicketPress = useCallback(
-    (ticket: BrandTicket) => {
-      void addTicket({ clientId: client.id, ticketId: ticket.id });
+  const onVisitBasedMembershipPress = useCallback(
+    (membership: BrandVisitBasedMembership) => {
+      void addMembership({
+        clientId: client.id,
+        membershipId: membership.id,
+      });
 
-      closeTicketsModal();
+      closeVisitBasedMembershipsModal();
     },
-    [addTicket, client.id, closeTicketsModal],
+    [addMembership, client.id, closeVisitBasedMembershipsModal],
   );
 
-  const onMembershipPress = useCallback(
-    (membership: BrandMembership) => {
-      void addMembership({ clientId: client.id, membershipId: membership.id });
+  const onPeriodBasedMembershipPress = useCallback(
+    (membership: BrandPeriodBasedMembership) => {
+      void addMembership({
+        clientId: client.id,
+        membershipId: membership.id,
+      });
 
-      closeMembershipsModal();
+      closePeriodBasedMembershipsModal();
     },
-    [addMembership, client.id, closeMembershipsModal],
+    [addMembership, client.id, closePeriodBasedMembershipsModal],
   );
 
   return (
     <>
       <AdaptivePopover
         placement="bottom"
-        disabled={!hasAnyOfPermissions(['membershipsAll', 'ticketsAll'])}
+        disabled={!hasPermission('catalogAll')}
         trigger={React.cloneElement(trigger, {
-          loading: isMembershipLoading || isTicketLoading,
+          loading: isMembershipLoading,
         })}
         ref={popoverRef}
         sheetTitle={t('brand_client.balance.top_up')}
       >
         <View>
-          {hasPermission('ticketsAll') && (
-            <ListItem
-              label={t('brand_client.balance.menu.add_ticket')}
-              icon={<Icon name={icons.Ticket} />}
-              onPress={openTicketsModal}
-            />
-          )}
-
-          {hasPermission('membershipsAll') && (
-            <ListItem
-              label={t('brand_client.balance.menu.add_membership')}
-              icon={<Icon name={icons.Membership} />}
-              onPress={openMembershipsModal}
-            />
-          )}
+          <ListItem
+            label={t('brand_client.balance.menu.add_visit_based_membership')}
+            icon={<Icon name={icons.VisitBasedMembership} />}
+            onPress={openVisitBasedMembershipsModal}
+          />
+          <ListItem
+            label={t('brand_client.balance.menu.add_period_based_membership')}
+            icon={<Icon name={icons.PeriodBasedMembership} />}
+            onPress={openPeriodBasedMembershipsModal}
+          />
         </View>
       </AdaptivePopover>
 
       <SlideSheetModal
         paddingHorizontal={0}
         withKeyboard={false}
-        headerTitle={t('brand_client.balance.menu.add_ticket')}
-        visible={ticketsModalVisible}
-        onClose={closeTicketsModal}
+        headerTitle={t('brand_client.balance.menu.add_visit_based_membership')}
+        visible={visitBasedMembershipsModalVisible}
+        onClose={closeVisitBasedMembershipsModal}
       >
-        <CurrentBrandTickets onTicketPress={onTicketPress} />
+        <BrandMembershipsCurrentList
+          type={BrandMembershipType.visits}
+          query={useBrandVisitBasedMembershipCurrentListQuery}
+          renderItem={({ item }) => (
+            <BrandMembershipItem
+              membership={item}
+              onPress={() =>
+                onVisitBasedMembershipPress(item as BrandVisitBasedMembership)
+              }
+            />
+          )}
+          Intro={InitView}
+        />
       </SlideSheetModal>
 
       <SlideSheetModal
         paddingHorizontal={0}
         withKeyboard={false}
-        headerTitle={t('brand_client.balance.menu.add_membership')}
-        visible={membershipsModalVisible}
-        onClose={closeMembershipsModal}
+        headerTitle={t('brand_client.balance.menu.add_period_based_membership')}
+        visible={periodBasedMembershipsModalVisible}
+        onClose={closePeriodBasedMembershipsModal}
       >
-        <CurrentBrandMemberships onMembershipPress={onMembershipPress} />
+        <BrandMembershipsCurrentList
+          type={BrandMembershipType.period}
+          query={useBrandPeriodBasedMembershipCurrentListQuery}
+          renderItem={({ item }) => (
+            <BrandMembershipItem
+              membership={item}
+              onPress={() =>
+                onPeriodBasedMembershipPress(item as BrandPeriodBasedMembership)
+              }
+            />
+          )}
+          Intro={InitView}
+        />
       </SlideSheetModal>
     </>
   );

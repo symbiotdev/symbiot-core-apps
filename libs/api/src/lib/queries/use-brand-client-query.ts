@@ -1,9 +1,8 @@
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
-import { PaginationList, PaginationListParams } from '../types/pagination';
+import { PaginationListParams } from '../types/pagination';
 import {
   BrandClient,
   BrandClientMembership,
-  BrandClientTicket,
   CreateBrandClient,
   ImportBrandClient,
   UpdateBrandClient,
@@ -26,6 +25,7 @@ export enum BrandClientQueryKey {
   genders = 'brand-client-genders',
   currentList = 'brand-client-current-list',
   detailedById = 'brand-client-detailed-by-id',
+  membershipById = 'brand-client-membership-by-id',
 }
 
 const refetchQueriesByClientChanges = async (
@@ -113,6 +113,23 @@ export const useBrandClientDetailedByIdQuery = (id: string, enabled = true) => {
   });
 };
 
+export const useBrandClientMembershipByIdQuery = (
+  clientId: string,
+  membershipId: string,
+  enabled = true,
+) => {
+  const queryKey = [BrandClientQueryKey.membershipById, clientId, membershipId];
+
+  return useQuery<BrandClientMembership, string>({
+    queryKey,
+    enabled: enabled || !queryClient.getQueryData(queryKey),
+    queryFn: () =>
+      requestWithStringError(
+        axios.get(`/api/brand-client/${clientId}/membership/${membershipId}`),
+      ),
+  });
+};
+
 export const useUpdateBrandClientQuery = () =>
   useMutation<BrandClient, string, { id: string; data: UpdateBrandClient }>({
     mutationFn: async ({ id, data }) => {
@@ -186,30 +203,5 @@ export const useBrandClientAddMembershipQuery = () =>
       }
 
       return membership;
-    },
-  });
-
-export const useBrandClientAddTicketQuery = () =>
-  useMutation<
-    BrandClientTicket,
-    string,
-    { clientId: string; ticketId: string }
-  >({
-    mutationFn: async ({ clientId, ticketId }) => {
-      const ticket = await requestWithAlertOnError<BrandClientTicket>(
-        axios.post(`/api/brand-client/${clientId}/ticket/${ticketId}/add`),
-      );
-
-      const clientQueryKey = [BrandClientQueryKey.detailedById, clientId];
-      const client = queryClient.getQueryData<BrandClient>(clientQueryKey);
-
-      if (client) {
-        queryClient.setQueryData(clientQueryKey, {
-          ...client,
-          tickets: [...(client.tickets || []), ticket],
-        });
-      }
-
-      return ticket;
     },
   });

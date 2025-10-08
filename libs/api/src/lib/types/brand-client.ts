@@ -1,8 +1,12 @@
 import { Gender } from './gender';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { Currency } from './currency';
-import { BrandTicket } from './brand-ticket';
-import { BrandMembership, BrandMembershipPeriod } from './brand-membership';
+import {
+  BrandMembershipPeriod,
+  BrandMembershipType,
+  BrandPeriodBasedMembership,
+  BrandVisitBasedMembership,
+} from './brand-membership';
 
 export type BrandClient = {
   id: string;
@@ -16,7 +20,6 @@ export type BrandClient = {
   emails: string[];
   phones: string[];
   gender: Gender;
-  tickets: BrandClientTicket[];
   memberships: BrandClientMembership[];
 };
 
@@ -37,18 +40,6 @@ export type ImportBrandClient = Omit<CreateBrandClient, 'avatar' | 'note'> & {
   avatarUrl?: string;
 };
 
-export type BrandClientTicket = {
-  id: string;
-  name: string;
-  price: number;
-  discount: number;
-  visits: number;
-  locations: string[];
-  services: string[];
-  currency: Currency;
-  ticket: BrandTicket;
-};
-
 export type BrandClientMembership = {
   id: string;
   name: string;
@@ -57,7 +48,8 @@ export type BrandClientMembership = {
   endAt: string;
   locations: string[];
   services: string[];
+  type: BrandMembershipType;
   currency: Currency;
   period: BrandMembershipPeriod;
-  membership: BrandMembership;
+  membership: BrandPeriodBasedMembership | BrandVisitBasedMembership;
 };

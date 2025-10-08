@@ -244,35 +244,27 @@ export const DrawerMenu = () => {
           />
         )}
 
-        {hasAnyOfPermissions([
-          'servicesAll',
-          'membershipsAll',
-          'ticketsAll',
-        ]) && <Br marginHorizontal={defaultPageHorizontalPadding} />}
+        {hasPermission('catalogAll') && (
+          <>
+            <Br marginHorizontal={defaultPageHorizontalPadding} />
 
-        {hasPermission('servicesAll') && (
-          <MenuItem
-            route="/services"
-            label={t('navigation.drawer.services.label')}
-            icon={icons.Service}
-            additionalRoutes={['/services']}
-          />
-        )}
-
-        {hasPermission('membershipsAll') && (
-          <MenuItem
-            route={`/memberships/${BrandMembershipType.period}`}
-            label={t('navigation.drawer.memberships.label')}
-            icon={icons.PeriodBasedMembership}
-          />
-        )}
-
-        {hasPermission('ticketsAll') && (
-          <MenuItem
-            route={`/memberships/${BrandMembershipType.visits}`}
-            label={t('navigation.drawer.tickets.label')}
-            icon={icons.VisitBasedMembership}
-          />
+            <MenuItem
+              route="/services"
+              label={t('navigation.drawer.services.label')}
+              icon={icons.Service}
+              additionalRoutes={['/services']}
+            />
+            <MenuItem
+              route={`/memberships/${BrandMembershipType.period}`}
+              label={t('navigation.drawer.period_based_memberships.label')}
+              icon={icons.PeriodBasedMembership}
+            />
+            <MenuItem
+              route={`/memberships/${BrandMembershipType.visits}`}
+              label={t('navigation.drawer.visit_based_memberships.label')}
+              icon={icons.VisitBasedMembership}
+            />
+          </>
         )}
 
         {hasAnyOfPermissions(['analyticsAll', 'financesAll']) && (

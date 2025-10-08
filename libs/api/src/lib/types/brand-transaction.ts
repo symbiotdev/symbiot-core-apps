@@ -1,14 +1,10 @@
-import {
-  BrandClient,
-  BrandClientMembership,
-  BrandClientTicket,
-} from './brand-client';
+import { BrandClient, BrandClientMembership } from './brand-client';
 import { Currency } from './currency';
 
 export enum BrandTransactionType {
   manual = 'manual',
-  clientMembership = 'client-membership',
-  clientTicket = 'client-ticket',
+  clientPeriodBasedMembership = 'client-period-based-membership',
+  clientVisitBasedMembership = 'client-visit-based-membership',
 }
 
 export type BrandTransaction = {
@@ -22,6 +18,5 @@ export type BrandTransaction = {
   currency: Currency;
   client: BrandClient;
   membership: BrandClientMembership;
-  ticket: BrandClientTicket;
   type: BrandTransactionType;
 };

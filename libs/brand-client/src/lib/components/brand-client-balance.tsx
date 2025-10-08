@@ -9,13 +9,10 @@ import React, { useCallback, useRef } from 'react';
 import {
   BrandClient,
   BrandClientMembership,
-  BrandClientTicket,
+  getBrandMembershipType,
 } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
-import {
-  BrandMembershipItemView,
-  BrandTicketItemView,
-} from '@symbiot-core-apps/brand';
+import { BrandPeriodBasedMembershipItemView } from '@symbiot-core-apps/brand';
 import { BrandClientTopUpBalance } from './brand-client-top-up-balance';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { router } from 'expo-router';
@@ -41,7 +38,7 @@ export const BrandClientBalance = ({ client }: { client: BrandClient }) => {
 
   return (
     <View gap="$1" alignItems="center">
-      {!client.memberships?.length && !client.tickets?.length && (
+      {!client.memberships?.length && (
         <ActionCardWithCustomButton
           title={t('brand_client.balance.extend.title')}
           subtitle={t('brand_client.balance.extend.subtitle')}
@@ -60,9 +57,9 @@ export const BrandClientBalance = ({ client }: { client: BrandClient }) => {
         />
       )}
 
-      {hasPermission('membershipsAll') &&
+      {hasPermission('catalogAll') &&
         client.memberships?.map((membership) => (
-          <BrandMembershipItemView
+          <BrandPeriodBasedMembershipItemView
             key={membership.id}
             name={membership.name}
             period={membership.period}
@@ -72,20 +69,6 @@ export const BrandClientBalance = ({ client }: { client: BrandClient }) => {
             locations={membership.locations}
             endAt={membership.endAt}
             onPress={() => onPressMembership(membership)}
-          />
-        ))}
-
-      {hasPermission('ticketsAll') &&
-        client.tickets?.map((ticket) => (
-          <BrandTicketItemView
-            key={ticket.id}
-            name={ticket.name}
-            visits={ticket.visits}
-            price={ticket.price}
-            discount={ticket.discount}
-            currency={ticket.currency}
-            locations={ticket.locations}
-            onPress={() => onPressTicket(ticket)}
           />
         ))}
     </View>

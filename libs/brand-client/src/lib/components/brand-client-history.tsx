@@ -1,4 +1,4 @@
-import { BrandClient } from '@symbiot-core-apps/api';
+import { BrandClient, BrandMembershipType } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 import { useApp } from '@symbiot-core-apps/app';
 import { Icon, ListItem, ListItemGroup } from '@symbiot-core-apps/ui';
@@ -12,24 +12,31 @@ export const BrandClientHistory = ({ client }: { client: BrandClient }) => {
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
 
   return (
-    hasAnyOfPermissions(['ticketsAll', 'membershipsAll', 'financesAll']) && (
+    hasAnyOfPermissions(['catalogAll', 'financesAll']) && (
       <ListItemGroup title={t('brand_client.history.title')}>
-        {hasPermission('ticketsAll') && (
-          <ListItem
-            label={t('brand_client.history.menu.tickets')}
-            icon={<Icon name={icons.Ticket} />}
-            iconAfter={<Icon name="ArrowRight" />}
-            onPress={() => router.push(`/clients/${client.id}/tickets`)}
-          />
-        )}
-
-        {hasPermission('membershipsAll') && (
-          <ListItem
-            label={t('brand_client.history.menu.memberships')}
-            icon={<Icon name={icons.Membership} />}
-            iconAfter={<Icon name="ArrowRight" />}
-            onPress={() => router.push(`/clients/${client.id}/memberships`)}
-          />
+        {hasPermission('catalogAll') && (
+          <>
+            <ListItem
+              label={t('brand_client.history.menu.visit_based_memberships')}
+              icon={<Icon name={icons.VisitBasedMembership} />}
+              iconAfter={<Icon name="ArrowRight" />}
+              onPress={() =>
+                router.push(
+                  `/clients/${client.id}/memberships/${BrandMembershipType.visits}`,
+                )
+              }
+            />
+            <ListItem
+              label={t('brand_client.history.menu.period_based_memberships')}
+              icon={<Icon name={icons.PeriodBasedMembership} />}
+              iconAfter={<Icon name="ArrowRight" />}
+              onPress={() =>
+                router.push(
+                  `/clients/${client.id}/memberships/${BrandMembershipType.period}`,
+                )
+              }
+            />
+          </>
         )}
 
         {hasPermission('financesAll') && (

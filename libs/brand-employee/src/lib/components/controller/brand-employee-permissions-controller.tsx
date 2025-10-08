@@ -5,6 +5,7 @@ import {
   BrandEmployeePermissions,
   useBrandEmployeePermissionsQuery,
 } from '@symbiot-core-apps/api';
+import { useTranslation } from 'react-i18next';
 
 export function BrandEmployeePermissionsController<
   T extends FieldValues,
@@ -13,6 +14,7 @@ export function BrandEmployeePermissionsController<
   control: Control<T>;
   onChange?: (key: keyof BrandEmployeePermissions, value: boolean) => void;
 }) {
+  const { t } = useTranslation();
   const { data, isPending, error } = useBrandEmployeePermissionsQuery();
 
   if (!data?.length) {
@@ -25,9 +27,9 @@ export function BrandEmployeePermissionsController<
         disabled={!!props.loadingKey}
         loading={props.loadingKey === permission.key}
         name={`permissions.${permission.key}` as Path<T>}
-        label={permission.title}
+        label={t(permission.title)}
         control={props.control}
-        description={permission.subtitle}
+        description={t(permission.subtitle)}
         onChange={(checked) => props.onChange?.(permission.key, checked)}
       />
     </Card>

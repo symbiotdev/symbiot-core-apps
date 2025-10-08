@@ -65,9 +65,7 @@ export const PlusActionAdaptiveModal = ({
     hasAnyOfPermissions([
       'employeesAll',
       'locationsAll',
-      'servicesAll',
-      'membershipsAll',
-      'ticketsAll',
+      'catalogAll',
       'clientsAll',
     ]) && (
       <AdaptivePopover
@@ -97,46 +95,36 @@ export const PlusActionAdaptiveModal = ({
             </View>
           )}
 
-          {hasAnyOfPermissions([
-            'servicesAll',
-            'membershipsAll',
-            'ticketsAll',
-          ]) && (
+          {hasPermission('catalogAll') && (
             <>
               {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && <Br />}
 
-              {hasPermission('servicesAll') && (
-                <ListItem
-                  icon={<Icon name={icons.Service} />}
-                  label={t('navigation.tabs.plus.actions.add_service.label')}
-                  onPress={addService}
-                />
-              )}
-
-              {hasPermission('membershipsAll') && (
-                <ListItem
-                  icon={<Icon name={icons.PeriodBasedMembership} />}
-                  label={t('navigation.tabs.plus.actions.add_membership.label')}
-                  onPress={addPeriodBasedMembership}
-                />
-              )}
-
-              {hasPermission('ticketsAll') && (
-                <ListItem
-                  icon={<Icon name={icons.VisitBasedMembership} />}
-                  label={t('navigation.tabs.plus.actions.add_ticket.label')}
-                  onPress={addVisitBasedMembership}
-                />
-              )}
+              <ListItem
+                icon={<Icon name={icons.Service} />}
+                label={t('navigation.tabs.plus.actions.add_service.label')}
+                onPress={addService}
+              />
+              <ListItem
+                icon={<Icon name={icons.PeriodBasedMembership} />}
+                label={t(
+                  'navigation.tabs.plus.actions.add_period_based_membership.label',
+                )}
+                onPress={addPeriodBasedMembership}
+              />
+              <ListItem
+                icon={<Icon name={icons.VisitBasedMembership} />}
+                label={t(
+                  'navigation.tabs.plus.actions.add_visit_based_membership.label',
+                )}
+                onPress={addVisitBasedMembership}
+              />
             </>
           )}
 
           {hasAnyOfPermissions([
             'employeesAll',
             'locationsAll',
-            'servicesAll',
-            'membershipsAll',
-            'ticketsAll',
+            'catalogAll',
           ]) && <Br />}
 
           {hasPermission('clientsAll') && (

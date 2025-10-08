@@ -5,18 +5,39 @@ import {
   Button,
   Icon,
 } from '@symbiot-core-apps/ui';
-import React, { useRef } from 'react';
-import { BrandClient } from '@symbiot-core-apps/api';
+import React, { useCallback, useRef } from 'react';
+import {
+  BrandClient,
+  BrandClientMembership,
+  BrandClientTicket,
+} from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 import {
   BrandMembershipItemView,
   BrandTicketItemView,
 } from '@symbiot-core-apps/brand';
 import { BrandClientTopUpBalance } from './brand-client-top-up-balance';
+import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
+import { router } from 'expo-router';
 
 export const BrandClientBalance = ({ client }: { client: BrandClient }) => {
   const { t } = useTranslation();
-  const popoverRef = useRef<AdaptivePopoverRef>(null);
+  const { hasPermission } = useCurrentBrandEmployee();
+  const topUpBalancePopoverRef = useRef<AdaptivePopoverRef>(null);
+
+  const onPressMembership = useCallback(
+    (membership: BrandClientMembership) => {
+      router.push(`/clients/${client.id}/memberships/${membership.id}/profile`);
+    },
+    [client.id],
+  );
+
+  const onPressTicket = useCallback(
+    (ticket: BrandClientTicket) => {
+      router.push(`/clients/${client.id}/tickets/${ticket.id}/profile`);
+    },
+    [client.id],
+  );
 
   return (
     <View gap="$1" alignItems="center">
@@ -27,7 +48,7 @@ export const BrandClientBalance = ({ client }: { client: BrandClient }) => {
           button={
             <BrandClientTopUpBalance
               client={client}
-              popoverRef={popoverRef}
+              popoverRef={topUpBalancePopoverRef}
               trigger={
                 <Button
                   icon={<Icon name="Wallet" />}
@@ -39,30 +60,34 @@ export const BrandClientBalance = ({ client }: { client: BrandClient }) => {
         />
       )}
 
-      {client.memberships?.map((membership) => (
-        <BrandMembershipItemView
-          key={membership.id}
-          name={membership.name}
-          period={membership.period}
-          price={membership.price}
-          discount={membership.discount}
-          currency={membership.currency}
-          locations={membership.locations}
-          endAt={membership.endAt}
-        />
-      ))}
+      {hasPermission('membershipsAll') &&
+        client.memberships?.map((membership) => (
+          <BrandMembershipItemView
+            key={membership.id}
+            name={membership.name}
+            period={membership.period}
+            price={membership.price}
+            discount={membership.discount}
+            currency={membership.currency}
+            locations={membership.locations}
+            endAt={membership.endAt}
+            onPress={() => onPressMembership(membership)}
+          />
+        ))}
 
-      {client.tickets?.map((ticket) => (
-        <BrandTicketItemView
-          key={ticket.id}
-          name={ticket.name}
-          visits={ticket.visits}
-          price={ticket.price}
-          discount={ticket.discount}
-          currency={ticket.currency}
-          locations={ticket.locations}
-        />
-      ))}
+      {hasPermission('ticketsAll') &&
+        client.tickets?.map((ticket) => (
+          <BrandTicketItemView
+            key={ticket.id}
+            name={ticket.name}
+            visits={ticket.visits}
+            price={ticket.price}
+            discount={ticket.discount}
+            currency={ticket.currency}
+            locations={ticket.locations}
+            onPress={() => onPressTicket(ticket)}
+          />
+        ))}
     </View>
   );
 };

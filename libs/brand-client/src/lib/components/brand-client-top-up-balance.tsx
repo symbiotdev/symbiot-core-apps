@@ -19,6 +19,7 @@ import { useApp } from '@symbiot-core-apps/app';
 import { useModal } from '@symbiot-core-apps/shared';
 import { CurrentBrandTickets } from '@symbiot-core-apps/brand-ticket';
 import { CurrentBrandMemberships } from '@symbiot-core-apps/brand-membership';
+import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 
 export const BrandClientTopUpBalance = ({
   client,
@@ -29,8 +30,9 @@ export const BrandClientTopUpBalance = ({
   client: BrandClient;
   trigger: ReactElement<{ loading?: boolean }>;
 }) => {
-  const { t } = useTranslation();
   const { icons } = useApp();
+  const { t } = useTranslation();
+  const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
   const {
     visible: ticketsModalVisible,
     open: openTicketsModal,
@@ -73,6 +75,7 @@ export const BrandClientTopUpBalance = ({
     <>
       <AdaptivePopover
         placement="bottom"
+        disabled={hasAnyOfPermissions(['membershipsAll', 'ticketsAll'])}
         trigger={React.cloneElement(trigger, {
           loading: isMembershipLoading || isTicketLoading,
         })}
@@ -80,16 +83,21 @@ export const BrandClientTopUpBalance = ({
         sheetTitle={t('brand_client.balance.top_up')}
       >
         <View>
-          <ListItem
-            label={t('brand_client.balance.menu.add_ticket')}
-            icon={<Icon name={icons.Ticket} />}
-            onPress={openTicketsModal}
-          />
-          <ListItem
-            label={t('brand_client.balance.menu.add_membership')}
-            icon={<Icon name={icons.Membership} />}
-            onPress={openMembershipsModal}
-          />
+          {hasPermission('ticketsAll') && (
+            <ListItem
+              label={t('brand_client.balance.menu.add_ticket')}
+              icon={<Icon name={icons.Ticket} />}
+              onPress={openTicketsModal}
+            />
+          )}
+
+          {hasPermission('membershipsAll') && (
+            <ListItem
+              label={t('brand_client.balance.menu.add_membership')}
+              icon={<Icon name={icons.Membership} />}
+              onPress={openMembershipsModal}
+            />
+          )}
         </View>
       </AdaptivePopover>
 

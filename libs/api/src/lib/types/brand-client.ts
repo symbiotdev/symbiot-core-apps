@@ -46,6 +46,7 @@ type BrandClientMembership = {
   price: number;
   discount: number;
   endAt: string;
+  dAt: string;
   locations: string[];
   services: string[];
   currency: Currency;

@@ -21,7 +21,7 @@ import {
   H3,
   RegularText,
 } from '@symbiot-core-apps/ui';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAllBrandLocation } from '../../hooks/use-additional-brand-location';
 
@@ -41,6 +41,7 @@ export const BrandMembershipItem = ({
       currency={membership.currency}
       locations={membership.locations?.map(({ name }) => name)}
       opacity={membership.hidden ? 0.7 : 1}
+      removed={!!membership.dAt}
     />
   ) : (
     <BrandVisitBasedMembershipItemView
@@ -52,6 +53,8 @@ export const BrandMembershipItem = ({
       currency={membership.currency}
       locations={membership.locations?.map(({ name }) => name)}
       opacity={membership.hidden ? 0.7 : 1}
+      removed={!!membership.dAt}
+      endAt={membership.endAt}
     />
   );
 };
@@ -73,6 +76,7 @@ export const BrandClientMembershipItem = ({
       currency={membership.currency}
       locations={membership.locations}
       endAt={membership.endAt}
+      removed={!!membership.dAt}
     />
   ) : (
     <BrandVisitBasedMembershipItemView
@@ -84,6 +88,8 @@ export const BrandClientMembershipItem = ({
       discount={membership.discount}
       currency={membership.currency}
       locations={membership.locations}
+      removed={!!membership.dAt}
+      endAt={membership.endAt}
     />
   );
 };
@@ -110,6 +116,7 @@ const BrandPeriodBasedMembershipItemView = ({
   currency,
   period,
   endAt,
+  removed,
   onPress,
   ...viewProps
 }: ViewProps & {
@@ -119,6 +126,7 @@ const BrandPeriodBasedMembershipItemView = ({
   currency: Currency;
   locations?: string[];
   endAt?: string;
+  removed?: boolean;
   period: BrandMembershipPeriod;
 }) => {
   const { t } = useTranslation();
@@ -155,17 +163,28 @@ const BrandPeriodBasedMembershipItemView = ({
 
       <XStack justifyContent="space-between" gap="$5" flexWrap="wrap">
         {!!period && <Chip label={period?.label} size="small" />}
-        {!!endAt && (
+
+        {!!removed && (
+          <Chip label={t('shared.deleted')} size="small" type="danger" />
+        )}
+
+        {!removed && !!endAt && (
           <Chip
-            label={t('shared.expires_in', {
-              value: DateHelper.formatDuration(
-                DateHelper.differenceInMinutes(endAt, now),
-                {
-                  onlyHighestValue: true,
-                  onlyDuration: ['days', 'hours', 'minutes'],
-                },
-              ),
-            })}
+            label={
+              DateHelper.isAfter(now, endAt)
+                ? t(
+                    `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.expired`,
+                  )
+                : t('shared.expires_in', {
+                    value: DateHelper.formatDuration(
+                      DateHelper.differenceInMinutes(endAt, now),
+                      {
+                        onlyHighestValue: true,
+                        onlyDuration: ['days', 'hours', 'minutes'],
+                      },
+                    ),
+                  })
+            }
             size="small"
             type="danger"
           />
@@ -219,6 +238,8 @@ const BrandVisitBasedMembershipItemView = ({
   discount,
   currency,
   locations,
+  removed,
+  endAt,
   onPress,
   ...viewProps
 }: ViewProps & {
@@ -228,9 +249,36 @@ const BrandVisitBasedMembershipItemView = ({
   discount: number;
   currency: Currency;
   locations?: string[];
+  removed?: boolean;
+  endAt?: string;
 }) => {
+  const { now } = useNativeNow();
   const { t } = useTranslation();
   const allLocations = useAllBrandLocation();
+
+  const expired = useMemo(
+    () => endAt && DateHelper.isAfter(now, endAt),
+    [endAt, now],
+  );
+
+  const footerText = useMemo(() => {
+    if (expired) {
+      return t(
+        `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.expired`,
+      );
+    } else if (visits <= 0) {
+      return t(
+        `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.limit_reached`,
+      );
+    } else {
+      return t(
+        `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.count_visits`,
+        {
+          count: visits,
+        },
+      );
+    }
+  }, [expired, t, visits]);
 
   return (
     <View
@@ -299,6 +347,23 @@ const BrandVisitBasedMembershipItemView = ({
             {t('brand_service.free')}
           </RegularText>
         )}
+
+        {!removed && !expired && endAt && (
+          <Chip
+            alignSelf="center"
+            label={t('shared.expires_in', {
+              value: DateHelper.formatDuration(
+                DateHelper.differenceInMinutes(endAt, now),
+                {
+                  onlyHighestValue: true,
+                  onlyDuration: ['days', 'hours', 'minutes'],
+                },
+              ),
+            })}
+            size="small"
+            type="danger"
+          />
+        )}
       </View>
 
       <View
@@ -315,14 +380,11 @@ const BrandVisitBasedMembershipItemView = ({
         alignItems="center"
         height={50}
       >
-        <RegularText textAlign="center">
-          {t(
-            `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.count_visits`,
-            {
-              count: visits,
-            },
-          )}
-        </RegularText>
+        {removed ? (
+          <Chip label={t('shared.deleted')} type="danger" />
+        ) : (
+          <RegularText textAlign="center">{footerText}</RegularText>
+        )}
       </View>
     </View>
   );

@@ -1,4 +1,4 @@
-import { View } from 'tamagui';
+import { View, ViewProps } from 'tamagui';
 import { RegularText } from '../text/text';
 
 const _sizeConfig = {
@@ -34,7 +34,8 @@ export const Chip = ({
   label,
   size = 'medium',
   type = 'default',
-}: {
+  ...viewProps
+}: ViewProps & {
   label: string;
   size?: keyof typeof _sizeConfig;
   type?: keyof typeof _typeConfig;
@@ -44,6 +45,7 @@ export const Chip = ({
 
   return (
     <View
+      {...viewProps}
       flex={0}
       backgroundColor={typeConfig.backgroundColor}
       paddingHorizontal={sizeConfig.paddingHorizontal}

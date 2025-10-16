@@ -3,6 +3,8 @@ import { PaginationListParams } from '../types/pagination';
 import {
   AnyBrandClientMembership,
   BrandClient,
+  BrandClientPeriodBasedMembership,
+  BrandClientVisitBasedMembership,
   CreateBrandClient,
   ImportBrandClient,
   UpdateBrandClient,
@@ -20,12 +22,15 @@ import {
   refetchQueriesByChanges,
 } from '../utils/query';
 import { Gender } from '../types/gender';
+import { BrandMembershipType } from '../types/brand-membership';
 
 export enum BrandClientQueryKey {
   genders = 'brand-client-genders',
   currentList = 'brand-client-current-list',
   detailedById = 'brand-client-detailed-by-id',
   membershipById = 'brand-client-membership-by-id',
+  periodBasedMembershipsList = 'brand-client-period-based-memberships-list',
+  visitsBasedMembershipsList = 'brand-client-visits-based-memberships-list',
 }
 
 const refetchQueriesByClientChanges = async (
@@ -49,9 +54,51 @@ export const useBrandClientCurrentListQuery = (props?: {
 }) =>
   useInfiniteQueryWrapper<BrandClient>({
     ...props,
-    apUrl: '/api/brand-client',
+    apUrl: '/api/brand-client/list',
     queryKey: [BrandClientQueryKey.currentList, props?.params],
     storeInitialData: true,
+  });
+
+export const useBrandClientPeriodBasedMembershipsListQuery = (
+  clientId: string,
+  props?: {
+    params?: PaginationListParams;
+  },
+) =>
+  useInfiniteQueryWrapper<BrandClientPeriodBasedMembership>({
+    ...props,
+    refetchOnMount: true,
+    apUrl: `/api/brand-client/${clientId}/membership/list`,
+    queryKey: [
+      BrandClientQueryKey.periodBasedMembershipsList,
+      clientId,
+      props?.params,
+    ],
+    params: {
+      ...props?.params,
+      type: BrandMembershipType.period,
+    },
+  });
+
+export const useBrandClientVisitsBasedMembershipsListQuery = (
+  clientId: string,
+  props?: {
+    params?: PaginationListParams;
+  },
+) =>
+  useInfiniteQueryWrapper<BrandClientVisitBasedMembership>({
+    ...props,
+    refetchOnMount: true,
+    apUrl: `/api/brand-client/${clientId}/membership/list`,
+    queryKey: [
+      BrandClientQueryKey.visitsBasedMembershipsList,
+      clientId,
+      props?.params,
+    ],
+    params: {
+      ...props?.params,
+      type: BrandMembershipType.visits,
+    },
   });
 
 export const useBrandClientGendersQuery = () =>

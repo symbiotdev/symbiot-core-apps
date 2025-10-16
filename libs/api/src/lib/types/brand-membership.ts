@@ -21,6 +21,8 @@ export type BrandMembership = {
   discount: number;
   type: BrandMembershipType;
   hidden: boolean;
+  dAt: string;
+  endAt: string;
   currency: Currency;
   locations: BrandLocation[];
   services: BrandService[];

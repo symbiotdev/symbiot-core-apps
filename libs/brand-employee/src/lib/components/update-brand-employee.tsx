@@ -52,6 +52,7 @@ import { BrandEmployeeTaxIdController } from './controller/brand-employee-tax-id
 import { BrandEmployeePermissionsController } from './controller/brand-employee-permissions-controller';
 import { useForm } from 'react-hook-form';
 import { useDynamicBrandLocation } from '@symbiot-core-apps/brand';
+import { View } from 'tamagui';
 
 export const UpdateBrandEmployee = ({
   employee,
@@ -75,15 +76,17 @@ export const UpdateBrandEmployee = ({
 
   return (
     <PageView scrollable withHeaderHeight withKeyboard gap="$5">
-      <AvatarPicker
-        marginHorizontal="auto"
-        loading={avatarUpdating}
-        name={employee.name}
-        color={employee?.avatarColor}
-        url={employee.avatarUrl}
-        size={100}
-        onAttach={onAddAvatar}
-      />
+      <View>
+        <AvatarPicker
+          marginHorizontal="auto"
+          loading={avatarUpdating}
+          name={employee.name}
+          color={employee?.avatarColor}
+          url={employee.avatarUrl}
+          size={100}
+          onAttach={onAddAvatar}
+        />
+      </View>
 
       <FormView gap="$10" paddingVertical="$5">
         <ListItemGroup>
@@ -168,7 +171,7 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
             value={value.birthday}
             onUpdate={updateValue}
             controllerProps={{
-              disableDrag: true
+              disableDrag: true,
             }}
             Controller={BrandEmployeeBirthdayController}
           />
@@ -176,7 +179,7 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
             name="gender"
             value={value.gender}
             controllerProps={{
-              disableDrag: true
+              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandEmployeeGenderController}
@@ -351,7 +354,7 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
               value.locations.length ? value.locations : [dynamicLocation.value]
             }
             controllerProps={{
-              disableDrag: true
+              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandEmployeeLocationController}
@@ -379,7 +382,7 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
               name="schedules"
               value={value.schedules}
               controllerProps={{
-                disableDrag: true
+                disableDrag: true,
               }}
               onUpdate={updateValue}
               Controller={BrandEmployeeLocationScheduleController}

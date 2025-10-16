@@ -8,6 +8,7 @@ export function SelectController<T extends FieldValues>({
   label,
   placeholder,
   disabled,
+  loading,
   disableDrag,
   required,
   rules,
@@ -20,6 +21,7 @@ export function SelectController<T extends FieldValues>({
   control: Control<T>;
   label: string;
   placeholder: string;
+  loading?: boolean;
   options?: PickerItem[];
   optionsLoading?: boolean;
   optionsError?: string | null;
@@ -38,6 +40,7 @@ export function SelectController<T extends FieldValues>({
         <SelectPicker
           required={required}
           disabled={disabled}
+          loading={loading}
           disableDrag={disableDrag}
           value={value}
           error={error?.message}

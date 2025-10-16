@@ -22,7 +22,7 @@ export const DatePicker = ({
   value,
   disabled,
   required,
-                             disableDrag,
+  disableDrag,
   label,
   error,
   placeholder,
@@ -61,7 +61,7 @@ export const DatePicker = ({
       popoverRef.current?.close();
 
       onChange?.(DateHelper.toDate(date as Date));
-      onBlur?.()
+      onBlur?.();
 
       emitHaptic();
     },

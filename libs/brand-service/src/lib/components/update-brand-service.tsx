@@ -49,6 +49,7 @@ import { BrandServiceNoteController } from './controller/brand-service-note-cont
 import { BrandServiceLocationController } from './controller/brand-service-location-controller';
 import { BrandServiceEmployeesController } from './controller/brand-service-employees-controller';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
+import { View } from 'tamagui';
 
 export const UpdateBrandService = ({ service }: { service: BrandService }) => {
   const { height } = useWindowDimensions();
@@ -68,20 +69,22 @@ export const UpdateBrandService = ({ service }: { service: BrandService }) => {
 
   return (
     <PageView scrollable withHeaderHeight withKeyboard gap="$5">
-      <AvatarPicker
-        allowsEditing={false}
-        marginHorizontal="auto"
-        loading={avatarUpdating}
-        name={service.name}
-        borderRadius="$10"
-        color="$background1"
-        url={service.avatarUrl}
-        size={{
-          width: '100%',
-          height: Math.max(height / 3, 250),
-        }}
-        onAttach={onAddAvatar}
-      />
+      <View>
+        <AvatarPicker
+          allowsEditing={false}
+          marginHorizontal="auto"
+          loading={avatarUpdating}
+          name={service.name}
+          borderRadius="$10"
+          color="$background1"
+          url={service.avatarUrl}
+          size={{
+            width: '100%',
+            height: Math.max(height / 3, 250),
+          }}
+          onAttach={onAddAvatar}
+        />
+      </View>
 
       <Availability service={service} />
 
@@ -208,7 +211,7 @@ const Pricing = ({ service }: { service: BrandService }) => {
               name="currency"
               value={value.currency}
               controllerProps={{
-                disableDrag: true
+                disableDrag: true,
               }}
               onUpdate={updateValue}
               Controller={BrandServiceCurrencyController}
@@ -293,7 +296,7 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
               value.locations?.length ? value.locations : [allLocations.value]
             }
             controllerProps={{
-              disableDrag: true
+              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandServiceLocationController}
@@ -432,7 +435,7 @@ const Structure = ({ service }: { service: BrandService }) => {
             name="type"
             value={value.type}
             controllerProps={{
-              disableDrag: true
+              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandServiceTypeController}
@@ -441,7 +444,7 @@ const Structure = ({ service }: { service: BrandService }) => {
             name="format"
             value={value.format}
             controllerProps={{
-              disableDrag: true
+              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandServiceFormatController}
@@ -459,7 +462,7 @@ const Structure = ({ service }: { service: BrandService }) => {
             name="gender"
             value={value.gender}
             controllerProps={{
-              disableDrag: true
+              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandServiceGenderController}
@@ -525,7 +528,7 @@ const Scheduling = ({ service }: { service: BrandService }) => {
             name="duration"
             value={value.duration}
             controllerProps={{
-              disableDrag: true
+              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandServiceDurationController}

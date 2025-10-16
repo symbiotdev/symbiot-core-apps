@@ -9,8 +9,10 @@ export function DateController<T extends FieldValues>({
   control,
   label,
   placeholder,
+  minDate,
+  maxDate,
   disabled,
-                                                        disableDrag,
+  disableDrag,
   required,
   rules,
   onBlur,
@@ -19,6 +21,8 @@ export function DateController<T extends FieldValues>({
   control: Control<T>;
   label: string;
   placeholder: string;
+  minDate?: Date;
+  maxDate?: Date;
   disabled?: boolean;
   disableDrag?: boolean;
   required?: boolean;
@@ -41,8 +45,8 @@ export function DateController<T extends FieldValues>({
           error={error?.message}
           formatStr={me?.preferences?.dateFormat}
           weekStartsOn={me?.preferences?.weekStartsOn}
-          minDate={DateHelper.addYears(new Date(), -100)}
-          maxDate={new Date()}
+          minDate={minDate || DateHelper.addYears(new Date(), -100)}
+          maxDate={maxDate || DateHelper.addYears(new Date(), 100)}
           label={label}
           placeholder={placeholder}
           onChange={onChange}

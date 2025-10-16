@@ -36,6 +36,7 @@ import { BrandCountryController } from './contoller/brand-country-controller';
 import { BrandCurrencyController } from './contoller/brand-currency-controller';
 import { BrandWebsiteController } from './contoller/brand-website-controller';
 import { BrandInstagramController } from './contoller/brand-instagram-controller';
+import { View } from 'tamagui';
 
 type GroupProps = {
   brand: Brand;
@@ -56,15 +57,17 @@ export const UpdateBrand = () => {
   return (
     brand && (
       <PageView scrollable withHeaderHeight withKeyboard gap="$5">
-        <AvatarPicker
-          alignSelf="center"
-          loading={isAvatarUpdating}
-          name={brand.name}
-          color={brand.avatarColor}
-          url={brand.avatarUrl}
-          size={100}
-          onAttach={updateAvatar$}
-        />
+        <View>
+          <AvatarPicker
+            alignSelf="center"
+            loading={isAvatarUpdating}
+            name={brand.name}
+            color={brand.avatarColor}
+            url={brand.avatarUrl}
+            size={100}
+            onAttach={updateAvatar$}
+          />
+        </View>
 
         <FormView>
           <Name brand={brand} onUpdated={setBrand} />

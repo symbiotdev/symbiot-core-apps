@@ -8,6 +8,7 @@ import {
   CreateBrandClient,
   ImportBrandClient,
   UpdateBrandClient,
+  UpdateBrandClientMembership,
 } from '../types/brand-client';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
@@ -198,6 +199,48 @@ export const useUpdateBrandClientQuery = () =>
       );
 
       return client;
+    },
+  });
+
+export const useUpdateBrandClientMembershipQuery = () =>
+  useMutation<
+    AnyBrandClientMembership,
+    string,
+    {
+      clientId: string;
+      membershipId: string;
+      data: UpdateBrandClientMembership;
+    }
+  >({
+    mutationFn: async ({ clientId, membershipId, data }) => {
+      const updatedMembership =
+        await requestWithAlertOnError<AnyBrandClientMembership>(
+          axios.put(
+            `/api/brand-client/${clientId}/membership/${membershipId}`,
+            data,
+          ),
+        );
+
+      const clientQueryKey = [BrandClientQueryKey.detailedById, clientId];
+      const client = queryClient.getQueryData<BrandClient>(clientQueryKey);
+
+      queryClient.setQueryData(
+        [BrandClientQueryKey.membershipById, clientId, membershipId],
+        updatedMembership,
+      );
+
+      if (client) {
+        queryClient.setQueryData(clientQueryKey, {
+          ...client,
+          memberships: client.memberships?.map((clientMembership) =>
+            clientMembership.id === membershipId
+              ? updatedMembership
+              : clientMembership,
+          ),
+        });
+      }
+
+      return updatedMembership;
     },
   });
 

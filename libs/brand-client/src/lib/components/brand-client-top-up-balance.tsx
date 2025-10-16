@@ -1,4 +1,5 @@
 import {
+  AnyBrandMembership,
   BrandClient,
   BrandMembershipType,
   BrandPeriodBasedMembership,
@@ -23,6 +24,7 @@ import { useModal } from '@symbiot-core-apps/shared';
 import { BrandMembershipsCurrentList } from '@symbiot-core-apps/brand-membership';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
+import { router } from 'expo-router';
 
 export const BrandClientTopUpBalance = ({
   client,
@@ -53,28 +55,34 @@ export const BrandClientTopUpBalance = ({
     onOpen: () => popoverRef.current?.close(),
   });
 
-  const onVisitBasedMembershipPress = useCallback(
-    (membership: BrandVisitBasedMembership) => {
-      void addMembership({
+  const onAdd = useCallback(
+    async (membership: AnyBrandMembership) => {
+      const clientMembership = await addMembership({
         clientId: client.id,
         membershipId: membership.id,
       });
 
+      router.push(
+        `/clients/${client.id}/memberships/${clientMembership.id}/update`,
+      );
+    },
+    [addMembership, client.id],
+  );
+
+  const onVisitBasedMembershipPress = useCallback(
+    (membership: BrandVisitBasedMembership) => {
+      void onAdd(membership);
       closeVisitBasedMembershipsModal();
     },
-    [addMembership, client.id, closeVisitBasedMembershipsModal],
+    [onAdd, closeVisitBasedMembershipsModal],
   );
 
   const onPeriodBasedMembershipPress = useCallback(
     (membership: BrandPeriodBasedMembership) => {
-      void addMembership({
-        clientId: client.id,
-        membershipId: membership.id,
-      });
-
+      void onAdd(membership);
       closePeriodBasedMembershipsModal();
     },
-    [addMembership, client.id, closePeriodBasedMembershipsModal],
+    [onAdd, closePeriodBasedMembershipsModal],
   );
 
   return (

@@ -1,5 +1,5 @@
 export * from './lib/components/brand-client-profile';
-export * from './lib/components/brand-client-membership-profile';
+export * from './lib/components/update-brand-client-membership';
 export * from './lib/components/brand-client-memberships-list';
 export * from './lib/components/create-brand-client';
 export * from './lib/components/current-brand-clients';

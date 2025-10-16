@@ -14,6 +14,7 @@ export function BrandEmployeeBirthdayController<T extends FieldValues>(props: {
     <DateController
       label={t('brand_employee.form.birthday.label')}
       placeholder={t('brand_employee.form.birthday.placeholder')}
+      maxDate={new Date()}
       {...props}
     />
   );

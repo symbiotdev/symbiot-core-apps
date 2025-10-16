@@ -57,6 +57,35 @@ export function useModalUpdateByIdForm<T, FV, UV>({
   );
 }
 
+export function useModalUpdateByQueryParamsForm<P, T, FV, UV>({
+  params,
+  initialValue,
+  query,
+  dataRequestFormatted,
+  onUpdated,
+}: {
+  params: P;
+  initialValue: FV;
+  query: () => UseMutationResult<T, string, P & { data: Partial<UV> }>;
+  dataRequestFormatted?: (value: Partial<FV>) => object;
+  onUpdated?: (value: T) => void;
+}) {
+  const { mutateAsync, isPending } = query();
+
+  const update = useCallback(
+    (data: Partial<UV>) => mutateAsync({ ...params, data }),
+    [params, mutateAsync],
+  );
+
+  return useUpdateForm(
+    initialValue,
+    isPending,
+    update,
+    dataRequestFormatted,
+    onUpdated,
+  );
+}
+
 export function useUpdateForm<T, FV, UV>(
   initialValue: FV,
   updating: boolean,

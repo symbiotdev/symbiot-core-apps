@@ -8,7 +8,7 @@ import {
 import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
-import { ViewProps } from 'tamagui';
+import { View, ViewProps } from 'tamagui';
 import { useTranslation } from 'react-i18next';
 
 export const BrandLocationMediaForm = ({
@@ -56,15 +56,17 @@ export const BrandLocationMediaForm = ({
 
   return (
     <FormView gap="$5" {...viewProps}>
-      <AvatarPicker
-        marginHorizontal="auto"
-        loading={avatarUpdating}
-        name={location.name}
-        color={brand?.avatarColor}
-        url={location.avatarUrl || brand?.avatarUrl}
-        size={100}
-        onAttach={onAddAvatar}
-      />
+      <View>
+        <AvatarPicker
+          marginHorizontal="auto"
+          loading={avatarUpdating}
+          name={location.name}
+          color={brand?.avatarColor}
+          url={location.avatarUrl || brand?.avatarUrl}
+          size={100}
+          onAttach={onAddAvatar}
+        />
+      </View>
 
       <GalleryPicker
         value={location.gallery?.map(({ xsUrl }) => xsUrl) || []}

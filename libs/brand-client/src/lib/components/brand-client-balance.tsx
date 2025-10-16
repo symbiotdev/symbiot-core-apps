@@ -20,7 +20,7 @@ export const BrandClientBalance = ({ client }: { client: BrandClient }) => {
 
   const onPressMembership = useCallback(
     (membership: AnyBrandClientMembership) => {
-      router.push(`/clients/${client.id}/memberships/${membership.id}/profile`);
+      router.push(`/clients/${client.id}/memberships/${membership.id}/update`);
     },
     [client.id],
   );

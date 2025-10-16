@@ -13,6 +13,7 @@ export function BrandBirthdayController<T extends FieldValues>(props: {
     <DateController
       label={t('brand.form.birthday.label')}
       placeholder={t('brand.form.birthday.placeholder')}
+      maxDate={new Date()}
       {...props}
     />
   );

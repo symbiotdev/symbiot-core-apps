@@ -19,6 +19,7 @@ import { AccountGenderController } from './controller/account-gender-controller'
 import { AccountBirthdayController } from './controller/account-birthday-controller';
 import { AccountInstagramController } from './controller/account-instagram-controller';
 import { AccountPhoneController } from './controller/account-phone-controller';
+import { View } from 'tamagui';
 
 export const UpdateAccount = () => {
   const { me, setMe } = useCurrentAccountState();
@@ -47,17 +48,19 @@ export const UpdateAccount = () => {
   return (
     me && (
       <PageView scrollable withHeaderHeight withKeyboard gap="$5">
-        <AvatarPicker
-          alignSelf="center"
-          loading={avatarUploading || avatarRemoving}
-          name={me.name}
-          color={me.avatarColor}
-          url={me.avatarUrl}
-          removable={!!me.avatarUrl}
-          size={100}
-          onAttach={onAttach}
-          onRemove={onRemove}
-        />
+        <View>
+          <AvatarPicker
+            alignSelf="center"
+            loading={avatarUploading || avatarRemoving}
+            name={me.name}
+            color={me.avatarColor}
+            url={me.avatarUrl}
+            removable={!!me.avatarUrl}
+            size={100}
+            onAttach={onAttach}
+            onRemove={onRemove}
+          />
+        </View>
 
         <FormView>
           <Input

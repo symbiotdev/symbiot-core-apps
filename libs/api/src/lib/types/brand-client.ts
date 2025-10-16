@@ -67,3 +67,8 @@ export type BrandClientVisitBasedMembership = BrandClientMembership & {
 export type AnyBrandClientMembership =
   | BrandClientPeriodBasedMembership
   | BrandClientVisitBasedMembership;
+
+export type UpdateBrandClientMembership = {
+  endAt?: string;
+  visits?: number;
+}

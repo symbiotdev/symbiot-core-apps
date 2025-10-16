@@ -14,6 +14,7 @@ export function AccountBirthdayController<T extends FieldValues>(props: {
     <DateController
       label={t('shared.account.form.birthday.label')}
       placeholder={t('shared.account.form.birthday.placeholder')}
+      maxDate={new Date()}
       {...props}
     />
   );

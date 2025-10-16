@@ -18,6 +18,7 @@ export function SelectPicker({
   error,
   placeholder,
   disabled,
+  loading,
   required,
   disableDrag,
   lazy,
@@ -36,6 +37,7 @@ export function SelectPicker({
   error?: string;
   placeholder?: string;
   disabled?: boolean;
+  loading?: boolean;
   required?: boolean;
   disableDrag?: boolean;
   lazy?: boolean;
@@ -102,18 +104,15 @@ export function SelectPicker({
         minWidth={200}
         trigger={
           <View gap="$2" pressStyle={{ opacity: 0.8 }}>
-            <InputFieldView disabled={disabled}>
+            <InputFieldView disabled={disabled} gap="$3">
               {!options?.length && optionsLoading ? (
-                <>
-                  <Spinner width={16} height={16} />
-                  <RegularText
-                    color="$placeholderColor"
-                    numberOfLines={1}
-                    flex={1}
-                  >
-                    {placeholder}
-                  </RegularText>
-                </>
+                <RegularText
+                  color="$placeholderColor"
+                  numberOfLines={1}
+                  flex={1}
+                >
+                  {placeholder}
+                </RegularText>
               ) : !formattedValue ? (
                 <RegularText
                   color="$placeholderColor"
@@ -130,6 +129,10 @@ export function SelectPicker({
                 >
                   {formattedValue}
                 </RegularText>
+              )}
+
+              {(loading || (!options?.length && optionsLoading)) && (
+                <Spinner marginLeft="auto" width={16} height={16} />
               )}
             </InputFieldView>
 

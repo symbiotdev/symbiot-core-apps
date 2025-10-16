@@ -27,6 +27,7 @@ import { toDate } from 'date-fns/toDate';
 import { set } from 'date-fns/set';
 import { isValid } from 'date-fns/isValid';
 import i18n from 'i18next';
+import { endOfDay } from 'date-fns/endOfDay';
 
 export const defaultWeekdayStartsOn: Day = 0;
 export const minutesInHour = 60;
@@ -53,6 +54,7 @@ export const DateHelper = {
   addYears,
   startOfMonth,
   startOfDay,
+  endOfDay,
   differenceInMinutes,
   differenceInHours,
   differenceInDays,

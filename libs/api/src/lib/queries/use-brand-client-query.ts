@@ -216,6 +216,31 @@ export const useRemoveBrandClientQuery = () =>
     },
   });
 
+export const useRemoveBrandClientMembershipQuery = () =>
+  useMutation<void, string, { clientId: string; membershipId: string }>({
+    mutationFn: async ({ clientId, membershipId }) => {
+      const response = await requestWithAlertOnError<void>(
+        axios.delete(
+          `/api/brand-client/${clientId}/membership/${membershipId}`,
+        ),
+      );
+
+      const clientQueryKey = [BrandClientQueryKey.detailedById, clientId];
+      const client = queryClient.getQueryData<BrandClient>(clientQueryKey);
+
+      if (client) {
+        queryClient.setQueryData(clientQueryKey, {
+          ...client,
+          memberships: client.memberships.filter(
+            ({ id }) => id !== membershipId,
+          ),
+        });
+      }
+
+      return response;
+    },
+  });
+
 export const useBrandClientImportTemplateQuery = () =>
   useMutation<ArrayBufferLike, string>({
     mutationFn: () =>

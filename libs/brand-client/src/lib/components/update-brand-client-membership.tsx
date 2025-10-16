@@ -75,7 +75,8 @@ const Visits = ({
       value={membership.visits}
       controllerProps={{
         loading: isPending,
-        disabled: isPending
+        disabled: isPending,
+        includeZero: true
       }}
       onUpdate={update}
       Controller={BrandClientMembershipVisitsController}

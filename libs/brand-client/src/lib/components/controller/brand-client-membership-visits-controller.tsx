@@ -16,24 +16,25 @@ export function BrandClientMembershipVisitsController<
   noLabel?: boolean;
   disabled?: boolean;
   loading?: boolean;
+  includeZero?: boolean;
   disableDrag?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
   const tPrefix = getTranslateKeyByBrandMembershipType(props.type);
 
-  const options = useMemo(
-    () =>
-      Array.from({ length: 100 }).map((_, i) => {
-        const value = i + 1;
+  const options = useMemo(() => {
+    const visits = Array.from({ length: 100 }).map((_, i) => {
+      const value = i + 1;
 
-        return {
-          label: String(value),
-          value,
-        };
-      }),
-    [],
-  );
+      return {
+        label: String(value),
+        value,
+      };
+    });
+
+    return props.includeZero ? [{ label: '0', value: 0 }, ...visits] : visits;
+  }, [props.includeZero]);
 
   return (
     <SelectController

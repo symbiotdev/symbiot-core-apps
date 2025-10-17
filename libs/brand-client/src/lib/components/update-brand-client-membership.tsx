@@ -23,7 +23,7 @@ import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 import { SingeElementForm } from '@symbiot-core-apps/form-controller';
 import { BrandClientBirthdayController } from './controller/brand-client-membership-end-at-controller';
-import { XStack } from 'tamagui';
+import { View, XStack } from 'tamagui';
 import { BrandClientMembershipVisitsController } from './controller/brand-client-membership-visits-controller';
 
 export const UpdateBrandClientMembership = ({
@@ -143,15 +143,17 @@ const EndAt = ({
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <XStack gap="$3" alignItems="center" width="100%">
-            <SingeElementForm
-              name="endAt"
-              value={value.endAt}
-              controllerProps={{
-                noLabel: true,
-              }}
-              onUpdate={updateValue}
-              Controller={BrandClientBirthdayController}
-            />
+            <View flex={1}>
+              <SingeElementForm
+                name="endAt"
+                value={value.endAt}
+                controllerProps={{
+                  noLabel: true,
+                }}
+                onUpdate={updateValue}
+                Controller={BrandClientBirthdayController}
+              />
+            </View>
 
             {!!value.endAt && (
               <ButtonIcon

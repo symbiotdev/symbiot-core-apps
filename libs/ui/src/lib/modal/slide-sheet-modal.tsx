@@ -1,9 +1,10 @@
 import { Modal } from 'react-native';
 import { PropsWithChildren, ReactElement } from 'react';
-import { PortalProvider, View, ViewProps } from 'tamagui';
+import { View, ViewProps } from 'tamagui';
 import { headerHeight, ModalHeader } from '../navigation/header';
 import { PageView } from '../view/page-view';
 import { isTablet } from '@symbiot-core-apps/shared';
+import { PortalProvider } from '@tamagui/portal';
 
 export const SlideSheetModal = ({
   children,

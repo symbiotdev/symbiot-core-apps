@@ -20,7 +20,7 @@ export const FormField = ({
   errorProps?: TextProps;
 }>) => {
   return (
-    <View flex={1} height="auto" gap="$2">
+    <View gap="$2">
       {!!label && (
         <Label
           paddingHorizontal="$4"

@@ -255,14 +255,14 @@ export const DrawerMenu = () => {
               additionalRoutes={['/services']}
             />
             <MenuItem
-              route={`/memberships/${BrandMembershipType.period}`}
-              label={t('navigation.drawer.period_based_memberships.label')}
-              icon={icons.PeriodBasedMembership}
-            />
-            <MenuItem
               route={`/memberships/${BrandMembershipType.visits}`}
               label={t('navigation.drawer.visit_based_memberships.label')}
               icon={icons.VisitBasedMembership}
+            />
+            <MenuItem
+              route={`/memberships/${BrandMembershipType.period}`}
+              label={t('navigation.drawer.period_based_memberships.label')}
+              icon={icons.PeriodBasedMembership}
             />
           </>
         )}

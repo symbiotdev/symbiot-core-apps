@@ -146,17 +146,17 @@ const BrandHome = () => {
             />
             <ListItem
               label={t(
-                `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.title`,
-              )}
-              icon={<Icon name={icons.PeriodBasedMembership} />}
-              onPress={onPeriodBasedMembershipsPress}
-            />
-            <ListItem
-              label={t(
                 `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.title`,
               )}
               icon={<Icon name={icons.VisitBasedMembership} />}
               onPress={onVisitBasedMembershipsPress}
+            />
+            <ListItem
+              label={t(
+                `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.title`,
+              )}
+              icon={<Icon name={icons.PeriodBasedMembership} />}
+              onPress={onPeriodBasedMembershipsPress}
             />
             <ListItem
               label={t('brand_gift_card.title')}

@@ -2,6 +2,7 @@ import {
   AdaptivePopover,
   AdaptivePopoverRef,
   Br,
+  defaultPageVerticalPadding,
   Icon,
   ListItem,
 } from '@symbiot-core-apps/ui';
@@ -74,7 +75,7 @@ export const PlusActionAdaptiveModal = ({
         ignoreHapticOnOpen
         trigger={trigger}
       >
-        <View gap="$3">
+        <View gap="$3" marginVertical={-(defaultPageVerticalPadding / 2)}>
           {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && (
             <View gap="$1">
               {hasPermission('locationsAll') && (
@@ -105,18 +106,18 @@ export const PlusActionAdaptiveModal = ({
                 onPress={addService}
               />
               <ListItem
-                icon={<Icon name={icons.PeriodBasedMembership} />}
-                label={t(
-                  'navigation.tabs.plus.actions.add_period_based_membership.label',
-                )}
-                onPress={addPeriodBasedMembership}
-              />
-              <ListItem
                 icon={<Icon name={icons.VisitBasedMembership} />}
                 label={t(
                   'navigation.tabs.plus.actions.add_visit_based_membership.label',
                 )}
                 onPress={addVisitBasedMembership}
+              />
+              <ListItem
+                icon={<Icon name={icons.PeriodBasedMembership} />}
+                label={t(
+                  'navigation.tabs.plus.actions.add_period_based_membership.label',
+                )}
+                onPress={addPeriodBasedMembership}
               />
             </>
           )}

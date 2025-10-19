@@ -8,6 +8,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { useCallback, useState } from 'react';
+import { View } from 'tamagui';
 
 type FormValue = {
   id: string;
@@ -33,7 +34,9 @@ export const BrandNewEmployeeIdForm = ({
 
   return (
     <>
-      <BrandNewEmployeeIdController name="id" control={control} />
+      <View width="100%">
+        <BrandNewEmployeeIdController name="id" control={control} />
+      </View>
 
       <Button
         label={t('brand_employee.create.intro.by_id.action.label')}

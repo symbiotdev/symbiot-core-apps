@@ -36,6 +36,7 @@ export type BrandEmployeePermissions = {
   financesAll: boolean;
   analyticsAll: boolean;
   catalogAll: boolean;
+  bookingAll: boolean;
   clientsAll: boolean;
   employeesAll: boolean;
   locationsAll: boolean;

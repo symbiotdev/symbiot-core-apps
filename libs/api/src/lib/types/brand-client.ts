@@ -47,8 +47,8 @@ type BrandClientMembership = {
   discount: number;
   endAt: string;
   dAt: string;
-  locations: string[];
-  services: string[];
+  locations: { id: string; name: string }[];
+  services: { id: string; name: string }[];
   currency: Currency;
 };
 
@@ -71,4 +71,4 @@ export type AnyBrandClientMembership =
 export type UpdateBrandClientMembership = {
   endAt?: string;
   visits?: number;
-}
+};

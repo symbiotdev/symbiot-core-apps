@@ -75,6 +75,7 @@ import { Ticket } from './Ticket';
 import { Phone } from './Phone';
 import { Wallet } from './Wallet';
 import { Bill } from './Bill';
+import { CalendarCross } from './CalendarCross';
 
 export const Map: IconMap = {
   AddCircle,
@@ -89,6 +90,7 @@ export const Map: IconMap = {
   Bell,
   Bill,
   Calendar,
+  CalendarCross,
   CalendarMinimalistic,
   Camera,
   Card2,

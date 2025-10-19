@@ -39,7 +39,7 @@ export const BrandMembershipItem = ({
       price={membership.price}
       discount={membership.discount}
       currency={membership.currency}
-      locations={membership.locations?.map(({ name }) => name)}
+      locations={membership.locations}
       opacity={membership.hidden ? 0.7 : 1}
       removed={!!membership.dAt}
     />
@@ -51,7 +51,7 @@ export const BrandMembershipItem = ({
       price={membership.price}
       discount={membership.discount}
       currency={membership.currency}
-      locations={membership.locations?.map(({ name }) => name)}
+      locations={membership.locations}
       opacity={membership.hidden ? 0.7 : 1}
       removed={!!membership.dAt}
       endAt={membership.endAt}
@@ -124,7 +124,7 @@ const BrandPeriodBasedMembershipItemView = ({
   price: number;
   discount: number;
   currency: Currency;
-  locations?: string[];
+  locations?: { id: string; name: string }[];
   endAt?: string;
   removed?: boolean;
   period: BrandMembershipPeriod;
@@ -196,7 +196,7 @@ const BrandPeriodBasedMembershipItemView = ({
           {name}
         </H3>
         <RegularText color="$placeholderColor">
-          {locations?.join(', ') || allLocations.label}
+          {locations?.map(({ name }) => name)?.join(', ') || allLocations.label}
         </RegularText>
       </View>
 
@@ -248,7 +248,7 @@ const BrandVisitBasedMembershipItemView = ({
   price: number;
   discount: number;
   currency: Currency;
-  locations?: string[];
+  locations?: { id: string; name: string }[];
   removed?: boolean;
   endAt?: string;
 }) => {
@@ -316,7 +316,8 @@ const BrandVisitBasedMembershipItemView = ({
             textAlign="center"
             numberOfLines={2}
           >
-            {locations?.join(', ') || allLocations.label}
+            {locations?.map(({ name }) => name)?.join(', ') ||
+              allLocations.label}
           </RegularText>
         </View>
 

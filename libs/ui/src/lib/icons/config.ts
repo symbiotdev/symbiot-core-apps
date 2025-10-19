@@ -14,6 +14,7 @@ export type IconName =
   | 'Bell'
   | 'Bill'
   | 'Calendar'
+  | 'CalendarCross'
   | 'CalendarMinimalistic'
   | 'Camera'
   | 'Card2'

@@ -23,7 +23,6 @@ import React, { useCallback, useMemo } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { useTranslation } from 'react-i18next';
 import {
-  ArrayForm,
   SingeElementForm,
   SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
@@ -40,7 +39,6 @@ import {
   formatPrice,
 } from '@symbiot-core-apps/shared';
 import { BrandServiceDurationController } from './controller/brand-service-duration-controller';
-import { BrandServiceRemindersController } from './controller/brand-service-reminders-controller';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { BrandServiceCurrencyController } from './controller/brand-service-currency-controller';
 import { BrandServicePriceController } from './controller/brand-service-price-controller';
@@ -50,9 +48,11 @@ import { BrandServiceLocationController } from './controller/brand-service-locat
 import { BrandServiceEmployeesController } from './controller/brand-service-employees-controller';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
+import { useApp } from '@symbiot-core-apps/app';
 
 export const UpdateBrandService = ({ service }: { service: BrandService }) => {
   const { height } = useWindowDimensions();
+  const { functionality } = useApp();
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
     useUpdateBrandServiceQuery();
 
@@ -89,11 +89,13 @@ export const UpdateBrandService = ({ service }: { service: BrandService }) => {
       <Availability service={service} />
 
       <ListItemGroup style={formViewStyles}>
-        <Pricing service={service} />
+        {functionality.availability.servicePrice && (
+          <Pricing service={service} />
+        )}
+
         <LocationProviders service={service} />
         <About service={service} />
         <Structure service={service} />
-        <Scheduling service={service} />
         <Note service={service} />
       </ListItemGroup>
     </PageView>
@@ -392,6 +394,7 @@ const Structure = ({ service }: { service: BrandService }) => {
         type: string;
         format: string;
         places: number;
+        duration: number;
         gender: string;
       },
       TUpdateBrandService
@@ -402,6 +405,7 @@ const Structure = ({ service }: { service: BrandService }) => {
         type: service.type?.value,
         format: service.format?.value,
         places: service.places,
+        duration: service.duration,
         gender: service.gender?.value,
       },
     });
@@ -413,6 +417,7 @@ const Structure = ({ service }: { service: BrandService }) => {
         iconAfter={<Icon name="ArrowRight" />}
         label={t('brand_service.update.groups.structure.title')}
         text={[
+          `${t('brand_service.form.duration.label')} (${DateHelper.formatDuration(value.duration)})`,
           service.type?.label,
           service.format
             ? `${service.format.label}${!service.format.fixed ? ` (${service.places})` : ''}`
@@ -459,72 +464,6 @@ const Structure = ({ service }: { service: BrandService }) => {
             />
           )}
           <SingeElementForm
-            name="gender"
-            value={value.gender}
-            controllerProps={{
-              disableDrag: true,
-            }}
-            onUpdate={updateValue}
-            Controller={BrandServiceGenderController}
-          />
-        </FormView>
-      </SlideSheetModal>
-    </>
-  );
-};
-
-const Scheduling = ({ service }: { service: BrandService }) => {
-  const { t } = useTranslation();
-  const { value, modalVisible, openModal, closeModal, updateValue } =
-    useModalUpdateByIdForm<
-      BrandService,
-      {
-        duration: number;
-        reminders: number[];
-      },
-      TUpdateBrandService
-    >({
-      id: service.id,
-      query: useUpdateBrandServiceQuery,
-      initialValue: {
-        duration: service.duration,
-        reminders: service.reminders,
-      },
-    });
-
-  return (
-    <>
-      <ListItem
-        icon={<Icon name="Calendar" />}
-        iconAfter={<Icon name="ArrowRight" />}
-        label={t('brand_service.update.groups.scheduling.title')}
-        text={[
-          `${t('brand_service.form.duration.label')} (${DateHelper.formatDuration(service.duration)})`,
-          value.reminders?.length
-            ? `${t('brand_service.form.reminders.label')} (${t(
-                'shared.datetime.time_before',
-                {
-                  value: value.reminders
-                    .sort((a, b) => a - b)
-                    .map((minutes) => DateHelper.formatDuration(minutes))
-                    .join(', '),
-                },
-              )})`
-            : '',
-        ]
-          .filter(Boolean)
-          .join(' · ')}
-        onPress={openModal}
-      />
-
-      <SlideSheetModal
-        scrollable
-        headerTitle={t('brand_service.update.groups.scheduling.title')}
-        visible={modalVisible}
-        onClose={closeModal}
-      >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <SingeElementForm
             name="duration"
             value={value.duration}
             controllerProps={{
@@ -533,11 +472,14 @@ const Scheduling = ({ service }: { service: BrandService }) => {
             onUpdate={updateValue}
             Controller={BrandServiceDurationController}
           />
-          <ArrayForm
-            name="reminders"
-            value={value.reminders}
+          <SingeElementForm
+            name="gender"
+            value={value.gender}
+            controllerProps={{
+              disableDrag: true,
+            }}
             onUpdate={updateValue}
-            Controller={BrandServiceRemindersController}
+            Controller={BrandServiceGenderController}
           />
         </FormView>
       </SlideSheetModal>

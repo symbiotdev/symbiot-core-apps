@@ -16,8 +16,6 @@ import { BrandServiceTypeController } from './controller/brand-service-type-cont
 import { BrandServiceFormatController } from './controller/brand-service-format-controller';
 import { BrandServiceGenderController } from './controller/brand-service-gender-controller';
 import { BrandServicePlacesController } from './controller/brand-service-places-controller';
-import { BrandServiceDurationController } from './controller/brand-service-duration-controller';
-import { BrandServiceRemindersController } from './controller/brand-service-reminders-controller';
 import { BrandServiceLocationController } from './controller/brand-service-location-controller';
 import { BrandServiceEmployeesController } from './controller/brand-service-employees-controller';
 import { BrandServicePriceController } from './controller/brand-service-price-controller';
@@ -27,10 +25,13 @@ import { BrandServiceCurrencyController } from './controller/brand-service-curre
 import { BrandServiceNoteController } from './controller/brand-service-note-controller';
 import { EventArg, NavigationAction } from '@react-navigation/native';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
+import { BrandServiceDurationController } from './controller/brand-service-duration-controller';
+import { useApp } from '@symbiot-core-apps/app';
 
 export const CreateBrandService = () => {
   const { brand } = useCurrentBrandState();
   const { t } = useTranslation();
+  const { functionality } = useApp();
   const { height } = useWindowDimensions();
   const { mutateAsync, isPending } = useCreateBrandServiceQuery();
   const navigation = useNavigation();
@@ -66,26 +67,14 @@ export const CreateBrandService = () => {
     type: string | null;
     format: string | null;
     places: number;
+    duration: number;
     gender: string | null;
   }>({
     defaultValues: {
       type: null,
       format: null,
       gender: null,
-    },
-  });
-
-  const {
-    control: schedulingControl,
-    getValues: schedulingGetValues,
-    formState: schedulingFormState,
-  } = useForm<{
-    duration: number;
-    reminders: number[];
-  }>({
-    defaultValues: {
       duration: 60,
-      reminders: [],
     },
   });
 
@@ -145,8 +134,7 @@ export const CreateBrandService = () => {
 
   const onFinish = useCallback(async () => {
     const { name, description, available } = aboutGetValues();
-    const { type, format, places, gender } = structureGetValues();
-    const { duration, reminders } = schedulingGetValues();
+    const { type, format, places, gender, duration } = structureGetValues();
     const { location } = locationGetValues();
     const { employees } = providersGetValues();
     const { currency, price, discount } = pricingGetValues();
@@ -162,7 +150,6 @@ export const CreateBrandService = () => {
       places,
       gender,
       duration,
-      reminders,
       locations: location ? [location] : [],
       employees,
       currency,
@@ -182,7 +169,6 @@ export const CreateBrandService = () => {
     mutateAsync,
     noteGetValues,
     pricingGetValues,
-    schedulingGetValues,
     structureGetValues,
   ]);
 
@@ -283,7 +269,6 @@ export const CreateBrandService = () => {
           name="format"
           control={structureControl}
         />
-
         {formats?.find(({ value }) => format === value)?.fixed === false && (
           <BrandServicePlacesController
             required
@@ -291,28 +276,16 @@ export const CreateBrandService = () => {
             control={structureControl}
           />
         )}
-
+        <BrandServiceDurationController
+          required
+          name="duration"
+          control={structureControl}
+        />
         <BrandServiceGenderController
           required
           withEmpty
           name="gender"
           control={structureControl}
-        />
-      </SurveyStep>
-
-      <SurveyStep
-        canGoNext={schedulingFormState.isValid}
-        title={t('brand_service.create.steps.scheduling.title')}
-        subtitle={t('brand_service.create.steps.scheduling.subtitle')}
-      >
-        <BrandServiceDurationController
-          required
-          name="duration"
-          control={schedulingControl}
-        />
-        <BrandServiceRemindersController
-          name="reminders"
-          control={schedulingControl}
         />
       </SurveyStep>
 
@@ -343,29 +316,31 @@ export const CreateBrandService = () => {
         />
       </SurveyStep>
 
-      <SurveyStep
-        canGoNext={pricingFormState.isValid && discount <= price}
-        title={t('brand_service.create.steps.pricing.title')}
-        subtitle={t('brand_service.create.steps.pricing.subtitle')}
-      >
-        {brand?.currencies && brand.currencies.length > 1 && (
-          <BrandServiceCurrencyController
-            name="currency"
+      {functionality.availability.servicePrice && (
+        <SurveyStep
+          canGoNext={pricingFormState.isValid && discount <= price}
+          title={t('brand_service.create.steps.pricing.title')}
+          subtitle={t('brand_service.create.steps.pricing.subtitle')}
+        >
+          {brand?.currencies && brand.currencies.length > 1 && (
+            <BrandServiceCurrencyController
+              name="currency"
+              control={pricingControl}
+            />
+          )}
+
+          <BrandServicePriceController
+            name="price"
+            currency={priceCurrency}
             control={pricingControl}
           />
-        )}
-
-        <BrandServicePriceController
-          name="price"
-          currency={priceCurrency}
-          control={pricingControl}
-        />
-        <BrandServiceDiscountController
-          name="discount"
-          currency={priceCurrency}
-          control={pricingControl}
-        />
-      </SurveyStep>
+          <BrandServiceDiscountController
+            name="discount"
+            currency={priceCurrency}
+            control={pricingControl}
+          />
+        </SurveyStep>
+      )}
 
       <SurveyStep
         skippable

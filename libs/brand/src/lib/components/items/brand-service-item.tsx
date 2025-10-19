@@ -3,6 +3,7 @@ import { ViewProps, XStack } from 'tamagui';
 import { Chip, FormView, MediumText, RegularText } from '@symbiot-core-apps/ui';
 import { BrandService } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
+import { useApp } from '@symbiot-core-apps/app';
 
 export const BrandServiceItem = ({
   service,
@@ -13,6 +14,7 @@ export const BrandServiceItem = ({
   service: BrandService;
   hidePricing?: boolean;
 }) => {
+  const { functionality } = useApp();
   const { t } = useTranslation();
 
   return (
@@ -32,7 +34,7 @@ export const BrandServiceItem = ({
           {service.name}
         </MediumText>
 
-        {!hidePricing && (
+        {!hidePricing && functionality.availability.servicePrice && (
           <>
             {service.price ? (
               <XStack gap="$2" alignItems="center">

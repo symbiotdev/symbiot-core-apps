@@ -28,7 +28,6 @@ export type BrandService = {
   places: number;
   avatarUrl: string;
   avatarXsUrl: string;
-  reminders: number[];
   currency: Currency;
   gender: Gender;
   type: BrandServiceType;
@@ -52,7 +51,6 @@ export type CreateBrandService = {
   description?: string;
   locations?: string[];
   employees?: string[];
-  reminders?: number[];
   avatar?: ImagePickerAsset;
 };
 

@@ -23,6 +23,7 @@ import {
   emitHaptic,
   SCREEN_MEDIA_SIZE,
   useKeyboardDismisser,
+  useRendered,
   useScreenSize,
 } from '@symbiot-core-apps/shared';
 import { ContainerView } from '../view/container-view';
@@ -85,6 +86,7 @@ export const AdaptivePopover = forwardRef(
     const { media } = useScreenSize();
     const { height } = useWindowDimensions();
     const { top, bottom, left, right } = useSafeAreaInsets();
+    const { rendered } = useRendered({ delay: 500 });
 
     const popoverListRef = useRef<ScrollView>(null);
     const sheetListRef = useRef<ScrollView>(null);
@@ -221,7 +223,7 @@ export const AdaptivePopover = forwardRef(
           )}
         </Popover.Content>
 
-        {!ignoreAdaptive && (
+        {!ignoreAdaptive && rendered && (
           <Adapt when={adaptiveMediaSize}>
             <Popover.Sheet
               modal

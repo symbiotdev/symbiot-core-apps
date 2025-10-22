@@ -46,7 +46,7 @@ export const BrandClientBalance = ({ client }: { client: BrandClient }) => {
         />
       )}
 
-      {hasPermission('catalogAll') &&
+      {hasPermission('catalog') &&
         client.memberships?.map((membership) => (
           <BrandClientMembershipItem
             alignSelf="center"

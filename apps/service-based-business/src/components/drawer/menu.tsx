@@ -211,13 +211,11 @@ export const DrawerMenu = () => {
           />
         )}
 
-        {hasAnyOfPermissions([
-          'clientsAll',
-          'locationsAll',
-          'employeesAll',
-        ]) && <Br marginHorizontal={defaultPageHorizontalPadding} />}
+        {hasAnyOfPermissions(['clients', 'locations', 'employees']) && (
+          <Br marginHorizontal={defaultPageHorizontalPadding} />
+        )}
 
-        {hasPermission('clientsAll') && (
+        {hasPermission('clients') && (
           <MenuItem
             route="/clients"
             label={t('navigation.drawer.clients.label')}
@@ -226,7 +224,7 @@ export const DrawerMenu = () => {
           />
         )}
 
-        {hasPermission('locationsAll') && (
+        {hasPermission('locations') && (
           <MenuItem
             route="/locations"
             label={t('navigation.drawer.locations.label')}
@@ -235,7 +233,7 @@ export const DrawerMenu = () => {
           />
         )}
 
-        {hasPermission('employeesAll') && (
+        {hasPermission('employees') && (
           <MenuItem
             route="/employees"
             label={t('navigation.drawer.employees.label')}
@@ -244,7 +242,7 @@ export const DrawerMenu = () => {
           />
         )}
 
-        {hasPermission('catalogAll') && (
+        {hasPermission('catalog') && (
           <>
             <Br marginHorizontal={defaultPageHorizontalPadding} />
 
@@ -267,11 +265,11 @@ export const DrawerMenu = () => {
           </>
         )}
 
-        {hasAnyOfPermissions(['analyticsAll', 'financesAll']) && (
+        {hasAnyOfPermissions(['analytics', 'finances']) && (
           <Br marginHorizontal={defaultPageHorizontalPadding} />
         )}
 
-        {hasPermission('analyticsAll') && (
+        {hasPermission('analytics') && (
           <MenuItem
             route="/brand/analytics"
             label={t('navigation.drawer.analytics.label')}
@@ -279,7 +277,7 @@ export const DrawerMenu = () => {
           />
         )}
 
-        {hasPermission('financesAll') && (
+        {hasPermission('finances') && (
           <MenuItem
             route="/transactions"
             label={t('navigation.drawer.transactions.label')}

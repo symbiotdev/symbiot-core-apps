@@ -153,7 +153,7 @@ export default () => {
                 <Stack.Protected guard={!!currentBrand}>
                   <Stack.Screen name="brand/profile" />
 
-                  <Stack.Protected guard={hasPermission('analyticsAll')}>
+                  <Stack.Protected guard={hasPermission('analytics')}>
                     <Stack.Screen
                       name="brand/analytics"
                       options={{
@@ -165,7 +165,7 @@ export default () => {
                     />
                   </Stack.Protected>
 
-                  <Stack.Protected guard={hasPermission('brandAll')}>
+                  <Stack.Protected guard={hasPermission('brand')}>
                     <Stack.Screen
                       name="brand/update"
                       options={{
@@ -186,8 +186,8 @@ export default () => {
 
                 {/*CLIENTS*/}
 
-                <Stack.Protected guard={hasPermission('clientsAll')}>
-                  <Stack.Protected guard={hasPermission('analyticsAll')}>
+                <Stack.Protected guard={hasPermission('clients')}>
+                  <Stack.Protected guard={hasPermission('analytics')}>
                     <Stack.Screen
                       name="clients/[id]/analytics"
                       options={{
@@ -196,13 +196,13 @@ export default () => {
                     />
                   </Stack.Protected>
 
-                  <Stack.Protected guard={hasPermission('catalogAll')}>
+                  <Stack.Protected guard={hasPermission('catalog')}>
                     <Stack.Screen name="clients/[id]/memberships/[membershipId]/update" />
                     <Stack.Screen name="clients/[id]/memberships/[membershipId]/remove" />
                     <Stack.Screen name="clients/[id]/memberships/[type]/index" />
                   </Stack.Protected>
 
-                  <Stack.Protected guard={hasPermission('financesAll')}>
+                  <Stack.Protected guard={hasPermission('finances')}>
                     <Stack.Screen name="clients/[id]/transactions" />
                   </Stack.Protected>
 
@@ -245,8 +245,8 @@ export default () => {
 
                 {/*EMPLOYEES*/}
 
-                <Stack.Protected guard={hasPermission('employeesAll')}>
-                  <Stack.Protected guard={hasPermission('analyticsAll')}>
+                <Stack.Protected guard={hasPermission('employees')}>
+                  <Stack.Protected guard={hasPermission('analytics')}>
                     <Stack.Screen
                       name="employees/[id]/analytics"
                       options={{
@@ -300,8 +300,8 @@ export default () => {
 
                 {/*LOCATIONS*/}
 
-                <Stack.Protected guard={hasPermission('locationsAll')}>
-                  <Stack.Protected guard={hasPermission('analyticsAll')}>
+                <Stack.Protected guard={hasPermission('locations')}>
+                  <Stack.Protected guard={hasPermission('analytics')}>
                     <Stack.Screen
                       name="locations/[id]/analytics"
                       options={{
@@ -341,8 +341,8 @@ export default () => {
 
                 {/*MEMBERSHIPS*/}
 
-                <Stack.Protected guard={hasPermission('catalogAll')}>
-                  <Stack.Protected guard={hasPermission('analyticsAll')}>
+                <Stack.Protected guard={hasPermission('catalog')}>
+                  <Stack.Protected guard={hasPermission('analytics')}>
                     <Stack.Screen name="memberships/[type]/[id]/analytics" />
                   </Stack.Protected>
                   <Stack.Screen name="memberships/[type]/[id]/remove" />
@@ -379,8 +379,8 @@ export default () => {
 
                 {/*SERVICES*/}
 
-                <Stack.Protected guard={hasPermission('catalogAll')}>
-                  <Stack.Protected guard={hasPermission('analyticsAll')}>
+                <Stack.Protected guard={hasPermission('catalog')}>
+                  <Stack.Protected guard={hasPermission('analytics')}>
                     <Stack.Screen
                       name="services/[id]/analytics"
                       options={{
@@ -420,7 +420,7 @@ export default () => {
 
                 {/*TRANSACTIONS*/}
 
-                <Stack.Protected guard={hasPermission('financesAll')}>
+                <Stack.Protected guard={hasPermission('finances')}>
                   <Stack.Screen
                     name="transactions/index"
                     options={{

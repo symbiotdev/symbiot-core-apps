@@ -28,10 +28,12 @@ export default () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: t(`${getTranslateKeyByBrandMembershipType(type)}.profile.title`),
+      headerTitle: t(
+        `${getTranslateKeyByBrandMembershipType(type)}.profile.title`,
+      ),
       headerRight: () => (
         <XStack gap="$3">
-          {hasPermission('analyticsAll') && (
+          {hasPermission('analytics') && (
             <HeaderButton
               iconName="ChartSquare"
               onPress={() =>
@@ -39,7 +41,7 @@ export default () => {
               }
             />
           )}
-          {hasPermission('catalogAll') && (
+          {hasPermission('catalog') && (
             <HeaderButton
               iconName="SettingsMinimalistic"
               onPress={() => router.push(`/memberships/${type}/${id}/update`)}

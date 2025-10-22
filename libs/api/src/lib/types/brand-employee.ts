@@ -32,15 +32,15 @@ export type BrandEmployeeSchedule = Schedule & {
 };
 
 export type BrandEmployeePermissions = {
-  brandAll: boolean;
-  notificationAll: boolean;
-  financesAll: boolean;
-  analyticsAll: boolean;
-  catalogAll: boolean;
-  bookingAll: boolean;
-  clientsAll: boolean;
-  employeesAll: boolean;
-  locationsAll: boolean;
+  brand: boolean;
+  notifications: boolean;
+  finances: boolean;
+  analytics: boolean;
+  catalog: boolean;
+  bookings: boolean;
+  clients: boolean;
+  employees: boolean;
+  locations: boolean;
 };
 
 export type BrandEmployeePermission = {

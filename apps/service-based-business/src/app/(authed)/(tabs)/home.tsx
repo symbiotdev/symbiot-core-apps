@@ -128,6 +128,7 @@ const BrandHome = () => {
         />
 
         {hasPermission('clientsAll') && (
+        {hasPermission('clients') && (
           <ListItemGroup title={t('brand.profile.stakeholders')}>
             <ListItem
               label={t('brand_client.title')}
@@ -137,7 +138,7 @@ const BrandHome = () => {
           </ListItemGroup>
         )}
 
-        {hasPermission('catalogAll') && (
+        {hasPermission('catalog') && (
           <ListItemGroup title={t('shared.catalog')}>
             <ListItem
               label={t('brand_service.title')}
@@ -172,7 +173,7 @@ const BrandHome = () => {
           </ListItemGroup>
         )}
 
-        {hasAnyOfPermissions(['financesAll']) && (
+        {hasPermission('finances') && (
           <ListItemGroup title={t('brand.profile.finance')}>
             <ListItem
               label={t('brand_transaction.title')}
@@ -182,9 +183,9 @@ const BrandHome = () => {
           </ListItemGroup>
         )}
 
-        {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && (
+        {hasAnyOfPermissions(['employees', 'locations']) && (
           <ListItemGroup title={t('brand.profile.infrastructure')}>
-            {hasPermission('locationsAll') && (
+            {hasPermission('locations') && (
               <ListItem
                 label={t('brand_location.title')}
                 icon={<Icon name="MapPointWave" />}
@@ -192,7 +193,7 @@ const BrandHome = () => {
               />
             )}
 
-            {hasPermission('employeesAll') && (
+            {hasPermission('employees') && (
               <ListItem
                 label={t('brand_employee.title')}
                 icon={<Icon name="UsersGroupRounded" />}

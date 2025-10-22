@@ -12,9 +12,9 @@ export const BrandClientHistory = ({ client }: { client: BrandClient }) => {
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
 
   return (
-    hasAnyOfPermissions(['catalogAll', 'financesAll']) && (
+    hasAnyOfPermissions(['catalog', 'finances']) && (
       <ListItemGroup title={t('brand_client.history.title')}>
-        {hasPermission('catalogAll') && (
+        {hasPermission('catalog') && (
           <>
             <ListItem
               label={t('brand_client.history.menu.visit_based_memberships')}
@@ -39,7 +39,7 @@ export const BrandClientHistory = ({ client }: { client: BrandClient }) => {
           </>
         )}
 
-        {hasPermission('financesAll') && (
+        {hasPermission('finances') && (
           <ListItem
             label={t('brand_client.history.menu.transactions')}
             icon={<Icon name="Bill" />}

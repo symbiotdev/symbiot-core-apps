@@ -20,13 +20,13 @@ export default () => {
     navigation.setOptions({
       headerRight: () => (
         <XStack gap="$3">
-          {hasPermission('analyticsAll') && (
+          {hasPermission('analytics') && (
             <HeaderButton
               iconName="ChartSquare"
               onPress={() => router.push(`/clients/${id}/analytics`)}
             />
           )}
-          {hasPermission('clientsAll') && (
+          {hasPermission('clients') && (
             <HeaderButton
               iconName="SettingsMinimalistic"
               onPress={() => router.push(`/clients/${id}/update`)}

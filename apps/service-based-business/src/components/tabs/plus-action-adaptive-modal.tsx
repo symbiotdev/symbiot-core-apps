@@ -63,22 +63,17 @@ export const PlusActionAdaptiveModal = ({
   }, []);
 
   return (
-    hasAnyOfPermissions([
-      'employeesAll',
-      'locationsAll',
-      'catalogAll',
-      'clientsAll',
-    ]) && (
+    hasAnyOfPermissions(['employees', 'locations', 'catalog', 'clients']) && (
       <AdaptivePopover
         ref={popoverRef}
         placement={placement}
         ignoreHapticOnOpen
         trigger={trigger}
       >
-        <View gap="$3" marginVertical={-(defaultPageVerticalPadding / 2)}>
-          {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && (
-            <View gap="$1">
-              {hasPermission('locationsAll') && (
+        <View gap="$1" marginVertical={-(defaultPageVerticalPadding / 2)}>
+          {hasAnyOfPermissions(['employees', 'locations']) && (
+            <>
+              {hasPermission('locations') && (
                 <ListItem
                   icon={<Icon name="MapPointWave" />}
                   label={t('navigation.tabs.plus.actions.add_location.label')}
@@ -86,19 +81,19 @@ export const PlusActionAdaptiveModal = ({
                 />
               )}
 
-              {hasPermission('employeesAll') && (
+              {hasPermission('employees') && (
                 <ListItem
                   icon={<Icon name="UsersGroupRounded" />}
                   label={t('navigation.tabs.plus.actions.add_employee.label')}
                   onPress={addEmployee}
                 />
               )}
-            </View>
+            </>
           )}
 
-          {hasPermission('catalogAll') && (
+          {hasPermission('catalog') && (
             <>
-              {hasAnyOfPermissions(['employeesAll', 'locationsAll']) && <Br />}
+              {hasAnyOfPermissions(['employees', 'locations']) && <Br />}
 
               <ListItem
                 icon={<Icon name={icons.Service} />}
@@ -122,14 +117,12 @@ export const PlusActionAdaptiveModal = ({
             </>
           )}
 
-          {hasAnyOfPermissions([
-            'employeesAll',
-            'locationsAll',
-            'catalogAll',
-          ]) && <Br />}
+          {hasPermission('clients') && (
+            <>
+              {hasAnyOfPermissions(['employees', 'locations', 'catalog']) && (
+                <Br />
+              )}
 
-          {hasPermission('clientsAll') && (
-            <View gap="$1">
               <ListItem
                 icon={<Icon name="Import" />}
                 label={t('navigation.tabs.plus.actions.import_client.label')}

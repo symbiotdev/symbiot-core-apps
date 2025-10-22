@@ -2,13 +2,12 @@ import { BrandLocation } from './brand-location';
 import { Gender } from './gender';
 import { Schedule } from './schedule';
 import { ImagePickerAsset } from 'expo-image-picker';
+import { Attachment } from './attachment';
 
 export type BrandEmployee = {
   id: string;
   about: string;
   avatarColor: string;
-  avatarUrl: string;
-  avatarXsUrl: string;
   name: string;
   firstname: string;
   lastname: string;
@@ -22,6 +21,7 @@ export type BrandEmployee = {
   gender: Gender;
   phones: string[];
   instagrams: string[];
+  avatar: Attachment;
   locations: BrandLocation[];
   schedules: BrandEmployeeSchedule[];
   permissions: BrandEmployeePermissions;
@@ -33,6 +33,7 @@ export type BrandEmployeeSchedule = Schedule & {
 
 export type BrandEmployeePermissions = {
   brandAll: boolean;
+  notificationAll: boolean;
   financesAll: boolean;
   analyticsAll: boolean;
   catalogAll: boolean;

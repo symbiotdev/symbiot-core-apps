@@ -20,7 +20,7 @@ export const parseImportedClients = (
     birthday: 4,
     gender: 5,
     address: 6,
-    avatarUrl: 7,
+    avatar: 7,
   };
   const result: {
     summary: ImportedClientsSummary;
@@ -50,9 +50,9 @@ export const parseImportedClients = (
       client[keys.address] && client[keys.address] !== '-'
         ? String(client[keys.address]).trim().substring(0, 150)
         : '';
-    const avatarUrl =
-      client[keys.avatarUrl] && client[keys.avatarUrl] !== '-'
-        ? String(client[keys.avatarUrl])
+    const avatar =
+      client[keys.avatar] && client[keys.avatar] !== '-'
+        ? String(client[keys.avatar])
         : '';
     const gender =
       client[keys.gender] && client[keys.gender] !== '-'
@@ -106,7 +106,7 @@ export const parseImportedClients = (
     result.clients.push({
       firstname,
       lastname,
-      avatarUrl,
+      avatar,
       gender,
       birthday: birthday
         ? DateHelper.startOfDay(

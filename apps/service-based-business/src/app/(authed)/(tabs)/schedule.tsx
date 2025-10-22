@@ -91,7 +91,7 @@ export default () => {
         <Avatar
           name={me.name}
           size={headerButtonSize}
-          url={me.avatarXsUrl}
+          url={me.avatar?.xsUrl}
           color={me.avatarColor}
         />
       ) : (

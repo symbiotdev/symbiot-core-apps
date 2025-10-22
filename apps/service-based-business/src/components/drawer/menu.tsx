@@ -175,7 +175,7 @@ export const DrawerMenu = () => {
                   size={defaultIconSize + 8}
                   name={currentBrand.name}
                   color={currentBrand.avatarColor}
-                  url={currentBrand.avatarXsUrl}
+                  url={currentBrand.avatar?.xsUrl}
                 />
               }
             />

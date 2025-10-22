@@ -140,7 +140,7 @@ export default () => {
               onPress={onAccountPress}
             >
               <Avatar
-                url={me.avatarXsUrl}
+                url={me.avatar?.xsUrl}
                 name={me.name}
                 color={me.avatarColor}
                 size={50}

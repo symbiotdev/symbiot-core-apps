@@ -23,8 +23,6 @@ export type BrandLocation = {
   remark: string;
   floor: string;
   entrance: string;
-  avatarUrl: string;
-  avatarXsUrl: string;
   phones: string[];
   emails: string[];
   instagrams: string[];
@@ -32,6 +30,7 @@ export type BrandLocation = {
   usState: BrandLocationUsState;
   schedules: Schedule[];
   gallery: Attachment[];
+  avatar: Attachment;
   advantages: BrandLocationAdvantage[];
 };
 

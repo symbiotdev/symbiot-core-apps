@@ -51,7 +51,7 @@ export default () => {
         >
           <Avatar
             name={currentBrand.name}
-            url={currentBrand.avatarXsUrl}
+            url={currentBrand.avatar?.xsUrl}
             size={30}
           />
           <H3 lineHeight={headerButtonSize} numberOfLines={1}>

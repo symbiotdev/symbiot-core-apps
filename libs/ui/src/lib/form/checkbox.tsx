@@ -28,7 +28,7 @@ export const Checkbox = ({
   }, [disabled, onChange, value]);
 
   return (
-    <View gap="$2" flex={1}>
+    <View gap="$2">
       <XStack
         gap="$3"
         alignItems="center"

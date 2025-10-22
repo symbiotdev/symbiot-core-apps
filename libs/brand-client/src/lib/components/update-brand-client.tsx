@@ -57,7 +57,7 @@ export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
           loading={avatarUpdating}
           name={`${client.firstname} ${client.lastname}`}
           color="$background1"
-          url={client.avatarUrl}
+          url={client.avatar?.url}
           size={100}
           onAttach={onAddAvatar}
         />

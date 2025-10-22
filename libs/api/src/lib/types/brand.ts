@@ -2,6 +2,7 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { Account } from './account';
 import { BrandLocation } from './brand-location';
 import { Currency } from './currency';
+import { Attachment } from './attachment';
 
 export type BrandCountry = {
   flag: string;
@@ -24,11 +25,10 @@ export type Brand = {
   id: string;
   name: string;
   avatarColor: string;
-  avatarUrl: string;
-  avatarXsUrl: string;
   about: string;
   birthday: string;
   owner: Account;
+  avatar: Attachment;
   industries: BrandIndustry[];
   countries: BrandCountry[];
   currencies: Currency[];

@@ -72,7 +72,7 @@ export const CurrentBrandClients = ({
         <Avatar
           name={`${item.firstname} ${item.lastname}`}
           size={40}
-          url={item.avatarXsUrl}
+          url={item.avatar?.xsUrl}
         />
 
         <MediumText numberOfLines={1} flex={1}>

@@ -1,6 +1,7 @@
 import { AccountPreferences } from './account-preferences';
 import { Gender } from './gender';
 import { ImagePickerAsset } from 'expo-image-picker';
+import { Attachment } from './attachment';
 
 export type Account = {
   id: string;
@@ -8,8 +9,6 @@ export type Account = {
   firstname: string;
   lastname: string;
   avatarColor: string;
-  avatarUrl: string;
-  avatarXsUrl: string;
   timezone: string;
   language: string;
   test: boolean;
@@ -21,6 +20,7 @@ export type Account = {
   email: string;
   lastRateDate: string;
   birthday: string;
+  avatar: Attachment;
   preferences: AccountPreferences;
   phones: string[];
   instagrams: string[];

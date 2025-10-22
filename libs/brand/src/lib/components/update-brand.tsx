@@ -63,7 +63,7 @@ export const UpdateBrand = () => {
             loading={isAvatarUpdating}
             name={brand.name}
             color={brand.avatarColor}
-            url={brand.avatarUrl}
+            url={brand.avatar?.url}
             size={100}
             onAttach={updateAvatar$}
           />

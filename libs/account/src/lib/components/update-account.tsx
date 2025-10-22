@@ -54,8 +54,8 @@ export const UpdateAccount = () => {
             loading={avatarUploading || avatarRemoving}
             name={me.name}
             color={me.avatarColor}
-            url={me.avatarUrl}
-            removable={!!me.avatarUrl}
+            url={me.avatar?.url}
+            removable={!!me.avatar}
             size={100}
             onAttach={onAttach}
             onRemove={onRemove}

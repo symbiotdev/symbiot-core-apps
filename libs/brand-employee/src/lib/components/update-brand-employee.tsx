@@ -82,7 +82,7 @@ export const UpdateBrandEmployee = ({
           loading={avatarUpdating}
           name={employee.name}
           color={employee?.avatarColor}
-          url={employee.avatarUrl}
+          url={employee.avatar?.url}
           size={100}
           onAttach={onAddAvatar}
         />

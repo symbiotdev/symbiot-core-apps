@@ -30,7 +30,7 @@ export const MyBrandsSelectionList = () => {
           <Avatar
             name={brand.name}
             size={40}
-            url={brand.avatarXsUrl}
+            url={brand.avatar?.xsUrl}
             color={brand.avatarColor}
           />
           <SemiBoldText numberOfLines={1} flex={1}>

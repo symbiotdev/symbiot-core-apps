@@ -32,7 +32,7 @@ export const BrandEmployeeItem = ({
       <Avatar
         name={employee.name}
         size={40}
-        url={employee.avatarXsUrl}
+        url={employee.avatar?.xsUrl}
         color={employee.avatarColor}
       />
 

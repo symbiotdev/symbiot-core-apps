@@ -38,7 +38,7 @@ export const BrandLocationMediaForm = ({
 
       return !image
         ? Promise.resolve()
-        : removeGalleryImage({ id: location.id, imageId: image.id });
+        : removeGalleryImage({ id: location.id, imageName: image.name });
     },
     [location.gallery, location.id, removeGalleryImage],
   );
@@ -62,7 +62,7 @@ export const BrandLocationMediaForm = ({
           loading={avatarUpdating}
           name={location.name}
           color={brand?.avatarColor}
-          url={location.avatarUrl || brand?.avatarUrl}
+          url={location.avatar?.url || brand?.avatar?.url}
           size={100}
           onAttach={onAddAvatar}
         />

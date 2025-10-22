@@ -3,6 +3,7 @@ import { BrandEmployee } from './brand-employee';
 import { Gender } from './gender';
 import { Currency } from './currency';
 import { BrandLocation } from './brand-location';
+import { Attachment } from './attachment';
 
 export type BrandServiceFormat = {
   label: string;
@@ -26,8 +27,7 @@ export type BrandService = {
   discount: number;
   hidden: boolean;
   places: number;
-  avatarUrl: string;
-  avatarXsUrl: string;
+  avatar: Attachment;
   currency: Currency;
   gender: Gender;
   type: BrandServiceType;

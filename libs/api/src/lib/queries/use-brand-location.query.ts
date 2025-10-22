@@ -65,10 +65,10 @@ export const useUploadBrandLocationGalleryImagesQuery = () =>
   });
 
 export const useRemoveBrandLocationGalleryImagesQuery = () =>
-  useMutation<BrandLocation, string, { id: string; imageId: string }>({
-    mutationFn: async ({ id, imageId }) => {
+  useMutation<BrandLocation, string, { id: string; imageName: string }>({
+    mutationFn: async ({ id, imageName }) => {
       const location = await requestWithAlertOnError<BrandLocation>(
-        axios.delete(`/api/brand-location/${id}/gallery/${imageId}`),
+        axios.delete(`/api/brand-location/${id}/gallery/${imageName}`),
       );
 
       await refetchQueriesByLocationChanges(

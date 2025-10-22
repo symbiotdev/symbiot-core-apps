@@ -62,7 +62,7 @@ export const BrandEmployeeProfile = ({
           <Avatar
             name={employee.name}
             size={100}
-            url={employee.avatarXsUrl}
+            url={employee.avatar?.xsUrl}
             color={employee.avatarColor}
           />
 

@@ -40,7 +40,7 @@ export const BrandProfile = ({ brand }: { brand: Brand }) => {
           <Avatar
             color="$background1"
             name={brand.name}
-            url={brand.avatarXsUrl}
+            url={brand.avatar?.xsUrl}
             size={100}
           />
 

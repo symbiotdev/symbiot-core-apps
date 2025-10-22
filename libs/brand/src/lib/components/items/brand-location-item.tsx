@@ -34,7 +34,7 @@ export const BrandLocationItem = ({
       <Avatar
         name={location.name}
         size={40}
-        url={location.avatarXsUrl || brand?.avatarXsUrl}
+        url={location.avatar?.xsUrl || brand?.avatar?.xsUrl}
       />
 
       <View gap="$1" flex={1}>

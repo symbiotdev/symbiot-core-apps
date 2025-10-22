@@ -7,19 +7,19 @@ import {
   BrandPeriodBasedMembership,
   BrandVisitBasedMembership,
 } from './brand-membership';
+import { Attachment } from './attachment';
 
 export type BrandClient = {
   id: string;
   firstname: string;
   lastname: string;
-  avatarUrl: string;
-  avatarXsUrl: string;
   birthday: string;
   note: string;
   addresses: string[];
   emails: string[];
   phones: string[];
   gender: Gender;
+  avatar: Attachment;
   memberships: AnyBrandClientMembership[];
 };
 
@@ -37,7 +37,7 @@ export type CreateBrandClient = {
 
 export type UpdateBrandClient = Partial<CreateBrandClient>;
 export type ImportBrandClient = Omit<CreateBrandClient, 'avatar' | 'note'> & {
-  avatarUrl?: string;
+  avatar?: string;
 };
 
 type BrandClientMembership = {

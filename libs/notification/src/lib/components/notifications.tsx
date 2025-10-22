@@ -64,7 +64,7 @@ export const Notifications = ({
           <Avatar
             name={item.from.name}
             size={40}
-            url={item.from.avatarXsUrl}
+            url={item.from.avatar?.xsUrl}
             color={item.from.avatarColor}
           />
 

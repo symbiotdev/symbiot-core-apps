@@ -77,7 +77,7 @@ export const UpdateBrandService = ({ service }: { service: BrandService }) => {
           name={service.name}
           borderRadius="$10"
           color="$background1"
-          url={service.avatarUrl}
+          url={service.avatar?.url}
           size={{
             width: '100%',
             height: Math.max(height / 3, 250),

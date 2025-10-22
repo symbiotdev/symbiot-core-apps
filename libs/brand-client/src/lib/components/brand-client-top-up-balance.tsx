@@ -89,7 +89,7 @@ export const BrandClientTopUpBalance = ({
     <>
       <AdaptivePopover
         placement="bottom"
-        disabled={!hasPermission('catalogAll')}
+        disabled={!hasPermission('catalog')}
         trigger={React.cloneElement(trigger, {
           loading: isMembershipLoading,
         })}

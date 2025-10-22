@@ -13,6 +13,7 @@ import {
 import {
   BrandEmployee,
   BrandEmployeePermissions,
+  BrandEmployeeSchedule,
   Schedule,
   UpdateBrandEmployee as TUpdateBrandEmployee,
   useBrandEmployeePermissionsQuery,
@@ -301,7 +302,7 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
       BrandEmployee,
       {
         locations: (string | null)[];
-        schedules: Schedule[];
+        schedules: BrandEmployeeSchedule[];
       },
       TUpdateBrandEmployee
     >({
@@ -309,16 +310,51 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
       query: useUpdateBrandEmployeeQuery,
       initialValue: {
         locations: employee.locations?.map(({ id }) => id) || [],
-        schedules: employee.schedules || defaultEmployeeSchedule,
+        schedules:
+          employee.schedules?.filter(
+            ({ location }) =>
+              !location ||
+              employee.locations?.some(
+                (employeeLocation) => employeeLocation.id === location,
+              ),
+          ) || defaultEmployeeSchedule,
       },
     });
+
+  const onChangeLocations = useCallback(
+    (locations: string[]) =>
+      updateValue({
+        locations,
+        schedules: value.schedules.map((schedule) => ({
+          ...schedule,
+          location: locations.length ? locations[0] : undefined,
+        })),
+      }),
+    [updateValue, value.schedules],
+  );
 
   const onChangeSchedule = useCallback(
     (checked: boolean) =>
       updateValue({
-        schedules: !checked ? [] : defaultEmployeeSchedule,
+        schedules: !checked
+          ? []
+          : defaultEmployeeSchedule.map((schedule) => ({
+              ...schedule,
+              location: value.locations[0] ? value.locations[0] : undefined,
+            })),
       }),
-    [updateValue],
+    [updateValue, value.locations],
+  );
+
+  const onChangeCustomSchedule = useCallback(
+    (schedules: Schedule[]) =>
+      updateValue({
+        schedules: schedules.map((schedule) => ({
+          ...schedule,
+          location: value.locations[0] ? value.locations[0] : undefined,
+        })),
+      }),
+    [updateValue, value.locations],
   );
 
   return (
@@ -330,8 +366,8 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
         text={[
           employee.locations?.map(({ name }) => name).join(' · ') ||
             dynamicLocation.label,
-          employee.schedules?.length
-            ? employee.locations?.length
+          value.schedules.length
+            ? value.locations.length
               ? t('brand_employee.form.location_custom_schedule.description')
               : t('brand_employee.form.employee_schedule.description')
             : '',
@@ -356,7 +392,9 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
             controllerProps={{
               disableDrag: true,
             }}
-            onUpdate={updateValue}
+            onUpdate={({ locations }) =>
+              onChangeLocations(locations as string[])
+            }
             Controller={BrandEmployeeLocationController}
           />
 
@@ -384,7 +422,9 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
               controllerProps={{
                 disableDrag: true,
               }}
-              onUpdate={updateValue}
+              onUpdate={({ schedules }) =>
+                onChangeCustomSchedule(schedules as Schedule[])
+              }
               Controller={BrandEmployeeLocationScheduleController}
             />
           )}

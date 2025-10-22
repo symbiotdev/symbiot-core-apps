@@ -28,7 +28,7 @@ export type BrandEmployee = {
 };
 
 export type BrandEmployeeSchedule = Schedule & {
-  location: BrandLocation;
+  location?: string;
 };
 
 export type BrandEmployeePermissions = {

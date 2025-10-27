@@ -13,7 +13,7 @@ import { router } from 'expo-router';
 import { View } from 'tamagui';
 import { Placement } from '@floating-ui/react-native';
 import { useApp } from '@symbiot-core-apps/app';
-import { BrandMembershipType } from '@symbiot-core-apps/api';
+import { BrandBookingType, BrandMembershipType } from '@symbiot-core-apps/api';
 
 export const PlusActionAdaptiveModal = ({
   trigger,
@@ -60,6 +60,16 @@ export const PlusActionAdaptiveModal = ({
   const addVisitBasedMembership = useCallback(() => {
     popoverRef.current?.close();
     router.push(`/memberships/${BrandMembershipType.visits}/create`);
+  }, []);
+
+  const addServiceBooking = useCallback(() => {
+    popoverRef.current?.close();
+    router.push(`/bookings/${BrandBookingType.service}/create`);
+  }, []);
+
+  const addUnavailableBooking = useCallback(() => {
+    popoverRef.current?.close();
+    router.push(`/bookings/${BrandBookingType.unavailable}/create`);
   }, []);
 
   return (
@@ -133,7 +143,29 @@ export const PlusActionAdaptiveModal = ({
                 label={t('navigation.tabs.plus.actions.add_client.label')}
                 onPress={addClient}
               />
-            </View>
+            </>
+          )}
+
+          {hasPermission('bookings') && (
+            <>
+              {hasAnyOfPermissions(['clients']) && <Br />}
+
+              <ListItem
+                icon={<Icon name={icons.ServiceBooking} />}
+                label={t(
+                  'navigation.tabs.plus.actions.add_service_booking.label',
+                )}
+                onPress={addServiceBooking}
+              />
+
+              <ListItem
+                icon={<Icon name={icons.UnavailableBooking} />}
+                label={t(
+                  'navigation.tabs.plus.actions.add_unavailable_booking.label',
+                )}
+                onPress={addUnavailableBooking}
+              />
+            </>
           )}
         </View>
       </AdaptivePopover>

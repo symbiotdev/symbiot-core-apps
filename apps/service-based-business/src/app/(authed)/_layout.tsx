@@ -134,6 +134,25 @@ export default () => {
                   }}
                 />
 
+                {/*BOOKINGS*/}
+
+                <Stack.Protected guard={hasPermission('bookings')}>
+                  <Stack.Protected guard={hasPermission('analytics')}>
+                    <Stack.Screen name="bookings/[type]/[id]/analytics" />
+                  </Stack.Protected>
+                  <Stack.Screen name="bookings/[type]/[id]/profile" />
+                  <Stack.Screen name="bookings/[type]/[id]/update" />
+                  <Stack.Screen name="bookings/[type]/create" />
+                  <Stack.Screen
+                    name="bookings/[type]/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                    }}
+                  />
+                </Stack.Protected>
+
                 {/*BRAND*/}
 
                 <Stack.Protected

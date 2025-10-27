@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import {
+  BrandBookingType,
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
@@ -117,6 +118,14 @@ const BrandHome = () => {
     () => router.push('/transactions'),
     [],
   );
+  const onServiceBookingsPress = useCallback(
+    () => router.push(`/bookings/${BrandBookingType.service}`),
+    [],
+  );
+  const onUnavailableBookingsPress = useCallback(
+    () => router.push(`/bookings/${BrandBookingType.unavailable}`),
+    [],
+  );
 
   return (
     <TabsPageView scrollable withHeaderHeight>
@@ -127,7 +136,21 @@ const BrandHome = () => {
           message="Сьогодні немає запланованих тренувань. Відпочиньте або проведіть час із користю для відновлення!"
         />
 
-        {hasPermission('clientsAll') && (
+        {hasPermission('bookings') && (
+          <ListItemGroup title={t('brand.profile.schedule')}>
+            <ListItem
+              label={t('service_brand_booking.title')}
+              icon={<Icon name={icons.ServiceBooking} />}
+              onPress={onServiceBookingsPress}
+            />
+            <ListItem
+              label={t('unavailable_brand_booking.title')}
+              icon={<Icon name={icons.UnavailableBooking} />}
+              onPress={onUnavailableBookingsPress}
+            />
+          </ListItemGroup>
+        )}
+
         {hasPermission('clients') && (
           <ListItemGroup title={t('brand.profile.stakeholders')}>
             <ListItem

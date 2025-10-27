@@ -53,8 +53,12 @@ export const UpdateBrandMembership = ({
       <Availability membership={membership} />
 
       <FormView>
-        {'period' in membership && <Period membership={membership} />}
-        {'visits' in membership && <Visits membership={membership} />}
+        {getBrandMembershipType(membership) === BrandMembershipType.period && (
+          <Period membership={membership as BrandPeriodBasedMembership} />
+        )}
+        {getBrandMembershipType(membership) === BrandMembershipType.visits && (
+          <Visits membership={membership as BrandVisitBasedMembership} />
+        )}
       </FormView>
 
       <ListItemGroup style={formViewStyles}>

@@ -1,9 +1,14 @@
 import {
   AnyBrandClientMembership,
   AnyBrandMembership,
+  BrandClientPeriodBasedMembership,
+  BrandClientVisitBasedMembership,
   BrandMembershipPeriod,
   BrandMembershipType,
+  BrandPeriodBasedMembership,
+  BrandVisitBasedMembership,
   Currency,
+  getBrandMembershipType,
   getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
 import {
@@ -31,11 +36,11 @@ export const BrandMembershipItem = ({
 }: ViewProps & {
   membership: AnyBrandMembership;
 }) => {
-  return 'period' in membership ? (
+  return getBrandMembershipType(membership) === BrandMembershipType.period ? (
     <BrandPeriodBasedMembershipItemView
       {...viewProps}
       name={membership.name}
-      period={membership.period}
+      period={(membership as BrandPeriodBasedMembership).period}
       price={membership.price}
       discount={membership.discount}
       currency={membership.currency}
@@ -47,7 +52,7 @@ export const BrandMembershipItem = ({
     <BrandVisitBasedMembershipItemView
       {...viewProps}
       name={membership.name}
-      visits={membership.visits}
+      visits={(membership as BrandVisitBasedMembership).visits}
       price={membership.price}
       discount={membership.discount}
       currency={membership.currency}
@@ -65,12 +70,12 @@ export const BrandClientMembershipItem = ({
 }: ViewProps & {
   membership: AnyBrandClientMembership;
 }) => {
-  return 'period' in membership ? (
+  return getBrandMembershipType(membership) === BrandMembershipType.period ? (
     <BrandPeriodBasedMembershipItemView
       {...viewProps}
       key={membership.id}
       name={membership.name}
-      period={membership.period}
+      period={(membership as BrandClientPeriodBasedMembership).period}
       price={membership.price}
       discount={membership.discount}
       currency={membership.currency}
@@ -83,7 +88,7 @@ export const BrandClientMembershipItem = ({
       {...viewProps}
       key={membership.id}
       name={membership.name}
-      visits={membership.visits}
+      visits={(membership as BrandClientVisitBasedMembership).visits}
       price={membership.price}
       discount={membership.discount}
       currency={membership.currency}

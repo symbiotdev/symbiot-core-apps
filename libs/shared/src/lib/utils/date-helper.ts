@@ -28,6 +28,12 @@ import { isValid } from 'date-fns/isValid';
 import i18n from 'i18next';
 import { endOfDay } from 'date-fns/endOfDay';
 import { toDate } from 'date-fns/toDate';
+import { setHours } from 'date-fns/setHours';
+import { setMinutes } from 'date-fns/setMinutes';
+import { setSeconds } from 'date-fns/setSeconds';
+import { setMilliseconds } from 'date-fns/setMilliseconds';
+import { isEqual } from 'date-fns/isEqual';
+import { getMinutes } from 'date-fns/getMinutes';
 
 export const defaultWeekdayStartsOn: Day = 0;
 export const minutesInHour = 60;
@@ -43,6 +49,7 @@ export type Weekday = Day;
 export const DateHelper = {
   set,
   toDate,
+  isSame: isEqual,
   isSameDay,
   isSameMonth,
   isAfter,
@@ -227,5 +234,28 @@ export const DateHelper = {
   },
   isAllDay(start: number, end: number, offset = 15) {
     return minutesInDay - (end - start) <= offset;
+  },
+  changeDateKeepTime: (originalDate: Date | string, newDate: Date | string) => {
+    newDate = new Date(newDate);
+    originalDate = new Date(originalDate);
+
+    newDate = setHours(newDate, originalDate.getHours());
+    newDate = setMinutes(newDate, originalDate.getMinutes());
+    newDate = setSeconds(newDate, originalDate.getSeconds());
+    newDate = setMilliseconds(newDate, originalDate.getMilliseconds());
+
+    return newDate;
+  },
+  roundTime: (date: Date | string, minutes: number) => {
+    const closestMinutes = Math.ceil(getMinutes(date) / minutes) * minutes;
+
+    date = setMinutes(date, closestMinutes);
+
+    if (closestMinutes >= 60) {
+      date = addMinutes(date, minutes);
+      date = setMinutes(date, 0);
+    }
+
+    return set(date, { seconds: 0, milliseconds: 0 });
   },
 };

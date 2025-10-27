@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ScheduleController } from '@symbiot-core-apps/form-controller';
+import { WeekdaysScheduleController } from '@symbiot-core-apps/form-controller';
 
 export function BrandEmployeeLocationScheduleController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -12,7 +12,7 @@ export function BrandEmployeeLocationScheduleController<T extends FieldValues>(p
   const { t } = useTranslation();
 
   return (
-    <ScheduleController
+    <WeekdaysScheduleController
       rules={{
         required: {
           value: true,

@@ -17,6 +17,7 @@ export * from './lib/form/avatar-picker';
 export * from './lib/form/checkbox';
 export * from './lib/form/code-input';
 export * from './lib/form/date-picker';
+export * from './lib/form/time-schedule';
 export * from './lib/form/document-picker';
 export * from './lib/form/duration-picker';
 export * from './lib/form/gallery-picker';

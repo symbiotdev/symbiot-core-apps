@@ -2,9 +2,9 @@ import {
   BrandService,
   Currency,
   UpdateBrandService as TUpdateBrandService,
-  useBrandServiceFormatsQuery,
+  useBrandServiceFormatsReq,
   useModalUpdateByIdForm,
-  useUpdateBrandServiceQuery,
+  useUpdateBrandServiceReq,
 } from '@symbiot-core-apps/api';
 import {
   AvatarPicker,
@@ -54,7 +54,7 @@ export const UpdateBrandService = ({ service }: { service: BrandService }) => {
   const { height } = useWindowDimensions();
   const { functionality } = useApp();
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
-    useUpdateBrandServiceQuery();
+    useUpdateBrandServiceReq();
 
   const onAddAvatar = useCallback(
     (avatar: ImagePickerAsset) =>
@@ -121,7 +121,7 @@ const EmployeesForm = SingeElementForm<{
 }>;
 
 const Availability = ({ service }: { service: BrandService }) => {
-  const { mutateAsync, isPending } = useUpdateBrandServiceQuery();
+  const { mutateAsync, isPending } = useUpdateBrandServiceReq();
 
   const onUpdate = useCallback(
     () =>
@@ -164,7 +164,7 @@ const Pricing = ({ service }: { service: BrandService }) => {
       TUpdateBrandService
     >({
       id: service.id,
-      query: useUpdateBrandServiceQuery,
+      query: useUpdateBrandServiceReq,
       initialValue: {
         currency: service.currency?.value,
         price: service.price,
@@ -256,7 +256,7 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
       TUpdateBrandService
     >({
       id: service.id,
-      query: useUpdateBrandServiceQuery,
+      query: useUpdateBrandServiceReq,
       initialValue: {
         locations: service.locations?.map(({ id }) => id) || [],
       },
@@ -340,7 +340,7 @@ const About = ({ service }: { service: BrandService }) => {
       TUpdateBrandService
     >({
       id: service.id,
-      query: useUpdateBrandServiceQuery,
+      query: useUpdateBrandServiceReq,
       initialValue: {
         name: service.name,
         description: service.description,
@@ -386,7 +386,7 @@ const About = ({ service }: { service: BrandService }) => {
 
 const Structure = ({ service }: { service: BrandService }) => {
   const { t } = useTranslation();
-  const { data: formats } = useBrandServiceFormatsQuery();
+  const { data: formats } = useBrandServiceFormatsReq();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandService,
@@ -400,7 +400,7 @@ const Structure = ({ service }: { service: BrandService }) => {
       TUpdateBrandService
     >({
       id: service.id,
-      query: useUpdateBrandServiceQuery,
+      query: useUpdateBrandServiceReq,
       initialValue: {
         type: service.type?.value,
         format: service.format?.value,
@@ -498,7 +498,7 @@ const Note = ({ service }: { service: BrandService }) => {
       TUpdateBrandService
     >({
       id: service.id,
-      query: useUpdateBrandServiceQuery,
+      query: useUpdateBrandServiceReq,
       initialValue: {
         note: service.note,
       },

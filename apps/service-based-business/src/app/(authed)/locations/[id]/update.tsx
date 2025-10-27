@@ -1,6 +1,6 @@
 import { UpdateBrandLocation } from '@symbiot-core-apps/brand-location';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import { useBrandLocationByIdQuery } from '@symbiot-core-apps/api';
+import { useBrandLocationByIdReq } from '@symbiot-core-apps/api';
 import {
   ContextMenuItem,
   ContextMenuPopover,
@@ -14,7 +14,7 @@ export default () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { data: location, error, isPending } = useBrandLocationByIdQuery(id);
+  const { data: location, error, isPending } = useBrandLocationByIdReq(id);
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [

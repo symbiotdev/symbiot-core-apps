@@ -1,8 +1,8 @@
 import { ReactElement, useCallback } from 'react';
 import { AuthVerifyView } from './auth-verify-view';
 import {
-  useAccountAuthResendForgotPasswordCodeQuery,
-  useAccountAuthVerifyForgotPasswordQuery,
+  useAccountAuthResendForgotPasswordCodeReq,
+  useAccountAuthVerifyForgotPasswordReq,
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams } from 'expo-router';
 
@@ -11,12 +11,12 @@ export const VerifyForgotPassword = ({ logo }: { logo: ReactElement }) => {
     mutateAsync: resendCode,
     error: resendCodeError,
     isPending: isCodeResending,
-  } = useAccountAuthResendForgotPasswordCodeQuery();
+  } = useAccountAuthResendForgotPasswordCodeReq();
   const {
     mutateAsync: verify,
     error: verifyError,
     isPending: isVerifying,
-  } = useAccountAuthVerifyForgotPasswordQuery();
+  } = useAccountAuthVerifyForgotPasswordReq();
   const { secret, email } = useLocalSearchParams<{
     secret: string;
     email: string;

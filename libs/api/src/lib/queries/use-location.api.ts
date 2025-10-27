@@ -6,7 +6,7 @@ import { LocationReverseParams } from '../types/location';
 export enum LocationQueryKey {
 }
 
-export const useLocationReverseQuery = () =>
+export const useLocationReverseReq = () =>
   useMutation<{ address: string }, string, LocationReverseParams>({
     mutationFn: (params) =>
       requestWithAlertOnError(

@@ -7,7 +7,7 @@ import {
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
-  useBrandMembershipDetailedByIdQuery,
+  useBrandMembershipDetailedByIdReq,
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +25,7 @@ export default () => {
     data: membership,
     isPending,
     error,
-  } = useBrandMembershipDetailedByIdQuery(id);
+  } = useBrandMembershipDetailedByIdReq(id);
   const tPrefix = getTranslateKeyByBrandMembershipType(type);
 
   const contextMenuItems: ContextMenuItem[] = useMemo(

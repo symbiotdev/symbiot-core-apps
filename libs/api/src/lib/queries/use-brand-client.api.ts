@@ -50,7 +50,7 @@ const refetchQueriesByClientChanges = async (
     },
   });
 
-export const useBrandClientCurrentListQuery = (props?: {
+export const useBrandClientCurrentListReq = (props?: {
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandClient>({
@@ -60,7 +60,7 @@ export const useBrandClientCurrentListQuery = (props?: {
     storeInitialData: true,
   });
 
-export const useBrandClientPeriodBasedMembershipsListQuery = (
+export const useBrandClientPeriodBasedMembershipsListReq = (
   clientId: string,
   props?: {
     params?: PaginationListParams;
@@ -81,7 +81,7 @@ export const useBrandClientPeriodBasedMembershipsListQuery = (
     },
   });
 
-export const useBrandClientVisitsBasedMembershipsListQuery = (
+export const useBrandClientVisitsBasedMembershipsListReq = (
   clientId: string,
   props?: {
     params?: PaginationListParams;
@@ -102,14 +102,14 @@ export const useBrandClientVisitsBasedMembershipsListQuery = (
     },
   });
 
-export const useBrandClientGendersQuery = () =>
+export const useBrandClientGendersReq = () =>
   useQuery<Gender[], string>({
     queryKey: [BrandClientQueryKey.genders],
     queryFn: () =>
       requestWithStringError(axios.get('/api/brand-client/genders')),
   });
 
-export const useCreateBrandClientQuery = () =>
+export const useCreateBrandClientReq = () =>
   useMutation<BrandClient, string, CreateBrandClient>({
     mutationFn: async (data) => {
       const client = await requestWithAlertOnError<BrandClient>(
@@ -128,7 +128,7 @@ export const useCreateBrandClientQuery = () =>
     },
   });
 
-export const useImportBrandClientsQuery = () =>
+export const useImportBrandClientsReq = () =>
   useMutation<BrandClient[], string, ImportBrandClient[]>({
     mutationFn: async (clients) => {
       const importedClients = await requestWithAlertOnError<BrandClient[]>(
@@ -150,7 +150,7 @@ export const useImportBrandClientsQuery = () =>
     },
   });
 
-export const useBrandClientDetailedByIdQuery = (id: string, enabled = true) => {
+export const useBrandClientDetailedByIdReq = (id: string, enabled = true) => {
   const queryKey = [BrandClientQueryKey.detailedById, id];
 
   return useQuery<BrandClient, string>({
@@ -161,7 +161,7 @@ export const useBrandClientDetailedByIdQuery = (id: string, enabled = true) => {
   });
 };
 
-export const useBrandClientMembershipByIdQuery = (
+export const useBrandClientMembershipByIdReq = (
   clientId: string,
   membershipId: string,
   enabled = true,
@@ -178,7 +178,7 @@ export const useBrandClientMembershipByIdQuery = (
   });
 };
 
-export const useUpdateBrandClientQuery = () =>
+export const useUpdateBrandClientReq = () =>
   useMutation<BrandClient, string, { id: string; data: UpdateBrandClient }>({
     mutationFn: async ({ id, data }) => {
       const client = await requestWithAlertOnError<BrandClient>(
@@ -202,7 +202,7 @@ export const useUpdateBrandClientQuery = () =>
     },
   });
 
-export const useUpdateBrandClientMembershipQuery = () =>
+export const useUpdateBrandClientMembershipReq = () =>
   useMutation<
     AnyBrandClientMembership,
     string,
@@ -244,7 +244,7 @@ export const useUpdateBrandClientMembershipQuery = () =>
     },
   });
 
-export const useRemoveBrandClientQuery = () =>
+export const useRemoveBrandClientReq = () =>
   useMutation<void, string, { id: string }>({
     mutationFn: async ({ id }) => {
       const response = await requestWithAlertOnError<void>(
@@ -259,7 +259,7 @@ export const useRemoveBrandClientQuery = () =>
     },
   });
 
-export const useRemoveBrandClientMembershipQuery = () =>
+export const useRemoveBrandClientMembershipReq = () =>
   useMutation<void, string, { clientId: string; membershipId: string }>({
     mutationFn: async ({ clientId, membershipId }) => {
       const response = await requestWithAlertOnError<void>(
@@ -284,7 +284,7 @@ export const useRemoveBrandClientMembershipQuery = () =>
     },
   });
 
-export const useBrandClientImportTemplateQuery = () =>
+export const useBrandClientImportTemplateReq = () =>
   useMutation<ArrayBufferLike, string>({
     mutationFn: () =>
       requestWithAlertOnError<ArrayBufferLike>(
@@ -294,7 +294,7 @@ export const useBrandClientImportTemplateQuery = () =>
       ),
   });
 
-export const useBrandClientAddMembershipQuery = () =>
+export const useBrandClientAddMembershipReq = () =>
   useMutation<
     AnyBrandClientMembership,
     string,

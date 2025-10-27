@@ -1,5 +1,5 @@
 import { AvatarPicker, Survey, SurveyStep } from '@symbiot-core-apps/ui';
-import { useCreateBrandClientQuery } from '@symbiot-core-apps/api';
+import { useCreateBrandClientReq } from '@symbiot-core-apps/api';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { router, useNavigation } from 'expo-router';
 import { EventArg, NavigationAction } from '@react-navigation/native';
@@ -18,7 +18,7 @@ import { BrandClientNoteController } from './controller/brand-client-note-contro
 
 export const CreateBrandClient = () => {
   const { t } = useTranslation();
-  const { mutateAsync, isPending } = useCreateBrandClientQuery();
+  const { mutateAsync, isPending } = useCreateBrandClientReq();
   const navigation = useNavigation();
 
   const createdRef = useRef(false);

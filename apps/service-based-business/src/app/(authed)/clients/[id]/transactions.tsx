@@ -2,7 +2,7 @@ import { InitView, useScreenHeaderHeight } from '@symbiot-core-apps/ui';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { BrandClientTransactions } from '@symbiot-core-apps/brand-transaction';
 import { useEffect } from 'react';
-import { useBrandClientDetailedByIdQuery } from '@symbiot-core-apps/api';
+import { useBrandClientDetailedByIdReq } from '@symbiot-core-apps/api';
 
 export default () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -12,7 +12,7 @@ export default () => {
     data: client,
     error,
     isPending,
-  } = useBrandClientDetailedByIdQuery(id, false);
+  } = useBrandClientDetailedByIdReq(id, false);
 
   useEffect(() => {
     if (client) {

@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from 'expo-router';
-import { useBrandEmployeeDetailedByIdQuery } from '@symbiot-core-apps/api';
+import { useBrandEmployeeDetailedByIdReq } from '@symbiot-core-apps/api';
 import { InitView } from '@symbiot-core-apps/ui';
 import { RemoveBrandEmployee } from '@symbiot-core-apps/brand-employee';
 
@@ -9,7 +9,7 @@ export default () => {
     data: employee,
     error,
     isPending,
-  } = useBrandEmployeeDetailedByIdQuery(id, false);
+  } = useBrandEmployeeDetailedByIdReq(id, false);
 
   if (!employee || error) {
     return <InitView loading={isPending} error={error} />;

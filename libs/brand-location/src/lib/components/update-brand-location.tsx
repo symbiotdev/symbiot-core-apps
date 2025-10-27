@@ -3,7 +3,7 @@ import {
   Schedule as TSchedule,
   UpdateBrandLocation as TUpdateBrandLocation,
   useModalUpdateByIdForm,
-  useUpdateBrandLocationQuery,
+  useUpdateBrandLocationReq,
 } from '@symbiot-core-apps/api';
 import {
   defaultPageHorizontalPadding,
@@ -75,7 +75,7 @@ export const UpdateBrandLocation = ({
 };
 
 const Name = ({ location }: { location: BrandLocation }) => {
-  const { mutateAsync } = useUpdateBrandLocationQuery();
+  const { mutateAsync } = useUpdateBrandLocationReq();
 
   const updateValue = useCallback(
     (data: TUpdateBrandLocation) =>
@@ -105,7 +105,7 @@ const Address = ({ location }: { location: BrandLocation }) => {
       TUpdateBrandLocation
     >({
       id: location.id,
-      query: useUpdateBrandLocationQuery,
+      query: useUpdateBrandLocationReq,
       initialValue: {
         address: location.address,
         floor: location.floor,
@@ -175,7 +175,7 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
       TUpdateBrandLocation
     >({
       id: location.id,
-      query: useUpdateBrandLocationQuery,
+      query: useUpdateBrandLocationReq,
       initialValue: {
         schedules: location.schedules,
       },
@@ -270,7 +270,7 @@ const Locale = ({ location }: { location: BrandLocation }) => {
       TUpdateBrandLocation
     >({
       id: location.id,
-      query: useUpdateBrandLocationQuery,
+      query: useUpdateBrandLocationReq,
       initialValue: {
         country: location.country?.value,
         usState: location.usState?.abbreviation,
@@ -354,7 +354,7 @@ const Advantages = ({ location }: { location: BrandLocation }) => {
       TUpdateBrandLocation
     >({
       id: location.id,
-      query: useUpdateBrandLocationQuery,
+      query: useUpdateBrandLocationReq,
       initialValue: {
         advantages: location.advantages?.map(({ value }) => value) || [],
       },
@@ -405,7 +405,7 @@ const Contact = ({ location }: { location: BrandLocation }) => {
       TUpdateBrandLocation
     >({
       id: location.id,
-      query: useUpdateBrandLocationQuery,
+      query: useUpdateBrandLocationReq,
       initialValue: {
         phones: location.phones || [],
         emails: location.emails || [],

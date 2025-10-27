@@ -1,7 +1,7 @@
 import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
 import { BrandClientProfile } from '@symbiot-core-apps/brand-client';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import { useBrandClientDetailedByIdQuery } from '@symbiot-core-apps/api';
+import { useBrandClientDetailedByIdReq } from '@symbiot-core-apps/api';
 import React, { useLayoutEffect } from 'react';
 import { XStack } from 'tamagui';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
@@ -14,7 +14,7 @@ export default () => {
     data: client,
     error,
     isPending,
-  } = useBrandClientDetailedByIdQuery(id);
+  } = useBrandClientDetailedByIdReq(id);
 
   useLayoutEffect(() => {
     navigation.setOptions({

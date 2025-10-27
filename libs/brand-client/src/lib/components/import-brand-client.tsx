@@ -18,9 +18,9 @@ import { View, XStack } from 'tamagui';
 import {
   gendersWithoutEmptyOption,
   ImportBrandClient as TImportBrandClient,
-  useBrandClientGendersQuery,
-  useBrandClientImportTemplateQuery,
-  useImportBrandClientsQuery,
+  useBrandClientGendersReq,
+  useBrandClientImportTemplateReq,
+  useImportBrandClientsReq,
 } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
 import { Platform } from 'react-native';
@@ -42,10 +42,10 @@ import {
 export const ImportBrandClient = () => {
   const { t } = useTranslation();
   const { mutateAsync, isPending: templateLoading } =
-    useBrandClientImportTemplateQuery();
+    useBrandClientImportTemplateReq();
   const { mutateAsync: importClients, isPending: clientsImporting } =
-    useImportBrandClientsQuery();
-  const { data: genders } = useBrandClientGendersQuery();
+    useImportBrandClientsReq();
+  const { data: genders } = useBrandClientGendersReq();
 
   const [sharing, setSharing] = useState(false);
   const [uploaded, setUploaded] = useState(false);

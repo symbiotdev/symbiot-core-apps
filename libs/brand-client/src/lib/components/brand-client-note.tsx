@@ -2,7 +2,7 @@ import {
   BrandClient,
   UpdateBrandClient as TUpdateBrandClient,
   useModalUpdateByIdForm,
-  useUpdateBrandClientQuery,
+  useUpdateBrandClientReq,
 } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 import {
@@ -28,7 +28,7 @@ export const BrandClientNote = ({ client }: { client: BrandClient }) => {
       TUpdateBrandClient
     >({
       id: client.id,
-      query: useUpdateBrandClientQuery,
+      query: useUpdateBrandClientReq,
       initialValue: {
         note: client.note,
       },

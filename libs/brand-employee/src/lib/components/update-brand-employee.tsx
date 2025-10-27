@@ -16,9 +16,9 @@ import {
   BrandEmployeeSchedule,
   Schedule,
   UpdateBrandEmployee as TUpdateBrandEmployee,
-  useBrandEmployeePermissionsQuery,
+  useBrandEmployeePermissionsReq,
   useModalUpdateByIdForm,
-  useUpdateBrandEmployeeQuery,
+  useUpdateBrandEmployeeReq,
 } from '@symbiot-core-apps/api';
 import React, { useCallback, useState } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
@@ -62,7 +62,7 @@ export const UpdateBrandEmployee = ({
 }) => {
   const { brand } = useCurrentBrandState();
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
-    useUpdateBrandEmployeeQuery();
+    useUpdateBrandEmployeeReq();
 
   const onAddAvatar = useCallback(
     (avatar: ImagePickerAsset) =>
@@ -122,7 +122,7 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
       TUpdateBrandEmployee
     >({
       id: employee.id,
-      query: useUpdateBrandEmployeeQuery,
+      query: useUpdateBrandEmployeeReq,
       initialValue: {
         firstname: employee.firstname,
         lastname: employee.lastname,
@@ -203,7 +203,7 @@ const Professionality = ({ employee }: { employee: BrandEmployee }) => {
       TUpdateBrandEmployee
     >({
       id: employee.id,
-      query: useUpdateBrandEmployeeQuery,
+      query: useUpdateBrandEmployeeReq,
       initialValue: {
         provider: employee.provider,
         role: employee.role,
@@ -256,7 +256,7 @@ const About = ({ employee }: { employee: BrandEmployee }) => {
       TUpdateBrandEmployee
     >({
       id: employee.id,
-      query: useUpdateBrandEmployeeQuery,
+      query: useUpdateBrandEmployeeReq,
       initialValue: {
         about: employee.about,
       },
@@ -307,7 +307,7 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
       TUpdateBrandEmployee
     >({
       id: employee.id,
-      query: useUpdateBrandEmployeeQuery,
+      query: useUpdateBrandEmployeeReq,
       initialValue: {
         locations: employee.locations?.map(({ id }) => id) || [],
         schedules:
@@ -447,7 +447,7 @@ const Contact = ({ employee }: { employee: BrandEmployee }) => {
       TUpdateBrandEmployee
     >({
       id: employee.id,
-      query: useUpdateBrandEmployeeQuery,
+      query: useUpdateBrandEmployeeReq,
       initialValue: {
         phones: employee.phones || [],
         emails: employee.emails || [],
@@ -524,7 +524,7 @@ const Identification = ({ employee }: { employee: BrandEmployee }) => {
       TUpdateBrandEmployee
     >({
       id: employee.id,
-      query: useUpdateBrandEmployeeQuery,
+      query: useUpdateBrandEmployeeReq,
       initialValue: {
         passport: employee.passport,
         taxId: employee.taxId,
@@ -571,7 +571,7 @@ const Identification = ({ employee }: { employee: BrandEmployee }) => {
 
 const Permissions = ({ employee }: { employee: BrandEmployee }) => {
   const { t } = useTranslation();
-  const { data, error } = useBrandEmployeePermissionsQuery();
+  const { data, error } = useBrandEmployeePermissionsReq();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandEmployee,
@@ -581,7 +581,7 @@ const Permissions = ({ employee }: { employee: BrandEmployee }) => {
       TUpdateBrandEmployee
     >({
       id: employee.id,
-      query: useUpdateBrandEmployeeQuery,
+      query: useUpdateBrandEmployeeReq,
       initialValue: {
         permissions: employee.permissions || {},
       },

@@ -1,4 +1,4 @@
-import { useBrandIndustriesQuery } from '@symbiot-core-apps/api';
+import { useBrandIndustriesReq } from '@symbiot-core-apps/api';
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SelectController } from '@symbiot-core-apps/form-controller';
@@ -10,7 +10,7 @@ export function BrandIndustryController<T extends FieldValues>(props: {
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
-  const { data, isPending, error } = useBrandIndustriesQuery();
+  const { data, isPending, error } = useBrandIndustriesReq();
 
   return (
     <SelectController

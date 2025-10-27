@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useNavigation } from 'expo-router';
-import { useBrandClientDetailedByIdQuery } from '@symbiot-core-apps/api';
+import { useBrandClientDetailedByIdReq } from '@symbiot-core-apps/api';
 import { EmptyView, InitView } from '@symbiot-core-apps/ui';
 import { useEffect } from 'react';
 
@@ -10,7 +10,7 @@ export default () => {
     data: client,
     error,
     isPending,
-  } = useBrandClientDetailedByIdQuery(id, false);
+  } = useBrandClientDetailedByIdReq(id, false);
 
   useEffect(() => {
     if (client) {

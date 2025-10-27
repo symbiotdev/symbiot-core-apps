@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
-  useCurrentBrandLocationsQuery,
+  useCurrentBrandLocationsReq,
 } from '@symbiot-core-apps/api';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 import { useMemo } from 'react';
@@ -20,7 +20,7 @@ export function BrandMembershipLocationController<
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
-  const { data, isPending, error } = useCurrentBrandLocationsQuery();
+  const { data, isPending, error } = useCurrentBrandLocationsReq();
   const allLocations = useAllBrandLocation();
   const tPrefix = getTranslateKeyByBrandMembershipType(props.type);
 

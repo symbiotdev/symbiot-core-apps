@@ -10,7 +10,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import {
   BrandEmployee,
-  useBrandEmployeeCurrentListQuery,
+  useBrandEmployeeCurrentListReq,
 } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -38,7 +38,7 @@ export const CurrentBrandEmployees = ({
     error,
     onRefresh,
     onEndReached,
-  } = useBrandEmployeeCurrentListQuery({
+  } = useBrandEmployeeCurrentListReq({
     params: {
       ...(!!search && {
         search,

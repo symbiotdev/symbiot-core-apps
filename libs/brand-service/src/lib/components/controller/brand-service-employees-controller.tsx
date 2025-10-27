@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { ToggleController } from '@symbiot-core-apps/form-controller';
 import {
   BrandEmployee,
-  useCurrentBrandEmployeeProvidersByLocationListQuery,
-  useCurrentBrandEmployeeProvidersListQuery,
+  useCurrentBrandEmployeeProvidersByLocationListReq,
+  useCurrentBrandEmployeeProvidersListReq,
 } from '@symbiot-core-apps/api';
 import { useMemo } from 'react';
 import { Avatar } from '@symbiot-core-apps/ui';
@@ -31,7 +31,7 @@ export function BrandServiceEmployeesController<T extends FieldValues>(
 }
 
 function BrandEmployees<T extends FieldValues>(props: ControllerProps<T>) {
-  const { items, isPending, error } = useCurrentBrandEmployeeProvidersListQuery(
+  const { items, isPending, error } = useCurrentBrandEmployeeProvidersListReq(
     {
       params: {
         take: 999,
@@ -55,7 +55,7 @@ function LocationEmployees<T extends FieldValues>(
   },
 ) {
   const { items, isPending, error } =
-    useCurrentBrandEmployeeProvidersByLocationListQuery({
+    useCurrentBrandEmployeeProvidersByLocationListReq({
       location: props.location,
       params: {
         take: 999,

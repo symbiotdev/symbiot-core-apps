@@ -2,7 +2,7 @@ import { AuthFormView } from './auth-form-view';
 import { useForm } from 'react-hook-form';
 import {
   AccountResetPasswordData,
-  useAccountAuthResetPasswordQuery,
+  useAccountAuthResetPasswordReq,
 } from '@symbiot-core-apps/api';
 import { ReactElement, useCallback } from 'react';
 import { useLocalSearchParams } from 'expo-router';
@@ -11,7 +11,7 @@ import { PasswordController } from '@symbiot-core-apps/form-controller';
 
 export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
-  const { mutateAsync, error } = useAccountAuthResetPasswordQuery();
+  const { mutateAsync, error } = useAccountAuthResetPasswordReq();
   const { secret, email, code } = useLocalSearchParams<{
     secret: string;
     email: string;

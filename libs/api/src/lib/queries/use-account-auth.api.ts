@@ -12,13 +12,13 @@ import { authTokenHeaderKey, useAuthTokens } from '../hooks/use-auth-tokens';
 import { Platform } from 'react-native';
 import { useCallback } from 'react';
 
-export const useAccountAuthSignUpQuery = () =>
+export const useAccountAuthSignUpReq = () =>
   useMutation<AccountAuthSecretResponse, string, AccountSignUpData>({
     mutationFn: (data) =>
       requestWithStringError(axios.post('/api/account-auth/sign-up', data)),
   });
 
-export const useAccountAuthResendSignUpCodeQuery = () =>
+export const useAccountAuthResendSignUpCodeReq = () =>
   useMutation<void, string, { secret: string; email: string }>({
     mutationFn: ({ secret, email }) =>
       requestWithStringError(
@@ -28,7 +28,7 @@ export const useAccountAuthResendSignUpCodeQuery = () =>
       ),
   });
 
-export const useAccountAuthVerifySignUpQuery = () => {
+export const useAccountAuthVerifySignUpReq = () => {
   const { setTokens } = useAuthTokens();
 
   return useMutation<void, string, { secret: string; code: string }>({
@@ -44,7 +44,7 @@ export const useAccountAuthVerifySignUpQuery = () => {
   });
 };
 
-export const useAccountAuthSignInQuery = () => {
+export const useAccountAuthSignInReq = () => {
   const { setTokens } = useAuthTokens();
 
   return useMutation<void, string, AccountSignInData>({
@@ -58,7 +58,7 @@ export const useAccountAuthSignInQuery = () => {
   });
 };
 
-export const useAccountAuthSignInWithFirebaseQuery = () => {
+export const useAccountAuthSignInWithFirebaseReq = () => {
   const { setTokens } = useAuthTokens();
 
   return useMutation<void, string, { token: string }>({
@@ -72,7 +72,7 @@ export const useAccountAuthSignInWithFirebaseQuery = () => {
   });
 };
 
-export const useAccountAuthForgotPasswordQuery = () =>
+export const useAccountAuthForgotPasswordReq = () =>
   useMutation<AccountAuthSecretResponse, string, AccountForgotPasswordData>({
     mutationFn: (data) =>
       requestWithStringError(
@@ -80,7 +80,7 @@ export const useAccountAuthForgotPasswordQuery = () =>
       ),
   });
 
-export const useAccountAuthResendForgotPasswordCodeQuery = () =>
+export const useAccountAuthResendForgotPasswordCodeReq = () =>
   useMutation<void, string, { secret: string; email: string }>({
     mutationFn: ({ secret, email }) =>
       requestWithStringError(
@@ -90,7 +90,7 @@ export const useAccountAuthResendForgotPasswordCodeQuery = () =>
       ),
   });
 
-export const useAccountAuthVerifyForgotPasswordQuery = () =>
+export const useAccountAuthVerifyForgotPasswordReq = () =>
   useMutation<void, string, { secret: string; code: string; email: string }>({
     mutationFn: ({ secret, code, email }) =>
       requestWithStringError(
@@ -101,7 +101,7 @@ export const useAccountAuthVerifyForgotPasswordQuery = () =>
       ),
   });
 
-export const useAccountAuthResetPasswordQuery = () => {
+export const useAccountAuthResetPasswordReq = () => {
   const { setTokens } = useAuthTokens();
 
   return useMutation<
@@ -123,7 +123,7 @@ export const useAccountAuthResetPasswordQuery = () => {
   });
 };
 
-export const useAccountAuthRefreshTokenQuery = () => {
+export const useAccountAuthRefreshTokenReq = () => {
   const { setTokens, tokens } = useAuthTokens();
 
   return useCallback(async () => {
@@ -147,7 +147,7 @@ export const useAccountAuthRefreshTokenQuery = () => {
   }, [setTokens, tokens.refresh]);
 };
 
-export const useAccountAuthSignOutQuery = () => {
+export const useAccountAuthSignOutReq = () => {
   const { removeTokens, tokens } = useAuthTokens();
 
   return useMutation({

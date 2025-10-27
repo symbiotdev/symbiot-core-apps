@@ -5,7 +5,7 @@ import {
   BrandMembership,
   BrandMembershipType,
   getTranslateKeyByBrandMembership,
-  useRemoveBrandMembershipQuery,
+  useRemoveBrandMembershipReq,
 } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
@@ -18,7 +18,7 @@ export const RemoveBrandMembership = ({
   type: BrandMembershipType;
 }) => {
   const { t } = useTranslation();
-  const { mutateAsync, isPending } = useRemoveBrandMembershipQuery();
+  const { mutateAsync, isPending } = useRemoveBrandMembershipReq();
   const tPrefix = getTranslateKeyByBrandMembership(membership);
 
   const onPress = useCallback(

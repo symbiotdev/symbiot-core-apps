@@ -33,7 +33,7 @@ import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
 import { Platform, TouchableOpacity } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
-import { useAccountAuthSignOutQuery } from '@symbiot-core-apps/api';
+import { useAccountAuthSignOutReq } from '@symbiot-core-apps/api';
 
 export default () => {
   const { me } = useCurrentAccountState();
@@ -43,7 +43,7 @@ export default () => {
   const { languages } = useApp();
   const { currentEmployee } = useCurrentBrandEmployee();
   const { visible: drawerVisible } = useDrawer();
-  const { mutate: signOut } = useAccountAuthSignOutQuery();
+  const { mutate: signOut } = useAccountAuthSignOutReq();
   const navigation = useNavigation();
 
   const onAccountPress = useCallback(() => {

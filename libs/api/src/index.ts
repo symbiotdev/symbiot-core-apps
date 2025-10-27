@@ -4,23 +4,24 @@ export * from './lib/hooks/use-auth-tokens';
 export * from './lib/hooks/use-infinite-query-wrapper';
 export * from './lib/hooks/use-modal-update-form';
 
-export * from './lib/queries/use-account.query';
-export * from './lib/queries/use-account-auth.query';
-export * from './lib/queries/use-account-device.query';
-export * from './lib/queries/use-notification.query';
+export * from './lib/queries/use-account.api';
+export * from './lib/queries/use-account-auth.api';
+export * from './lib/queries/use-account-device.api';
+export * from './lib/queries/use-notification.api';
 
-export * from './lib/queries/use-app.query';
-export * from './lib/queries/use-app-faq.query';
+export * from './lib/queries/use-app.api';
+export * from './lib/queries/use-app-faq.api';
 
-export * from './lib/queries/use-brand.query';
-export * from './lib/queries/use-brand-client-query';
-export * from './lib/queries/use-brand-employee.query';
-export * from './lib/queries/use-brand-location.query';
-export * from './lib/queries/use-brand-membership.query';
-export * from './lib/queries/use-brand-service.query';
-export * from './lib/queries/use-brand-transaction.query';
+export * from './lib/queries/use-brand.api';
+export * from './lib/queries/use-brand-booking.api';
+export * from './lib/queries/use-brand-client.api';
+export * from './lib/queries/use-brand-employee.api';
+export * from './lib/queries/use-brand-location.api';
+export * from './lib/queries/use-brand-membership.api';
+export * from './lib/queries/use-brand-service.api';
+export * from './lib/queries/use-brand-transaction.api';
 
-export * from './lib/queries/use-location.query';
+export * from './lib/queries/use-location.api';
 
 export * from './lib/types/account';
 export * from './lib/types/account-auth';
@@ -33,6 +34,7 @@ export * from './lib/types/account-preferences';
 export * from './lib/types/app-config';
 export * from './lib/types/app-translations';
 export * from './lib/types/brand';
+export * from './lib/types/brand-booking';
 export * from './lib/types/brand-client';
 export * from './lib/types/brand-employee';
 export * from './lib/types/brand-location';

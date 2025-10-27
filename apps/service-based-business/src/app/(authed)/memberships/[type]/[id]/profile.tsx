@@ -2,7 +2,7 @@ import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
-  useBrandMembershipProfileByIdQuery,
+  useBrandMembershipProfileByIdReq,
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
@@ -24,7 +24,7 @@ export default () => {
     data: membership,
     isPending,
     error,
-  } = useBrandMembershipProfileByIdQuery(id);
+  } = useBrandMembershipProfileByIdReq(id);
 
   useLayoutEffect(() => {
     navigation.setOptions({

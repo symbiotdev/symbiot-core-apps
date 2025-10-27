@@ -1,7 +1,7 @@
 import { AvatarPicker, Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import {
-  useBrandServiceFormatsQuery,
-  useCreateBrandServiceQuery,
+  useBrandServiceFormatsReq,
+  useCreateBrandServiceReq,
 } from '@symbiot-core-apps/api';
 import { router, useNavigation } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -33,9 +33,9 @@ export const CreateBrandService = () => {
   const { t } = useTranslation();
   const { functionality } = useApp();
   const { height } = useWindowDimensions();
-  const { mutateAsync, isPending } = useCreateBrandServiceQuery();
+  const { mutateAsync, isPending } = useCreateBrandServiceReq();
   const navigation = useNavigation();
-  const { data: formats } = useBrandServiceFormatsQuery();
+  const { data: formats } = useBrandServiceFormatsReq();
 
   const createdRef = useRef(false);
 

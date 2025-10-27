@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useCurrentBrandLocationsQuery } from '@symbiot-core-apps/api';
+import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 import { useMemo } from 'react';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
@@ -13,7 +13,7 @@ export function BrandServiceLocationController<T extends FieldValues>(props: {
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
-  const { data, isPending, error } = useCurrentBrandLocationsQuery();
+  const { data, isPending, error } = useCurrentBrandLocationsReq();
   const allLocations = useAllBrandLocation();
 
   const options = useMemo(

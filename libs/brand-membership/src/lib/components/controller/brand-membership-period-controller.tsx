@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
-  useBrandMembershipPeriodsQuery,
+  useBrandMembershipPeriodsReq,
 } from '@symbiot-core-apps/api';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 
@@ -17,7 +17,7 @@ export function BrandMembershipPeriodController<T extends FieldValues>(props: {
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
-  const { data, isPending, error } = useBrandMembershipPeriodsQuery();
+  const { data, isPending, error } = useBrandMembershipPeriodsReq();
   const tPrefix = getTranslateKeyByBrandMembershipType(props.type);
 
   return (

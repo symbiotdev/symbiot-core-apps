@@ -3,8 +3,8 @@ import {
   Account,
   BrandEmployeePermissions,
   Schedule,
-  useBrandEmployeeNewAccountQuery,
-  useCreateBrandEmployeeQuery,
+  useBrandEmployeeNewAccountReq,
+  useCreateBrandEmployeeReq,
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -35,9 +35,9 @@ import { defaultEmployeeSchedule } from '../utils/schedule';
 export const CreateBrandEmployee = () => {
   const { t } = useTranslation();
   const { mutateAsync: createEmployee, isPending } =
-    useCreateBrandEmployeeQuery();
+    useCreateBrandEmployeeReq();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { mutateAsync: getAccountById } = useBrandEmployeeNewAccountQuery();
+  const { mutateAsync: getAccountById } = useBrandEmployeeNewAccountReq();
   const navigation = useNavigation();
 
   const createdRef = useRef(false);

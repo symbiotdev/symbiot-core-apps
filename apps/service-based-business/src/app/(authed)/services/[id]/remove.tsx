@@ -1,5 +1,5 @@
 import { InitView } from '@symbiot-core-apps/ui';
-import { useBrandServiceProfileByIdQuery } from '@symbiot-core-apps/api';
+import { useBrandServiceProfileByIdReq } from '@symbiot-core-apps/api';
 import { useLocalSearchParams } from 'expo-router';
 import { RemoveBrandService } from '@symbiot-core-apps/brand-service';
 
@@ -9,7 +9,7 @@ export default () => {
     data: service,
     isPending,
     error,
-  } = useBrandServiceProfileByIdQuery(id, false);
+  } = useBrandServiceProfileByIdReq(id, false);
 
   if (!service || error) {
     return <InitView loading={isPending} error={error} />;

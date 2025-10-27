@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import { useBrandEmployeeDetailedByIdQuery } from '@symbiot-core-apps/api';
+import { useBrandEmployeeDetailedByIdReq } from '@symbiot-core-apps/api';
 import {
   ContextMenuItem,
   ContextMenuPopover,
@@ -24,7 +24,7 @@ export default () => {
     data: employee,
     error,
     isPending,
-  } = useBrandEmployeeDetailedByIdQuery(id);
+  } = useBrandEmployeeDetailedByIdReq(id);
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [

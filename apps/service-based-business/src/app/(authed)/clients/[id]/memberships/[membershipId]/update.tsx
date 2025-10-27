@@ -1,7 +1,7 @@
 import { UpdateBrandClientMembership } from '@symbiot-core-apps/brand-client';
 import {
-  useBrandClientDetailedByIdQuery,
-  useBrandClientMembershipByIdQuery,
+  useBrandClientDetailedByIdReq,
+  useBrandClientMembershipByIdReq,
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import {
@@ -20,12 +20,12 @@ export default () => {
     id: string;
     membershipId: string;
   }>();
-  const { data: client } = useBrandClientDetailedByIdQuery(id, false);
+  const { data: client } = useBrandClientDetailedByIdReq(id, false);
   const {
     data: membership,
     error,
     isPending,
-  } = useBrandClientMembershipByIdQuery(id, membershipId);
+  } = useBrandClientMembershipByIdReq(id, membershipId);
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [

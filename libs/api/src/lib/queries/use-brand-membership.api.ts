@@ -50,7 +50,7 @@ const refetchQueriesByMembershipChanges = async (
     },
   });
 
-export const useBrandMembershipPeriodsQuery = (enabled?: boolean) => {
+export const useBrandMembershipPeriodsReq = (enabled?: boolean) => {
   const queryKey = [BrandMembershipQueryKey.periods];
 
   return useQuery<BrandMembershipPeriod[], string>({
@@ -61,7 +61,7 @@ export const useBrandMembershipPeriodsQuery = (enabled?: boolean) => {
   });
 };
 
-export const useBrandMembershipProfileByIdQuery = (
+export const useBrandMembershipProfileByIdReq = (
   id: string,
   enabled = true,
 ) => {
@@ -75,7 +75,7 @@ export const useBrandMembershipProfileByIdQuery = (
   });
 };
 
-export const useBrandMembershipDetailedByIdQuery = (
+export const useBrandMembershipDetailedByIdReq = (
   id: string,
   enabled = true,
 ) => {
@@ -89,7 +89,7 @@ export const useBrandMembershipDetailedByIdQuery = (
   });
 };
 
-export const useBrandPeriodBasedMembershipCurrentListQuery = (props?: {
+export const useBrandPeriodBasedMembershipCurrentListReq = (props?: {
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandPeriodBasedMembership>({
@@ -103,7 +103,7 @@ export const useBrandPeriodBasedMembershipCurrentListQuery = (props?: {
     },
   });
 
-export const useBrandVisitBasedMembershipCurrentListQuery = (props?: {
+export const useBrandVisitBasedMembershipCurrentListReq = (props?: {
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandVisitBasedMembership>({
@@ -117,7 +117,7 @@ export const useBrandVisitBasedMembershipCurrentListQuery = (props?: {
     },
   });
 
-export const useCreateBrandPeriodBasedMembershipQuery = () =>
+export const useCreateBrandPeriodBasedMembershipReq = () =>
   useMutation<
     BrandPeriodBasedMembership,
     string,
@@ -141,7 +141,7 @@ export const useCreateBrandPeriodBasedMembershipQuery = () =>
     },
   });
 
-export const useCreateBrandVisitBasedMembershipQuery = () =>
+export const useCreateBrandVisitBasedMembershipReq = () =>
   useMutation<
     BrandVisitBasedMembership,
     string,
@@ -165,7 +165,7 @@ export const useCreateBrandVisitBasedMembershipQuery = () =>
     },
   });
 
-export const useUpdateBrandMembershipQuery = () =>
+export const useUpdateBrandMembershipReq = () =>
   useMutation<
     AnyBrandMembership,
     string,
@@ -188,7 +188,7 @@ export const useUpdateBrandMembershipQuery = () =>
     },
   });
 
-export const useRemoveBrandMembershipQuery = () =>
+export const useRemoveBrandMembershipReq = () =>
   useMutation<void, string, { id: string }>({
     mutationFn: async ({ id }) => {
       const response = await requestWithAlertOnError<void>(

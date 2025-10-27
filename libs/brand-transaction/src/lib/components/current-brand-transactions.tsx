@@ -1,4 +1,4 @@
-import { useCurrentBrandTransactionListQuery } from '@symbiot-core-apps/api';
+import { useCurrentBrandTransactionListReq } from '@symbiot-core-apps/api';
 import { BrandTransactionsList } from './brand-transactions-list';
 
 export const CurrentBrandTransactions = ({
@@ -14,7 +14,7 @@ export const CurrentBrandTransactions = ({
     error,
     onRefresh,
     onEndReached,
-  } = useCurrentBrandTransactionListQuery();
+  } = useCurrentBrandTransactionListReq();
 
   return (
     <BrandTransactionsList

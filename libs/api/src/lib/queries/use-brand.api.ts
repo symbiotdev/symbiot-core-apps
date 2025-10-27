@@ -27,7 +27,7 @@ type CurrentBrandResponse = {
   tokens?: AccountAuthTokens;
 };
 
-export const useCurrentBrandQuery = ({ enabled }: { enabled: boolean }) =>
+export const useCurrentBrandReq = ({ enabled }: { enabled: boolean }) =>
   useQuery<CurrentBrandResponse>({
     enabled,
     queryKey: [BrandQueryKey.current],
@@ -37,25 +37,25 @@ export const useCurrentBrandQuery = ({ enabled }: { enabled: boolean }) =>
       ),
   });
 
-export const useBrandIndustriesQuery = () =>
+export const useBrandIndustriesReq = () =>
   useQuery<BrandIndustry[], string>({
     queryKey: [BrandQueryKey.industries],
     queryFn: () => requestWithStringError(axios.get('/api/brand/industries')),
   });
 
-export const useBrandCountriesQuery = () =>
+export const useBrandCountriesReq = () =>
   useQuery<BrandCountry[], string>({
     queryKey: [BrandQueryKey.countries],
     queryFn: () => requestWithStringError(axios.get('/api/brand/countries')),
   });
 
-export const useBrandCurrenciesQuery = () =>
+export const useBrandCurrenciesReq = () =>
   useQuery<BrandCountry[], string>({
     queryKey: [BrandQueryKey.currencies],
     queryFn: () => requestWithStringError(axios.get('/api/brand/currencies')),
   });
 
-export const useCurrentBrandUpdate = () =>
+export const useCurrentBrandUpdateReq = () =>
   useMutation<Brand, string, UpdateBrand>({
     mutationFn: async (data) =>
       requestWithAlertOnError(
@@ -68,13 +68,13 @@ export const useCurrentBrandUpdate = () =>
       ),
   });
 
-export const useBrandAuthQuery = () =>
+export const useBrandAuthReq = () =>
   useMutation<{ brand: Brand; tokens: AccountAuthTokens }, string, string>({
     mutationFn: (id: string) =>
       requestWithAlertOnError(axios.post(`/api/brand/auth/${id}`)),
   });
 
-export const useBrandCreateQuery = () =>
+export const useBrandCreateReq = () =>
   useMutation<Brand, string, CreateBrand>({
     mutationFn: async (data) =>
       requestWithAlertOnError(

@@ -38,7 +38,7 @@ const refetchQueriesByLocationChanges = async (
     },
   });
 
-export const useUploadBrandLocationGalleryImagesQuery = () =>
+export const useUploadBrandLocationGalleryImagesReq = () =>
   useMutation<
     BrandLocation,
     string,
@@ -64,7 +64,7 @@ export const useUploadBrandLocationGalleryImagesQuery = () =>
     },
   });
 
-export const useRemoveBrandLocationGalleryImagesQuery = () =>
+export const useRemoveBrandLocationGalleryImagesReq = () =>
   useMutation<BrandLocation, string, { id: string; imageName: string }>({
     mutationFn: async ({ id, imageName }) => {
       const location = await requestWithAlertOnError<BrandLocation>(
@@ -83,7 +83,7 @@ export const useRemoveBrandLocationGalleryImagesQuery = () =>
     },
   });
 
-export const useCreateBrandLocationQuery = () =>
+export const useCreateBrandLocationReq = () =>
   useMutation<BrandLocation, string, CreateBrandLocation>({
     mutationFn: async (data) => {
       const location = await requestWithAlertOnError<BrandLocation>(
@@ -104,7 +104,7 @@ export const useCreateBrandLocationQuery = () =>
     },
   });
 
-export const useUpdateBrandLocationQuery = () =>
+export const useUpdateBrandLocationReq = () =>
   useMutation<BrandLocation, string, { id: string; data: UpdateBrandLocation }>(
     {
       mutationFn: async ({ id, data }) => {
@@ -130,7 +130,7 @@ export const useUpdateBrandLocationQuery = () =>
     },
   );
 
-export const useRemoveBrandLocationQuery = () =>
+export const useRemoveBrandLocationReq = () =>
   useMutation<void, string, { id: string }>({
     mutationFn: async ({ id }) => {
       const response = await requestWithAlertOnError<void>(
@@ -145,7 +145,7 @@ export const useRemoveBrandLocationQuery = () =>
     },
   });
 
-export const useCurrentBrandLocationsQuery = () =>
+export const useCurrentBrandLocationsReq = () =>
   useQuery<PaginationList<BrandLocation>, string>({
     queryKey: [BrandLocationQueryKey.currentList],
     queryFn: () =>
@@ -154,14 +154,14 @@ export const useCurrentBrandLocationsQuery = () =>
       ),
   });
 
-export const useBrandLocationAdvantages = () =>
+export const useBrandLocationAdvantagesReq = () =>
   useQuery<BrandLocationAdvantage[], string>({
     queryKey: [BrandLocationQueryKey.advantages],
     queryFn: () =>
       requestWithStringError(axios.get(`/api/brand-location/advantages`)),
   });
 
-export const useBrandLocationByIdQuery = (id: string, enabled = true) => {
+export const useBrandLocationByIdReq = (id: string, enabled = true) => {
   const queryKey = [BrandLocationQueryKey.byId, id];
 
   return useQuery<BrandLocation, string>({

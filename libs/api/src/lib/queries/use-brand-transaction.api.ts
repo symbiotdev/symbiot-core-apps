@@ -7,7 +7,7 @@ export enum BrandTransactionQueryKey {
   clientList = 'brand-transaction-client-list',
 }
 
-export const useCurrentBrandTransactionListQuery = (props?: {
+export const useCurrentBrandTransactionListReq = (props?: {
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandTransaction>({
@@ -18,7 +18,7 @@ export const useCurrentBrandTransactionListQuery = (props?: {
     ...props,
   });
 
-export const useBrandClientTransactionListQuery = (
+export const useBrandClientTransactionListReq = (
   clientId: string,
   params?: PaginationListParams,
 ) =>

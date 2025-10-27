@@ -14,20 +14,20 @@ export enum AccountQueryKey {
   genders = 'account-genders',
 }
 
-export const useAccountMeQuery = ({ enabled }: { enabled: boolean }) =>
+export const useAccountMeReq = ({ enabled }: { enabled: boolean }) =>
   useQuery<Account, string>({
     enabled,
     queryKey: [AccountQueryKey.me],
     queryFn: () => requestWithAlertOnError(axios.get('/api/account/me')),
   });
 
-export const useAccountGendersQuery = () =>
+export const useAccountGendersReq = () =>
   useQuery<Gender[], string>({
     queryKey: [AccountQueryKey.genders],
     queryFn: () => requestWithStringError(axios.get('/api/account/genders')),
   });
 
-export const useAccountMeUpdate = () =>
+export const useAccountMeUpdateReq = () =>
   useMutation<Account, string, UpdateAccountData>({
     mutationFn: async (data) =>
       requestWithAlertOnError(
@@ -40,18 +40,18 @@ export const useAccountMeUpdate = () =>
       ),
   });
 
-export const useAccountMeRemoveAvatar = () =>
+export const useAccountMeRemoveAvatarReq = () =>
   useMutation<Account, string>({
     mutationFn: () =>
       requestWithAlertOnError(axios.delete('/api/account/me/avatar')),
   });
 
-export const useAccountRemoveMe = () =>
+export const useAccountRemoveMeReq = () =>
   useMutation({
     mutationFn: () => requestWithAlertOnError(axios.delete('/api/account/me')),
   });
 
-export const useUpdateAccountMePreferencesQuery = () =>
+export const useUpdateAccountMePreferencesReq = () =>
   useMutation<AccountPreferences, string, Partial<AccountPreferences>>({
     mutationFn: (data) =>
       requestWithAlertOnError(axios.put('/api/account/me/preferences', data)),

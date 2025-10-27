@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
 import {
   BrandLocation,
-  useRemoveBrandLocationQuery,
+  useRemoveBrandLocationReq,
 } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
@@ -14,7 +14,7 @@ export const RemoveBrandLocation = ({
   location: BrandLocation;
 }) => {
   const { t } = useTranslation();
-  const { mutateAsync, isPending } = useRemoveBrandLocationQuery();
+  const { mutateAsync, isPending } = useRemoveBrandLocationReq();
 
   const onActionPress = useCallback(
     () =>

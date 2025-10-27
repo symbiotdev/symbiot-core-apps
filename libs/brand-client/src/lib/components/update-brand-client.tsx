@@ -2,7 +2,7 @@ import {
   BrandClient,
   UpdateBrandClient as TUpdateBrandClient,
   useModalUpdateByIdForm,
-  useUpdateBrandClientQuery,
+  useUpdateBrandClientReq,
 } from '@symbiot-core-apps/api';
 import {
   AvatarPicker,
@@ -36,7 +36,7 @@ import { PhoneNumber } from 'react-native-phone-input/dist';
 
 export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
-    useUpdateBrandClientQuery();
+    useUpdateBrandClientReq();
 
   const onAddAvatar = useCallback(
     (avatar: ImagePickerAsset) =>
@@ -87,7 +87,7 @@ const Personality = ({ client }: { client: BrandClient }) => {
       TUpdateBrandClient
     >({
       id: client.id,
-      query: useUpdateBrandClientQuery,
+      query: useUpdateBrandClientReq,
       initialValue: {
         firstname: client.firstname,
         lastname: client.lastname,
@@ -169,7 +169,7 @@ const Contact = ({ client }: { client: BrandClient }) => {
       TUpdateBrandClient
     >({
       id: client.id,
-      query: useUpdateBrandClientQuery,
+      query: useUpdateBrandClientReq,
       initialValue: {
         emails: client.emails || [],
         phones: client.phones || [],
@@ -245,7 +245,7 @@ const Note = ({ client }: { client: BrandClient }) => {
       TUpdateBrandClient
     >({
       id: client.id,
-      query: useUpdateBrandClientQuery,
+      query: useUpdateBrandClientReq,
       initialValue: {
         note: client.note,
       },

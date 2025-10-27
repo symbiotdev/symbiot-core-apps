@@ -1,4 +1,4 @@
-import { useBrandClientTransactionListQuery } from '@symbiot-core-apps/api';
+import { useBrandClientTransactionListReq } from '@symbiot-core-apps/api';
 import { BrandTransactionsList } from './brand-transactions-list';
 
 export const BrandClientTransactions = ({
@@ -16,7 +16,7 @@ export const BrandClientTransactions = ({
     error,
     onRefresh,
     onEndReached,
-  } = useBrandClientTransactionListQuery(clientId);
+  } = useBrandClientTransactionListReq(clientId);
 
   return (
     <BrandTransactionsList

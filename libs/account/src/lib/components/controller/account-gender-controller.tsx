@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useAccountGendersQuery } from '@symbiot-core-apps/api';
+import { useAccountGendersReq } from '@symbiot-core-apps/api';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 
 export function AccountGenderController<T extends FieldValues>(props: {
@@ -10,7 +10,7 @@ export function AccountGenderController<T extends FieldValues>(props: {
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
-  const { data, isPending, error } = useAccountGendersQuery();
+  const { data, isPending, error } = useAccountGendersReq();
 
   return (
     <SelectController

@@ -1,8 +1,8 @@
 import { ReactElement, useCallback } from 'react';
 import { authCodeLength, AuthVerifyView } from './auth-verify-view';
 import {
-  useAccountAuthResendSignUpCodeQuery,
-  useAccountAuthVerifySignUpQuery,
+  useAccountAuthResendSignUpCodeReq,
+  useAccountAuthVerifySignUpReq,
 } from '@symbiot-core-apps/api';
 import { useLocalSearchParams } from 'expo-router';
 
@@ -15,12 +15,12 @@ export const VerifySignUp = ({ logo }: { logo: ReactElement }) => {
     mutateAsync: resendCode,
     error: resendCodeError,
     isPending: isCodeResending,
-  } = useAccountAuthResendSignUpCodeQuery();
+  } = useAccountAuthResendSignUpCodeReq();
   const {
     mutateAsync: verify,
     error: verifyError,
     isPending: isVerifying,
-  } = useAccountAuthVerifySignUpQuery();
+  } = useAccountAuthVerifySignUpReq();
 
   const onChange = useCallback(
     (code: string) =>

@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
 import {
   BrandEmployee,
-  useRemoveBrandEmployeeQuery,
+  useRemoveBrandEmployeeReq,
 } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
@@ -14,7 +14,7 @@ export const RemoveBrandEmployee = ({
   employee: BrandEmployee;
 }) => {
   const { t } = useTranslation();
-  const { mutateAsync, isPending } = useRemoveBrandEmployeeQuery();
+  const { mutateAsync, isPending } = useRemoveBrandEmployeeReq();
 
   const onPress = useCallback(
     () =>

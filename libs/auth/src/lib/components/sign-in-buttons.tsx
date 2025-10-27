@@ -6,7 +6,7 @@ import { isAvailableAsync } from 'expo-apple-authentication';
 import { Platform } from 'react-native';
 import { Button, Error, FormView, Icon } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
-import { useAccountAuthSignInWithFirebaseQuery } from '@symbiot-core-apps/api';
+import { useAccountAuthSignInWithFirebaseReq } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 
 const isGoogleAuthAvailable = Platform.OS !== 'web';
@@ -17,12 +17,12 @@ export const SignInButtons = () => {
     mutate: appleAuth,
     error: appleAuthError,
     isPending: isAppleAuthPending,
-  } = useAccountAuthSignInWithFirebaseQuery();
+  } = useAccountAuthSignInWithFirebaseReq();
   const {
     mutate: googleAuth,
     error: googleAuthError,
     isPending: isGoogleAuthPending,
-  } = useAccountAuthSignInWithFirebaseQuery();
+  } = useAccountAuthSignInWithFirebaseReq();
 
   const [error, setError] = useState<string>();
   const [isAppleAuthAvailable, setIsAppleAuthAvailable] = useState(false);

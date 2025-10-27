@@ -4,9 +4,9 @@ import {
   BrandMembershipType,
   BrandPeriodBasedMembership,
   BrandVisitBasedMembership,
-  useBrandClientAddMembershipQuery,
-  useBrandPeriodBasedMembershipCurrentListQuery,
-  useBrandVisitBasedMembershipCurrentListQuery,
+  useBrandClientAddMembershipReq,
+  useBrandPeriodBasedMembershipCurrentListReq,
+  useBrandVisitBasedMembershipCurrentListReq,
 } from '@symbiot-core-apps/api';
 import React, { ReactElement, RefObject, useCallback } from 'react';
 import {
@@ -39,7 +39,7 @@ export const BrandClientTopUpBalance = ({
   const { t } = useTranslation();
   const { hasPermission } = useCurrentBrandEmployee();
   const { mutateAsync: addMembership, isPending: isMembershipLoading } =
-    useBrandClientAddMembershipQuery();
+    useBrandClientAddMembershipReq();
   const {
     visible: visitBasedMembershipsModalVisible,
     open: openVisitBasedMembershipsModal,
@@ -119,7 +119,7 @@ export const BrandClientTopUpBalance = ({
       >
         <BrandMembershipsCurrentList
           type={BrandMembershipType.visits}
-          query={useBrandVisitBasedMembershipCurrentListQuery}
+          query={useBrandVisitBasedMembershipCurrentListReq}
           renderItem={({ item }) => (
             <BrandMembershipItem
               alignSelf="center"
@@ -142,7 +142,7 @@ export const BrandClientTopUpBalance = ({
       >
         <BrandMembershipsCurrentList
           type={BrandMembershipType.period}
-          query={useBrandPeriodBasedMembershipCurrentListQuery}
+          query={useBrandPeriodBasedMembershipCurrentListReq}
           renderItem={({ item }) => (
             <BrandMembershipItem
               alignSelf="center"

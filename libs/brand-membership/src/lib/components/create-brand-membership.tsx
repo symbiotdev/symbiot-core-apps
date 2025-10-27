@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
-  useCreateBrandPeriodBasedMembershipQuery,
-  useCreateBrandVisitBasedMembershipQuery,
+  useCreateBrandPeriodBasedMembershipReq,
+  useCreateBrandVisitBasedMembershipReq,
 } from '@symbiot-core-apps/api';
 import { router, useNavigation } from 'expo-router';
 import { EventArg, NavigationAction } from '@react-navigation/native';
@@ -34,11 +34,11 @@ export const CreateBrandMembership = ({
   const {
     mutateAsync: createPeriodBasedMembership,
     isPending: isPeriodBasedMembershipLoading,
-  } = useCreateBrandPeriodBasedMembershipQuery();
+  } = useCreateBrandPeriodBasedMembershipReq();
   const {
     mutateAsync: createVisitBasedMembership,
     isPending: isVisitBasedMembershipLoading,
-  } = useCreateBrandVisitBasedMembershipQuery();
+  } = useCreateBrandVisitBasedMembershipReq();
   const navigation = useNavigation();
   const tPrefix = getTranslateKeyByBrandMembershipType(type);
 

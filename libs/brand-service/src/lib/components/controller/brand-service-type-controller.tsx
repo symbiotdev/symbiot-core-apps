@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useBrandServiceTypesQuery } from '@symbiot-core-apps/api';
+import { useBrandServiceTypesReq } from '@symbiot-core-apps/api';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 import { useMemo } from 'react';
 
@@ -13,7 +13,7 @@ export function BrandServiceTypeController<T extends FieldValues>(props: {
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
-  const { data, isPending, error } = useBrandServiceTypesQuery();
+  const { data, isPending, error } = useBrandServiceTypesReq();
 
   const options = useMemo(
     () =>

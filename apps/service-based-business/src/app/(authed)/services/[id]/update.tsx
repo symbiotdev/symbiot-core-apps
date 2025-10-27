@@ -4,7 +4,7 @@ import {
   Icon,
   InitView,
 } from '@symbiot-core-apps/ui';
-import { useBrandServiceDetailedByIdQuery } from '@symbiot-core-apps/api';
+import { useBrandServiceDetailedByIdReq } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { UpdateBrandService } from '@symbiot-core-apps/brand-service';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,7 @@ export default () => {
     data: service,
     isPending,
     error,
-  } = useBrandServiceDetailedByIdQuery(id);
+  } = useBrandServiceDetailedByIdReq(id);
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [

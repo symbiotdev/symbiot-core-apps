@@ -1,9 +1,9 @@
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import {
   BrandMembershipType,
-  useBrandClientDetailedByIdQuery,
-  useBrandClientPeriodBasedMembershipsListQuery,
-  useBrandClientVisitsBasedMembershipsListQuery,
+  useBrandClientDetailedByIdReq,
+  useBrandClientPeriodBasedMembershipsListReq,
+  useBrandClientVisitsBasedMembershipsListReq,
 } from '@symbiot-core-apps/api';
 import { InitView, useScreenHeaderHeight } from '@symbiot-core-apps/ui';
 import React, { useEffect } from 'react';
@@ -21,7 +21,7 @@ export default () => {
     data: client,
     error,
     isPending,
-  } = useBrandClientDetailedByIdQuery(id, false);
+  } = useBrandClientDetailedByIdReq(id, false);
 
   useEffect(() => {
     if (client) {
@@ -41,8 +41,8 @@ export default () => {
       offsetTop={headerHeight}
       query={
         type === BrandMembershipType.period
-          ? useBrandClientPeriodBasedMembershipsListQuery
-          : useBrandClientVisitsBasedMembershipsListQuery
+          ? useBrandClientPeriodBasedMembershipsListReq
+          : useBrandClientVisitsBasedMembershipsListReq
       }
       renderItem={({ item }) => (
         <BrandClientMembershipItem alignSelf="center" membership={item} />

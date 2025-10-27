@@ -4,7 +4,7 @@ import {
   NotificationQueryKey,
   queryClient,
   useAuthTokens,
-  useBrandAuthQuery,
+  useBrandAuthReq,
 } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
@@ -21,7 +21,7 @@ export const useBrandAuthState = create<BrandAuthState>((set) => ({
 }));
 
 export const useAuthBrand = () => {
-  const { mutateAsync } = useBrandAuthQuery();
+  const { mutateAsync } = useBrandAuthReq();
   const { setProcessing } = useBrandAuthState();
   const { setBrand: setCurrentBrand } = useCurrentBrandState();
   const { setTokens } = useAuthTokens();

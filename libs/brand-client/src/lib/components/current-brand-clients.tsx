@@ -16,7 +16,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import {
   BrandClient,
-  useBrandClientCurrentListQuery,
+  useBrandClientCurrentListReq,
 } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
 import { emitHaptic } from '@symbiot-core-apps/shared';
@@ -45,7 +45,7 @@ export const CurrentBrandClients = ({
     error,
     onRefresh,
     onEndReached,
-  } = useBrandClientCurrentListQuery({
+  } = useBrandClientCurrentListReq({
     params: {
       ...(!!search && {
         search,

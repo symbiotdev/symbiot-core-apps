@@ -16,7 +16,7 @@ import {
   Spinner,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useRef, useState } from 'react';
-import { useLocationReverseQuery } from '@symbiot-core-apps/api';
+import { useLocationReverseReq } from '@symbiot-core-apps/api';
 import { View, XStack } from 'tamagui';
 import { useTranslation } from 'react-i18next';
 import { Linking, TextInputProps } from 'react-native';
@@ -50,7 +50,7 @@ export const AddressPicker = ({
     address: string;
   }>(null);
 
-  const { mutateAsync } = useLocationReverseQuery();
+  const { mutateAsync } = useLocationReverseReq();
 
   const openDeniedPermissionModal = useCallback(
     () => setPermissionDeniedModalVisible(true),
@@ -76,8 +76,7 @@ export const AddressPicker = ({
         if (status === PermissionStatus.GRANTED) {
           const { coords } = await getCurrentPositionAsync();
 
-          if (myLocationRef.current) {
-          } else {
+          if (!myLocationRef.current) {
             const { address } = await mutateAsync(coords);
 
             myLocationRef.current = {

@@ -1,5 +1,5 @@
 import { BrandEmployeeProfile } from '@symbiot-core-apps/brand-employee';
-import { useBrandEmployeeProfileByIdQuery } from '@symbiot-core-apps/api';
+import { useBrandEmployeeProfileByIdReq } from '@symbiot-core-apps/api';
 import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
@@ -14,7 +14,7 @@ export default () => {
     data: employee,
     isPending,
     error,
-  } = useBrandEmployeeProfileByIdQuery(id);
+  } = useBrandEmployeeProfileByIdReq(id);
 
   useLayoutEffect(() => {
     navigation.setOptions({

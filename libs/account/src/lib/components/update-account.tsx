@@ -2,8 +2,8 @@ import { AvatarPicker, FormView, Input, PageView } from '@symbiot-core-apps/ui';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import {
   UpdateAccountData,
-  useAccountMeRemoveAvatar,
-  useAccountMeUpdate,
+  useAccountMeRemoveAvatarReq,
+  useAccountMeUpdateReq,
 } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
@@ -24,11 +24,11 @@ import { View } from 'tamagui';
 export const UpdateAccount = () => {
   const { me, setMe } = useCurrentAccountState();
   const { t } = useTranslation();
-  const { mutateAsync } = useAccountMeUpdate();
+  const { mutateAsync } = useAccountMeUpdateReq();
   const { mutateAsync: uploadAvatar, isPending: avatarUploading } =
-    useAccountMeUpdate();
+    useAccountMeUpdateReq();
   const { mutateAsync: removeAvatar, isPending: avatarRemoving } =
-    useAccountMeRemoveAvatar();
+    useAccountMeRemoveAvatarReq();
 
   const onAttach = useCallback(
     async (avatar: ImagePickerAsset) => setMe(await uploadAvatar({ avatar })),

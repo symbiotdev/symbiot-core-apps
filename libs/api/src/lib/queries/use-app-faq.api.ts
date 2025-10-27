@@ -7,7 +7,7 @@ export enum AppFaqQueryKey {
   list = 'app-faq-list',
 }
 
-export const useAppFaqQuery = () =>
+export const useAppFaqReq = () =>
   useQuery<FAQ[], string>({
     queryKey: [AppFaqQueryKey.list],
     queryFn: () => requestWithStringError(axios.get('/api/app-faq')),

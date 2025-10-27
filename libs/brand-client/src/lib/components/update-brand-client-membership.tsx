@@ -4,7 +4,7 @@ import {
   BrandMembershipType,
   UpdateBrandClientMembership as TUpdateBrandClientMembership,
   useModalUpdateByQueryParamsForm,
-  useUpdateBrandClientMembershipQuery,
+  useUpdateBrandClientMembershipReq,
 } from '@symbiot-core-apps/api';
 import {
   ButtonIcon,
@@ -57,7 +57,7 @@ const Visits = ({
   clientId: string;
   membership: BrandClientVisitBasedMembership;
 }) => {
-  const { mutateAsync, isPending } = useUpdateBrandClientMembershipQuery();
+  const { mutateAsync, isPending } = useUpdateBrandClientMembershipReq();
 
   const update = useCallback(
     (data: TUpdateBrandClientMembership) =>
@@ -101,7 +101,7 @@ const EndAt = ({
       TUpdateBrandClientMembership
     >({
       params: { clientId, membershipId: membership.id },
-      query: useUpdateBrandClientMembershipQuery,
+      query: useUpdateBrandClientMembershipReq,
       initialValue: {
         endAt: membership.endAt || null,
       },

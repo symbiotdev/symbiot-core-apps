@@ -54,11 +54,7 @@ const refetchQueriesByEmployeeChanges = async (
     },
   });
 
-export const useCurrentBrandEmployeeQuery = ({
-  enabled,
-}: {
-  enabled: boolean;
-}) =>
+export const useCurrentBrandEmployeeReq = ({ enabled }: { enabled: boolean }) =>
   useQuery<BrandEmployee>({
     enabled,
     queryKey: [BrandEmployeesQueryKey.current],
@@ -68,14 +64,14 @@ export const useCurrentBrandEmployeeQuery = ({
       ),
   });
 
-export const useBrandEmployeeGendersQuery = () =>
+export const useBrandEmployeeGendersReq = () =>
   useQuery<Gender[], string>({
     queryKey: [BrandEmployeesQueryKey.genders],
     queryFn: () =>
       requestWithStringError(axios.get('/api/brand-employee/genders')),
   });
 
-export const useBrandEmployeePermissionsQuery = () =>
+export const useBrandEmployeePermissionsReq = () =>
   useQuery<BrandEmployeePermission[], string>({
     enabled: !queryClient.getQueryData([BrandEmployeesQueryKey.permissions]),
     queryKey: [BrandEmployeesQueryKey.permissions],
@@ -85,7 +81,7 @@ export const useBrandEmployeePermissionsQuery = () =>
       ),
   });
 
-export const useBrandEmployeeNewAccountQuery = () =>
+export const useBrandEmployeeNewAccountReq = () =>
   useMutation<Account, string, { id: string }>({
     mutationFn: ({ id }) =>
       requestWithAlertOnError<Account>(
@@ -93,7 +89,7 @@ export const useBrandEmployeeNewAccountQuery = () =>
       ),
   });
 
-export const useCreateBrandEmployeeQuery = () =>
+export const useCreateBrandEmployeeReq = () =>
   useMutation<BrandEmployee, string, { id: string; data: CreateBrandEmployee }>(
     {
       mutationFn: async ({ id, data }) => {
@@ -114,7 +110,7 @@ export const useCreateBrandEmployeeQuery = () =>
     },
   );
 
-export const useUpdateBrandEmployeeQuery = () =>
+export const useUpdateBrandEmployeeReq = () =>
   useMutation<BrandEmployee, string, { id: string; data: UpdateBrandEmployee }>(
     {
       mutationFn: async ({ id, data }) => {
@@ -140,7 +136,7 @@ export const useUpdateBrandEmployeeQuery = () =>
     },
   );
 
-export const useRemoveBrandEmployeeQuery = () =>
+export const useRemoveBrandEmployeeReq = () =>
   useMutation<void, string, { id: string }>({
     mutationFn: async ({ id }) => {
       const response = await requestWithAlertOnError<void>(
@@ -155,7 +151,7 @@ export const useRemoveBrandEmployeeQuery = () =>
     },
   });
 
-export const useBrandEmployeeCurrentListQuery = (props?: {
+export const useBrandEmployeeCurrentListReq = (props?: {
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandEmployee>({
@@ -165,7 +161,7 @@ export const useBrandEmployeeCurrentListQuery = (props?: {
     storeInitialData: true,
   });
 
-export const useCurrentBrandEmployeeProvidersListQuery = (props?: {
+export const useCurrentBrandEmployeeProvidersListReq = (props?: {
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandEmployee>({
@@ -175,7 +171,7 @@ export const useCurrentBrandEmployeeProvidersListQuery = (props?: {
     ...props,
   });
 
-export const useCurrentBrandEmployeeProvidersByLocationListQuery = (props: {
+export const useCurrentBrandEmployeeProvidersByLocationListReq = (props: {
   location: string;
   params?: PaginationListParams;
 }) =>
@@ -186,10 +182,7 @@ export const useCurrentBrandEmployeeProvidersByLocationListQuery = (props: {
     ...props,
   });
 
-export const useBrandEmployeeProfileByIdQuery = (
-  id: string,
-  enabled = true,
-) => {
+export const useBrandEmployeeProfileByIdReq = (id: string, enabled = true) => {
   const queryKey = [BrandEmployeesQueryKey.profileById, id];
 
   return useQuery<BrandEmployee, string>({
@@ -200,10 +193,7 @@ export const useBrandEmployeeProfileByIdQuery = (
   });
 };
 
-export const useBrandEmployeeProviderByIdQuery = (
-  id: string,
-  enabled = true,
-) => {
+export const useBrandEmployeeProviderByIdReq = (id: string, enabled = true) => {
   const queryKey = [BrandEmployeesQueryKey.providerById, id];
 
   return useQuery<BrandEmployee, string>({
@@ -214,10 +204,7 @@ export const useBrandEmployeeProviderByIdQuery = (
   });
 };
 
-export const useBrandEmployeeDetailedByIdQuery = (
-  id: string,
-  enabled = true,
-) => {
+export const useBrandEmployeeDetailedByIdReq = (id: string, enabled = true) => {
   const queryKey = [BrandEmployeesQueryKey.detailedById, id];
 
   return useQuery<BrandEmployee, string>({

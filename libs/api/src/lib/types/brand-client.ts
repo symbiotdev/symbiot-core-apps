@@ -40,13 +40,14 @@ export type ImportBrandClient = Omit<CreateBrandClient, 'avatar' | 'note'> & {
   avatar?: string;
 };
 
-type BrandClientMembership = {
+export type BrandClientMembership = {
   id: string;
   name: string;
   price: number;
   discount: number;
   endAt: string;
   dAt: string;
+  type: BrandMembershipType;
   locations: { id: string; name: string }[];
   services: { id: string; name: string }[];
   currency: Currency;

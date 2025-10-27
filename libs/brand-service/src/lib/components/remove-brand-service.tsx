@@ -3,14 +3,14 @@ import { useCallback } from 'react';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
 import {
   BrandService,
-  useRemoveBrandServiceQuery,
+  useRemoveBrandServiceReq,
 } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 
 export const RemoveBrandService = ({ service }: { service: BrandService }) => {
   const { t } = useTranslation();
-  const { mutateAsync, isPending } = useRemoveBrandServiceQuery();
+  const { mutateAsync, isPending } = useRemoveBrandServiceReq();
 
   const onPress = useCallback(
     () =>

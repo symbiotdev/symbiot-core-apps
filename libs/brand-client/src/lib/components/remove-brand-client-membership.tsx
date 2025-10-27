@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
 import {
   AnyBrandClientMembership,
-  useRemoveBrandClientMembershipQuery,
+  useRemoveBrandClientMembershipReq,
 } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
@@ -16,7 +16,7 @@ export const RemoveBrandClientMembership = ({
   membership: AnyBrandClientMembership;
 }) => {
   const { t } = useTranslation();
-  const { mutateAsync, isPending } = useRemoveBrandClientMembershipQuery();
+  const { mutateAsync, isPending } = useRemoveBrandClientMembershipReq();
 
   const onPress = useCallback(
     () =>

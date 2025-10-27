@@ -9,7 +9,7 @@ import {
   getTranslateKeyByBrandMembership,
   UpdateBrandMembership as TUpdateBrandMembership,
   useModalUpdateByIdForm,
-  useUpdateBrandMembershipQuery,
+  useUpdateBrandMembershipReq,
 } from '@symbiot-core-apps/api';
 import {
   defaultPageVerticalPadding,
@@ -90,7 +90,7 @@ const ServicesForm = SingeElementForm<{
 }>;
 
 const Availability = ({ membership }: { membership: BrandMembership }) => {
-  const { mutateAsync, isPending } = useUpdateBrandMembershipQuery();
+  const { mutateAsync, isPending } = useUpdateBrandMembershipReq();
 
   const onUpdate = useCallback(
     () =>
@@ -129,7 +129,7 @@ const Period = ({ membership }: { membership: BrandPeriodBasedMembership }) => {
     TUpdateBrandMembership
   >({
     id: membership.id,
-    query: useUpdateBrandMembershipQuery,
+    query: useUpdateBrandMembershipReq,
     initialValue: {
       period: membership.period?.value,
     },
@@ -157,7 +157,7 @@ const Visits = ({ membership }: { membership: BrandVisitBasedMembership }) => {
     TUpdateBrandMembership
   >({
     id: membership.id,
-    query: useUpdateBrandMembershipQuery,
+    query: useUpdateBrandMembershipReq,
     initialValue: {
       visits: membership.visits,
     },
@@ -192,7 +192,7 @@ const Pricing = ({ membership }: { membership: BrandMembership }) => {
       TUpdateBrandMembership
     >({
       id: membership.id,
-      query: useUpdateBrandMembershipQuery,
+      query: useUpdateBrandMembershipReq,
       initialValue: {
         currency: membership.currency?.value,
         price: membership.price,
@@ -288,7 +288,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
       TUpdateBrandMembership
     >({
       id: membership.id,
-      query: useUpdateBrandMembershipQuery,
+      query: useUpdateBrandMembershipReq,
       initialValue: {
         locations: membership.locations?.map(({ id }) => id) || [],
       },
@@ -375,7 +375,7 @@ const About = ({ membership }: { membership: BrandMembership }) => {
       TUpdateBrandMembership
     >({
       id: membership.id,
-      query: useUpdateBrandMembershipQuery,
+      query: useUpdateBrandMembershipReq,
       initialValue: {
         name: membership.name,
         description: membership.description,
@@ -438,7 +438,7 @@ const Note = ({ membership }: { membership: BrandMembership }) => {
       TUpdateBrandMembership
     >({
       id: membership.id,
-      query: useUpdateBrandMembershipQuery,
+      query: useUpdateBrandMembershipReq,
       initialValue: {
         note: membership.note,
       },

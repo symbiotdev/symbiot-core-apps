@@ -17,7 +17,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCallback, useState } from 'react';
 import {
   BrandService,
-  useBrandServiceCurrentListQuery,
+  useBrandServiceCurrentListReq,
 } from '@symbiot-core-apps/api';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandServiceItem } from '@symbiot-core-apps/brand';
@@ -42,7 +42,7 @@ export const CurrentBrandServices = ({
     error,
     onRefresh,
     onEndReached,
-  } = useBrandServiceCurrentListQuery({
+  } = useBrandServiceCurrentListReq({
     params: {
       ...(!!search && {
         search,

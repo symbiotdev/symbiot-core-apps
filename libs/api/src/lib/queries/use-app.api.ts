@@ -12,7 +12,7 @@ export enum AppQueryKey {
   referrals = 'app-referrals',
 }
 
-export const useAppConfigQuery = ({ refetch }: { refetch: boolean }) =>
+export const useAppConfigReq = ({ refetch }: { refetch: boolean }) =>
   useQuery<AppConfig, string>({
     staleTime: Infinity,
     refetchOnWindowFocus: refetch,
@@ -22,7 +22,7 @@ export const useAppConfigQuery = ({ refetch }: { refetch: boolean }) =>
     queryFn: () => requestWithStringError(axios.get('/api/app/config')),
   });
 
-export const useAppTranslationsQuery = ({ refetch }: { refetch: boolean }) =>
+export const useAppTranslationsReq = ({ refetch }: { refetch: boolean }) =>
   useQuery<AppTranslations, string>({
     staleTime: Infinity,
     refetchOnWindowFocus: refetch,
@@ -32,14 +32,14 @@ export const useAppTranslationsQuery = ({ refetch }: { refetch: boolean }) =>
     queryFn: () => requestWithStringError(axios.get('/api/app/translations')),
   });
 
-export const useAppCompetitorsQuery = () =>
+export const useAppCompetitorsReq = () =>
   useQuery<BrandSourceOption[], string>({
     staleTime: Infinity,
     queryKey: [AppQueryKey.competitors],
     queryFn: () => requestWithStringError(axios.get('/api/app/competitors')),
   });
 
-export const useAppReferralsQuery = () =>
+export const useAppReferralsReq = () =>
   useQuery<BrandSourceOption[], string>({
     staleTime: Infinity,
     queryKey: [AppQueryKey.referrals],

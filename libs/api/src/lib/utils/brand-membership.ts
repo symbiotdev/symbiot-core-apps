@@ -1,8 +1,8 @@
 import {
-  AnyBrandMembership,
+  BrandMembership,
   BrandMembershipType,
 } from '../types/brand-membership';
-import { AnyBrandClientMembership } from '../types/brand-client';
+import { BrandClientMembership } from '../types/brand-client';
 
 export const getTranslateKeyByBrandMembershipType = (
   type?: BrandMembershipType,
@@ -12,7 +12,7 @@ export const getTranslateKeyByBrandMembershipType = (
     : 'brand_visit_based_membership';
 
 export const getBrandMembershipType = (
-  membership: AnyBrandMembership | AnyBrandClientMembership,
+  membership: BrandMembership | BrandClientMembership,
 ) =>
   membership.type ||
   ('period' in membership
@@ -20,5 +20,5 @@ export const getBrandMembershipType = (
     : BrandMembershipType.visits);
 
 export const getTranslateKeyByBrandMembership = (
-  membership: AnyBrandMembership | AnyBrandClientMembership,
+  membership: BrandMembership | BrandClientMembership,
 ) => getTranslateKeyByBrandMembershipType(getBrandMembershipType(membership));

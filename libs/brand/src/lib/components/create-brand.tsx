@@ -7,7 +7,7 @@ import { EventArg, NavigationAction } from '@react-navigation/native';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
 import { router, useNavigation } from 'expo-router';
 import { useAuthBrand, useBrandAuthState } from '../hooks/use-brand-auth';
-import { useBrandCreateQuery } from '@symbiot-core-apps/api';
+import { useBrandCreateReq } from '@symbiot-core-apps/api';
 import { useApp } from '@symbiot-core-apps/app';
 import { BrandWebsiteController } from './contoller/brand-website-controller';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
@@ -29,7 +29,7 @@ export const CreateBrand = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { functionality } = useApp();
-  const { mutateAsync, isPending } = useBrandCreateQuery();
+  const { mutateAsync, isPending } = useBrandCreateReq();
   const switchBrand = useAuthBrand();
 
   const createdRef = useRef(false);

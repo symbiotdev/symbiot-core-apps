@@ -1,7 +1,7 @@
 import { UpdateBrandClient } from '@symbiot-core-apps/brand-client';
 import { useTranslation } from 'react-i18next';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import { useBrandClientDetailedByIdQuery } from '@symbiot-core-apps/api';
+import { useBrandClientDetailedByIdReq } from '@symbiot-core-apps/api';
 import {
   ContextMenuItem,
   ContextMenuPopover,
@@ -18,7 +18,7 @@ export default () => {
     data: client,
     error,
     isPending,
-  } = useBrandClientDetailedByIdQuery(id);
+  } = useBrandClientDetailedByIdReq(id);
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [

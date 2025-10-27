@@ -3,7 +3,7 @@ import { SwitchController } from '@symbiot-core-apps/form-controller';
 import { Card, InitView } from '@symbiot-core-apps/ui';
 import {
   BrandEmployeePermissions,
-  useBrandEmployeePermissionsQuery,
+  useBrandEmployeePermissionsReq,
 } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +15,7 @@ export function BrandEmployeePermissionsController<
   onChange?: (key: keyof BrandEmployeePermissions, value: boolean) => void;
 }) {
   const { t } = useTranslation();
-  const { data, isPending, error } = useBrandEmployeePermissionsQuery();
+  const { data, isPending, error } = useBrandEmployeePermissionsReq();
 
   if (!data?.length) {
     return <InitView loading={isPending} error={error} />;

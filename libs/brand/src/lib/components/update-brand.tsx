@@ -17,7 +17,7 @@ import {
 import {
   Brand,
   UpdateBrand as TUpdateBrand,
-  useCurrentBrandUpdate,
+  useCurrentBrandUpdateReq,
   useModalUpdateForm,
 } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
@@ -46,7 +46,7 @@ type GroupProps = {
 export const UpdateBrand = () => {
   const { brand, setBrand } = useCurrentBrandState();
   const { mutateAsync: updateAvatar, isPending: isAvatarUpdating } =
-    useCurrentBrandUpdate();
+    useCurrentBrandUpdateReq();
 
   const updateAvatar$ = useCallback(
     async (avatar: ImagePickerAsset) =>
@@ -84,7 +84,7 @@ export const UpdateBrand = () => {
 };
 
 const Name = ({ brand, onUpdated }: GroupProps) => {
-  const { mutateAsync } = useCurrentBrandUpdate();
+  const { mutateAsync } = useCurrentBrandUpdateReq();
 
   const update = useCallback(
     async (data: TUpdateBrand) => onUpdated(await mutateAsync(data)),
@@ -110,7 +110,7 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
       { about: string; birthday: string | null },
       TUpdateBrand
     >({
-      query: useCurrentBrandUpdate,
+      query: useCurrentBrandUpdateReq,
       initialValue: {
         about: brand.about,
         birthday: brand.birthday,
@@ -179,7 +179,7 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
       { countries: string[]; currencies: string[] },
       TUpdateBrand
     >({
-      query: useCurrentBrandUpdate,
+      query: useCurrentBrandUpdateReq,
       initialValue: {
         countries: brand.countries.map(({ value }) => value),
         currencies: brand.currencies.map(({ value }) => value),
@@ -240,7 +240,7 @@ const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
       { instagrams: string[]; websites: string[] },
       TUpdateBrand
     >({
-      query: useCurrentBrandUpdate,
+      query: useCurrentBrandUpdateReq,
       initialValue: {
         instagrams: brand.instagrams,
         websites: brand.websites,

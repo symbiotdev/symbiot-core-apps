@@ -2,9 +2,9 @@ import {
   Account,
   AccountPreferences,
   UpdateAccountData,
-  useAccountMeRemoveAvatar,
-  useAccountMeUpdate,
-  useUpdateAccountMePreferencesQuery,
+  useAccountMeRemoveAvatarReq,
+  useAccountMeUpdateReq,
+  useUpdateAccountMePreferencesReq,
 } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
@@ -114,22 +114,22 @@ export const useCurrentAccountUpdater = () => {
     mutateAsync: updatePreferences,
     isPending: arePreferencesUpdating,
     error: updatePreferencesError,
-  } = useUpdateAccountMePreferencesQuery();
+  } = useUpdateAccountMePreferencesReq();
   const {
     mutateAsync: updateAccount,
     isPending: isAccountUpdating,
     error: updateAccountError,
-  } = useAccountMeUpdate();
+  } = useAccountMeUpdateReq();
   const {
     mutateAsync: updateAvatar,
     isPending: isAvatarUpdating,
     error: updateAvatarError,
-  } = useAccountMeUpdate();
+  } = useAccountMeUpdateReq();
   const {
     mutateAsync: removeAvatar,
     isPending: isAvatarRemoving,
     error: removeAvatarError,
-  } = useAccountMeRemoveAvatar();
+  } = useAccountMeRemoveAvatarReq();
 
   const updateAccount$ = useCallback(
     async (data: UpdateAccountData) => updateMe(await updateAccount(data)),

@@ -1,4 +1,4 @@
-import { useBrandCountriesQuery } from '@symbiot-core-apps/api';
+import { useBrandCountriesReq } from '@symbiot-core-apps/api';
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ export function BrandCountryController<T extends FieldValues>(props: {
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
-  const { data, isPending, error } = useBrandCountriesQuery();
+  const { data, isPending, error } = useBrandCountriesReq();
 
   const options = useMemo(
     () =>

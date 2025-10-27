@@ -1,7 +1,7 @@
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { BrandSource } from './brand-source';
 import { useTranslation } from 'react-i18next';
-import { useAppCompetitorsQuery } from '@symbiot-core-apps/api';
+import { useAppCompetitorsReq } from '@symbiot-core-apps/api';
 
 export function BrandCompetitorController<T extends FieldValues>({
   name,
@@ -15,7 +15,7 @@ export function BrandCompetitorController<T extends FieldValues>({
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
-  const { data, isPending, error } = useAppCompetitorsQuery();
+  const { data, isPending, error } = useAppCompetitorsReq();
 
   return (
     <Controller

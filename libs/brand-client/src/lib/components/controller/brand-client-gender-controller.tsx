@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useBrandClientGendersQuery } from '@symbiot-core-apps/api';
+import { useBrandClientGendersReq } from '@symbiot-core-apps/api';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 
 export function BrandClientGenderController<T extends FieldValues>(props: {
@@ -11,7 +11,7 @@ export function BrandClientGenderController<T extends FieldValues>(props: {
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
-  const { data, isPending, error } = useBrandClientGendersQuery();
+  const { data, isPending, error } = useBrandClientGendersReq();
 
   return (
     <SelectController

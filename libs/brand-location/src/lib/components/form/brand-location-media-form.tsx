@@ -1,9 +1,9 @@
 import { AvatarPicker, FormView, GalleryPicker } from '@symbiot-core-apps/ui';
 import {
   BrandLocation,
-  useRemoveBrandLocationGalleryImagesQuery,
-  useUpdateBrandLocationQuery,
-  useUploadBrandLocationGalleryImagesQuery,
+  useRemoveBrandLocationGalleryImagesReq,
+  useUpdateBrandLocationReq,
+  useUploadBrandLocationGalleryImagesReq,
 } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
@@ -20,11 +20,11 @@ export const BrandLocationMediaForm = ({
   const { brand } = useCurrentBrandState();
   const { t } = useTranslation();
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
-    useUpdateBrandLocationQuery();
+    useUpdateBrandLocationReq();
   const { mutateAsync: uploadGalleryImages } =
-    useUploadBrandLocationGalleryImagesQuery();
+    useUploadBrandLocationGalleryImagesReq();
   const { mutateAsync: removeGalleryImage } =
-    useRemoveBrandLocationGalleryImagesQuery();
+    useRemoveBrandLocationGalleryImagesReq();
 
   const extendGallery = useCallback(
     (images: ImagePickerAsset[]) =>

@@ -5,8 +5,8 @@ import {
   BrandMembershipType,
   BrandService,
   getTranslateKeyByBrandMembershipType,
-  useServicesListByLocationQuery,
-  useServicesQuery,
+  useServicesListByLocationReq,
+  useServicesReq,
 } from '@symbiot-core-apps/api';
 import { useMemo } from 'react';
 
@@ -33,7 +33,7 @@ export function BrandMembershipServicesController<T extends FieldValues>(
 }
 
 function BrandServices<T extends FieldValues>(props: ControllerProps<T>) {
-  const { items, isPending, error } = useServicesQuery({
+  const { items, isPending, error } = useServicesReq({
     params: {
       take: 999,
     },
@@ -54,7 +54,7 @@ function LocationServices<T extends FieldValues>(
     location: string;
   },
 ) {
-  const { items, isPending, error } = useServicesListByLocationQuery({
+  const { items, isPending, error } = useServicesListByLocationReq({
     location: props.location,
     params: {
       take: 999,

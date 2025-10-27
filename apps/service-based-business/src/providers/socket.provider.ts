@@ -5,7 +5,7 @@ import {
   Notification,
   queryClient,
   socket,
-  useNotificationQueryState,
+  useNotificationReqState,
   WebsocketAction,
 } from '@symbiot-core-apps/api';
 import {
@@ -35,7 +35,7 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
   const {
     addToList: addNotificationToListQueryState,
     markAllAsRead: markAllNotificationsAsRead,
-  } = useNotificationQueryState();
+  } = useNotificationReqState();
 
   const onBrandAssigned = useCallback(
     (brand: Brand) => {

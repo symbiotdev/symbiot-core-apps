@@ -1,7 +1,7 @@
 import { Link, RegularText } from '@symbiot-core-apps/ui';
 import {
   AccountSignUpData,
-  useAccountAuthSignUpQuery,
+  useAccountAuthSignUpReq,
 } from '@symbiot-core-apps/api';
 import { useForm } from 'react-hook-form';
 import { AuthFormView } from './auth-form-view';
@@ -22,7 +22,7 @@ import {
 export const SignUp = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
 
-  const { mutateAsync, error } = useAccountAuthSignUpQuery();
+  const { mutateAsync, error } = useAccountAuthSignUpReq();
 
   const {
     control,

@@ -9,7 +9,7 @@ import {
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import {
   BrandLocation,
-  useCurrentBrandLocationsQuery,
+  useCurrentBrandLocationsReq,
 } from '@symbiot-core-apps/api';
 import { router } from 'expo-router';
 import { useMemo } from 'react';
@@ -24,7 +24,7 @@ export const CurrentBrandLocations = ({
   const { brand } = useCurrentBrandState();
   const headerHeight = useScreenHeaderHeight();
   const { data, isLoading, isRefetching, error, refetch } =
-    useCurrentBrandLocationsQuery();
+    useCurrentBrandLocationsReq();
 
   const locations = useMemo(
     () => data?.items || brand?.locations,

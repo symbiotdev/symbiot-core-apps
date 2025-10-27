@@ -1,8 +1,8 @@
 import {
-  useAccountMeQuery,
+  useAccountMeReq,
   useAuthTokens,
-  useCurrentBrandEmployeeQuery,
-  useCurrentBrandQuery,
+  useCurrentBrandEmployeeReq,
+  useCurrentBrandReq,
 } from '@symbiot-core-apps/api';
 import { useEffect } from 'react';
 import { changeAppLanguage } from '@symbiot-core-apps/i18n';
@@ -25,17 +25,17 @@ export const useCurrentEntitiesLoader = () => {
     setBrand: setCurrentBrand,
     setBrands: setCurrentBrands,
   } = useCurrentBrandState();
-  const { data: meResponse, error: meResponseError } = useAccountMeQuery({
+  const { data: meResponse, error: meResponseError } = useAccountMeReq({
     enabled: !!tokens.access,
   });
   const { data: currentBrandResponse, error: currentBrandResponseError } =
-    useCurrentBrandQuery({
+    useCurrentBrandReq({
       enabled: !!tokens.access,
     });
   const {
     data: currentBrandEmployeeResponse,
     error: currentBrandEmployeeResponseError,
-  } = useCurrentBrandEmployeeQuery({
+  } = useCurrentBrandEmployeeReq({
     enabled: !!tokens.access && !!currentBrand,
   });
 

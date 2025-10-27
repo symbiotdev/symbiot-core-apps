@@ -13,8 +13,8 @@ import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { useCallback, useEffect } from 'react';
 import {
   Notification,
-  useNotificationsListQuery,
-  useNotificationsReadQuery,
+  useNotificationsListReq,
+  useNotificationsReadReq,
 } from '@symbiot-core-apps/api';
 import { View, XStack } from 'tamagui';
 import { DateHelper, emitHaptic } from '@symbiot-core-apps/shared';
@@ -26,7 +26,7 @@ export const Notifications = ({
 }) => {
   const { me, setMeStats } = useCurrentAccountState();
   const headerHeight = useScreenHeaderHeight();
-  const { mutateAsync: readAll } = useNotificationsReadQuery();
+  const { mutateAsync: readAll } = useNotificationsReadReq();
   const {
     items: notifications,
     isFetchingNextPage,
@@ -35,7 +35,7 @@ export const Notifications = ({
     error,
     onRefresh,
     onEndReached,
-  } = useNotificationsListQuery();
+  } = useNotificationsListReq();
 
   const markAllNotificationsAsRead = useCallback(async () => {
     await readAll();

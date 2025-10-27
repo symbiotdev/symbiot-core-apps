@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useBrandLocationAdvantages } from '@symbiot-core-apps/api';
+import { useBrandLocationAdvantagesReq } from '@symbiot-core-apps/api';
 import { ToggleController } from '@symbiot-core-apps/form-controller';
 
 export function BrandLocationAdvantagesController<
@@ -14,7 +14,7 @@ export function BrandLocationAdvantagesController<
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
-  const { data, isPending, error } = useBrandLocationAdvantages();
+  const { data, isPending, error } = useBrandLocationAdvantagesReq();
 
   return (
     <ToggleController

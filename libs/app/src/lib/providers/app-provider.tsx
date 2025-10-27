@@ -13,8 +13,8 @@ import {
   AppConfigFunctionality,
   AppConfigIconName,
   AppTranslations,
-  useAppConfigQuery,
-  useAppTranslationsQuery,
+  useAppConfigReq,
+  useAppTranslationsReq,
 } from '@symbiot-core-apps/api';
 import { IconName } from '@symbiot-core-apps/ui';
 import { create } from 'zustand';
@@ -74,11 +74,11 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     setTranslations,
     setFunctionality,
   } = useAppState();
-  const { data: appConfig, error: appConfigError } = useAppConfigQuery({
+  const { data: appConfig, error: appConfigError } = useAppConfigReq({
     refetch: !icons,
   });
   const { data: appTranslations, error: appTranslationError } =
-    useAppTranslationsQuery({
+    useAppTranslationsReq({
       refetch: !translations,
     });
 

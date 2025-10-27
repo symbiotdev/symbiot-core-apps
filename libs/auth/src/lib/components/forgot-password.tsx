@@ -3,7 +3,7 @@ import { AuthFormView } from './auth-form-view';
 import { useForm } from 'react-hook-form';
 import {
   AccountForgotPasswordData,
-  useAccountAuthForgotPasswordQuery,
+  useAccountAuthForgotPasswordReq,
 } from '@symbiot-core-apps/api';
 import { ReactElement, useCallback } from 'react';
 import { router } from 'expo-router';
@@ -12,7 +12,7 @@ import { EmailController } from '@symbiot-core-apps/form-controller';
 
 export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
   const { t } = useTranslation();
-  const { mutateAsync, error } = useAccountAuthForgotPasswordQuery();
+  const { mutateAsync, error } = useAccountAuthForgotPasswordReq();
 
   const {
     control,

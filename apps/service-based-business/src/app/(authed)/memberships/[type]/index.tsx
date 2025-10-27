@@ -12,8 +12,8 @@ import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
-  useBrandPeriodBasedMembershipCurrentListQuery,
-  useBrandVisitBasedMembershipCurrentListQuery,
+  useBrandPeriodBasedMembershipCurrentListReq,
+  useBrandVisitBasedMembershipCurrentListReq,
 } from '@symbiot-core-apps/api';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
 import { useTranslation } from 'react-i18next';
@@ -45,8 +45,8 @@ export default () => {
       offsetTop={headerHeight}
       query={
         type === BrandMembershipType.period
-          ? useBrandPeriodBasedMembershipCurrentListQuery
-          : useBrandVisitBasedMembershipCurrentListQuery
+          ? useBrandPeriodBasedMembershipCurrentListReq
+          : useBrandVisitBasedMembershipCurrentListReq
       }
       renderItem={({ item }) => (
         <BrandMembershipItem

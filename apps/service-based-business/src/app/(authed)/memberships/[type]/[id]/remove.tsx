@@ -1,7 +1,7 @@
 import { InitView } from '@symbiot-core-apps/ui';
 import {
   BrandMembershipType,
-  useBrandMembershipProfileByIdQuery,
+  useBrandMembershipProfileByIdReq,
 } from '@symbiot-core-apps/api';
 import { useLocalSearchParams } from 'expo-router';
 import { RemoveBrandMembership } from '@symbiot-core-apps/brand-membership';
@@ -15,7 +15,7 @@ export default () => {
     data: membership,
     isPending,
     error,
-  } = useBrandMembershipProfileByIdQuery(id, false);
+  } = useBrandMembershipProfileByIdReq(id, false);
 
   if (!membership || error) {
     return <InitView loading={isPending} error={error} />;

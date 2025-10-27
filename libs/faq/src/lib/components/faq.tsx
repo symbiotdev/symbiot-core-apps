@@ -7,14 +7,16 @@ import {
   PageView,
   RegularText,
 } from '@symbiot-core-apps/ui';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Linking } from 'react-native';
 import { useFaqState } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
+import { useAppFaqReq } from '@symbiot-core-apps/api';
 
 export const Faq = () => {
   const { t } = useTranslation();
-  const { faq } = useFaqState();
+  const { data } = useAppFaqReq();
+  const { faq, setFAQ } = useFaqState();
 
   const sortedFaq = useMemo(() => faq?.sort((a, b) => b.rate - a.rate), [faq]);
 
@@ -22,6 +24,12 @@ export const Faq = () => {
     () => Linking.openURL(`mailto:${process.env.EXPO_PUBLIC_SUPPORT_EMAIL}`),
     [],
   );
+
+  useEffect(() => {
+    if (data) {
+      setFAQ(data);
+    }
+  }, [data, setFAQ]);
 
   return (
     <PageView scrollable withHeaderHeight>

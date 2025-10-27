@@ -1,4 +1,4 @@
-import { useBrandCurrenciesQuery } from '@symbiot-core-apps/api';
+import { useBrandCurrenciesReq } from '@symbiot-core-apps/api';
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SelectController } from '@symbiot-core-apps/form-controller';
@@ -11,7 +11,7 @@ export function BrandCurrencyController<T extends FieldValues>(props: {
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
-  const { data, isPending, error } = useBrandCurrenciesQuery();
+  const { data, isPending, error } = useBrandCurrenciesReq();
 
   return (
     <SelectController

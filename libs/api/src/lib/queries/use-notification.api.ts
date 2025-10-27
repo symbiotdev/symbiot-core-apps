@@ -13,7 +13,7 @@ export enum NotificationQueryKey {
   getList = 'notifications-list',
 }
 
-export const useNotificationQueryState = () => {
+export const useNotificationReqState = () => {
   const getListState = useCallback(
     () =>
       queryClient.getQueryData<InfiniteData<PaginationList<Notification>>>([
@@ -74,23 +74,23 @@ export const useNotificationQueryState = () => {
   };
 };
 
-export const useCountNewNotifications = () =>
+export const useCountNewNotificationsReq = () =>
   useQuery<{ count: number }, void>({
     queryKey: [NotificationQueryKey.countNew],
     queryFn: () =>
       requestWithStringError(axios.get('/api/notification/new/count')),
   });
 
-export const useNotificationsListQuery = () =>
+export const useNotificationsListReq = () =>
   useInfiniteQueryWrapper<Notification>({
     storeInitialData: true,
     apUrl: '/api/notification',
     queryKey: [NotificationQueryKey.getList],
   });
 
-export const useNotificationsReadQuery = () => {
+export const useNotificationsReadReq = () => {
   const { markAllAsRead, getListState, setListState } =
-    useNotificationQueryState();
+    useNotificationReqState();
 
   return useMutation({
     mutationFn: async () => {

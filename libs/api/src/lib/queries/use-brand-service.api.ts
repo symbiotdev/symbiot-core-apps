@@ -54,7 +54,7 @@ const refetchQueriesByServiceChanges = async (
     },
   });
 
-export const useBrandServiceProfileByIdQuery = (id: string, enabled = true) => {
+export const useBrandServiceProfileByIdReq = (id: string, enabled = true) => {
   const queryKey = [BrandServiceQueryKey.profileById, id];
 
   return useQuery<BrandService, string>({
@@ -65,7 +65,7 @@ export const useBrandServiceProfileByIdQuery = (id: string, enabled = true) => {
   });
 };
 
-export const useBrandServiceViewByIdQuery = (id: string, enabled = true) => {
+export const useBrandServiceViewByIdReq = (id: string, enabled = true) => {
   const queryKey = [BrandServiceQueryKey.viewById, id];
 
   return useQuery<BrandService, string>({
@@ -76,10 +76,7 @@ export const useBrandServiceViewByIdQuery = (id: string, enabled = true) => {
   });
 };
 
-export const useBrandServiceDetailedByIdQuery = (
-  id: string,
-  enabled = true,
-) => {
+export const useBrandServiceDetailedByIdReq = (id: string, enabled = true) => {
   const queryKey = [BrandServiceQueryKey.detailedById, id];
 
   return useQuery<BrandService, string>({
@@ -90,7 +87,7 @@ export const useBrandServiceDetailedByIdQuery = (
   });
 };
 
-export const useBrandServiceTypesQuery = (enabled?: boolean) => {
+export const useBrandServiceTypesReq = (enabled?: boolean) => {
   const queryKey = [BrandServiceQueryKey.types];
 
   return useQuery<BrandServiceType[], string>({
@@ -101,7 +98,7 @@ export const useBrandServiceTypesQuery = (enabled?: boolean) => {
   });
 };
 
-export const useBrandServiceFormatsQuery = (enabled?: boolean) => {
+export const useBrandServiceFormatsReq = (enabled?: boolean) => {
   const queryKey = [BrandServiceQueryKey.formats];
 
   return useQuery<BrandServiceFormat[], string>({
@@ -112,7 +109,7 @@ export const useBrandServiceFormatsQuery = (enabled?: boolean) => {
   });
 };
 
-export const useBrandServiceGendersQuery = (enabled?: boolean) => {
+export const useBrandServiceGendersReq = (enabled?: boolean) => {
   const queryKey = [BrandServiceQueryKey.genders];
 
   return useQuery<Gender[], string>({
@@ -123,7 +120,7 @@ export const useBrandServiceGendersQuery = (enabled?: boolean) => {
   });
 };
 
-export const useBrandServiceCurrentListQuery = (props?: {
+export const useBrandServiceCurrentListReq = (props?: {
   params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<BrandService>({
@@ -133,7 +130,7 @@ export const useBrandServiceCurrentListQuery = (props?: {
     queryKey: [BrandServiceQueryKey.currentList, props?.params],
   });
 
-export const useServicesQuery = (props?: { params?: PaginationListParams }) =>
+export const useServicesReq = (props?: { params?: PaginationListParams }) =>
   useInfiniteQueryWrapper<BrandService>({
     refetchOnMount: true,
     apUrl: `/api/brand-service/services`,
@@ -141,7 +138,7 @@ export const useServicesQuery = (props?: { params?: PaginationListParams }) =>
     ...props,
   });
 
-export const useServicesListByLocationQuery = (props: {
+export const useServicesListByLocationReq = (props: {
   location: string;
   params?: PaginationListParams;
 }) =>
@@ -152,7 +149,7 @@ export const useServicesListByLocationQuery = (props: {
     ...props,
   });
 
-export const useCreateBrandServiceQuery = () =>
+export const useCreateBrandServiceReq = () =>
   useMutation<BrandService, string, CreateBrandService>({
     mutationFn: async (data) => {
       const service = await requestWithAlertOnError<BrandService>(
@@ -171,7 +168,7 @@ export const useCreateBrandServiceQuery = () =>
     },
   });
 
-export const useUpdateBrandServiceQuery = () =>
+export const useUpdateBrandServiceReq = () =>
   useMutation<BrandService, string, { id: string; data: UpdateBrandService }>({
     mutationFn: async ({ id, data }) => {
       const service = await requestWithAlertOnError<BrandService>(
@@ -195,7 +192,7 @@ export const useUpdateBrandServiceQuery = () =>
     },
   });
 
-export const useRemoveBrandServiceQuery = () =>
+export const useRemoveBrandServiceReq = () =>
   useMutation<void, string, { id: string }>({
     mutationFn: async ({ id }) => {
       const response = await requestWithAlertOnError<void>(

@@ -1,5 +1,5 @@
 import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
-import { useBrandServiceProfileByIdQuery } from '@symbiot-core-apps/api';
+import { useBrandServiceProfileByIdReq } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
 import { XStack } from 'tamagui';
@@ -12,7 +12,7 @@ export default () => {
     data: service,
     isPending,
     error,
-  } = useBrandServiceProfileByIdQuery(id);
+  } = useBrandServiceProfileByIdReq(id);
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
 

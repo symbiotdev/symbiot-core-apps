@@ -2,7 +2,6 @@ import { refetchQueriesByChanges } from '../utils/query';
 import {
   AnyBrandBooking,
   BrandBookingClient,
-  BrandBookingPaginationParams,
   BrandBookingSlot,
   BrandBookingType,
   CreateServiceBrandBooking,
@@ -22,9 +21,12 @@ import {
 } from '../utils/request';
 import axios from 'axios';
 import { queryClient } from '../utils/client';
+import { getBrandBookingType } from '../utils/brand-booking';
+import { PaginationListParams } from '../types/pagination';
 
 export enum BrandBookingQueryKey {
-  currentList = 'brand-booking-current-list',
+  unavailableCurrentList = 'brand-booking-unavailable-current-list',
+  serviceCurrentList = 'brand-booking-service-current-list',
   periodList = 'brand-booking-period-list',
   detailedById = 'brand-booking-detailed-by-id',
   slotsByService = 'brand-booking-slots-by-service',
@@ -33,7 +35,7 @@ export enum BrandBookingQueryKey {
 const refetchQueriesByBookingChanges = async (
   entities: {
     id: string;
-    data?: AnyBrandBooking;
+    data: AnyBrandBooking;
   }[],
   refetchList = true,
 ) =>
@@ -42,30 +44,53 @@ const refetchQueriesByBookingChanges = async (
     entities,
     queryKeys: {
       byId: [BrandBookingQueryKey.detailedById],
-      list: [BrandBookingQueryKey.currentList],
+      list: entities.some(
+        ({ data }) =>
+          getBrandBookingType(data) === BrandBookingType.unavailable,
+      )
+        ? [BrandBookingQueryKey.unavailableCurrentList]
+        : [BrandBookingQueryKey.serviceCurrentList],
     },
   });
 
-export const useBrandBookingCurrentListReq = (props?: {
-  params?: BrandBookingPaginationParams;
+export const useBrandBookingCurrentListReq = ({
+  type,
+  start,
+  params,
+}: {
+  type: BrandBookingType;
+  start: Date;
+  params?: PaginationListParams;
 }) =>
   useInfiniteQueryWrapper<AnyBrandBooking>({
-    ...props,
-    apUrl: '/api/brand-booking',
-    queryKey: [BrandBookingQueryKey.currentList, props?.params],
     storeInitialData: true,
+    refetchOnMount: true,
+    apUrl: '/api/brand-booking',
+    queryKey: [
+      BrandBookingQueryKey.unavailableCurrentList,
+      type,
+      start,
+      params,
+    ],
+    params: {
+      ...params,
+      type,
+      start,
+    },
   });
 
 export const useBrandBookingPeriodListReq = (props?: {
-  params?: BrandBookingPaginationParams & {
+  params?: PaginationListParams & {
     end: Date;
+    location?: string;
   };
 }) =>
   useInfiniteQueryWrapper<AnyBrandBooking>({
     ...props,
+    storeInitialData: true,
+    refetchOnMount: true,
     apUrl: '/api/brand-booking',
     queryKey: [BrandBookingQueryKey.periodList, props?.params],
-    storeInitialData: true,
   });
 
 export const useBrandBookingDetailedByIdReq = (id: string) =>

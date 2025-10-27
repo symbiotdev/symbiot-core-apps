@@ -2,7 +2,6 @@ import { BrandLocation } from './brand-location';
 import { BrandEmployee } from './brand-employee';
 import { BrandService } from './brand-service';
 import { AnyBrandClientMembership, BrandClient } from './brand-client';
-import { PaginationListParams } from './pagination';
 
 export enum BrandBookingType {
   service = 'service',
@@ -52,13 +51,6 @@ export type ServiceBrandBooking = BrandBooking & {
 };
 
 export type AnyBrandBooking = UnavailableBrandBooking | ServiceBrandBooking;
-
-export type BrandBookingPaginationParams = PaginationListParams & {
-  start: Date;
-  end?: Date;
-  type?: BrandBookingType;
-  location?: string;
-};
 
 export type ServiceBrandBookingSlotsParams = {
   date: Date;

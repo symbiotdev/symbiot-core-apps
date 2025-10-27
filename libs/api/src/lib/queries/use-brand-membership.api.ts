@@ -19,6 +19,7 @@ import {
   CreateBrandVisitBasedMembership,
   UpdateBrandMembership,
 } from '../types/brand-membership';
+import { getBrandMembershipType } from '../utils/brand-membership';
 
 export enum BrandMembershipQueryKey {
   periods = 'brand-membership-periods',
@@ -43,10 +44,14 @@ const refetchQueriesByMembershipChanges = async (
         BrandMembershipQueryKey.profileById,
         BrandMembershipQueryKey.detailedById,
       ],
-      list: [
-        BrandMembershipQueryKey.periodBasedCurrentList,
-        BrandMembershipQueryKey.visitBasedCurrentList,
-      ],
+      list: !entity.data
+        ? [
+            BrandMembershipQueryKey.periodBasedCurrentList,
+            BrandMembershipQueryKey.visitBasedCurrentList,
+          ]
+        : getBrandMembershipType(entity.data) === BrandMembershipType.visits
+          ? [BrandMembershipQueryKey.visitBasedCurrentList]
+          : [BrandMembershipQueryKey.periodBasedCurrentList],
     },
   });
 

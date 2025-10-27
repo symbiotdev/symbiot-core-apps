@@ -48,6 +48,7 @@ export * from './lib/types/gender';
 export * from './lib/types/pagination';
 export * from './lib/types/schedule';
 
+export * from './lib/utils/brand-booking';
 export * from './lib/utils/brand-membership';
 export * from './lib/utils/client';
 export * from './lib/utils/gender';

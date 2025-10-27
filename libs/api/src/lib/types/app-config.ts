@@ -42,6 +42,8 @@ export type AppConfigIconName =
   | 'Package'
   | 'PeriodBasedMembership'
   | 'VisitBasedMembership'
+  | 'UnavailableBooking'
+  | 'ServiceBooking'
   | 'More';
 
 export type AppConfigFunctionality = {

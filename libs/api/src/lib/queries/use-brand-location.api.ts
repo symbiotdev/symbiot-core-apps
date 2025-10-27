@@ -31,7 +31,7 @@ const refetchQueriesByLocationChanges = async (
 ) =>
   refetchQueriesByChanges<BrandLocation>({
     refetchList,
-    entity,
+    entities: [entity],
     queryKeys: {
       byId: [BrandLocationQueryKey.byId],
       list: [BrandLocationQueryKey.currentList],
@@ -150,7 +150,7 @@ export const useCurrentBrandLocationsQuery = () =>
     queryKey: [BrandLocationQueryKey.currentList],
     queryFn: () =>
       requestWithStringError<PaginationList<BrandLocation>>(
-        axios.get('/api/brand-location/current/list'),
+        axios.get('/api/brand-location/current'),
       ),
   });
 

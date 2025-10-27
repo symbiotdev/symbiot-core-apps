@@ -43,7 +43,7 @@ const refetchQueriesByClientChanges = async (
 ) =>
   refetchQueriesByChanges<BrandClient>({
     refetchList,
-    entity,
+    entities: [entity],
     queryKeys: {
       byId: [BrandClientQueryKey.detailedById],
       list: [BrandClientQueryKey.currentList],
@@ -55,7 +55,7 @@ export const useBrandClientCurrentListQuery = (props?: {
 }) =>
   useInfiniteQueryWrapper<BrandClient>({
     ...props,
-    apUrl: '/api/brand-client/list',
+    apUrl: '/api/brand-client',
     queryKey: [BrandClientQueryKey.currentList, props?.params],
     storeInitialData: true,
   });
@@ -69,7 +69,7 @@ export const useBrandClientPeriodBasedMembershipsListQuery = (
   useInfiniteQueryWrapper<BrandClientPeriodBasedMembership>({
     ...props,
     refetchOnMount: true,
-    apUrl: `/api/brand-client/${clientId}/membership/list`,
+    apUrl: `/api/brand-client/${clientId}/membership`,
     queryKey: [
       BrandClientQueryKey.periodBasedMembershipsList,
       clientId,
@@ -90,7 +90,7 @@ export const useBrandClientVisitsBasedMembershipsListQuery = (
   useInfiniteQueryWrapper<BrandClientVisitBasedMembership>({
     ...props,
     refetchOnMount: true,
-    apUrl: `/api/brand-client/${clientId}/membership/list`,
+    apUrl: `/api/brand-client/${clientId}/membership`,
     queryKey: [
       BrandClientQueryKey.visitsBasedMembershipsList,
       clientId,
@@ -114,7 +114,7 @@ export const useCreateBrandClientQuery = () =>
     mutationFn: async (data) => {
       const client = await requestWithAlertOnError<BrandClient>(
         axios.post(
-          `/api/brand-client/add`,
+          `/api/brand-client`,
           await generateFormData<CreateBrandClient>(data, ['avatar']),
         ),
       );
@@ -133,7 +133,7 @@ export const useImportBrandClientsQuery = () =>
     mutationFn: async (clients) => {
       const importedClients = await requestWithAlertOnError<BrandClient[]>(
         axios.post(`/api/brand-client/import`, {
-          clients: clients,
+          clients,
         }),
       );
 
@@ -304,7 +304,7 @@ export const useBrandClientAddMembershipQuery = () =>
       const membership =
         await requestWithAlertOnError<AnyBrandClientMembership>(
           axios.post(
-            `/api/brand-client/${clientId}/membership/${membershipId}/add`,
+            `/api/brand-client/${clientId}/membership/${membershipId}`,
           ),
         );
 

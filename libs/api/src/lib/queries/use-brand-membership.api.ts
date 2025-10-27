@@ -37,7 +37,7 @@ const refetchQueriesByMembershipChanges = async (
 ) =>
   refetchQueriesByChanges<BrandMembership>({
     refetchList,
-    entity,
+    entities: [entity],
     queryKeys: {
       byId: [
         BrandMembershipQueryKey.profileById,
@@ -95,7 +95,7 @@ export const useBrandPeriodBasedMembershipCurrentListQuery = (props?: {
   useInfiniteQueryWrapper<BrandPeriodBasedMembership>({
     ...props,
     storeInitialData: true,
-    apUrl: '/api/brand-membership/list',
+    apUrl: '/api/brand-membership',
     queryKey: [BrandMembershipQueryKey.periodBasedCurrentList, props?.params],
     params: {
       ...props?.params,
@@ -109,7 +109,7 @@ export const useBrandVisitBasedMembershipCurrentListQuery = (props?: {
   useInfiniteQueryWrapper<BrandVisitBasedMembership>({
     ...props,
     storeInitialData: true,
-    apUrl: '/api/brand-membership/list',
+    apUrl: '/api/brand-membership',
     queryKey: [BrandMembershipQueryKey.visitBasedCurrentList, props?.params],
     params: {
       ...props?.params,
@@ -127,7 +127,7 @@ export const useCreateBrandPeriodBasedMembershipQuery = () =>
       const membership =
         await requestWithAlertOnError<BrandPeriodBasedMembership>(
           axios.post(
-            `/api/brand-membership/${BrandMembershipType.period}/add`,
+            `/api/brand-membership/${BrandMembershipType.period}`,
             data,
           ),
         );
@@ -151,7 +151,7 @@ export const useCreateBrandVisitBasedMembershipQuery = () =>
       const membership =
         await requestWithAlertOnError<BrandVisitBasedMembership>(
           axios.post(
-            `/api/brand-membership/${BrandMembershipType.visits}/add`,
+            `/api/brand-membership/${BrandMembershipType.visits}`,
             data,
           ),
         );

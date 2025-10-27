@@ -11,7 +11,7 @@ import { authTokenHeaderKey, useAuthTokens } from '../hooks/use-auth-tokens';
 import { useDevId } from '../hooks/use-dev-id';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '../utils/client';
-import { useAccountAuthRefreshTokenQuery } from '../queries/use-account-auth.query';
+import { useAccountAuthRefreshTokenQuery } from '../queries/use-account-auth.api';
 import { Platform } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { clearInitialQueryData } from '../utils/initial-query-data';

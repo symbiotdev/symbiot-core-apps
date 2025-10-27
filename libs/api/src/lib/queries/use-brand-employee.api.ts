@@ -12,7 +12,7 @@ import {
 } from '../types/brand-employee';
 import { Account } from '../types/account';
 import { generateFormData } from '../utils/media';
-import { PaginationList, PaginationListParams } from '../types/pagination';
+import { PaginationListParams } from '../types/pagination';
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { queryClient } from '../utils/client';
 import { refetchQueriesByChanges } from '../utils/query';
@@ -39,7 +39,7 @@ const refetchQueriesByEmployeeChanges = async (
 ) =>
   refetchQueriesByChanges<BrandEmployee>({
     refetchList,
-    entity,
+    entities: [entity],
     queryKeys: {
       byId: [
         BrandEmployeesQueryKey.profileById,

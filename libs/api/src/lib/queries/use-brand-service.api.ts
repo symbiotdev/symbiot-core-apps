@@ -39,7 +39,7 @@ const refetchQueriesByServiceChanges = async (
 ) =>
   refetchQueriesByChanges<BrandService>({
     refetchList,
-    entity,
+    entities: [entity],
     queryKeys: {
       byId: [
         BrandServiceQueryKey.profileById,
@@ -157,7 +157,7 @@ export const useCreateBrandServiceQuery = () =>
     mutationFn: async (data) => {
       const service = await requestWithAlertOnError<BrandService>(
         axios.post(
-          `/api/brand-service/add`,
+          `/api/brand-service`,
           await generateFormData<CreateBrandService>(data, ['avatar']),
         ),
       );

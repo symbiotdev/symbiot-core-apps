@@ -14,24 +14,26 @@ export async function refetchInfiniteListByKey(key: string) {
 
 export async function refetchQueriesByChanges<T extends { id: string }>({
   queryKeys,
-  entity,
+  entities,
   refetchList,
 }: {
   queryKeys: {
     byId: string[];
     list: string[];
   };
-  entity: {
+  entities: {
     id: string;
     data?: T;
-  };
+  }[];
   refetchList: boolean;
 }) {
-  queryKeys.byId.forEach((key) =>
-    queryClient.setQueryData([key, entity.id], entity.data),
-  );
+  entities.forEach((entity) => {
+    queryKeys.byId.forEach((key) =>
+      queryClient.setQueryData([key, entity.id], entity.data),
+    );
+  });
 
-  if (refetchList || !entity.data) {
+  if (refetchList || entities.some(({ data }) => !data)) {
     await Promise.all(queryKeys.list.map(refetchInfiniteListByKey));
   } else {
     queryKeys.list.forEach((key) => {
@@ -49,9 +51,13 @@ export async function refetchQueriesByChanges<T extends { id: string }>({
           ...data,
           pages: data.pages.map((page) => ({
             ...page,
-            items: page.items.map((item) =>
-              item.id === entity.id ? entity.data as T : item,
-            ),
+            items: page.items.map((item) => {
+              const targetEntity = entities.find(
+                (entity) => entity.id === item.id,
+              );
+
+              return targetEntity ? (targetEntity.data as T) : item;
+            }),
           })),
         });
       });

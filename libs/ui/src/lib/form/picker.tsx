@@ -208,7 +208,7 @@ const CustomPicker = ({
   }, [rendered, scrollToIndex]);
 
   if (!rendered) {
-    return <LoadingView flex={1} height={300} maxHeight="100%" />;
+    return <LoadingView flex={1} height={200} maxHeight="100%" />;
   }
 
   return (
@@ -219,7 +219,7 @@ const CustomPicker = ({
       keyExtractor={(item) => String(item.value)}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
-      style={{ maxHeight: 300 }}
+      style={{ maxHeight: 200 }}
       contentContainerStyle={[
         {
           paddingHorizontal: defaultPageHorizontalPadding,

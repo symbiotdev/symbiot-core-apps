@@ -72,9 +72,8 @@ export const TimeSchedule = ({
           ? DateHelper.addMinutes(adjustedStart, timeInterval)
           : value.end,
       });
-      onBlur?.();
     },
-    [startOfDay, onChange, value.end, onBlur],
+    [startOfDay, onChange, value.end],
   );
 
   const onChangeEndValue = useCallback(
@@ -87,9 +86,8 @@ export const TimeSchedule = ({
           ? DateHelper.addMinutes(adjustedEnd, -timeInterval)
           : value.start,
       });
-      onBlur?.();
     },
-    [startOfDay, onChange, value.start, onBlur],
+    [startOfDay, onChange, value.start],
   );
 
   return (
@@ -122,6 +120,7 @@ export const TimeSchedule = ({
           onChange={setActiveSegment}
         />
       }
+      onClose={onBlur}
     >
       <FormView>
         {activeSegment === 'start' && (

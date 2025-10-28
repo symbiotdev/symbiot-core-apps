@@ -65,13 +65,9 @@ export const useBrandBookingCurrentListReq = ({
   useInfiniteQueryWrapper<AnyBrandBooking>({
     storeInitialData: true,
     refetchOnMount: true,
+    afterKeys: ['id', 'start'],
     apUrl: '/api/brand-booking',
-    queryKey: [
-      BrandBookingQueryKey.unavailableCurrentList,
-      type,
-      start,
-      params,
-    ],
+    queryKey: [type, start, params],
     params: {
       ...params,
       type,

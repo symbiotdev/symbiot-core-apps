@@ -24,16 +24,18 @@ export type InfiniteQuery<T> = UseInfiniteQueryResult<
   onEndReached: () => void;
 };
 
-export function useInfiniteQueryWrapper<T>({
+export function useInfiniteQueryWrapper<T extends { id: string }>({
   apUrl,
   queryKey,
   params,
   refetchOnMount = false,
+  afterKeys = ['id'],
   storeInitialData,
 }: {
   apUrl: string;
   queryKey: unknown[];
   refetchOnMount?: boolean;
+  afterKeys?: (keyof T)[];
   storeInitialData?: boolean;
   params?: PaginationListParams & Record<string, unknown>;
 }) {
@@ -53,11 +55,16 @@ export function useInfiniteQueryWrapper<T>({
         axios.get(apUrl, {
           params: {
             ...params,
-            ...(!!pageParam && {
-              after: {
-                id: (pageParam as { id: string })['id'],
-              },
-            }),
+            ...(!!pageParam &&
+              afterKeys?.length && {
+                after: afterKeys.reduce(
+                  (obj, key) => ({
+                    ...obj,
+                    [key]: (pageParam as T)[key],
+                  }),
+                  {},
+                ),
+              }),
           },
         }),
       ),

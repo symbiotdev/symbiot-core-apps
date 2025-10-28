@@ -147,6 +147,7 @@ export const useRemoveBrandLocationReq = () =>
 
 export const useCurrentBrandLocationsReq = () =>
   useQuery<PaginationList<BrandLocation>, string>({
+    refetchOnMount: false,
     queryKey: [BrandLocationQueryKey.currentList],
     queryFn: () =>
       requestWithStringError<PaginationList<BrandLocation>>(

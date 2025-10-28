@@ -2,6 +2,7 @@ import {
   TimeGrid,
   TimeGridActionsProps,
   TimeGridRef,
+  TimeGridUnavailableTime,
 } from '@symbiot.dev/react-native-timegrid-pro';
 import { LayoutChangeEvent, Platform } from 'react-native';
 import { useDateLocale } from '@symbiot-core-apps/i18n';
@@ -26,6 +27,7 @@ export const Calendar = ({
   timeGridRef,
   gridBottomOffset = 0,
   weekStartsOn,
+  unavailableTime,
   renderHeaderSafeArea,
   onChangeDate,
 }: {
@@ -33,6 +35,7 @@ export const Calendar = ({
   timeGridRef?: Ref<TimeGridRef>;
   gridBottomOffset?: number;
   weekStartsOn?: Weekday;
+  unavailableTime?: TimeGridUnavailableTime[];
   renderHeaderSafeArea?: () => ReactElement;
   onChangeDate: TimeGridActionsProps['onChangeDate'];
 }) => {
@@ -62,6 +65,7 @@ export const Calendar = ({
     () => width - paddings.left - paddings.right,
     [paddings.left, paddings.right, width],
   );
+
   const numberOfDays = useMemo(
     () =>
       ['sm', 'md', 'lg', 'xl'].includes(media) &&
@@ -153,7 +157,6 @@ export const Calendar = ({
           gridBottomOffset={gridBottomOffset}
           locale={locale}
           startDate={selectedDate}
-          isAllDayEventsVisible={false}
           horizontalLineSize={1}
           minScale={1}
           scale={1.4}
@@ -161,6 +164,7 @@ export const Calendar = ({
           numberOfDays={numberOfDays}
           dayHeaderHeight={60}
           renderHeaderSafeArea={renderHeaderSafeArea}
+          unavailableTime={unavailableTime}
           renderDayHeader={renderDayHeader}
           renderNowIndicator={renderNowIndicator}
           theme={{
@@ -172,11 +176,9 @@ export const Calendar = ({
             verticalLineColor: theme.calendarLineColor?.val,
             horizontalLineColor: theme.calendarLineColor?.val,
             timelineTextColor: theme.calendarTimeColor?.val,
+            allDayEventsSafeAreaBackgroundColor:
+              theme.calendarHeaderBackgroundColor?.val,
           }}
-          unavailableTime={[
-            { from: 0, to: 540 },
-            { from: 1080, to: 1440 },
-          ]}
           onChangeDate={onChangeDate}
         />
       )}

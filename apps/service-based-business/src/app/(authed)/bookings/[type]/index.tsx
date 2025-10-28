@@ -16,7 +16,6 @@ import {
   PageView,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
-import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { useApp } from '@symbiot-core-apps/app';
 import { DateHelper, useNativeNow } from '@symbiot-core-apps/shared';
 
@@ -54,13 +53,6 @@ export default () => {
       offsetTop={headerHeight}
       type={type}
       query={useQuery}
-      renderItem={({ item }) => (
-        <BrandBookingItem
-          alignSelf="center"
-          booking={item}
-          onPress={() => router.push(`/bookings/${type}/${item.id}/profile`)}
-        />
-      )}
       Intro={Intro}
     />
   );

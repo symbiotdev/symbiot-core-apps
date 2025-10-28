@@ -1,14 +1,10 @@
 import React, { ForwardedRef } from 'react';
-import { FlatList, Platform } from 'react-native';
-import Animated, {
-  FadingTransition,
-  FlatListPropsWithLayout,
-} from 'react-native-reanimated';
+import { SectionList as RNSectionList, SectionListProps } from 'react-native';
 import { Refresher } from '../loading/refresher';
 import { ListLoadingFooter } from './list-loading-footer';
 import { ViewProps } from 'tamagui';
 
-export function AnimatedList<T>({
+export function SectionList<T>({
   listRef,
   listLoadingFooterProps,
   refreshing,
@@ -17,9 +13,9 @@ export function AnimatedList<T>({
   progressViewOffset,
   onRefresh,
   onEndReached,
-  ...flatListProps
-}: FlatListPropsWithLayout<T> & {
-  listRef?: ForwardedRef<FlatList>;
+  ...listProps
+}: SectionListProps<T> & {
+  listRef?: ForwardedRef<RNSectionList>;
   listLoadingFooterProps?: ViewProps;
   refreshing?: boolean;
   expanding?: boolean;
@@ -29,12 +25,10 @@ export function AnimatedList<T>({
   onEndReached?: () => void;
 }) {
   return (
-    <Animated.FlatList
+    <RNSectionList
+      stickySectionHeadersEnabled
       ref={listRef}
       keyExtractor={(_, index) => String(index)}
-      itemLayoutAnimation={
-        Platform.OS === 'web' || ignoreAnimation ? undefined : FadingTransition
-      }
       onEndReachedThreshold={0.3}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
@@ -54,19 +48,18 @@ export function AnimatedList<T>({
         ) : undefined
       }
       onEndReached={onEndReached}
-      // decelerationRate={0.9} // specially for swipe lists and keep the same behaviour on all list
-      {...flatListProps}
+      {...listProps}
       style={[
         {
           flex: 1,
         },
-        flatListProps.style,
+        listProps.style,
       ]}
       contentContainerStyle={[
         {
           flexGrow: 1,
         },
-        flatListProps.contentContainerStyle,
+        listProps.contentContainerStyle,
       ]}
     />
   );

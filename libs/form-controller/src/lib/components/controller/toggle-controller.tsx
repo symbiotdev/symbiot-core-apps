@@ -13,6 +13,7 @@ export function ToggleController<T extends FieldValues>({
   disabled,
   required,
   errors,
+  multiselect = true,
   items,
   itemsLoading,
   itemsError,
@@ -22,6 +23,7 @@ export function ToggleController<T extends FieldValues>({
   control: Control<T>;
   label: string;
   required?: boolean;
+  multiselect?: boolean;
   items?: ToggleGroupItem[];
   itemsLoading?: boolean;
   itemsError?: string | null;
@@ -47,12 +49,12 @@ export function ToggleController<T extends FieldValues>({
             ? true
             : Array.isArray(value) && value.length
               ? true
-              : errors?.required,
+              : errors?.required || !!value,
       }}
       render={({ field: { value, onChange } }) => (
         <ToggleGroup
           allowEmpty
-          multiselect
+          multiselect={multiselect}
           disabled={disabled}
           viewProps={{
             backgroundColor: '$background1',

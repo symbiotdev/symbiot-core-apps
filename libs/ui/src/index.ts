@@ -41,6 +41,7 @@ export * from './lib/icons';
 
 export * from './lib/list/animated-list';
 export * from './lib/list/list-item';
+export * from './lib/list/section-list';
 
 export * from './lib/loading/progress';
 export * from './lib/loading/spinner';

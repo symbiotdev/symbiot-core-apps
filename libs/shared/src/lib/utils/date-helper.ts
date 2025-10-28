@@ -34,6 +34,8 @@ import { setSeconds } from 'date-fns/setSeconds';
 import { setMilliseconds } from 'date-fns/setMilliseconds';
 import { isEqual } from 'date-fns/isEqual';
 import { getMinutes } from 'date-fns/getMinutes';
+import { isBefore } from 'date-fns/isBefore';
+import { addWeeks } from 'date-fns/addWeeks';
 
 export const defaultWeekdayStartsOn: Day = 0;
 export const minutesInHour = 60;
@@ -53,10 +55,12 @@ export const DateHelper = {
   isSameDay,
   isSameMonth,
   isAfter,
+  isBefore,
   isValid,
   addMinutes,
   addHours,
   addDays,
+  addWeeks,
   addMonths,
   addYears,
   startOfMonth,

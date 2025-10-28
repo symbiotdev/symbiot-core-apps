@@ -9,17 +9,24 @@ import { AdaptivePopover } from '../popover/adaptive-popover';
 import { RegularText } from '../text/text';
 import { InputFieldView } from '../view/input-field-view';
 import { YStack } from 'tamagui';
+import { FormField } from './form-field';
 
 const timeInterval = 5;
 
 export const TimeSchedule = ({
   value,
+  label,
+  error,
+  required,
   disabled,
   disableDrag,
   onChange,
   onBlur,
 }: {
   value: { start: Date; end: Date };
+  label?: string;
+  error?: string;
+  required?: boolean;
   disabled?: boolean;
   disableDrag?: boolean;
   onChange: (params: { start: Date; end: Date }) => void;
@@ -99,11 +106,13 @@ export const TimeSchedule = ({
       minWidth={250}
       trigger={
         <YStack gap="$1" disabled={disabled} pressStyle={{ opacity: 0.8 }}>
-          <InputFieldView>
-            <RegularText>
-              {`${DateHelper.format(value.start, 'p')} - ${DateHelper.format(value.end, 'p')}`}
-            </RegularText>
-          </InputFieldView>
+          <FormField label={label} error={error} required={required}>
+            <InputFieldView>
+              <RegularText>
+                {`${DateHelper.format(value.start, 'p')} - ${DateHelper.format(value.end, 'p')}`}
+              </RegularText>
+            </InputFieldView>
+          </FormField>
           <RegularText color="$disabled" marginHorizontal="$4">
             {`${t('shared.duration')} - ${DateHelper.formatDuration(
               DateHelper.differenceInMinutes(value.end, value.start),

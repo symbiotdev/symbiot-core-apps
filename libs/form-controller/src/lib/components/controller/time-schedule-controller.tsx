@@ -5,13 +5,17 @@ import type { ControllerProps } from 'react-hook-form/dist/types';
 export function TimeScheduleController<T extends FieldValues>({
   name,
   control,
+  label,
   disabled,
+  required,
   rules,
   onBlur,
 }: {
   name: Path<T>;
   control: Control<T>;
+  label?: string;
   disabled?: boolean;
+  required?: boolean;
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
 }) {
@@ -20,9 +24,12 @@ export function TimeScheduleController<T extends FieldValues>({
       control={control}
       name={name}
       rules={rules}
-      render={({ field: { value, onChange } }) => (
+      render={({ field: { value, onChange }, fieldState: { error } }) => (
         <TimeSchedule
           value={value}
+          label={label}
+          error={error?.message}
+          required={required}
           disabled={disabled}
           onChange={onChange}
           onBlur={onBlur}

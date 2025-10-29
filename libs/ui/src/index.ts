@@ -43,6 +43,7 @@ export * from './lib/list/animated-list';
 export * from './lib/list/list-item';
 export * from './lib/list/section-list';
 
+export * from './lib/loading/determined-progress';
 export * from './lib/loading/progress';
 export * from './lib/loading/spinner';
 

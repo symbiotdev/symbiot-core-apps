@@ -1,49 +1,32 @@
 import {
   TimeGrid,
-  TimeGridActionsProps,
+  TimeGridProps,
   TimeGridRef,
-  TimeGridUnavailableTime,
 } from '@symbiot.dev/react-native-timegrid-pro';
 import { LayoutChangeEvent, Platform } from 'react-native';
 import { useDateLocale } from '@symbiot-core-apps/i18n';
-import { ReactElement, Ref, useCallback, useMemo, useState } from 'react';
+import { Ref, useCallback, useMemo, useState } from 'react';
 import { useTheme, View, XStack } from 'tamagui';
 import {
   DateHelper,
-  DeviceInfo,
-  isTablet,
   useNativeNow,
   useScreenOrientation,
-  useScreenSize,
-  Weekday,
 } from '@symbiot-core-apps/shared';
 import { BoldText, RegularText } from '../text/text';
 import { Orientation } from 'expo-screen-orientation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { DeviceType } from 'expo-device';
 
 export const Calendar = ({
-  selectedDate,
   timeGridRef,
-  gridBottomOffset = 0,
-  weekStartsOn,
-  unavailableTime,
-  renderHeaderSafeArea,
-  onChangeDate,
-}: {
-  selectedDate: Date;
+  ...timeGridProps
+}: Omit<TimeGridProps, 'ref'> & {
   timeGridRef?: Ref<TimeGridRef>;
   gridBottomOffset?: number;
-  weekStartsOn?: Weekday;
-  unavailableTime?: TimeGridUnavailableTime[];
-  renderHeaderSafeArea?: () => ReactElement;
-  onChangeDate: TimeGridActionsProps['onChangeDate'];
 }) => {
   const locale = useDateLocale();
   const theme = useTheme();
   const { orientation } = useScreenOrientation();
   const { left, right } = useSafeAreaInsets();
-  const { media } = useScreenSize();
   const { now } = useNativeNow();
 
   const [width, setWidth] = useState(0);
@@ -64,18 +47,6 @@ export const Calendar = ({
   const adjustedWidth = useMemo(
     () => width - paddings.left - paddings.right,
     [paddings.left, paddings.right, width],
-  );
-
-  const numberOfDays = useMemo(
-    () =>
-      ['sm', 'md', 'lg', 'xl'].includes(media) &&
-      (isTablet ||
-        DeviceInfo.deviceType === DeviceType.DESKTOP ||
-        orientation === Orientation.LANDSCAPE_LEFT ||
-        orientation === Orientation.LANDSCAPE_RIGHT)
-        ? 7
-        : 3,
-    [media, orientation],
   );
 
   const renderDayHeader = useCallback(
@@ -153,18 +124,12 @@ export const Calendar = ({
           ref={timeGridRef}
           snappable={snappable}
           width={adjustedWidth}
-          weekStartsOn={weekStartsOn}
-          gridBottomOffset={gridBottomOffset}
           locale={locale}
-          startDate={selectedDate}
           horizontalLineSize={1}
           minScale={1}
           scale={1.4}
           maxScale={3}
-          numberOfDays={numberOfDays}
           dayHeaderHeight={60}
-          renderHeaderSafeArea={renderHeaderSafeArea}
-          unavailableTime={unavailableTime}
           renderDayHeader={renderDayHeader}
           renderNowIndicator={renderNowIndicator}
           theme={{
@@ -179,7 +144,7 @@ export const Calendar = ({
             allDayEventsSafeAreaBackgroundColor:
               theme.calendarHeaderBackgroundColor?.val,
           }}
-          onChangeDate={onChangeDate}
+          {...timeGridProps}
         />
       )}
     </View>

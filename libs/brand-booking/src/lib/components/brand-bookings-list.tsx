@@ -98,6 +98,10 @@ export const BrandBookingsList = ({
           y={Platform.OS === 'web' ? offsetTop : undefined}
           alignSelf="center"
           booking={item}
+          borderRadius="$4"
+          cursor="pointer"
+          style={formViewStyles}
+          pressStyle={{ opacity: 0.8 }}
           onPress={() => router.push(`/bookings/${type}/${item.id}/profile`)}
         />
       )}

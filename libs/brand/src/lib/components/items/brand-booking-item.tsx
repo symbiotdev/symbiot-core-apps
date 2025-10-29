@@ -1,22 +1,15 @@
-import { View, ViewProps, XStack } from 'tamagui';
+import { View, ViewProps } from 'tamagui';
 import {
   AnyBrandBooking,
   AppConfigIconName,
   BrandBookingType,
   isBrandBookingAllDay,
 } from '@symbiot-core-apps/api';
-import {
-  formViewStyles,
-  Icon,
-  MediumText,
-  RegularText,
-} from '@symbiot-core-apps/ui';
-import { router } from 'expo-router';
+import { MediumText, RegularText } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { DateHelper } from '@symbiot-core-apps/shared';
-import { useApp } from '@symbiot-core-apps/app';
 
-const configByType: Record<
+export const configByType: Record<
   BrandBookingType,
   {
     backgroundColor: string;
@@ -30,53 +23,52 @@ const configByType: Record<
     iconKey: 'UnavailableBooking',
   },
   [BrandBookingType.service]: {
-    backgroundColor: '$background1',
+    backgroundColor: 'red',
     color: '$color',
     iconKey: 'ServiceBooking',
   },
 };
 
 export const BrandBookingItem = ({
+  hideSchedule,
   booking,
   ...viewProps
 }: ViewProps & {
+  hideSchedule?: boolean;
   booking: AnyBrandBooking;
 }) => {
-  const { icons } = useApp();
   const { t } = useTranslation();
   const config = configByType[booking.type];
 
   return (
     <View
-      backgroundColor={config.backgroundColor}
+      flex={1}
+      overflow="hidden"
       padding="$2"
       gap="$2"
       width="100%"
-      borderRadius="$4"
-      cursor="pointer"
-      style={formViewStyles}
-      pressStyle={{ opacity: 0.8 }}
-      onPress={() =>
-        router.push(`/booking/${booking.type}/${booking.id}/profile`)
-      }
+      backgroundColor={config.backgroundColor}
       {...viewProps}
     >
-      <XStack alignItems="center" gap="$1">
-        <Icon color={config.color} name={icons[config.iconKey]} size={16} />
+      <MediumText color={config.color} numberOfLines={1} minHeight={14}>
+        {booking.name}
+      </MediumText>
 
-        <RegularText fontSize={12} color={config.color} numberOfLines={1}>
+      {!hideSchedule && (
+        <RegularText
+          fontSize={12}
+          minHeight={12}
+          color={config.color}
+          numberOfLines={1}
+        >
           {isBrandBookingAllDay(booking)
             ? t('shared.schedule.all_day')
             : `${DateHelper.format(booking.start, 'p')} - ${DateHelper.format(booking.end, 'p')}`}
         </RegularText>
-      </XStack>
-
-      <MediumText color={config.color} numberOfLines={1}>
-        {booking.name}
-      </MediumText>
+      )}
 
       {!!booking.employees?.length && (
-        <RegularText>
+        <RegularText numberOfLines={1} fontSize={12} minHeight={12}>
           {booking.employees.map(({ name }) => name).join(', ')}
         </RegularText>
       )}

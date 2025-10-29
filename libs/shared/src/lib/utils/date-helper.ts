@@ -36,6 +36,7 @@ import { isEqual } from 'date-fns/isEqual';
 import { getMinutes } from 'date-fns/getMinutes';
 import { isBefore } from 'date-fns/isBefore';
 import { addWeeks } from 'date-fns/addWeeks';
+import { endOfMonth } from 'date-fns/endOfMonth';
 
 export const defaultWeekdayStartsOn: Day = 0;
 export const minutesInHour = 60;
@@ -66,6 +67,7 @@ export const DateHelper = {
   startOfMonth,
   startOfDay,
   endOfDay,
+  endOfMonth,
   differenceInMinutes,
   differenceInHours,
   differenceInDays,

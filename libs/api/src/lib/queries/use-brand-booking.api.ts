@@ -77,13 +77,13 @@ export const useBrandBookingCurrentListReq = ({
 
 export const useBrandBookingPeriodListReq = (props?: {
   params?: PaginationListParams & {
+    start: Date;
     end: Date;
     location?: string;
   };
 }) =>
   useInfiniteQueryWrapper<AnyBrandBooking>({
     ...props,
-    storeInitialData: true,
     refetchOnMount: true,
     apUrl: '/api/brand-booking',
     queryKey: [BrandBookingQueryKey.periodList, props?.params],

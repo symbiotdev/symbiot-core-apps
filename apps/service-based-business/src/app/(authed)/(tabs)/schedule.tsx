@@ -1,37 +1,58 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { TimeGridRef } from '@symbiot.dev/react-native-timegrid-pro';
 import { useNavigation } from 'expo-router';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import {
   DateHelper,
   emitHaptic,
+  isEqual,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import {
+  AdaptivePopover,
+  AdaptivePopoverRef,
   Avatar,
-  Calendar,
   H3,
   headerButtonSize,
   Icon,
   MediumText,
-  RegularText,
+  Picker,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { View, XStack } from 'tamagui';
-import { Platform } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { BrandBookingsCalendar } from '@symbiot-core-apps/brand-booking';
+import { useCurrentBrandBookingsState } from '@symbiot-core-apps/state';
+import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
+import { Platform } from 'react-native';
 
 export default () => {
-  const { me } = useCurrentAccountState();
-  const timeGridRef = useRef<TimeGridRef>(null);
-  const navigation = useNavigation();
+  const { i18n } = useTranslation();
   const { now } = useNativeNow();
-  const { i18n, t } = useTranslation();
-  const bottomTabBarHeight = useBottomTabBarHeight();
   const headerHeight = useScreenHeaderHeight();
+  const bottomTabBarHeight = useBottomTabBarHeight();
+  const navigation = useNavigation();
+  const { location, setLocation } = useCurrentBrandBookingsState();
+
+  const {
+    data: locations,
+    isPending: locationsLoading,
+    error: locationsError,
+  } = useCurrentBrandLocationsReq();
+
+  const popoverRef = useRef<AdaptivePopoverRef>(null);
+  const timeGridRef = useRef<TimeGridRef>(null);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const locationsOptions = useMemo(
+    () =>
+      locations?.items?.map(({ id, name }) => ({
+        label: name,
+        value: id,
+      })),
+    [locations],
+  );
 
   const goToday = useCallback(() => {
     timeGridRef.current?.toDatetime(new Date(), {
@@ -73,31 +94,45 @@ export default () => {
     [i18n.language, now, goToday, selectedDate],
   );
 
-  const renderHeaderSafeArea = useCallback(() => {
-    return (
-      <View flex={1} justifyContent="center" alignItems="center" gap="$1">
-        <RegularText color="$calendarTimeColor" fontSize={10}>
-          {t('shared.schedule.all_day')}
-        </RegularText>
-        {/*<RegularText fontSize={10}>09:00</RegularText>*/}
-        {/*<RegularText fontSize={10}>18:00</RegularText>*/}
-      </View>
-    );
-  }, [t]);
-
   const headerRight = useCallback(
     () =>
-      me ? (
-        <Avatar
-          name={me.name}
-          size={headerButtonSize}
-          url={me.avatar?.xsUrl}
-          color={me.avatarColor}
-        />
-      ) : (
-        <View />
+      location && (
+        <AdaptivePopover
+          ignoreScroll
+          ref={popoverRef}
+          minWidth={200}
+          trigger={
+            <Avatar
+              cursor="pointer"
+              pressStyle={{ opacity: 0.8 }}
+              name={location.name}
+              size={headerButtonSize}
+              url={location.avatar?.xsUrl}
+            />
+          }
+        >
+          <Picker
+            moveSelectedToTop
+            value={location.id}
+            options={locationsOptions}
+            optionsLoading={locationsLoading}
+            optionsError={locationsError}
+            onChange={(selectedId) => {
+              Platform.OS !== 'ios' && popoverRef.current?.close();
+
+              setLocation(locations?.items.find(({ id }) => selectedId === id));
+            }}
+          />
+        </AdaptivePopover>
       ),
-    [me],
+    [
+      locations,
+      locationsError,
+      locationsLoading,
+      locationsOptions,
+      location,
+      setLocation,
+    ],
   );
 
   useEffect(() => {
@@ -108,16 +143,23 @@ export default () => {
     });
   }, [headerLeft, headerRight, navigation]);
 
+  useEffect(() => {
+    if (
+      locations &&
+      !locations.items.some((locationItem) => isEqual(locationItem, location))
+    ) {
+      setLocation(locations.items.length > 1 ? locations.items[0] : undefined);
+    }
+  }, [location, locations, setLocation]);
+
   return (
-    <View flex={1} marginTop={headerHeight}>
-      <Calendar
-        timeGridRef={timeGridRef}
-        selectedDate={selectedDate}
-        weekStartsOn={me?.preferences?.weekStartsOn}
-        gridBottomOffset={Platform.OS === 'android' ? 5 : bottomTabBarHeight}
-        renderHeaderSafeArea={renderHeaderSafeArea}
-        onChangeDate={setSelectedDate}
-      />
-    </View>
+    <BrandBookingsCalendar
+      timeGridRef={timeGridRef}
+      location={location}
+      offsetTop={headerHeight}
+      offsetBottom={bottomTabBarHeight}
+      selectedDate={selectedDate}
+      onChangeSelectedDate={setSelectedDate}
+    />
   );
 };

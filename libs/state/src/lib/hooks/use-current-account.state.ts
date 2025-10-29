@@ -7,7 +7,7 @@ import {
   useUpdateAccountMePreferencesReq,
 } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 import { useCallback } from 'react';
 import { Scheme, schemes } from '@symbiot-core-apps/shared';
 import { useAppSchemeState } from './use-app-theme.state';
@@ -29,45 +29,43 @@ type CurrentAccountState = {
 };
 
 export const useCurrentAccountState = create<CurrentAccountState>()(
-  devtools(
-    persist<CurrentAccountState>(
-      (set, get) => ({
-        stats: {},
-        clear: () =>
-          set({
-            me: undefined,
-            stats: {},
-          }),
-        setMe: (me) => set({ me }),
-        setMePreferences: (preferences) => {
-          const { setMe, me } = get();
+  persist<CurrentAccountState>(
+    (set, get) => ({
+      stats: {},
+      clear: () =>
+        set({
+          me: undefined,
+          stats: {},
+        }),
+      setMe: (me) => set({ me }),
+      setMePreferences: (preferences) => {
+        const { setMe, me } = get();
 
-          if (me) {
-            setMe({
-              ...me,
-              preferences: {
-                ...me.preferences,
-                ...preferences,
-              },
-            });
-          }
-        },
-        setMeStats: (newStats) => {
-          const { stats } = get();
-
-          set({
-            stats: {
-              ...stats,
-              ...newStats,
+        if (me) {
+          setMe({
+            ...me,
+            preferences: {
+              ...me.preferences,
+              ...preferences,
             },
           });
-        },
-      }),
-      {
-        name: 'symbiot-current-account',
-        storage: createZustandStorage(),
+        }
       },
-    ),
+      setMeStats: (newStats) => {
+        const { stats } = get();
+
+        set({
+          stats: {
+            ...stats,
+            ...newStats,
+          },
+        });
+      },
+    }),
+    {
+      name: 'symbiot-current-account',
+      storage: createZustandStorage(),
+    },
   ),
 );
 

@@ -3,7 +3,7 @@ import {
   BrandEmployeePermissions,
 } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 import { useCallback, useMemo } from 'react';
 
@@ -14,21 +14,19 @@ type CurrentBrandEmployeeState = {
 };
 
 export const useCurrentBrandEmployeeState = create<CurrentBrandEmployeeState>()(
-  devtools(
-    persist<CurrentBrandEmployeeState>(
-      (set) => ({
-        clear: () => {
-          set({
-            currentEmployee: undefined,
-          });
-        },
-        setCurrentEmployee: (currentEmployee) => set({ currentEmployee }),
-      }),
-      {
-        name: 'symbiot-current-brand-employee',
-        storage: createZustandStorage(),
+  persist<CurrentBrandEmployeeState>(
+    (set) => ({
+      clear: () => {
+        set({
+          currentEmployee: undefined,
+        });
       },
-    ),
+      setCurrentEmployee: (currentEmployee) => set({ currentEmployee }),
+    }),
+    {
+      name: 'symbiot-current-brand-employee',
+      storage: createZustandStorage(),
+    },
   ),
 );
 

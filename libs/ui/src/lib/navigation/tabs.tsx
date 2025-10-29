@@ -70,7 +70,7 @@ export const CustomTabBar = ({
         justifyContent="center"
         alignItems="center"
         borderRadius={100}
-        paddingHorizontal="$2"
+        paddingHorizontal="$3"
         boxShadow="0 0 10px rgba(0, 0, 0, 0.05)"
         overflow="hidden"
       >
@@ -96,7 +96,7 @@ export const CustomTabBar = ({
             >
               {descriptor.options.tabBarIcon?.({
                 focused,
-                size: 22,
+                size: 24,
                 color: focused
                   ? theme.tabBarActiveTintColor?.val
                   : theme.tabBarInactiveTintColor?.val,

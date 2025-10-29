@@ -9,27 +9,47 @@ import { Ref, useCallback, useMemo, useState } from 'react';
 import { useTheme, View, XStack } from 'tamagui';
 import {
   DateHelper,
+  DeviceInfo,
+  isTablet,
   useNativeNow,
   useScreenOrientation,
+  useScreenSize,
 } from '@symbiot-core-apps/shared';
 import { BoldText, RegularText } from '../text/text';
 import { Orientation } from 'expo-screen-orientation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { DeviceType } from 'expo-device';
+import { DeterminedProgressBar } from '../loading/determined-progress';
 
 export const Calendar = ({
+  loading,
   timeGridRef,
   ...timeGridProps
 }: Omit<TimeGridProps, 'ref'> & {
+  loading?: boolean;
   timeGridRef?: Ref<TimeGridRef>;
   gridBottomOffset?: number;
 }) => {
   const locale = useDateLocale();
   const theme = useTheme();
+  const { media } = useScreenSize();
   const { orientation } = useScreenOrientation();
   const { left, right } = useSafeAreaInsets();
   const { now } = useNativeNow();
 
   const [width, setWidth] = useState(0);
+
+  const numberOfDays = useMemo(
+    () =>
+      ['sm', 'md', 'lg', 'xl'].includes(media) &&
+      (isTablet ||
+        DeviceInfo.deviceType === DeviceType.DESKTOP ||
+        orientation === Orientation.LANDSCAPE_LEFT ||
+        orientation === Orientation.LANDSCAPE_RIGHT)
+        ? 7
+        : 3,
+    [media, orientation],
+  );
 
   const snappable = useMemo(
     () => Platform.OS !== 'web' && orientation === Orientation.PORTRAIT_UP,
@@ -115,6 +135,12 @@ export const Calendar = ({
       paddingRight={paddings.right}
       onLayout={onLayout}
     >
+      {loading && (
+        <DeterminedProgressBar
+          color={['#dddddd', '#cccccc', '#dddddd', '#cccccc', '#dddddd']}
+        />
+      )}
+
       {!!width && (
         <TimeGrid
           swipeable
@@ -124,6 +150,7 @@ export const Calendar = ({
           ref={timeGridRef}
           snappable={snappable}
           width={adjustedWidth}
+          numberOfDays={timeGridProps.numberOfDays || numberOfDays}
           locale={locale}
           horizontalLineSize={1}
           minScale={1}

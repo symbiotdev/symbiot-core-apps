@@ -51,8 +51,9 @@ export default () => {
               trigger={
                 <Button
                   label="+"
-                  fontSize={20}
+                  fontSize={24}
                   boxShadow="0 0 10px rgba(0, 0, 0, 0.05)"
+                  paddingVertical={0}
                   paddingHorizontal={0}
                   borderRadius={50}
                   width={45}

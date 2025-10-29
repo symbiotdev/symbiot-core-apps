@@ -8,6 +8,15 @@ export enum BrandBookingType {
   unavailable = 'unavailable',
 }
 
+export enum BrandBookingFrequency {
+  noRepeat = 'noRepeat',
+  // specificDates = 'specificDates',
+  everyWorkday = 'everyWorkday',
+  everyDay = 'everyDay',
+  everyWeek = 'everyWeek',
+  everyMonth = 'everyMonth',
+}
+
 export enum BrandBookingCancelBy {
   brand = 'brand',
   employee = 'employee',
@@ -58,7 +67,9 @@ export type ServiceBrandBookingSlotsParams = {
 };
 
 export type CreateUnavailableBrandBooking = {
-  start: Date[];
+  start: Date;
+  end?: Date;
+  frequency: BrandBookingFrequency;
   reason: string;
   duration: number;
   locations: string[];
@@ -78,7 +89,9 @@ export type UpdateServiceBrandBookingClient = {
 };
 
 export type CreateServiceBrandBooking = {
-  start: Date[];
+  start: Date;
+  end?: Date;
+  frequency: BrandBookingFrequency;
   places: number;
   duration: number;
   services: string[];
@@ -93,14 +106,14 @@ export type UpdateBrandBooking = {
   duration?: number;
   following?: boolean;
   locations?: string[];
-  employees: string[];
 };
 
-export type UpdateUnavailableBrandBooking = UnavailableBrandBooking & {
+export type UpdateUnavailableBrandBooking = UpdateBrandBooking & {
   reason?: string;
 };
 
-export type UpdateServiceBrandBooking = UnavailableBrandBooking & {
+export type UpdateServiceBrandBooking = UpdateBrandBooking & {
+  employees?: string[];
   places?: number;
   services?: string[];
   reminders?: number[];

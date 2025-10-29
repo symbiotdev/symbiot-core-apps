@@ -1,4 +1,4 @@
-import { View, ViewProps } from 'tamagui';
+import { TextProps, View, ViewProps } from 'tamagui';
 import {
   AnyBrandBooking,
   AppConfigIconName,
@@ -30,10 +30,12 @@ export const configByType: Record<
 };
 
 export const BrandBookingItem = ({
+  nameProps,
   hideSchedule,
   booking,
   ...viewProps
 }: ViewProps & {
+  nameProps?: TextProps;
   hideSchedule?: boolean;
   booking: AnyBrandBooking;
 }) => {
@@ -50,7 +52,12 @@ export const BrandBookingItem = ({
       backgroundColor={config.backgroundColor}
       {...viewProps}
     >
-      <MediumText color={config.color} numberOfLines={1} minHeight={14}>
+      <MediumText
+        color={config.color}
+        numberOfLines={1}
+        minHeight={14}
+        {...nameProps}
+      >
         {booking.name}
       </MediumText>
 

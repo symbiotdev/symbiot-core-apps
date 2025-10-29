@@ -1,4 +1,8 @@
-import { AnyBrandBooking, BrandBookingType } from '../types/brand-booking';
+import {
+  AnyBrandBooking,
+  BrandBookingFrequency,
+  BrandBookingType,
+} from '../types/brand-booking';
 import { DateHelper, minutesInDay } from '@symbiot-core-apps/shared';
 
 export const getTranslateKeyByBrandBookingType = (type?: BrandBookingType) =>
@@ -34,58 +38,19 @@ export const isBrandBookingAllDay = ({
   );
 };
 
-export enum BookingRepeatType {
-  noRepeat,
-  custom,
-  daily,
-  weekly,
-  monthly,
-}
-
-export const getMaxDateByRepeatType = (type: BookingRepeatType) => {
-  if (type === BookingRepeatType.daily) {
+export const getEndDateByBrandBookingFrequency = (
+  frequency: BrandBookingFrequency,
+) => {
+  if (
+    frequency === BrandBookingFrequency.everyWorkday ||
+    frequency === BrandBookingFrequency.everyDay
+  ) {
     return DateHelper.addMonths(new Date(), 1);
-  } else if (type === BookingRepeatType.weekly) {
+  } else if (frequency === BrandBookingFrequency.everyWeek) {
     return DateHelper.addMonths(new Date(), 6);
-  } else if (type === BookingRepeatType.monthly) {
+  } else if (frequency === BrandBookingFrequency.everyMonth) {
     return DateHelper.addMonths(new Date(), 12);
   } else {
     return undefined;
   }
-};
-
-export const getDatesByRepeatType = ({
-  type,
-  start,
-  end,
-}: {
-  type: BookingRepeatType;
-  start: Date;
-  end: Date;
-}) => {
-  const dates: Date[] = [];
-  let current = new Date(start);
-
-  while (
-    DateHelper.isBefore(current, end) ||
-    current.getTime() === end.getTime()
-  ) {
-    dates.push(new Date(current));
-
-    switch (type) {
-      case BookingRepeatType.daily:
-        current = DateHelper.addDays(current, 1);
-        break;
-      case BookingRepeatType.weekly:
-        current = DateHelper.addWeeks(current, 1);
-        break;
-      case BookingRepeatType.monthly:
-        current = DateHelper.addMonths(current, 1);
-        break;
-      default:
-        return [start];
-    }
-  }
-
-  return dates;
 };

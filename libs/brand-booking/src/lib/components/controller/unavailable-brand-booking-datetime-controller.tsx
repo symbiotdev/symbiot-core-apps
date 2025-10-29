@@ -12,7 +12,7 @@ enum Duration {
 }
 
 export function UnavailableBrandBookingDatetimeController(props: {
-  control: Control<{ duration: { start: Date; end: Date } }>;
+  control: Control<{ datetime: { start: Date; end: Date } }>;
   disabled?: boolean;
   disableDrag?: boolean;
   onBlur?: () => void;
@@ -21,7 +21,7 @@ export function UnavailableBrandBookingDatetimeController(props: {
 
   return (
     <Controller
-      name="duration"
+      name="datetime"
       control={props.control}
       render={({
         field: { value, onChange, onBlur },
@@ -90,7 +90,7 @@ export function UnavailableBrandBookingDatetimeController(props: {
             {!isAllDay && (
               <TimeScheduleController
                 {...props}
-                name="duration"
+                name="datetime"
                 disabled={props.disabled || isAllDay}
                 onBlur={onBlur}
               />

@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import {
-  BookingRepeatType,
+  BrandBookingFrequency,
   BrandBookingType,
-  getDatesByRepeatType,
   useCreateUnavailableBrandBookingReq,
 } from '@symbiot-core-apps/api';
 import { router, useNavigation } from 'expo-router';
@@ -12,7 +11,7 @@ import { ConfirmAlert, DateHelper } from '@symbiot-core-apps/shared';
 import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useForm } from 'react-hook-form';
 import { UnavailableBrandBookingDatetimeController } from './controller/unavailable-brand-booking-datetime-controller';
-import { RepeatBrandBookingController } from './controller/repeat-brand-booking-controller';
+import { FrequencyBrandBookingController } from './controller/frequency-brand-booking-controller';
 import { EmployeesBrandBookingController } from './controller/employees-brand-booking-controller';
 import { UnavailableBrandBookingReasonController } from './controller/unavailable-brand-booking-reason-controller';
 
@@ -30,13 +29,13 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
     formState: datetimeFormState,
     watch: datetimeWatch,
   } = useForm<{
-    duration: {
+    datetime: {
       start: Date;
       end: Date;
     };
   }>({
     defaultValues: {
-      duration: {
+      datetime: {
         start,
         end: DateHelper.isSame(DateHelper.startOfDay(start), start)
           ? start
@@ -45,19 +44,21 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
     },
   });
 
-  const { duration } = datetimeWatch();
+  const { datetime } = datetimeWatch();
 
   const {
-    control: repeatControl,
-    getValues: repeatGetValues,
-    formState: repeatFormState,
+    control: frequencyControl,
+    getValues: frequencyGetValues,
+    formState: frequencyFormState,
   } = useForm<{
-    repeat: { type: BookingRepeatType; endDate?: Date };
+    frequency: {
+      type: BrandBookingFrequency;
+      endDate?: Date;
+    };
   }>({
     defaultValues: {
-      repeat: {
-        type: BookingRepeatType.noRepeat,
-        endDate: undefined,
+      frequency: {
+        type: BrandBookingFrequency.noRepeat,
       },
     },
   });
@@ -87,18 +88,16 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
   });
 
   const onFinish = useCallback(async () => {
-    const { duration } = datetimeGetValues();
-    const { repeat } = repeatGetValues();
+    const { datetime } = datetimeGetValues();
+    const { frequency } = frequencyGetValues();
     const { employee } = employeesGetValues();
     const { reason } = reasonGetValues();
 
     const booking = await createBooking({
-      start: getDatesByRepeatType({
-        type: repeat.type,
-        start: duration.start,
-        end: repeat.endDate || duration.end,
-      }),
-      duration: DateHelper.differenceInMinutes(duration.end, duration.start),
+      start: datetime.start,
+      end: frequency.endDate,
+      frequency: frequency.type,
+      duration: DateHelper.differenceInMinutes(datetime.end, datetime.start),
       reason,
       locations: [],
       employees: [employee],
@@ -114,7 +113,7 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
     datetimeGetValues,
     employeesGetValues,
     reasonGetValues,
-    repeatGetValues,
+    frequencyGetValues,
   ]);
 
   const onLeave = useCallback(
@@ -161,13 +160,13 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
       </SurveyStep>
 
       <SurveyStep
-        canGoNext={repeatFormState.isValid}
-        title={t(`unavailable_brand_booking.create.steps.repeat.title`)}
-        subtitle={t(`unavailable_brand_booking.create.steps.repeat.subtitle`)}
+        canGoNext={frequencyFormState.isValid}
+        title={t(`unavailable_brand_booking.create.steps.frequency.title`)}
+        subtitle={t(`unavailable_brand_booking.create.steps.frequency.subtitle`)}
       >
-        <RepeatBrandBookingController
-          control={repeatControl}
-          minDate={DateHelper.addDays(duration.start, 1)}
+        <FrequencyBrandBookingController
+          control={frequencyControl}
+          minDate={DateHelper.addDays(datetime.start, 1)}
         />
       </SurveyStep>
 

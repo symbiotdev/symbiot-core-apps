@@ -5,47 +5,49 @@ import { useMemo } from 'react';
 import { DatePicker, SelectPicker } from '@symbiot-core-apps/ui';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import {
-  BookingRepeatType,
-  getMaxDateByRepeatType,
+  BrandBookingFrequency,
+  getEndDateByBrandBookingFrequency,
 } from '@symbiot-core-apps/api';
 
-export function RepeatBrandBookingController(props: {
-  control: Control<{ repeat: { type: BookingRepeatType; endDate?: Date } }>;
+export function FrequencyBrandBookingController(props: {
+  control: Control<{
+    frequency: { type: BrandBookingFrequency; endDate?: Date };
+  }>;
   minDate: Date;
   disabled?: boolean;
   disableDrag?: boolean;
 }) {
   const { t } = useTranslation();
 
-  const repeatOptions = useMemo(
+  const options = useMemo(
     () => [
       {
-        label: t('shared.schedule.repeat.no_repeat'),
-        value: BookingRepeatType.noRepeat,
+        label: t('shared.schedule.frequency.no_repeat'),
+        value: BrandBookingFrequency.noRepeat,
       },
       {
-        label: t('shared.schedule.repeat.daily'),
-        value: BookingRepeatType.daily,
+        label: t('shared.schedule.frequency.every_workday'),
+        value: BrandBookingFrequency.everyWorkday,
       },
       {
-        label: t('shared.schedule.repeat.weekly'),
-        value: BookingRepeatType.weekly,
+        label: t('shared.schedule.frequency.every_day'),
+        value: BrandBookingFrequency.everyDay,
       },
       {
-        label: t('shared.schedule.repeat.monthly'),
-        value: BookingRepeatType.monthly,
+        label: t('shared.schedule.frequency.every_week'),
+        value: BrandBookingFrequency.everyWeek,
       },
-      // {
-      //   label: t('shared.schedule.repeat.custom'),
-      //   value: BookingRepeatType.custom,
-      // },
+      {
+        label: t('shared.schedule.frequency.every_month'),
+        value: BrandBookingFrequency.everyMonth,
+      },
     ],
     [t],
   );
 
   return (
     <Controller
-      name="repeat"
+      name="frequency"
       control={props.control}
       render={({ field: { value, onChange } }) => {
         return (
@@ -53,10 +55,10 @@ export function RepeatBrandBookingController(props: {
             <SelectPicker
               {...props}
               value={value.type}
-              options={repeatOptions}
+              options={options}
               onChange={(type) => {
-                const maxDate = getMaxDateByRepeatType(
-                  type as BookingRepeatType,
+                const maxDate = getEndDateByBrandBookingFrequency(
+                  type as BrandBookingFrequency,
                 );
 
                 onChange({
@@ -71,13 +73,13 @@ export function RepeatBrandBookingController(props: {
               }}
             />
 
-            {value.type !== BookingRepeatType.noRepeat && (
+            {value.type !== BrandBookingFrequency.noRepeat && (
               <DatePicker
                 {...props}
                 value={value.endDate}
-                label={t('shared.schedule.repeat_until')}
+                label={t('shared.schedule.frequency_until')}
                 minDate={props.minDate}
-                maxDate={getMaxDateByRepeatType(value.type)}
+                maxDate={getEndDateByBrandBookingFrequency(value.type)}
                 onChange={(endDate) => {
                   onChange({
                     ...value,

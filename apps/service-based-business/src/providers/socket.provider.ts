@@ -10,6 +10,7 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   useCurrentAccount,
+  useCurrentBrandBookingsState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
@@ -32,6 +33,7 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     setBrands: setCurrentBrands,
   } = useCurrentBrandState();
   const { setCurrentEmployee } = useCurrentBrandEmployee();
+  const { upsertBookings, removeBookings } = useCurrentBrandBookingsState();
   const {
     addToList: addNotificationToListQueryState,
     markAllAsRead: markAllNotificationsAsRead,
@@ -108,14 +110,25 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     socket.on(WebsocketAction.notificationAdded, onNotificationAdded);
     socket.on(WebsocketAction.notificationsRead, onNotificationsReadAll);
 
+    socket.on(WebsocketAction.unavailableBrandBookingsCreated, upsertBookings);
+    socket.on(WebsocketAction.unavailableBrandBookingsUpdated, upsertBookings);
+    socket.on(WebsocketAction.unavailableBrandBookingsCanceled, removeBookings);
+    socket.on(WebsocketAction.serviceBrandBookingsCanceled, removeBookings);
+    socket.on(WebsocketAction.serviceBrandBookingsCreated, upsertBookings);
+    socket.on(WebsocketAction.serviceBrandBookingsUpdated, upsertBookings);
+    socket.on(WebsocketAction.serviceBrandBookingClientAdded, upsertBookings);
+    socket.on(WebsocketAction.serviceBrandBookingClientRemoved, upsertBookings);
+
     return () => {
       socket.off();
     };
   }, [
     updateMe,
-    updateMePreferences,
     setCurrentBrand,
     setCurrentEmployee,
+    upsertBookings,
+    removeBookings,
+    updateMePreferences,
     onBrandAssigned,
     onNotificationAdded,
     onNotificationsReadAll,

@@ -14,12 +14,14 @@ import { UnavailableBrandBookingDatetimeController } from './controller/unavaila
 import { FrequencyBrandBookingController } from './controller/frequency-brand-booking-controller';
 import { EmployeesBrandBookingController } from './controller/employees-brand-booking-controller';
 import { UnavailableBrandBookingReasonController } from './controller/unavailable-brand-booking-reason-controller';
+import { useCurrentBrandBookingsState } from '@symbiot-core-apps/state';
 
 export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
   const { t } = useTranslation();
   const { mutateAsync: createBooking, isPending: isBookingLoading } =
     useCreateUnavailableBrandBookingReq();
   const navigation = useNavigation();
+  const { upsertBookings } = useCurrentBrandBookingsState();
 
   const createdRef = useRef(false);
 
@@ -93,7 +95,7 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
     const { employee } = employeesGetValues();
     const { reason } = reasonGetValues();
 
-    const booking = await createBooking({
+    const bookings = await createBooking({
       start: datetime.start,
       end: frequency.endDate,
       frequency: frequency.type,
@@ -105,15 +107,18 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
 
     createdRef.current = true;
 
+    upsertBookings(bookings);
+
     router.replace(
-      `/bookings/${BrandBookingType.unavailable}/${booking[0].id}/profile`,
+      `/bookings/${BrandBookingType.unavailable}/${bookings[0].id}/profile`,
     );
   }, [
-    createBooking,
     datetimeGetValues,
+    frequencyGetValues,
     employeesGetValues,
     reasonGetValues,
-    frequencyGetValues,
+    createBooking,
+    upsertBookings,
   ]);
 
   const onLeave = useCallback(
@@ -162,7 +167,9 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
       <SurveyStep
         canGoNext={frequencyFormState.isValid}
         title={t(`unavailable_brand_booking.create.steps.frequency.title`)}
-        subtitle={t(`unavailable_brand_booking.create.steps.frequency.subtitle`)}
+        subtitle={t(
+          `unavailable_brand_booking.create.steps.frequency.subtitle`,
+        )}
       >
         <FrequencyBrandBookingController
           control={frequencyControl}

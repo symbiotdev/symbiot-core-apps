@@ -23,7 +23,10 @@ import { View, XStack } from 'tamagui';
 import { useTranslation } from 'react-i18next';
 import { BrandBookingsCalendar } from '@symbiot-core-apps/brand-booking';
 import { useCurrentBrandBookingsState } from '@symbiot-core-apps/state';
-import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
+import {
+  useBrandBookingPeriodListReq,
+  useCurrentBrandLocationsReq,
+} from '@symbiot-core-apps/api';
 import { Platform } from 'react-native';
 
 export default () => {
@@ -32,7 +35,13 @@ export default () => {
   const headerHeight = useScreenHeaderHeight();
   const bottomTabBarHeight = useBottomTabBarHeight();
   const navigation = useNavigation();
-  const { location, setLocation } = useCurrentBrandBookingsState();
+  const { location, setLocation, upsertBookings } =
+    useCurrentBrandBookingsState();
+
+  const popoverRef = useRef<AdaptivePopoverRef>(null);
+  const timeGridRef = useRef<TimeGridRef>(null);
+
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const {
     data: locations,
@@ -40,10 +49,17 @@ export default () => {
     error: locationsError,
   } = useCurrentBrandLocationsReq();
 
-  const popoverRef = useRef<AdaptivePopoverRef>(null);
-  const timeGridRef = useRef<TimeGridRef>(null);
+  const bookingsParams = useMemo(() => {
+    return {
+      start: DateHelper.addDays(DateHelper.startOfMonth(selectedDate), -7),
+      end: DateHelper.addDays(DateHelper.endOfMonth(selectedDate), 7),
+      location: location?.id,
+    };
+  }, [location?.id, selectedDate]);
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const { data: bookings, isFetching } = useBrandBookingPeriodListReq({
+    params: bookingsParams,
+  });
 
   const locationsOptions = useMemo(
     () =>
@@ -152,9 +168,16 @@ export default () => {
     }
   }, [location, locations, setLocation]);
 
+  useEffect(() => {
+    if (bookings && bookings.items?.length) {
+      upsertBookings(bookings.items);
+    }
+  }, [bookings, upsertBookings]);
+
   return (
     <BrandBookingsCalendar
       timeGridRef={timeGridRef}
+      isFetching={isFetching}
       location={location}
       offsetTop={headerHeight}
       offsetBottom={bottomTabBarHeight}

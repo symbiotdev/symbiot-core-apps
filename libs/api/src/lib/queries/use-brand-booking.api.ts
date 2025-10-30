@@ -22,7 +22,7 @@ import {
 import axios from 'axios';
 import { queryClient } from '../utils/client';
 import { getBrandBookingType } from '../utils/brand-booking';
-import { PaginationListParams } from '../types/pagination';
+import { PaginationList, PaginationListParams } from '../types/pagination';
 
 export enum BrandBookingQueryKey {
   unavailableCurrentList = 'brand-booking-unavailable-current-list',
@@ -76,17 +76,20 @@ export const useBrandBookingCurrentListReq = ({
   });
 
 export const useBrandBookingPeriodListReq = (props?: {
-  params?: PaginationListParams & {
+  params: PaginationListParams & {
     start: Date;
     end: Date;
     location?: string;
   };
 }) =>
-  useInfiniteQueryWrapper<AnyBrandBooking>({
-    ...props,
-    refetchOnMount: true,
-    apUrl: '/api/brand-booking',
+  useQuery<PaginationList<AnyBrandBooking>>({
     queryKey: [BrandBookingQueryKey.periodList, props?.params],
+    queryFn: () =>
+      requestWithAlertOnError(
+        axios.get(`/api/brand-booking`, {
+          params: props?.params,
+        }),
+      ),
   });
 
 export const useBrandBookingDetailedByIdReq = (id: string) =>

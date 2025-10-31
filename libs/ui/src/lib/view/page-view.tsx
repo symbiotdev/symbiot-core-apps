@@ -44,7 +44,7 @@ export const PageView = ({
         showsVerticalScrollIndicator={isWeb}
         bottomOffset={30}
         refreshControl={
-          refreshing !== undefined ? (
+          refreshing !== undefined && Platform.OS !== 'web' ? (
             <Refresher refreshing={refreshing} onRefresh={onRefresh} />
           ) : undefined
         }
@@ -74,7 +74,7 @@ export const PageView = ({
         showsVerticalScrollIndicator={isWeb}
         contentContainerStyle={styles.FullScreen}
         refreshControl={
-          refreshing !== undefined ? (
+          refreshing !== undefined && Platform.OS !== 'web' ? (
             <Refresher refreshing={refreshing} onRefresh={onRefresh} />
           ) : undefined
         }

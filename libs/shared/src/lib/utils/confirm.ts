@@ -5,6 +5,8 @@ export const ConfirmAlert = (props: {
   title: string;
   message?: string;
   callback: () => void;
+  cancelText?: string;
+  confirmText?: string;
 }) => {
   if (Platform.OS === 'web') {
     if (window.confirm(`${props.title}\n\n${props.message || ''}`.trim())) {
@@ -14,12 +16,12 @@ export const ConfirmAlert = (props: {
 
   Alert.alert(props.title, props.message || '', [
     {
-      text: i18n.t('shared.cancel'),
+      text: props.cancelText || i18n.t('shared.cancel'),
       style: 'cancel',
       isPreferred: true,
     },
     {
-      text: i18n.t('shared.continue'),
+      text: props.confirmText || i18n.t('shared.continue'),
       onPress: props.callback,
     },
   ]);

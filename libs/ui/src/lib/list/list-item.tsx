@@ -103,7 +103,7 @@ export const ListItem = memo(
         {!!iconAfter &&
           cloneElement(iconAfter, {
             color: adjustedColor,
-            size: iconSize || 18,
+            size: iconSize,
           })}
       </XStack>
     );

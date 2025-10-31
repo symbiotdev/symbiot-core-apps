@@ -40,7 +40,7 @@ export function AnimatedList<T>({
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       refreshControl={
-        typeof refreshing !== 'undefined' ? (
+        typeof refreshing !== 'undefined' && Platform.OS !== 'web' ? (
           <Refresher
             refreshing={refreshing}
             progressViewOffset={progressViewOffset}

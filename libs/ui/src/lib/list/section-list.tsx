@@ -1,5 +1,9 @@
 import React, { ForwardedRef } from 'react';
-import { SectionList as RNSectionList, SectionListProps } from 'react-native';
+import {
+  Platform,
+  SectionList as RNSectionList,
+  SectionListProps,
+} from 'react-native';
 import { Refresher } from '../loading/refresher';
 import { ListLoadingFooter } from './list-loading-footer';
 import { ViewProps } from 'tamagui';
@@ -34,7 +38,7 @@ export function SectionList<T>({
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       refreshControl={
-        typeof refreshing !== 'undefined' ? (
+        typeof refreshing !== 'undefined' && Platform.OS !== 'web' ? (
           <Refresher
             refreshing={refreshing}
             progressViewOffset={progressViewOffset}

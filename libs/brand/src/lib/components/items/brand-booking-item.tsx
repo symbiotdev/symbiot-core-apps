@@ -1,11 +1,11 @@
-import { TextProps, View, ViewProps } from 'tamagui';
+import { TextProps, View, ViewProps, XStack } from 'tamagui';
 import {
   AnyBrandBooking,
   AppConfigIconName,
   BrandBookingType,
   isBrandBookingAllDay,
 } from '@symbiot-core-apps/api';
-import { MediumText, RegularText } from '@symbiot-core-apps/ui';
+import { Icon, MediumText, RegularText } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { DateHelper } from '@symbiot-core-apps/shared';
 
@@ -56,6 +56,15 @@ export const BrandBookingItem = ({
       backgroundColor={config.backgroundColor}
       {...viewProps}
     >
+      {!!booking.cancelAt && (
+        <XStack gap="$1" alignSelf="flex-end" justifyContent="space-between">
+          <Icon name="Close" size={16} color="$error" />
+          <RegularText color="$error" alignSelf="center" fontSize={12}>
+            {t('shared.canceled')}
+          </RegularText>
+        </XStack>
+      )}
+
       <View
         width={2}
         backgroundColor={config.markerColor}

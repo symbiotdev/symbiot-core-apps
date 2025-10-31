@@ -44,6 +44,7 @@ export const Icon = memo(
 
     return (
       <IconComponent
+        key={name}
         color={color ? theme[color]?.val || color : theme.color?.val}
         width={size}
         height={size}

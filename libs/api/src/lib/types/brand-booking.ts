@@ -35,6 +35,8 @@ export type BrandBooking = {
   start: string;
   end: string;
   repetitive: boolean;
+  cancelAt: string;
+  cancelBy: BrandBookingCancelBy;
   locations: BrandLocation[];
   employees: BrandEmployee[];
 };
@@ -54,8 +56,6 @@ export type ServiceBrandBooking = BrandBooking & {
   type: BrandBookingType.service;
   places: number;
   reminders: number[];
-  cancelAt: string;
-  cancelBy: BrandBookingCancelBy;
   clients: BrandBookingClient[];
   services: BrandService[];
 };

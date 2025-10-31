@@ -2,7 +2,7 @@ import Svg, { Line } from 'react-native-svg';
 import { IconProps } from '../../icon-props';
 
 export const Close = (props: IconProps) => (
-  <Svg width={24} height={24} viewBox="0 0 24 24">
+  <Svg width={24} height={24} viewBox="0 0 24 24" {...props}>
     <Line
       x1="6"
       y1="6"

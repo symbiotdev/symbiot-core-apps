@@ -18,10 +18,7 @@ import {
 import axios from 'axios';
 import { generateFormData } from '../utils/media';
 import { queryClient } from '../utils/client';
-import {
-  refetchInfiniteListByKey,
-  refetchQueriesByChanges,
-} from '../utils/query';
+import { refetchQueriesByChanges } from '../utils/query';
 import { Gender } from '../types/gender';
 import { BrandMembershipType } from '../types/brand-membership';
 
@@ -144,7 +141,9 @@ export const useImportBrandClientsReq = () =>
         );
       });
 
-      await refetchInfiniteListByKey(BrandClientQueryKey.currentList);
+      queryClient.removeQueries({
+        queryKey: [BrandClientQueryKey.currentList],
+      });
 
       return importedClients;
     },

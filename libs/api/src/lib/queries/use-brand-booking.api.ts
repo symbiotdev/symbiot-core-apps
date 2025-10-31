@@ -48,8 +48,14 @@ const refetchQueriesByBookingChanges = async (
         ({ data }) =>
           getBrandBookingType(data) === BrandBookingType.unavailable,
       )
-        ? [BrandBookingQueryKey.unavailableCurrentList]
-        : [BrandBookingQueryKey.serviceCurrentList],
+        ? [
+            BrandBookingQueryKey.unavailableCurrentList,
+            BrandBookingQueryKey.periodList,
+          ]
+        : [
+            BrandBookingQueryKey.serviceCurrentList,
+            BrandBookingQueryKey.periodList,
+          ],
     },
   });
 
@@ -67,7 +73,13 @@ export const useBrandBookingCurrentListReq = ({
     refetchOnMount: true,
     afterKeys: ['id', 'start'],
     apUrl: '/api/brand-booking',
-    queryKey: [type, start, params],
+    queryKey: [
+      type === BrandBookingType.unavailable
+        ? BrandBookingQueryKey.unavailableCurrentList
+        : BrandBookingQueryKey.serviceCurrentList,
+      start,
+      params,
+    ],
     params: {
       ...params,
       type,

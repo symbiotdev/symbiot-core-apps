@@ -27,7 +27,7 @@ export const useCurrentBrandBookingsState = create<CurrentBrandBookingsState>()(
         set({
           bookings: [
             ...(get().bookings || []).filter(
-              (booking) => !newBookings.some(({ id }) => id === booking.id),
+              ({ id }) => !newBookings.some((booking) => booking.id === id),
             ),
             ...newBookings,
           ],
@@ -36,7 +36,7 @@ export const useCurrentBrandBookingsState = create<CurrentBrandBookingsState>()(
       removeBookings: (bookings) => {
         set({
           bookings: get().bookings?.filter(
-            (booking) => !bookings.some(({ id }) => id === booking.id),
+            ({ id }) => !bookings.some((booking) => booking.id === id),
           ),
         });
       },

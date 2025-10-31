@@ -24,7 +24,7 @@ export enum WebsocketAction {
   serviceBrandBookingClientRemoved = 'service_brand_booking_client_removed',
 }
 
-export const socket = io(process.env.EXPO_PUBLIC_API_URL?.split('://')[1], {
+export const socket = io(process.env.EXPO_PUBLIC_API_URL, {
   transports: ['websocket'],
   autoConnect: false,
   secure: true,

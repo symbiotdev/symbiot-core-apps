@@ -32,7 +32,7 @@ export default () => {
         `${getTranslateKeyByBrandMembershipType(type)}.profile.title`,
       ),
       headerRight: () => (
-        <XStack gap="$3">
+        <XStack gap="$3" flex={1}>
           {hasPermission('analytics') && (
             <HeaderButton
               iconName="ChartSquare"

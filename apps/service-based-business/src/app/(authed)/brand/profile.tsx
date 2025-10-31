@@ -17,7 +17,7 @@ export default () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <XStack gap="$3">
+        <XStack gap="$3" flex={1}>
           {!drawerVisible && hasPermission('analytics') && (
             <HeaderButton
               iconName="ChartSquare"

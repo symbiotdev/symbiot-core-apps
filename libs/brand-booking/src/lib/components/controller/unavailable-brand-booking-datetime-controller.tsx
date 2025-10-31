@@ -44,6 +44,7 @@ export function UnavailableBrandBookingDatetimeController(props: {
             />
 
             <SelectPicker
+              disableDrag={props.disableDrag}
               label={t('unavailable_brand_booking.form.duration.label')}
               value={isAllDay ? Duration.allDay : Duration.custom}
               options={[

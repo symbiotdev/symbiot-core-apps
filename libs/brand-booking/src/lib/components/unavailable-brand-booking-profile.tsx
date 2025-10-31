@@ -171,6 +171,7 @@ const DateTime = ({ booking }: { booking: UnavailableBrandBooking }) => {
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <UnavailableBrandBookingDatetimeController
+            disableDrag
             control={datetimeControl}
             onBlur={onUpdate}
           />

@@ -47,7 +47,7 @@ export const BrandEmployeeItem = ({
         </RegularText>
       </View>
 
-      <Icon name="ArrowRight" />
+      {!!onPress && <Icon name="ArrowRight" />}
     </FormView>
   );
 };

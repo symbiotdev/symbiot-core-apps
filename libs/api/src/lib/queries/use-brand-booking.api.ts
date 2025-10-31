@@ -92,11 +92,14 @@ export const useBrandBookingPeriodListReq = (props?: {
       ),
   });
 
-export const useBrandBookingDetailedByIdReq = (id: string) =>
+export const useBrandBookingDetailedByIdReq = (
+  id: string,
+  type: BrandBookingType,
+) =>
   useQuery<AnyBrandBooking, string>({
     queryKey: [BrandBookingQueryKey.detailedById, id],
     queryFn: () =>
-      requestWithStringError(axios.get(`/api/brand-booking/detailed/${id}`)),
+      requestWithStringError(axios.get(`/api/brand-booking/${type}/${id}`)),
   });
 
 export const useBrandBookingSlotsByServiceReq = (
@@ -140,11 +143,11 @@ export const useCreateServiceBrandBookingReq = () =>
   useCreateBrandBookingReq<CreateServiceBrandBooking>(BrandBookingType.service);
 
 const useCancelBrandBookingReq = (type: BrandBookingType) =>
-  useMutation<AnyBrandBooking[], string, { id: string; following: boolean }>({
-    mutationFn: async ({ id, following }) => {
+  useMutation<AnyBrandBooking[], string, { id: string; recurring: boolean }>({
+    mutationFn: async ({ id, recurring }) => {
       const bookings = await requestWithAlertOnError<AnyBrandBooking[]>(
         axios.post(`/api/brand-booking/${type}/${id}/cancel`, {
-          following,
+          recurring,
         }),
       );
 

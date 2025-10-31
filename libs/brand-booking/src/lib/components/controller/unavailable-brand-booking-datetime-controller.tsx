@@ -23,10 +23,7 @@ export function UnavailableBrandBookingDatetimeController(props: {
     <Controller
       name="datetime"
       control={props.control}
-      render={({
-        field: { value, onChange, onBlur },
-        fieldState: { error },
-      }) => {
+      render={({ field: { value, onChange }, fieldState: { error } }) => {
         const isAllDay = isBrandBookingAllDay(value);
 
         return (
@@ -43,7 +40,7 @@ export function UnavailableBrandBookingDatetimeController(props: {
                   end: DateHelper.changeDateKeepTime(value.end, newDate),
                 })
               }
-              onBlur={onBlur}
+              onBlur={props.onBlur}
             />
 
             <SelectPicker
@@ -59,7 +56,6 @@ export function UnavailableBrandBookingDatetimeController(props: {
                   value: Duration.custom,
                 },
               ]}
-              onBlur={onBlur}
               onChange={(selectedValue) => {
                 let start = DateHelper.startOfDay(value.start);
 
@@ -68,6 +64,8 @@ export function UnavailableBrandBookingDatetimeController(props: {
                     start,
                     end: start,
                   });
+
+                  props.onBlur?.()
                 } else {
                   const now = DateHelper.roundTime(new Date(), 5);
 
@@ -92,7 +90,6 @@ export function UnavailableBrandBookingDatetimeController(props: {
                 {...props}
                 name="datetime"
                 disabled={props.disabled || isAllDay}
-                onBlur={onBlur}
               />
             )}
           </View>

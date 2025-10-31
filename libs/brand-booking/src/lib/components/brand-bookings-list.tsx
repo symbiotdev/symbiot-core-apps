@@ -15,7 +15,6 @@ import { DateHelper } from '@symbiot-core-apps/shared';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
-import { Platform } from 'react-native';
 
 export const BrandBookingsList = ({
   type,
@@ -39,18 +38,28 @@ export const BrandBookingsList = ({
   } = query();
   const { me } = useCurrentAccountState();
 
-  const sections = useMemo(
-    () =>
-      bookings
-        ?.map(({ start }) => DateHelper.startOfDay(start))
-        ?.map((start) => ({
-          title: DateHelper.format(start, me?.preferences?.dateFormat),
-          data: bookings?.filter((booking) =>
-            DateHelper.isSameDay(start, booking.start),
+  const sections = useMemo(() => {
+    if (!bookings) {
+      return [];
+    } else {
+      return (
+        Array.from(
+          new Set(
+            bookings.map(({ start }) => DateHelper.startOfDay(start).getTime()),
           ),
-        })) || [],
-    [bookings, me?.preferences?.dateFormat],
-  );
+        ).map((time) => {
+          const start = new Date(time);
+
+          return {
+            title: DateHelper.format(start, me?.preferences?.dateFormat),
+            data: bookings?.filter((booking) =>
+              DateHelper.isSameDay(start, booking.start),
+            ),
+          };
+        }) || []
+      );
+    }
+  }, [bookings, me?.preferences?.dateFormat]);
 
   const ListEmptyComponent = useCallback(
     () => <Intro loading={isLoading} error={error} />,
@@ -63,22 +72,13 @@ export const BrandBookingsList = ({
       refreshing={isRefetching && !isLoading}
       expanding={isFetchingNextPage}
       sections={sections}
-      listLoadingFooterProps={{
-        ...(Platform.OS === 'web' && {
-          y: offsetTop,
-        }),
-      }}
       progressViewOffset={offsetTop}
+      style={{
+        paddingTop: offsetTop,
+      }}
       contentContainerStyle={{
         gap: 4,
         paddingHorizontal: defaultPageHorizontalPadding,
-        ...(Platform.OS === 'web'
-          ? {
-              paddingBottom: offsetTop,
-            }
-          : {
-              marginTop: offsetTop,
-            }),
       }}
       keyExtractor={(item) => item.id}
       ListEmptyComponent={ListEmptyComponent}
@@ -88,17 +88,16 @@ export const BrandBookingsList = ({
           style={formViewStyles}
           textAlign="center"
           paddingVertical="$2"
-          y={Platform.OS === 'web' ? offsetTop : undefined}
         >
           {section.title}
         </RegularText>
       )}
       renderItem={({ item }) => (
         <BrandBookingItem
-          y={Platform.OS === 'web' ? offsetTop : undefined}
           alignSelf="center"
           booking={item}
-          borderRadius="$4"
+          borderRadius="$10"
+          padding="$4"
           cursor="pointer"
           style={formViewStyles}
           pressStyle={{ opacity: 0.8 }}

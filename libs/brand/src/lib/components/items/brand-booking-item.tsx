@@ -14,17 +14,20 @@ export const configByType: Record<
   {
     backgroundColor: string;
     color: string;
+    markerColor: string;
     iconKey: AppConfigIconName;
   }
 > = {
   [BrandBookingType.unavailable]: {
     backgroundColor: '$highlighted',
     color: '$disabled',
+    markerColor: '#dddddd',
     iconKey: 'UnavailableBooking',
   },
   [BrandBookingType.service]: {
     backgroundColor: 'red',
     color: '$color',
+    markerColor: '$background1',
     iconKey: 'ServiceBooking',
   },
 };
@@ -49,9 +52,19 @@ export const BrandBookingItem = ({
       padding="$2"
       gap="$2"
       width="100%"
+      position="relative"
       backgroundColor={config.backgroundColor}
       {...viewProps}
     >
+      <View
+        width={2}
+        backgroundColor={config.markerColor}
+        position="absolute"
+        left={0}
+        top={0}
+        bottom={0}
+      />
+
       <MediumText
         color={config.color}
         numberOfLines={1}
@@ -69,7 +82,7 @@ export const BrandBookingItem = ({
           numberOfLines={1}
         >
           {isBrandBookingAllDay(booking)
-            ? t('shared.schedule.all_day')
+            ? t('shared.schedule.duration.all_day')
             : `${DateHelper.format(booking.start, 'p')} - ${DateHelper.format(booking.end, 'p')}`}
         </RegularText>
       )}

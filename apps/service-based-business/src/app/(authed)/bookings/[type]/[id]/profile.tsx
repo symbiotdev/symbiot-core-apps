@@ -1,11 +1,18 @@
-import { EmptyView } from '@symbiot-core-apps/ui';
+import { InitView } from '@symbiot-core-apps/ui';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import {
   BrandBookingType,
   getTranslateKeyByBrandBookingType,
+  ServiceBrandBooking,
+  UnavailableBrandBooking,
+  useBrandBookingDetailedByIdReq,
 } from '@symbiot-core-apps/api';
 import React, { useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+  ServiceBrandBookingProfile,
+  UnavailableBrandBookingProfile,
+} from '@symbiot-core-apps/brand-booking';
 
 export default () => {
   const { t } = useTranslation();
@@ -15,6 +22,12 @@ export default () => {
     type: BrandBookingType;
   }>();
 
+  const {
+    data: booking,
+    isPending,
+    error,
+  } = useBrandBookingDetailedByIdReq(id, type);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: t(
@@ -23,5 +36,15 @@ export default () => {
     });
   }, [navigation, type, t]);
 
-  return <EmptyView />;
+  if (!booking || error) {
+    return <InitView loading={isPending} error={error} />;
+  }
+
+  return type === BrandBookingType.unavailable ? (
+    <UnavailableBrandBookingProfile
+      booking={booking as UnavailableBrandBooking}
+    />
+  ) : (
+    <ServiceBrandBookingProfile booking={booking as ServiceBrandBooking} />
+  );
 };

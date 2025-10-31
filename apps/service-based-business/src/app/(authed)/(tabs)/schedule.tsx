@@ -177,7 +177,7 @@ export default () => {
   return (
     <BrandBookingsCalendar
       timeGridRef={timeGridRef}
-      isFetching={isFetching}
+      isFetching={isFetching || locationsLoading}
       location={location}
       offsetTop={headerHeight}
       offsetBottom={bottomTabBarHeight}

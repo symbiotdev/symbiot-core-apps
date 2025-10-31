@@ -34,6 +34,7 @@ export type BrandBooking = {
   name: string;
   start: string;
   end: string;
+  repetitive: boolean;
   locations: BrandLocation[];
   employees: BrandEmployee[];
 };
@@ -104,7 +105,7 @@ export type CreateServiceBrandBooking = {
 export type UpdateBrandBooking = {
   start?: Date;
   duration?: number;
-  following?: boolean;
+  recurring?: boolean;
   locations?: string[];
 };
 

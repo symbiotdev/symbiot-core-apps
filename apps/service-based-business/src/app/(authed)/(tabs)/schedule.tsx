@@ -118,7 +118,8 @@ export default () => {
 
   const headerRight = useCallback(
     () =>
-      location && (
+      location &&
+      !!currentEmployee?.permissions?.locations && (
         <AdaptivePopover
           ignoreScroll
           ref={popoverRef}
@@ -154,6 +155,7 @@ export default () => {
       locationsOptions,
       location,
       setLocation,
+      currentEmployee?.permissions?.locations,
     ],
   );
 

@@ -20,7 +20,10 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import React, { useCallback } from 'react';
 import { ConfirmAlert, DateHelper, useModal } from '@symbiot-core-apps/shared';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccountState,
+  useCurrentBrandEmployee,
+} from '@symbiot-core-apps/state';
 import { useApp } from '@symbiot-core-apps/app';
 import { SingeElementForm } from '@symbiot-core-apps/form-controller';
 import { UnavailableBrandBookingReasonController } from './controller/unavailable-brand-booking-reason-controller';
@@ -68,6 +71,7 @@ export const UnavailableBrandBookingProfile = ({
 const DateTime = ({ booking }: { booking: UnavailableBrandBooking }) => {
   const { t } = useTranslation();
   const { me } = useCurrentAccountState();
+  const { currentEmployee } = useCurrentBrandEmployee();
   const { icons } = useApp();
   const { mutateAsync } = useUpdateUnavailableBrandBookingReq();
   const {
@@ -149,6 +153,7 @@ const DateTime = ({ booking }: { booking: UnavailableBrandBooking }) => {
   return (
     <>
       <ListItem
+        disabled={!currentEmployee?.permissions?.bookings}
         icon={<Icon name={icons.UnavailableBooking} />}
         iconAfter={<Icon name="ArrowRight" />}
         label={t(`unavailable_brand_booking.profile.groups.datetime.title`)}

@@ -11,6 +11,7 @@ import { Platform } from 'react-native';
 import {
   useCurrentAccountState,
   useCurrentBrandBookingsState,
+  useCurrentBrandEmployee,
 } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 import {
@@ -42,6 +43,7 @@ export const BrandBookingsCalendar = ({
   const { t } = useTranslation();
   const { me } = useCurrentAccountState();
   const { bookings } = useCurrentBrandBookingsState();
+  const { currentEmployee } = useCurrentBrandEmployee();
 
   const events: TimeGridEvent[] = useMemo(
     () =>
@@ -164,6 +166,7 @@ export const BrandBookingsCalendar = ({
         timeGridRef={timeGridRef}
         startDate={selectedDate}
         events={events}
+        draggable={!!currentEmployee?.permissions?.bookings}
         weekStartsOn={me?.preferences?.weekStartsOn}
         unavailableTime={unavailableTime}
         eventBorderRadius={10}

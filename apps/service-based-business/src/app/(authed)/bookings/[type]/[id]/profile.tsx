@@ -20,6 +20,7 @@ import {
   UnavailableBrandBookingProfile,
 } from '@symbiot-core-apps/brand-booking';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
+import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 
 export default () => {
   const { id, type } = useLocalSearchParams<{
@@ -44,6 +45,7 @@ const UnavailableBooking = ({ id }: { id: string }) => {
   } = useBrandBookingDetailedByIdReq(id, BrandBookingType.unavailable);
   const { mutateAsync: cancel, isPending: cancelProcessing } =
     useCancelUnavailableBrandBookingReq();
+  const { currentEmployee } = useCurrentBrandEmployee();
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [
@@ -87,14 +89,21 @@ const UnavailableBooking = ({ id }: { id: string }) => {
   const headerRight = useCallback(
     () =>
       !!booking?.id &&
-      !booking?.cancelAt && (
+      !booking?.cancelAt &&
+      currentEmployee?.permissions?.bookings && (
         <ContextMenuPopover
           loading={cancelProcessing}
           disabled={cancelProcessing}
           items={contextMenuItems}
         />
       ),
-    [booking?.cancelAt, booking?.id, cancelProcessing, contextMenuItems],
+    [
+      booking?.cancelAt,
+      booking?.id,
+      currentEmployee?.permissions?.bookings,
+      cancelProcessing,
+      contextMenuItems,
+    ],
   );
 
   useLayoutEffect(() => {
@@ -125,6 +134,7 @@ const ServiceBooking = ({ id }: { id: string }) => {
   } = useBrandBookingDetailedByIdReq(id, BrandBookingType.service);
   const { mutateAsync: cancel, isPending: cancelProcessing } =
     useCancelServiceBrandBookingReq();
+  const { currentEmployee } = useCurrentBrandEmployee();
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [
@@ -168,14 +178,21 @@ const ServiceBooking = ({ id }: { id: string }) => {
   const headerRight = useCallback(
     () =>
       !!booking?.id &&
-      !booking?.cancelAt && (
+      !booking?.cancelAt &&
+      currentEmployee?.permissions?.bookings && (
         <ContextMenuPopover
           loading={cancelProcessing}
           disabled={cancelProcessing}
           items={contextMenuItems}
         />
       ),
-    [booking?.cancelAt, booking?.id, cancelProcessing, contextMenuItems],
+    [
+      booking?.cancelAt,
+      booking?.id,
+      currentEmployee?.permissions?.bookings,
+      cancelProcessing,
+      contextMenuItems,
+    ],
   );
 
   useLayoutEffect(() => {

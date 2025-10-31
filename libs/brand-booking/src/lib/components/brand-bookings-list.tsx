@@ -5,10 +5,8 @@ import {
   SectionList,
 } from '@symbiot-core-apps/ui';
 import {
-  AnyBrandBooking,
   BrandBookingType,
-  InfiniteQuery,
-  PaginationListParams,
+  useBrandBookingCurrentListReq,
 } from '@symbiot-core-apps/api';
 import React, { ComponentType, useCallback, useMemo } from 'react';
 import { DateHelper } from '@symbiot-core-apps/shared';
@@ -18,13 +16,11 @@ import { router } from 'expo-router';
 
 export const BrandBookingsList = ({
   type,
-  query,
   offsetTop,
   Intro,
 }: {
   type: BrandBookingType;
   offsetTop?: number;
-  query: (params?: PaginationListParams) => InfiniteQuery<AnyBrandBooking>;
   Intro: ComponentType<{ loading?: boolean; error?: string | null }>;
 }) => {
   const {
@@ -35,7 +31,10 @@ export const BrandBookingsList = ({
     error,
     onRefresh,
     onEndReached,
-  } = query();
+  } = useBrandBookingCurrentListReq({
+    type,
+    start: DateHelper.startOfDay(new Date()),
+  });
   const { me } = useCurrentAccountState();
 
   const sections = useMemo(() => {

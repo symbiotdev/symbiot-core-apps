@@ -4,10 +4,8 @@ import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import {
   BrandBookingType,
   getTranslateKeyByBrandBookingType,
-  PaginationListParams,
-  useBrandBookingCurrentListReq,
 } from '@symbiot-core-apps/api';
-import React, { useCallback, useLayoutEffect, useMemo } from 'react';
+import React, { useLayoutEffect } from 'react';
 import {
   Button,
   EmptyView,
@@ -17,24 +15,14 @@ import {
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { useApp } from '@symbiot-core-apps/app';
-import { DateHelper, useNativeNow } from '@symbiot-core-apps/shared';
 
 export default () => {
   const { t } = useTranslation();
-  const { now } = useNativeNow();
   const headerHeight = useScreenHeaderHeight();
   const navigation = useNavigation();
   const { type } = useLocalSearchParams<{
     type: BrandBookingType;
   }>();
-
-  const start = useMemo(() => DateHelper.startOfDay(now), [now]);
-
-  const useQuery = useCallback(
-    (params?: PaginationListParams) =>
-      useBrandBookingCurrentListReq({ type, start, params }),
-    [start, type],
-  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -49,12 +37,7 @@ export default () => {
   }, [type, navigation, t]);
 
   return (
-    <BrandBookingsList
-      offsetTop={headerHeight}
-      type={type}
-      query={useQuery}
-      Intro={Intro}
-    />
+    <BrandBookingsList offsetTop={headerHeight} type={type} Intro={Intro} />
   );
 };
 

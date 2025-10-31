@@ -63,7 +63,11 @@ export default () => {
     };
   }, [location?.id, selectedDate]);
 
-  const { data: bookings, isFetching } = useBrandBookingPeriodListReq({
+  const {
+    data: bookings,
+    isFetching,
+    isFetchedAfterMount,
+  } = useBrandBookingPeriodListReq({
     params: bookingsParams,
   });
 
@@ -177,10 +181,10 @@ export default () => {
   }, [location, locations, setLocation]);
 
   useEffect(() => {
-    if (bookings && bookings.items?.length) {
+    if (isFetchedAfterMount && bookings && bookings.items?.length) {
       upsertBookings(bookings.items);
     }
-  }, [bookings, upsertBookings]);
+  }, [bookings, isFetchedAfterMount, upsertBookings]);
 
   return (
     <BrandBookingsCalendar

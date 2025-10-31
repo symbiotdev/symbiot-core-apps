@@ -16,8 +16,11 @@ import {
 import { useTranslation } from 'react-i18next';
 import {
   AnyBrandBooking,
+  BrandBookingType,
   BrandLocation,
   getBrandBookingType,
+  useUpdateServiceBrandBookingReq,
+  useUpdateUnavailableBrandBookingReq,
 } from '@symbiot-core-apps/api';
 import { DateHelper, minutesInDay } from '@symbiot-core-apps/shared';
 import { BrandBookingItem } from '@symbiot-core-apps/brand';
@@ -44,6 +47,14 @@ export const BrandBookingsCalendar = ({
   const { me } = useCurrentAccountState();
   const { bookings } = useCurrentBrandBookingsState();
   const { currentEmployee } = useCurrentBrandEmployee();
+  const {
+    mutateAsync: updateUnavailableBooking,
+    isPending: unavailableBookingUpdating,
+  } = useUpdateUnavailableBrandBookingReq();
+  const {
+    mutateAsync: updateServiceBooking,
+    isPending: serviceBookingUpdating,
+  } = useUpdateServiceBrandBookingReq();
 
   const events: TimeGridEvent[] = useMemo(
     () =>
@@ -158,11 +169,42 @@ export const BrandBookingsCalendar = ({
     [],
   );
 
+  const onEventUpdated = useCallback(
+    async ({ event }: { event: TimeGridEvent }) => {
+      const type = getBrandBookingType(event as AnyBrandBooking);
+
+      if (type === BrandBookingType.unavailable) {
+        await updateUnavailableBooking({
+          id: event.id,
+          data: {
+            start: event.start as string,
+          },
+        });
+
+        return true;
+      } else if (type === BrandBookingType.service) {
+        await updateServiceBooking({
+          id: event.id,
+          data: {
+            start: event.start as string,
+          },
+        });
+
+        return true;
+      } else {
+        return false;
+      }
+    },
+    [updateServiceBooking, updateUnavailableBooking],
+  );
+
   return (
     <View flex={1} marginTop={offsetTop}>
       <Calendar
         debounceable
-        loading={isFetching}
+        loading={
+          isFetching || unavailableBookingUpdating || serviceBookingUpdating
+        }
         timeGridRef={timeGridRef}
         startDate={selectedDate}
         events={events}
@@ -182,6 +224,7 @@ export const BrandBookingsCalendar = ({
             `/bookings/${getBrandBookingType(event as AnyBrandBooking)}/${event.id}/profile`,
           )
         }
+        onEventUpdated={onEventUpdated}
         onChangeDate={onChangeSelectedDate}
       />
     </View>

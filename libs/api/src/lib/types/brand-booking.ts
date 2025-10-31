@@ -103,7 +103,7 @@ export type CreateServiceBrandBooking = {
 };
 
 export type UpdateBrandBooking = {
-  start?: Date;
+  start?: Date | string;
   duration?: number;
   recurring?: boolean;
   locations?: string[];

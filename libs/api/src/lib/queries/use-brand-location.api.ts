@@ -146,7 +146,13 @@ export const useRemoveBrandLocationReq = () =>
   });
 
 export const useCurrentBrandLocationsReq = () =>
+export const useCurrentBrandLocationsReq = ({
+  enabled,
+}: {
+  enabled?: boolean;
+} = {}) =>
   useQuery<PaginationList<BrandLocation>, string>({
+    enabled,
     refetchOnMount: false,
     queryKey: [BrandLocationQueryKey.currentList],
     queryFn: () =>

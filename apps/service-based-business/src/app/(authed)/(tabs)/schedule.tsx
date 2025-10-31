@@ -22,7 +22,10 @@ import {
 import { View, XStack } from 'tamagui';
 import { useTranslation } from 'react-i18next';
 import { BrandBookingsCalendar } from '@symbiot-core-apps/brand-booking';
-import { useCurrentBrandBookingsState } from '@symbiot-core-apps/state';
+import {
+  useCurrentBrandBookingsState,
+  useCurrentBrandEmployee,
+} from '@symbiot-core-apps/state';
 import {
   useBrandBookingPeriodListReq,
   useCurrentBrandLocationsReq,
@@ -37,6 +40,7 @@ export default () => {
   const navigation = useNavigation();
   const { location, setLocation, upsertBookings } =
     useCurrentBrandBookingsState();
+  const { currentEmployee } = useCurrentBrandEmployee();
 
   const popoverRef = useRef<AdaptivePopoverRef>(null);
   const timeGridRef = useRef<TimeGridRef>(null);
@@ -45,9 +49,11 @@ export default () => {
 
   const {
     data: locations,
-    isPending: locationsLoading,
+    isFetching: locationsLoading,
     error: locationsError,
-  } = useCurrentBrandLocationsReq();
+  } = useCurrentBrandLocationsReq({
+    enabled: !!currentEmployee?.permissions?.locations,
+  });
 
   const bookingsParams = useMemo(() => {
     return {

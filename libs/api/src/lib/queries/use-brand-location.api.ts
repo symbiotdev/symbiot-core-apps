@@ -145,7 +145,6 @@ export const useRemoveBrandLocationReq = () =>
     },
   });
 
-export const useCurrentBrandLocationsReq = () =>
 export const useCurrentBrandLocationsReq = ({
   enabled,
 }: {

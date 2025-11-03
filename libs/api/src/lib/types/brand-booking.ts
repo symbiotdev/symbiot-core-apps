@@ -55,6 +55,7 @@ export type BrandBookingClient = BrandClient & {
 export type ServiceBrandBooking = BrandBooking & {
   type: BrandBookingType.service;
   places: number;
+  note: string;
   reminders: number[];
   clients: BrandBookingClient[];
   services: BrandService[];
@@ -91,10 +92,10 @@ export type UpdateServiceBrandBookingClient = {
 
 export type CreateServiceBrandBooking = {
   start: Date;
-  end?: Date;
   frequency: BrandBookingFrequency;
-  places: number;
-  duration: number;
+  places?: number;
+  duration?: number;
+  note?: string;
   services: string[];
   locations: string[];
   employees: string[];
@@ -116,6 +117,7 @@ export type UpdateUnavailableBrandBooking = UpdateBrandBooking & {
 export type UpdateServiceBrandBooking = UpdateBrandBooking & {
   employees?: string[];
   places?: number;
+  note?: string;
   services?: string[];
   reminders?: number[];
 };

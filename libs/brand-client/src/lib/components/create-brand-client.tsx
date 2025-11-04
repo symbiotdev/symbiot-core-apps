@@ -109,7 +109,7 @@ export const CreateBrandClient = () => {
       ConfirmAlert({
         title: t('brand_client.create.discard.title'),
         message: t('brand_client.create.discard.message'),
-        callback: () => navigation.dispatch(e.data.action),
+        onAgree: () => navigation.dispatch(e.data.action),
       });
     },
     [t, navigation],

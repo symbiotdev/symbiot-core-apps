@@ -8,7 +8,6 @@ export function EmployeesBrandBookingController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   disabled?: boolean;
-  disableDrag?: boolean;
 }) {
   const { items, isPending, error } = useBrandEmployeeCurrentListReq({
     params: {

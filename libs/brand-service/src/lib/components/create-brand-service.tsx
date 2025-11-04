@@ -181,7 +181,7 @@ export const CreateBrandService = () => {
       ConfirmAlert({
         title: t('brand_service.create.discard.title'),
         message: t('brand_service.create.discard.message'),
-        callback: () => navigation.dispatch(e.data.action),
+        onAgree: () => navigation.dispatch(e.data.action),
       });
     },
     [t, navigation],

@@ -94,7 +94,7 @@ const DateTime = ({ booking }: { booking: UnavailableBrandBooking }) => {
     },
   });
 
-  const onUpdate = useCallback(() => {
+  const onUpdate = useCallback(async () => {
     let recurring = false;
     const { datetime } = datetimeGetValues();
     const start = datetime.start;
@@ -112,22 +112,25 @@ const DateTime = ({ booking }: { booking: UnavailableBrandBooking }) => {
     );
 
     if (booking.repetitive) {
-      ConfirmAlert({
-        title: t('unavailable_brand_booking.profile.update_recurring'),
-        cancelText: t('shared.no'),
-        confirmText: t('shared.yes'),
-        callback: async () => {
-          recurring = true;
+      recurring = await new Promise((resolve) => {
+        ConfirmAlert({
+          title: t('unavailable_brand_booking.profile.update_recurring'),
+          cancelText: t('shared.no'),
+          confirmText: t('shared.yes'),
+          onCancel: () => resolve(false),
+          onAgree: () => {
+            resolve(true);
 
-          void mutateAsync({
-            id: booking.id,
-            data: {
-              recurring: true,
-              duration,
-              start: datetime.start,
-            },
-          });
-        },
+            void mutateAsync({
+              id: booking.id,
+              data: {
+                recurring: true,
+                duration,
+                start: datetime.start,
+              },
+            });
+          },
+        });
       });
     }
 
@@ -206,18 +209,21 @@ const Reason = ({ booking }: { booking: UnavailableBrandBooking }) => {
       let recurring = false;
 
       if (booking.repetitive) {
-        ConfirmAlert({
-          title: t('unavailable_brand_booking.profile.update_recurring'),
-          cancelText: t('shared.no'),
-          confirmText: t('shared.yes'),
-          callback: () => {
-            recurring = true;
+        recurring = await new Promise((resolve) => {
+          ConfirmAlert({
+            title: t('unavailable_brand_booking.profile.update_recurring'),
+            cancelText: t('shared.no'),
+            confirmText: t('shared.yes'),
+            onCancel: () => resolve(false),
+            onAgree: () => {
+              resolve(true);
 
-            void updateValue({
-              ...value,
-              recurring,
-            });
-          },
+              void updateValue({
+                ...value,
+                recurring,
+              });
+            },
+          });
         });
       }
 

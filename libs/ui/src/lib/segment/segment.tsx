@@ -99,7 +99,7 @@ export const Segment = memo(
         backgroundColor="$background"
         overflow="hidden"
         disabled={disabled}
-        disabledStyle={{ opacity: 0.8 }}
+        disabledStyle={{ opacity: 0.5 }}
         {...xStackProps}
       >
         <FlatList

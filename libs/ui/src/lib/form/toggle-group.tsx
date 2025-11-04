@@ -147,7 +147,7 @@ const Item = memo(
         paddingVertical="$3"
         disabled={disabled}
         cursor={!disabled && onChange ? 'pointer' : 'default'}
-        disabledStyle={{ opacity: 0.8 }}
+        disabledStyle={{ opacity: 0.5 }}
         pressStyle={!disabled && { opacity: 0.8 }}
         onPress={onPress}
         {...xStackProps}

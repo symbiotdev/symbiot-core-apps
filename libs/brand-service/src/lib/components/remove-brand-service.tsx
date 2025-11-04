@@ -17,7 +17,7 @@ export const RemoveBrandService = ({ service }: { service: BrandService }) => {
       ConfirmAlert({
         title: t('brand_service.remove.confirm_dialog.title'),
         message: t('brand_service.remove.confirm_dialog.message'),
-        callback: async () => {
+        onAgree: async () => {
           await mutateAsync({ id: service.id });
 
           router.dismissAll();

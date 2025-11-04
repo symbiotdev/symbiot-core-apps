@@ -155,7 +155,7 @@ export const CreateBrandLocation = () => {
       ConfirmAlert({
         title: t('brand_location.create.discard.title'),
         message: t('brand_location.create.discard.message'),
-        callback: () => navigation.dispatch(e.data.action),
+        onAgree: () => navigation.dispatch(e.data.action),
       });
     },
     [t, navigation],

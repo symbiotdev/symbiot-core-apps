@@ -163,7 +163,7 @@ const CustomPicker = ({
           backgroundColor={value === item.value ? '$background' : undefined}
           borderRadius="$10"
           cursor={!disabled ? 'pointer' : 'default'}
-          disabledStyle={{ opacity: 0.8 }}
+          disabledStyle={{ opacity: 0.5 }}
           pressStyle={!disabled && { opacity: 0.8 }}
           onPress={() => {
             onChange(item.value as string);

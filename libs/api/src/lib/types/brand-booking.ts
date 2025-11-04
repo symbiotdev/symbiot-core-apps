@@ -24,7 +24,7 @@ export enum BrandBookingCancelBy {
 }
 
 export type BrandBookingSlot = {
-  location?: Pick<BrandLocation, 'id'>;
+  location?: Pick<BrandLocation, 'id' | 'name'>;
   providers: BrandEmployee[];
   slots: Record<string, number[]>;
 };

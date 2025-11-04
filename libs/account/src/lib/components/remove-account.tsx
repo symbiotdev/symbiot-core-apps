@@ -15,7 +15,7 @@ export const RemoveAccount = () => {
       ConfirmAlert({
         title: t('shared.account.remove.confirm_dialog.title'),
         message: t('shared.account.remove.confirm_dialog.message'),
-        callback: mutateAsync,
+        onAgree: mutateAsync,
       }),
     [mutateAsync, t],
   );

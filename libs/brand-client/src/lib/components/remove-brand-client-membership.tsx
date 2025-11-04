@@ -23,7 +23,7 @@ export const RemoveBrandClientMembership = ({
       ConfirmAlert({
         title: t('brand_client_membership.remove.confirm_dialog.title'),
         message: t('brand_client_membership.remove.confirm_dialog.message'),
-        callback: async () => {
+        onAgree: async () => {
           await mutateAsync({ clientId, membershipId: membership.id });
 
           router.dismissTo(`/clients/${clientId}/profile`);

@@ -21,7 +21,7 @@ export const RemoveBrandEmployee = ({
       ConfirmAlert({
         title: t('brand_employee.remove.confirm_dialog.title'),
         message: t('brand_employee.remove.confirm_dialog.message'),
-        callback: async () => {
+        onAgree: async () => {
           await mutateAsync({ id: employee.id });
 
           router.dismissAll()

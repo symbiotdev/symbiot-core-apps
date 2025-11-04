@@ -21,7 +21,7 @@ export const RemoveBrandLocation = ({
       ConfirmAlert({
         title: t('brand_location.remove.confirm_dialog.title'),
         message: t('brand_location.remove.confirm_dialog.message'),
-        callback: async () => {
+        onAgree: async () => {
           await mutateAsync({ id: location.id });
 
           router.dismissAll();

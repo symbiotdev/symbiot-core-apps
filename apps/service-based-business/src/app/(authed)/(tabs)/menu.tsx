@@ -105,7 +105,7 @@ export default () => {
           onPress={() =>
             ConfirmAlert({
               title: t('shared.auth.sign_out.confirm.title'),
-              callback: signOut,
+              onAgree: signOut,
             })
           }
         />

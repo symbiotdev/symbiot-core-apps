@@ -17,6 +17,7 @@ import { PaginationListParams } from '../types/pagination';
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { Gender } from '../types/gender';
 import { queryClient } from '../utils/client';
+import { BrandLocation } from '../types/brand-location';
 
 export enum BrandServiceQueryKey {
   types = 'brand-service-types',
@@ -25,6 +26,7 @@ export enum BrandServiceQueryKey {
   currentList = 'brand-service-current-list',
   services = 'brand-services',
   locationServices = 'brand-service-location-services',
+  serviceLocations = 'brand-service-service-locations',
   profileById = 'brand-service-profile-by-id',
   viewById = 'brand-service-view-by-id',
   detailedById = 'brand-service-detailed-by-id',
@@ -144,8 +146,19 @@ export const useServicesListByLocationReq = (props: {
 }) =>
   useInfiniteQueryWrapper<BrandService>({
     refetchOnMount: true,
-    apUrl: `/api/brand-service/location/${props.location}/services`,
+    apUrl: `/api/brand-service/location/${props.location}`,
     queryKey: [BrandServiceQueryKey.locationServices, props],
+    ...props,
+  });
+
+export const useServiceLocationsListReq = (props: {
+  service: string;
+  params?: PaginationListParams;
+}) =>
+  useInfiniteQueryWrapper<BrandLocation>({
+    refetchOnMount: true,
+    apUrl: `/api/brand-service/${props.service}/locations`,
+    queryKey: [BrandServiceQueryKey.serviceLocations, props],
     ...props,
   });
 

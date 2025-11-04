@@ -199,7 +199,7 @@ export const CreateBrandEmployee = () => {
       ConfirmAlert({
         title: t('brand_employee.create.discard.title'),
         message: t('brand_employee.create.discard.message'),
-        callback: () => navigation.dispatch(e.data.action),
+        onAgree: () => navigation.dispatch(e.data.action),
       });
     },
     [t, navigation],

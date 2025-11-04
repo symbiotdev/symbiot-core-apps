@@ -14,7 +14,7 @@ export const RemoveBrandClient = ({ client }: { client: BrandClient }) => {
       ConfirmAlert({
         title: t('brand_client.remove.confirm_dialog.title'),
         message: t('brand_client.remove.confirm_dialog.message'),
-        callback: async () => {
+        onAgree: async () => {
           await mutateAsync({ id: client.id });
 
           router.dismissAll();

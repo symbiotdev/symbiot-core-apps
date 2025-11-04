@@ -53,24 +53,27 @@ const UnavailableBooking = ({ id }: { id: string }) => {
         label: t(`unavailable_brand_booking.profile.context_menu.cancel.label`),
         icon: <Icon name="Close" />,
         color: '$error',
-        onPress: () => {
+        onPress: async () => {
           if (!booking?.id) return;
 
           let recurring = false;
 
           if (booking.repetitive) {
-            ConfirmAlert({
-              title: t('unavailable_brand_booking.profile.update_recurring'),
-              cancelText: t('shared.no'),
-              confirmText: t('shared.yes'),
-              callback: async () => {
-                recurring = true;
+            recurring = await new Promise((resolve) => {
+              ConfirmAlert({
+                title: t('unavailable_brand_booking.profile.update_recurring'),
+                cancelText: t('shared.no'),
+                confirmText: t('shared.yes'),
+                onCancel: () => resolve(false),
+                onAgree: () => {
+                  resolve(true);
 
-                void cancel({
-                  id: booking.id,
-                  recurring: true,
-                });
-              },
+                  void cancel({
+                    id: booking.id,
+                    recurring: true,
+                  });
+                },
+              });
             });
           }
 
@@ -152,7 +155,7 @@ const ServiceBooking = ({ id }: { id: string }) => {
               title: t('service_brand_booking.profile.update_recurring'),
               cancelText: t('shared.no'),
               confirmText: t('shared.yes'),
-              callback: async () => {
+              onAgree: async () => {
                 recurring = true;
 
                 void cancel({

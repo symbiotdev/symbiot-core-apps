@@ -170,7 +170,7 @@ export const CreateBrandMembership = ({
       ConfirmAlert({
         title: t(`${tPrefix}.create.discard.title`),
         message: t(`${tPrefix}.create.discard.message`),
-        callback: () => navigation.dispatch(e.data.action),
+        onAgree: () => navigation.dispatch(e.data.action),
       });
     },
     [t, navigation, tPrefix],

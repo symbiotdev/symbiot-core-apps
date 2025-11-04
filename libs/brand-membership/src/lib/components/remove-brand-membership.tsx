@@ -26,7 +26,7 @@ export const RemoveBrandMembership = ({
       ConfirmAlert({
         title: t(`${tPrefix}.remove.confirm_dialog.title`),
         message: t(`${tPrefix}.remove.confirm_dialog.message`),
-        callback: async () => {
+        onAgree: async () => {
           await mutateAsync({ id: membership.id });
 
           router.dismissAll();

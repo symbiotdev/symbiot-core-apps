@@ -130,7 +130,7 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
       ConfirmAlert({
         title: t(`unavailable_brand_booking.create.discard.title`),
         message: t(`unavailable_brand_booking.create.discard.message`),
-        callback: () => navigation.dispatch(e.data.action),
+        onAgree: () => navigation.dispatch(e.data.action),
       });
     },
     [t, navigation],

@@ -116,14 +116,18 @@ export const useBrandBookingDetailedByIdReq = (
 
 export const useBrandBookingSlotsByServiceReq = (
   serviceId: string,
-  props: { params: ServiceBrandBookingSlotsParams },
+  props: {
+    params: ServiceBrandBookingSlotsParams;
+  },
 ) =>
   useQuery<BrandBookingSlot[], string>({
     ...props,
     queryKey: [BrandBookingQueryKey.slotsByService, serviceId, props.params],
     queryFn: () =>
       requestWithStringError(
-        axios.get(`/api/brand-booking/service/${serviceId}/slots`),
+        axios.get(`/api/brand-booking/service/${serviceId}/slots`, {
+          params: props.params,
+        }),
       ),
   });
 

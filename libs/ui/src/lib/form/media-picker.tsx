@@ -140,7 +140,7 @@ export const MediaPicker = ({
     ConfirmAlert({
       title: t('shared.preferences.media.action.delete.confirm.title'),
       message: t('shared.preferences.media.action.delete.confirm.message'),
-      callback: async () => {
+      onAgree: async () => {
         setProcessing(true);
         try {
           await onRemove?.();

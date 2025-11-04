@@ -225,7 +225,8 @@ export const Survey = ({
                 {
                   gap: 0,
                   paddingHorizontal: defaultPageHorizontalPadding,
-                  paddingBottom: bottom + defaultPageVerticalPadding,
+                  paddingTop: 4,
+                  paddingBottom: bottom + defaultPageVerticalPadding
                 },
               ]}
             >

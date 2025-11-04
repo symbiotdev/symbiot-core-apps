@@ -57,8 +57,8 @@ export const Button = memo(
     return (
       <XStack
         backgroundColor={ButtonTheme[type].backgroundColor}
+        borderColor={ButtonTheme[type].borderColor}
         borderWidth={2}
-        borderColor={ButtonTheme[type].backgroundColor}
         borderRadius="$10"
         justifyContent="center"
         alignItems="center"
@@ -134,6 +134,7 @@ export const ButtonIcon = ({
       height={size}
       pressStyle={{ opacity: 0.8 }}
       backgroundColor={ButtonTheme[type].backgroundColor}
+      borderColor={ButtonTheme[type].borderColor}
       borderWidth={2}
       disabledStyle={{
         cursor: 'auto',

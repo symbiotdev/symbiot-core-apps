@@ -1,5 +1,4 @@
-import { LabelProps, TextProps, View } from 'tamagui';
-import { PropsWithChildren } from 'react';
+import { LabelProps, TextProps, View, ViewProps } from 'tamagui';
 import { Error, Label } from '../text/custom';
 import { Platform } from 'react-native';
 
@@ -11,16 +10,17 @@ export const FormField = ({
   error,
   errorProps,
   children,
-}: PropsWithChildren<{
+  ...viewProps
+}: ViewProps & {
   label?: string;
   required?: boolean;
   htmlFor?: string;
   labelProps?: LabelProps;
   error?: string;
   errorProps?: TextProps;
-}>) => {
+}) => {
   return (
-    <View gap="$2">
+    <View gap="$2" {...viewProps}>
       {!!label && (
         <Label
           paddingHorizontal="$4"

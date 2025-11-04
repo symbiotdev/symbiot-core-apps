@@ -11,25 +11,21 @@ export const ButtonTheme = {
   default: {
     color: '$buttonTextColor',
     backgroundColor: '$buttonBackground',
-    borderWidth: 0,
     borderColor: 'transparent',
   },
   clear: {
     color: '$buttonTextColor1',
     backgroundColor: 'transparent',
-    borderWidth: 0,
     borderColor: 'transparent',
   },
   outlined: {
     color: '$buttonTextColor1',
     backgroundColor: 'transparent',
-    borderWidth: 1.5,
     borderColor: '$buttonBackground',
   },
   danger: {
     color: '$buttonTextColor',
     backgroundColor: '$error',
-    borderWidth: 0,
     borderColor: 'transparent',
   },
 };
@@ -61,7 +57,7 @@ export const Button = memo(
     return (
       <XStack
         backgroundColor={ButtonTheme[type].backgroundColor}
-        borderWidth={ButtonTheme[type].borderWidth}
+        borderWidth={2}
         borderColor="$buttonBackground"
         borderRadius="$10"
         justifyContent="center"
@@ -139,7 +135,7 @@ export const ButtonIcon = ({
       height={size}
       pressStyle={{ opacity: 0.8 }}
       backgroundColor={ButtonTheme[type].backgroundColor}
-      borderWidth={ButtonTheme[type].borderWidth}
+      borderWidth={2}
       disabledStyle={{
         cursor: 'auto',
         opacity: 0.8,

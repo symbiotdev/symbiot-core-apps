@@ -16,8 +16,7 @@ export const useInputSelection = (
   return useMemo(() => {
     if (cursorAlwaysOn === undefined) {
       return undefined;
-    }
-    if (typeof cursorAlwaysOn === 'number') {
+    } else if (typeof cursorAlwaysOn === 'number') {
       return { start: cursorAlwaysOn, end: cursorAlwaysOn };
     } else if (cursorAlwaysOn === 'start') {
       return { start: 0, end: 0 };
@@ -112,9 +111,9 @@ export const Input = forwardRef(
           nextValue = isNaN(Number(text)) ? null : text;
         }
 
-        onDebounceChange(nextValue);
+        debounce ? onDebounceChange(nextValue) : onChange?.(nextValue);
       },
-      [maxLength, onDebounceChange, regex, type],
+      [maxLength, debounce, onDebounceChange, onChange, regex, type],
     );
 
     return (

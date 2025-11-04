@@ -22,6 +22,7 @@ export * from './lib/form/document-picker';
 export * from './lib/form/duration-picker';
 export * from './lib/form/gallery-picker';
 export * from './lib/form/media-picker';
+export * from './lib/form/horizontal-picker';
 export * from './lib/form/input';
 export * from './lib/form/instagram-input';
 export * from './lib/form/phone-input';

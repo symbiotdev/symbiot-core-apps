@@ -122,6 +122,7 @@ export const useBrandBookingSlotsByServiceReq = (
 ) =>
   useQuery<BrandBookingSlot[], string>({
     ...props,
+    enabled: !!serviceId,
     queryKey: [BrandBookingQueryKey.slotsByService, serviceId, props.params],
     queryFn: () =>
       requestWithStringError(

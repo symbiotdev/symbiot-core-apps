@@ -1,4 +1,4 @@
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { View } from 'tamagui';
 import { useMemo } from 'react';
@@ -9,11 +9,15 @@ import {
   getEndDateByBrandBookingFrequency,
 } from '@symbiot-core-apps/api';
 
-export function FrequencyBrandBookingController(props: {
-  control: Control<{
+export function FrequencyBrandBookingController<
+  T extends FieldValues & {
     frequency: { type: BrandBookingFrequency; endDate?: Date };
-  }>;
+  },
+>(props: {
+  name: Path<T>;
+  control: Control<T>;
   minDate: Date;
+  label?: string;
   disabled?: boolean;
   disableDrag?: boolean;
 }) {
@@ -47,7 +51,7 @@ export function FrequencyBrandBookingController(props: {
 
   return (
     <Controller
-      name="frequency"
+      name={'frequency' as Path<T>}
       control={props.control}
       render={({ field: { value, onChange } }) => {
         return (

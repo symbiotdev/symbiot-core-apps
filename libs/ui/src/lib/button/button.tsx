@@ -67,18 +67,20 @@ export const Button = memo(
         minHeight={46}
         width="100%"
         gap="$3"
-        cursor={xStackProps.disabled ? 'auto' : 'pointer'}
-        pressStyle={{ opacity: 0.8 }}
         disabledStyle={{
           cursor: 'auto',
           opacity: 0.5,
         }}
-        {...xStackProps}
         disabled={disabled}
-        onPress={(e) => {
-          onPress?.(e);
-          hapticable && emitHaptic();
-        }}
+        {...xStackProps}
+        {...(onPress && {
+          cursor: 'pointer',
+          pressStyle: { opacity: 0.8 },
+          onPress: (e) => {
+            hapticable && emitHaptic();
+            onPress?.(e);
+          },
+        })}
       >
         {loading ? (
           <Spinner color={color} size="small" />
@@ -129,10 +131,8 @@ export const ButtonIcon = ({
       borderRadius="100%"
       justifyContent="center"
       alignItems="center"
-      cursor="pointer"
       width={size}
       height={size}
-      pressStyle={{ opacity: 0.8 }}
       backgroundColor={ButtonTheme[type].backgroundColor}
       borderColor={ButtonTheme[type].borderColor}
       borderWidth={2}
@@ -140,12 +140,16 @@ export const ButtonIcon = ({
         cursor: 'auto',
         opacity: 0.5,
       }}
-      {...viewProps}
       disabled={disabled}
-      onPress={(e) => {
-        onPress?.(e);
-        hapticable && emitHaptic();
-      }}
+      {...viewProps}
+      {...(onPress && {
+        cursor: 'pointer',
+        pressStyle: { opacity: 0.8 },
+        onPress: (e) => {
+         hapticable && emitHaptic();
+          onPress?.(e);
+        },
+      })}
     >
       {loading ? (
         <Spinner color={color} size="small" />

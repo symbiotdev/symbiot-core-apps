@@ -20,16 +20,18 @@ export const BrandLocationItem = ({
 }) => {
   return (
     <FormView
-      {...viewProps}
       alignItems="center"
       gap="$4"
       flexDirection="row"
-      cursor={onPress ? 'pointer' : undefined}
-      pressStyle={onPress && { opacity: 0.8 }}
-      onPress={(e) => {
-        onPress && emitHaptic();
-        onPress?.(e);
-      }}
+      {...viewProps}
+      {...(onPress && {
+        cursor: 'pointer',
+        pressStyle: { opacity: 0.8 },
+        onPress: (e) => {
+          emitHaptic();
+          onPress?.(e);
+        },
+      })}
     >
       <Avatar
         name={location.name}

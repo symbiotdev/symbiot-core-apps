@@ -49,9 +49,9 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
   const { datetime } = datetimeWatch();
 
   const {
-    control: frequencyControl,
-    getValues: frequencyGetValues,
-    formState: frequencyFormState,
+    control: recurrenceControl,
+    getValues: recurrenceGetValues,
+    formState: recurrenceFormState,
   } = useForm<{
     frequency: {
       type: BrandBookingFrequency;
@@ -91,7 +91,7 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
 
   const onFinish = useCallback(async () => {
     const { datetime } = datetimeGetValues();
-    const { frequency } = frequencyGetValues();
+    const { frequency } = recurrenceGetValues();
     const { employee } = employeesGetValues();
     const { reason } = reasonGetValues();
 
@@ -114,7 +114,7 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
     );
   }, [
     datetimeGetValues,
-    frequencyGetValues,
+    recurrenceGetValues,
     employeesGetValues,
     reasonGetValues,
     createBooking,
@@ -165,14 +165,15 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
       </SurveyStep>
 
       <SurveyStep
-        canGoNext={frequencyFormState.isValid}
-        title={t(`unavailable_brand_booking.create.steps.frequency.title`)}
+        canGoNext={recurrenceFormState.isValid}
+        title={t(`unavailable_brand_booking.create.steps.recurrence.title`)}
         subtitle={t(
-          `unavailable_brand_booking.create.steps.frequency.subtitle`,
+          `unavailable_brand_booking.create.steps.recurrence.subtitle`,
         )}
       >
         <FrequencyBrandBookingController
-          control={frequencyControl}
+          name="frequency"
+          control={recurrenceControl}
           minDate={DateHelper.addDays(datetime.start, 1)}
         />
       </SurveyStep>

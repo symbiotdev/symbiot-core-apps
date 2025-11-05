@@ -140,7 +140,6 @@ const BrandPeriodBasedMembershipItemView = ({
 
   return (
     <View
-      {...viewProps}
       height={200}
       maxWidth={400}
       width="100%"
@@ -152,12 +151,15 @@ const BrandPeriodBasedMembershipItemView = ({
       gap="$2"
       justifyContent="space-between"
       position="relative"
-      cursor={onPress ? 'pointer' : undefined}
-      pressStyle={onPress && { opacity: 0.8 }}
-      onPress={(e) => {
-        onPress && emitHaptic();
-        onPress?.(e);
-      }}
+      {...viewProps}
+      {...(onPress && {
+        cursor: 'pointer',
+        pressStyle: { opacity: 0.8 },
+        onPress: (e) => {
+          emitHaptic();
+          onPress?.(e);
+        },
+      })}
     >
       <LinearGradient
         colors={['#FFFFFF05', '#FFFFFF30', '#FFFFFF05']}
@@ -287,19 +289,21 @@ const BrandVisitBasedMembershipItemView = ({
 
   return (
     <View
-      {...viewProps}
       backgroundColor="$background"
       overflow="hidden"
       position="relative"
       borderRadius="$10"
       maxWidth={400}
       width="100%"
-      cursor={onPress ? 'pointer' : undefined}
-      pressStyle={onPress && { opacity: 0.8 }}
-      onPress={(e) => {
-        onPress && emitHaptic();
-        onPress?.(e);
-      }}
+      {...viewProps}
+      {...(onPress && {
+        cursor: 'pointer',
+        pressStyle: { opacity: 0.8 },
+        onPress: (e) => {
+          emitHaptic();
+          onPress?.(e);
+        },
+      })}
     >
       <CutDown right={-cutoutSize / 1.5} />
       <CutDown left={-cutoutSize / 1.5} />

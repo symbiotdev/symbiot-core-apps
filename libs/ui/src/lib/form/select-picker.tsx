@@ -1,5 +1,5 @@
 import { DimensionValue, Platform } from 'react-native';
-import { useCallback, useMemo, useRef } from 'react';
+import { ReactElement, useCallback, useMemo, useRef } from 'react';
 import {
   AdaptivePopover,
   AdaptivePopoverRef,
@@ -28,6 +28,7 @@ export function SelectPicker({
   optionsLoading,
   optionsError,
   options,
+  trigger,
   onChange,
   onBlur,
 }: {
@@ -45,9 +46,10 @@ export function SelectPicker({
   showSelectedDescription?: boolean;
   noCheckedValue?: string;
   maxWidth?: DimensionValue;
+  options?: PickerItem[];
   optionsLoading?: boolean;
   optionsError?: string | null;
-  options?: PickerItem[];
+  trigger?: ReactElement;
   onChange: PickerOnChange;
   onBlur?: () => void;
 }) {
@@ -103,38 +105,40 @@ export function SelectPicker({
         sheetTitle={sheetLabel}
         minWidth={200}
         trigger={
-          <View gap="$2" pressStyle={{ opacity: 0.8 }}>
-            <InputFieldView disabled={disabled} gap="$3">
-              {!options?.length && optionsLoading ? (
-                <RegularText
-                  color="$placeholderColor"
-                  numberOfLines={1}
-                  flex={1}
-                >
-                  {placeholder}
-                </RegularText>
-              ) : !formattedValue ? (
-                <RegularText
-                  color="$placeholderColor"
-                  numberOfLines={1}
-                  flex={1}
-                >
-                  {placeholder}
-                </RegularText>
-              ) : (
-                <RegularText
-                  flex={1}
-                  numberOfLines={1}
-                  color={disabled ? '$disabled' : '$color'}
-                >
-                  {formattedValue}
-                </RegularText>
-              )}
+          <View gap="$2" cursor="pointer" pressStyle={{ opacity: 0.8 }}>
+            {trigger || (
+              <InputFieldView disabled={disabled} gap="$3">
+                {!options?.length && optionsLoading ? (
+                  <RegularText
+                    color="$placeholderColor"
+                    numberOfLines={1}
+                    flex={1}
+                  >
+                    {placeholder}
+                  </RegularText>
+                ) : !formattedValue ? (
+                  <RegularText
+                    color="$placeholderColor"
+                    numberOfLines={1}
+                    flex={1}
+                  >
+                    {placeholder}
+                  </RegularText>
+                ) : (
+                  <RegularText
+                    flex={1}
+                    numberOfLines={1}
+                    color={disabled ? '$disabled' : '$color'}
+                  >
+                    {formattedValue}
+                  </RegularText>
+                )}
 
-              {(loading || (!options?.length && optionsLoading)) && (
-                <Spinner marginLeft="auto" width={16} height={16} />
-              )}
-            </InputFieldView>
+                {(loading || (!options?.length && optionsLoading)) && (
+                  <Spinner marginLeft="auto" width={16} height={16} />
+                )}
+              </InputFieldView>
+            )}
 
             {!!description && (
               <RegularText color="$placeholderColor" paddingHorizontal="$4">

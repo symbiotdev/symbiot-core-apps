@@ -67,10 +67,12 @@ export const ListItem = memo(
         alignItems="center"
         gap="$4"
         paddingVertical="$2"
-        pressStyle={!disabled && { opacity: 0.8 }}
-        cursor={onPress && !disabled ? 'pointer' : 'auto'}
-        onPress={onXStackPress}
         {...xStackProps}
+        {...(onPress && {
+          pressStyle: { opacity: 0.8 },
+          cursor: 'pointer',
+          onPress: onXStackPress,
+        })}
       >
         {!!icon &&
           cloneElement(icon, {

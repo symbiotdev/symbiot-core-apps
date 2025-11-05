@@ -19,15 +19,17 @@ export const BrandServiceItem = ({
 
   return (
     <FormView
-      {...viewProps}
       gap="$3"
       opacity={service.hidden ? 0.7 : 1}
-      cursor={onPress ? 'pointer' : undefined}
-      pressStyle={onPress && { opacity: 0.8 }}
-      onPress={(e) => {
-        onPress && emitHaptic();
-        onPress?.(e);
-      }}
+      {...viewProps}
+      {...(onPress && {
+        cursor: 'pointer',
+        pressStyle: { opacity: 0.8 },
+        onPress: (e) => {
+          emitHaptic();
+          onPress?.(e);
+        },
+      })}
     >
       <XStack flex={1}>
         <MediumText numberOfLines={2} flex={1}>

@@ -32,16 +32,18 @@ export const BrandTransactionItem = ({
 
   return (
     <View
-      {...viewProps}
       maxWidth={400}
       width="100%"
       gap="$2"
-      cursor={onPress ? 'pointer' : undefined}
-      pressStyle={onPress && { opacity: 0.8 }}
-      onPress={(e) => {
-        onPress && emitHaptic();
-        onPress?.(e);
-      }}
+      {...viewProps}
+      {...(onPress && {
+        cursor: 'pointer',
+        pressStyle: { opacity: 0.8 },
+        onPress: (e) => {
+          emitHaptic();
+          onPress?.(e);
+        },
+      })}
     >
       <XStack justifyContent="space-between" gap="$5" flexWrap="wrap">
         <RegularText>{t('brand_transaction.transaction_id')}</RegularText>

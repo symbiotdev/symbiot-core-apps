@@ -112,8 +112,7 @@ const Employee = ({
       required
       optionsCentered={false}
       value={value}
-      label={t('service_brand_booking.form.service.label')}
-      placeholder={t('service_brand_booking.form.service.placeholder')}
+      placeholder={t('unavailable_brand_booking.form.employee.placeholder')}
       options={options}
       optionsLoading={loading}
       optionsError={error}

@@ -9,9 +9,9 @@ import {
   CreateUnavailableBrandBooking,
   ServiceBrandBooking,
   ServiceBrandBookingSlotsParams,
+  UpdateBrandBooking,
   UpdateServiceBrandBooking,
   UpdateServiceBrandBookingClient,
-  UpdateUnavailableBrandBooking,
 } from '../types/brand-booking';
 import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -238,7 +238,7 @@ function useUpdateBrandBookingQueryReq<UT>(type: BrandBookingType) {
 }
 
 export const useUpdateUnavailableBrandBookingReq = () =>
-  useUpdateBrandBookingQueryReq<UpdateUnavailableBrandBooking>(
+  useUpdateBrandBookingQueryReq<UpdateBrandBooking>(
     BrandBookingType.unavailable,
   );
 

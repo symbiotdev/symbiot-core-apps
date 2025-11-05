@@ -11,7 +11,7 @@ import {
   AnyBrandBooking,
   isBrandBookingAllDay,
   UnavailableBrandBooking,
-  UpdateUnavailableBrandBooking,
+  UpdateBrandBooking,
   useModalUpdateByIdForm,
   useUpdateUnavailableBrandBookingReq,
 } from '@symbiot-core-apps/api';
@@ -26,9 +26,9 @@ import {
 } from '@symbiot-core-apps/state';
 import { useApp } from '@symbiot-core-apps/app';
 import { SingeElementForm } from '@symbiot-core-apps/form-controller';
-import { UnavailableBrandBookingReasonController } from './controller/unavailable-brand-booking-reason-controller';
 import { useForm } from 'react-hook-form';
 import { UnavailableBrandBookingDatetimeController } from './controller/unavailable-brand-booking-datetime-controller';
+import { BrandBookingNoteController } from './controller/brand-booking-note-controller';
 
 export const UnavailableBrandBookingProfile = ({
   booking,
@@ -61,7 +61,7 @@ export const UnavailableBrandBookingProfile = ({
         <ListItemGroup title={t('unavailable_brand_booking.profile.settings')}>
           {!booking.cancelAt && <DateTime booking={booking} />}
 
-          <Reason booking={booking} />
+          <Note booking={booking} />
         </ListItemGroup>
       </FormView>
     </PageView>
@@ -173,7 +173,7 @@ const DateTime = ({ booking }: { booking: UnavailableBrandBooking }) => {
 
       <SlideSheetModal
         scrollable
-        headerTitle={t(`unavailable_brand_booking.profile.groups.reason.title`)}
+        headerTitle={t(`unavailable_brand_booking.profile.groups.datetime.title`)}
         visible={modalVisible}
         onClose={closeModal}
       >
@@ -189,23 +189,23 @@ const DateTime = ({ booking }: { booking: UnavailableBrandBooking }) => {
   );
 };
 
-const Reason = ({ booking }: { booking: UnavailableBrandBooking }) => {
+const Note = ({ booking }: { booking: UnavailableBrandBooking }) => {
   const { t } = useTranslation();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       AnyBrandBooking[],
-      UpdateUnavailableBrandBooking,
-      Partial<UpdateUnavailableBrandBooking>
+      UpdateBrandBooking,
+      Partial<UpdateBrandBooking>
     >({
       id: booking.id,
       query: useUpdateUnavailableBrandBookingReq,
       initialValue: {
-        reason: booking.reason || '',
+        note: booking.note || '',
       },
     });
 
   const onUpdate = useCallback(
-    async (value: Partial<UpdateUnavailableBrandBooking>) => {
+    async (value: Partial<UpdateBrandBooking>) => {
       let recurring = false;
 
       if (booking.repetitive) {
@@ -239,23 +239,26 @@ const Reason = ({ booking }: { booking: UnavailableBrandBooking }) => {
       <ListItem
         icon={<Icon name="InfoCircle" />}
         iconAfter={<Icon name="ArrowRight" />}
-        label={t(`unavailable_brand_booking.profile.groups.reason.title`)}
-        text={value.reason || t('shared.not_specified')}
+        label={t(`unavailable_brand_booking.profile.groups.note.title`)}
+        text={value.note || t('shared.not_specified')}
         onPress={openModal}
       />
 
       <SlideSheetModal
         scrollable
-        headerTitle={t(`unavailable_brand_booking.profile.groups.reason.title`)}
+        headerTitle={t(`unavailable_brand_booking.profile.groups.note.title`)}
         visible={modalVisible}
         onClose={closeModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
-            name="reason"
-            value={value.reason}
+            name="note"
+            value={value.note}
+            controllerProps={{
+              placeholder: t(`unavailable_brand_booking.form.note.placeholder`)
+            }}
             onUpdate={onUpdate}
-            Controller={UnavailableBrandBookingReasonController}
+            Controller={BrandBookingNoteController}
           />
         </FormView>
       </SlideSheetModal>

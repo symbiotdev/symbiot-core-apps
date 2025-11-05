@@ -34,6 +34,7 @@ export type BrandBooking = {
   name: string;
   start: string;
   end: string;
+  note: string;
   repetitive: boolean;
   cancelAt: string;
   cancelBy: BrandBookingCancelBy;
@@ -43,7 +44,6 @@ export type BrandBooking = {
 
 export type UnavailableBrandBooking = BrandBooking & {
   type: BrandBookingType.unavailable;
-  reason: string;
 };
 
 export type BrandBookingClient = BrandClient & {
@@ -105,13 +105,10 @@ export type CreateServiceBrandBooking = {
 
 export type UpdateBrandBooking = {
   start?: Date | string;
+  note?: string;
   duration?: number;
   recurring?: boolean;
   locations?: string[];
-};
-
-export type UpdateUnavailableBrandBooking = UpdateBrandBooking & {
-  reason?: string;
 };
 
 export type UpdateServiceBrandBooking = UpdateBrandBooking & {

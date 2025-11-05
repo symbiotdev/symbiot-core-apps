@@ -30,7 +30,7 @@ export function UnavailableBrandBookingDatetimeController(props: {
           <View gap="$2">
             <DatePicker
               {...props}
-              label={t('unavailable_brand_booking.form.date.label')}
+              label={''}
               value={value.start}
               error={error?.message}
               minDate={new Date()}

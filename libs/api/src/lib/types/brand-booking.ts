@@ -72,7 +72,7 @@ export type CreateUnavailableBrandBooking = {
   start: Date;
   end?: Date;
   frequency: BrandBookingFrequency;
-  reason: string;
+  note?: string;
   duration: number;
   locations: string[];
   employees: string[];

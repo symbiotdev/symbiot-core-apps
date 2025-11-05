@@ -12,9 +12,11 @@ import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useForm } from 'react-hook-form';
 import { UnavailableBrandBookingDatetimeController } from './controller/unavailable-brand-booking-datetime-controller';
 import { FrequencyBrandBookingController } from './controller/frequency-brand-booking-controller';
-import { EmployeesBrandBookingController } from './controller/employees-brand-booking-controller';
-import { UnavailableBrandBookingReasonController } from './controller/unavailable-brand-booking-reason-controller';
-import { useCurrentBrandBookingsState } from '@symbiot-core-apps/state';
+import { BrandBookingEmployeesController } from './controller/brand-booking-employees-controller';
+import {
+  useCurrentBrandBookingsState,
+  useCurrentBrandEmployee,
+} from '@symbiot-core-apps/state';
 
 export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
   const { t } = useTranslation();
@@ -22,8 +24,27 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
     useCreateUnavailableBrandBookingReq();
   const navigation = useNavigation();
   const { upsertBookings } = useCurrentBrandBookingsState();
+  const { currentEmployee } = useCurrentBrandEmployee();
 
   const createdRef = useRef(false);
+
+  const {
+    control: employeesControl,
+    getValues: employeesGetValues,
+    formState: employeesFormState,
+  } = useForm<{
+    details: {
+      employee: string;
+      note: string;
+    };
+  }>({
+    defaultValues: {
+      details: {
+        employee: currentEmployee?.id,
+        note: '',
+      },
+    },
+  });
 
   const {
     control: datetimeControl,
@@ -65,44 +86,19 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
     },
   });
 
-  const {
-    control: employeesControl,
-    getValues: employeesGetValues,
-    formState: employeesFormState,
-  } = useForm<{
-    employee: string;
-  }>({
-    defaultValues: {
-      employee: undefined,
-    },
-  });
-
-  const {
-    control: reasonControl,
-    getValues: reasonGetValues,
-    formState: reasonFormState,
-  } = useForm<{
-    reason: string;
-  }>({
-    defaultValues: {
-      reason: '',
-    },
-  });
-
   const onFinish = useCallback(async () => {
     const { datetime } = datetimeGetValues();
     const { frequency } = recurrenceGetValues();
-    const { employee } = employeesGetValues();
-    const { reason } = reasonGetValues();
+    const { details } = employeesGetValues();
 
     const bookings = await createBooking({
       start: datetime.start,
       end: frequency.endDate,
       frequency: frequency.type,
+      note: details.note,
       duration: DateHelper.differenceInMinutes(datetime.end, datetime.start),
-      reason,
       locations: [],
-      employees: [employee],
+      employees: [details.employee],
     });
 
     createdRef.current = true;
@@ -116,7 +112,6 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
     datetimeGetValues,
     recurrenceGetValues,
     employeesGetValues,
-    reasonGetValues,
     createBooking,
     upsertBookings,
   ]);
@@ -157,6 +152,14 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
       onFinish={onFinish}
     >
       <SurveyStep
+        canGoNext={employeesFormState.isValid}
+        title={t(`unavailable_brand_booking.create.steps.employee.title`)}
+        subtitle={t(`unavailable_brand_booking.create.steps.employee.subtitle`)}
+      >
+        <BrandBookingEmployeesController control={employeesControl} />
+      </SurveyStep>
+
+      <SurveyStep
         canGoNext={datetimeFormState.isValid}
         title={t(`unavailable_brand_booking.create.steps.datetime.title`)}
         subtitle={t(`unavailable_brand_booking.create.steps.datetime.subtitle`)}
@@ -175,31 +178,6 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
           name="frequency"
           control={recurrenceControl}
           minDate={DateHelper.addDays(datetime.start, 1)}
-        />
-      </SurveyStep>
-
-      <SurveyStep
-        canGoNext={employeesFormState.isValid}
-        title={t(`unavailable_brand_booking.create.steps.employee.title`)}
-        subtitle={t(`unavailable_brand_booking.create.steps.employee.subtitle`)}
-      >
-        <EmployeesBrandBookingController
-          name="employee"
-          control={employeesControl}
-        />
-      </SurveyStep>
-
-      <SurveyStep
-        skippable
-        canGoNext={reasonFormState.isValid}
-        title={t(`unavailable_brand_booking.create.steps.reason.title`)}
-        subtitle={t(`unavailable_brand_booking.create.steps.reason.subtitle`)}
-      >
-        <UnavailableBrandBookingReasonController
-          noLabel
-          required
-          name="reason"
-          control={reasonControl}
         />
       </SurveyStep>
     </Survey>

@@ -35,16 +35,18 @@ export const Picker = ({
   optionsError,
   disabled,
   lazy,
+  optionsCentered,
   contentContainerStyle,
   moveSelectedToTop,
   onChange,
   ...viewProps
 }: Omit<ViewProps, 'onMoveShouldSetResponder'> & {
   value?: unknown;
+  disabled?: boolean;
   options?: PickerItem[];
   optionsLoading?: boolean;
   optionsError?: string | null;
-  disabled?: boolean;
+  optionsCentered?: boolean; // not applicable on IOS
   lazy?: boolean; // not applicable on IOS
   moveSelectedToTop?: boolean; // not applicable on IOS
   contentContainerStyle?: ViewStyle; // not applicable on IOS
@@ -103,9 +105,10 @@ export const Picker = ({
   ) : (
     <CustomPicker
       value={selectedValue}
-      options={adjustedOptions}
       disabled={disabled}
       lazy={lazy}
+      options={adjustedOptions}
+      optionsCentered={optionsCentered}
       contentContainerStyle={contentContainerStyle}
       ignoreScrollTopOnChange={!moveSelectedToTop}
       onChange={onValueChange as PickerOnChange}
@@ -119,6 +122,7 @@ const CustomPicker = ({
   disabled,
   ignoreScrollTopOnChange,
   lazy,
+  optionsCentered = true,
   contentContainerStyle,
   onChange,
 }: {
@@ -127,6 +131,7 @@ const CustomPicker = ({
   ignoreScrollTopOnChange?: boolean;
   lazy?: boolean;
   contentContainerStyle?: ViewStyle;
+  optionsCentered?: boolean;
   options: PickerItem[];
   onChange: PickerOnChange;
 }) => {
@@ -155,7 +160,7 @@ const CustomPicker = ({
         <View
           gap="$1"
           justifyContent="center"
-          alignItems="center"
+          alignItems={optionsCentered ? 'center' : 'flex-start'}
           paddingVertical={10}
           minHeight={toggleItemMinHeight}
           paddingHorizontal={defaultPageHorizontalPadding}
@@ -180,7 +185,7 @@ const CustomPicker = ({
 
             <RegularText
               color={disabled ? '$disabled' : '$color'}
-              textAlign="center"
+              textAlign={optionsCentered ? 'center' : 'left'}
             >
               {item.label}
             </RegularText>
@@ -190,7 +195,7 @@ const CustomPicker = ({
             <RegularText
               fontSize={12}
               color="$placeholderColor"
-              textAlign="center"
+              textAlign={optionsCentered ? 'center' : 'left'}
             >
               {item.description}
             </RegularText>
@@ -198,7 +203,14 @@ const CustomPicker = ({
         </View>
       );
     },
-    [disabled, ignoreScrollTopOnChange, scrollToIndex, onChange, value],
+    [
+      optionsCentered,
+      disabled,
+      value,
+      onChange,
+      ignoreScrollTopOnChange,
+      scrollToIndex,
+    ],
   );
 
   useEffect(() => {

@@ -24,6 +24,7 @@ export function SelectPicker({
   lazy,
   moveSelectedToTop,
   showSelectedDescription,
+  optionsCentered,
   noCheckedValue,
   optionsLoading,
   optionsError,
@@ -44,6 +45,7 @@ export function SelectPicker({
   lazy?: boolean;
   moveSelectedToTop?: boolean;
   showSelectedDescription?: boolean;
+  optionsCentered?: boolean;
   noCheckedValue?: string;
   maxWidth?: DimensionValue;
   options?: PickerItem[];
@@ -156,6 +158,7 @@ export function SelectPicker({
           optionsError={optionsError}
           disabled={disabled}
           lazy={lazy}
+          optionsCentered={optionsCentered}
           moveSelectedToTop={moveSelectedToTop}
           onChange={onChangeValue}
         />

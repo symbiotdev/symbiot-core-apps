@@ -10,7 +10,7 @@ import {
   CreateBrandLocation,
   UpdateBrandLocation,
 } from '../types/brand-location';
-import { PaginationList } from '../types/pagination';
+import { PaginationList, PaginationListParams } from '../types/pagination';
 import { queryClient } from '../utils/client';
 import { generateFormData } from '../utils/media';
 import { ImagePickerAsset } from 'expo-image-picker';
@@ -18,6 +18,7 @@ import { refetchQueriesByChanges } from '../utils/query';
 
 export enum BrandLocationQueryKey {
   currentList = 'brand-location-current-list',
+  listByService = 'brand-location-list_by-service',
   byId = 'brand-location-by-id',
   advantages = 'brand-location-advantages',
 }
@@ -157,6 +158,20 @@ export const useCurrentBrandLocationsReq = ({
     queryFn: () =>
       requestWithStringError<PaginationList<BrandLocation>>(
         axios.get('/api/brand-location/current'),
+      ),
+  });
+
+export const useBrandLocationsByServiceIdReq = (
+  serviceId: string,
+  params?: PaginationListParams,
+) =>
+  useQuery<PaginationList<BrandLocation>, string>({
+    queryKey: [BrandLocationQueryKey.listByService, serviceId, params],
+    queryFn: () =>
+      requestWithStringError<PaginationList<BrandLocation>>(
+        axios.get(`/api/brand-location/service/${serviceId}`, {
+          params,
+        }),
       ),
   });
 

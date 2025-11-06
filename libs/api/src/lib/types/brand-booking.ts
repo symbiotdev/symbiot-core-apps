@@ -92,6 +92,7 @@ export type UpdateServiceBrandBookingClient = {
 
 export type CreateServiceBrandBooking = {
   start: Date;
+  end?: Date;
   frequency: BrandBookingFrequency;
   places?: number;
   duration?: number;

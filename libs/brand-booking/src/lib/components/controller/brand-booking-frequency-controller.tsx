@@ -9,7 +9,7 @@ import {
   getEndDateByBrandBookingFrequency,
 } from '@symbiot-core-apps/api';
 
-export function FrequencyBrandBookingController<
+export function BrandBookingFrequencyController<
   T extends FieldValues & {
     frequency: { type: BrandBookingFrequency; endDate?: Date };
   },

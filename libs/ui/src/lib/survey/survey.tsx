@@ -49,6 +49,11 @@ type SurveyStepProps = PropsWithChildren<{
   skippable?: boolean;
 }>;
 
+const headerTextPadding =
+  Platform.OS === 'web'
+    ? defaultPageVerticalPadding
+    : defaultPageVerticalPadding / 2;
+
 export const SurveyStep = (props: SurveyStepProps) => {
   const { rendered } = useRendered();
 
@@ -201,12 +206,7 @@ export const Survey = ({
                 { gap: defaultPageVerticalPadding },
               ]}
             >
-              <View
-                gap="$2"
-                paddingTop={
-                  defaultPageVerticalPadding / (Platform.OS === 'web' ? 1 : 2)
-                }
-              >
+              <View gap="$2" paddingVertical={headerTextPadding}>
                 <H2>{currentStep.props.title}</H2>
                 <RegularText>{currentStep.props.subtitle}</RegularText>
               </View>
@@ -226,7 +226,7 @@ export const Survey = ({
                   gap: 0,
                   paddingHorizontal: defaultPageHorizontalPadding,
                   paddingTop: 4,
-                  paddingBottom: bottom + defaultPageVerticalPadding
+                  paddingBottom: bottom + defaultPageVerticalPadding,
                 },
               ]}
             >

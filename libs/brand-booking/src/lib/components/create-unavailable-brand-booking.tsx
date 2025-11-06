@@ -11,7 +11,7 @@ import { ConfirmAlert, DateHelper } from '@symbiot-core-apps/shared';
 import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useForm } from 'react-hook-form';
 import { UnavailableBrandBookingDatetimeController } from './controller/unavailable-brand-booking-datetime-controller';
-import { FrequencyBrandBookingController } from './controller/frequency-brand-booking-controller';
+import { BrandBookingFrequencyController } from './controller/brand-booking-frequency-controller';
 import { BrandBookingEmployeesController } from './controller/brand-booking-employees-controller';
 import {
   useCurrentBrandBookingsState,
@@ -174,7 +174,7 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
           `unavailable_brand_booking.create.steps.recurrence.subtitle`,
         )}
       >
-        <FrequencyBrandBookingController
+        <BrandBookingFrequencyController
           name="frequency"
           control={recurrenceControl}
           minDate={DateHelper.addDays(datetime.start, 1)}

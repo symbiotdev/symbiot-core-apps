@@ -3,7 +3,11 @@ import axios, {
   Canceler,
   InternalAxiosRequestConfig,
 } from 'axios';
-import { DeviceInfo, DeviceVersion } from '@symbiot-core-apps/shared';
+import {
+  DateHelper,
+  DeviceInfo,
+  DeviceVersion,
+} from '@symbiot-core-apps/shared';
 import { Platform } from 'react-native';
 import { RequestError } from './request';
 import { AccountAuthTokens } from '../types/account-auth';
@@ -72,8 +76,7 @@ const onRequest = async (
   }
 
   if (!config.headers['Timezone']) {
-    config.headers['Timezone'] =
-      Intl.DateTimeFormat().resolvedOptions().timeZone;
+    config.headers['Timezone'] = DateHelper.currentTimezone();
   }
 
   config.headers['x-app'] = process.env['EXPO_PUBLIC_APP_TYPE'];

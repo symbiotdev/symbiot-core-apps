@@ -34,28 +34,41 @@ export async function refetchQueriesByChanges<T extends { id: string }>({
   } else {
     queryKeys.list.forEach((key) => {
       const queryData = queryClient.getQueriesData<
-        InfiniteData<PaginationList<T>>
+        InfiniteData<PaginationList<T>> | PaginationList<T>
       >({
         queryKey: [key],
         exact: false,
       });
 
       queryData.forEach(([queryKey, data]) => {
-        if (!data?.pages) return;
+        if ((data as InfiniteData<PaginationList<T>>)['pages']?.length) {
+          queryClient.setQueryData(queryKey, {
+            ...data,
+            pages: (data as InfiniteData<PaginationList<T>>).pages.map(
+              (page) => ({
+                ...page,
+                items: page.items.map((item) => {
+                  const targetEntity = entities.find(
+                    (entity) => entity.id === item.id,
+                  );
 
-        queryClient.setQueryData<InfiniteData<PaginationList<T>>>(queryKey, {
-          ...data,
-          pages: data.pages.map((page) => ({
-            ...page,
-            items: page.items.map((item) => {
+                  return targetEntity ? (targetEntity.data as T) : item;
+                }),
+              }),
+            ),
+          });
+        } else if ((data as PaginationList<T>)?.items?.length) {
+          queryClient.setQueryData(queryKey, {
+            ...data,
+            items: (data as PaginationList<T>).items.map((item) => {
               const targetEntity = entities.find(
                 (entity) => entity.id === item.id,
               );
 
               return targetEntity ? (targetEntity.data as T) : item;
             }),
-          })),
-        });
+          });
+        }
       });
     });
   }

@@ -153,7 +153,6 @@ export const useCurrentBrandLocationsReq = ({
 } = {}) =>
   useQuery<PaginationList<BrandLocation>, string>({
     enabled,
-    refetchOnMount: false,
     queryKey: [BrandLocationQueryKey.currentList],
     queryFn: () =>
       requestWithStringError<PaginationList<BrandLocation>>(

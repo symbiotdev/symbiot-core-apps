@@ -75,6 +75,7 @@ export const DateHelper = {
   differenceInYears,
   intervalToDuration,
   eachDayOfInterval,
+  currentTimezone: () => Intl.DateTimeFormat().resolvedOptions().timeZone,
   formatDuration: (
     totalMinutes: number,
     params?: {

@@ -182,10 +182,14 @@ export const BrandBookingsCalendar = ({
         eventBorderRadius={10}
         allDayEventHeight={40}
         gridBottomOffset={Platform.OS === 'android' ? 5 : offsetBottom}
-        renderHeaderSafeArea={renderHeaderSafeArea}
         renderEvent={renderEvent as TimeGridRenderProps['renderEvent']}
         renderAllDayEvent={
           renderAllDayEvent as TimeGridRenderProps['renderAllDayEvent']
+        }
+        renderHeaderSafeArea={
+          timezone !== DateHelper.currentTimezone()
+            ? renderHeaderSafeArea
+            : undefined
         }
         onEventPress={({ event }) =>
           router.push(

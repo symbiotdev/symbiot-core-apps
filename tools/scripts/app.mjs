@@ -89,9 +89,9 @@ export const getSubmitCommand = (app, profile, buildTo) =>
     : 'echo "Ready!"';
 
 export const getStartCommand = (app, env, platform) => {
-  const prebuild = getPrebuildCommand(app, platform);
-
   if (platform !== 'web') {
+    const prebuild = getPrebuildCommand(app, platform);
+
     const buildType =
       env === 'production'
         ? platform === 'ios'

@@ -32,10 +32,7 @@ export const isBrandBookingAllDay = ({
 
   const diff = DateHelper.differenceInMinutes(start, end);
 
-  return (
-    DateHelper.isSameDay(start, end) &&
-    (diff === minutesInDay || diff === minutesInDay)
-  );
+  return diff === minutesInDay;
 };
 
 export const getEndDateByBrandBookingFrequency = (

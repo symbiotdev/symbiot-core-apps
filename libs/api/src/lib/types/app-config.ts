@@ -24,12 +24,18 @@ export type ThemeConfig = {
   qrCode: string;
   qrCodeGradientFrom: string;
   qrCodeGradientTo: string;
+  switchSelectedColor: string;
   calendarBackgroundColor: string;
   calendarLineColor: string;
   calendarTimeColor: string;
   calendarTodayColor: string;
   calendarNowIndicatorColor: string;
-  switchSelectedColor: string;
+  calendarUnavailableSlotBackgroundColor: string;
+  calendarUnavailableSlotColor: string;
+  calendarUnavailableSlotMarkerColor: string;
+  calendarServiceSlotBackgroundColor: string;
+  calendarServiceSlotColor: string;
+  calendarServiceSlotMarkerColor: string;
 };
 
 export type AppConfigIconName =

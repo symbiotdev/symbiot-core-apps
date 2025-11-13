@@ -34,6 +34,7 @@ export type BrandBooking = {
   name: string;
   start: string;
   end: string;
+  timezone: string;
   note: string;
   repetitive: boolean;
   cancelAt: string;

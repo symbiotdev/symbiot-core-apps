@@ -62,7 +62,7 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
         start,
         end: DateHelper.isSame(DateHelper.startOfDay(start), start)
           ? start
-          : DateHelper.addMinutes(start, 30),
+          : DateHelper.addMinutes(start, 60),
       },
     },
   });

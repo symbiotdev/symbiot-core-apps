@@ -13,7 +13,6 @@ import {
   useCurrentBrandBookingsState,
   useCurrentBrandEmployee,
 } from '@symbiot-core-apps/state';
-import { useTranslation } from 'react-i18next';
 import {
   AnyBrandBooking,
   BrandBookingType,
@@ -25,6 +24,8 @@ import {
 import { DateHelper, minutesInDay } from '@symbiot-core-apps/shared';
 import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
+import { getTimezone } from 'countries-and-timezones';
+import { useBookingDate } from '../hooks/use-booking-date';
 
 export const BrandBookingsCalendar = ({
   offsetTop,
@@ -43,10 +44,9 @@ export const BrandBookingsCalendar = ({
   selectedDate: Date;
   onChangeSelectedDate: (date: Date) => void;
 }) => {
-  const { t } = useTranslation();
   const { me } = useCurrentAccountState();
   const { bookings } = useCurrentBrandBookingsState();
-  const { currentEmployee } = useCurrentBrandEmployee();
+  const { hasPermission } = useCurrentBrandEmployee();
   const {
     mutateAsync: updateUnavailableBooking,
     isPending: unavailableBookingUpdating,
@@ -55,6 +55,8 @@ export const BrandBookingsCalendar = ({
     mutateAsync: updateServiceBooking,
     isPending: serviceBookingUpdating,
   } = useUpdateServiceBrandBookingReq();
+
+  const { timezone } = useBookingDate();
 
   const events: TimeGridEvent[] = useMemo(
     () =>
@@ -67,14 +69,10 @@ export const BrandBookingsCalendar = ({
         )
         ?.map((booking) => ({
           ...booking,
+          timezone,
           text: booking.name,
         })) || [],
-    [bookings, location],
-  );
-
-  const schedule = useMemo(
-    () => location?.schedules?.find(({ day }) => day === selectedDate.getDay()),
-    [location, selectedDate],
+    [bookings, location, timezone],
   );
 
   const unavailableTime = useMemo(
@@ -98,45 +96,14 @@ export const BrandBookingsCalendar = ({
   );
 
   const renderHeaderSafeArea = useCallback(() => {
-    if (!schedule) return <View />;
-
-    if (DateHelper.isAllDay(schedule.start, schedule.end)) {
-      return (
-        <View flex={1} justifyContent="center" alignItems="center" gap="$1">
-          <RegularText color="$calendarTimeColor" fontSize={10}>
-            {t('shared.schedule.all_day')}
-          </RegularText>
-        </View>
-      );
-    } else if (DateHelper.isDayOff(schedule.start, schedule.end)) {
-      return (
-        <View flex={1} justifyContent="center" alignItems="center" gap="$1">
-          <RegularText color="$calendarTimeColor" fontSize={10}>
-            {t('shared.schedule.day_off')}
-          </RegularText>
-        </View>
-      );
-    } else {
-      const startOfDay = DateHelper.startOfDay(new Date());
-
-      return (
-        <View flex={1} justifyContent="center" alignItems="center" gap="$1">
-          <RegularText fontSize={10}>
-            {DateHelper.format(
-              DateHelper.addMinutes(startOfDay, schedule.start),
-              'p',
-            )}
-          </RegularText>
-          <RegularText fontSize={10}>
-            {DateHelper.format(
-              DateHelper.addMinutes(startOfDay, schedule.end),
-              'p',
-            )}
-          </RegularText>
-        </View>
-      );
-    }
-  }, [schedule, t]);
+    return (
+      <View flex={1} justifyContent="center" alignItems="center" gap="$1">
+        <RegularText color="$calendarTimeColor" fontSize={12}>
+          {getTimezone(timezone)?.utcOffsetStr}
+        </RegularText>
+      </View>
+    );
+  }, [timezone]);
 
   const renderEvent = useCallback(
     ({ event }: { event: TimeGridEvent & AnyBrandBooking }) => (
@@ -177,7 +144,7 @@ export const BrandBookingsCalendar = ({
         await updateUnavailableBooking({
           id: event.id,
           data: {
-            start: event.start as string,
+            start: event.start as Date,
           },
         });
 
@@ -186,7 +153,7 @@ export const BrandBookingsCalendar = ({
         await updateServiceBooking({
           id: event.id,
           data: {
-            start: event.start as string,
+            start: event.start as Date,
           },
         });
 
@@ -208,9 +175,10 @@ export const BrandBookingsCalendar = ({
         timeGridRef={timeGridRef}
         startDate={selectedDate}
         events={events}
-        draggable={!!currentEmployee?.permissions?.bookings}
+        draggable={hasPermission('bookings')}
         weekStartsOn={me?.preferences?.weekStartsOn}
         unavailableTime={unavailableTime}
+        timezone={timezone}
         eventBorderRadius={10}
         allDayEventHeight={40}
         gridBottomOffset={Platform.OS === 'android' ? 5 : offsetBottom}

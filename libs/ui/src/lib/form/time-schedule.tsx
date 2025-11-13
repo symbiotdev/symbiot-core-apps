@@ -75,9 +75,11 @@ export const TimeSchedule = ({
 
       onChange({
         start: adjustedStart,
-        end: DateHelper.isAfter(adjustedStart, value.end)
-          ? DateHelper.addMinutes(adjustedStart, timeInterval)
-          : value.end,
+        end:
+          DateHelper.isSame(adjustedStart, value.end) ||
+          DateHelper.isAfter(adjustedStart, value.end)
+            ? DateHelper.addMinutes(adjustedStart, timeInterval)
+            : value.end,
       });
     },
     [startOfDay, onChange, value.end],
@@ -89,9 +91,11 @@ export const TimeSchedule = ({
 
       onChange({
         end: adjustedEnd,
-        start: DateHelper.isAfter(value.start, adjustedEnd)
-          ? DateHelper.addMinutes(adjustedEnd, -timeInterval)
-          : value.start,
+        start:
+          DateHelper.isSame(value.start, adjustedEnd) ||
+          DateHelper.isAfter(value.start, adjustedEnd)
+            ? DateHelper.addMinutes(adjustedEnd, -timeInterval)
+            : value.start,
       });
     },
     [startOfDay, onChange, value.start],

@@ -19,15 +19,15 @@ export const configByType: Record<
   }
 > = {
   [BrandBookingType.unavailable]: {
-    backgroundColor: '$highlighted',
-    color: '$disabled',
-    markerColor: '#dddddd',
+    backgroundColor: '$calendarUnavailableSlotBackgroundColor',
+    color: '$calendarUnavailableSlotColor',
+    markerColor: '$calendarUnavailableSlotMarkerColor',
     iconKey: 'UnavailableBooking',
   },
   [BrandBookingType.service]: {
-    backgroundColor: 'red',
-    color: '$color',
-    markerColor: '$background1',
+    backgroundColor: '$calendarServiceSlotBackgroundColor',
+    color: '$calendarServiceSlotColor',
+    markerColor: '$calendarServiceSlotMarkerColor',
     iconKey: 'ServiceBooking',
   },
 };
@@ -35,11 +35,15 @@ export const configByType: Record<
 export const BrandBookingItem = ({
   nameProps,
   hideSchedule,
+  showLocalTime,
+  timezone,
   booking,
   ...viewProps
 }: ViewProps & {
   nameProps?: TextProps;
   hideSchedule?: boolean;
+  showLocalTime?: boolean;
+  timezone?: string;
   booking: AnyBrandBooking;
 }) => {
   const { t } = useTranslation();
@@ -84,16 +88,11 @@ export const BrandBookingItem = ({
       </MediumText>
 
       {!hideSchedule && (
-        <RegularText
-          fontSize={12}
-          minHeight={12}
-          color={config.color}
-          numberOfLines={1}
-        >
-          {isBrandBookingAllDay(booking)
-            ? t('shared.schedule.duration.all_day')
-            : `${DateHelper.format(booking.start, 'p')} - ${DateHelper.format(booking.end, 'p')}`}
-        </RegularText>
+        <Schedule
+          booking={booking}
+          timezone={timezone}
+          showLocalTime={showLocalTime}
+        />
       )}
 
       {!!booking.employees?.length && (
@@ -102,5 +101,44 @@ export const BrandBookingItem = ({
         </RegularText>
       )}
     </View>
+  );
+};
+
+const Schedule = ({
+  booking,
+  timezone,
+  showLocalTime,
+}: {
+  booking: AnyBrandBooking;
+  timezone?: string;
+  showLocalTime?: boolean;
+}) => {
+  const { t } = useTranslation();
+  const config = configByType[booking.type];
+  let text: string;
+
+  if (isBrandBookingAllDay(booking)) {
+    text = t('shared.schedule.duration.all_day');
+  } else {
+    const adjustedTimezone = timezone || booking.timezone;
+    const start = DateHelper.toZonedTime(booking.start, adjustedTimezone);
+    const end = DateHelper.toZonedTime(booking.end, adjustedTimezone);
+
+    text = `${DateHelper.format(start, 'p')} - ${DateHelper.format(end, 'p')}`;
+
+    if (showLocalTime && !DateHelper.isSame(start, booking.start)) {
+      text = `${text} (${t('shared.local_time')}: ${DateHelper.format(booking.start, 'p')} - ${DateHelper.format(booking.end, 'p')})`;
+    }
+  }
+
+  return (
+    <RegularText
+      fontSize={12}
+      minHeight={12}
+      color={config.color}
+      numberOfLines={1}
+    >
+      {text}
+    </RegularText>
   );
 };

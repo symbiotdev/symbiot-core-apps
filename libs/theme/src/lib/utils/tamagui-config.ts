@@ -91,6 +91,7 @@ export const zIndex = {
   $true: 1,
 };
 export const radius = {
+  $true: 5,
   1: 2,
   2: 4,
   3: 6,

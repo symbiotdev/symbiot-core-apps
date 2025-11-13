@@ -45,7 +45,7 @@ const UnavailableBooking = ({ id }: { id: string }) => {
   } = useBrandBookingDetailedByIdReq(id, BrandBookingType.unavailable);
   const { mutateAsync: cancel, isPending: cancelProcessing } =
     useCancelUnavailableBrandBookingReq();
-  const { currentEmployee } = useCurrentBrandEmployee();
+  const { hasPermission } = useCurrentBrandEmployee();
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [
@@ -93,7 +93,7 @@ const UnavailableBooking = ({ id }: { id: string }) => {
     () =>
       !!booking?.id &&
       !booking?.cancelAt &&
-      currentEmployee?.permissions?.bookings && (
+      hasPermission('bookings') && (
         <ContextMenuPopover
           loading={cancelProcessing}
           disabled={cancelProcessing}
@@ -103,7 +103,7 @@ const UnavailableBooking = ({ id }: { id: string }) => {
     [
       booking?.cancelAt,
       booking?.id,
-      currentEmployee?.permissions?.bookings,
+      hasPermission,
       cancelProcessing,
       contextMenuItems,
     ],
@@ -137,7 +137,7 @@ const ServiceBooking = ({ id }: { id: string }) => {
   } = useBrandBookingDetailedByIdReq(id, BrandBookingType.service);
   const { mutateAsync: cancel, isPending: cancelProcessing } =
     useCancelServiceBrandBookingReq();
-  const { currentEmployee } = useCurrentBrandEmployee();
+  const { hasPermission } = useCurrentBrandEmployee();
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [
@@ -182,7 +182,7 @@ const ServiceBooking = ({ id }: { id: string }) => {
     () =>
       !!booking?.id &&
       !booking?.cancelAt &&
-      currentEmployee?.permissions?.bookings && (
+      hasPermission('bookings') && (
         <ContextMenuPopover
           loading={cancelProcessing}
           disabled={cancelProcessing}
@@ -192,7 +192,7 @@ const ServiceBooking = ({ id }: { id: string }) => {
     [
       booking?.cancelAt,
       booking?.id,
-      currentEmployee?.permissions?.bookings,
+      hasPermission,
       cancelProcessing,
       contextMenuItems,
     ],

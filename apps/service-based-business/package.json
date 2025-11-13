@@ -84,7 +84,6 @@
     "react-native-confirmation-code-field": "*",
     "react-native-collapsible": "*",
     "react-native-phone-input": "*",
-    "@hookform/resolvers": "*",
     "@symbiot.dev/react-native-timegrid-pro": "*",
     "zustand": "*",
     "react-native-qr-svg": "*",

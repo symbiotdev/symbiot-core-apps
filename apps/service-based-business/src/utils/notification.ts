@@ -21,6 +21,7 @@ export const onPressNotification = (notification: Notification) => {
       NotificationType.unavailableBrandBookingsCreated,
       NotificationType.unavailableBrandBookingsCanceled,
       NotificationType.unavailableBrandBookingsUpdated,
+      NotificationType.unavailableBrandBookingsUpcoming,
     ].includes(notification.type)
   ) {
     router.navigate(
@@ -31,6 +32,7 @@ export const onPressNotification = (notification: Notification) => {
       NotificationType.serviceBrandBookingsCanceled,
       NotificationType.serviceBrandBookingsCreated,
       NotificationType.serviceBrandBookingsUpdated,
+      NotificationType.serviceBrandBookingsUpcoming,
       NotificationType.serviceBrandBookingClientAdded,
       NotificationType.serviceBrandBookingClientRemoved,
     ].includes(notification.type)

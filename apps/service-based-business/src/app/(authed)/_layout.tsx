@@ -7,7 +7,10 @@ import {
   useStackScreenHeaderOptions,
 } from '@symbiot-core-apps/ui';
 import { Redirect, Stack, usePathname } from 'expo-router';
-import { useAuthTokens } from '@symbiot-core-apps/api';
+import {
+  useAuthTokens,
+  useCurrentBrandLocationsReq,
+} from '@symbiot-core-apps/api';
 import { useCurrentEntitiesLoader } from '../../hooks/use-current-entities-loader';
 import React, { useEffect } from 'react';
 import { hideAsync } from 'expo-splash-screen';
@@ -18,11 +21,13 @@ import { SocketProvider } from '../../providers/socket.provider';
 import { NotificationsProvider } from '@symbiot-core-apps/notification';
 import { onPressNotification } from '../../utils/notification';
 import {
+  useCurrentBrandBookingsState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 import { PlusActionAdaptiveModal } from '../../components/tabs/plus-action-adaptive-modal';
+import { isEqual } from '@symbiot-core-apps/shared';
 
 const PlusButton = () => {
   const pathname = usePathname();
@@ -57,12 +62,26 @@ export default () => {
   const screenOptions = useStackScreenHeaderOptions();
   const currentEntitiesLoaded = useCurrentEntitiesLoader();
   const { hasPermission } = useCurrentBrandEmployee();
+  const { location, setLocation } = useCurrentBrandBookingsState();
+
+  const { data: locations } = useCurrentBrandLocationsReq({
+    enabled: hasPermission('locations'),
+  });
 
   useEffect(() => {
     if (currentEntitiesLoaded) {
       void hideAsync();
     }
   }, [currentEntitiesLoaded]);
+
+  useEffect(() => {
+    if (
+      locations &&
+      !locations.items.some((locationItem) => isEqual(locationItem, location))
+    ) {
+      setLocation(locations.items.length > 1 ? locations.items[0] : undefined);
+    }
+  }, [location, locations, setLocation]);
 
   if (!tokens.access) {
     return <Redirect href="/onboarding" />;

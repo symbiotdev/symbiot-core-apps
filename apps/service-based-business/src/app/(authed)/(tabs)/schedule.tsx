@@ -4,7 +4,6 @@ import { useNavigation } from 'expo-router';
 import {
   DateHelper,
   emitHaptic,
-  isEqual,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -40,7 +39,7 @@ export default () => {
   const navigation = useNavigation();
   const { location, setLocation, upsertBookings } =
     useCurrentBrandBookingsState();
-  const { currentEmployee } = useCurrentBrandEmployee();
+  const { hasPermission } = useCurrentBrandEmployee();
 
   const popoverRef = useRef<AdaptivePopoverRef>(null);
   const timeGridRef = useRef<TimeGridRef>(null);
@@ -52,7 +51,7 @@ export default () => {
     isFetching: locationsLoading,
     error: locationsError,
   } = useCurrentBrandLocationsReq({
-    enabled: !!currentEmployee?.permissions?.locations,
+    enabled: false,
   });
 
   const bookingsParams = useMemo(() => {
@@ -123,7 +122,7 @@ export default () => {
   const headerRight = useCallback(
     () =>
       location &&
-      !!currentEmployee?.permissions?.locations && (
+      hasPermission('locations') && (
         <AdaptivePopover
           ignoreScroll
           ref={popoverRef}
@@ -159,7 +158,7 @@ export default () => {
       locationsOptions,
       location,
       setLocation,
-      currentEmployee?.permissions?.locations,
+      hasPermission,
     ],
   );
 
@@ -170,15 +169,6 @@ export default () => {
       headerRight,
     });
   }, [headerLeft, headerRight, navigation]);
-
-  useEffect(() => {
-    if (
-      locations &&
-      !locations.items.some((locationItem) => isEqual(locationItem, location))
-    ) {
-      setLocation(locations.items.length > 1 ? locations.items[0] : undefined);
-    }
-  }, [location, locations, setLocation]);
 
   useEffect(() => {
     if (isFetchedAfterMount && bookings && bookings.items?.length) {

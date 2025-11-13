@@ -19,10 +19,10 @@ import { PlusActionAdaptiveModal } from '../../../components/tabs/plus-action-ad
 
 export default () => {
   const { brand: currentBrand } = useCurrentBrandState();
+  const { stats, setMeStats } = useCurrentAccountState();
   const { icons } = useApp();
   const segments = useSegments();
   const { visible: drawerVisible } = useDrawer();
-  const { stats, setMeStats } = useCurrentAccountState();
   const { data: countNewNotifications } = useCountNewNotificationsReq();
   const screenOptions = useTabsScreenOptions();
 

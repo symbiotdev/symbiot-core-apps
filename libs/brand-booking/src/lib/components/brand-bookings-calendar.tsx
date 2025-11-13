@@ -25,7 +25,7 @@ import { DateHelper, minutesInDay } from '@symbiot-core-apps/shared';
 import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { getTimezone } from 'countries-and-timezones';
-import { useBookingDate } from '../hooks/use-booking-date';
+import { useBookingDatetime } from '../hooks/use-booking-datetime';
 
 export const BrandBookingsCalendar = ({
   offsetTop,
@@ -56,7 +56,7 @@ export const BrandBookingsCalendar = ({
     isPending: serviceBookingUpdating,
   } = useUpdateServiceBrandBookingReq();
 
-  const { timezone } = useBookingDate();
+  const { timezone } = useBookingDatetime();
 
   const events: TimeGridEvent[] = useMemo(
     () =>

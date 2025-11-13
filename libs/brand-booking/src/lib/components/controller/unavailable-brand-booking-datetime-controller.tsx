@@ -66,33 +66,19 @@ export function UnavailableBrandBookingDatetimeController(props: {
                     end: start,
                   });
 
-                  props.onBlur?.()
+                  props.onBlur?.();
                 } else {
-                  const now = DateHelper.roundTime(new Date(), 5);
-
-                  start = DateHelper.addMinutes(
-                    start,
-                    DateHelper.differenceInMinutes(
-                      now,
-                      DateHelper.startOfDay(now),
-                    ),
-                  );
+                  start = DateHelper.addHours(DateHelper.startOfDay(start), 12);
 
                   onChange({
                     start,
-                    end: DateHelper.addMinutes(start, 30),
+                    end: DateHelper.addHours(start, 1),
                   });
                 }
               }}
             />
 
-            {!isAllDay && (
-              <TimeScheduleController
-                {...props}
-                name="datetime"
-                disabled={props.disabled || isAllDay}
-              />
-            )}
+            {!isAllDay && <TimeScheduleController {...props} name="datetime" />}
           </View>
         );
       }}

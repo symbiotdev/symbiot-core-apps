@@ -13,7 +13,7 @@ import { DateHelper } from '@symbiot-core-apps/shared';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
-import { useBookingDate } from '../hooks/use-booking-date';
+import { useBookingDatetime } from '../hooks/use-booking-datetime';
 
 export const BrandBookingsList = ({
   type,
@@ -24,7 +24,7 @@ export const BrandBookingsList = ({
   offsetTop?: number;
   Intro: ComponentType<{ loading?: boolean; error?: string | null }>;
 }) => {
-  const { timezone } = useBookingDate();
+  const { timezone } = useBookingDatetime();
   const {
     items: bookings,
     isFetchingNextPage,

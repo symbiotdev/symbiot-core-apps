@@ -1,11 +1,11 @@
 import {
   Avatar,
-  EmptyView,
   FormView,
   H3,
   HeaderButton,
   headerButtonSize,
   Icon,
+  InitView,
   ListItem,
   ListItemGroup,
   RegularText,
@@ -19,16 +19,21 @@ import {
 } from '@symbiot-core-apps/state';
 import { InitialAction } from '../../../components/brand/initial-action';
 import { router, useNavigation } from 'expo-router';
-import React, { useCallback, useLayoutEffect } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo } from 'react';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
-import { emitHaptic } from '@symbiot-core-apps/shared';
+import {
+  DateHelper,
+  emitHaptic,
+  useNativeNow,
+} from '@symbiot-core-apps/shared';
 import {
   BrandBookingType,
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
+import { useBrandBookingLoader } from '@symbiot-core-apps/brand-booking';
 
 export default () => {
   const { me, stats } = useCurrentAccountState();
@@ -100,7 +105,18 @@ export default () => {
 const BrandHome = () => {
   const { icons } = useApp();
   const { t } = useTranslation();
+  const { now } = useNativeNow();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
+
+  const bookingsParams = useMemo(
+    () => ({
+      start: DateHelper.startOfDay(now),
+      end: DateHelper.endOfDay(now),
+    }),
+    [now],
+  );
+
+  const { isPending, error } = useBrandBookingLoader(bookingsParams);
 
   const onLocationsPress = useCallback(() => router.push('/locations'), []);
   const onEmployeesPress = useCallback(() => router.push('/employees'), []);
@@ -130,10 +146,13 @@ const BrandHome = () => {
   return (
     <TabsPageView scrollable withHeaderHeight>
       <FormView gap="$3">
-        <EmptyView
+        {/*fixme*/}
+        <InitView
+          loading={isPending}
+          error={error?.message}
           paddingVertical={50}
-          iconName="MagicStick"
-          message="Сьогодні немає запланованих тренувань. Відпочиньте або проведіть час із користю для відновлення!"
+          noDataIcon="MagicStick"
+          noDataMessage="Сьогодні немає запланованих тренувань. Відпочиньте або проведіть час із користю для відновлення!"
         />
 
         {hasPermission('bookings') && (

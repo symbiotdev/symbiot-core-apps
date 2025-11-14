@@ -21,15 +21,15 @@ import {
 } from '@symbiot-core-apps/ui';
 import { View, XStack } from 'tamagui';
 import { useTranslation } from 'react-i18next';
-import { BrandBookingsCalendar } from '@symbiot-core-apps/brand-booking';
+import {
+  BrandBookingsCalendar,
+  useBrandBookingLoader,
+} from '@symbiot-core-apps/brand-booking';
 import {
   useCurrentBrandBookingsState,
   useCurrentBrandEmployee,
 } from '@symbiot-core-apps/state';
-import {
-  useBrandBookingPeriodListReq,
-  useCurrentBrandLocationsReq,
-} from '@symbiot-core-apps/api';
+import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
 import { Platform } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
@@ -37,19 +37,16 @@ const today = new Date();
 
 export default () => {
   const { i18n } = useTranslation();
-  const route = useRoute();
   const { now } = useNativeNow();
+  const route = useRoute();
   const headerHeight = useScreenHeaderHeight();
   const bottomTabBarHeight = useBottomTabBarHeight();
   const navigation = useNavigation();
-  const { location, setLocation, syncBookings } =
-    useCurrentBrandBookingsState();
-  const { currentEmployee, hasPermission } = useCurrentBrandEmployee();
+  const { location, setLocation } = useCurrentBrandBookingsState();
+  const { hasPermission } = useCurrentBrandEmployee();
 
   const popoverRef = useRef<AdaptivePopoverRef>(null);
   const timeGridRef = useRef<TimeGridRef>(null);
-  const permissionsRef = useRef(currentEmployee?.permissions?.bookings);
-  const bookingParamsRef = useRef({ start: today, end: today });
 
   const [selectedDate, setSelectedDate] = useState(today);
 
@@ -74,14 +71,7 @@ export default () => {
     [location?.id, selectedDate],
   );
 
-  const {
-    data: bookings,
-    isFetching,
-    isFetchedAfterMount,
-    refetch,
-  } = useBrandBookingPeriodListReq({
-    params: bookingsParams,
-  });
+  const { refetch, isFetching } = useBrandBookingLoader(bookingsParams);
 
   const locationsOptions = useMemo(
     () =>
@@ -109,7 +99,12 @@ export default () => {
           </MediumText>
         </View>
 
-        <H3 textTransform="capitalize" flex={1} numberOfLines={1} lineHeight={defaultIconSize}>
+        <H3
+          textTransform="capitalize"
+          flex={1}
+          numberOfLines={1}
+          lineHeight={defaultIconSize}
+        >
           {DateHelper.format(selectedDate, 'LLLL yyyy', i18n.language)}
         </H3>
       </XStack>
@@ -161,19 +156,6 @@ export default () => {
   );
 
   useEffect(() => {
-    bookingParamsRef.current = bookingsParams;
-  }, [bookingsParams]);
-
-  useEffect(() => {
-    if (permissionsRef.current === currentEmployee?.permissions?.bookings)
-      return;
-
-    permissionsRef.current = currentEmployee?.permissions?.bookings;
-
-    void refetch();
-  }, [currentEmployee?.permissions?.bookings]);
-
-  useEffect(() => {
     navigation.setOptions({
       headerShown: true,
       headerLeft,
@@ -196,16 +178,6 @@ export default () => {
       eventEmitter.off('tabPress', onTabPress);
     };
   }, [headerLeft, headerRight, navigation, route, refetch, isFetching]);
-
-  useEffect(() => {
-    if (isFetchedAfterMount && bookings && bookings.items?.length) {
-      syncBookings({
-        bookings: bookings.items,
-        start: bookingParamsRef.current.start,
-        end: bookingParamsRef.current.end,
-      });
-    }
-  }, [bookings, isFetchedAfterMount, syncBookings]);
 
   return (
     <BrandBookingsCalendar

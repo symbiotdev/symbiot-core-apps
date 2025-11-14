@@ -2,6 +2,7 @@ import { LoadingView } from './loading-view';
 import { ErrorView } from './error-view';
 import { EmptyView } from './empty-view';
 import { IconName } from '../icons/config';
+import { ViewProps } from 'tamagui';
 
 export const InitView = ({
   loading,
@@ -9,7 +10,8 @@ export const InitView = ({
   noDataTitle,
   noDataMessage,
   error,
-}: {
+  ...viewProps
+}: ViewProps & {
   loading?: boolean;
   noDataIcon?: IconName;
   noDataTitle?: string;
@@ -17,11 +19,11 @@ export const InitView = ({
   error?: string | null;
 }) => {
   if (loading) {
-    return <LoadingView />;
+    return <LoadingView {...viewProps} />;
   }
 
   if (error) {
-    return <ErrorView message={error} />;
+    return <ErrorView message={error} {...viewProps} />;
   }
 
   return (
@@ -29,6 +31,7 @@ export const InitView = ({
       iconName={noDataIcon}
       title={noDataTitle}
       message={noDataMessage}
+      {...viewProps}
     />
   );
 };

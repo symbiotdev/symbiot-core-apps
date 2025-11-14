@@ -289,17 +289,19 @@ export const CreateBrandService = () => {
         />
       </SurveyStep>
 
-      <SurveyStep
-        canGoNext={locationFormState.isValid}
-        title={t('brand_service.create.steps.location.title')}
-        subtitle={t('brand_service.create.steps.location.subtitle')}
-      >
-        <BrandServiceLocationController
-          noLabel
-          name="location"
-          control={locationControl}
-        />
-      </SurveyStep>
+      {!!brand?.locations?.length && (
+        <SurveyStep
+          canGoNext={locationFormState.isValid}
+          title={t('brand_service.create.steps.location.title')}
+          subtitle={t('brand_service.create.steps.location.subtitle')}
+        >
+          <BrandServiceLocationController
+            noLabel
+            name="location"
+            control={locationControl}
+          />
+        </SurveyStep>
+      )}
 
       <SurveyStep
         skippable

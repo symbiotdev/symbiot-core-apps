@@ -29,10 +29,10 @@ export function BrandBookingServicesController(props: {
       name="details"
       control={props.control}
       rules={{
-        required: {
-          value: true,
-          message: t('service_brand_booking.form.service.error.required'),
-        },
+        validate: (value) =>
+          value.service
+            ? true
+            : t('service_brand_booking.form.service.error.required'),
       }}
       render={({ field: { value, onChange } }) => (
         <>

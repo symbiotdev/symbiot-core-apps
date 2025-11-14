@@ -6,6 +6,7 @@ import {
   useBrandEmployeePermissionsReq,
 } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
+import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 
 export function BrandEmployeePermissionsController<
   T extends FieldValues,
@@ -15,23 +16,26 @@ export function BrandEmployeePermissionsController<
   onChange?: (key: keyof BrandEmployeePermissions, value: boolean) => void;
 }) {
   const { t } = useTranslation();
+  const { currentEmployee } = useCurrentBrandEmployee();
   const { data, isPending, error } = useBrandEmployeePermissionsReq();
 
   if (!data?.length) {
     return <InitView loading={isPending} error={error} />;
   }
 
-  return data.map((permission) => (
-    <Card key={permission.key}>
-      <SwitchController
-        disabled={!!props.loadingKey}
-        loading={props.loadingKey === permission.key}
-        name={`permissions.${permission.key}` as Path<T>}
-        label={t(permission.title)}
-        control={props.control}
-        description={t(permission.subtitle)}
-        onChange={(checked) => props.onChange?.(permission.key, checked)}
-      />
-    </Card>
-  ));
+  return data
+    .filter((permission) => !!currentEmployee?.permissions?.[permission.key])
+    .map((permission) => (
+      <Card key={permission.key}>
+        <SwitchController
+          disabled={!!props.loadingKey}
+          loading={props.loadingKey === permission.key}
+          name={`permissions.${permission.key}` as Path<T>}
+          label={t(permission.title)}
+          control={props.control}
+          description={t(permission.subtitle)}
+          onChange={(checked) => props.onChange?.(permission.key, checked)}
+        />
+      </Card>
+    ));
 }

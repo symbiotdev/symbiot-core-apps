@@ -159,8 +159,6 @@ export default () => {
                   <Stack.Protected guard={hasPermission('analytics')}>
                     <Stack.Screen name="bookings/[type]/[id]/analytics" />
                   </Stack.Protected>
-                  <Stack.Screen name="bookings/[type]/[id]/profile" />
-                  <Stack.Screen name="bookings/[type]/[id]/update" />
                   <Stack.Screen name="bookings/[type]/create" />
                   <Stack.Screen
                     name="bookings/[type]/index"
@@ -171,6 +169,8 @@ export default () => {
                     }}
                   />
                 </Stack.Protected>
+
+                <Stack.Screen name="bookings/[type]/[id]/profile" />
 
                 {/*BRAND*/}
 

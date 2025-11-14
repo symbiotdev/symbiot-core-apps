@@ -21,7 +21,11 @@ import {
   useUpdateServiceBrandBookingReq,
   useUpdateUnavailableBrandBookingReq,
 } from '@symbiot-core-apps/api';
-import { DateHelper, minutesInDay } from '@symbiot-core-apps/shared';
+import {
+  DateHelper,
+  emitHaptic,
+  minutesInDay,
+} from '@symbiot-core-apps/shared';
 import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { getTimezone } from 'countries-and-timezones';
@@ -165,6 +169,14 @@ export const BrandBookingsCalendar = ({
     [updateServiceBooking, updateUnavailableBooking],
   );
 
+  const onEventPress = useCallback(({ event }: { event: TimeGridEvent }) => {
+    emitHaptic();
+
+    router.push(
+      `/bookings/${getBrandBookingType(event as AnyBrandBooking)}/${event.id}/profile`,
+    );
+  }, []);
+
   return (
     <View flex={1} marginTop={offsetTop}>
       <Calendar
@@ -191,11 +203,7 @@ export const BrandBookingsCalendar = ({
             ? renderHeaderSafeArea
             : undefined
         }
-        onEventPress={({ event }) =>
-          router.push(
-            `/bookings/${getBrandBookingType(event as AnyBrandBooking)}/${event.id}/profile`,
-          )
-        }
+        onEventPress={onEventPress}
         onEventUpdated={onEventUpdated}
         onChangeDate={onChangeSelectedDate}
       />

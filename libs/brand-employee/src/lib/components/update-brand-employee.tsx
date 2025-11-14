@@ -26,6 +26,7 @@ import { DateHelper } from '@symbiot-core-apps/shared';
 import { useTranslation } from 'react-i18next';
 import {
   useCurrentAccountState,
+  useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import {
@@ -61,6 +62,7 @@ export const UpdateBrandEmployee = ({
   employee: BrandEmployee;
 }) => {
   const { brand } = useCurrentBrandState();
+  const { currentEmployee, hasAnyPermission } = useCurrentBrandEmployee();
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
     useUpdateBrandEmployeeReq();
 
@@ -98,9 +100,9 @@ export const UpdateBrandEmployee = ({
           <Contact employee={employee} />
           <Identification employee={employee} />
 
-          {brand?.owner?.id !== employee.id && (
-            <Permissions employee={employee} />
-          )}
+          {brand?.owner?.id !== employee.id &&
+            employee.id !== currentEmployee?.id &&
+            hasAnyPermission && <Permissions employee={employee} />}
         </ListItemGroup>
       </FormView>
     </PageView>

@@ -256,24 +256,24 @@ const Providers = ({
     }
   }, [onSelectEmployee, onLoadProviders, providers, value]);
 
-  return !providers?.length ? (
-    <EmptyView />
-  ) : (
-    <HorizontalPicker
-      value={value}
-      items={items}
-      noValueItem={
-        providers.length > 1
-          ? {
-              label: 'Any provider',
-              value: undefined,
-              icon: <Icon name="UsersGroupRounded" size={30} />,
-            }
-          : undefined
-      }
-      label={t('service_brand_booking.form.provider.label')}
-      onChange={onSelectEmployee}
-    />
+  return (
+    !!providers?.length && (
+      <HorizontalPicker
+        value={value}
+        items={items}
+        noValueItem={
+          providers.length > 1
+            ? {
+                label: 'Any provider',
+                value: undefined,
+                icon: <Icon name="UsersGroupRounded" size={30} />,
+              }
+            : undefined
+        }
+        label={t('service_brand_booking.form.provider.label')}
+        onChange={onSelectEmployee}
+      />
+    )
   );
 };
 

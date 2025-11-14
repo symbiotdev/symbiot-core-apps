@@ -2,14 +2,21 @@ import { AnyBrandBooking, BrandLocation } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
+import { DateHelper } from '@symbiot-core-apps/shared';
 
 type CurrentBrandBookingsState = {
   location?: BrandLocation;
   bookings?: AnyBrandBooking[];
   clear: () => void;
   setLocation: (location?: BrandLocation) => void;
-  upsertBookings: (bookings: AnyBrandBooking[]) => void;
+  addBookings: (bookings: AnyBrandBooking[]) => void;
   removeBookings: (bookings: AnyBrandBooking[]) => void;
+  upsertBookings: (bookings: AnyBrandBooking[]) => void;
+  syncBookings: (params: {
+    start: Date;
+    end: Date;
+    bookings: AnyBrandBooking[];
+  }) => void;
 };
 
 export const useCurrentBrandBookingsState = create<CurrentBrandBookingsState>()(
@@ -23,6 +30,18 @@ export const useCurrentBrandBookingsState = create<CurrentBrandBookingsState>()(
         });
       },
       setLocation: (location) => set({ location }),
+      addBookings: (newBookings) => {
+        set({
+          bookings: [...(get().bookings || []), ...newBookings],
+        });
+      },
+      removeBookings: (bookings) => {
+        set({
+          bookings: get().bookings?.filter(
+            ({ id }) => !bookings.some((booking) => booking.id === id),
+          ),
+        });
+      },
       upsertBookings: (newBookings) => {
         set({
           bookings: [
@@ -33,11 +52,16 @@ export const useCurrentBrandBookingsState = create<CurrentBrandBookingsState>()(
           ],
         });
       },
-      removeBookings: (bookings) => {
+      syncBookings: ({ start, end, bookings }) => {
         set({
-          bookings: get().bookings?.filter(
-            ({ id }) => !bookings.some((booking) => booking.id === id),
-          ),
+          bookings: [
+            ...(get().bookings || []).filter(
+              (booking) =>
+                DateHelper.isSameDay(booking.start, start) ||
+                DateHelper.isSameDay(booking.end, end),
+            ),
+            ...bookings,
+          ],
         });
       },
     }),

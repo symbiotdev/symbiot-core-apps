@@ -31,20 +31,24 @@ import {
 } from '@symbiot-core-apps/api';
 import { Platform } from 'react-native';
 
+const today = new Date();
+
 export default () => {
   const { i18n } = useTranslation();
   const { now } = useNativeNow();
   const headerHeight = useScreenHeaderHeight();
   const bottomTabBarHeight = useBottomTabBarHeight();
   const navigation = useNavigation();
-  const { location, setLocation, upsertBookings } =
+  const { location, setLocation, syncBookings } =
     useCurrentBrandBookingsState();
-  const { hasPermission } = useCurrentBrandEmployee();
+  const { currentEmployee, hasPermission } = useCurrentBrandEmployee();
 
   const popoverRef = useRef<AdaptivePopoverRef>(null);
   const timeGridRef = useRef<TimeGridRef>(null);
+  const permissionsRef = useRef(currentEmployee?.permissions?.bookings);
+  const bookingParamsRef = useRef({ start: today, end: today });
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(today);
 
   const {
     data: locations,
@@ -54,18 +58,24 @@ export default () => {
     enabled: false,
   });
 
-  const bookingsParams = useMemo(() => {
-    return {
-      start: DateHelper.addDays(DateHelper.startOfMonth(selectedDate), -7),
-      end: DateHelper.addDays(DateHelper.endOfMonth(selectedDate), 7),
+  const bookingsParams = useMemo(
+    () => ({
+      start: DateHelper.startOfDay(
+        DateHelper.addDays(DateHelper.startOfMonth(selectedDate), -7),
+      ),
+      end: DateHelper.endOfDay(
+        DateHelper.addDays(DateHelper.endOfMonth(selectedDate), 7),
+      ),
       location: location?.id,
-    };
-  }, [location?.id, selectedDate]);
+    }),
+    [location?.id, selectedDate],
+  );
 
   const {
     data: bookings,
     isFetching,
     isFetchedAfterMount,
+    refetch,
   } = useBrandBookingPeriodListReq({
     params: bookingsParams,
   });
@@ -163,6 +173,19 @@ export default () => {
   );
 
   useEffect(() => {
+    bookingParamsRef.current = bookingsParams;
+  }, [bookingsParams]);
+
+  useEffect(() => {
+    if (permissionsRef.current === currentEmployee?.permissions?.bookings)
+      return;
+
+    permissionsRef.current = currentEmployee?.permissions?.bookings;
+
+    void refetch();
+  }, [currentEmployee?.permissions?.bookings]);
+
+  useEffect(() => {
     navigation.setOptions({
       headerShown: true,
       headerLeft,
@@ -172,9 +195,13 @@ export default () => {
 
   useEffect(() => {
     if (isFetchedAfterMount && bookings && bookings.items?.length) {
-      upsertBookings(bookings.items);
+      syncBookings({
+        bookings: bookings.items,
+        start: bookingParamsRef.current.start,
+        end: bookingParamsRef.current.end,
+      });
     }
-  }, [bookings, isFetchedAfterMount, upsertBookings]);
+  }, [bookings, isFetchedAfterMount, syncBookings]);
 
   return (
     <BrandBookingsCalendar

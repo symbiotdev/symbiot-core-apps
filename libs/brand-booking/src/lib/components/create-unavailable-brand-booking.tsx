@@ -23,7 +23,7 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
   const { mutateAsync: createBooking, isPending: isBookingLoading } =
     useCreateUnavailableBrandBookingReq();
   const navigation = useNavigation();
-  const { upsertBookings } = useCurrentBrandBookingsState();
+  const { addBookings } = useCurrentBrandBookingsState();
   const { currentEmployee } = useCurrentBrandEmployee();
 
   const createdRef = useRef(false);
@@ -103,7 +103,7 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
 
     createdRef.current = true;
 
-    upsertBookings(bookings);
+    addBookings(bookings);
 
     router.replace(
       `/bookings/${BrandBookingType.unavailable}/${bookings[0].id}/profile`,
@@ -113,7 +113,7 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
     recurrenceGetValues,
     employeesGetValues,
     createBooking,
-    upsertBookings,
+    addBookings,
   ]);
 
   const onLeave = useCallback(

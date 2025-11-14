@@ -23,7 +23,7 @@ export const CreateServiceBrandBooking = ({ start }: { start: Date }) => {
   const { mutateAsync: createBooking, isPending: isBookingLoading } =
     useCreateServiceBrandBookingReq();
   const navigation = useNavigation();
-  const { upsertBookings } = useCurrentBrandBookingsState();
+  const { addBookings } = useCurrentBrandBookingsState();
 
   const createdRef = useRef(false);
 
@@ -141,7 +141,7 @@ export const CreateServiceBrandBooking = ({ start }: { start: Date }) => {
 
     createdRef.current = true;
 
-    upsertBookings(bookings);
+    addBookings(bookings);
 
     router.replace(
       `/bookings/${BrandBookingType.service}/${bookings[0].id}/profile`,
@@ -152,7 +152,7 @@ export const CreateServiceBrandBooking = ({ start }: { start: Date }) => {
     scheduleGetValues,
     servicesGetValues,
     slots,
-    upsertBookings,
+    addBookings,
   ]);
 
   const onLeave = useCallback(

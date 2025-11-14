@@ -50,6 +50,7 @@ export const BrandBookingsCalendar = ({
 }) => {
   const { me } = useCurrentAccountState();
   const { bookings } = useCurrentBrandBookingsState();
+  const { currentEmployee } = useCurrentBrandEmployee();
   const { hasPermission } = useCurrentBrandEmployee();
   const {
     mutateAsync: updateUnavailableBooking,
@@ -66,17 +67,25 @@ export const BrandBookingsCalendar = ({
     () =>
       bookings
         ?.filter(
-          ({ locations }) =>
-            !location ||
-            !locations?.length ||
-            locations?.some(({ id }) => id === location.id),
+          ({ locations, employees }) =>
+            (currentEmployee?.permissions?.bookings ||
+              employees.some(({ id }) => id === currentEmployee?.id)) &&
+            (!location ||
+              !locations?.length ||
+              locations?.some(({ id }) => id === location.id)),
         )
         ?.map((booking) => ({
           ...booking,
           timezone,
           text: booking.name,
         })) || [],
-    [bookings, location, timezone],
+    [
+      bookings,
+      location,
+      timezone,
+      currentEmployee?.id,
+      currentEmployee?.permissions?.bookings,
+    ],
   );
 
   const unavailableTime = useMemo(

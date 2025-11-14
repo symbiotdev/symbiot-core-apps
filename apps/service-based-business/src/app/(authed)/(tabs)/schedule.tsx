@@ -3,7 +3,7 @@ import { TimeGridRef } from '@symbiot.dev/react-native-timegrid-pro';
 import { useNavigation } from 'expo-router';
 import {
   DateHelper,
-  emitHaptic,
+  eventEmitter,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -11,6 +11,7 @@ import {
   AdaptivePopover,
   AdaptivePopoverRef,
   Avatar,
+  defaultIconSize,
   H3,
   headerButtonSize,
   Icon,
@@ -30,11 +31,13 @@ import {
   useCurrentBrandLocationsReq,
 } from '@symbiot-core-apps/api';
 import { Platform } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
 const today = new Date();
 
 export default () => {
   const { i18n } = useTranslation();
+  const route = useRoute();
   const { now } = useNativeNow();
   const headerHeight = useScreenHeaderHeight();
   const bottomTabBarHeight = useBottomTabBarHeight();
@@ -89,25 +92,10 @@ export default () => {
     [locations],
   );
 
-  const goToday = useCallback(() => {
-    timeGridRef.current?.toDatetime(new Date(), {
-      animated: true,
-    });
-
-    emitHaptic();
-  }, []);
-
   const headerLeft = useCallback(
     () => (
       <XStack gap="$3" alignItems="center" width="100%">
-        <View
-          position="relative"
-          alignItems="center"
-          justifyContent="center"
-          cursor="pointer"
-          pressStyle={{ opacity: 0.8 }}
-          onPress={goToday}
-        >
+        <View position="relative" alignItems="center" justifyContent="center">
           <Icon name="CalendarMinimalistic" color="$buttonTextColor1" />
 
           <MediumText
@@ -121,12 +109,12 @@ export default () => {
           </MediumText>
         </View>
 
-        <H3 textTransform="capitalize" flex={1} numberOfLines={1}>
+        <H3 textTransform="capitalize" flex={1} numberOfLines={1} lineHeight={defaultIconSize}>
           {DateHelper.format(selectedDate, 'LLLL yyyy', i18n.language)}
         </H3>
       </XStack>
     ),
-    [i18n.language, now, goToday, selectedDate],
+    [i18n.language, now, selectedDate],
   );
 
   const headerRight = useCallback(
@@ -191,7 +179,23 @@ export default () => {
       headerLeft,
       headerRight,
     });
-  }, [headerLeft, headerRight, navigation]);
+
+    const onTabPress = (name: string) => {
+      if (route.name === name && navigation.isFocused() && !isFetching) {
+        void refetch();
+
+        timeGridRef.current?.toDatetime(new Date(), {
+          animated: true,
+        });
+      }
+    };
+
+    eventEmitter.on('tabPress', onTabPress);
+
+    return () => {
+      eventEmitter.off('tabPress', onTabPress);
+    };
+  }, [headerLeft, headerRight, navigation, route, refetch, isFetching]);
 
   useEffect(() => {
     if (isFetchedAfterMount && bookings && bookings.items?.length) {

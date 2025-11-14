@@ -8,7 +8,7 @@ import { HeaderOptions } from '@react-navigation/elements';
 import { useTheme, View, XStack } from 'tamagui';
 import { useScreenHeaderOptions } from './header';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { emitHaptic } from '@symbiot-core-apps/shared';
+import { emitHaptic, eventEmitter } from '@symbiot-core-apps/shared';
 import { NavigationBackground } from './background';
 import Animated, {
   Easing,
@@ -77,7 +77,8 @@ export const CustomTabBar = ({
         <NavigationBackground />
 
         {Object.values(descriptors).map((descriptor) => {
-          const path = `/${descriptor.route.name}`;
+          const name = descriptor.route.name;
+          const path = `/${name}`;
           const focused = pathname === path;
 
           return (
@@ -92,6 +93,7 @@ export const CustomTabBar = ({
               onPress={() => {
                 emitHaptic();
                 router.navigate(path);
+                eventEmitter.emit('tabPress', name);
               }}
             >
               {descriptor.options.tabBarIcon?.({

@@ -1,7 +1,11 @@
 import { Redirect, Stack } from 'expo-router';
 import { useAuthTokens } from '@symbiot-core-apps/api';
 import {
+  useCurrentAccountState,
+  useCurrentBrandBookingsState,
+  useCurrentBrandEmployeeState,
   useCurrentBrandState,
+  useFaqState,
   useOnboardingState,
 } from '@symbiot-core-apps/state';
 import { useStackScreenHeaderOptions } from '@symbiot-core-apps/ui';
@@ -12,13 +16,33 @@ import { hideAsync } from 'expo-splash-screen';
 export default () => {
   const { tokens } = useAuthTokens();
   const { finished: onboardingFinished } = useOnboardingState();
+  const { clear: clearCurrentAccountState } = useCurrentAccountState();
+  const { clear: clearCurrentBrandState } = useCurrentBrandState();
+  const { clear: clearCurrentBrandBookingsState } =
+    useCurrentBrandBookingsState();
+  const { clear: clearCurrentBrandEmployeeState } =
+    useCurrentBrandEmployeeState();
+  const { clear: clearFaq } = useFaqState();
   const headerScreenOptions = useStackScreenHeaderOptions();
 
   useEffect(() => {
     if (!tokens.access) {
       void hideAsync();
+
+      clearCurrentAccountState();
+      clearCurrentBrandState();
+      clearCurrentBrandBookingsState();
+      clearCurrentBrandEmployeeState();
+      clearFaq();
     }
-  }, [tokens.access]);
+  }, [
+    tokens.access,
+    clearCurrentAccountState,
+    clearCurrentBrandState,
+    clearCurrentBrandBookingsState,
+    clearCurrentBrandEmployeeState,
+    clearFaq,
+  ]);
 
   if (tokens.access) {
     return <Redirect href="/home" />;

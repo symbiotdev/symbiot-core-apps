@@ -5,7 +5,6 @@ import {
   HeaderButton,
   headerButtonSize,
   Icon,
-  InitView,
   ListItem,
   ListItemGroup,
   RegularText,
@@ -19,21 +18,16 @@ import {
 } from '@symbiot-core-apps/state';
 import { InitialAction } from '../../../components/brand/initial-action';
 import { router, useNavigation } from 'expo-router';
-import React, { useCallback, useLayoutEffect, useMemo } from 'react';
+import React, { useCallback, useLayoutEffect } from 'react';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
+import { emitHaptic } from '@symbiot-core-apps/shared';
 import {
-  DateHelper,
-  emitHaptic,
-  useNativeNow,
-} from '@symbiot-core-apps/shared';
-import {
-  BrandBookingType,
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
-import { useBrandBookingLoader } from '@symbiot-core-apps/brand-booking';
+import { TodayBrandBookings } from '@symbiot-core-apps/brand-booking';
 
 export default () => {
   const { me, stats } = useCurrentAccountState();
@@ -105,18 +99,7 @@ export default () => {
 const BrandHome = () => {
   const { icons } = useApp();
   const { t } = useTranslation();
-  const { now } = useNativeNow();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
-
-  const bookingsParams = useMemo(
-    () => ({
-      start: DateHelper.startOfDay(now),
-      end: DateHelper.endOfDay(now),
-    }),
-    [now],
-  );
-
-  const { isPending, error } = useBrandBookingLoader(bookingsParams);
 
   const onLocationsPress = useCallback(() => router.push('/locations'), []);
   const onEmployeesPress = useCallback(() => router.push('/employees'), []);
@@ -134,41 +117,11 @@ const BrandHome = () => {
     () => router.push('/transactions'),
     [],
   );
-  const onServiceBookingsPress = useCallback(
-    () => router.push(`/bookings/${BrandBookingType.service}`),
-    [],
-  );
-  const onUnavailableBookingsPress = useCallback(
-    () => router.push(`/bookings/${BrandBookingType.unavailable}`),
-    [],
-  );
 
   return (
     <TabsPageView scrollable withHeaderHeight>
       <FormView gap="$3">
-        {/*fixme*/}
-        <InitView
-          loading={isPending}
-          error={error?.message}
-          paddingVertical={50}
-          noDataIcon="MagicStick"
-          noDataMessage="Сьогодні немає запланованих тренувань. Відпочиньте або проведіть час із користю для відновлення!"
-        />
-
-        {hasPermission('bookings') && (
-          <ListItemGroup title={t('brand.profile.schedule')}>
-            <ListItem
-              label={t('service_brand_booking.title')}
-              icon={<Icon name={icons.ServiceBooking} />}
-              onPress={onServiceBookingsPress}
-            />
-            <ListItem
-              label={t('unavailable_brand_booking.title')}
-              icon={<Icon name={icons.UnavailableBooking} />}
-              onPress={onUnavailableBookingsPress}
-            />
-          </ListItemGroup>
-        )}
+        <TodayBrandBookings />
 
         {hasPermission('clients') && (
           <ListItemGroup title={t('brand.profile.stakeholders')}>

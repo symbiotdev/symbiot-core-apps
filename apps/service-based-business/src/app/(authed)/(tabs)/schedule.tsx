@@ -11,6 +11,7 @@ import {
   AdaptivePopover,
   AdaptivePopoverRef,
   Avatar,
+  ButtonIcon,
   defaultIconSize,
   H3,
   headerButtonSize,
@@ -32,6 +33,7 @@ import {
 import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
 import { Platform } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 
 const today = new Date();
 
@@ -44,6 +46,7 @@ export default () => {
   const navigation = useNavigation();
   const { location, setLocation } = useCurrentBrandBookingsState();
   const { hasPermission } = useCurrentBrandEmployee();
+  const allLocations = useAllBrandLocation();
 
   const popoverRef = useRef<AdaptivePopoverRef>(null);
   const timeGridRef = useRef<TimeGridRef>(null);
@@ -66,20 +69,22 @@ export default () => {
       end: DateHelper.endOfDay(
         DateHelper.addDays(DateHelper.endOfMonth(selectedDate), 7),
       ),
-      location: location?.id,
     }),
-    [location?.id, selectedDate],
+    [selectedDate],
   );
 
   const { refetch, isFetching } = useBrandBookingLoader(bookingsParams);
 
   const locationsOptions = useMemo(
     () =>
-      locations?.items?.map(({ id, name }) => ({
-        label: name,
-        value: id,
-      })),
-    [locations],
+      locations && [
+        allLocations,
+        ...locations.items.map(({ id, name }) => ({
+          label: name,
+          value: id,
+        })),
+      ],
+    [allLocations, locations],
   );
 
   const headerLeft = useCallback(
@@ -114,32 +119,42 @@ export default () => {
 
   const headerRight = useCallback(
     () =>
-      location &&
+      locations &&
       hasPermission('locations') && (
         <AdaptivePopover
           ignoreScroll
           ref={popoverRef}
           minWidth={200}
           trigger={
-            <Avatar
-              cursor="pointer"
-              pressStyle={{ opacity: 0.8 }}
-              name={location.name}
-              size={headerButtonSize}
-              url={location.avatar?.xsUrl}
-            />
+            location ? (
+              <Avatar
+                cursor="pointer"
+                pressStyle={{ opacity: 0.8 }}
+                name={location?.name || allLocations.label}
+                size={headerButtonSize}
+                url={location?.avatar?.xsUrl}
+              />
+            ) : (
+              <ButtonIcon
+                type="clear"
+                iconSize={headerButtonSize}
+                iconName="MapPointWave"
+              />
+            )
           }
         >
           <Picker
             moveSelectedToTop
-            value={location.id}
+            value={location?.id || allLocations.value}
             options={locationsOptions}
             optionsLoading={locationsLoading}
             optionsError={locationsError}
             onChange={(selectedId) => {
               Platform.OS !== 'ios' && popoverRef.current?.close();
 
-              setLocation(locations?.items.find(({ id }) => selectedId === id));
+              setLocation(
+                locations?.items.find(({ id }) => selectedId === id) || null,
+              );
             }}
           />
         </AdaptivePopover>
@@ -151,6 +166,7 @@ export default () => {
       locationsOptions,
       location,
       setLocation,
+      allLocations,
       hasPermission,
     ],
   );
@@ -183,7 +199,6 @@ export default () => {
     <BrandBookingsCalendar
       timeGridRef={timeGridRef}
       isFetching={isFetching || locationsLoading}
-      location={location}
       offsetTop={headerHeight}
       offsetBottom={bottomTabBarHeight}
       selectedDate={selectedDate}

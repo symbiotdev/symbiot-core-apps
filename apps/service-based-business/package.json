@@ -76,6 +76,7 @@
     "react-native-svg": "*",
     "react-native-svg-transformer": "*",
     "react-native-legal": "*",
+    "react-native-nitro-modules": "*",
     "react-native-web": "*",
     "react-native-mmkv": "*",
     "react-native-webview": "*",

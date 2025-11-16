@@ -8,10 +8,11 @@ export const JsonMMKVStorage: StateStorage = {
   },
   getItem: (name) => {
     const value = mmkvGlobalStorage.getString(name);
+
     return value ?? null;
   },
   removeItem: (name) => {
-    return mmkvGlobalStorage.delete(name);
+    return mmkvGlobalStorage.remove(name);
   },
 };
 

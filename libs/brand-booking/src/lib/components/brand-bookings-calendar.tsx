@@ -16,7 +16,6 @@ import {
 import {
   AnyBrandBooking,
   BrandBookingType,
-  BrandLocation,
   getBrandBookingType,
   useUpdateServiceBrandBookingReq,
   useUpdateUnavailableBrandBookingReq,
@@ -35,7 +34,6 @@ export const BrandBookingsCalendar = ({
   offsetTop,
   isFetching,
   offsetBottom,
-  location,
   timeGridRef,
   selectedDate,
   onChangeSelectedDate,
@@ -43,13 +41,12 @@ export const BrandBookingsCalendar = ({
   offsetTop?: number;
   isFetching?: boolean;
   offsetBottom?: number;
-  location?: BrandLocation;
   timeGridRef?: Ref<TimeGridRef>;
   selectedDate: Date;
   onChangeSelectedDate: (date: Date) => void;
 }) => {
   const { me } = useCurrentAccountState();
-  const { bookings } = useCurrentBrandBookingsState();
+  const { location, bookings } = useCurrentBrandBookingsState();
   const { currentEmployee } = useCurrentBrandEmployee();
   const { hasPermission } = useCurrentBrandEmployee();
   const {

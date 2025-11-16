@@ -9,6 +9,7 @@ export const ActionCard = ({
   buttonIcon,
   buttonType,
   buttonLoading,
+  buttonHidden,
   onPress,
   ...otherProps
 }: ViewProps & {
@@ -18,19 +19,22 @@ export const ActionCard = ({
   buttonIcon: ReactElement<{ color?: string; size?: number }>;
   buttonType?: ButtonType;
   buttonLoading?: boolean;
+  buttonHidden?: boolean;
 }) => {
   return (
     <ActionCardWithCustomButton
       {...otherProps}
       button={
-        <Button
-          marginTop="$2"
-          label={buttonLabel}
-          icon={buttonIcon}
-          type={buttonType}
-          loading={buttonLoading}
-          onPress={onPress}
-        />
+        !buttonHidden ? (
+          <Button
+            marginTop="$2"
+            label={buttonLabel}
+            icon={buttonIcon}
+            type={buttonType}
+            loading={buttonLoading}
+            onPress={onPress}
+          />
+        ) : undefined
       }
     />
   );
@@ -44,7 +48,7 @@ export const ActionCardWithCustomButton = ({
 }: ViewProps & {
   title: string;
   subtitle: string;
-  button: ReactElement;
+  button?: ReactElement;
 }) => {
   return (
     <Card gap="$2" width="100%" {...viewProps}>

@@ -67,6 +67,7 @@ export const ListItem = memo(
         alignItems="center"
         gap="$4"
         paddingVertical="$2"
+        disabled={disabled}
         {...xStackProps}
         {...(onPress && {
           pressStyle: { opacity: 0.8 },

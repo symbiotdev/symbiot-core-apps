@@ -1,30 +1,32 @@
 import {
+  Button,
   defaultPageHorizontalPadding,
+  EmptyView,
   formViewStyles,
+  InitView,
   RegularText,
   SectionList,
+  useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import {
   BrandBookingType,
   useBrandBookingCurrentListReq,
 } from '@symbiot-core-apps/api';
-import React, { ComponentType, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { DateHelper } from '@symbiot-core-apps/shared';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccountState,
+  useCurrentBrandEmployee,
+} from '@symbiot-core-apps/state';
 import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
+import { useApp } from '@symbiot-core-apps/app';
+import { useTranslation } from 'react-i18next';
 
-export const BrandBookingsList = ({
-  type,
-  offsetTop,
-  Intro,
-}: {
-  type: BrandBookingType;
-  offsetTop?: number;
-  Intro: ComponentType<{ loading?: boolean; error?: string | null }>;
-}) => {
+export const BrandBookingsList = () => {
   const { timezone } = useBookingDatetime();
+  const headerHeight = useScreenHeaderHeight();
   const {
     items: bookings,
     isFetchingNextPage,
@@ -34,7 +36,6 @@ export const BrandBookingsList = ({
     onRefresh,
     onEndReached,
   } = useBrandBookingCurrentListReq({
-    type,
     start: DateHelper.startOfDay(new Date()),
   });
   const { me } = useCurrentAccountState();
@@ -73,9 +74,9 @@ export const BrandBookingsList = ({
       refreshing={isRefetching && !isLoading}
       expanding={isFetchingNextPage}
       sections={sections}
-      progressViewOffset={offsetTop}
+      progressViewOffset={headerHeight}
       style={{
-        paddingTop: offsetTop,
+        paddingTop: headerHeight,
       }}
       contentContainerStyle={{
         gap: 4,
@@ -103,11 +104,47 @@ export const BrandBookingsList = ({
           timezone={timezone}
           style={formViewStyles}
           pressStyle={{ opacity: 0.8 }}
-          onPress={() => router.push(`/bookings/${type}/${item.id}/profile`)}
+          onPress={() =>
+            router.push(`/bookings/${item.type}/${item.id}/profile`)
+          }
         />
       )}
       onRefresh={onRefresh}
       onEndReached={onEndReached}
     />
   );
+};
+
+const Intro = ({
+  loading,
+  error,
+}: {
+  loading: boolean;
+  error?: string | null;
+}) => {
+  const { icons } = useApp();
+  let { t } = useTranslation();
+  const { hasPermission } = useCurrentBrandEmployee();
+
+  if (loading || error) {
+    return <InitView loading={loading} error={error} />;
+  } else {
+    return (
+      <EmptyView
+        padding={0}
+        iconName={icons.ServiceBooking}
+        title={t(`brand_booking.empty.title`)}
+        message={t(`brand_booking.empty.subtitle`)}
+      >
+        {hasPermission('bookings') && (
+          <Button
+            label={t(`brand_booking.empty.button.label`)}
+            onPress={() =>
+              router.push(`/bookings/${BrandBookingType.service}/create`)
+            }
+          />
+        )}
+      </EmptyView>
+    );
+  }
 };

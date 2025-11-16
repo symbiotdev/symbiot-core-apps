@@ -3,13 +3,11 @@ import * as SecureStore from 'expo-secure-store';
 import { mmkvGlobalStorage } from './global';
 
 export const JsonMMKVStorage: StateStorage = {
+  getItem: (name) => {
+    return mmkvGlobalStorage.getString(name) ?? null;
+  },
   setItem: (name, value) => {
     return mmkvGlobalStorage.set(name, value);
-  },
-  getItem: (name) => {
-    const value = mmkvGlobalStorage.getString(name);
-
-    return value ?? null;
   },
   removeItem: (name) => {
     return mmkvGlobalStorage.remove(name);

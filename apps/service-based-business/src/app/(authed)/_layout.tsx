@@ -76,10 +76,11 @@ export default () => {
 
   useEffect(() => {
     if (
+      location &&
       locations &&
       !locations.items.some((locationItem) => isEqual(locationItem, location))
     ) {
-      setLocation(locations.items.length > 1 ? locations.items[0] : undefined);
+      setLocation(null);
     }
   }, [location, locations, setLocation]);
 
@@ -160,17 +161,18 @@ export default () => {
                     <Stack.Screen name="bookings/[type]/[id]/analytics" />
                   </Stack.Protected>
                   <Stack.Screen name="bookings/[type]/create" />
-                  <Stack.Screen
-                    name="bookings/[type]/index"
-                    options={{
-                      ...(drawerVisible && {
-                        animation: 'none',
-                      }),
-                    }}
-                  />
                 </Stack.Protected>
 
                 <Stack.Screen name="bookings/[type]/[id]/profile" />
+                <Stack.Screen
+                  name="bookings/index"
+                  options={{
+                    headerTitle: t(`brand_booking.schedule`),
+                    ...(drawerVisible && {
+                      animation: 'none',
+                    }),
+                  }}
+                />
 
                 {/*BRAND*/}
 

@@ -153,7 +153,8 @@ export default () => {
               Platform.OS !== 'ios' && popoverRef.current?.close();
 
               setLocation(
-                locations?.items.find(({ id }) => selectedId === id) || null,
+                locations?.items.find(({ id }) => selectedId === id) ||
+                  allLocations.value,
               );
             }}
           />

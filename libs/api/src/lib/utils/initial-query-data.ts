@@ -11,6 +11,6 @@ export const clearInitialQueryData = () => {
     .getAllKeys()
     .filter((key) => key.indexOf(storeKeyPrefix) === 0)
     .forEach((key) => {
-      mmkvGlobalStorage.delete(key)
+      mmkvGlobalStorage.remove(key)
     });
 };

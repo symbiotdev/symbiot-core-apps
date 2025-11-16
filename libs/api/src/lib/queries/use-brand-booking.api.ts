@@ -60,11 +60,9 @@ const refetchQueriesByBookingChanges = async (
   });
 
 export const useBrandBookingCurrentListReq = ({
-  type,
   start,
   params,
 }: {
-  type: BrandBookingType;
   start: Date;
   params?: PaginationListParams;
 }) =>
@@ -73,16 +71,9 @@ export const useBrandBookingCurrentListReq = ({
     refetchOnMount: true,
     afterKeys: ['id', 'start'],
     apUrl: '/api/brand-booking',
-    queryKey: [
-      type === BrandBookingType.unavailable
-        ? BrandBookingQueryKey.unavailableCurrentList
-        : BrandBookingQueryKey.serviceCurrentList,
-      start,
-      params,
-    ],
+    queryKey: [start, params],
     params: {
       ...params,
-      type,
       start,
     },
   });

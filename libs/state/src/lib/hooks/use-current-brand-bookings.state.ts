@@ -5,10 +5,10 @@ import { createZustandStorage } from '@symbiot-core-apps/storage';
 import { DateHelper } from '@symbiot-core-apps/shared';
 
 type CurrentBrandBookingsState = {
-  location?: BrandLocation;
+  location: BrandLocation | null;
   bookings?: AnyBrandBooking[];
   clear: () => void;
-  setLocation: (location?: BrandLocation) => void;
+  setLocation: (location: CurrentBrandBookingsState['location']) => void;
   addBookings: (bookings: AnyBrandBooking[]) => void;
   removeBookings: (bookings: AnyBrandBooking[]) => void;
   upsertBookings: (bookings: AnyBrandBooking[]) => void;
@@ -22,10 +22,10 @@ type CurrentBrandBookingsState = {
 export const useCurrentBrandBookingsState = create<CurrentBrandBookingsState>()(
   persist<CurrentBrandBookingsState>(
     (set, get) => ({
-      bookings: [],
+      location: null,
       clear: () => {
         set({
-          location: undefined,
+          location: null,
           bookings: [],
         });
       },
@@ -57,8 +57,8 @@ export const useCurrentBrandBookingsState = create<CurrentBrandBookingsState>()(
           bookings: [
             ...(get().bookings || []).filter(
               (booking) =>
-                DateHelper.isSameDay(booking.start, start) ||
-                DateHelper.isSameDay(booking.end, end),
+                DateHelper.isBefore(booking.start, start) ||
+                DateHelper.isAfter(booking.start, end),
             ),
             ...bookings,
           ],

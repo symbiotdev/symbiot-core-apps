@@ -24,7 +24,12 @@ export function BrandEmployeePermissionsController<
   }
 
   return data
-    .filter((permission) => !!currentEmployee?.permissions?.[permission.key])
+    .filter(
+      (permission) =>
+        !!currentEmployee?.permissions?.[permission.key] &&
+        // todo - analytics
+        permission.key !== 'analytics',
+    )
     .map((permission) => (
       <Card key={permission.key}>
         <SwitchController

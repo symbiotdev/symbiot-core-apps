@@ -13,7 +13,7 @@ export default () => {
     navigation.setOptions({
       headerRight: () => (
         <XStack gap="$3" flex={1}>
-          {/*todo*/}
+          {/*todo - analytics*/}
           {/*{hasPermission('analytics') && (*/}
           {/*  <HeaderButton*/}
           {/*    iconName="ChartSquare"*/}

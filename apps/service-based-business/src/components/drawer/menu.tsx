@@ -269,7 +269,7 @@ export const DrawerMenu = () => {
           <Br marginHorizontal={defaultPageHorizontalPadding} />
         )}
 
-        {/*todo*/}
+        {/*todo - analytics*/}
         {/*{hasPermission('analytics') && (*/}
         {/*  <MenuItem*/}
         {/*    route="/brand/analytics"*/}

@@ -192,7 +192,7 @@ export const CreateBrandEmployee = () => {
 
   const onLeave = useCallback(
     (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
-      if (createdRef.current) return;
+      if (createdRef.current || !account) return;
 
       e.preventDefault();
 
@@ -202,7 +202,7 @@ export const CreateBrandEmployee = () => {
         onAgree: () => navigation.dispatch(e.data.action),
       });
     },
-    [t, navigation],
+    [t, navigation, account],
   );
 
   useEffect(() => {

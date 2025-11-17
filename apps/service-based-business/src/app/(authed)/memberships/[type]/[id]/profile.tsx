@@ -33,14 +33,15 @@ export default () => {
       ),
       headerRight: () => (
         <XStack gap="$3" flex={1}>
-          {hasPermission('analytics') && (
-            <HeaderButton
-              iconName="ChartSquare"
-              onPress={() =>
-                router.push(`/memberships/${type}/${id}/analytics`)
-              }
-            />
-          )}
+          {/*todo*/}
+          {/*{hasPermission('analytics') && (*/}
+          {/*  <HeaderButton*/}
+          {/*    iconName="ChartSquare"*/}
+          {/*    onPress={() =>*/}
+          {/*      router.push(`/memberships/${type}/${id}/analytics`)*/}
+          {/*    }*/}
+          {/*  />*/}
+          {/*)}*/}
           {hasPermission('catalog') && (
             <HeaderButton
               iconName="SettingsMinimalistic"

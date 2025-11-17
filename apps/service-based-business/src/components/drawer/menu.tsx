@@ -269,13 +269,14 @@ export const DrawerMenu = () => {
           <Br marginHorizontal={defaultPageHorizontalPadding} />
         )}
 
-        {hasPermission('analytics') && (
-          <MenuItem
-            route="/brand/analytics"
-            label={t('navigation.drawer.analytics.label')}
-            icon="ChartSquare"
-          />
-        )}
+        {/*todo*/}
+        {/*{hasPermission('analytics') && (*/}
+        {/*  <MenuItem*/}
+        {/*    route="/brand/analytics"*/}
+        {/*    label={t('navigation.drawer.analytics.label')}*/}
+        {/*    icon="ChartSquare"*/}
+        {/*  />*/}
+        {/*)}*/}
 
         {hasPermission('finances') && (
           <MenuItem

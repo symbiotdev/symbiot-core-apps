@@ -17,6 +17,7 @@ import { BrandBookingServicesController } from './controller/brand-booking-servi
 import { ServiceBrandBookingScheduleController } from './controller/service-brand-booking-schedule-controller';
 import { BrandBookingFrequencyController } from './controller/brand-booking-frequency-controller';
 import { BrandBookingRemindersController } from './controller/brand-booking-reminders-controller';
+import { getSlotsRandomEmployee } from '../utils/get-slots-random-employee';
 
 export const CreateServiceBrandBooking = ({ start }: { start: Date }) => {
   const { t } = useTranslation();
@@ -111,19 +112,7 @@ export const CreateServiceBrandBooking = ({ start }: { start: Date }) => {
 
     const employee =
       schedule.employee ||
-      slots
-        .reduce((employeeIds, { slots, location }) => {
-          if (schedule.location === location?.id) {
-            employeeIds.push(
-              ...Object.keys(slots).filter((id) => slots[id].includes(start)),
-            );
-          }
-
-          return employeeIds;
-        }, [] as string[])
-        .reduce((chosen, current, _, arr) =>
-          Math.random() < 1 / (arr.indexOf(current) + 1) ? current : chosen,
-        );
+      getSlotsRandomEmployee({ slots, start, locationId: schedule.location });
 
     if (!employee) return;
 

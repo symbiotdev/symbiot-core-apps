@@ -154,7 +154,7 @@ export const UnavailableBrandBookingProfile = ({
           <ListItemGroup
             gap="$4"
             paddingVertical="$4"
-            title={t('unavailable_brand_booking.profile.employees')}
+            title={t('unavailable_brand_booking.profile.employee')}
           >
             {booking.employees.map((employee) => (
               <BrandEmployeeItem
@@ -167,7 +167,7 @@ export const UnavailableBrandBookingProfile = ({
 
           <ListItemGroup
             paddingVertical="$4"
-            title={t(`unavailable_brand_booking.profile.groups.note.title`)}
+            title={t(`unavailable_brand_booking.profile.note`)}
           >
             <RegularText>
               {booking.note || t('shared.not_specified')}
@@ -179,19 +179,19 @@ export const UnavailableBrandBookingProfile = ({
       <SlideSheetModal
         scrollable
         headerTitle={t(
-          `unavailable_brand_booking.profile.groups.datetime.title`,
+          `unavailable_brand_booking.profile.datetime`,
         )}
         visible={rescheduleModalVisible}
         onClose={closeRescheduleModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
-          <DateTimeForm booking={booking} onUpdate={onUpdate} />
+          <RescheduleForm booking={booking} onUpdate={onUpdate} />
         </FormView>
       </SlideSheetModal>
 
       <SlideSheetModal
         scrollable
-        headerTitle={t(`unavailable_brand_booking.profile.groups.note.title`)}
+        headerTitle={t(`unavailable_brand_booking.profile.note`)}
         visible={noteModalVisible}
         onClose={closeNoteModal}
       >
@@ -203,7 +203,7 @@ export const UnavailableBrandBookingProfile = ({
   );
 };
 
-const DateTimeForm = ({
+const RescheduleForm = ({
   booking,
   onUpdate,
 }: {

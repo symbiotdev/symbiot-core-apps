@@ -78,7 +78,7 @@ export const UnavailableBrandBookingProfile = ({
         },
       });
     },
-    [booking.id, getRecurring],
+    [booking.id, getRecurring, update],
   );
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
@@ -108,7 +108,7 @@ export const UnavailableBrandBookingProfile = ({
           }),
       },
     ],
-    [openNoteModal, openRescheduleModal, cancel, getRecurring, booking.id],
+    [t, openRescheduleModal, openNoteModal, cancel, booking.id, getRecurring],
   );
 
   const headerRight = useCallback(
@@ -210,7 +210,6 @@ const DateTimeForm = ({
   booking: UnavailableBrandBooking;
   onUpdate: (data: UpdateBrandBooking) => Promise<void>;
 }) => {
-  const { t } = useTranslation();
   const { timezone } = useBookingDatetime({ fallbackZone: booking.timezone });
 
   const { control: datetimeControl, getValues: datetimeGetValues } = useForm<{
@@ -247,7 +246,7 @@ const DateTimeForm = ({
       start: DateHelper.fromZonedTime(datetime.start, timezone),
       duration: DateHelper.differenceInMinutes(datetime.end, datetime.start),
     });
-  }, [booking.end, booking.start, timezone, datetimeGetValues, onUpdate, t]);
+  }, [booking.end, booking.start, timezone, datetimeGetValues, onUpdate]);
 
   return (
     <UnavailableBrandBookingDatetimeController
@@ -280,7 +279,7 @@ const NoteForm = ({
     void onUpdate({
       note,
     });
-  }, [getValues, booking.note]);
+  }, [getValues, booking.note, onUpdate]);
 
   return (
     <BrandBookingNoteController

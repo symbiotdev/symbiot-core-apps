@@ -243,7 +243,7 @@ export const CreateBrand = () => {
         </SurveyStep>
       )}
 
-      {!me?.sourced && (
+      {functionality.availability.brandCompetitor && !me?.sourced && (
         <SurveyStep
           skippable
           canGoNext={competitorSourceFormState.isValid}

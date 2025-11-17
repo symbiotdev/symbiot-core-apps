@@ -56,6 +56,7 @@ export type AppConfigFunctionality = {
   availability: {
     servicePrice: boolean;
     brandIndustry: boolean;
+    brandCompetitor: boolean;
   };
 };
 

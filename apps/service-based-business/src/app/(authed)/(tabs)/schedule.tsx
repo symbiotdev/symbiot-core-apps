@@ -105,7 +105,6 @@ export default () => {
         </View>
 
         <H3
-          textTransform="capitalize"
           flex={1}
           numberOfLines={1}
           lineHeight={defaultIconSize}

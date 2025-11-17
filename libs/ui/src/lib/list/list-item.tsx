@@ -84,7 +84,6 @@ export const ListItem = memo(
         <View flex={1} justifyContent="center">
           {!!label && (
             <RegularText
-              textTransform="capitalize"
               lineHeight={defaultIconSize}
               numberOfLines={labelNumberOfLines}
               color={adjustedColor}

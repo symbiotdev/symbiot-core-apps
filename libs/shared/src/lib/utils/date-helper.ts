@@ -38,6 +38,7 @@ import { isBefore } from 'date-fns/isBefore';
 import { addWeeks } from 'date-fns/addWeeks';
 import { endOfMonth } from 'date-fns/endOfMonth';
 import { fromZonedTime, toZonedTime } from 'date-fns-tz';
+import { capitalizeFirst } from './text';
 
 export const defaultWeekdayStartsOn: Day = 0;
 export const minutesInHour = 60;
@@ -193,9 +194,11 @@ export const DateHelper = {
       formatStr = 'dd.MM.yyyy';
     }
 
-    return format(date, formatStr, {
-      locale: lang ? DATE_FNS_SUPPORTED_LANGUAGES[lang] : getDateLocale(),
-    });
+    return capitalizeFirst(
+      format(date, formatStr, {
+        locale: lang ? DATE_FNS_SUPPORTED_LANGUAGES[lang] : getDateLocale(),
+      }),
+    );
   },
   getWeekdays: (props?: { formatStr?: string; weekStartsOn?: Day }) => {
     const formatStr = props?.formatStr ?? 'EEEE';

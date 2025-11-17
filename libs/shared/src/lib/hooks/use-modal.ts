@@ -12,9 +12,9 @@ export const useModal = ({
   const [visible, setVisible] = useState(false);
 
   const open = useCallback(
-    (e: BaseSyntheticEvent) => {
-      e.stopPropagation();
-      e.stopPropagation();
+    (e?: BaseSyntheticEvent) => {
+      e?.preventDefault?.();
+      e?.stopPropagation?.();
       setVisible(true);
       onOpen?.();
     },
@@ -22,9 +22,9 @@ export const useModal = ({
   );
 
   const close = useCallback(
-    (e: BaseSyntheticEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
+    (e?: BaseSyntheticEvent) => {
+      e?.preventDefault?.();
+      e?.stopPropagation?.();
       setVisible(false);
       onClose?.();
     },

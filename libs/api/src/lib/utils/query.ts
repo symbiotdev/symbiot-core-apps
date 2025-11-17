@@ -41,7 +41,7 @@ export async function refetchQueriesByChanges<T extends { id: string }>({
       });
 
       queryData.forEach(([queryKey, data]) => {
-        if ((data as InfiniteData<PaginationList<T>>)['pages']?.length) {
+        if ((data as InfiniteData<PaginationList<T>>)?.['pages']?.length) {
           queryClient.setQueryData(queryKey, {
             ...data,
             pages: (data as InfiniteData<PaginationList<T>>).pages.map(

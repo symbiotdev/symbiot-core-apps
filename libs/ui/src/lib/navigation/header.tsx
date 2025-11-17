@@ -5,7 +5,13 @@ import {
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { memo, ReactElement, useCallback, useMemo } from 'react';
+import {
+  BaseSyntheticEvent,
+  memo,
+  ReactElement,
+  useCallback,
+  useMemo,
+} from 'react';
 import { H4 } from '../text/heading';
 import { Icon } from '../icons';
 import { IconName } from '../icons/config';
@@ -78,7 +84,7 @@ export const HeaderButton = memo(
   }: {
     iconName: IconName;
     attention?: boolean;
-    onPress?: () => void;
+    onPress?: (e: BaseSyntheticEvent) => void;
   }) => (
     <AttentionView attention={Boolean(attention)}>
       <Pressable
@@ -89,8 +95,8 @@ export const HeaderButton = memo(
           opacity: pressed ? 0.8 : 1,
           outlineWidth: 0,
         })}
-        onPress={() => {
-          onPress?.();
+        onPress={(e) => {
+          onPress?.(e);
           emitHaptic();
         }}
       >
@@ -193,7 +199,7 @@ export const ModalHeader = memo(
     headerLeft?: () => ReactElement;
     headerTitle?: string | (() => ReactElement);
     headerRight?: () => ReactElement;
-    onClose?: () => void;
+    onClose?: (e: BaseSyntheticEvent) => void;
   }) => {
     const { top, left, right } = useSafeAreaInsets();
     const theme = useTheme();

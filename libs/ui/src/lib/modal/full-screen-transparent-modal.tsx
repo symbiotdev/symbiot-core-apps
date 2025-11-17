@@ -1,5 +1,5 @@
 import { Modal, ModalProps } from 'react-native';
-import { PropsWithChildren } from 'react';
+import { BaseSyntheticEvent, PropsWithChildren } from 'react';
 
 export const FullScreenTransparentModal = ({
   children,
@@ -8,7 +8,7 @@ export const FullScreenTransparentModal = ({
 }: PropsWithChildren<
   ModalProps & {
     visible: boolean;
-    onClose: () => void;
+    onClose: (e: BaseSyntheticEvent) => void;
   }
 >) => (
   <Modal

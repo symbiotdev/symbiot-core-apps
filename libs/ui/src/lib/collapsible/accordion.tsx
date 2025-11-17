@@ -1,6 +1,6 @@
-import { View, XStack } from 'tamagui';
+import { useTheme, View, XStack } from 'tamagui';
 import Collapsible from 'react-native-collapsible';
-import { memo, ReactElement, useCallback, useState } from 'react';
+import { ReactElement, useCallback, useState } from 'react';
 import { Icon } from '../icons';
 import { Card } from '../card/card';
 import { emitHaptic } from '@symbiot-core-apps/shared';
@@ -26,43 +26,52 @@ export const Accordion = ({ items }: { items: AccordionItem[] }) => {
   );
 };
 
-const Item = memo(
-  ({
-    item,
-    first,
-    last,
-  }: {
-    item: AccordionItem;
-    first: boolean;
-    last: boolean;
-  }) => {
-    const [collapsed, setCollapsed] = useState(true);
+const Item = ({
+  item,
+  first,
+  last,
+}: {
+  item: AccordionItem;
+  first: boolean;
+  last: boolean;
+}) => {
+  const [collapsed, setCollapsed] = useState(true);
+  const theme = useTheme();
 
-    const toggle = useCallback(() => {
-      setCollapsed((prev) => !prev);
-      emitHaptic();
-    }, []);
+  const toggle = useCallback(() => {
+    setCollapsed((prev) => !prev);
+    emitHaptic();
+  }, []);
 
-    return (
-      <View borderBottomWidth={last ? 0 : 1} borderBottomColor="$background">
-        <XStack
-          cursor="pointer"
-          gap="$5"
-          justifyContent="space-between"
-          alignItems="center"
-          onPress={toggle}
+  return (
+    <View
+      borderBottomWidth={last ? 0 : 1}
+      // $background as value not woking on light theme
+      borderBottomColor={theme?.$background?.val}
+    >
+      <XStack
+        flex={1}
+        cursor="pointer"
+        gap="$5"
+        justifyContent="space-between"
+        alignItems="center"
+        onPress={toggle}
+      >
+        <SemiBoldText
+          fontSize={18}
+          lineHeight={20}
+          paddingVertical="$4"
+          flex={1}
         >
-          <SemiBoldText fontSize={18} paddingVertical="$4" flex={1}>
-            {item.title}
-          </SemiBoldText>
+          {item.title}
+        </SemiBoldText>
 
-          <Icon name={collapsed ? 'AltArrowDown' : 'AltArrowUp'} />
-        </XStack>
+        <Icon name={collapsed ? 'AltArrowDown' : 'AltArrowUp'} />
+      </XStack>
 
-        <Collapsible collapsed={collapsed}>
-          <View paddingBottom="$3">{item.content}</View>
-        </Collapsible>
-      </View>
-    );
-  },
-);
+      <Collapsible collapsed={collapsed}>
+        <View paddingBottom="$3">{item.content}</View>
+      </Collapsible>
+    </View>
+  );
+};

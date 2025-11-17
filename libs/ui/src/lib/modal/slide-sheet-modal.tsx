@@ -1,5 +1,5 @@
 import { Modal } from 'react-native';
-import { PropsWithChildren, ReactElement } from 'react';
+import { BaseSyntheticEvent, PropsWithChildren, ReactElement } from 'react';
 import { View, ViewProps } from 'tamagui';
 import { headerHeight, ModalHeader } from '../navigation/header';
 import { PageView } from '../view/page-view';
@@ -24,7 +24,7 @@ export const SlideSheetModal = ({
     headerLeft?: () => ReactElement;
     headerTitle?: string | (() => ReactElement);
     headerRight?: () => ReactElement;
-    onClose: () => void;
+    onClose: (e: BaseSyntheticEvent) => void;
   }
 >) => (
   <Modal

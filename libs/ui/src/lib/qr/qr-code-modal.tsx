@@ -1,5 +1,5 @@
 import { Platform, StyleSheet } from 'react-native';
-import { ReactElement } from 'react';
+import { BaseSyntheticEvent, ReactElement } from 'react';
 import { PageView } from '../view/page-view';
 import { QrCode } from './qr-code';
 import { Card } from '../card/card';
@@ -57,7 +57,7 @@ export const QrCodeModal = ({
   qrSize?: number;
   qrContent?: ReactElement;
   title?: string;
-  onClose: () => void;
+  onClose: (e: BaseSyntheticEvent) => void;
 }) => {
   return (
     <FullScreenTransparentModal

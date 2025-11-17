@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { BaseSyntheticEvent, useCallback, useState } from 'react';
 
 export const useModal = ({
   onOpen,
@@ -11,15 +11,25 @@ export const useModal = ({
 } = {}) => {
   const [visible, setVisible] = useState(false);
 
-  const open = useCallback(() => {
-    setVisible(true);
-    onOpen?.();
-  }, [onOpen]);
+  const open = useCallback(
+    (e: BaseSyntheticEvent) => {
+      e.stopPropagation();
+      e.stopPropagation();
+      setVisible(true);
+      onOpen?.();
+    },
+    [onOpen],
+  );
 
-  const close = useCallback(() => {
-    setVisible(false);
-    onClose?.();
-  }, [onClose]);
+  const close = useCallback(
+    (e: BaseSyntheticEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setVisible(false);
+      onClose?.();
+    },
+    [onClose],
+  );
 
   const toggle = useCallback(() => {
     setVisible((prev) => !prev);

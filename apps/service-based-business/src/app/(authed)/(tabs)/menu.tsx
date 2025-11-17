@@ -31,7 +31,7 @@ import {
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
-import { Platform, TouchableOpacity } from 'react-native';
+import { GestureResponderEvent, Platform } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useAccountAuthSignOutReq } from '@symbiot-core-apps/api';
 
@@ -76,17 +76,23 @@ export default () => {
     [],
   );
 
-  const copyId = useCallback(() => {
-    if (!me?.id) return;
+  const copyId = useCallback(
+    (e: GestureResponderEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-    emitHaptic();
+      if (!me?.id) return;
 
-    Clipboard.setString(me?.id);
+      emitHaptic();
 
-    ShowNativeSuccessAlert({
-      title: t('shared.copied'),
-    });
-  }, [t, me?.id]);
+      Clipboard.setString(me?.id);
+
+      ShowNativeSuccessAlert({
+        title: t('shared.copied'),
+      });
+    },
+    [t, me?.id],
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -130,15 +136,15 @@ export default () => {
             />
           )}
 
-          <Card flexDirection="row" alignItems="center" gap="$4">
-            <XStack
-              alignItems="center"
-              gap="$4"
-              flex={1}
-              cursor="pointer"
-              pressStyle={{ opacity: 0.8 }}
-              onPress={onAccountPress}
-            >
+          <Card
+            flexDirection="row"
+            alignItems="center"
+            cursor="pointer"
+            pressStyle={{ opacity: 0.8 }}
+            gap="$4"
+            onPress={onAccountPress}
+          >
+            <XStack alignItems="center" gap="$4" flex={1}>
               <Avatar
                 url={me.avatar?.xsUrl}
                 name={me.name}
@@ -148,13 +154,17 @@ export default () => {
               <View flex={1} gap="$2">
                 <H3 numberOfLines={1}>{me.name}</H3>
 
-                <TouchableOpacity onPress={copyId}>
-                  <MediumText color="$placeholderColor" numberOfLines={1}>
-                    ID: {me.id}
-                  </MediumText>
-                </TouchableOpacity>
+                <MediumText
+                  alignSelf="flex-start"
+                  color="$placeholderColor"
+                  numberOfLines={1}
+                  onPress={copyId}
+                >
+                  ID: {me.id}
+                </MediumText>
               </View>
             </XStack>
+
             <QrCodeModalWithTrigger
               trigger={<Icon name="QrCode" />}
               qrValue={me.id}

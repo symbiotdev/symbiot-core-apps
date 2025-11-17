@@ -33,7 +33,7 @@ export type ContextMenuItem = {
   icon?: false | ReactElement<{ color?: string; size?: number }>;
   iconSize?: number;
   color?: ColorTokens;
-  onPress: () => void;
+  onPress: (e: GestureResponderEvent) => void;
 };
 
 const actionDelay = 250;

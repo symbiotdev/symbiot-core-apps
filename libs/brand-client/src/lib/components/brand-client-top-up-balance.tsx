@@ -2,8 +2,6 @@ import {
   AnyBrandMembership,
   BrandClient,
   BrandMembershipType,
-  BrandPeriodBasedMembership,
-  BrandVisitBasedMembership,
   useBrandClientAddMembershipReq,
   useBrandPeriodBasedMembershipCurrentListReq,
   useBrandVisitBasedMembershipCurrentListReq,
@@ -69,22 +67,6 @@ export const BrandClientTopUpBalance = ({
     [addMembership, client.id],
   );
 
-  const onVisitBasedMembershipPress = useCallback(
-    (membership: BrandVisitBasedMembership) => {
-      void onAdd(membership);
-      closeVisitBasedMembershipsModal();
-    },
-    [onAdd, closeVisitBasedMembershipsModal],
-  );
-
-  const onPeriodBasedMembershipPress = useCallback(
-    (membership: BrandPeriodBasedMembership) => {
-      void onAdd(membership);
-      closePeriodBasedMembershipsModal();
-    },
-    [onAdd, closePeriodBasedMembershipsModal],
-  );
-
   return (
     <>
       <AdaptivePopover
@@ -124,9 +106,10 @@ export const BrandClientTopUpBalance = ({
             <BrandMembershipItem
               alignSelf="center"
               membership={item}
-              onPress={() =>
-                onVisitBasedMembershipPress(item as BrandVisitBasedMembership)
-              }
+              onPress={(e) => {
+                void onAdd(item);
+                closeVisitBasedMembershipsModal(e);
+              }}
             />
           )}
           Intro={InitView}
@@ -147,9 +130,10 @@ export const BrandClientTopUpBalance = ({
             <BrandMembershipItem
               alignSelf="center"
               membership={item}
-              onPress={() =>
-                onPeriodBasedMembershipPress(item as BrandPeriodBasedMembership)
-              }
+              onPress={(e) => {
+                void onAdd(item);
+                closePeriodBasedMembershipsModal(e);
+              }}
             />
           )}
           Intro={InitView}

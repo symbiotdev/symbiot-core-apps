@@ -259,7 +259,9 @@ const RescheduleForm = ({
 
   const initialSchedule = useMemo(
     () => ({
-      date: DateHelper.toDate(DateHelper.startOfDay(booking.start)),
+      date: DateHelper.toDate(
+        DateHelper.startOfDay(DateHelper.toZonedTime(booking.start, timezone)),
+      ),
       providers: [],
       location: booking.locations?.[0]?.id,
       employee: booking.employees?.[0]?.id,
@@ -268,7 +270,7 @@ const RescheduleForm = ({
         DateHelper.startOfDay(booking.start),
       ),
     }),
-    [booking.employees, booking.locations, booking.start],
+    [booking.employees, booking.locations, booking.start, timezone],
   );
 
   const { control, watch, getValues } = useForm<{
@@ -306,7 +308,10 @@ const RescheduleForm = ({
       const updateValues: UpdateServiceBrandBooking = {};
 
       const { schedule } = getValues();
-      const start = schedule.start || initialSchedule.start;
+      const start = schedule.start;
+
+      if (start === undefined) return;
+
       const startDate = DateHelper.addMinutes(schedule.date, start);
       const employee =
         schedule.employee ||

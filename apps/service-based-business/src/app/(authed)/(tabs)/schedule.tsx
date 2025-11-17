@@ -104,11 +104,7 @@ export default () => {
           </MediumText>
         </View>
 
-        <H3
-          flex={1}
-          numberOfLines={1}
-          lineHeight={defaultIconSize}
-        >
+        <H3 flex={1} numberOfLines={1} lineHeight={defaultIconSize}>
           {DateHelper.format(selectedDate, 'LLLL yyyy', i18n.language)}
         </H3>
       </XStack>
@@ -118,7 +114,8 @@ export default () => {
 
   const headerRight = useCallback(
     () =>
-      locations &&
+      locations?.items &&
+      locations.items.length > 1 &&
       hasPermission('locations') && (
         <AdaptivePopover
           ignoreScroll

@@ -74,12 +74,15 @@ export default () => {
   }, [currentEntitiesLoaded]);
 
   useEffect(() => {
-    if (
-      location &&
-      locations &&
-      !locations.items.some((locationItem) => isEqual(locationItem, location))
-    ) {
-      setLocation(null);
+    if (locations?.items) {
+      if (
+        location &&
+        !locations.items.some((locationItem) => isEqual(locationItem, location))
+      ) {
+        setLocation(null);
+      } else if (!location && locations.items.length === 1) {
+        setLocation(locations.items[0]);
+      }
     }
   }, [location, locations, setLocation]);
 

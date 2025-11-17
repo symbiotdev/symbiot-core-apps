@@ -12,7 +12,7 @@ export const useNativeNow = (intervalInSeconds?: number) => {
     const date = new Date();
     const timeout = setTimeout(
       () => setNow(date),
-      (intervalInSeconds || 60 - date.getSeconds()) * 1000
+      (intervalInSeconds || 60 - date.getSeconds()) * 1000,
     );
 
     return () => clearTimeout(timeout);

@@ -4,7 +4,7 @@ import {
 } from '@symbiot-core-apps/state';
 import { useBrandBookingPeriodListReq } from '@symbiot-core-apps/api';
 import { useEffect, useRef } from 'react';
-import { useRestoreApp } from '@symbiot-core-apps/shared';
+import { useRestoreNativeApp } from '@symbiot-core-apps/shared';
 
 export const useBrandBookingLoader = (params: {
   start: Date;
@@ -23,7 +23,7 @@ export const useBrandBookingLoader = (params: {
       params,
     });
 
-  useRestoreApp(refetch);
+  useRestoreNativeApp(refetch);
 
   useEffect(() => {
     paramsRef.current = params;

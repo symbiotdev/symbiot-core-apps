@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AppState, AppStateStatus } from 'react-native';
+import { AppState, AppStateStatus, Platform } from 'react-native';
 
 export const useAppState = () => {
   const [appState, setAppState] = useState<AppStateStatus>(
@@ -31,3 +31,12 @@ export const useRestoreApp = (callback: () => void) => {
     lastAppStateRef.current = appState;
   }, [appState, callback]);
 };
+
+export const useRestoreNativeApp = (callback: () => void) =>
+  useRestoreApp(
+    Platform.OS !== 'web'
+      ? callback
+      : () => {
+          /* empty */
+        },
+  );

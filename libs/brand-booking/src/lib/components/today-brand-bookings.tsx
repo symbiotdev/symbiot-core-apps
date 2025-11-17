@@ -43,7 +43,7 @@ export const TodayBrandBookings = () => {
 
   if (!adjustedBookings) {
     return (
-      <InitView minHeight={300} loading={isPending} error={error?.message} />
+      <InitView height={100} loading={isPending} error={error?.message} />
     );
   } else {
     return (

@@ -13,7 +13,7 @@ type AccordionItem = {
 
 export const Accordion = ({ items }: { items: AccordionItem[] }) => {
   return (
-    <Card paddingVertical="$1">
+    <Card paddingVertical="$2">
       {items.map((item, index) => (
         <Item
           key={index}
@@ -52,7 +52,7 @@ const Item = memo(
           alignItems="center"
           onPress={toggle}
         >
-          <SemiBoldText fontSize={18} paddingVertical="$3" flex={1}>
+          <SemiBoldText fontSize={18} paddingVertical="$4" flex={1}>
             {item.title}
           </SemiBoldText>
 

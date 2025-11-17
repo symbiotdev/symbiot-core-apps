@@ -21,6 +21,7 @@ export const BrandEmployeeItem = ({
       alignItems="center"
       gap="$4"
       flexDirection="row"
+      disabledStyle={{ opacity: 0.5 }}
       {...viewProps}
       {...(onPress && {
         cursor: 'pointer',

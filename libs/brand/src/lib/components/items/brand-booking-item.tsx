@@ -8,6 +8,8 @@ import {
 import { Icon, MediumText, RegularText } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import { DateHelper } from '@symbiot-core-apps/shared';
+import { useMemo } from 'react';
+import { useCurrentAccountState } from '@symbiot-core-apps/state';
 
 export const configByType: Record<
   BrandBookingType,
@@ -104,6 +106,57 @@ export const BrandBookingItem = ({
   );
 };
 
+export const useBookingScheduleFormattedTime = ({
+  booking,
+  timezone,
+}: {
+  booking: AnyBrandBooking;
+  timezone?: string;
+}) => {
+  const { t } = useTranslation();
+  const { me } = useCurrentAccountState();
+
+  return useMemo(() => {
+    if (isBrandBookingAllDay(booking)) {
+      return {
+        zonedTime: t('shared.schedule.duration.all_day'),
+        localTime: '',
+      };
+    } else {
+      const adjustedTimezone = timezone || booking.timezone;
+      const start = DateHelper.toZonedTime(booking.start, adjustedTimezone);
+      const end = DateHelper.toZonedTime(booking.end, adjustedTimezone);
+      const dateFormat = me?.preferences?.dateFormat;
+      let zonedTime: string;
+      let localTime = '';
+
+      if (!DateHelper.isSameDay(start, end)) {
+        zonedTime = `${DateHelper.format(start, dateFormat)} ${DateHelper.format(start, 'p')} - ${DateHelper.format(end, dateFormat)} ${DateHelper.format(end, 'p')}`;
+      } else {
+        zonedTime = `${DateHelper.format(start, 'p')} - ${DateHelper.format(end, 'p')}`;
+      }
+
+      if (!DateHelper.isSame(start, booking.start)) {
+        const moreThanOneDay = !DateHelper.isSameDay(
+          booking.start,
+          booking.end,
+        );
+
+        if (!DateHelper.isSameDay(start, booking.start) || moreThanOneDay) {
+          localTime = `${DateHelper.format(booking.start, dateFormat)} ${DateHelper.format(booking.start, 'p')} -${moreThanOneDay ? ` ${DateHelper.format(booking.end, dateFormat)}` : ''} ${DateHelper.format(booking.end, 'p')}`;
+        } else {
+          localTime = `${DateHelper.format(booking.start, 'p')} - ${DateHelper.format(booking.end, 'p')}`;
+        }
+      }
+
+      return {
+        zonedTime,
+        localTime,
+      };
+    }
+  }, [booking, me?.preferences?.dateFormat, t, timezone]);
+};
+
 const Schedule = ({
   booking,
   timezone,
@@ -115,21 +168,10 @@ const Schedule = ({
 }) => {
   const { t } = useTranslation();
   const config = configByType[booking.type];
-  let text: string;
-
-  if (isBrandBookingAllDay(booking)) {
-    text = t('shared.schedule.duration.all_day');
-  } else {
-    const adjustedTimezone = timezone || booking.timezone;
-    const start = DateHelper.toZonedTime(booking.start, adjustedTimezone);
-    const end = DateHelper.toZonedTime(booking.end, adjustedTimezone);
-
-    text = `${DateHelper.format(start, 'p')} - ${DateHelper.format(end, 'p')}`;
-
-    if (showLocalTime && !DateHelper.isSame(start, booking.start)) {
-      text = `${text} (${t('shared.local_time')}: ${DateHelper.format(booking.start, 'p')} - ${DateHelper.format(booking.end, 'p')})`;
-    }
-  }
+  const { zonedTime, localTime } = useBookingScheduleFormattedTime({
+    booking,
+    timezone,
+  });
 
   return (
     <RegularText
@@ -138,7 +180,7 @@ const Schedule = ({
       color={config.color}
       numberOfLines={1}
     >
-      {text}
+      {`${zonedTime}${showLocalTime && localTime ? ` (${t('shared.local_time')}: ${localTime})` : ''}`}
     </RegularText>
   );
 };

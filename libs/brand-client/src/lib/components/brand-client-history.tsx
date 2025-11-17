@@ -19,7 +19,6 @@ export const BrandClientHistory = ({ client }: { client: BrandClient }) => {
             <ListItem
               label={t('brand_client.history.menu.visit_based_memberships')}
               icon={<Icon name={icons.VisitBasedMembership} />}
-              iconAfter={<Icon name="ArrowRight" />}
               onPress={() =>
                 router.push(
                   `/clients/${client.id}/memberships/${BrandMembershipType.visits}`,
@@ -29,7 +28,6 @@ export const BrandClientHistory = ({ client }: { client: BrandClient }) => {
             <ListItem
               label={t('brand_client.history.menu.period_based_memberships')}
               icon={<Icon name={icons.PeriodBasedMembership} />}
-              iconAfter={<Icon name="ArrowRight" />}
               onPress={() =>
                 router.push(
                   `/clients/${client.id}/memberships/${BrandMembershipType.period}`,
@@ -43,7 +41,6 @@ export const BrandClientHistory = ({ client }: { client: BrandClient }) => {
           <ListItem
             label={t('brand_client.history.menu.transactions')}
             icon={<Icon name="Bill" />}
-            iconAfter={<Icon name="ArrowRight" />}
             onPress={() => router.push(`/clients/${client.id}/transactions`)}
           />
         )}

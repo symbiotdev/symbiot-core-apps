@@ -1,5 +1,5 @@
 import { Platform, Pressable } from 'react-native';
-import { useTheme, View, ViewProps, XStack } from 'tamagui';
+import { TextProps, useTheme, View, ViewProps, XStack } from 'tamagui';
 import {
   NativeStackHeaderProps,
   NativeStackNavigationOptions,
@@ -106,6 +106,17 @@ export const HeaderButton = memo(
   ),
 );
 
+export const HeaderTitle = (textProps: TextProps) => (
+  <MediumText
+    flex={4}
+    zIndex={1}
+    numberOfLines={2}
+    textAlign="center"
+    lineHeight={headerButtonSize}
+    {...textProps}
+  />
+);
+
 export const ScreenHeader = memo(
   ({
     back,
@@ -160,15 +171,7 @@ export const ScreenHeader = memo(
         />
 
         {typeof options.headerTitle === 'string' && (
-          <MediumText
-            flex={4}
-            zIndex={1}
-            numberOfLines={2}
-            textAlign="center"
-            lineHeight={headerButtonSize}
-          >
-            {options.headerTitle}
-          </MediumText>
+          <HeaderTitle>{options.headerTitle}</HeaderTitle>
         )}
 
         {typeof options.headerTitle === 'function' && (

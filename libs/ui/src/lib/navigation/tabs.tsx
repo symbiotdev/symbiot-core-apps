@@ -120,7 +120,7 @@ export const useTabsScreenOptions = () => {
     () =>
       ({
         ...headerOptions,
-        animation: Platform.OS === 'web' ? 'fade' : 'shift',
+        animation: Platform.OS === 'web' ? 'fade' : 'none',
       }) as HeaderOptions &
         BottomTabNavigationOptions &
         Omit<NativeStackNavigationOptions, 'animation'>,

@@ -1,15 +1,11 @@
 import {
   AnimatedList,
-  Avatar,
   Button,
   ContainerView,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   EmptyView,
-  FormView,
-  Icon,
   InitView,
-  MediumText,
   NavigationBackground,
   PageView,
   Search,
@@ -19,17 +15,21 @@ import {
   useBrandClientCurrentListReq,
 } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
-import { emitHaptic } from '@symbiot-core-apps/shared';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
+import { BrandClientItem } from '@symbiot-core-apps/brand';
 
 export const CurrentBrandClients = ({
   offsetTop,
+  hideArrow,
+  disabledIds,
   onClientPress,
 }: {
   offsetTop?: number;
+  hideArrow?: boolean;
+  disabledIds?: string[];
   onClientPress: (client: BrandClient) => void;
 }) => {
   const { t } = useTranslation();
@@ -52,38 +52,6 @@ export const CurrentBrandClients = ({
       }),
     },
   });
-
-  const renderItem = useCallback(
-    ({ item }: { item: BrandClient }) => (
-      <FormView
-        alignItems="center"
-        backgroundColor="$background1"
-        borderRadius="$10"
-        padding="$4"
-        gap="$4"
-        cursor="pointer"
-        flexDirection="row"
-        pressStyle={{ opacity: 0.8 }}
-        onPress={() => {
-          emitHaptic();
-          onClientPress(item);
-        }}
-      >
-        <Avatar
-          name={`${item.firstname} ${item.lastname}`}
-          size={40}
-          url={item.avatar?.xsUrl}
-        />
-
-        <MediumText numberOfLines={1} flex={1}>
-          {`${item.firstname} ${item.lastname}`}
-        </MediumText>
-
-        <Icon name="ArrowRight" />
-      </FormView>
-    ),
-    [onClientPress],
-  );
 
   const ListEmptyComponent = useCallback(
     () => <EmptyView iconName="Magnifer" message={t('shared.nothing_found')} />,
@@ -111,7 +79,17 @@ export const CurrentBrandClients = ({
           }}
           keyExtractor={(item) => item.id}
           ListEmptyComponent={ListEmptyComponent}
-          renderItem={renderItem}
+          renderItem={({ item }) => (
+            <BrandClientItem
+              padding="$4"
+              borderRadius="$10"
+              backgroundColor="$background1"
+              client={item}
+              hideArrow={hideArrow}
+              disabled={disabledIds?.includes(item.id)}
+              onPress={() => onClientPress(item)}
+            />
+          )}
           onRefresh={onRefresh}
           onEndReached={onEndReached}
         />

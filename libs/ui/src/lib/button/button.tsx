@@ -67,11 +67,11 @@ export const Button = memo(
         minHeight={46}
         width="100%"
         gap="$3"
+        disabled={disabled}
         disabledStyle={{
           cursor: 'auto',
           opacity: 0.5,
         }}
-        disabled={disabled}
         {...xStackProps}
         {...(onPress && {
           cursor: 'pointer',

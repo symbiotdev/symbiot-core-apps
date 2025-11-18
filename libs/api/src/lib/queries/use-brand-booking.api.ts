@@ -178,11 +178,15 @@ export const useCancelServiceBrandBookingReq = () =>
   useCancelBrandBookingReq(BrandBookingType.service);
 
 export const useAddServiceBrandBookingClientReq = () =>
-  useMutation<ServiceBrandBooking, string, CreateServiceBrandBookingClient>({
-    mutationFn: async (data) => {
+  useMutation<
+    ServiceBrandBooking,
+    string,
+    { bookingId: string; data: CreateServiceBrandBookingClient }
+  >({
+    mutationFn: async ({ bookingId, data }) => {
       const booking = await requestWithAlertOnError<ServiceBrandBooking>(
         axios.post(
-          `/api/brand-booking/${BrandBookingType.service}/client`,
+          `/api/brand-booking/${BrandBookingType.service}/${bookingId}/client`,
           data,
         ),
       );

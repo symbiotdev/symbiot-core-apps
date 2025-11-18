@@ -1,6 +1,8 @@
 import { PropsWithChildren, useCallback, useEffect } from 'react';
 import {
+  AnyBrandBooking,
   Brand,
+  BrandBookingQueryKey,
   clearInitialQueryData,
   Notification,
   queryClient,
@@ -97,6 +99,34 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     });
   }, [setMeStats, markAllNotificationsAsRead]);
 
+  const onUpdateBookings = useCallback(
+    (bookings: AnyBrandBooking[]) => {
+      upsertBookings(bookings);
+
+      bookings.forEach((booking) => {
+        queryClient.setQueryData(
+          [BrandBookingQueryKey.detailedById, booking.id],
+          booking,
+        );
+      });
+    },
+    [upsertBookings],
+  );
+
+  const onRemoveBookings = useCallback(
+    (bookings: AnyBrandBooking[]) => {
+      removeBookings(bookings);
+
+      bookings.forEach((booking) => {
+        queryClient.setQueryData(
+          [BrandBookingQueryKey.detailedById, booking.id],
+          booking,
+        );
+      });
+    },
+    [removeBookings],
+  );
+
   useEffect(() => {
     socket.on(WebsocketAction.accountUpdated, updateMe);
     socket.on(WebsocketAction.accountPreferencesUpdated, updateMePreferences);
@@ -110,14 +140,26 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     socket.on(WebsocketAction.notificationAdded, onNotificationAdded);
     socket.on(WebsocketAction.notificationsRead, onNotificationsReadAll);
 
-    socket.on(WebsocketAction.unavailableBrandBookingsCreated, upsertBookings);
-    socket.on(WebsocketAction.unavailableBrandBookingsUpdated, upsertBookings);
-    socket.on(WebsocketAction.unavailableBrandBookingsCanceled, removeBookings);
-    socket.on(WebsocketAction.serviceBrandBookingsCanceled, removeBookings);
-    socket.on(WebsocketAction.serviceBrandBookingsCreated, upsertBookings);
-    socket.on(WebsocketAction.serviceBrandBookingsUpdated, upsertBookings);
-    socket.on(WebsocketAction.serviceBrandBookingClientAdded, upsertBookings);
-    socket.on(WebsocketAction.serviceBrandBookingClientRemoved, upsertBookings);
+    socket.on(
+      WebsocketAction.unavailableBrandBookingsCreated,
+      onUpdateBookings,
+    );
+    socket.on(
+      WebsocketAction.unavailableBrandBookingsUpdated,
+      onUpdateBookings,
+    );
+    socket.on(
+      WebsocketAction.unavailableBrandBookingsCanceled,
+      onRemoveBookings,
+    );
+    socket.on(WebsocketAction.serviceBrandBookingsCanceled, onRemoveBookings);
+    socket.on(WebsocketAction.serviceBrandBookingsCreated, onUpdateBookings);
+    socket.on(WebsocketAction.serviceBrandBookingsUpdated, onUpdateBookings);
+    socket.on(WebsocketAction.serviceBrandBookingClientAdded, onUpdateBookings);
+    socket.on(
+      WebsocketAction.serviceBrandBookingClientRemoved,
+      onUpdateBookings,
+    );
 
     return () => {
       socket.off();
@@ -126,8 +168,8 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     updateMe,
     setCurrentBrand,
     setCurrentEmployee,
-    upsertBookings,
-    removeBookings,
+    onRemoveBookings,
+    onUpdateBookings,
     updateMePreferences,
     onBrandAssigned,
     onNotificationAdded,

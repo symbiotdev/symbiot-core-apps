@@ -45,6 +45,7 @@ import { router, useNavigation } from 'expo-router';
 import { BrandBookingNoteController } from './controller/brand-booking-note-controller';
 import { getSlotsRandomEmployee } from '../utils/get-slots-random-employee';
 import { useApp } from '@symbiot-core-apps/app';
+import { ServiceBrandBookingProfileClients } from './service-brand-booking-profile-clients';
 
 export const ServiceBrandBookingProfile = ({
   booking,
@@ -65,15 +66,16 @@ export const ServiceBrandBookingProfile = ({
     booking,
     timezone,
   });
+
   const {
     visible: rescheduleModalVisible,
     open: openRescheduleModal,
     close: closeRescheduleModal,
   } = useModal();
   const {
-    visible: noteModalVisible,
-    open: openNoteModal,
-    close: closeNoteModal,
+    visible: serviceNoteModalVisible,
+    open: openServiceNoteModal,
+    close: closeServiceNoteModal,
   } = useModal();
 
   const getRecurring = useCallback(
@@ -119,7 +121,7 @@ export const ServiceBrandBookingProfile = ({
           `service_brand_booking.profile.context_menu.change_note.label`,
         ),
         icon: <Icon name="InfoCircle" />,
-        onPress: openNoteModal,
+        onPress: openServiceNoteModal,
       },
       {
         label: t(`service_brand_booking.profile.context_menu.cancel.label`),
@@ -132,7 +134,14 @@ export const ServiceBrandBookingProfile = ({
           }),
       },
     ],
-    [t, openRescheduleModal, openNoteModal, cancel, booking.id, getRecurring],
+    [
+      t,
+      openRescheduleModal,
+      openServiceNoteModal,
+      cancel,
+      booking.id,
+      getRecurring,
+    ],
   );
 
   const headerRight = useCallback(
@@ -219,6 +228,8 @@ export const ServiceBrandBookingProfile = ({
               {booking.note || t('shared.not_specified')}
             </RegularText>
           </ListItemGroup>
+
+          <ServiceBrandBookingProfileClients booking={booking} />
         </FormView>
       </PageView>
 
@@ -236,8 +247,8 @@ export const ServiceBrandBookingProfile = ({
       <SlideSheetModal
         scrollable
         headerTitle={t(`service_brand_booking.profile.note`)}
-        visible={noteModalVisible}
-        onClose={closeNoteModal}
+        visible={serviceNoteModalVisible}
+        onClose={closeServiceNoteModal}
       >
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <NoteForm booking={booking} onUpdate={onUpdate} />

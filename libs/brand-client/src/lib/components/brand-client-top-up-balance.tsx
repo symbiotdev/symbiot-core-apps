@@ -93,8 +93,8 @@ export const BrandClientTopUpBalance = ({
       </AdaptivePopover>
 
       <SlideSheetModal
-        paddingHorizontal={0}
         withKeyboard={false}
+        paddingHorizontal={0}
         headerTitle={t('brand_client.balance.menu.add_visit_based_membership')}
         visible={visitBasedMembershipsModalVisible}
         onClose={closeVisitBasedMembershipsModal}

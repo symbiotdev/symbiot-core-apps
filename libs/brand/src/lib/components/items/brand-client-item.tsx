@@ -27,15 +27,15 @@ export const BrandClientItem = ({
     gap="$4"
     flexDirection="row"
     disabledStyle={{ opacity: 0.5 }}
-    pressStyle={{ opacity: 0.8 }}
-    onPress={(e) => {
-      emitHaptic();
-      onPress?.(e);
-    }}
-    {...(!viewProps.disabled && {
-      cursor: 'pointer',
-    })}
     {...viewProps}
+    {...(onPress && {
+      cursor: 'pointer',
+      pressStyle: { opacity: 0.8 },
+      onPress: (e) => {
+        emitHaptic();
+        onPress?.(e);
+      },
+    })}
   >
     <Avatar
       name={`${client.firstname} ${client.lastname}`}
@@ -44,7 +44,7 @@ export const BrandClientItem = ({
     />
 
     <View gap="$1" flex={1}>
-      <MediumText numberOfLines={1} flex={1}>
+      <MediumText numberOfLines={1}>
         {`${client.firstname} ${client.lastname}`}
       </MediumText>
 

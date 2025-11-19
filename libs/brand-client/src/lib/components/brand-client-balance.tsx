@@ -17,12 +17,14 @@ import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 export const BrandClientBalance = ({
   client,
   showTopUpBalance,
+  disabledIds,
   preventNavigationToCreatedMembership,
   showEmptyMessage,
   onPressMembership,
 }: {
   client: BrandClient;
   showTopUpBalance?: boolean;
+  disabledIds?: string[];
   preventNavigationToCreatedMembership?: boolean;
   showEmptyMessage?: boolean;
   onPressMembership: (membership: AnyBrandClientMembership) => void;
@@ -63,6 +65,7 @@ export const BrandClientBalance = ({
           alignSelf="center"
           key={membership.id}
           membership={membership}
+          disabled={disabledIds?.includes(membership.id)}
           onPress={() => onPressMembership(membership)}
         />
       ))}

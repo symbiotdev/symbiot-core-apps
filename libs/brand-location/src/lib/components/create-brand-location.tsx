@@ -217,7 +217,6 @@ export const CreateBrandLocation = () => {
         subtitle={t('brand_location.create.steps.address.subtitle')}
       >
         <BrandLocationAddressController
-          noLabel
           name="address"
           control={addressControl}
         />

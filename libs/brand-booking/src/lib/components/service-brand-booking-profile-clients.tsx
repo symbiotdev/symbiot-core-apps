@@ -185,6 +185,7 @@ export const ServiceBrandBookingProfileClients = ({
         {!!actionClient && (
           <Balance
             id={actionClient.id}
+            membershipId={actionClient.membership?.id}
             onPressMembership={(membership) => {
               closeClientBalanceModal();
               setActionClient(undefined);
@@ -255,8 +256,10 @@ export const ServiceBrandBookingProfileClients = ({
 const Balance = ({
   id,
   onPressMembership,
+  membershipId,
 }: {
   id: string;
+  membershipId?: string;
   onPressMembership: (membership: AnyBrandClientMembership) => void;
 }) => {
   const { t } = useTranslation();
@@ -285,6 +288,7 @@ const Balance = ({
         showTopUpBalance
         preventNavigationToCreatedMembership
         client={client}
+        disabledIds={membershipId ? [membershipId] : []}
         onPressMembership={onPressMembership}
       />
     </FormView>

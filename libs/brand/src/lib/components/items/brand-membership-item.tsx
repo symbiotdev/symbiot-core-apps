@@ -151,15 +151,17 @@ const BrandPeriodBasedMembershipItemView = ({
       gap="$2"
       justifyContent="space-between"
       position="relative"
+      disabledStyle={{ opacity: 0.5 }}
       {...viewProps}
-      {...(onPress && {
-        cursor: 'pointer',
-        pressStyle: { opacity: 0.8 },
-        onPress: (e) => {
-          emitHaptic();
-          onPress?.(e);
-        },
-      })}
+      {...(onPress &&
+        !viewProps.disabled && {
+          cursor: 'pointer',
+          pressStyle: { opacity: 0.8 },
+          onPress: (e) => {
+            emitHaptic();
+            onPress?.(e);
+          },
+        })}
     >
       <LinearGradient
         colors={['#FFFFFF05', '#FFFFFF30', '#FFFFFF05']}
@@ -295,15 +297,17 @@ const BrandVisitBasedMembershipItemView = ({
       borderRadius="$10"
       maxWidth={400}
       width="100%"
+      disabledStyle={{ opacity: 0.5 }}
       {...viewProps}
-      {...(onPress && {
-        cursor: 'pointer',
-        pressStyle: { opacity: 0.8 },
-        onPress: (e) => {
-          emitHaptic();
-          onPress?.(e);
-        },
-      })}
+      {...(onPress &&
+        !viewProps.disabled && {
+          cursor: 'pointer',
+          pressStyle: { opacity: 0.8 },
+          onPress: (e) => {
+            emitHaptic();
+            onPress?.(e);
+          },
+        })}
     >
       <CutDown right={-cutoutSize / 1.5} />
       <CutDown left={-cutoutSize / 1.5} />

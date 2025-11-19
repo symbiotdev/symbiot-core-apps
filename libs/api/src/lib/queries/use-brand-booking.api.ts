@@ -1,7 +1,6 @@
 import { refetchQueriesByChanges } from '../utils/query';
 import {
   AnyBrandBooking,
-  BrandBookingClient,
   BrandBookingSlot,
   BrandBookingType,
   CreateServiceBrandBooking,
@@ -244,7 +243,7 @@ export const useUpdateServiceBrandBookingReq = () =>
 
 export const useUpdateServiceBrandBookingClientReq = () =>
   useMutation<
-    BrandBookingClient,
+    ServiceBrandBooking,
     string,
     {
       bookingId: string;
@@ -253,31 +252,19 @@ export const useUpdateServiceBrandBookingClientReq = () =>
     }
   >({
     mutationFn: async ({ bookingId, clientId, data }) => {
-      const client = await requestWithAlertOnError<BrandBookingClient>(
+      const booking = await requestWithAlertOnError<ServiceBrandBooking>(
         axios.put(
           `/api/brand-booking/${BrandBookingType.service}/${bookingId}/client/${clientId}`,
           data,
         ),
       );
-      const bookingQueryKey = [BrandBookingQueryKey.detailedById, bookingId];
-      const booking =
-        queryClient.getQueryData<ServiceBrandBooking>(bookingQueryKey);
 
-      if (booking) {
-        queryClient.setQueryData(bookingQueryKey, {
-          ...booking,
-          clients: booking.clients?.map((currentClient) =>
-            currentClient.id === clientId
-              ? {
-                  ...currentClient,
-                  ...client,
-                }
-              : currentClient,
-          ),
-        });
-      }
+      queryClient.setQueryData(
+        [BrandBookingQueryKey.detailedById, bookingId],
+        booking,
+      );
 
-      return client;
+      return booking;
     },
   });
 

@@ -69,6 +69,8 @@ export * from './lib/qr/qr-code';
 export * from './lib/qr/qr-code-modal';
 export * from './lib/qr/qr-code-scan-modal';
 
+export * from './lib/sheet/sheet';
+
 export * from './lib/survey/survey';
 
 export * from './lib/text/heading';

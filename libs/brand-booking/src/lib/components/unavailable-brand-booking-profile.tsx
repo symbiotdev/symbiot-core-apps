@@ -4,8 +4,9 @@ import {
   defaultPageVerticalPadding,
   FormView,
   H1,
+  H2,
+  H4,
   Icon,
-  ListItem,
   ListItemGroup,
   MediumText,
   PageView,
@@ -66,6 +67,8 @@ export const UnavailableBrandBookingProfile = ({
     open: openNoteModal,
     close: closeNoteModal,
   } = useModal();
+
+  const textDecorationLine = booking.cancelAt ? 'line-through' : undefined;
 
   const getRecurring = useCallback(
     () =>
@@ -159,37 +162,39 @@ export const UnavailableBrandBookingProfile = ({
     <>
       <PageView scrollable withHeaderHeight>
         <FormView gap="$4">
-          <View gap="$2">
-            <H1
-              textDecorationLine={booking.cancelAt ? 'line-through' : undefined}
-            >
+          <View gap="$2" marginVertical="$3">
+            <H2 textDecorationLine={textDecorationLine}>
               {t(`unavailable_brand_booking.profile.title`)}
-            </H1>
+            </H2>
 
-            {!!booking.cancelAt && (
-              <XStack gap="$1">
-                <Icon name="Close" color="$error" />
-                <MediumText color="$error" alignSelf="center">
-                  {t('shared.canceled')}
-                </MediumText>
-              </XStack>
+            <H1 textDecorationLine={textDecorationLine}>{zonedTime}</H1>
+
+            {!!localTime && (
+              <RegularText
+                fontSize={12}
+                color="$placeholderColor"
+                textDecorationLine={textDecorationLine}
+              >
+                {t('shared.local_time')} {localTime}
+              </RegularText>
             )}
 
-            <ListItem
-              alignItems="flex-start"
-              textNumberOfLines={2}
-              icon={
-                <Icon
-                  name={icons.UnavailableBooking}
-                  style={{ marginTop: 8 }}
-                />
-              }
-              label={DateHelper.format(
-                booking.start,
-                me?.preferences?.dateFormat,
+            <XStack gap="$2" alignItems="center">
+              <Icon name={icons.UnavailableBooking} size={18} />
+
+              <H4 textDecorationLine={textDecorationLine}>
+                {DateHelper.format(booking.start, me?.preferences?.dateFormat)}
+              </H4>
+
+              {!!booking.cancelAt && (
+                <XStack gap="$1">
+                  <Icon name="Close" color="$error" />
+                  <MediumText color="$error" alignSelf="center">
+                    {t('shared.canceled')}
+                  </MediumText>
+                </XStack>
               )}
-              text={`${zonedTime}${localTime ? ` (${t('shared.local_time')}: ${localTime})` : ''}`}
-            />
+            </XStack>
           </View>
 
           <ListItemGroup

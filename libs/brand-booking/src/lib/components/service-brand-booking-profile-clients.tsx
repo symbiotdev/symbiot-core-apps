@@ -37,7 +37,37 @@ import {
   CurrentBrandClients,
 } from '@symbiot-core-apps/brand-client';
 import { router } from 'expo-router';
-import { View } from 'tamagui';
+import { View, ViewProps } from 'tamagui';
+
+const ClientItem = ({
+  client,
+  hideArrow,
+  loading,
+  ...viewProps
+}: ViewProps & {
+  client: BrandBookingClient;
+  hideArrow?: boolean;
+  loading?: boolean;
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <BrandClientItem
+      loading={loading}
+      hideArrow={hideArrow}
+      style={formViewStyles}
+      client={client}
+      subtitleColor={!client.membership && !client.free ? '$error' : undefined}
+      subtitle={
+        client.free
+          ? t(`service_brand_booking.profile.clients.free_visit`)
+          : client.membership?.name ||
+            t(`service_brand_booking.profile.clients.need_pay`)
+      }
+      {...viewProps}
+    />
+  );
+};
 
 export const ServiceBrandBookingProfileClients = ({
   booking,
@@ -114,12 +144,31 @@ export const ServiceBrandBookingProfileClients = ({
     [booking.id, updateClient],
   );
 
+  const onMarkAsFree = useCallback(
+    async (client: BrandClient) => {
+      setLoadingId(client.id);
+
+      try {
+        await updateClient({
+          bookingId: booking.id,
+          clientId: client.id,
+          data: {
+            free: true,
+          },
+        });
+      } finally {
+        setLoadingId(undefined);
+      }
+    },
+    [booking.id, updateClient],
+  );
+
   return (
     <>
       <ListItemGroup
         title={`${t(booking.clients.length > booking.places ? `service_brand_booking.profile.clients.overbooking` : 'service_brand_booking.profile.clients.title')} (${booking.clients.length}/${booking.places})`}
       >
-        {hasPermission('bookings') && (
+        {!booking.cancelAt && hasPermission('bookings') && (
           <Button
             loading={clientAdding}
             type="clear"
@@ -144,16 +193,13 @@ export const ServiceBrandBookingProfileClients = ({
           booking.clients
             .sort((a, b) => (a.firstname > b.firstname ? 1 : -1))
             .map((client) => (
-              <BrandClientItem
+              <ClientItem
                 paddingVertical="$1"
                 key={client.id}
+                hideArrow={!!booking.cancelAt}
+                disabled={!!booking.cancelAt}
                 loading={loadingId === client.id}
                 client={client}
-                subtitleColor={!client.membership ? '$error' : undefined}
-                subtitle={
-                  client.membership?.name ||
-                  t(`service_brand_booking.profile.clients.need_pay`)
-                }
                 onPress={() => setActionClient(client)}
               />
             ))
@@ -200,27 +246,20 @@ export const ServiceBrandBookingProfileClients = ({
         onClose={() => setActionClient(undefined)}
       >
         {!!actionClient && (
-          <BrandClientItem
+          <ClientItem
             hideArrow
-            paddingBottom="$2"
-            style={formViewStyles}
+            paddingVertical="$2"
             client={actionClient}
-            subtitleColor={!actionClient.membership ? '$error' : undefined}
-            subtitle={
-              actionClient.membership?.name ||
-              t(`service_brand_booking.profile.clients.need_pay`)
-            }
           />
         )}
 
         <Br style={formViewStyles} />
 
-        <View paddingLeft="$2">
+        <View paddingLeft="$2" style={formViewStyles}>
           <ListItem
             label={t(
               `service_brand_booking.profile.clients.actions.profile.label`,
             )}
-            style={formViewStyles}
             icon={<Icon name="SmileCircle" />}
             onPress={() => {
               setActionClient(undefined);
@@ -231,16 +270,26 @@ export const ServiceBrandBookingProfileClients = ({
             label={t(
               `service_brand_booking.profile.clients.actions.use_balance.label`,
             )}
-            style={formViewStyles}
             icon={<Icon name="Wallet" />}
             onPress={openClientBalanceModal}
           />
+          {!actionClient?.free && (
+            <ListItem
+              label={t(
+                `service_brand_booking.profile.clients.actions.mark_as_free.label`,
+              )}
+              icon={<Icon name="Balloon" />}
+              onPress={() => {
+                void onMarkAsFree(actionClient as BrandBookingClient);
+                setActionClient(undefined);
+              }}
+            />
+          )}
           <ListItem
             color="$error"
             label={t(
               `service_brand_booking.profile.clients.actions.cancel_by_brand.label`,
             )}
-            style={formViewStyles}
             icon={<Icon name="TrashBinMinimalistic" />}
             onPress={() => {
               void onRemove(actionClient as BrandBookingClient);

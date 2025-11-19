@@ -11,10 +11,12 @@ import { View, ViewProps } from 'tamagui';
 
 export const BrandEmployeeItem = ({
   employee,
+  hideArrow,
   onPress,
   ...viewProps
 }: ViewProps & {
   employee: BrandEmployee;
+  hideArrow?: boolean;
 }) => {
   return (
     <FormView
@@ -23,14 +25,15 @@ export const BrandEmployeeItem = ({
       flexDirection="row"
       disabledStyle={{ opacity: 0.5 }}
       {...viewProps}
-      {...(onPress && {
-        cursor: 'pointer',
-        pressStyle: { opacity: 0.8 },
-        onPress: (e) => {
-          emitHaptic();
-          onPress?.(e);
-        },
-      })}
+      {...(onPress &&
+        !viewProps.disabled && {
+          cursor: 'pointer',
+          pressStyle: { opacity: 0.8 },
+          onPress: (e) => {
+            emitHaptic();
+            onPress?.(e);
+          },
+        })}
     >
       <Avatar
         name={employee.name}
@@ -50,7 +53,7 @@ export const BrandEmployeeItem = ({
         </RegularText>
       </View>
 
-      {!!onPress && <Icon name="ArrowRight" />}
+      {!!onPress && !hideArrow && <Icon name="ArrowRight" />}
     </FormView>
   );
 };

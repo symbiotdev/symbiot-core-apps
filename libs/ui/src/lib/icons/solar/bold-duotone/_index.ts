@@ -76,6 +76,7 @@ import { Phone } from './Phone';
 import { Wallet } from './Wallet';
 import { Bill } from './Bill';
 import { CalendarCross } from './CalendarCross';
+import { Balloon } from './Balloon';
 
 export const Map: IconMap = {
   AddCircle,
@@ -87,6 +88,7 @@ export const Map: IconMap = {
   ArrowLeft,
   ArrowRight,
   ArrowToTopLeft,
+  Balloon,
   Bell,
   Bill,
   Calendar,

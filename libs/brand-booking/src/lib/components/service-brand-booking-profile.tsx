@@ -4,8 +4,8 @@ import {
   defaultPageVerticalPadding,
   FormView,
   H1,
+  H2,
   Icon,
-  ListItem,
   ListItemGroup,
   MediumText,
   PageView,
@@ -46,17 +46,17 @@ import { ServiceBrandBookingScheduleController } from './controller/service-bran
 import { router, useNavigation } from 'expo-router';
 import { BrandBookingNoteController } from './controller/brand-booking-note-controller';
 import { getSlotsRandomEmployee } from '../utils/get-slots-random-employee';
-import { useApp } from '@symbiot-core-apps/app';
 import { ServiceBrandBookingProfileClients } from './service-brand-booking-profile-clients';
 import { View, XStack } from 'tamagui';
+import { useApp } from '@symbiot-core-apps/app';
 
 export const ServiceBrandBookingProfile = ({
   booking,
 }: {
   booking: ServiceBrandBooking;
 }) => {
-  const { t } = useTranslation();
   const { icons } = useApp();
+  const { t } = useTranslation();
   const { me } = useCurrentAccountState();
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
@@ -69,6 +69,8 @@ export const ServiceBrandBookingProfile = ({
     booking,
     timezone,
   });
+
+  const textDecorationLine = booking.cancelAt ? 'line-through' : undefined;
 
   const {
     visible: rescheduleModalVisible,
@@ -179,35 +181,36 @@ export const ServiceBrandBookingProfile = ({
     <>
       <PageView scrollable withHeaderHeight>
         <FormView gap="$5">
-          <View gap="$2">
-            <H1
-              textDecorationLine={booking.cancelAt ? 'line-through' : undefined}
-            >
-              {booking.name}
-            </H1>
+          <View gap="$2" marginVertical="$3">
+            <H2 textDecorationLine={textDecorationLine}>{booking.name}</H2>
+            <H1 textDecorationLine={textDecorationLine}>{zonedTime}</H1>
 
-            {!!booking.cancelAt && (
-              <XStack gap="$1">
-                <Icon name="Close" color="$error" />
-                <MediumText color="$error" alignSelf="center">
-                  {t('shared.canceled')}
-                </MediumText>
-              </XStack>
+            {!!localTime && (
+              <RegularText
+                fontSize={12}
+                color="$placeholderColor"
+                textDecorationLine={textDecorationLine}
+              >
+                {t('shared.local_time')} {localTime}
+              </RegularText>
             )}
 
-            <ListItem
-              paddingVertical={0}
-              alignItems="flex-start"
-              textNumberOfLines={2}
-              icon={
-                <Icon name={icons.ServiceBooking} style={{ marginTop: 8 }} />
-              }
-              label={DateHelper.format(
-                booking.start,
-                me?.preferences?.dateFormat,
+            <XStack gap="$2" alignItems="center">
+              <Icon name={icons.ServiceBooking} size={18} />
+
+              <RegularText textDecorationLine={textDecorationLine}>
+                {`${DateHelper.format(booking.start, me?.preferences?.dateFormat)} (${DateHelper.format(booking.start, 'EEEE')})`}
+              </RegularText>
+
+              {!!booking.cancelAt && (
+                <XStack gap="$1">
+                  <Icon name="Close" color="$error" />
+                  <MediumText color="$error" alignSelf="center">
+                    {t('shared.canceled')}
+                  </MediumText>
+                </XStack>
               )}
-              text={`${zonedTime}${localTime ? ` (${t('shared.local_time')}: ${localTime})` : ''}`}
-            />
+            </XStack>
           </View>
 
           {!!booking.locations?.length && (
@@ -219,6 +222,8 @@ export const ServiceBrandBookingProfile = ({
               {booking.locations.map((location) => (
                 <BrandLocationItem
                   key={location.id}
+                  hideArrow={!!booking.cancelAt}
+                  disabled={!!booking.cancelAt}
                   location={location}
                   onPress={() =>
                     router.push(`/locations/${location.id}/profile`)
@@ -236,6 +241,8 @@ export const ServiceBrandBookingProfile = ({
             {booking.employees.map((employee) => (
               <BrandEmployeeItem
                 key={employee.id}
+                hideArrow={!!booking.cancelAt}
+                disabled={!!booking.cancelAt}
                 employee={employee}
                 onPress={() => router.push(`/employees/${employee.id}/profile`)}
               />

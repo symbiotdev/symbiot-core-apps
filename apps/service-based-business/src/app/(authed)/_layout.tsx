@@ -192,7 +192,12 @@ export default () => {
               </Stack.Protected>
 
               <Stack.Protected guard={!!currentBrand}>
-                <Stack.Screen name="brand/profile" />
+                <Stack.Screen
+                  name="brand/profile"
+                  options={{
+                    headerTitle: t('brand.profile.title'),
+                  }}
+                />
 
                 <Stack.Protected guard={hasPermission('analytics')}>
                   <Stack.Screen
@@ -210,7 +215,7 @@ export default () => {
                   <Stack.Screen
                     name="brand/update"
                     options={{
-                      headerTitle: t('brand.information.title'),
+                      headerTitle: t('brand.update.title'),
                     }}
                   />
                 </Stack.Protected>

@@ -11,6 +11,7 @@ export type IconName =
   | 'ArrowLeft'
   | 'ArrowRight'
   | 'ArrowToTopLeft'
+  | 'Balloon'
   | 'Bell'
   | 'Bill'
   | 'Calendar'

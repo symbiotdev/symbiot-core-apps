@@ -12,19 +12,22 @@ import { View, ViewProps } from 'tamagui';
 export const BrandLocationItem = ({
   location,
   brand,
+  hideArrow,
   onPress,
   ...viewProps
 }: ViewProps & {
   location: BrandLocation;
   brand?: Brand;
+  hideArrow?: boolean;
 }) => {
   return (
     <FormView
       alignItems="center"
       gap="$4"
       flexDirection="row"
+      disabledStyle={{ opacity: 0.5 }}
       {...viewProps}
-      {...(onPress && {
+      {...(onPress && !viewProps.disabled && {
         cursor: 'pointer',
         pressStyle: { opacity: 0.8 },
         onPress: (e) => {
@@ -46,7 +49,7 @@ export const BrandLocationItem = ({
         </RegularText>
       </View>
 
-      <Icon name="ArrowRight" />
+      {!hideArrow && <Icon name="ArrowRight" />}
     </FormView>
   );
 };

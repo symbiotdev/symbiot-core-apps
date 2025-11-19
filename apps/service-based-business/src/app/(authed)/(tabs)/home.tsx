@@ -1,13 +1,12 @@
 import {
   Avatar,
+  CardGroup,
+  CardGroupItem,
   FormView,
   H3,
   HeaderButton,
   headerButtonSize,
   Icon,
-  ListItem,
-  ListItemGroup,
-  RegularText,
   TabsPageView,
   useDrawer,
 } from '@symbiot-core-apps/ui';
@@ -21,7 +20,7 @@ import { router, useNavigation } from 'expo-router';
 import React, { useCallback, useLayoutEffect } from 'react';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
-import { View, XStack } from 'tamagui';
+import { XStack } from 'tamagui';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import {
   BrandMembershipType,
@@ -124,64 +123,49 @@ const BrandHome = () => {
         <TodayBrandBookings />
 
         {hasPermission('clients') && (
-          <ListItemGroup title={t('brand.profile.stakeholders')}>
-            <ListItem
+          <CardGroup title={t('brand.profile.stakeholders')}>
+            <CardGroupItem
               label={t('brand_client.title')}
               icon={<Icon name="SmileCircle" />}
               onPress={onClientsPress}
             />
-          </ListItemGroup>
+          </CardGroup>
         )}
 
         {hasPermission('catalog') && (
-          <ListItemGroup title={t('shared.catalog')}>
-            <ListItem
+          <CardGroup title={t('shared.catalog')}>
+            <CardGroupItem
               label={t('brand_service.title')}
               icon={<Icon name={icons.Service} />}
               onPress={onServicesPress}
             />
-            <ListItem
+            <CardGroupItem
               label={t(
                 `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.title`,
               )}
               icon={<Icon name={icons.VisitBasedMembership} />}
               onPress={onVisitBasedMembershipsPress}
             />
-            <ListItem
+            <CardGroupItem
               label={t(
                 `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.title`,
               )}
               icon={<Icon name={icons.PeriodBasedMembership} />}
               onPress={onPeriodBasedMembershipsPress}
             />
-            <ListItem
+            <CardGroupItem
+              disabled
               label={t('brand_gift_card.title')}
               icon={<Icon name="Gift" />}
-              iconAfter={
-                <View>
-                  <RegularText color="$placeholderColor" fontSize={12}>
-                    {t('shared.coming_soon')}
-                  </RegularText>
-                </View>
-              }
+              text={`(${t('shared.coming_soon')})`}
             />
-          </ListItemGroup>
-        )}
-
-        {hasPermission('finances') && (
-          <ListItemGroup title={t('brand.profile.finance')}>
-            <ListItem
-              label={t('brand_transaction.title')}
-              icon={<Icon name="Bill" />}
-              onPress={onTransactionPress}
-            />
-          </ListItemGroup>
+          </CardGroup>
         )}
 
         {hasAnyOfPermissions(['employees', 'locations']) && (
-          <ListItemGroup title={t('brand.profile.infrastructure')}>
+          <CardGroup title={t('brand.profile.infrastructure')}>
             {hasPermission('locations') && (
-              <ListItem
+              <CardGroupItem
                 label={t('brand_location.title')}
                 icon={<Icon name="MapPointWave" />}
                 onPress={onLocationsPress}
@@ -189,13 +173,23 @@ const BrandHome = () => {
             )}
 
             {hasPermission('employees') && (
-              <ListItem
+              <CardGroupItem
                 label={t('brand_employee.title')}
                 icon={<Icon name="UsersGroupRounded" />}
                 onPress={onEmployeesPress}
               />
             )}
-          </ListItemGroup>
+          </CardGroup>
+        )}
+
+        {hasPermission('finances') && (
+          <CardGroup title={t('brand.profile.finance')}>
+            <CardGroupItem
+              label={t('brand_transaction.title')}
+              icon={<Icon name="Bill" />}
+              onPress={onTransactionPress}
+            />
+          </CardGroup>
         )}
       </FormView>
     </TabsPageView>

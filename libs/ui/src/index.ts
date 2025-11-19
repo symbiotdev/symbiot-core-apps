@@ -6,6 +6,7 @@ export * from './lib/calendar/calendar';
 
 export * from './lib/card/action-card';
 export * from './lib/card/card';
+export * from './lib/card/card-group';
 
 export * from './lib/chip/chip';
 

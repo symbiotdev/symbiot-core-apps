@@ -3,6 +3,7 @@ import {
   ContextMenuPopover,
   defaultPageVerticalPadding,
   FormView,
+  H1,
   Icon,
   ListItem,
   ListItemGroup,
@@ -46,6 +47,7 @@ import { BrandBookingNoteController } from './controller/brand-booking-note-cont
 import { getSlotsRandomEmployee } from '../utils/get-slots-random-employee';
 import { useApp } from '@symbiot-core-apps/app';
 import { ServiceBrandBookingProfileClients } from './service-brand-booking-profile-clients';
+import { View } from 'tamagui';
 
 export const ServiceBrandBookingProfile = ({
   booking,
@@ -176,7 +178,9 @@ export const ServiceBrandBookingProfile = ({
     <>
       <PageView scrollable withHeaderHeight>
         <FormView gap="$5">
-          <ListItemGroup gap="$4">
+          <View gap="$2">
+            <H1>{booking.name}</H1>
+
             <ListItem
               textNumberOfLines={2}
               icon={<Icon name={icons.ServiceBooking} />}
@@ -186,7 +190,7 @@ export const ServiceBrandBookingProfile = ({
               )}
               text={`${zonedTime}${localTime ? `\n${t('shared.local_time')}: ${localTime}` : ''}`}
             />
-          </ListItemGroup>
+          </View>
 
           {!!booking.locations?.length && (
             <ListItemGroup
@@ -220,14 +224,14 @@ export const ServiceBrandBookingProfile = ({
             ))}
           </ListItemGroup>
 
-          <ListItemGroup
-            paddingVertical="$4"
-            title={t(`service_brand_booking.profile.note`)}
-          >
-            <RegularText>
-              {booking.note || t('shared.not_specified')}
-            </RegularText>
-          </ListItemGroup>
+          {!!booking.note && (
+            <ListItemGroup
+              paddingVertical="$4"
+              title={t(`service_brand_booking.profile.note`)}
+            >
+              <RegularText>{booking.note}</RegularText>
+            </ListItemGroup>
+          )}
 
           <ServiceBrandBookingProfileClients booking={booking} />
         </FormView>

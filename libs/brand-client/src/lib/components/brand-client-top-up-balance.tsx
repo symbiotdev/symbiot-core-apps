@@ -28,10 +28,12 @@ export const BrandClientTopUpBalance = ({
   client,
   popoverRef,
   trigger,
+  preventNavigationToProfile,
 }: {
   popoverRef: RefObject<AdaptivePopoverRef | null>;
   client: BrandClient;
   trigger: ReactElement<{ loading?: boolean }>;
+  preventNavigationToProfile?: boolean;
 }) => {
   const { icons } = useApp();
   const { t } = useTranslation();
@@ -60,11 +62,13 @@ export const BrandClientTopUpBalance = ({
         membershipId: membership.id,
       });
 
+      if (preventNavigationToProfile) return;
+
       router.push(
         `/clients/${client.id}/memberships/${clientMembership.id}/update`,
       );
     },
-    [addMembership, client.id],
+    [addMembership, client.id, preventNavigationToProfile],
   );
 
   return (

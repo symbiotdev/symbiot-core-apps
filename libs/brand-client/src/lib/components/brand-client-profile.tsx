@@ -1,4 +1,4 @@
-import { BrandClient } from '@symbiot-core-apps/api';
+import { AnyBrandClientMembership, BrandClient } from '@symbiot-core-apps/api';
 import {
   AdaptivePopoverRef,
   Avatar,
@@ -19,6 +19,7 @@ import { BrandClientBalance } from './brand-client-balance';
 import { BrandClientNote } from './brand-client-note';
 import { BrandClientHistory } from './brand-client-history';
 import { BrandClientTopUpBalance } from './brand-client-top-up-balance';
+import { router } from 'expo-router';
 
 export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
   const { me } = useCurrentAccountState();
@@ -36,6 +37,13 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
   );
 
   const name = `${client.firstname} ${client.lastname}`;
+
+  const onPressMembership = useCallback(
+    (membership: AnyBrandClientMembership) => {
+      router.push(`/clients/${client.id}/memberships/${membership.id}/update`);
+    },
+    [client.id],
+  );
 
   return (
     <PageView scrollable withHeaderHeight>
@@ -100,7 +108,11 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
           </XStack>
         </View>
 
-        <BrandClientBalance client={client} />
+        <BrandClientBalance
+          client={client}
+          showTopUpBalance={!client.memberships?.length}
+          onPressMembership={onPressMembership}
+        />
         <BrandClientNote client={client} />
         <BrandClientHistory client={client} />
       </FormView>

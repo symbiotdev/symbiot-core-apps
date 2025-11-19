@@ -1,4 +1,6 @@
+export * from './lib/components/brand-client-balance';
 export * from './lib/components/brand-client-profile';
+export * from './lib/components/brand-client-top-up-balance';
 export * from './lib/components/update-brand-client-membership';
 export * from './lib/components/brand-client-memberships-list';
 export * from './lib/components/create-brand-client';

@@ -7,6 +7,7 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
+  MediumText,
   PageView,
   RegularText,
   SlideSheetModal,
@@ -47,7 +48,7 @@ import { BrandBookingNoteController } from './controller/brand-booking-note-cont
 import { getSlotsRandomEmployee } from '../utils/get-slots-random-employee';
 import { useApp } from '@symbiot-core-apps/app';
 import { ServiceBrandBookingProfileClients } from './service-brand-booking-profile-clients';
-import { View } from 'tamagui';
+import { View, XStack } from 'tamagui';
 
 export const ServiceBrandBookingProfile = ({
   booking,
@@ -179,7 +180,20 @@ export const ServiceBrandBookingProfile = ({
       <PageView scrollable withHeaderHeight>
         <FormView gap="$5">
           <View gap="$2">
-            <H1>{booking.name}</H1>
+            <H1
+              textDecorationLine={booking.cancelAt ? 'line-through' : undefined}
+            >
+              {booking.name}
+            </H1>
+
+            {!!booking.cancelAt && (
+              <XStack gap="$1">
+                <Icon name="Close" color="$error" />
+                <MediumText color="$error" alignSelf="center">
+                  {t('shared.canceled')}
+                </MediumText>
+              </XStack>
+            )}
 
             <ListItem
               alignItems="flex-start"
@@ -189,9 +203,9 @@ export const ServiceBrandBookingProfile = ({
               }
               label={DateHelper.format(
                 booking.start,
-                `EEEE ${me?.preferences?.dateFormat}`,
+                me?.preferences?.dateFormat,
               )}
-              text={`${zonedTime}${localTime ? `\n${t('shared.local_time')}: ${localTime}` : ''}`}
+              text={`${zonedTime}${localTime ? ` (${t('shared.local_time')}: ${localTime})` : ''}`}
             />
           </View>
 

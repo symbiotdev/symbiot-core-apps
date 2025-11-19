@@ -3,37 +3,42 @@ import {
   ActionCardWithCustomButton,
   AdaptivePopoverRef,
   Button,
+  formViewStyles,
   Icon,
 } from '@symbiot-core-apps/ui';
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { AnyBrandClientMembership, BrandClient } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 import { BrandClientMembershipItem } from '@symbiot-core-apps/brand';
 import { BrandClientTopUpBalance } from './brand-client-top-up-balance';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
-import { router } from 'expo-router';
 
-export const BrandClientBalance = ({ client }: { client: BrandClient }) => {
+export const BrandClientBalance = ({
+  client,
+  showTopUpBalance,
+  preventNavigationToCreatedMembership,
+  onPressMembership,
+}: {
+  client: BrandClient;
+  showTopUpBalance?: boolean;
+  preventNavigationToCreatedMembership?: boolean;
+  onPressMembership: (membership: AnyBrandClientMembership) => void;
+}) => {
   const { t } = useTranslation();
   const { hasPermission } = useCurrentBrandEmployee();
   const topUpBalancePopoverRef = useRef<AdaptivePopoverRef>(null);
 
-  const onPressMembership = useCallback(
-    (membership: AnyBrandClientMembership) => {
-      router.push(`/clients/${client.id}/memberships/${membership.id}/update`);
-    },
-    [client.id],
-  );
-
   return (
     <View gap="$2" alignItems="center">
-      {!client.memberships?.length && (
+      {hasPermission('catalog') && showTopUpBalance && (
         <ActionCardWithCustomButton
+          style={formViewStyles}
           title={t('brand_client.balance.extend.title')}
           subtitle={t('brand_client.balance.extend.subtitle')}
           button={
             <BrandClientTopUpBalance
               client={client}
+              preventNavigationToProfile={preventNavigationToCreatedMembership}
               popoverRef={topUpBalancePopoverRef}
               trigger={
                 <Button
@@ -46,15 +51,14 @@ export const BrandClientBalance = ({ client }: { client: BrandClient }) => {
         />
       )}
 
-      {hasPermission('catalog') &&
-        client.memberships?.map((membership) => (
-          <BrandClientMembershipItem
-            alignSelf="center"
-            key={membership.id}
-            membership={membership}
-            onPress={() => onPressMembership(membership)}
-          />
-        ))}
+      {client.memberships?.map((membership) => (
+        <BrandClientMembershipItem
+          alignSelf="center"
+          key={membership.id}
+          membership={membership}
+          onPress={() => onPressMembership(membership)}
+        />
+      ))}
     </View>
   );
 };

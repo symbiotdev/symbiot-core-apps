@@ -7,6 +7,7 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
+  MediumText,
   PageView,
   RegularText,
   SlideSheetModal,
@@ -34,7 +35,7 @@ import { UnavailableBrandBookingDatetimeController } from './controller/unavaila
 import { BrandBookingNoteController } from './controller/brand-booking-note-controller';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
 import { useApp } from '@symbiot-core-apps/app';
-import { View } from 'tamagui';
+import { View, XStack } from 'tamagui';
 
 export const UnavailableBrandBookingProfile = ({
   booking,
@@ -159,19 +160,35 @@ export const UnavailableBrandBookingProfile = ({
       <PageView scrollable withHeaderHeight>
         <FormView gap="$4">
           <View gap="$2">
-            <H1>{t(`unavailable_brand_booking.profile.title`)}</H1>
+            <H1
+              textDecorationLine={booking.cancelAt ? 'line-through' : undefined}
+            >
+              {t(`unavailable_brand_booking.profile.title`)}
+            </H1>
+
+            {!!booking.cancelAt && (
+              <XStack gap="$1">
+                <Icon name="Close" color="$error" />
+                <MediumText color="$error" alignSelf="center">
+                  {t('shared.canceled')}
+                </MediumText>
+              </XStack>
+            )}
 
             <ListItem
               alignItems="flex-start"
               textNumberOfLines={2}
               icon={
-                <Icon name={icons.ServiceBooking} style={{ marginTop: 8 }} />
+                <Icon
+                  name={icons.UnavailableBooking}
+                  style={{ marginTop: 8 }}
+                />
               }
               label={DateHelper.format(
                 booking.start,
-                `EEEE ${me?.preferences?.dateFormat}`,
+                me?.preferences?.dateFormat,
               )}
-              text={`${zonedTime}${localTime ? `\n${t('shared.local_time')}: ${localTime}` : ''}`}
+              text={`${zonedTime}${localTime ? ` (${t('shared.local_time')}: ${localTime})` : ''}`}
             />
           </View>
 

@@ -196,6 +196,7 @@ export const ServiceBrandBookingProfile = ({
             )}
 
             <ListItem
+              paddingVertical={0}
               alignItems="flex-start"
               textNumberOfLines={2}
               icon={

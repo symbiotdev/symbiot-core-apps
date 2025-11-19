@@ -3,6 +3,7 @@ import {
   ActionCardWithCustomButton,
   AdaptivePopoverRef,
   Button,
+  EmptyView,
   formViewStyles,
   Icon,
 } from '@symbiot-core-apps/ui';
@@ -17,11 +18,13 @@ export const BrandClientBalance = ({
   client,
   showTopUpBalance,
   preventNavigationToCreatedMembership,
+  showEmptyMessage,
   onPressMembership,
 }: {
   client: BrandClient;
   showTopUpBalance?: boolean;
   preventNavigationToCreatedMembership?: boolean;
+  showEmptyMessage?: boolean;
   onPressMembership: (membership: AnyBrandClientMembership) => void;
 }) => {
   const { t } = useTranslation();
@@ -49,6 +52,10 @@ export const BrandClientBalance = ({
             />
           }
         />
+      )}
+
+      {showEmptyMessage && !client.memberships?.length && (
+        <EmptyView message={t('brand_client.balance.empty')} />
       )}
 
       {client.memberships?.map((membership) => (

@@ -3,7 +3,9 @@ import {
   ContextMenuPopover,
   defaultPageVerticalPadding,
   FormView,
+  H1,
   Icon,
+  ListItem,
   ListItemGroup,
   PageView,
   RegularText,
@@ -15,23 +17,33 @@ import {
   useCancelUnavailableBrandBookingReq,
   useUpdateUnavailableBrandBookingReq,
 } from '@symbiot-core-apps/api';
-import { BrandBookingItem, BrandEmployeeItem } from '@symbiot-core-apps/brand';
+import {
+  BrandEmployeeItem,
+  useBookingScheduleFormattedTime,
+} from '@symbiot-core-apps/brand';
 import { router, useNavigation } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import React, { useCallback, useLayoutEffect, useMemo } from 'react';
 import { ConfirmAlert, DateHelper, useModal } from '@symbiot-core-apps/shared';
-import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccountState,
+  useCurrentBrandEmployee,
+} from '@symbiot-core-apps/state';
 import { useForm } from 'react-hook-form';
 import { UnavailableBrandBookingDatetimeController } from './controller/unavailable-brand-booking-datetime-controller';
 import { BrandBookingNoteController } from './controller/brand-booking-note-controller';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
+import { useApp } from '@symbiot-core-apps/app';
+import { View } from 'tamagui';
 
 export const UnavailableBrandBookingProfile = ({
   booking,
 }: {
   booking: UnavailableBrandBooking;
 }) => {
+  const { icons } = useApp();
   const { t } = useTranslation();
+  const { me } = useCurrentAccountState();
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
   const { timezone } = useBookingDatetime({ fallbackZone: booking.timezone });
@@ -39,6 +51,10 @@ export const UnavailableBrandBookingProfile = ({
     useCancelUnavailableBrandBookingReq();
   const { mutateAsync: update, isPending: updateProcessing } =
     useUpdateUnavailableBrandBookingReq();
+  const { zonedTime, localTime } = useBookingScheduleFormattedTime({
+    booking,
+    timezone,
+  });
   const {
     visible: rescheduleModalVisible,
     open: openRescheduleModal,
@@ -134,22 +150,30 @@ export const UnavailableBrandBookingProfile = ({
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: t(`unavailable_brand_booking.profile.title`),
       headerRight,
     });
-  }, [navigation, t, headerRight]);
+  }, [navigation, headerRight]);
 
   return (
     <>
       <PageView scrollable withHeaderHeight>
         <FormView gap="$4">
-          <BrandBookingItem
-            showLocalTime
-            padding="$4"
-            borderRadius="$10"
-            booking={booking}
-            timezone={timezone}
-          />
+          <View gap="$2">
+            <H1>{t(`unavailable_brand_booking.profile.title`)}</H1>
+
+            <ListItem
+              alignItems="flex-start"
+              textNumberOfLines={2}
+              icon={
+                <Icon name={icons.ServiceBooking} style={{ marginTop: 8 }} />
+              }
+              label={DateHelper.format(
+                booking.start,
+                `EEEE ${me?.preferences?.dateFormat}`,
+              )}
+              text={`${zonedTime}${localTime ? `\n${t('shared.local_time')}: ${localTime}` : ''}`}
+            />
+          </View>
 
           <ListItemGroup
             gap="$4"
@@ -178,9 +202,7 @@ export const UnavailableBrandBookingProfile = ({
 
       <SlideSheetModal
         scrollable
-        headerTitle={t(
-          `unavailable_brand_booking.profile.datetime`,
-        )}
+        headerTitle={t(`unavailable_brand_booking.profile.datetime`)}
         visible={rescheduleModalVisible}
         onClose={closeRescheduleModal}
       >

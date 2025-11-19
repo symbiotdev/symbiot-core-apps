@@ -182,8 +182,11 @@ export const ServiceBrandBookingProfile = ({
             <H1>{booking.name}</H1>
 
             <ListItem
+              alignItems="flex-start"
               textNumberOfLines={2}
-              icon={<Icon name={icons.ServiceBooking} />}
+              icon={
+                <Icon name={icons.ServiceBooking} style={{ marginTop: 8 }} />
+              }
               label={DateHelper.format(
                 booking.start,
                 `EEEE ${me?.preferences?.dateFormat}`,

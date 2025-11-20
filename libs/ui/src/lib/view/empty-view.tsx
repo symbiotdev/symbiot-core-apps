@@ -1,8 +1,7 @@
 import { View, ViewProps } from 'tamagui';
 import { H3 } from '../text/heading';
 import { RegularText } from '../text/text';
-import { IconName } from '../icons/config';
-import { Icon } from '../icons';
+import { Icon, IconName } from '../icons';
 import { useTranslation } from 'react-i18next';
 import { FormView } from './form-view';
 

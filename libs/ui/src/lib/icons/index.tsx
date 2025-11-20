@@ -5,9 +5,11 @@ import { Map as SolarBoldDuotone } from './solar/bold-duotone/_index';
 import { Map as SolarBroken } from './solar/broken/_index';
 import { Map as SolarLinear } from './solar/linear/_index';
 import { Map as SolarLinearDuotone } from './solar/linear-duotone/_index';
-import { Map as Social } from './social/_index';
-import { IconName } from './config';
+import { Map as Social, SocialIconName } from './social/_index';
+import { SolarIconName } from './config';
 import { ViewStyle } from 'react-native';
+
+export type IconName = SolarIconName | SocialIconName;
 
 const Map = {
   SolarBold,
@@ -36,7 +38,8 @@ export const Icon = memo(
     style?: ViewStyle;
   }) => {
     const theme = useTheme();
-    const IconComponent = Map[type][name];
+    const IconComponent =
+      Social[name as SocialIconName] || Map[type][name as SolarIconName];
 
     if (!IconComponent) {
       return null;
@@ -45,45 +48,6 @@ export const Icon = memo(
     return (
       <IconComponent
         key={name}
-        color={color ? theme[color]?.val || color : theme.color?.val}
-        width={size}
-        height={size}
-        style={{
-          ...style,
-          pointerEvents: 'none',
-          ...(!scalable && {
-            minWidth: size,
-            minHeight: size,
-          }),
-        }}
-      />
-    );
-  },
-);
-
-export const SocialIcon = memo(
-  ({
-    name,
-    scalable,
-    color,
-    size = 24,
-    style,
-  }: {
-    name: keyof typeof Social;
-    scalable?: boolean;
-    color?: string;
-    size?: number;
-    style?: ViewStyle;
-  }) => {
-    const theme = useTheme();
-    const IconComponent = Social[name];
-
-    if (!IconComponent) {
-      return null;
-    }
-
-    return (
-      <IconComponent
         color={color ? theme[color]?.val || color : theme.color?.val}
         width={size}
         height={size}

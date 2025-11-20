@@ -27,7 +27,6 @@ export const ActionCard = ({
       button={
         !buttonHidden ? (
           <Button
-            marginTop="$2"
             label={buttonLabel}
             icon={buttonIcon}
             type={buttonType}

@@ -1,7 +1,6 @@
 import { ViewProps, XStack } from 'tamagui';
 import { formViewStyles } from '../view/form-view';
-import { IconName } from '../icons/config';
-import { defaultIconSize, Icon } from '../icons';
+import { defaultIconSize, Icon, IconName } from '../icons';
 import { Card } from './card';
 import { ButtonIcon } from '../button/button';
 import { RegularText } from '../text/text';

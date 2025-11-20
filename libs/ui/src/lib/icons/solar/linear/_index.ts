@@ -78,6 +78,7 @@ import { Bill } from './Bill';
 import { CalendarCross } from './CalendarCross';
 import { Balloon } from './Balloon';
 import { Confetti } from './Confetti';
+import { Link } from './Link';
 
 export const Map: IconMap = {
   AddCircle,
@@ -120,6 +121,7 @@ export const Map: IconMap = {
   InfoCircle,
   Letter,
   Library,
+  Link,
   Lock,
   Login,
   Logout2,

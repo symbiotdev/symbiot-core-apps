@@ -13,8 +13,7 @@ import {
   useMemo,
 } from 'react';
 import { H4 } from '../text/heading';
-import { Icon } from '../icons';
-import { IconName } from '../icons/config';
+import { Icon, IconName } from '../icons';
 import { emitHaptic, isTablet } from '@symbiot-core-apps/shared';
 import { AttentionView } from '../view/attention-view';
 import { NavigationBackground } from './background';

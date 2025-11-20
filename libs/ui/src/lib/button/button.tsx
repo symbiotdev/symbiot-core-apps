@@ -3,8 +3,7 @@ import { MediumText } from '../text/text';
 import { ColorTokens, View, ViewProps, XStack, XStackProps } from 'tamagui';
 import { Spinner } from '../loading/spinner';
 import { emitHaptic } from '@symbiot-core-apps/shared';
-import { Icon } from '../icons';
-import { IconName } from '../icons/config';
+import { Icon, IconName } from '../icons';
 import { ViewStyle } from 'react-native';
 
 export const ButtonTheme = {
@@ -146,7 +145,7 @@ export const ButtonIcon = ({
         cursor: 'pointer',
         pressStyle: { opacity: 0.8 },
         onPress: (e) => {
-         hapticable && emitHaptic();
+          hapticable && emitHaptic();
           onPress?.(e);
         },
       })}

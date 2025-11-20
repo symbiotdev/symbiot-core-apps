@@ -42,7 +42,6 @@ export * from './lib/form/toggle-group';
 export * from './lib/form/website-input';
 export * from './lib/form/weekdays-schedule';
 
-export * from './lib/icons/config';
 export * from './lib/icons';
 
 export * from './lib/list/animated-list';

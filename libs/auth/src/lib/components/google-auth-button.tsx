@@ -1,4 +1,4 @@
-import { Button, SocialIcon } from '@symbiot-core-apps/ui';
+import { Button, Icon } from '@symbiot-core-apps/ui';
 import { useCallback, useState } from 'react';
 import {
   GoogleSignin,
@@ -58,7 +58,7 @@ export const GoogleAuthButton = ({
     <Button
       loading={loading || pending}
       disabled={disabled}
-      icon={<SocialIcon name="Google" size={18} />}
+      icon={<Icon name="Google" size={18} />}
       label={t('shared.auth.workspace.button.continue_with_google')}
       onPress={onPress}
     />

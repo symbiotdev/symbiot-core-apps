@@ -4,12 +4,12 @@ import {
   FormView,
   getNicknameFromUrl,
   H3,
+  Icon,
   Link,
   ListItemGroup,
   PageView,
   RegularText,
   SemiBoldText,
-  SocialIcon,
   WeekdaySchedule,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useMemo } from 'react';
@@ -74,7 +74,7 @@ export const BrandEmployeeProfile = ({
 
           {!!instagram && (
             <XStack justifyContent="center" gap="$2" flex={1} maxWidth="80%">
-              <SocialIcon name="Instagram" size={18} color="$link" />
+              <Icon name="Instagram" size={18} color="$link" />
               <Link
                 onPress={onInstagramPress}
                 lineHeight={18}

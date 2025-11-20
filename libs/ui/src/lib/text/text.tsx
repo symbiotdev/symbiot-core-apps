@@ -10,7 +10,7 @@ export const defaultTextStyles: TextNonStyleProps & TextStyle = {
   maxWidth: '100%',
   allowFontScaling: true,
   fontSize: 14,
-  lineHeight: Platform.OS === 'web' ? 14 : undefined,
+  lineHeight: Platform.OS === 'web' ? 18 : undefined,
   userSelect: 'none',
 };
 

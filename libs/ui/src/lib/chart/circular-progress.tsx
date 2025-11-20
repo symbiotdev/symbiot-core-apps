@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ViewProps, YStack } from 'tamagui';
+import { useTheme, View, ViewProps, YStack } from 'tamagui';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { Circle } from 'react-native-svg';
 import { MediumText, RegularText } from '../text/text';
@@ -24,9 +24,9 @@ export const CircularProgress = ({
   subtitleFontSize?: number | string;
   delay?: number;
 }) => {
+  const theme = useTheme();
+
   const arcSweepAngle = angle || 360;
-  const tintColor = '#177AD5';
-  const backgroundColor = 'lightgray';
 
   return (
     <View {...viewProps}>
@@ -36,15 +36,15 @@ export const CircularProgress = ({
         arcSweepAngle={arcSweepAngle}
         width={radius / 10}
         fill={progress}
-        tintColor={tintColor}
+        tintColor={theme?.color?.val}
+        backgroundColor="#EEEEEE50"
         delay={delay}
-        backgroundColor={backgroundColor}
         renderCap={({ center }) => (
           <Circle
             cx={center.x}
             cy={center.y}
             r={radius / 20}
-            fill={tintColor}
+            fill={theme?.color?.val}
           />
         )}
       >

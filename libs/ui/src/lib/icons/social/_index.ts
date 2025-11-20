@@ -11,3 +11,5 @@ export const Map = {
   LinkedIn,
   X,
 };
+
+export type SocialIconName = keyof typeof Map;

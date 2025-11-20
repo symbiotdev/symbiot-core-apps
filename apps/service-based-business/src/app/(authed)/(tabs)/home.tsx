@@ -27,7 +27,10 @@ import {
   getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
 import { TodayBrandBookings } from '@symbiot-core-apps/brand-booking';
-import { BrandFoundationBirthday } from '@symbiot-core-apps/brand';
+import {
+  BrandFoundationBirthday,
+  BrandProfileCompletion,
+} from '@symbiot-core-apps/brand';
 
 export default () => {
   const { me, stats } = useCurrentAccountState();
@@ -99,6 +102,7 @@ export default () => {
 const BrandHome = () => {
   const { icons } = useApp();
   const { t } = useTranslation();
+  const { brand: currentBrand } = useCurrentBrandState();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
 
   const onLocationsPress = useCallback(() => router.push('/locations'), []);
@@ -122,6 +126,10 @@ const BrandHome = () => {
     <TabsPageView scrollable withHeaderHeight>
       <FormView gap="$3">
         <BrandFoundationBirthday />
+
+        {!!currentBrand && hasPermission('brand') && (
+          <BrandProfileCompletion showAction brand={currentBrand} />
+        )}
 
         <TodayBrandBookings />
 

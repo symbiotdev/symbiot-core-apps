@@ -1,9 +1,9 @@
 import {
   FormView,
+  Icon,
   ListItem,
   ListItemGroup,
   PageView,
-  SocialIcon,
 } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import {
@@ -40,17 +40,17 @@ export const FollowUs = () => {
         <ListItemGroup>
           <ListItem
             label="@symbiothub"
-            icon={<SocialIcon name="X" />}
+            icon={<Icon name="X" />}
             onPress={openTwitter}
           />
           <ListItem
             label="@symbiothub"
-            icon={<SocialIcon name="Instagram" />}
+            icon={<Icon name="Instagram" />}
             onPress={openInstagram}
           />
           <ListItem
             label="@symbiothub"
-            icon={<SocialIcon name="LinkedIn" />}
+            icon={<Icon name="LinkedIn" />}
             onPress={openLinkedin}
           />
         </ListItemGroup>

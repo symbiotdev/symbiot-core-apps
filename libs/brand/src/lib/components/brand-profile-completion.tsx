@@ -60,7 +60,6 @@ export const BrandProfileCompletion = ({
       <Animated.View entering={FadeInUp} exiting={FadeOutUp}>
         <ProgressCard
           progress={progress}
-          title={t('brand.completion.title')}
           subtitle={t('brand.completion.subtitle')}
           onClose={() =>
             ignore('byBrandId', brand.id, DateHelper.addDays(new Date(), 30))

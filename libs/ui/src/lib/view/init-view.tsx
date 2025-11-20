@@ -1,8 +1,8 @@
 import { LoadingView } from './loading-view';
 import { ErrorView } from './error-view';
 import { EmptyView } from './empty-view';
-import { IconName } from '../icons/config';
 import { ViewProps } from 'tamagui';
+import { IconName } from '../icons';
 
 export const InitView = ({
   loading,

@@ -1,19 +1,17 @@
 import { useCurrentBrandReq } from '@symbiot-core-apps/api';
 import {
   Avatar,
+  ButtonIcon,
   FormView,
-  getNicknameFromUrl,
   H3,
   InitView,
-  Link,
   ListItemGroup,
   PageView,
   RegularText,
-  SocialIcon,
 } from '@symbiot-core-apps/ui';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { View, XStack } from 'tamagui';
-import { DateHelper, emitHaptic } from '@symbiot-core-apps/shared';
+import { DateHelper } from '@symbiot-core-apps/shared';
 import { openBrowserAsync } from 'expo-web-browser';
 import { BrandLocationItem } from './items/brand-location-item';
 import { router } from 'expo-router';
@@ -41,14 +39,7 @@ export const CurrentBrandProfile = () => {
 
   const brand = currentBrandResponse?.brand;
   const instagram = useMemo(() => brand?.instagrams?.[0], [brand?.instagrams]);
-
-  const onInstagramPress = useCallback(() => {
-    if (!instagram) return;
-
-    emitHaptic();
-
-    void openBrowserAsync(instagram);
-  }, [instagram]);
+  const website = useMemo(() => brand?.websites?.[0], [brand?.websites]);
 
   useEffect(() => {
     if (brand) {
@@ -65,10 +56,6 @@ export const CurrentBrandProfile = () => {
       <FormView gap="$5">
         <BrandFoundationBirthday />
 
-        {hasPermission('brand') && (
-          <BrandProfileCompletion showAction brand={currentBrand} />
-        )}
-
         <View alignItems="center" gap="$2">
           <Avatar
             color="$background1"
@@ -79,24 +66,30 @@ export const CurrentBrandProfile = () => {
 
           <H3 textAlign="center">{currentBrand.name}</H3>
 
-          {!!instagram && (
-            <XStack justifyContent="center" gap="$2" flex={1} maxWidth="80%">
-              <SocialIcon name="Instagram" size={18} color="$link" />
-              <Link
-                onPress={onInstagramPress}
-                lineHeight={18}
-                numberOfLines={1}
-              >
-                {getNicknameFromUrl(instagram)}
-              </Link>
+          {(!!instagram || !!website) && (
+            <XStack justifyContent="center" gap="$2" marginTop="$2">
+              {!!instagram && (
+                <ButtonIcon
+                  iconName="Instagram"
+                  size={40}
+                  iconSize={20}
+                  onPress={() => openBrowserAsync(instagram)}
+                />
+              )}
+              {!!website && (
+                <ButtonIcon
+                  iconName="Link"
+                  size={40}
+                  iconSize={20}
+                  onPress={() => openBrowserAsync(website)}
+                />
+              )}
             </XStack>
           )}
         </View>
 
-        {!!currentBrand.about && (
-          <ListItemGroup paddingVertical="$4" title={t('brand.profile.about')}>
-            <RegularText>{currentBrand.about}</RegularText>
-          </ListItemGroup>
+        {hasPermission('brand') && (
+          <BrandProfileCompletion showAction brand={currentBrand} />
         )}
 
         {!!currentBrand.locations?.length && (
@@ -117,19 +110,30 @@ export const CurrentBrandProfile = () => {
           </ListItemGroup>
         )}
 
-        {!!currentBrand.birthday && (
-          <ListItemGroup
-            paddingVertical="$4"
-            title={t('brand.profile.birthday')}
-          >
-            <RegularText>
-              {DateHelper.format(
-                currentBrand.birthday,
-                me?.preferences?.dateFormat,
-              )}
-            </RegularText>
-          </ListItemGroup>
-        )}
+        <ListItemGroup
+          paddingVertical={0}
+          backgroundColor="transparent"
+          title={t('brand.profile.about')}
+        >
+          <RegularText lineHeight={20}>
+            {currentBrand.about || t('shared.not_specified')}
+          </RegularText>
+        </ListItemGroup>
+
+        <ListItemGroup
+          paddingVertical={0}
+          backgroundColor="transparent"
+          title={t('brand.profile.birthday')}
+        >
+          <RegularText>
+            {currentBrand.birthday
+              ? DateHelper.format(
+                  currentBrand.birthday,
+                  me?.preferences?.dateFormat,
+                )
+              : t('shared.not_specified')}
+          </RegularText>
+        </ListItemGroup>
       </FormView>
     </PageView>
   );

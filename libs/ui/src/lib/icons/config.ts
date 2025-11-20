@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { IconProps } from './icon-props';
 
-export type IconName =
+export type SolarIconName =
   | 'AddCircle'
   | 'AddSquare'
   | 'AltArrowDown'
@@ -43,6 +43,7 @@ export type IconName =
   | 'Login'
   | 'Letter'
   | 'Library'
+  | 'Link'
   | 'Lock'
   | 'Logout2'
   | 'MagicStick'
@@ -81,4 +82,4 @@ export type IconName =
   | 'Wallet'
   | 'Widget'
   | 'Widget3';
-export type IconMap = Record<IconName, (props: IconProps) => ReactElement>;
+export type IconMap = Record<SolarIconName, (props: IconProps) => ReactElement>;

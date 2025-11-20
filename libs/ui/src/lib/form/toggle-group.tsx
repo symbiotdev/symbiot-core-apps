@@ -1,10 +1,9 @@
 import { View, ViewProps, XStack, XStackProps } from 'tamagui';
 import { memo, ReactElement } from 'react';
 import { RegularText } from '../text/text';
-import { Icon } from '../icons';
+import { Icon, IconName } from '../icons';
 import { InitView } from '../view/init-view';
 import { emitHaptic, isEqual } from '@symbiot-core-apps/shared';
-import { IconName } from '../icons/config';
 import { ContainerView } from '../view/container-view';
 import { FormField } from './form-field';
 
@@ -160,12 +159,19 @@ const Item = memo(
           minHeight={toggleItemMinHeight}
           justifyContent="center"
         >
-          <RegularText color={disabled ? '$disabled' : '$color'} numberOfLines={1}>
+          <RegularText
+            color={disabled ? '$disabled' : '$color'}
+            numberOfLines={1}
+          >
             {item.label}
           </RegularText>
 
           {!!item.description && (
-            <RegularText fontSize={12} color="$placeholderColor" numberOfLines={2}>
+            <RegularText
+              fontSize={12}
+              color="$placeholderColor"
+              numberOfLines={2}
+            >
               {item.description}
             </RegularText>
           )}

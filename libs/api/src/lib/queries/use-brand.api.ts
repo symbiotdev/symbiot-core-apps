@@ -13,6 +13,7 @@ import {
 } from '../utils/request';
 import { generateFormData } from '../utils/media';
 import { AccountAuthTokens } from '../types/account-auth';
+import { queryClient } from '../utils/client';
 
 export enum BrandQueryKey {
   current = 'brand-current',
@@ -57,15 +58,20 @@ export const useBrandCurrenciesReq = () =>
 
 export const useCurrentBrandUpdateReq = () =>
   useMutation<Brand, string, UpdateBrand>({
-    mutationFn: async (data) =>
-      requestWithAlertOnError(
+    mutationFn: async (data) => {
+      const brand = await requestWithAlertOnError<Brand>(
         axios.put(
           '/api/brand/current',
           await (data.avatar
             ? generateFormData<UpdateBrand>(data, ['avatar'])
             : data),
         ),
-      ),
+      );
+
+      queryClient.setQueryData([BrandQueryKey.current], { brand });
+
+      return brand;
+    },
   });
 
 export const useBrandAuthReq = () =>

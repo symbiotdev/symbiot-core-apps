@@ -28,7 +28,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { TodayBrandBookings } from '@symbiot-core-apps/brand-booking';
 import {
-  BrandFoundationBirthday,
+  BrandCongrats,
   BrandProfileCompletion,
 } from '@symbiot-core-apps/brand';
 
@@ -125,10 +125,14 @@ const BrandHome = () => {
   return (
     <TabsPageView scrollable withHeaderHeight>
       <FormView gap="$3">
-        <BrandFoundationBirthday />
+        {!!currentBrand && (
+          <>
+            <BrandCongrats brand={currentBrand} />
 
-        {!!currentBrand && hasPermission('brand') && (
-          <BrandProfileCompletion showAction brand={currentBrand} />
+            {hasPermission('brand') && (
+              <BrandProfileCompletion showAction brand={currentBrand} />
+            )}
+          </>
         )}
 
         <TodayBrandBookings />

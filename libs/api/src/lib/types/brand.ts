@@ -35,6 +35,7 @@ export type Brand = {
   locations: BrandLocation[];
   instagrams: string[];
   websites: string[];
+  cAt: string;
 };
 
 export type CreateBrand = {

@@ -6,7 +6,7 @@ export * from './lib/components/items/brand-membership-item';
 export * from './lib/components/items/brand-service-item';
 export * from './lib/components/items/brand-transaction-item';
 
-export * from './lib/components/brand-foundation-birthday';
+export * from './lib/components/brand-congrats';
 export * from './lib/components/brand-profile-completion';
 export * from './lib/components/current-brand-profile';
 export * from './lib/components/create-brand';

@@ -21,7 +21,7 @@ import {
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { BrandFoundationBirthday } from './brand-foundation-birthday';
+import { BrandCongrats } from './brand-congrats';
 import { BrandProfileCompletion } from './brand-profile-completion';
 
 export const CurrentBrandProfile = () => {
@@ -54,7 +54,7 @@ export const CurrentBrandProfile = () => {
   return (
     <PageView scrollable withHeaderHeight>
       <FormView gap="$5">
-        <BrandFoundationBirthday />
+        <BrandCongrats brand={currentBrand} />
 
         <View alignItems="center" gap="$2">
           <Avatar

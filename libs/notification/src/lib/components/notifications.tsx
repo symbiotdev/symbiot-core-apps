@@ -30,7 +30,7 @@ export const Notifications = ({
   const {
     items: notifications,
     isFetchingNextPage,
-    isRefetching,
+    isManualRefetching,
     isLoading,
     error,
     onRefresh,
@@ -107,7 +107,7 @@ export const Notifications = ({
         <InitView loading={isLoading} error={error} />
       ) : (
         <AnimatedList
-          refreshing={isRefetching && !isLoading}
+          refreshing={isManualRefetching}
           expanding={isFetchingNextPage}
           data={notifications}
           progressViewOffset={headerHeight}

@@ -39,7 +39,7 @@ export const BrandTransactionsList = ({
     <ContainerView flex={1} paddingVertical={defaultPageVerticalPadding}>
       <AnimatedList
         keyboardDismissMode="on-drag"
-        refreshing={isRefetching && !isLoading}
+        refreshing={isRefetching}
         expanding={isFetchingNextPage}
         data={transactions}
         progressViewOffset={offsetTop}

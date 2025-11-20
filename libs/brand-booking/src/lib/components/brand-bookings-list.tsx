@@ -30,7 +30,7 @@ export const BrandBookingsList = () => {
   const {
     items: bookings,
     isFetchingNextPage,
-    isRefetching,
+    isManualRefetching,
     isLoading,
     error,
     onRefresh,
@@ -65,13 +65,13 @@ export const BrandBookingsList = () => {
 
   const ListEmptyComponent = useCallback(
     () => <Intro loading={isLoading} error={error} />,
-    [Intro, error, isLoading],
+    [error, isLoading],
   );
 
   return (
     <SectionList
       keyboardDismissMode="on-drag"
-      refreshing={isRefetching && !isLoading}
+      refreshing={isManualRefetching}
       expanding={isFetchingNextPage}
       sections={sections}
       progressViewOffset={headerHeight}
@@ -123,7 +123,7 @@ const Intro = ({
   error?: string | null;
 }) => {
   const { icons } = useApp();
-  let { t } = useTranslation();
+  const { t } = useTranslation();
   const { hasPermission } = useCurrentBrandEmployee();
 
   if (loading || error) {

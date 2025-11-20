@@ -42,7 +42,7 @@ export const CurrentBrandClients = ({
   const {
     items: clients,
     isFetchingNextPage,
-    isRefetching,
+    isManualRefetching,
     isLoading,
     error,
     onRefresh,
@@ -69,7 +69,7 @@ export const CurrentBrandClients = ({
       <ContainerView flex={1} paddingVertical={defaultPageVerticalPadding}>
         <AnimatedList
           keyboardDismissMode="on-drag"
-          refreshing={isRefetching && !isLoading}
+          refreshing={isManualRefetching}
           expanding={isFetchingNextPage}
           data={clients}
           progressViewOffset={offsetTop}

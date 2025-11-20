@@ -31,7 +31,7 @@ export const BrandClientMembershipsList = ({
   const {
     items: memberships,
     isFetchingNextPage,
-    isRefetching,
+    isManualRefetching,
     isLoading,
     error,
     onRefresh,
@@ -47,7 +47,7 @@ export const BrandClientMembershipsList = ({
     <ContainerView flex={1} paddingVertical={defaultPageVerticalPadding}>
       <AnimatedList
         keyboardDismissMode="on-drag"
-        refreshing={isRefetching && !isLoading}
+        refreshing={isManualRefetching}
         expanding={isFetchingNextPage}
         data={memberships}
         progressViewOffset={offsetTop}

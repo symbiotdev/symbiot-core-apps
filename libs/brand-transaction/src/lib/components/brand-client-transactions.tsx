@@ -11,7 +11,7 @@ export const BrandClientTransactions = ({
   const {
     items: transactions,
     isFetchingNextPage,
-    isRefetching,
+    isManualRefetching,
     isLoading,
     error,
     onRefresh,
@@ -23,7 +23,7 @@ export const BrandClientTransactions = ({
       transactions={transactions}
       offsetTop={offsetTop}
       isLoading={isLoading}
-      isRefetching={isRefetching}
+      isRefetching={isManualRefetching}
       isFetchingNextPage={isFetchingNextPage}
       error={error}
       onRefresh={onRefresh}

@@ -35,7 +35,7 @@ export const CurrentBrandEmployees = ({
   const {
     items: employees,
     isFetchingNextPage,
-    isRefetching,
+    isManualRefetching,
     isLoading,
     error,
     onRefresh,
@@ -61,7 +61,7 @@ export const CurrentBrandEmployees = ({
     <>
       <ContainerView flex={1} paddingVertical={defaultPageVerticalPadding}>
         <AnimatedList
-          refreshing={isRefetching && !isLoading}
+          refreshing={isManualRefetching}
           expanding={isFetchingNextPage}
           data={employees}
           progressViewOffset={offsetTop}

@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import type { InfiniteData, QueryKey } from '@tanstack/query-core';
 import axios from 'axios';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { PaginationList, PaginationListParams } from '../types/pagination';
 import { queryClient } from '../utils/client';
 import { requestWithStringError } from '../utils/request';
@@ -20,6 +20,7 @@ export type InfiniteQuery<T> = UseInfiniteQueryResult<
   string
 > & {
   items: T[] | undefined;
+  isManualRefetching: boolean;
   onRefresh: () => void;
   onEndReached: () => void;
 };
@@ -39,6 +40,8 @@ export function useInfiniteQueryWrapper<T extends { id: string }>({
   storeInitialData?: boolean;
   params?: PaginationListParams & Record<string, unknown>;
 }) {
+  const [isManualRefetching, setIsManualRefetching] = useState(false);
+
   const query = useInfiniteQuery<
     PaginationList<T>,
     string,
@@ -90,7 +93,9 @@ export function useInfiniteQueryWrapper<T extends { id: string }>({
     }
   }, [query.data?.pages, queryKey]);
 
-  const onRefresh = useCallback(() => {
+  const onRefresh = useCallback(async () => {
+    setIsManualRefetching(true);
+
     queryClient.setQueryData<InfiniteData<PaginationList<T>>>(
       queryKey,
       (data) =>
@@ -100,7 +105,11 @@ export function useInfiniteQueryWrapper<T extends { id: string }>({
         },
     );
 
-    void query.refetch();
+    try {
+      await query.refetch();
+    } finally {
+      setIsManualRefetching(false);
+    }
   }, [query, queryKey]);
 
   const onEndReached = useCallback(
@@ -121,6 +130,7 @@ export function useInfiniteQueryWrapper<T extends { id: string }>({
   return {
     ...query,
     items,
+    isManualRefetching,
     onRefresh,
     onEndReached,
   };

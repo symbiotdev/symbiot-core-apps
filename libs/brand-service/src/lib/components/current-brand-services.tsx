@@ -37,7 +37,7 @@ export const CurrentBrandServices = ({
   const {
     items: services,
     isFetchingNextPage,
-    isRefetching,
+    isManualRefetching,
     isLoading,
     error,
     onRefresh,
@@ -64,7 +64,7 @@ export const CurrentBrandServices = ({
       <ContainerView flex={1} paddingVertical={defaultPageVerticalPadding}>
         <AnimatedList
           keyboardDismissMode="on-drag"
-          refreshing={isRefetching && !isLoading}
+          refreshing={isManualRefetching}
           expanding={isFetchingNextPage}
           data={services}
           progressViewOffset={offsetTop}

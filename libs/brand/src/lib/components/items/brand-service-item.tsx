@@ -19,8 +19,7 @@ export const BrandServiceItem = ({
 
   return (
     <FormView
-      gap="$3"
-      opacity={service.hidden ? 0.7 : 1}
+      opacity={service.hidden ? 0.5 : 1}
       {...viewProps}
       {...(onPress && {
         cursor: 'pointer',
@@ -31,6 +30,12 @@ export const BrandServiceItem = ({
         },
       })}
     >
+      {service.hidden && (
+        <RegularText color="$error" fontSize={12}>
+          {t('brand_service.unavailable')}
+        </RegularText>
+      )}
+
       <XStack flex={1}>
         <MediumText numberOfLines={2} flex={1}>
           {service.name}

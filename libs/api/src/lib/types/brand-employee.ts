@@ -17,6 +17,7 @@ export type BrandEmployee = {
   role: string;
   passport: string;
   taxId: string;
+  cAt: string;
   provider: boolean;
   gender: Gender;
   phones: string[];

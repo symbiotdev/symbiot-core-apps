@@ -1,27 +1,32 @@
 import { BrandEmployee } from '@symbiot-core-apps/api';
 import {
   Avatar,
+  ButtonIcon,
   FormView,
-  getNicknameFromUrl,
   H3,
-  Icon,
-  Link,
   ListItemGroup,
+  MapsTrigger,
+  MediumText,
   PageView,
   RegularText,
   SemiBoldText,
   WeekdaySchedule,
 } from '@symbiot-core-apps/ui';
-import { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { View, XStack } from 'tamagui';
+import { DateHelper, useNativeNow } from '@symbiot-core-apps/shared';
 import {
-  DateHelper,
-  emitHaptic,
-  useNativeNow,
-} from '@symbiot-core-apps/shared';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+  useCurrentAccountState,
+  useCurrentBrandEmployee,
+  useCurrentBrandState,
+} from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 import { openBrowserAsync } from 'expo-web-browser';
+import { BrandLocationItem } from '@symbiot-core-apps/brand';
+import { router } from 'expo-router';
+import { Linking } from 'react-native';
+import { BrandEmployeeCongrats } from './brand-employee-congrats';
+import { BrandEmployeeProfileCompletion } from './brand-employee-profile-completion';
 
 const startOfDay = DateHelper.startOfDay(new Date());
 
@@ -31,12 +36,32 @@ export const BrandEmployeeProfile = ({
   employee: BrandEmployee;
 }) => {
   const { me } = useCurrentAccountState();
+  const { brand } = useCurrentBrandState();
+  const { hasPermission } = useCurrentBrandEmployee();
   const { t } = useTranslation();
   const { now } = useNativeNow();
 
-  const instagram = useMemo(
-    () => employee.instagrams?.[0],
-    [employee.instagrams],
+  const { instagram, email, phone, address } = useMemo(
+    () => ({
+      instagram: employee.instagrams?.[0],
+      email: employee.emails?.[0],
+      phone: employee.phones?.[0],
+      address: employee.addresses?.[0],
+    }),
+    [employee.instagrams, employee.emails, employee.phones, employee.addresses],
+  );
+
+  const subtitle = useMemo(
+    () =>
+      [
+        employee.birthday
+          ? DateHelper.format(employee.birthday, me?.preferences?.dateFormat)
+          : '',
+        employee.gender?.label,
+      ]
+        .filter(Boolean)
+        .join(' · '),
+    [employee.birthday, employee.gender?.label, me?.preferences?.dateFormat],
   );
 
   const schedules = useMemo(
@@ -47,17 +72,11 @@ export const BrandEmployeeProfile = ({
     [employee.locations, employee.schedules],
   );
 
-  const onInstagramPress = useCallback(() => {
-    if (!instagram) return;
-
-    emitHaptic();
-
-    void openBrowserAsync(instagram);
-  }, [instagram]);
-
   return (
     <PageView scrollable withHeaderHeight>
-      <FormView alignItems="center" gap="$5">
+      <FormView alignItems="center" gap="$5" flex={1}>
+        <BrandEmployeeCongrats employee={employee} />
+
         <View gap="$3" alignItems="center">
           <Avatar
             name={employee.name}
@@ -68,35 +87,57 @@ export const BrandEmployeeProfile = ({
 
           <H3 textAlign="center">{employee.name}</H3>
 
-          <RegularText color="$placeholderColor" textAlign="center">
-            {employee.role}
-          </RegularText>
-
-          {!!instagram && (
-            <XStack justifyContent="center" gap="$2" flex={1} maxWidth="80%">
-              <Icon name="Instagram" size={18} color="$link" />
-              <Link
-                onPress={onInstagramPress}
-                lineHeight={18}
-                numberOfLines={1}
-              >
-                {getNicknameFromUrl(instagram)}
-              </Link>
-            </XStack>
+          {!!subtitle && (
+            <RegularText color="$placeholderColor" textAlign="center">
+              {subtitle}
+            </RegularText>
           )}
+
+          <MediumText color="$placeholderColor" textAlign="center">
+            {employee.role}
+          </MediumText>
+
+          <XStack justifyContent="center" gap="$2">
+            <ButtonIcon
+              iconName="Phone"
+              disabled={!phone}
+              size={40}
+              iconSize={20}
+              iconStyle={{ marginLeft: -2, marginBottom: -2 }}
+              onPress={() => Linking.openURL(`tel:${phone}`)}
+            />
+            <ButtonIcon
+              iconName="Letter"
+              disabled={!email}
+              size={40}
+              iconSize={20}
+              onPress={() => Linking.openURL(`mailto:${email}`)}
+            />
+
+            <MapsTrigger
+              address={address}
+              disabled={!address}
+              trigger={
+                <ButtonIcon iconName="MapPoint" size={40} iconSize={20} />
+              }
+            />
+
+            {!!instagram && (
+              <ButtonIcon
+                iconName="Instagram"
+                size={40}
+                iconSize={20}
+                onPress={() => openBrowserAsync(instagram)}
+              />
+            )}
+          </XStack>
         </View>
 
-        {!!employee.about && (
-          <ListItemGroup
-            title={t('shared.about')}
-            paddingVertical="$4"
-            gap="$2"
-          >
-            <RegularText lineHeight={22}>{employee.about}</RegularText>
-          </ListItemGroup>
+        {hasPermission('employees') && (
+          <BrandEmployeeProfileCompletion employee={employee} />
         )}
 
-        {!!schedules?.length && (
+        {schedules?.length ? (
           <ListItemGroup
             title={t('shared.schedule.working_hours')}
             paddingVertical="$4"
@@ -122,6 +163,7 @@ export const BrandEmployeeProfile = ({
                     opacity={isDayOff ? 0.5 : 1}
                     alignItems="center"
                     gap="$3"
+                    flexWrap="wrap"
                   >
                     <View
                       width={5}
@@ -148,7 +190,53 @@ export const BrandEmployeeProfile = ({
                 );
               })}
           </ListItemGroup>
+        ) : (
+          <ListItemGroup
+            paddingVertical={0}
+            backgroundColor="transparent"
+            title={t('shared.schedule.working_hours')}
+          >
+            <RegularText>{t('shared.not_specified')}</RegularText>
+          </ListItemGroup>
         )}
+
+        {employee.locations?.length ? (
+          <ListItemGroup
+            paddingVertical="$4"
+            gap="$3"
+            title={t('brand_employee.profile.locations')}
+          >
+            {employee.locations.map((location) => (
+              <BrandLocationItem
+                key={location.id}
+                location={location}
+                brand={brand}
+                onPress={() => router.push(`/locations/${location.id}/profile`)}
+              />
+            ))}
+          </ListItemGroup>
+        ) : (
+          <ListItemGroup
+            paddingVertical={0}
+            backgroundColor="transparent"
+            gap="$3"
+            title={t('brand_employee.profile.locations')}
+          >
+            <RegularText>
+              {t('brand_employee.profile.dynamic_location')}
+            </RegularText>
+          </ListItemGroup>
+        )}
+
+        <ListItemGroup
+          title={t('shared.about')}
+          paddingVertical={0}
+          backgroundColor="transparent"
+        >
+          <RegularText lineHeight={22}>
+            {employee.about || t('shared.not_specified')}
+          </RegularText>
+        </ListItemGroup>
       </FormView>
     </PageView>
   );

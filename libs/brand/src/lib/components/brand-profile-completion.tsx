@@ -1,10 +1,14 @@
 import { Brand } from '@symbiot-core-apps/api';
-import { Button, ProgressCard } from '@symbiot-core-apps/ui';
+import { Button, formViewStyles, ProgressCard } from '@symbiot-core-apps/ui';
 import { useTranslation } from 'react-i18next';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 import { useIgnoredProfileCompletionState } from '@symbiot-core-apps/state';
 import { useMemo } from 'react';
-import { DateHelper, useNativeNow } from '@symbiot-core-apps/shared';
+import {
+  DateHelper,
+  secondsInHour,
+  useNativeNow,
+} from '@symbiot-core-apps/shared';
 import { router } from 'expo-router';
 
 export const BrandProfileCompletion = ({
@@ -16,7 +20,7 @@ export const BrandProfileCompletion = ({
 }) => {
   const { t } = useTranslation();
   const { byBrandId, ignore } = useIgnoredProfileCompletionState();
-  const { now } = useNativeNow(60 * 60 * 1000);
+  const { now } = useNativeNow(secondsInHour);
 
   const progress = useMemo(() => {
     let percentage = 0;
@@ -57,7 +61,11 @@ export const BrandProfileCompletion = ({
 
   return (
     isVisible && (
-      <Animated.View entering={FadeInUp} exiting={FadeOutUp}>
+      <Animated.View
+        style={formViewStyles}
+        entering={FadeInUp}
+        exiting={FadeOutUp}
+      >
         <ProgressCard
           progress={progress}
           subtitle={t('brand.completion.subtitle')}

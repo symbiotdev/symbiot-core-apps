@@ -10,10 +10,12 @@ import { ListItem } from '../list/list-item';
 export const MapsTrigger = ({
   address,
   disableDrag,
+  disabled,
   trigger,
 }: {
   address: string;
   disableDrag?: boolean;
+  disabled?: boolean;
   trigger: ReactElement;
 }) => {
   const { t } = useTranslation();
@@ -48,6 +50,7 @@ export const MapsTrigger = ({
   return (
     <AdaptivePopover
       ref={popoverRef}
+      disabled={disabled}
       disableDrag={disableDrag}
       placement="bottom"
       sheetTitle={t('shared.maps.open.title')}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRestoreApp } from './use-app-state';
+import { secondsInDay } from '../utils/date-helper';
 
 export const useNativeNow = (intervalInSeconds?: number) => {
   const [now, setNow] = useState(new Date());
@@ -12,11 +13,13 @@ export const useNativeNow = (intervalInSeconds?: number) => {
     const date = new Date();
     const timeout = setTimeout(
       () => setNow(date),
-      (intervalInSeconds || 60 - date.getSeconds()) * 1000,
+      (intervalInSeconds
+        ? Math.min(intervalInSeconds, secondsInDay)
+        : 60 - date.getSeconds()) * 1000,
     );
 
     return () => clearTimeout(timeout);
-  }, [intervalInSeconds]);
+  }, [intervalInSeconds, now]);
 
   return {
     now,

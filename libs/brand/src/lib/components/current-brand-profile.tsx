@@ -97,7 +97,6 @@ export const CurrentBrandProfile = () => {
             paddingVertical="$4"
             gap="$3"
             title={t('brand.profile.locations')}
-            disabled={!currentBrand.locations}
           >
             {currentBrand.locations.map((location) => (
               <BrandLocationItem

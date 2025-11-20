@@ -164,7 +164,7 @@ const Item = memo(
             {item.label}
           </RegularText>
 
-          {item.description && (
+          {!!item.description && (
             <RegularText fontSize={12} color="$placeholderColor" numberOfLines={2}>
               {item.description}
             </RegularText>

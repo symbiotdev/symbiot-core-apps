@@ -141,7 +141,7 @@ export const useImportBrandClientsReq = () =>
         );
       });
 
-      queryClient.removeQueries({
+      await queryClient.resetQueries({
         queryKey: [BrandClientQueryKey.currentList],
       });
 

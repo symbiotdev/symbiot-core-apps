@@ -93,9 +93,9 @@ export const Textarea = forwardRef(
           text = text.replace(/\n|\s\s+/g, '');
         }
 
-        Platform.OS === 'web' ? onChange?.(text) : onDebounceChange(text);
+        onDebounceChange(text);
       },
-      [ignoreTab, maxLength, onChange, onDebounceChange],
+      [ignoreTab, maxLength, onDebounceChange],
     );
 
     const onInputFocus = useCallback(() => {

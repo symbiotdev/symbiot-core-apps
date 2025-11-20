@@ -27,7 +27,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
     <PageView scrollable withHeaderHeight>
       <Avatar
         name={service.name}
-        url={service.avatar?.xsUrl}
+        url={service.avatar?.url}
         borderRadius="$10"
         color="$background1"
         size={{

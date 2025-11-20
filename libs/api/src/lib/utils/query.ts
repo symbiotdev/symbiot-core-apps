@@ -26,7 +26,7 @@ export async function refetchQueriesByChanges<T extends { id: string }>({
   if (refetchList || entities.some(({ data }) => !data)) {
     await Promise.all(
       queryKeys.list.map((key) =>
-        queryClient.removeQueries({
+        queryClient.resetQueries({
           queryKey: [key],
         }),
       ),

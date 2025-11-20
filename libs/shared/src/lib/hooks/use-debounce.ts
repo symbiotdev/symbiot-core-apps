@@ -9,6 +9,8 @@ export const useDebounceCallback = <T>(
 
   const debouncedCallback = useCallback(
     (arg: T) => {
+      if (!delay) return callback(arg);
+
       lastArgsRef.current = arg;
 
       if (timeoutRef.current) clearTimeout(timeoutRef.current);

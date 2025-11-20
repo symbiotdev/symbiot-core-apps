@@ -18,6 +18,7 @@ import { BrandLocationItem } from './items/brand-location-item';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { BrandFoundationBirthday } from './brand-foundation-birthday';
 
 export const BrandProfile = ({ brand }: { brand: Brand }) => {
   const { me } = useCurrentAccountState();
@@ -36,6 +37,8 @@ export const BrandProfile = ({ brand }: { brand: Brand }) => {
   return (
     <PageView scrollable withHeaderHeight>
       <FormView gap="$5">
+        <BrandFoundationBirthday />
+
         <View alignItems="center" gap="$2">
           <Avatar
             color="$background1"

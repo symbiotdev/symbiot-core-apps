@@ -27,6 +27,7 @@ import {
   getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
 import { TodayBrandBookings } from '@symbiot-core-apps/brand-booking';
+import { BrandFoundationBirthday } from '@symbiot-core-apps/brand';
 
 export default () => {
   const { me, stats } = useCurrentAccountState();
@@ -120,6 +121,8 @@ const BrandHome = () => {
   return (
     <TabsPageView scrollable withHeaderHeight>
       <FormView gap="$3">
+        <BrandFoundationBirthday />
+
         <TodayBrandBookings />
 
         {hasPermission('clients') && (

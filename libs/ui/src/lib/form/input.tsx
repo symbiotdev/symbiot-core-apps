@@ -121,7 +121,7 @@ export const Input = forwardRef(
         <InputUi
           ref={ref}
           id={id}
-          value={(value as string) || ''}
+          value={String(value || '')}
           autoFocus={autoFocus}
           backgroundColor="$inputBackgroundColor"
           borderWidth={0}

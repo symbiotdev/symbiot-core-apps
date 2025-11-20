@@ -77,6 +77,7 @@ import { Wallet } from './Wallet';
 import { Bill } from './Bill';
 import { CalendarCross } from './CalendarCross';
 import { Balloon } from './Balloon';
+import { Confetti } from './Confetti';
 
 export const Map: IconMap = {
   AddCircle,
@@ -103,6 +104,7 @@ export const Map: IconMap = {
   CloseCircle,
   Code,
   CodeCircle,
+  Confetti,
   Copy,
   CrownLine,
   Document,

@@ -26,7 +26,6 @@ export function AnimatedList<T>({
   ignoreAnimation?: boolean;
   progressViewOffset?: number;
   onRefresh?: () => void;
-  onEndReached?: () => void;
 }) {
   return (
     <Animated.FlatList
@@ -53,7 +52,6 @@ export function AnimatedList<T>({
           <ListLoadingFooter loading={expanding} {...listLoadingFooterProps} />
         ) : undefined
       }
-      onEndReached={onEndReached}
       // decelerationRate={0.9} // specially for swipe lists and keep the same behaviour on all list
       {...flatListProps}
       style={[

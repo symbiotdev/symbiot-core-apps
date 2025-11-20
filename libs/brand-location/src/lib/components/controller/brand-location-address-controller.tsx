@@ -14,6 +14,7 @@ export function BrandLocationAddressController<T extends FieldValues>(props: {
 
   return (
     <AddressController
+      required
       label={!props.noLabel ? t('brand_location.form.address.label') : ''}
       placeholder={t('brand_location.form.address.placeholder')}
       rules={{

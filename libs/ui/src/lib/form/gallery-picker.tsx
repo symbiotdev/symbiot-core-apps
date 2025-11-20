@@ -1,18 +1,17 @@
 import { Image, ImageSource } from 'expo-image';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { FormField } from './form-field';
-import { AnimatedList } from '../list/animated-list';
 import { View, XStack } from 'tamagui';
 import { useCallback, useState } from 'react';
 import { RegularText } from '../text/text';
 import { avatarBlurhash } from '../media/avatar';
 import { ButtonIcon } from '../button/button';
 import { MediaPicker } from './media-picker';
-import { Platform } from 'react-native';
+import { FlatList, Platform } from 'react-native';
 import { Spinner } from '../loading/spinner';
 import { defaultPageHorizontalPadding } from '../view/page-view';
 
-const MediaList = AnimatedList<ImageSource | string>;
+const MediaList = FlatList<ImageSource | string>;
 
 export const GalleryPicker = ({
   label,
@@ -59,7 +58,7 @@ export const GalleryPicker = ({
 
   const renderItem = useCallback(
     ({ item, index }: { item: ImageSource | string; index: number }) => (
-      <View position="relative">
+      <View key={index} position="relative" width={imageSize} height={imageSize}>
         {removingIndex === null && (
           <ButtonIcon
             type="danger"
@@ -110,19 +109,21 @@ export const GalleryPicker = ({
   );
 
   const ListFooterComponent = useCallback(
-    () => (
-      <XStack gap={6}>
-        {Array.from({ length: Math.max(4 - value.length, 0) }).map((_, i) => (
-          <View
-            key={i}
-            width={imageSize}
-            height={imageSize}
-            backgroundColor="$background1"
-            borderRadius="$10"
-          />
-        ))}
-      </XStack>
-    ),
+    () =>
+      !value.length && (
+        <XStack gap={6}>
+          {/*{Array.from({ length: Math.max(4 - value.length, 0) }).map((_, i) => (*/}
+          {Array.from({ length: 4 }).map((_, i) => (
+            <View
+              key={i}
+              width={imageSize}
+              height={imageSize}
+              backgroundColor="$background1"
+              borderRadius="$10"
+            />
+          ))}
+        </XStack>
+      ),
     [imageSize, value.length],
   );
 

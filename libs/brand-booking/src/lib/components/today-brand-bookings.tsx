@@ -89,7 +89,7 @@ export const TodayBrandBookings = () => {
           />
         ))}
 
-        {(!adjustedBookings.length && hasCompletedServices) && (
+        {!adjustedBookings.length && (
           <ActionCard
             title={t('brand_booking.today_schedule')}
             subtitle={t(

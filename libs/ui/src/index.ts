@@ -7,6 +7,8 @@ export * from './lib/calendar/calendar';
 export * from './lib/card/action-card';
 export * from './lib/card/card';
 export * from './lib/card/card-group';
+export * from './lib/card/closable-card';
+export { default as ClosableCard } from './lib/card/closable-card';
 
 export * from './lib/chip/chip';
 

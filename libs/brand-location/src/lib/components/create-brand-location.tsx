@@ -102,6 +102,7 @@ export const CreateBrandLocation = () => {
     control: contactControl,
     getValues: contactGetValues,
     formState: contactFromState,
+    watch: contactWatch,
   } = useForm<{
     phone: string;
     email: string;
@@ -109,6 +110,8 @@ export const CreateBrandLocation = () => {
   }>({
     defaultValues: { phone: '', email: '', instagram: '' },
   });
+
+  const { phone, email, instagram } = contactWatch();
 
   const onFinish = useCallback(async () => {
     const { name } = nameGetValues();
@@ -254,15 +257,11 @@ export const CreateBrandLocation = () => {
 
       <SurveyStep
         skippable
-        canGoNext={contactFromState.isValid}
+        canGoNext={contactFromState.isValid && !!(phone || email || instagram)}
         title={t('brand_location.create.steps.contact.title')}
         subtitle={t('brand_location.create.steps.contact.subtitle')}
       >
-        <BrandLocationPhoneController
-          required
-          name="phone"
-          control={contactControl}
-        />
+        <BrandLocationPhoneController name="phone" control={contactControl} />
         <BrandLocationEmailController name="email" control={contactControl} />
         <BrandLocationInstagramController
           name="instagram"

@@ -132,7 +132,7 @@ export const DrawerMenu = () => {
       ]}
     >
       <NavigationBackground
-        borderTopWidth={1}
+        borderRightWidth={1}
         borderRightColor={theme?.$background1?.val}
       />
 

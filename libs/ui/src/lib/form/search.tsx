@@ -53,7 +53,7 @@ export const Search = forwardRef(
   ) => {
     const { scheme } = useScheme();
 
-    const [adjustedValue, setAdjustedValue] = useState(value || '');
+    const [adjustedValue, setAdjustedValue] = useState(String(value || ''));
 
     const selection = useInputSelection(cursorAlwaysOn, adjustedValue);
 

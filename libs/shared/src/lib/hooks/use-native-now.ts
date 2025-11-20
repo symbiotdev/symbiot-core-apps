@@ -16,7 +16,7 @@ export const useNativeNow = (intervalInSeconds?: number) => {
     );
 
     return () => clearTimeout(timeout);
-  }, [intervalInSeconds, now]);
+  }, [intervalInSeconds]);
 
   return {
     now,

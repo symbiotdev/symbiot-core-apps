@@ -37,6 +37,6 @@ export async function requestWithAlertOnError<T>(
       text: error as string,
     });
 
-    throw error;
+    throw getRequestErrorMessage(error) || '';
   }
 }

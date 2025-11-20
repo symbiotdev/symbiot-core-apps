@@ -7,7 +7,7 @@ import { ButtonIcon } from '../button/button';
 import { RegularText } from '../text/text';
 import { H3 } from '../text/heading';
 
-const ClosableCard = ({
+export const ClosableCard = ({
   iconName,
   title,
   subtitle,
@@ -42,4 +42,3 @@ const ClosableCard = ({
     </Card>
   );
 };
-export default ClosableCard;

@@ -1,10 +1,10 @@
 import { Sheet as SheetUI, View } from 'tamagui';
+import React, { PropsWithChildren } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
-} from '@symbiot-core-apps/ui';
-import React, { PropsWithChildren } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+} from '../view/page-view';
 
 export const Sheet = ({
   children,

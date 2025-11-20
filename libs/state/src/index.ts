@@ -7,4 +7,5 @@ export * from './lib/hooks/use-current-brand-bookings.state';
 export * from './lib/hooks/use-current-brand-employee.state';
 
 export * from './lib/hooks/use-faq.state';
+export * from './lib/hooks/use-ignored-profile-completion.state';
 export * from './lib/hooks/use-onboarding.state';

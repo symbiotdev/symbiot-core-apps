@@ -28,7 +28,7 @@ type CurrentBrandResponse = {
 };
 
 export const useCurrentBrandReq = ({ enabled }: { enabled: boolean }) =>
-  useQuery<CurrentBrandResponse>({
+  useQuery<CurrentBrandResponse, string>({
     enabled,
     queryKey: [BrandQueryKey.current],
     queryFn: () =>

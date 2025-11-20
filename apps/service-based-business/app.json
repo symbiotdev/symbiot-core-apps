@@ -14,7 +14,7 @@
     "ios": {
       "appleTeamId": "8WPTDS74WX",
       "bundleIdentifier": "com.symbiothub.dance.dev",
-      "buildNumber": "30",
+      "buildNumber": "31",
       "googleServicesFile": "./google/GoogleService-Info.plist",
       "supportsTablet": true,
       "usesAppleSignIn": true,
@@ -33,7 +33,7 @@
     },
     "android": {
       "package": "com.symbiothub.dance.dev",
-      "versionCode": 30,
+      "versionCode": 31,
       "icon": "./assets/images/icon/ios-light.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon/adaptive-icon.png",

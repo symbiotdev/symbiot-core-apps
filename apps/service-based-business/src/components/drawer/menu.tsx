@@ -1,4 +1,4 @@
-import { ScrollView, View, XStackProps } from 'tamagui';
+import { ScrollView, useTheme, View, XStackProps } from 'tamagui';
 import {
   AttentionView,
   Avatar,
@@ -99,6 +99,7 @@ export const DrawerMenu = () => {
   const { icons } = useApp();
   const { t } = useTranslation();
   const { permanent } = useDrawer();
+  const theme = useTheme();
   const { top, bottom, left } = useSafeAreaInsets();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
 
@@ -131,8 +132,8 @@ export const DrawerMenu = () => {
       ]}
     >
       <NavigationBackground
-        borderRightWidth={1}
-        borderRightColor="$background1"
+        borderTopWidth={1}
+        borderRightColor={theme?.$background1?.val}
       />
 
       {!permanent && (

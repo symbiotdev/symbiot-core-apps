@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
+import { useTheme } from 'tamagui';
 
 export const CurrentBrandEmployees = ({
   offsetTop,
@@ -27,6 +28,7 @@ export const CurrentBrandEmployees = ({
 }) => {
   const { t } = useTranslation();
   const { bottom } = useSafeAreaInsets();
+  const theme = useTheme();
 
   const [search, setSearch] = useState('');
 
@@ -98,9 +100,10 @@ export const CurrentBrandEmployees = ({
           zIndex: 1,
         }}
       >
+
         <NavigationBackground
           borderTopWidth={1}
-          borderTopColor="$background1"
+          borderTopColor={theme?.$background1?.val}
         />
 
         <Search

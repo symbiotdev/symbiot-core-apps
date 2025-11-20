@@ -30,6 +30,18 @@ export const TodayBrandBookings = () => {
 
   const { isPending, error } = useBrandBookingLoader(bookingsParams);
 
+  const hasCompletedServices = useMemo(
+    () =>
+      bookings?.some(
+        ({ start, end, type }) =>
+          type === BrandBookingType.service &&
+          (DateHelper.isSameDay(now, start) ||
+            DateHelper.isSameDay(now, end)) &&
+          DateHelper.isAfter(now, end),
+      ),
+    [bookings, now],
+  );
+
   const adjustedBookings = useMemo(
     () =>
       bookings?.filter(
@@ -42,9 +54,7 @@ export const TodayBrandBookings = () => {
   );
 
   if (!adjustedBookings) {
-    return (
-      <InitView height={100} loading={isPending} error={error?.message} />
-    );
+    return <InitView height={100} loading={isPending} error={error?.message} />;
   } else {
     return (
       <View gap="$1">
@@ -64,10 +74,29 @@ export const TodayBrandBookings = () => {
           </Link>
         </XStack>
 
-        {!adjustedBookings.length ? (
+        {adjustedBookings.map((booking) => (
+          <BrandBookingItem
+            showLocalTime
+            padding="$4"
+            borderRadius="$10"
+            cursor="pointer"
+            key={booking.id}
+            booking={booking}
+            pressStyle={{ opacity: 0.8 }}
+            onPress={() =>
+              router.push(`/bookings/${booking.type}/${booking.id}/profile`)
+            }
+          />
+        ))}
+
+        {(!adjustedBookings.length && hasCompletedServices) && (
           <ActionCard
             title={t('brand_booking.today_schedule')}
-            subtitle={t('brand_booking.today_no_schedules')}
+            subtitle={t(
+              hasCompletedServices
+                ? 'brand_booking.today_schedules_completed'
+                : 'brand_booking.today_no_schedules',
+            )}
             buttonLabel={t('brand_booking.add_service_booking')}
             buttonHidden={!hasPermission('bookings')}
             buttonIcon={<Icon name={icons.ServiceBooking} />}
@@ -75,21 +104,6 @@ export const TodayBrandBookings = () => {
               router.push(`/bookings/${BrandBookingType.service}/create`)
             }
           />
-        ) : (
-          adjustedBookings.map((booking) => (
-            <BrandBookingItem
-              showLocalTime
-              padding="$4"
-              borderRadius="$10"
-              cursor="pointer"
-              key={booking.id}
-              booking={booking}
-              pressStyle={{ opacity: 0.8 }}
-              onPress={() =>
-                router.push(`/bookings/${booking.type}/${booking.id}/profile`)
-              }
-            />
-          ))
         )}
       </View>
     );

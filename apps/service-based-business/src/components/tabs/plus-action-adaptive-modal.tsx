@@ -80,7 +80,7 @@ export const PlusActionAdaptiveModal = ({
         ignoreHapticOnOpen
         trigger={trigger}
       >
-        <View gap="$1" marginVertical={-(defaultPageVerticalPadding / 2)}>
+        <View gap="$3" marginVertical={-(defaultPageVerticalPadding / 2)}>
           {hasAnyOfPermissions(['employees', 'locations']) && (
             <>
               {hasPermission('locations') && (

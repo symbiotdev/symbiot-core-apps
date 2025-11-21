@@ -94,7 +94,7 @@ export const AdaptivePopover = forwardRef(
     const [opened, setOpened] = useState(false);
 
     const adjustedMaxHeight = useMemo(
-      () => Math.min(maxHeight || 500, height - top - 50),
+      () => Math.min(maxHeight || 600, height - top - 50),
       [height, maxHeight, top],
     );
 

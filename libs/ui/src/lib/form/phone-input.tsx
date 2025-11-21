@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import PhoneInputUI from 'react-native-phone-input';
 import { useScheme } from '@symbiot-core-apps/state';
 import { useTheme } from 'tamagui';
-import { InputFieldView } from '../view/input-field-view';
+import { InputFieldView, InputHeight } from '../view/input-field-view';
 
 export const PhoneInput = ({
   value,
@@ -88,7 +88,7 @@ export const PhoneInput = ({
           style={{
             backgroundColor: 'transparent',
             width: '100%',
-            height: '100%',
+            height: InputHeight,
           }}
           textProps={{
             keyboardAppearance: scheme,

@@ -4,6 +4,7 @@ import { Input as InputUi, InputProps } from 'tamagui';
 import { FormField } from './form-field';
 import { useDebounceCallback } from '@symbiot-core-apps/shared';
 import { useScheme } from '@symbiot-core-apps/state';
+import { InputHeight } from '../view/input-field-view';
 
 export type InputValue = string | number | null;
 export type onChangeInput = (value: InputValue) => void;
@@ -125,7 +126,7 @@ export const Input = forwardRef(
           autoFocus={autoFocus}
           backgroundColor="$inputBackgroundColor"
           borderWidth={0}
-          height={46}
+          height={InputHeight}
           borderRadius="$10"
           paddingHorizontal="$4"
           placeholder={placeholder}

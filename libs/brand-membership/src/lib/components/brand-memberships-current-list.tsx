@@ -107,8 +107,7 @@ export const BrandMembershipsCurrentList = ({
         }}
       >
         <NavigationBackground
-          borderTopWidth={1}
-          borderTopColor="$background1"
+          backgroundColor="$background1"
         />
 
         <Search

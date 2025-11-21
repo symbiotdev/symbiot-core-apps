@@ -1,4 +1,4 @@
-import { InputFieldView } from '../view/input-field-view';
+import { InputFieldView, InputHeight } from '../view/input-field-view';
 import { TextInputProps } from 'react-native';
 import { Input as InputUi, InputProps, XStackProps } from 'tamagui';
 import { Icon } from '../icons';
@@ -80,8 +80,7 @@ export const Search = forwardRef(
             autoFocus={autoFocus}
             flex={1}
             borderWidth={0}
-            height="100%"
-            backgroundColor="transparent"
+            height={InputHeight}
             placeholder={placeholder}
             placeholderTextColor="$placeholderColor"
             inputMode="search"

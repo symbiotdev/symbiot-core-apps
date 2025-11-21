@@ -20,7 +20,6 @@ import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandClientItem } from '@symbiot-core-apps/brand';
-import { useTheme } from 'tamagui';
 
 export const CurrentBrandClients = ({
   offsetTop,
@@ -34,7 +33,6 @@ export const CurrentBrandClients = ({
   onClientPress: (client: BrandClient) => void;
 }) => {
   const { t } = useTranslation();
-  const theme = useTheme();
   const { bottom } = useSafeAreaInsets();
 
   const [search, setSearch] = useState('');
@@ -110,10 +108,7 @@ export const CurrentBrandClients = ({
           zIndex: 1,
         }}
       >
-        <NavigationBackground
-          borderTopWidth={1}
-          borderTopColor={theme?.$background1?.val}
-        />
+        <NavigationBackground backgroundColor="$background1" />
 
         <Search
           value={search}

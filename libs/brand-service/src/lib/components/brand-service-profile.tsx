@@ -15,7 +15,6 @@ import {
   BrandEmployeeItem,
   BrandLocationItem,
   BrandServiceItemChips,
-  useAllBrandLocation,
 } from '@symbiot-core-apps/brand';
 import { useTranslation } from 'react-i18next';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
@@ -23,14 +22,19 @@ import { router } from 'expo-router';
 import { View } from 'tamagui';
 import { useApp } from '@symbiot-core-apps/app';
 import { formatPrice } from '@symbiot-core-apps/shared';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
   const { brand } = useCurrentBrandState();
   const { t } = useTranslation();
   const { functionality } = useApp();
   const { height } = useWindowDimensions();
-  const allBrandLocation = useAllBrandLocation();
+
+  const locations = useMemo(
+    () =>
+      service.locations?.length ? service.locations : brand?.locations || [],
+    [brand?.locations, service.locations],
+  );
 
   return (
     <PageView
@@ -123,25 +127,26 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
           </ListItemGroup>
         )}
 
-        <ListItemGroup
-          paddingVertical="$4"
-          gap="$3"
-          title={t('brand_service.profile.location')}
-          disabled={!service.locations}
-        >
-          {service.locations?.length ? (
-            service.locations.map((location) => (
+        {locations.length && (
+          <ListItemGroup
+            padding={0}
+            backgroundColor="transparent"
+            gap="$1"
+            title={t('brand_service.profile.locations')}
+          >
+            {locations.map((location) => (
               <BrandLocationItem
+                backgroundColor="$background1"
+                borderRadius="$10"
+                padding="$4"
                 key={location.id}
                 location={location}
                 brand={brand}
                 onPress={() => router.push(`/locations/${location.id}/profile`)}
               />
-            ))
-          ) : (
-            <RegularText>{allBrandLocation.label}</RegularText>
-          )}
-        </ListItemGroup>
+            ))}
+          </ListItemGroup>
+        )}
 
         <ListItemGroup
           paddingVertical={0}

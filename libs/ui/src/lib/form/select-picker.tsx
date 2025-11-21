@@ -33,7 +33,7 @@ export function SelectPicker({
   onChange,
   onBlur,
 }: {
-  value: unknown;
+  value?: unknown;
   label?: string;
   sheetLabel?: string;
   error?: string;

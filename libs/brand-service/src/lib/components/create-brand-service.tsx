@@ -230,41 +230,16 @@ export const CreateBrandService = () => {
       </SurveyStep>
 
       <SurveyStep
-        skippable
-        canGoNext={!!avatar}
-        title={t('brand_service.create.steps.avatar.title')}
-        subtitle={t('brand_service.create.steps.avatar.subtitle')}
-      >
-        <AvatarPicker
-          removable={!!avatar}
-          alignSelf="center"
-          marginTop="$5"
-          borderRadius="$10"
-          url={avatar}
-          name={name}
-          color="$placeholderColor"
-          size={{
-            width: '100%',
-            height: Math.max(height / 3, 250),
-          }}
-          onAttach={setAvatar}
-          onRemove={() => setAvatar(undefined)}
-        />
-      </SurveyStep>
-
-      <SurveyStep
         canGoNext={structureFormState.isValid}
         title={t('brand_service.create.steps.structure.title')}
         subtitle={t('brand_service.create.steps.structure.subtitle')}
       >
         <BrandServiceTypeController
-          withEmpty
           required
           name="type"
           control={structureControl}
         />
         <BrandServiceFormatController
-          withEmpty
           required
           name="format"
           control={structureControl}
@@ -283,7 +258,6 @@ export const CreateBrandService = () => {
         />
         <BrandServiceGenderController
           required
-          withEmpty
           name="gender"
           control={structureControl}
         />
@@ -315,6 +289,29 @@ export const CreateBrandService = () => {
           name="employees"
           location={location}
           control={providersControl}
+        />
+      </SurveyStep>
+
+      <SurveyStep
+        skippable
+        canGoNext={!!avatar}
+        title={t('brand_service.create.steps.avatar.title')}
+        subtitle={t('brand_service.create.steps.avatar.subtitle')}
+      >
+        <AvatarPicker
+          removable={!!avatar}
+          alignSelf="center"
+          marginTop="$5"
+          borderRadius="$10"
+          url={avatar}
+          name={name}
+          color="$placeholderColor"
+          size={{
+            width: '100%',
+            height: Math.max(height / 3, 250),
+          }}
+          onAttach={setAvatar}
+          onRemove={() => setAvatar(undefined)}
         />
       </SurveyStep>
 

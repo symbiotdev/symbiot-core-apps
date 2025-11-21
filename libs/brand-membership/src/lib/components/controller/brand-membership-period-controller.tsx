@@ -13,7 +13,6 @@ export function BrandMembershipPeriodController<T extends FieldValues>(props: {
   control: Control<T>;
   disabled?: boolean;
   required?: boolean;
-  withEmpty?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();

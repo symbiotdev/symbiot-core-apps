@@ -108,6 +108,7 @@ const PageContent = ({
   return (
     <ContainerView
       flex={1}
+      {...viewProps}
       paddingTop={
         (withHeaderHeight ? headerHeight : !ignoreTopSafeArea ? top : 0) +
         Number(paddingTop)
@@ -118,7 +119,6 @@ const PageContent = ({
       }
       paddingLeft={left + Number(paddingLeft)}
       paddingRight={right + Number(paddingRight)}
-      {...viewProps}
     />
   );
 };

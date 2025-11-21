@@ -130,6 +130,7 @@ const SelectService = ({
         selectedService ? (
           <XStack alignItems="center" gap="$2" flex={1}>
             <BrandServiceItem
+              hidePricing
               flex={1}
               backgroundColor="$background1"
               borderRadius="$10"

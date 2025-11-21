@@ -47,20 +47,21 @@ export const BrandMembershipProfile = ({
         )}
 
         <ListItemGroup
-          gap="$4"
-          paddingVertical="$4"
+          gap="$1"
+          paddingVertical={0}
+          paddingHorizontal={0}
+          backgroundColor="transparent"
           title={t(`${tPrefix}.profile.services`)}
         >
           {membership.services?.length ? (
-            membership.services.map((service, index) => (
+            membership.services.map((service) => (
               <BrandServiceItem
-                borderTopWidth={!index ? 0 : 1}
-                paddingTop={!index ? 0 : '$4'}
-                borderTopColor="$background"
                 hidePricing
+                backgroundColor="$background1"
+                borderRadius="$10"
+                padding="$4"
                 key={service.id}
                 service={service}
-                onPress={() => router.push(`/services/${service.id}/profile`)}
               />
             ))
           ) : (
@@ -85,6 +86,16 @@ export const BrandMembershipProfile = ({
           ) : (
             <RegularText>{allLocations.label}</RegularText>
           )}
+        </ListItemGroup>
+
+        <ListItemGroup
+          title={t(`${tPrefix}.profile.note`)}
+          paddingVertical={0}
+          backgroundColor="transparent"
+        >
+          <RegularText lineHeight={22}>
+            {membership.note || t('shared.not_specified')}
+          </RegularText>
         </ListItemGroup>
       </FormView>
     </PageView>

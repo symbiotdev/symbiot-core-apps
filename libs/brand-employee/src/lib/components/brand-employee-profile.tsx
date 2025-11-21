@@ -219,7 +219,6 @@ export const BrandEmployeeProfile = ({
           <ListItemGroup
             paddingVertical={0}
             backgroundColor="transparent"
-            gap="$3"
             title={t('brand_employee.profile.locations')}
           >
             <RegularText>

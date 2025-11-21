@@ -22,8 +22,9 @@ import { StyleSheet } from 'react-native';
 import { View, ViewProps, XStack } from 'tamagui';
 import {
   Chip,
-  defaultPageHorizontalPadding,
+  ExtraBoldText,
   H3,
+  MediumText,
   RegularText,
 } from '@symbiot-core-apps/ui';
 import React, { useMemo } from 'react';
@@ -99,20 +100,6 @@ export const BrandClientMembershipItem = ({
   );
 };
 
-const cutoutSize = 40;
-const CutDown = (props: ViewProps) => (
-  <View
-    position="absolute"
-    backgroundColor="$background"
-    borderRadius={100}
-    zIndex={1}
-    top={120}
-    width={cutoutSize}
-    height={cutoutSize}
-    {...props}
-  />
-);
-
 const BrandPeriodBasedMembershipItemView = ({
   name,
   locations,
@@ -164,9 +151,9 @@ const BrandPeriodBasedMembershipItemView = ({
         })}
     >
       <LinearGradient
-        colors={['#FFFFFF05', '#FFFFFF30', '#FFFFFF05']}
+        colors={['#FFFFFF05', '#FFFFFF30', '#FFFFFF30', '#FFFFFF05']}
         start={{ x: 1, y: 1 }}
-        end={{ x: -1, y: -1 }}
+        end={{ x: 0, y: -1 }}
         style={StyleSheet.absoluteFill}
       />
 
@@ -204,23 +191,15 @@ const BrandPeriodBasedMembershipItemView = ({
         <H3 numberOfLines={2} color="white" zIndex={1}>
           {name}
         </H3>
-        <RegularText color="$placeholderColor">
+        <RegularText color="$placeholderColor" numberOfLines={2}>
           {locations?.map(({ name }) => name)?.join(', ') || allLocations.label}
         </RegularText>
       </View>
 
       {price ? (
         <XStack gap="$2" alignItems="center" alignSelf="flex-end">
-          <RegularText color="white">
-            {formatPrice({
-              price,
-              discount,
-              symbol: currency?.symbol,
-            })}
-          </RegularText>
-
           {!!discount && (
-            <RegularText
+            <MediumText
               textDecorationLine="line-through"
               color="$placeholderColor"
             >
@@ -228,8 +207,16 @@ const BrandPeriodBasedMembershipItemView = ({
                 price,
                 symbol: currency?.symbol,
               })}
-            </RegularText>
+            </MediumText>
           )}
+
+          <ExtraBoldText color="white" fontSize={24}>
+            {formatPrice({
+              price,
+              discount,
+              symbol: currency?.symbol,
+            })}
+          </ExtraBoldText>
         </XStack>
       ) : (
         <View alignSelf="flex-end">
@@ -291,10 +278,12 @@ const BrandVisitBasedMembershipItemView = ({
 
   return (
     <View
-      backgroundColor="$background"
+      padding="$4"
       overflow="hidden"
       position="relative"
+      justifyContent="space-between"
       borderRadius="$10"
+      height={200}
       maxWidth={400}
       width="100%"
       disabledStyle={{ opacity: 0.5 }}
@@ -309,57 +298,18 @@ const BrandVisitBasedMembershipItemView = ({
           },
         })}
     >
-      <CutDown right={-cutoutSize / 1.5} />
-      <CutDown left={-cutoutSize / 1.5} />
+      <LinearGradient
+        colors={['#5A3A2560', '#5A3A2599', '#5A3A2599', '#5A3A2560']}
+        start={{ x: 1, y: 1 }}
+        end={{ x: 0, y: -1 }}
+        style={StyleSheet.absoluteFill}
+      />
 
-      <View
-        backgroundColor="$background1"
-        width="100%"
-        minHeight={140}
-        gap="$2"
-        padding={defaultPageHorizontalPadding}
-      >
-        <View gap="$2" flex={1} alignItems="center" justifyContent="center">
-          <H3 textAlign="center" numberOfLines={2}>
-            {name}
-          </H3>
-
-          <RegularText
-            color="$placeholderColor"
-            textAlign="center"
-            numberOfLines={2}
-          >
-            {locations?.map(({ name }) => name)?.join(', ') ||
-              allLocations.label}
-          </RegularText>
-        </View>
-
-        {price ? (
-          <XStack gap="$2" justifyContent="center">
-            <RegularText>
-              {formatPrice({
-                price,
-                discount,
-                symbol: currency?.symbol,
-              })}
-            </RegularText>
-
-            {!!discount && (
-              <RegularText
-                textDecorationLine="line-through"
-                color="$placeholderColor"
-              >
-                {formatPrice({
-                  price,
-                  symbol: currency?.symbol,
-                })}
-              </RegularText>
-            )}
-          </XStack>
+      <XStack justifyContent="space-between" gap="$5" flexWrap="wrap">
+        {removed ? (
+          <Chip label={t('shared.deleted')} type="danger" size="small" />
         ) : (
-          <RegularText textAlign="center">
-            {t('brand_service.free')}
-          </RegularText>
+          <Chip label={footerText} size="small" />
         )}
 
         {!removed && !expired && endAt && (
@@ -378,28 +328,44 @@ const BrandVisitBasedMembershipItemView = ({
             type="danger"
           />
         )}
+      </XStack>
+
+      <View gap="$1">
+        <H3 numberOfLines={2} color="white">
+          {name}
+        </H3>
+        <RegularText color="$disabled" numberOfLines={2}>
+          {locations?.map(({ name }) => name)?.join(', ') || allLocations.label}
+        </RegularText>
       </View>
 
-      <View
-        width="100%"
-        borderWidth={2}
-        borderStyle="dashed"
-        borderColor="$background1"
-      />
+      {price ? (
+        <XStack gap="$2" alignItems="center" alignSelf="flex-end">
+          {!!discount && (
+            <MediumText
+              textDecorationLine="line-through"
+              color="white"
+            >
+              {formatPrice({
+                price,
+                symbol: currency?.symbol,
+              })}
+            </MediumText>
+          )}
 
-      <View
-        backgroundColor="$background1"
-        width="100%"
-        justifyContent="center"
-        alignItems="center"
-        height={50}
-      >
-        {removed ? (
-          <Chip label={t('shared.deleted')} type="danger" />
-        ) : (
-          <RegularText textAlign="center">{footerText}</RegularText>
-        )}
-      </View>
+          <ExtraBoldText color="white" fontSize={24}>
+            {formatPrice({
+              price,
+              discount,
+              symbol: currency?.symbol,
+            })}
+          </ExtraBoldText>
+        </XStack>
+      ) : (
+        <View alignSelf="flex-end">
+          <RegularText color="white">{t('shared.free')}</RegularText>
+        </View>
+      )}
     </View>
   );
 };

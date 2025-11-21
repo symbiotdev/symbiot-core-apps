@@ -93,9 +93,9 @@ export const UpdateBrandService = ({ service }: { service: BrandService }) => {
           <Pricing service={service} />
         )}
 
-        <LocationProviders service={service} />
         <About service={service} />
         <Structure service={service} />
+        <LocationProviders service={service} />
         <Note service={service} />
       </ListItemGroup>
     </PageView>

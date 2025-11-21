@@ -28,7 +28,14 @@ const _typeConfig = {
     backgroundColor: '$background1',
     textColor: '$error',
   },
+  highlighted: {
+    backgroundColor: '$background1',
+    textColor: '$color',
+  },
 };
+
+export type ChipType = keyof typeof _typeConfig;
+export type ChipSize = keyof typeof _sizeConfig;
 
 export const Chip = ({
   label,
@@ -37,8 +44,8 @@ export const Chip = ({
   ...viewProps
 }: ViewProps & {
   label: string;
-  size?: keyof typeof _sizeConfig;
-  type?: keyof typeof _typeConfig;
+  type?: ChipType;
+  size?: ChipSize;
 }) => {
   const sizeConfig = _sizeConfig[size];
   const typeConfig = _typeConfig[type];

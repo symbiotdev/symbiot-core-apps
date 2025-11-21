@@ -1,6 +1,13 @@
 import { DateHelper, emitHaptic, formatPrice } from '@symbiot-core-apps/shared';
 import { ViewProps, XStack } from 'tamagui';
-import { Chip, FormView, MediumText, RegularText } from '@symbiot-core-apps/ui';
+import {
+  Chip,
+  ChipSize,
+  ChipType,
+  FormView,
+  MediumText,
+  RegularText,
+} from '@symbiot-core-apps/ui';
 import { BrandService } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 import { useApp } from '@symbiot-core-apps/app';
@@ -42,9 +49,9 @@ export const BrandServiceItem = ({
         </MediumText>
 
         {!hidePricing && functionality.availability.servicePrice && (
-          <>
+          <XStack gap="$2" alignItems="center">
             {service.price ? (
-              <XStack gap="$2" alignItems="center">
+              <>
                 <RegularText>
                   {formatPrice({
                     price: service.price,
@@ -64,11 +71,11 @@ export const BrandServiceItem = ({
                     })}
                   </RegularText>
                 )}
-              </XStack>
+              </>
             ) : (
               <RegularText>{t('brand_service.free')}</RegularText>
             )}
-          </>
+          </XStack>
         )}
       </XStack>
 
@@ -79,8 +86,12 @@ export const BrandServiceItem = ({
 
 export const BrandServiceItemChips = ({
   service,
+  type,
+  size = 'small',
 }: {
   service: BrandService;
+  type?: ChipType;
+  size?: ChipSize;
 }) => (
   <XStack flex={1} flexWrap="wrap" gap="$1">
     {service.duration && (
@@ -88,16 +99,19 @@ export const BrandServiceItemChips = ({
         label={DateHelper.formatDuration(service.duration, {
           shortFormat: true,
         })}
-        size="small"
+        type={type}
+        size={size}
       />
     )}
 
-    {service.type?.value && <Chip label={service.type.label} size="small" />}
+    {service.type?.value && (
+      <Chip label={service.type.label} type={type} size={size} />
+    )}
     {service.format?.value && (
-      <Chip label={service.format.label} size="small" />
+      <Chip label={service.format.label} type={type} size={size} />
     )}
     {service.gender?.value && (
-      <Chip label={service.gender.label} size="small" />
+      <Chip label={service.gender.label} type={type} size={size} />
     )}
   </XStack>
 );

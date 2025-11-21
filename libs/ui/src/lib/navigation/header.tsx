@@ -155,7 +155,7 @@ export const ScreenHeader = memo(
         <NavigationBackground />
 
         <SideElement
-          flex={1}
+          flex={!options.headerTitle ? 1 : undefined}
           alignItems="flex-start"
           children={
             typeof options.headerLeft === 'function'
@@ -174,13 +174,12 @@ export const ScreenHeader = memo(
         )}
 
         {typeof options.headerTitle === 'function' && (
-          <View flex={4} alignItems="center">
+          <View flex={1} alignItems="center">
             {options.headerTitle({ children: '' })}
           </View>
         )}
 
         <SideElement
-          flex={options.headerTitle ? 1 : undefined}
           alignItems="flex-end"
           children={options.headerRight?.({})}
         />

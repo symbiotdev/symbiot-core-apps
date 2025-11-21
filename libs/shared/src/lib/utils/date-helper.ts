@@ -50,6 +50,9 @@ export const averageDaysInMonth = 30.4375;
 export const averageDaysInYear = 365.25;
 export const minutesInYear = averageDaysInYear * minutesInDay;
 export const minutesInMonth = averageDaysInMonth * minutesInDay;
+export const secondsInHour = minutesInHour * 60;
+export const secondsInDay = secondsInHour * 24;
+export const secondsInMonth = minutesInMonth * 60;
 
 export type Weekday = Day;
 

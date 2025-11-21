@@ -1,8 +1,12 @@
 import { BrandService } from '@symbiot-core-apps/api';
 import {
   Avatar,
+  defaultPageHorizontalPadding,
+  ExtraBoldText,
   FormView,
+  H2,
   ListItemGroup,
+  MediumText,
   PageView,
   RegularText,
 } from '@symbiot-core-apps/ui';
@@ -10,25 +14,36 @@ import { useWindowDimensions } from 'react-native';
 import {
   BrandEmployeeItem,
   BrandLocationItem,
-  BrandServiceItem,
-  useAnyBrandLocation,
+  BrandServiceItemChips,
+  useAllBrandLocation,
 } from '@symbiot-core-apps/brand';
 import { useTranslation } from 'react-i18next';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { router } from 'expo-router';
+import { View } from 'tamagui';
+import { useApp } from '@symbiot-core-apps/app';
+import { formatPrice } from '@symbiot-core-apps/shared';
+import React from 'react';
 
 export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
   const { brand } = useCurrentBrandState();
   const { t } = useTranslation();
+  const { functionality } = useApp();
   const { height } = useWindowDimensions();
-  const anyLocation = useAnyBrandLocation();
+  const allBrandLocation = useAllBrandLocation();
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <PageView
+      scrollable
+      withHeaderHeight
+      paddingLeft={0}
+      paddingRight={0}
+      paddingTop={0}
+    >
       <Avatar
         name={service.name}
         url={service.avatar?.url}
-        borderRadius="$10"
+        borderRadius={0}
         color="$background1"
         size={{
           width: '100%',
@@ -36,21 +51,59 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
         }}
       />
 
-      <FormView marginTop="$3" gap="$2">
-        <BrandServiceItem
-          backgroundColor="$background1"
-          borderRadius="$10"
-          padding="$4"
-          service={service}
-        />
+      <FormView
+        marginTop="$3"
+        gap="$5"
+        paddingHorizontal={defaultPageHorizontalPadding}
+      >
+        <View paddingTop="$3" gap="$3">
+          <H2>{service.name}</H2>
+
+          {service.hidden && (
+            <RegularText color="$error">
+              {t('brand_service.unavailable')}
+            </RegularText>
+          )}
+
+          {functionality.availability.servicePrice && (
+            <View gap="$1">
+              {service.price ? (
+                <>
+                  {!!service.discount && (
+                    <MediumText
+                      textDecorationLine="line-through"
+                      color="$placeholderColor"
+                    >
+                      {formatPrice({
+                        price: service.price,
+                        symbol: service.currency?.symbol,
+                      })}
+                    </MediumText>
+                  )}
+
+                  <ExtraBoldText fontSize={30}>
+                    {formatPrice({
+                      price: service.price,
+                      discount: service.discount,
+                      symbol: service.currency?.symbol,
+                    })}
+                  </ExtraBoldText>
+                </>
+              ) : (
+                <RegularText>{t('brand_service.free')}</RegularText>
+              )}
+            </View>
+          )}
+
+          <BrandServiceItemChips
+            type="highlighted"
+            size="medium"
+            service={service}
+          />
+        </View>
 
         {!!service.description && (
-          <ListItemGroup
-            paddingVertical="$4"
-            title={t('brand_service.profile.description')}
-          >
-            <RegularText>{service.description}</RegularText>
-          </ListItemGroup>
+          <RegularText>{service.description}</RegularText>
         )}
 
         {!!service.employees?.length && (
@@ -86,8 +139,18 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
               />
             ))
           ) : (
-            <RegularText>{anyLocation.label}</RegularText>
+            <RegularText>{allBrandLocation.label}</RegularText>
           )}
+        </ListItemGroup>
+
+        <ListItemGroup
+          paddingVertical={0}
+          backgroundColor="transparent"
+          title={t('brand_service.profile.note')}
+        >
+          <RegularText lineHeight={22}>
+            {service.note || t('shared.not_specified')}
+          </RegularText>
         </ListItemGroup>
       </FormView>
     </PageView>

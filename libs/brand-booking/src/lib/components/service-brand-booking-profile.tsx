@@ -213,6 +213,16 @@ export const ServiceBrandBookingProfile = ({
             </XStack>
           </View>
 
+          {!!booking.note && (
+            <ListItemGroup
+              paddingVertical={0}
+              paddingHorizontal="$3"
+              backgroundColor="transparent"
+            >
+              <RegularText>{booking.note}</RegularText>
+            </ListItemGroup>
+          )}
+
           {!!booking.locations?.length && (
             <ListItemGroup
               gap="$4"
@@ -248,15 +258,6 @@ export const ServiceBrandBookingProfile = ({
               />
             ))}
           </ListItemGroup>
-
-          {!!booking.note && (
-            <ListItemGroup
-              paddingVertical="$4"
-              title={t(`service_brand_booking.profile.note`)}
-            >
-              <RegularText>{booking.note}</RegularText>
-            </ListItemGroup>
-          )}
 
           <ServiceBrandBookingProfileClients booking={booking} />
         </FormView>

@@ -150,6 +150,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
 
         <ListItemGroup
           paddingVertical={0}
+          paddingHorizontal="$3"
           backgroundColor="transparent"
           title={t('brand_service.profile.note')}
         >

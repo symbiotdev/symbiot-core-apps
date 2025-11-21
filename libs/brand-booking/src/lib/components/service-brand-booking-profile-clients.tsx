@@ -175,6 +175,7 @@ export const ServiceBrandBookingProfileClients = ({
             minHeight="auto"
             width="auto"
             fontSize={14}
+            color="$link"
             paddingVertical={0}
             position="absolute"
             right={0}

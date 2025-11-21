@@ -54,11 +54,12 @@ export const CustomTabBar = ({
         animatedStyle,
         {
           position: 'absolute',
-          left: insets.left,
-          right: insets.right,
+          marginLeft: insets.left,
+          marginRight: insets.right,
           bottom:
             insets.bottom + (insets.bottom ? 0 : defaultPageVerticalPadding),
           justifyContent: 'center',
+          alignSelf: 'center',
           alignItems: 'center',
           flexDirection: 'row',
           gap: 10,
@@ -74,7 +75,7 @@ export const CustomTabBar = ({
         boxShadow="0 0 10px rgba(0, 0, 0, 0.05)"
         overflow="hidden"
       >
-        <NavigationBackground />
+        <NavigationBackground blurIntensity={70} />
 
         {Object.values(descriptors).map((descriptor) => {
           const name = descriptor.route.name;

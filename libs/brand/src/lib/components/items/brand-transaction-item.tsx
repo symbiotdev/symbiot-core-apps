@@ -1,4 +1,4 @@
-import { H3, MediumText, RegularText } from '@symbiot-core-apps/ui';
+import { MediumText, RegularText, SemiBoldText } from '@symbiot-core-apps/ui';
 import { BrandTransaction } from '@symbiot-core-apps/api';
 import { View, ViewProps, XStack } from 'tamagui';
 import {
@@ -114,15 +114,20 @@ export const BrandTransactionItem = ({
         marginTop="$2"
       />
 
-      <XStack justifyContent="space-between" gap="$5" flexWrap="wrap">
+      <XStack
+        justifyContent="space-between"
+        gap="$5"
+        marginTop="$2"
+        flexWrap="wrap"
+      >
         <MediumText>{t('brand_transaction.total')}</MediumText>
-        <H3>
+        <SemiBoldText fontSize={24}>
           {formatPrice({
             price: transaction.price,
             discount: transaction.discount,
             symbol: transaction.currency?.symbol,
           })}
-        </H3>
+        </SemiBoldText>
       </XStack>
     </View>
   );

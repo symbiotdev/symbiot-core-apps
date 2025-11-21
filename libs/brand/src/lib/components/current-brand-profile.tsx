@@ -111,6 +111,7 @@ export const CurrentBrandProfile = () => {
 
         <ListItemGroup
           paddingVertical={0}
+          paddingHorizontal="$3"
           backgroundColor="transparent"
           title={t('brand.profile.about')}
         >
@@ -121,6 +122,7 @@ export const CurrentBrandProfile = () => {
 
         <ListItemGroup
           paddingVertical={0}
+          paddingHorizontal="$3"
           backgroundColor="transparent"
           title={t('brand.profile.birthday')}
         >

@@ -7,7 +7,7 @@ export const Blur = memo(
   ({
     children,
     style,
-    intensity = 50,
+    intensity = 40,
   }: PropsWithChildren<{ style?: ViewStyle; intensity?: number }>) => {
     const { scheme } = useScheme();
 

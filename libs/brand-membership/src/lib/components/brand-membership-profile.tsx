@@ -105,6 +105,7 @@ export const BrandMembershipProfile = ({
         <ListItemGroup
           title={t(`${tPrefix}.profile.note`)}
           paddingVertical={0}
+          paddingHorizontal="$3"
           backgroundColor="transparent"
         >
           <RegularText lineHeight={22}>

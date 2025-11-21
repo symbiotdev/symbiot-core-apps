@@ -212,7 +212,9 @@ export const UnavailableBrandBookingProfile = ({
           </ListItemGroup>
 
           <ListItemGroup
-            paddingVertical="$4"
+            paddingVertical={0}
+            paddingHorizontal="$3"
+            backgroundColor="transparent"
             title={t(`unavailable_brand_booking.profile.note`)}
           >
             <RegularText>

@@ -52,7 +52,7 @@ export const Appearance = () => {
     <PageView scrollable withHeaderHeight>
       <FormView>
         <ListItemGroup
-          title={t('shared.preferences.appearance.theme.title')}
+          // title={t('shared.preferences.appearance.theme.title')}
           gap="$4"
           paddingVertical="$4"
         >

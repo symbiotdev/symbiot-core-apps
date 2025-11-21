@@ -1,7 +1,6 @@
-import { cloneElement, memo, ReactElement, useCallback } from 'react';
+import React, { cloneElement, memo, ReactElement, useCallback } from 'react';
 import { ColorTokens, View, ViewProps, XStack, XStackProps } from 'tamagui';
-import { RegularText } from '../text/text';
-import { H5 } from '../text/heading';
+import { MediumText, RegularText } from '../text/text';
 import { Card } from '../card/card';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { GestureResponderEvent } from 'react-native';
@@ -11,16 +10,12 @@ export const ListItemGroup = memo((props: ViewProps & { title?: string }) => {
   return (
     <View gap="$1" width="100%">
       {!!props.title && (
-        <H5 textTransform="uppercase" color="$disabled" marginHorizontal="$4">
+        <MediumText color="$placeholderColor" marginHorizontal="$3">
           {props.title}
-        </H5>
+        </MediumText>
       )}
-      <Card
-        backgroundColor="$background1"
-        paddingVertical="$2"
-        gap="$2"
-        {...props}
-      />
+
+      <Card paddingVertical="$2" gap="$2" {...props} />
     </View>
   );
 });

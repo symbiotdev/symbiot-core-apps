@@ -193,6 +193,7 @@ export const BrandEmployeeProfile = ({
         ) : (
           <ListItemGroup
             paddingVertical={0}
+            paddingHorizontal="$3"
             backgroundColor="transparent"
             title={t('shared.schedule.working_hours')}
           >
@@ -218,6 +219,7 @@ export const BrandEmployeeProfile = ({
         ) : (
           <ListItemGroup
             paddingVertical={0}
+            paddingHorizontal="$3"
             backgroundColor="transparent"
             title={t('brand_employee.profile.locations')}
           >
@@ -230,6 +232,7 @@ export const BrandEmployeeProfile = ({
         <ListItemGroup
           title={t('shared.about')}
           paddingVertical={0}
+          paddingHorizontal="$3"
           backgroundColor="transparent"
         >
           <RegularText lineHeight={22}>

@@ -91,7 +91,11 @@ export const Button = memo(
               })}
 
             {!!label && (
-              <MediumText fontSize={fontSize} color={color}>
+              <MediumText
+                textAlign={!icon ? 'center' : 'left'}
+                fontSize={fontSize}
+                color={color}
+              >
                 {label}
               </MediumText>
             )}

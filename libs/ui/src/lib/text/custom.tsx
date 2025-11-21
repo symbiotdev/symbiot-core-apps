@@ -12,10 +12,11 @@ export const Error = styled(TamaguiText, {
 export const Link = styled(TamaguiText, {
   cursor: 'pointer',
   color: '$link',
+  fontFamily: 'BodyMedium',
 }) as typeof TamaguiText;
 
-export const Label = styled(TamaguiLabel, {
-  fontSize: 14,
-  fontWeight: 400,
-  lineHeight: Platform.OS === 'web' ? 16 : undefined,
+export const Label = styled(TamaguiText, {
+  ...defaultTextStyles,
+  fontFamily: 'BodyMedium',
+  color: '$placeholderColor',
 }) as typeof TamaguiLabel;

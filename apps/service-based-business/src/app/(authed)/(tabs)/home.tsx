@@ -1,12 +1,10 @@
 import {
   Avatar,
-  CardGroup,
-  CardGroupItem,
+  CardsGrid,
   FormView,
   H3,
   HeaderButton,
   headerButtonSize,
-  Icon,
   TabsPageView,
   useDrawer,
 } from '@symbiot-core-apps/ui';
@@ -137,74 +135,82 @@ const BrandHome = () => {
 
         <TodayBrandBookings />
 
-        {hasPermission('clients') && (
-          <CardGroup title={t('brand.profile.stakeholders')}>
-            <CardGroupItem
-              label={t('brand_client.title')}
-              icon={<Icon name="SmileCircle" />}
-              onPress={onClientsPress}
-            />
-          </CardGroup>
+        {hasAnyOfPermissions([
+          'clients',
+          'catalog',
+          'employees',
+          'locations',
+        ]) && (
+          <CardsGrid
+            title={t('brand.profile.assets')}
+            items={[
+              {
+                hidden: !hasPermission('clients'),
+                iconName: 'SmileCircle',
+                label: t('brand_client.title'),
+                onPress: onClientsPress,
+              },
+              {
+                hidden: !hasPermission('catalog'),
+                iconName: icons.Service,
+                label: t('brand_service.title'),
+                onPress: onServicesPress,
+              },
+              {
+                hidden: !hasPermission('employees'),
+                iconName: 'UsersGroupRounded',
+                label: t('brand_employee.title'),
+                onPress: onEmployeesPress,
+              },
+              {
+                hidden: !hasPermission('locations'),
+                iconName: 'MapPointWave',
+                label: t('brand_location.title'),
+                onPress: onLocationsPress,
+              },
+            ]}
+          />
         )}
 
         {hasPermission('catalog') && (
-          <CardGroup title={t('shared.catalog')}>
-            <CardGroupItem
-              label={t('brand_service.title')}
-              icon={<Icon name={icons.Service} />}
-              onPress={onServicesPress}
-            />
-            <CardGroupItem
-              label={t(
-                `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.title`,
-              )}
-              icon={<Icon name={icons.VisitBasedMembership} />}
-              onPress={onVisitBasedMembershipsPress}
-            />
-            <CardGroupItem
-              label={t(
-                `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.title`,
-              )}
-              icon={<Icon name={icons.PeriodBasedMembership} />}
-              onPress={onPeriodBasedMembershipsPress}
-            />
-            <CardGroupItem
-              disabled
-              label={t('brand_gift_card.title')}
-              icon={<Icon name="Gift" />}
-              text={`(${t('shared.coming_soon')})`}
-            />
-          </CardGroup>
-        )}
-
-        {hasAnyOfPermissions(['employees', 'locations']) && (
-          <CardGroup title={t('brand.profile.infrastructure')}>
-            {hasPermission('locations') && (
-              <CardGroupItem
-                label={t('brand_location.title')}
-                icon={<Icon name="MapPointWave" />}
-                onPress={onLocationsPress}
-              />
-            )}
-
-            {hasPermission('employees') && (
-              <CardGroupItem
-                label={t('brand_employee.title')}
-                icon={<Icon name="UsersGroupRounded" />}
-                onPress={onEmployeesPress}
-              />
-            )}
-          </CardGroup>
+          <CardsGrid
+            title={t('shared.catalog')}
+            items={[
+              {
+                iconName: icons.VisitBasedMembership,
+                label: t(
+                  `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.title`,
+                ),
+                onPress: onVisitBasedMembershipsPress,
+              },
+              {
+                iconName: icons.PeriodBasedMembership,
+                label: t(
+                  `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.title`,
+                ),
+                onPress: onPeriodBasedMembershipsPress,
+              },
+              {
+                disabled: true,
+                iconName: 'Gift',
+                label: t('brand_gift_card.title'),
+                text: t('shared.coming_soon'),
+              },
+            ]}
+          />
         )}
 
         {hasPermission('finances') && (
-          <CardGroup title={t('brand.profile.finance')}>
-            <CardGroupItem
-              label={t('brand_transaction.title')}
-              icon={<Icon name="Bill" />}
-              onPress={onTransactionPress}
-            />
-          </CardGroup>
+          <CardsGrid
+            title={t('brand.profile.finance')}
+            items={[
+              {
+                iconName: 'Bill',
+                label: t('brand_transaction.title'),
+                onPress: onTransactionPress,
+              },
+            ]}
+          />
         )}
       </FormView>
     </TabsPageView>

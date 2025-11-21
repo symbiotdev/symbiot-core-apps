@@ -1,5 +1,5 @@
 import { Platform, Pressable } from 'react-native';
-import { TextProps, useTheme, View, ViewProps, XStack } from 'tamagui';
+import { TextProps, View, ViewProps, XStack } from 'tamagui';
 import {
   NativeStackHeaderProps,
   NativeStackNavigationOptions,
@@ -32,19 +32,12 @@ export const useScreenHeaderHeight = () => {
 
 export const useScreenHeaderOptions = () => {
   const { top, left, right } = useSafeAreaInsets();
-  const theme = useTheme();
 
   const header = useCallback(
     (props: NativeStackHeaderProps) => (
-      <ScreenHeader
-        {...props}
-        top={top}
-        left={left}
-        right={right}
-        borderBottomColor={theme.background?.val}
-      />
+      <ScreenHeader {...props} top={top} left={left} right={right} />
     ),
-    [left, right, theme.background?.val, top],
+    [left, right, top],
   );
 
   return {
@@ -124,12 +117,10 @@ export const ScreenHeader = memo(
     left,
     right,
     options,
-    borderBottomColor,
   }: NativeStackHeaderProps & {
     top: number;
     left: number;
     right: number;
-    borderBottomColor?: string;
   }) => {
     const withContent =
       !!options.headerLeft ||
@@ -149,8 +140,6 @@ export const ScreenHeader = memo(
         paddingLeft={left + headerHorizontalPadding}
         paddingRight={right + headerHorizontalPadding}
         height={top + (withContent ? headerHeight : 0)}
-        borderBottomWidth={1}
-        borderBottomColor={borderBottomColor}
       >
         <NavigationBackground />
 
@@ -203,7 +192,6 @@ export const ModalHeader = memo(
     onClose?: (e: BaseSyntheticEvent) => void;
   }) => {
     const { top, left, right } = useSafeAreaInsets();
-    const theme = useTheme();
 
     const adjustedTop = useMemo(() => (isTablet ? top : 0), [top]);
 
@@ -223,31 +211,28 @@ export const ModalHeader = memo(
         height={adjustedTop + (height || headerHeight)}
         paddingLeft={left + headerHorizontalPadding}
         paddingRight={right + headerHorizontalPadding}
-        borderBottomWidth={1}
-        borderBottomColor={theme.background1?.val}
       >
         <NavigationBackground />
 
         <SideElement
-          flex={1}
+          flex={!headerTitle ? 1 : undefined}
           alignItems="flex-start"
           children={headerLeft?.()}
         />
 
         {typeof headerTitle === 'string' && (
-          <H4 flex={4} textAlign="center" zIndex={1}>
+          <H4 flex={1} textAlign="center" zIndex={1}>
             {headerTitle}
           </H4>
         )}
 
         {typeof headerTitle === 'function' && (
-          <View flex={4} alignItems="center">
+          <View flex={1} alignItems="center">
             {headerTitle()}
           </View>
         )}
 
         <SideElement
-          flex={headerTitle ? 1 : undefined}
           alignItems="flex-end"
           children={
             typeof headerRight === 'function' ? (

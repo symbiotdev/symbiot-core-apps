@@ -1,5 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import { ActionCard, H5, Icon, InitView, Link } from '@symbiot-core-apps/ui';
+import {
+  ActionCard,
+  Icon,
+  InitView,
+  Link,
+  MediumText,
+} from '@symbiot-core-apps/ui';
 import React, { useMemo } from 'react';
 import { useBrandBookingLoader } from '../hooks/use-brand-booking-loader';
 import { DateHelper, useNativeNow } from '@symbiot-core-apps/shared';
@@ -58,11 +64,11 @@ export const TodayBrandBookings = () => {
   } else {
     return (
       <View gap="$1">
-        <XStack alignItems="center" gap="$5" paddingHorizontal="$4">
+        <XStack alignItems="center" gap="$5" paddingHorizontal="$3">
           {!!adjustedBookings.length && (
-            <H5 textTransform="uppercase" color="$disabled">
+            <MediumText color="$placeholderColor">
               {t('brand_booking.today_schedule')}
-            </H5>
+            </MediumText>
           )}
 
           <Link

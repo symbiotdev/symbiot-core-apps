@@ -20,10 +20,10 @@ export const FormField = ({
   errorProps?: TextProps;
 }) => {
   return (
-    <View gap="$2" {...viewProps}>
+    <View gap="$1" {...viewProps}>
       {!!label && (
         <Label
-          paddingHorizontal="$4"
+          paddingHorizontal="$3"
           htmlFor={htmlFor}
           {...labelProps}
           pointerEvents={Platform.OS === 'web' ? 'auto' : 'none'}

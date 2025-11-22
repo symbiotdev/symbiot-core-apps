@@ -2,10 +2,11 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 
-type ById = 'byBrandId' | 'byEmployeeId' | 'byClientId';
+type ById = 'byBrandId' | 'byLocationId' | 'byEmployeeId' | 'byClientId';
 
 type IgnoredProfileCompletionState = {
   byBrandId: Record<string, string>;
+  byLocationId: Record<string, string>;
   byEmployeeId: Record<string, string>;
   byClientId: Record<string, string>;
   ignore: (byId: ById, id: string, date: Date) => void;
@@ -16,6 +17,7 @@ export const useIgnoredProfileCompletionState =
     persist<IgnoredProfileCompletionState>(
       (set, get) => ({
         byBrandId: {},
+        byLocationId: {},
         byEmployeeId: {},
         byClientId: {},
         ignore: (byId, id, date) =>

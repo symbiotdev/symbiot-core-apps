@@ -1,13 +1,16 @@
-import { HeaderButton, PageView } from '@symbiot-core-apps/ui';
+import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { XStack } from 'tamagui';
+import { useBrandLocationByIdReq } from '@symbiot-core-apps/api';
+import { BrandLocationProfile } from '@symbiot-core-apps/brand-location';
 
 export default () => {
-  const { id } = useLocalSearchParams();
+  const { id } = useLocalSearchParams<{ id: string }>();
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
+  const { data: location, isPending, error } = useBrandLocationByIdReq(id);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -31,5 +34,9 @@ export default () => {
     });
   }, [hasPermission, id, navigation]);
 
-  return <PageView />;
+  if (!location) {
+    return <InitView loading={isPending} error={error} />;
+  }
+
+  return <BrandLocationProfile location={location} />;
 };

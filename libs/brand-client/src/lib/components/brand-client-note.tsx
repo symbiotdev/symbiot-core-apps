@@ -47,7 +47,7 @@ export const BrandClientNote = ({ client }: { client: BrandClient }) => {
           textAlign={value.note ? 'left' : 'center'}
           paddingVertical="$2"
         >
-          {value.note || t('shared.not_specified')}
+          {value.note?.trim() || t('shared.not_specified')}
         </RegularText>
       </ListItemGroup>
 

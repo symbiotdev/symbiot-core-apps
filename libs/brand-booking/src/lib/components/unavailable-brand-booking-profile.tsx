@@ -218,7 +218,7 @@ export const UnavailableBrandBookingProfile = ({
             title={t(`unavailable_brand_booking.profile.note`)}
           >
             <RegularText>
-              {booking.note || t('shared.not_specified')}
+              {booking.note?.trim() || t('shared.not_specified')}
             </RegularText>
           </ListItemGroup>
         </FormView>

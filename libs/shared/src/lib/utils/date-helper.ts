@@ -244,7 +244,7 @@ export const DateHelper = {
   get24HoursInFormattedTime: (interval = 15) => {
     const start = DateHelper.startOfDay(new Date());
 
-    return Array.from({ length: minutesInDay / interval }).map((_, i) => ({
+    return Array.from({ length: minutesInDay / interval + 1 }).map((_, i) => ({
       label: DateHelper.format(DateHelper.addMinutes(start, i * interval), 'p'),
       value: i * interval,
     }));
@@ -252,7 +252,7 @@ export const DateHelper = {
   isDayOff(start: number, end: number) {
     return !start && !end;
   },
-  isAllDay(start: number, end: number, offset = 15) {
+  isAllDay(start: number, end: number, offset = 0) {
     return minutesInDay - (end - start) <= offset;
   },
   changeDateKeepTime: (originalDate: Date | string, newDate: Date | string) => {

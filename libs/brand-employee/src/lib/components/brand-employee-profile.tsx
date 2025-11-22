@@ -11,12 +11,10 @@ import {
   MediumText,
   PageView,
   RegularText,
-  SemiBoldText,
-  WeekdaySchedule,
 } from '@symbiot-core-apps/ui';
 import React, { useMemo } from 'react';
 import { View, XStack } from 'tamagui';
-import { DateHelper, useNativeNow } from '@symbiot-core-apps/shared';
+import { DateHelper } from '@symbiot-core-apps/shared';
 import {
   useCurrentAccountState,
   useCurrentBrandEmployee,
@@ -24,13 +22,11 @@ import {
 } from '@symbiot-core-apps/state';
 import { useTranslation } from 'react-i18next';
 import { openBrowserAsync } from 'expo-web-browser';
-import { BrandLocationItem } from '@symbiot-core-apps/brand';
+import { BrandLocationItem, BrandSchedule } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { Linking } from 'react-native';
 import { BrandEmployeeCongrats } from './brand-employee-congrats';
 import { BrandEmployeeProfileCompletion } from './brand-employee-profile-completion';
-
-const startOfDay = DateHelper.startOfDay(new Date());
 
 export const BrandEmployeeProfile = ({
   employee,
@@ -41,7 +37,6 @@ export const BrandEmployeeProfile = ({
   const { brand } = useCurrentBrandState();
   const { hasPermission } = useCurrentBrandEmployee();
   const { t } = useTranslation();
-  const { now } = useNativeNow();
 
   const { instagram, email, phone, address } = useMemo(
     () => ({
@@ -82,7 +77,9 @@ export const BrandEmployeeProfile = ({
         {!employee.provider && (
           <Card width="100%" flexDirection="row" alignItems="center" gap="$3">
             <Icon name="InfoCircle" color="$error" />
-            <RegularText color="$error">{t('brand_employee.profile.not_provider')}</RegularText>
+            <RegularText color="$error">
+              {t('brand_employee.profile.not_provider')}
+            </RegularText>
           </Card>
         )}
 
@@ -146,69 +143,7 @@ export const BrandEmployeeProfile = ({
           <BrandEmployeeProfileCompletion employee={employee} />
         )}
 
-        {schedules?.length ? (
-          <ListItemGroup
-            title={t('shared.schedule.working_hours')}
-            paddingVertical="$4"
-            gap="$2"
-          >
-            {DateHelper.getWeekdays({
-              weekStartsOn: me?.preferences?.weekStartsOn,
-            })
-              .map((weekday) => ({
-                ...weekday,
-                schedule: schedules.find(
-                  ({ day }) => day === weekday.value,
-                ) as WeekdaySchedule,
-              }))
-              .filter(({ schedule }) => !!schedule)
-              .map(({ label, schedule: { start, end, day } }) => {
-                const isDayOff = DateHelper.isDayOff(start, end);
-                const Text = now.getDay() === day ? SemiBoldText : RegularText;
-
-                return (
-                  <XStack
-                    key={day}
-                    opacity={isDayOff ? 0.5 : 1}
-                    alignItems="center"
-                    gap="$3"
-                    flexWrap="wrap"
-                  >
-                    <View
-                      width={5}
-                      height={5}
-                      borderRadius="$10"
-                      backgroundColor="$link"
-                    />
-
-                    <Text>{label}</Text>
-                    <Text marginLeft="auto">
-                      {isDayOff
-                        ? t('shared.schedule.day_off')
-                        : DateHelper.isAllDay(start, end)
-                          ? t('shared.schedule.all_day')
-                          : `${DateHelper.format(
-                              DateHelper.addMinutes(startOfDay, start),
-                              'p',
-                            )} - ${DateHelper.format(
-                              DateHelper.addMinutes(startOfDay, end),
-                              'p',
-                            )}`}
-                    </Text>
-                  </XStack>
-                );
-              })}
-          </ListItemGroup>
-        ) : (
-          <ListItemGroup
-            paddingVertical={0}
-            paddingHorizontal="$3"
-            backgroundColor="transparent"
-            title={t('shared.schedule.working_hours')}
-          >
-            <RegularText>{t('shared.not_specified')}</RegularText>
-          </ListItemGroup>
-        )}
+        <BrandSchedule schedules={schedules} />
 
         {employee.locations?.length ? (
           <ListItemGroup
@@ -245,7 +180,7 @@ export const BrandEmployeeProfile = ({
           backgroundColor="transparent"
         >
           <RegularText lineHeight={22}>
-            {employee.about || t('shared.not_specified')}
+            {employee.about?.trim() || t('shared.not_specified')}
           </RegularText>
         </ListItemGroup>
       </FormView>

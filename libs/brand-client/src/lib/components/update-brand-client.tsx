@@ -257,7 +257,7 @@ const Note = ({ client }: { client: BrandClient }) => {
         icon={<Icon name="Document" />}
         iconAfter={<Icon name="ArrowRight" />}
         label={t('brand_client.update.groups.note.title')}
-        text={value.note?.replace(/\n/gi, ' ') || t('shared.not_specified')}
+        text={value.note?.replace(/\n/gi, ' ')?.trim() || t('shared.not_specified')}
         onPress={openModal}
       />
 

@@ -109,7 +109,7 @@ export const BrandMembershipProfile = ({
           backgroundColor="transparent"
         >
           <RegularText lineHeight={22}>
-            {membership.note || t('shared.not_specified')}
+            {membership.note?.trim() || t('shared.not_specified')}
           </RegularText>
         </ListItemGroup>
       </FormView>

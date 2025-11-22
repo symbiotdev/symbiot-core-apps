@@ -116,7 +116,7 @@ export const CurrentBrandProfile = () => {
           title={t('brand.profile.about')}
         >
           <RegularText lineHeight={20}>
-            {currentBrand.about || t('shared.not_specified')}
+            {currentBrand.about?.trim() || t('shared.not_specified')}
           </RegularText>
         </ListItemGroup>
 

@@ -155,7 +155,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
           title={t('brand_service.profile.note')}
         >
           <RegularText lineHeight={22}>
-            {service.note || t('shared.not_specified')}
+            {service.note?.trim() || t('shared.not_specified')}
           </RegularText>
         </ListItemGroup>
       </FormView>

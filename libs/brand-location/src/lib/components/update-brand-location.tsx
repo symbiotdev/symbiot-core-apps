@@ -55,7 +55,8 @@ export const UpdateBrandLocation = ({
       withHeaderHeight
       withKeyboard
       gap="$5"
-      paddingHorizontal={0}
+      paddingLeft={0}
+      paddingRight={0}
     >
       <BrandLocationMediaForm marginTop="$5" location={location} />
 

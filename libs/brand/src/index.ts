@@ -8,6 +8,7 @@ export * from './lib/components/items/brand-transaction-item';
 
 export * from './lib/components/brand-congrats';
 export * from './lib/components/brand-profile-completion';
+export * from './lib/components/brand-schedule';
 export * from './lib/components/current-brand-profile';
 export * from './lib/components/create-brand';
 export * from './lib/components/create-brand-intro';

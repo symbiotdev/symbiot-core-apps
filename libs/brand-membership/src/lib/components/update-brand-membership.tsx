@@ -454,7 +454,7 @@ const Note = ({ membership }: { membership: BrandMembership }) => {
         icon={<Icon name="ChatRoundDots" />}
         iconAfter={<Icon name="ArrowRight" />}
         label={t(`${tPrefix}.update.groups.note.title`)}
-        text={value.note?.replace(/\n/gi, ' ') || t('shared.not_specified')}
+        text={value.note?.replace(/\n/gi, ' ')?.trim() || t('shared.not_specified')}
         onPress={openModal}
       />
 

@@ -33,7 +33,7 @@ export const EmptyView = ({
         {!!title && <H3 textAlign="center">{title}</H3>}
 
         <RegularText textAlign="center" maxWidth={500}>
-          {message || t('shared.its_empty')}
+          {message?.trim() || t('shared.its_empty')}
         </RegularText>
       </View>
 

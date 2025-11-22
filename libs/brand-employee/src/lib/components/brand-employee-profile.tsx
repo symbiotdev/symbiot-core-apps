@@ -2,8 +2,10 @@ import { BrandEmployee } from '@symbiot-core-apps/api';
 import {
   Avatar,
   ButtonIcon,
+  Card,
   FormView,
   H3,
+  Icon,
   ListItemGroup,
   MapsTrigger,
   MediumText,
@@ -76,6 +78,13 @@ export const BrandEmployeeProfile = ({
     <PageView scrollable withHeaderHeight>
       <FormView alignItems="center" gap="$5" flex={1}>
         <BrandEmployeeCongrats employee={employee} />
+
+        {!employee.provider && (
+          <Card width="100%" flexDirection="row" alignItems="center" gap="$3">
+            <Icon name="InfoCircle" color="$error" />
+            <RegularText color="$error">{t('brand_employee.profile.not_provider')}</RegularText>
+          </Card>
+        )}
 
         <View gap="$3" alignItems="center">
           <Avatar

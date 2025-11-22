@@ -18,6 +18,7 @@ export type PageViewProps = ContainerViewProps & {
   scrollable?: boolean;
   refreshing?: boolean;
   withKeyboard?: boolean;
+  scrollEnabled?: boolean;
   withHeaderHeight?: boolean;
   ignoreTopSafeArea?: boolean;
   ignoreBottomSafeArea?: boolean;
@@ -26,6 +27,7 @@ export type PageViewProps = ContainerViewProps & {
 
 export const PageView = ({
   scrollable,
+  scrollEnabled = true,
   refreshing,
   withKeyboard,
   withHeaderHeight,
@@ -39,6 +41,7 @@ export const PageView = ({
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="none"
+        scrollEnabled={scrollEnabled}
         contentContainerStyle={styles.FullScreen}
         showsHorizontalScrollIndicator={isWeb}
         showsVerticalScrollIndicator={isWeb}
@@ -69,6 +72,7 @@ export const PageView = ({
   if (scrollable) {
     return (
       <ScrollView
+        scrollEnabled={scrollEnabled}
         keyboardShouldPersistTaps="handled"
         showsHorizontalScrollIndicator={isWeb}
         showsVerticalScrollIndicator={isWeb}

@@ -8,7 +8,9 @@ export * from './lib/card/action-card';
 export * from './lib/card/card';
 export * from './lib/card/cards-grid';
 export * from './lib/card/closable-card';
-export * from './lib/card/progress-card';
+export * from './lib/card/progress-card'
+
+export * from './lib/carousel/simple-horizontal-carousel';
 
 export * from './lib/chart/circular-progress';
 

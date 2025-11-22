@@ -4,8 +4,10 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   Avatar,
+  avatarBlurhash,
   ButtonIcon,
   Chip,
+  defaultPageHorizontalPadding,
   FormView,
   H3,
   InitView,
@@ -14,16 +16,18 @@ import {
   MediumText,
   PageView,
   RegularText,
+  SimpleHorizontalCarousel,
 } from '@symbiot-core-apps/ui';
 import { BrandEmployeeItem, BrandSchedule } from '@symbiot-core-apps/brand';
-import React from 'react';
+import React, { useState } from 'react';
 import { View, XStack } from 'tamagui';
-import { Linking } from 'react-native';
+import { Linking, useWindowDimensions } from 'react-native';
 import { openBrowserAsync } from 'expo-web-browser';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandLocationCompletion } from './brand-location-completion';
+import { Image } from 'expo-image';
 
 export const BrandLocationProfile = ({
   location,
@@ -31,6 +35,7 @@ export const BrandLocationProfile = ({
   location: BrandLocation;
 }) => {
   const { t } = useTranslation();
+  const { height } = useWindowDimensions();
   const { hasPermission } = useCurrentBrandEmployee();
   const { items, isPending, error } =
     useCurrentBrandEmployeeProvidersByLocationListReq({
@@ -40,9 +45,49 @@ export const BrandLocationProfile = ({
       },
     });
 
+  const [scrollEnabled, setScrollEnabled] = useState(true);
+  const galleryImageHeight = Math.max(height / 4, 200);
+
   return (
-    <PageView scrollable withHeaderHeight>
-      <FormView alignItems="center" gap="$5" flex={1}>
+    <PageView
+      scrollable
+      withHeaderHeight
+      scrollEnabled={scrollEnabled}
+      paddingLeft={0}
+      paddingRight={0}
+    >
+      {!!location.gallery?.length && (
+        <View height={galleryImageHeight} width="100%" position="relative">
+          <SimpleHorizontalCarousel
+            id="symbiot-location-profile-gallery"
+            showCounter={location.gallery?.length > 1}
+            onStartSwipe={() => setScrollEnabled(false)}
+            onEndSwipe={() => setScrollEnabled(true)}
+          >
+            {location.gallery.map(({ url }, index) => (
+              <Image
+                key={index}
+                source={url}
+                placeholder={{
+                  blurhash: avatarBlurhash,
+                }}
+                style={{
+                  height: galleryImageHeight,
+                  width: '100%',
+                }}
+              />
+            ))}
+          </SimpleHorizontalCarousel>
+        </View>
+      )}
+
+      <FormView
+        alignItems="center"
+        gap="$5"
+        flex={1}
+        marginTop={location?.gallery?.length ? -50 : 0}
+        paddingHorizontal={defaultPageHorizontalPadding}
+      >
         <View gap="$2" alignItems="center">
           <Avatar
             name={location.name}

@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery as useTanStackInfiniteQuery } from '@tanstack/react-query';
 import type { InfiniteData, QueryKey } from '@tanstack/query-core';
 import axios from 'axios';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -8,6 +8,7 @@ import { requestWithStringError } from '../utils/request';
 import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
 import { getInitialQueryDataStoreQueryKey } from '../utils/initial-query-data';
 import type { UseInfiniteQueryResult } from '@tanstack/react-query/src/types';
+import { useQueryEnabled } from './use-query-enabled';
 
 function getNextPageParam<T>(page: PaginationList<T>) {
   return page.items.length < page.count
@@ -25,37 +26,42 @@ export type InfiniteQuery<T> = UseInfiniteQueryResult<
   onEndReached: () => void;
 };
 
-export function useInfiniteQueryWrapper<T extends { id: string }>({
-  apUrl,
+export function useInfiniteQuery<T extends { id: string }>({
+  url,
   queryKey,
+  enabled: enabledByProps,
   params,
   refetchOnMount = false,
   afterKeys = ['id'],
   storeInitialData,
 }: {
-  apUrl: string;
+  url: string;
   queryKey: unknown[];
   refetchOnMount?: boolean;
+  enabled?: boolean;
   afterKeys?: (keyof T)[];
   storeInitialData?: boolean;
   params?: PaginationListParams & Record<string, unknown>;
 }) {
+  const enabled = useQueryEnabled(enabledByProps);
+
   const [isManualRefetching, setIsManualRefetching] = useState(false);
 
-  const query = useInfiniteQuery<
+  const query = useTanStackInfiniteQuery<
     PaginationList<T>,
     string,
     InfiniteData<PaginationList<T>>,
     QueryKey,
     T | undefined
   >({
-    getNextPageParam,
+    enabled,
     refetchOnMount,
     initialPageParam: undefined,
     queryKey,
+    getNextPageParam,
     queryFn: ({ pageParam }) =>
       requestWithStringError(
-        axios.get(apUrl, {
+        axios.get(url, {
           params: {
             ...params,
             ...(!!pageParam &&

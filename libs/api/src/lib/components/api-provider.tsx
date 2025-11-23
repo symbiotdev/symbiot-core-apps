@@ -11,10 +11,11 @@ import { authTokenHeaderKey, useAuthTokens } from '../hooks/use-auth-tokens';
 import { useDevId } from '../hooks/use-dev-id';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '../utils/client';
-import { useAccountAuthRefreshTokenReq } from '../queries/use-account-auth.api';
 import { Platform } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { clearInitialQueryData } from '../utils/initial-query-data';
+import { DateHelper, useNativeNow } from '@symbiot-core-apps/shared';
+import { useAccountAuthRefreshTokenReq } from '../queries/use-account-auth.api';
 
 type SocketState = {
   connecting: boolean;
@@ -33,9 +34,12 @@ export const ApiProvider = ({
   onConnected?: () => void;
 }>) => {
   const devId = useDevId();
+  const { now } = useNativeNow();
   const { i18n } = useTranslation();
+  const { tokens, nextRefreshDate, setTokens } = useAuthTokens();
   const refreshTokens = useAccountAuthRefreshTokenReq();
-  const { tokens, setTokens } = useAuthTokens();
+
+  const [loaded, setLoaded] = useState(false);
 
   const stateRef = useRef<SocketState>({
     connecting: false,
@@ -76,7 +80,6 @@ export const ApiProvider = ({
       languageCode: i18n.language,
       onUnauthorized,
       onNoRespond,
-      refreshTokens,
     });
 
     if (tokens.access) {
@@ -107,8 +110,23 @@ export const ApiProvider = ({
     onNoRespond,
     onUnauthorized,
     setTokens,
-    refreshTokens,
   ]);
+
+  useLayoutEffect(() => {
+    if (!devId) {
+      return;
+    }
+
+    if (
+      nextRefreshDate &&
+      (DateHelper.isAfter(now, nextRefreshDate) ||
+        DateHelper.isSame(now, nextRefreshDate))
+    ) {
+      void refreshTokens();
+    } else {
+      setLoaded(true);
+    }
+  }, [devId, nextRefreshDate, now, refreshTokens]);
 
   useLayoutEffect(() => {
     socket.on('connect', () => {
@@ -141,7 +159,7 @@ export const ApiProvider = ({
 
   return (
     <QueryClientProvider client={queryClient}>
-      {devId && children}
+      {loaded && children}
     </QueryClientProvider>
   );
 };

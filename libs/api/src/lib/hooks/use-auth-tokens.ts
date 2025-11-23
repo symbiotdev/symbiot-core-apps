@@ -2,9 +2,11 @@ import { AccountAuthTokens } from '../types/account-auth';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
+import { DateHelper } from '@symbiot-core-apps/shared';
 
 export type OnboardingState = {
   tokens: AccountAuthTokens;
+  nextRefreshDate?: string;
   setTokens: (tokens: AccountAuthTokens) => Promise<void>;
   removeTokens: () => Promise<void>;
 };
@@ -22,12 +24,16 @@ export const useAuthTokens = create<OnboardingState>()(
         refresh: '',
       },
       setTokens: async (tokens) => {
-        set({ tokens });
+        set({
+          tokens,
+          nextRefreshDate: DateHelper.addMinutes(new Date(), 5).toUTCString(),
+        });
 
         return Promise.resolve();
       },
       removeTokens: async () => {
         set({
+          nextRefreshDate: undefined,
           tokens: {
             access: '',
             refresh: '',

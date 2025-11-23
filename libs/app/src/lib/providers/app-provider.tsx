@@ -125,10 +125,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     }
   }, [appTranslationError, appTranslations, setTranslations]);
 
-  const hasAssets =
-    !!icons && !!theme && !!languages && !!translations && functionality;
-
-  if (!hasAssets) {
+  if (!(!!icons && !!theme && !!languages && !!translations && functionality)) {
     if (loadConfigFailed || loadTranslationsFailed) {
       return <LoadAssetsFailed />;
     }
@@ -137,15 +134,13 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   }
 
   return (
-    hasAssets && (
-      <Context.Provider value={{ icons, theme, languages, functionality }}>
-        <KeyboardProvider>
-          <I18nProvider translations={translations}>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
-          </I18nProvider>
-        </KeyboardProvider>
-      </Context.Provider>
-    )
+    <Context.Provider value={{ icons, theme, languages, functionality }}>
+      <KeyboardProvider>
+        <I18nProvider translations={translations}>
+          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        </I18nProvider>
+      </KeyboardProvider>
+    </Context.Provider>
   );
 };
 

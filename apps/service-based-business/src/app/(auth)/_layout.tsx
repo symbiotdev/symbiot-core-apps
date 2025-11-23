@@ -12,6 +12,7 @@ import { useStackScreenHeaderOptions } from '@symbiot-core-apps/ui';
 import { Platform } from 'react-native';
 import { useEffect } from 'react';
 import { hideAsync } from 'expo-splash-screen';
+import { changeAppLanguageToSystem } from '@symbiot-core-apps/i18n';
 
 export default () => {
   const { tokens } = useAuthTokens();
@@ -28,6 +29,7 @@ export default () => {
   useEffect(() => {
     if (!tokens.access) {
       void hideAsync();
+      changeAppLanguageToSystem();
 
       clearCurrentAccountState();
       clearCurrentBrandState();

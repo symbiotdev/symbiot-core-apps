@@ -94,8 +94,9 @@ function ServicesController<T extends FieldValues>(
   return (
     <ToggleController
       {...props}
-      label={!props.noLabel ? t(`${tPrefix}.form.services.label`) : ''}
       items={items}
+      label={!props.noLabel ? t(`${tPrefix}.form.services.label`) : ''}
+      noDataMessage={t(`${tPrefix}.create.steps.services.empty`)}
       errors={{
         required: t(`${tPrefix}.form.services.error.required`),
       }}

@@ -27,6 +27,18 @@ export const changeAppLanguage = (language: string) => {
   mmkvGlobalStorage.set(LANGUAGE_STORE_KEY, language);
 };
 
+export const changeAppLanguageToSystem = () => {
+  mmkvGlobalStorage.remove(LANGUAGE_STORE_KEY);
+
+  const primaryLanguage =
+    i18n.languages.find((language) => language === fallbackLanguage) ||
+    i18n.languages[0];
+
+  if (primaryLanguage) {
+    void i18n.changeLanguage(primaryLanguage);
+  }
+};
+
 export type Translations = {
   [key: string]: string | Translations;
 };

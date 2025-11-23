@@ -17,6 +17,7 @@ export function ToggleController<T extends FieldValues>({
   items,
   itemsLoading,
   itemsError,
+  noDataMessage,
   onBlur,
 }: {
   name: Path<T>;
@@ -27,6 +28,7 @@ export function ToggleController<T extends FieldValues>({
   items?: ToggleGroupItem[];
   itemsLoading?: boolean;
   itemsError?: string | null;
+  noDataMessage?: string;
   errors?: {
     required: string;
   };
@@ -64,6 +66,7 @@ export function ToggleController<T extends FieldValues>({
           label={label}
           items={items}
           loading={itemsLoading}
+          noDataMessage={noDataMessage}
           error={itemsError}
           value={value}
           onChange={onChange}

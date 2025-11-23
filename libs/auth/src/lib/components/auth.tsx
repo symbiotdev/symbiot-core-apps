@@ -1,7 +1,7 @@
 import { View } from 'tamagui';
 import { useVideoPlayer, VideoSource, VideoView } from 'expo-video';
 import { Platform, ScrollView, StyleSheet } from 'react-native';
-import { useRestoreNativeApp } from '@symbiot-core-apps/shared';
+import { useRestoreApp } from '@symbiot-core-apps/shared';
 import { ReactElement, useCallback, useEffect } from 'react';
 import { Image } from 'expo-image';
 import { Blur, H2, H4 } from '@symbiot-core-apps/ui';
@@ -38,7 +38,7 @@ export const Auth = ({
     player.play();
   }, [player]);
 
-  useRestoreNativeApp(() => {
+  useRestoreApp(() => {
     player.play();
   });
 

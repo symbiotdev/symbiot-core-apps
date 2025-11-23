@@ -23,7 +23,9 @@ export enum BrandMembershipQueryKey {
   profileById = 'brand-membership-profile-by-id',
   detailedById = 'brand-membership-detailed-by-id',
   periodBasedCurrentList = 'brand-membership-period-based-current-list',
+  periodBasedCurrentFilteredList = 'brand-membership-period-based-current-filtered-list',
   visitBasedCurrentList = 'brand-membership-visit-based-current-list',
+  visitBasedCurrentFilteredList = 'brand-membership-visit-based-current-filtered-list',
 }
 
 const refetchQueriesByMembershipChanges = async (
@@ -44,11 +46,19 @@ const refetchQueriesByMembershipChanges = async (
       list: !entity.data
         ? [
             BrandMembershipQueryKey.periodBasedCurrentList,
+            BrandMembershipQueryKey.periodBasedCurrentFilteredList,
             BrandMembershipQueryKey.visitBasedCurrentList,
+            BrandMembershipQueryKey.visitBasedCurrentFilteredList,
           ]
         : getBrandMembershipType(entity.data) === BrandMembershipType.visits
-          ? [BrandMembershipQueryKey.visitBasedCurrentList]
-          : [BrandMembershipQueryKey.periodBasedCurrentList],
+          ? [
+              BrandMembershipQueryKey.visitBasedCurrentList,
+              BrandMembershipQueryKey.visitBasedCurrentFilteredList,
+            ]
+          : [
+              BrandMembershipQueryKey.periodBasedCurrentList,
+              BrandMembershipQueryKey.periodBasedCurrentFilteredList,
+            ],
     },
   });
 
@@ -89,13 +99,18 @@ export const useBrandMembershipDetailedByIdReq = (
 };
 
 export const useBrandPeriodBasedMembershipCurrentListReq = (props?: {
-  params?: PaginationListParams;
+  params?: PaginationListParams & { hidden?: boolean };
 }) =>
   useInfiniteQuery<BrandPeriodBasedMembership>({
     ...props,
     storeInitialData: true,
     url: '/api/brand-membership',
-    queryKey: [BrandMembershipQueryKey.periodBasedCurrentList, props?.params],
+    queryKey: [
+      props?.params?.hidden !== undefined
+        ? BrandMembershipQueryKey.periodBasedCurrentList
+        : BrandMembershipQueryKey.visitBasedCurrentFilteredList,
+      props?.params,
+    ],
     params: {
       ...props?.params,
       type: BrandMembershipType.period,
@@ -103,13 +118,18 @@ export const useBrandPeriodBasedMembershipCurrentListReq = (props?: {
   });
 
 export const useBrandVisitBasedMembershipCurrentListReq = (props?: {
-  params?: PaginationListParams;
+  params?: PaginationListParams & { hidden?: boolean };
 }) =>
   useInfiniteQuery<BrandVisitBasedMembership>({
     ...props,
     storeInitialData: true,
     url: '/api/brand-membership',
-    queryKey: [BrandMembershipQueryKey.visitBasedCurrentList, props?.params],
+    queryKey: [
+      props?.params?.hidden !== undefined
+        ? BrandMembershipQueryKey.visitBasedCurrentList
+        : BrandMembershipQueryKey.visitBasedCurrentFilteredList,
+      props?.params,
+    ],
     params: {
       ...props?.params,
       type: BrandMembershipType.visits,

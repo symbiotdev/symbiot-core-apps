@@ -27,14 +27,16 @@ import { KeyboardStickyView } from 'react-native-keyboard-controller';
 export const BrandMembershipsCurrentList = ({
   offsetTop,
   type,
+  withHidden,
   query,
   renderItem,
   Intro,
 }: {
   offsetTop?: number;
+  withHidden?: boolean;
   type: BrandMembershipType;
   query: (props?: {
-    params?: PaginationListParams;
+    params?: PaginationListParams & { hidden?: boolean };
   }) => InfiniteQuery<AnyBrandMembership>;
   renderItem: (props: { item: AnyBrandMembership }) => ReactElement;
   Intro: ComponentType<{ loading?: boolean; error?: string | null }>;
@@ -55,6 +57,7 @@ export const BrandMembershipsCurrentList = ({
     onEndReached,
   } = query({
     params: {
+      hidden: withHidden,
       ...(!!search && {
         search,
       }),
@@ -106,9 +109,7 @@ export const BrandMembershipsCurrentList = ({
           zIndex: 1,
         }}
       >
-        <NavigationBackground
-          backgroundColor="$background1"
-        />
+        <NavigationBackground backgroundColor="$background1" />
 
         <Search
           value={search}

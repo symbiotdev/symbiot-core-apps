@@ -60,7 +60,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
         gap="$5"
         paddingHorizontal={defaultPageHorizontalPadding}
       >
-        <View paddingTop="$3" gap="$3">
+        <View paddingHorizontal="$3" paddingTop="$3" gap="$3">
           <H2>{service.name}</H2>
 
           {service.hidden && (
@@ -107,7 +107,14 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
         </View>
 
         {!!service.description && (
-          <RegularText>{service.description}</RegularText>
+          <ListItemGroup
+            paddingVertical={0}
+            paddingHorizontal="$3"
+            backgroundColor="transparent"
+            title={t('brand_service.profile.description')}
+          >
+            <RegularText>{service.description}</RegularText>
+          </ListItemGroup>
         )}
 
         {!!service.employees?.length && (
@@ -129,7 +136,8 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
 
         {locations.length && (
           <ListItemGroup
-            padding={0}
+            paddingVertical={0}
+            paddingHorizontal={0}
             backgroundColor="transparent"
             gap="$1"
             title={t('brand_service.profile.locations')}

@@ -45,6 +45,7 @@ export const BrandMembershipItem = ({
       price={membership.price}
       discount={membership.discount}
       currency={membership.currency}
+      hidden={membership.hidden}
       locations={membership.locations}
       opacity={membership.hidden ? 0.7 : 1}
       removed={!!membership.dAt}
@@ -57,6 +58,7 @@ export const BrandMembershipItem = ({
       price={membership.price}
       discount={membership.discount}
       currency={membership.currency}
+      hidden={membership.hidden}
       locations={membership.locations}
       opacity={membership.hidden ? 0.7 : 1}
       removed={!!membership.dAt}
@@ -105,6 +107,7 @@ const BrandPeriodBasedMembershipItemView = ({
   locations,
   price,
   discount,
+  hidden,
   currency,
   period,
   endAt,
@@ -115,6 +118,7 @@ const BrandPeriodBasedMembershipItemView = ({
   name: string;
   price: number;
   discount: number;
+  hidden?: boolean;
   currency: Currency;
   locations?: { id: string; name: string }[];
   endAt?: string;
@@ -138,6 +142,7 @@ const BrandPeriodBasedMembershipItemView = ({
       gap="$2"
       justifyContent="space-between"
       position="relative"
+      opacity={hidden ? 0.5 : 1}
       disabledStyle={{ opacity: 0.5 }}
       {...viewProps}
       {...(onPress &&
@@ -187,7 +192,15 @@ const BrandPeriodBasedMembershipItemView = ({
         )}
       </XStack>
 
-      <View gap="$1">
+      <View gap="$2">
+        {!!hidden && (
+          <MediumText color="$error">
+            {t(
+              `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.unavailable`,
+            )}
+          </MediumText>
+        )}
+
         <H3 numberOfLines={2} color="white" zIndex={1}>
           {name}
         </H3>
@@ -233,6 +246,7 @@ const BrandVisitBasedMembershipItemView = ({
   price,
   discount,
   currency,
+  hidden,
   locations,
   removed,
   endAt,
@@ -243,6 +257,7 @@ const BrandVisitBasedMembershipItemView = ({
   visits: number;
   price: number;
   discount: number;
+  hidden?: boolean;
   currency: Currency;
   locations?: { id: string; name: string }[];
   removed?: boolean;
@@ -286,6 +301,7 @@ const BrandVisitBasedMembershipItemView = ({
       height={200}
       maxWidth={400}
       width="100%"
+      opacity={hidden ? 0.5 : 1}
       disabledStyle={{ opacity: 0.5 }}
       {...viewProps}
       {...(onPress &&
@@ -330,7 +346,15 @@ const BrandVisitBasedMembershipItemView = ({
         )}
       </XStack>
 
-      <View gap="$1">
+      <View gap="$2">
+        {!!hidden && (
+          <MediumText color="$error">
+            {t(
+              `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.unavailable`,
+            )}
+          </MediumText>
+        )}
+
         <H3 numberOfLines={2} color="white">
           {name}
         </H3>
@@ -342,10 +366,7 @@ const BrandVisitBasedMembershipItemView = ({
       {price ? (
         <XStack gap="$2" alignItems="center" alignSelf="flex-end">
           {!!discount && (
-            <MediumText
-              textDecorationLine="line-through"
-              color="white"
-            >
+            <MediumText textDecorationLine="line-through" color="white">
               {formatPrice({
                 price,
                 symbol: currency?.symbol,

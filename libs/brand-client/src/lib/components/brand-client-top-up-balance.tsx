@@ -104,6 +104,7 @@ export const BrandClientTopUpBalance = ({
         onClose={closeVisitBasedMembershipsModal}
       >
         <BrandMembershipsCurrentList
+          withHidden={false}
           type={BrandMembershipType.visits}
           query={useBrandVisitBasedMembershipCurrentListReq}
           renderItem={({ item }) => (
@@ -121,13 +122,14 @@ export const BrandClientTopUpBalance = ({
       </SlideSheetModal>
 
       <SlideSheetModal
-        paddingHorizontal={0}
         withKeyboard={false}
+        paddingHorizontal={0}
         headerTitle={t('brand_client.balance.menu.add_period_based_membership')}
         visible={periodBasedMembershipsModalVisible}
         onClose={closePeriodBasedMembershipsModal}
       >
         <BrandMembershipsCurrentList
+          withHidden={false}
           type={BrandMembershipType.period}
           query={useBrandPeriodBasedMembershipCurrentListReq}
           renderItem={({ item }) => (

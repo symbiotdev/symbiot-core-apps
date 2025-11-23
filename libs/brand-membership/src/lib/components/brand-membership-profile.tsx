@@ -45,7 +45,9 @@ export const BrandMembershipProfile = ({
       <FormView gap="$5" marginVertical="$5">
         {!!membership.description && (
           <ListItemGroup
-            paddingVertical="$4"
+            paddingVertical={0}
+            paddingHorizontal="$3"
+            backgroundColor="transparent"
             title={t(`${tPrefix}.profile.description`)}
           >
             <RegularText>{membership.description}</RegularText>
@@ -68,6 +70,7 @@ export const BrandMembershipProfile = ({
                 padding="$4"
                 key={service.id}
                 service={service}
+                onPress={() => router.push(`/services/${service.id}/profile`)}
               />
             ))}
           </ListItemGroup>

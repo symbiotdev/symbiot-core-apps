@@ -60,7 +60,7 @@ export const CurrentBrandProfile = () => {
           <Avatar
             color="$background1"
             name={currentBrand.name}
-            url={currentBrand.avatar?.xsUrl}
+            url={currentBrand.avatar?.url}
             size={100}
           />
 

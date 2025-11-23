@@ -52,7 +52,7 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
           <Avatar
             color="$background1"
             name={name}
-            url={client.avatar?.xsUrl}
+            url={client.avatar?.url}
             size={100}
           />
 

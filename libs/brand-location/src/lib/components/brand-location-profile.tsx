@@ -92,7 +92,7 @@ export const BrandLocationProfile = ({
           <Avatar
             name={location.name}
             size={100}
-            url={location.avatar?.xsUrl}
+            url={location.avatar?.url}
             color="$background1"
           />
 

@@ -108,7 +108,7 @@ export const useBrandPeriodBasedMembershipCurrentListReq = (props?: {
     queryKey: [
       props?.params?.hidden !== undefined
         ? BrandMembershipQueryKey.periodBasedCurrentList
-        : BrandMembershipQueryKey.visitBasedCurrentFilteredList,
+        : BrandMembershipQueryKey.periodBasedCurrentFilteredList,
       props?.params,
     ],
     params: {

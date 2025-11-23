@@ -122,7 +122,7 @@ export const BrandLocationProfile = ({
               <ButtonIcon
                 iconName="Instagram"
                 size={40}
-                iconSize={20}
+                iconSize={18}
                 onPress={() => openBrowserAsync(location.instagrams[0])}
               />
             )}
@@ -158,6 +158,17 @@ export const BrandLocationProfile = ({
             <RegularText>{`${t('brand_location.profile.floor')}: ${location.floor}`}</RegularText>
           )}
         </ListItemGroup>
+
+        {!!location.remark && (
+          <ListItemGroup
+            paddingVertical={0}
+            paddingHorizontal="$3"
+            backgroundColor="transparent"
+            title={t('brand_location.profile.remark')}
+          >
+            <RegularText>{location.remark.trim()}</RegularText>
+          </ListItemGroup>
+        )}
 
         <BrandSchedule schedules={location.schedules} />
 
@@ -202,17 +213,6 @@ export const BrandLocationProfile = ({
             ))}
           </ListItemGroup>
         )}
-
-        <ListItemGroup
-          paddingVertical={0}
-          paddingHorizontal="$3"
-          backgroundColor="transparent"
-          title={t('brand_location.profile.remark')}
-        >
-          <RegularText>
-            {location.remark?.trim() || t('shared.not_specified')}
-          </RegularText>
-        </ListItemGroup>
       </FormView>
     </PageView>
   );

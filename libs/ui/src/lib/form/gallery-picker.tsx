@@ -58,7 +58,12 @@ export const GalleryPicker = ({
 
   const renderItem = useCallback(
     ({ item, index }: { item: ImageSource | string; index: number }) => (
-      <View key={index} position="relative" width={imageSize} height={imageSize}>
+      <View
+        key={index}
+        position="relative"
+        width={imageSize}
+        height={imageSize}
+      >
         {removingIndex === null && (
           <ButtonIcon
             type="danger"
@@ -128,7 +133,7 @@ export const GalleryPicker = ({
   );
 
   return (
-    <FormField label={label}>
+    <FormField label={label} labelProps={{ paddingHorizontal: '$6' }}>
       <MediaList
         horizontal
         data={value}

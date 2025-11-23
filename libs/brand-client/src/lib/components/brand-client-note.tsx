@@ -19,7 +19,7 @@ import React from 'react';
 export const BrandClientNote = ({ client }: { client: BrandClient }) => {
   const { t } = useTranslation();
 
-  const { value, modalVisible, updateValue, openModal, closeModal } =
+  const { modalVisible, updateValue, openModal, closeModal } =
     useModalUpdateByIdForm<
       BrandClient,
       {
@@ -43,11 +43,11 @@ export const BrandClientNote = ({ client }: { client: BrandClient }) => {
         onPress={openModal}
       >
         <RegularText
-          color={!value.note ? '$disabled' : undefined}
-          textAlign={value.note ? 'left' : 'center'}
+          color={!client.note ? '$disabled' : undefined}
+          textAlign={client.note ? 'left' : 'center'}
           paddingVertical="$2"
         >
-          {value.note?.trim() || t('shared.not_specified')}
+          {client.note?.trim() || t('shared.not_specified')}
         </RegularText>
       </ListItemGroup>
 
@@ -60,7 +60,7 @@ export const BrandClientNote = ({ client }: { client: BrandClient }) => {
         <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="note"
-            value={value.note}
+            value={client.note}
             onUpdate={updateValue}
             Controller={BrandClientNoteController}
           />

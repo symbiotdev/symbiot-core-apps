@@ -72,7 +72,7 @@ export const CurrentBrandProfile = () => {
                 <ButtonIcon
                   iconName="Instagram"
                   size={40}
-                  iconSize={20}
+                  iconSize={18}
                   onPress={() => openBrowserAsync(instagram)}
                 />
               )}

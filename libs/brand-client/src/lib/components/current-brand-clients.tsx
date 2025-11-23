@@ -5,6 +5,7 @@ import {
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   EmptyView,
+  Icon,
   InitView,
   NavigationBackground,
   PageView,
@@ -20,6 +21,7 @@ import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandClientItem } from '@symbiot-core-apps/brand';
+import { View } from 'tamagui';
 
 export const CurrentBrandClients = ({
   offsetTop,
@@ -61,7 +63,13 @@ export const CurrentBrandClients = ({
   );
 
   if (!clients?.length && !search) {
-    return <Intro loading={isLoading} error={error} hideAddClientButton={hideAddClientButton} />;
+    return (
+      <Intro
+        loading={isLoading}
+        error={error}
+        hideAddClientButton={hideAddClientButton}
+      />
+    );
   }
 
   return (
@@ -153,10 +161,18 @@ const Intro = ({
           message={t('brand_client.create.intro.subtitle')}
         >
           {!hideAddClientButton && (
-            <Button
-              label={t('brand_client.create.intro.button.label')}
-              onPress={() => router.push('/clients/create')}
-            />
+            <View width="100%" gap="$1">
+              <Button
+                label={t('brand_client.create.intro.button.label')}
+                onPress={() => router.push('/clients/create')}
+              />
+              <Button
+                type="clear"
+                icon={<Icon name="Import" />}
+                label={t('navigation.tabs.plus.actions.import_client.label')}
+                onPress={() => router.push('/clients/import')}
+              />
+            </View>
           )}
         </EmptyView>
       </PageView>

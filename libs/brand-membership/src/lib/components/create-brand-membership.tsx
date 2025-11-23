@@ -10,7 +10,13 @@ import {
 import { router, useNavigation } from 'expo-router';
 import { EventArg, NavigationAction } from '@react-navigation/native';
 import { ConfirmAlert } from '@symbiot-core-apps/shared';
-import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
+import {
+  Card,
+  Icon,
+  SemiBoldText,
+  Survey,
+  SurveyStep,
+} from '@symbiot-core-apps/ui';
 import { useForm } from 'react-hook-form';
 import { BrandMembershipAvailabilityController } from './controller/brand-membership-availability-controller';
 import { BrandMembershipNameController } from './controller/brand-membership-name-controller';
@@ -253,9 +259,16 @@ export const CreateBrandMembership = ({
         title={t(`${tPrefix}.create.steps.services.title`)}
         subtitle={t(`${tPrefix}.create.steps.services.subtitle`)}
       >
+        <Card flexDirection="row" gap="$3">
+          <Icon name="InfoCircle" />
+
+          <SemiBoldText>
+            {t(`${tPrefix}.create.steps.services.all_included`)}
+          </SemiBoldText>
+        </Card>
+
         <BrandMembershipServicesController
           required
-          noLabel
           name="services"
           type={type}
           location={location}

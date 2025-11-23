@@ -37,6 +37,7 @@ export const configByType: Record<
 export const BrandBookingItem = ({
   nameProps,
   hideSchedule,
+  hideCancelledText,
   showLocalTime,
   timezone,
   booking,
@@ -44,6 +45,7 @@ export const BrandBookingItem = ({
 }: ViewProps & {
   nameProps?: TextProps;
   hideSchedule?: boolean;
+  hideCancelledText?: boolean;
   showLocalTime?: boolean;
   timezone?: string;
   booking: AnyBrandBooking;
@@ -62,7 +64,7 @@ export const BrandBookingItem = ({
       backgroundColor={config.backgroundColor}
       {...viewProps}
     >
-      {!!booking.cancelAt && (
+      {!hideCancelledText && !!booking.cancelAt && (
         <XStack gap="$1" alignSelf="flex-end" justifyContent="space-between">
           <Icon name="Close" size={16} color="$error" />
           <RegularText color="$error" alignSelf="center" fontSize={12}>

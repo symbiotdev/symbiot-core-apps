@@ -216,6 +216,7 @@ export const ServiceBrandBookingProfileClients = ({
       >
         <CurrentBrandClients
           hideArrow
+          hideAddClientButton
           disabledIds={booking.clients.map(({ id }) => id)}
           onClientPress={onAdd}
         />
@@ -247,11 +248,7 @@ export const ServiceBrandBookingProfileClients = ({
         onClose={() => setActionClient(undefined)}
       >
         {!!actionClient && (
-          <ClientItem
-            hideArrow
-            paddingVertical="$2"
-            client={actionClient}
-          />
+          <ClientItem hideArrow paddingVertical="$2" client={actionClient} />
         )}
 
         <Br style={formViewStyles} />

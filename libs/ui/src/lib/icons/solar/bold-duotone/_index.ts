@@ -79,6 +79,7 @@ import { CalendarCross } from './CalendarCross';
 import { Balloon } from './Balloon';
 import { Confetti } from './Confetti';
 import { Link } from './Link';
+import { Pallete2 } from './Pallete2';
 
 export const Map: IconMap = {
   AddCircle,
@@ -135,6 +136,7 @@ export const Map: IconMap = {
   MoneyBag,
   Moon,
   MusicLibrary2,
+  Pallete2,
   PaperclipRounded,
   Pen,
   Phone,

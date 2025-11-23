@@ -132,6 +132,7 @@ export const BrandBookingsCalendar = ({
     ({ event }: { event: TimeGridEvent & AnyBrandBooking }) => (
       <BrandBookingItem
         hideSchedule
+        hideCancelledText
         paddingVertical="$1"
         paddingHorizontal="$2"
         gap="$1"

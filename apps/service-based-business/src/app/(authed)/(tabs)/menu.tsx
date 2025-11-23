@@ -9,6 +9,7 @@ import {
   useCurrentAccountState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
+  useScheme,
 } from '@symbiot-core-apps/state';
 import React, { useCallback, useLayoutEffect } from 'react';
 import { router, useNavigation } from 'expo-router';
@@ -25,20 +26,23 @@ import {
   MediumText,
   QrCodeModalWithTrigger,
   RegularText,
+  SemiBoldText,
   TabsPageView,
   useDrawer,
 } from '@symbiot-core-apps/ui';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
-import { GestureResponderEvent, Platform } from 'react-native';
+import { GestureResponderEvent, Linking, Platform } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useAccountAuthSignOutReq } from '@symbiot-core-apps/api';
+import { Image } from 'expo-image';
 
 export default () => {
   const { me } = useCurrentAccountState();
   const { brand: currentBrand } = useCurrentBrandState();
   const share = useShareApp();
+  const { scheme } = useScheme();
   const { t } = useTranslation();
   const { languages } = useApp();
   const { currentEmployee } = useCurrentBrandEmployee();
@@ -96,15 +100,20 @@ export default () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () =>
-        Platform.OS !== 'web' && (
-          <XStack gap="$2" alignItems="center">
-            <Icon name="Code" color="$placeholderColor" />
-            <RegularText color="$placeholderColor">
-              {t('shared.version')}: {DeviceVersion}
-            </RegularText>
-          </XStack>
-        ),
+      headerLeft: () => (
+        <Image
+          source={
+            scheme === 'light'
+              ? require('../../../../assets/images/icon/logo-light.png')
+              : require('../../../../assets/images/icon/logo-dark.png')
+          }
+          style={{
+            resizeMode: 'contain',
+            height: 24,
+            width: 100,
+          }}
+        />
+      ),
       headerRight: () => (
         <HeaderButton
           iconName="Logout2"
@@ -117,12 +126,12 @@ export default () => {
         />
       ),
     });
-  }, [navigation, signOut, t]);
+  }, [navigation, signOut, t, scheme]);
 
   return (
     me && (
       <TabsPageView scrollable withHeaderHeight>
-        <FormView gap="$3">
+        <FormView gap="$3" flex={1}>
           {(!currentBrand ||
             currentEmployee?.id === currentBrand.owner?.id) && (
             <ActionCard
@@ -180,7 +189,7 @@ export default () => {
             />
             <ListItem
               label={t('shared.preferences.appearance.title')}
-              icon={<Icon name="TuningSquare" />}
+              icon={<Icon name="Pallete2" />}
               onPress={onAppearancePress}
             />
 
@@ -197,6 +206,14 @@ export default () => {
               icon={<Icon name="Calendar" />}
               onPress={onCalendarPress}
             />
+
+            {Platform.OS !== 'web' && (
+              <ListItem
+                label={t('shared.preferences.system.title')}
+                icon={<Icon name="TuningSquare" />}
+                onPress={Linking.openSettings}
+              />
+            )}
           </ListItemGroup>
 
           <ListItemGroup title={t('shared.application')}>
@@ -223,6 +240,20 @@ export default () => {
               onPress={onFollowUsPress}
             />
           </ListItemGroup>
+
+          <View alignItems="center" gap="$1" marginTop="auto">
+            <Icon name="CodeCircle" color="$placeholderColor" />
+
+            {Platform.OS !== 'web' && (
+              <SemiBoldText>
+                {t('shared.version')}: {DeviceVersion}
+              </SemiBoldText>
+            )}
+
+            <RegularText color="$placeholderColor" textAlign="center">
+              Powered by Symbiot Development
+            </RegularText>
+          </View>
         </FormView>
       </TabsPageView>
     )

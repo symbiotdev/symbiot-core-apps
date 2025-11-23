@@ -24,11 +24,13 @@ import { BrandClientItem } from '@symbiot-core-apps/brand';
 export const CurrentBrandClients = ({
   offsetTop,
   hideArrow,
+  hideAddClientButton,
   disabledIds,
   onClientPress,
 }: {
   offsetTop?: number;
   hideArrow?: boolean;
+  hideAddClientButton?: boolean;
   disabledIds?: string[];
   onClientPress: (client: BrandClient) => void;
 }) => {
@@ -59,7 +61,7 @@ export const CurrentBrandClients = ({
   );
 
   if (!clients?.length && !search) {
-    return <Intro loading={isLoading} error={error} />;
+    return <Intro loading={isLoading} error={error} hideAddClientButton={hideAddClientButton} />;
   }
 
   return (
@@ -124,9 +126,11 @@ export const CurrentBrandClients = ({
 
 const Intro = ({
   loading,
+  hideAddClientButton,
   error,
 }: {
   loading?: boolean;
+  hideAddClientButton?: boolean;
   error?: string | null;
 }) => {
   const { t } = useTranslation();
@@ -148,10 +152,12 @@ const Intro = ({
           title={t('brand_client.create.intro.title')}
           message={t('brand_client.create.intro.subtitle')}
         >
-          <Button
-            label={t('brand_client.create.intro.button.label')}
-            onPress={() => router.push('/clients/create')}
-          />
+          {!hideAddClientButton && (
+            <Button
+              label={t('brand_client.create.intro.button.label')}
+              onPress={() => router.push('/clients/create')}
+            />
+          )}
         </EmptyView>
       </PageView>
     );

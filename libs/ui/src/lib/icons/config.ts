@@ -56,6 +56,7 @@ export type SolarIconName =
   | 'MoneyBag'
   | 'Moon'
   | 'MusicLibrary2'
+  | 'Pallete2'
   | 'PaperclipRounded'
   | 'Pen'
   | 'Phone'

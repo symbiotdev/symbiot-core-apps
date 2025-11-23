@@ -63,9 +63,9 @@ export const BrandEmployeeProfile = ({
 
   const schedules = useMemo(
     () =>
-      employee.schedules?.length
+      (employee.schedules?.length
         ? employee.schedules
-        : employee.locations?.[0]?.schedules,
+        : employee.locations?.[0]?.schedules) || [],
     [employee.locations, employee.schedules],
   );
 

@@ -12,6 +12,7 @@ import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { useApp } from '@symbiot-core-apps/app';
 import { useTranslation } from 'react-i18next';
+import { queryClient } from '@symbiot-core-apps/api';
 
 export const Language = () => {
   const { i18n } = useTranslation();
@@ -45,6 +46,7 @@ export const Language = () => {
             onChange={async (language) => {
               await updateAccount$({ language: language as string });
               changeAppLanguage(language as string);
+              queryClient.clear();
             }}
           />
         </Card>

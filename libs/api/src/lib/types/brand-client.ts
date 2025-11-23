@@ -47,6 +47,7 @@ export type BrandClientMembership = {
   discount: number;
   endAt: string;
   dAt: string;
+  cAt: string;
   type: BrandMembershipType;
   locations: { id: string; name: string }[];
   services: { id: string; name: string }[];

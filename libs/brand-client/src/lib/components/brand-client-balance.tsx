@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { BrandClientMembershipItem } from '@symbiot-core-apps/brand';
 import { BrandClientTopUpBalance } from './brand-client-top-up-balance';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
+import { DateHelper } from '@symbiot-core-apps/shared';
 
 export const BrandClientBalance = ({
   client,
@@ -60,15 +61,17 @@ export const BrandClientBalance = ({
         <EmptyView message={t('brand_client.balance.empty')} />
       )}
 
-      {client.memberships?.map((membership) => (
-        <BrandClientMembershipItem
-          alignSelf="center"
-          key={membership.id}
-          membership={membership}
-          disabled={disabledIds?.includes(membership.id)}
-          onPress={() => onPressMembership(membership)}
-        />
-      ))}
+      {client.memberships
+        ?.sort((a, b) => (DateHelper.isAfter(b.cAt, a.cAt) ? 1 : -1))
+        ?.map((membership) => (
+          <BrandClientMembershipItem
+            alignSelf="center"
+            key={membership.id}
+            membership={membership}
+            disabled={disabledIds?.includes(membership.id)}
+            onPress={() => onPressMembership(membership)}
+          />
+        ))}
     </View>
   );
 };

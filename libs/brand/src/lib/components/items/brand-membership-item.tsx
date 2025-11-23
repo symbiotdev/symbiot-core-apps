@@ -272,7 +272,7 @@ const BrandVisitBasedMembershipItemView = ({
     [endAt, now],
   );
 
-  const footerText = useMemo(() => {
+  const info = useMemo(() => {
     if (expired) {
       return t(
         `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.expired`,
@@ -322,11 +322,7 @@ const BrandVisitBasedMembershipItemView = ({
       />
 
       <XStack justifyContent="space-between" gap="$5" flexWrap="wrap">
-        {removed ? (
-          <Chip label={t('shared.deleted')} type="danger" size="small" />
-        ) : (
-          <Chip label={footerText} size="small" />
-        )}
+        <Chip label={info} size="small" />
 
         {!removed && !expired && endAt && (
           <Chip
@@ -343,6 +339,10 @@ const BrandVisitBasedMembershipItemView = ({
             size="small"
             type="danger"
           />
+        )}
+
+        {!!removed && (
+          <Chip label={t('shared.deleted')} type="danger" size="small" />
         )}
       </XStack>
 

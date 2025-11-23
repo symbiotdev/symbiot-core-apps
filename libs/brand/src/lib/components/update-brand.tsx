@@ -16,6 +16,7 @@ import {
 } from '@symbiot-core-apps/state';
 import {
   Brand,
+  queryClient,
   UpdateBrand as TUpdateBrand,
   useCurrentBrandUpdateReq,
   useModalUpdateForm,
@@ -184,7 +185,10 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
         countries: brand.countries.map(({ value }) => value),
         currencies: brand.currencies.map(({ value }) => value),
       },
-      onUpdated,
+      onUpdated: (brand) => {
+        onUpdated(brand);
+        void queryClient.clear();
+      },
     });
 
   return (

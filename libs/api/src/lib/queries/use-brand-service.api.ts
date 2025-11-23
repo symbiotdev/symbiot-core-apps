@@ -1,8 +1,3 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-  requestWithAlertOnError,
-  requestWithStringError,
-} from '../utils/request';
 import axios from 'axios';
 import {
   BrandService,
@@ -14,10 +9,12 @@ import {
 import { refetchQueriesByChanges } from '../utils/query';
 import { generateFormData } from '../utils/media';
 import { PaginationListParams } from '../types/pagination';
-import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
+import { useInfiniteQuery } from '../hooks/use-infinite-query';
 import { Gender } from '../types/gender';
 import { queryClient } from '../utils/client';
 import { BrandLocation } from '../types/brand-location';
+import { useQuery } from '../hooks/use-query';
+import { useMutation } from '../hooks/use-mutation';
 
 export enum BrandServiceQueryKey {
   types = 'brand-service-types',
@@ -62,8 +59,7 @@ export const useBrandServiceProfileByIdReq = (id: string, enabled = true) => {
   return useQuery<BrandService, string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
-    queryFn: () =>
-      requestWithStringError(axios.get(`/api/brand-service/profile/${id}`)),
+    url: `/api/brand-service/profile/${id}`,
   });
 };
 
@@ -73,8 +69,7 @@ export const useBrandServiceViewByIdReq = (id: string, enabled = true) => {
   return useQuery<BrandService, string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
-    queryFn: () =>
-      requestWithStringError(axios.get(`/api/brand-service/view/${id}`)),
+    url: `/api/brand-service/view/${id}`,
   });
 };
 
@@ -84,8 +79,7 @@ export const useBrandServiceDetailedByIdReq = (id: string, enabled = true) => {
   return useQuery<BrandService, string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
-    queryFn: () =>
-      requestWithStringError(axios.get(`/api/brand-service/detailed/${id}`)),
+    url: `/api/brand-service/detailed/${id}`,
   });
 };
 
@@ -95,8 +89,7 @@ export const useBrandServiceTypesReq = (enabled?: boolean) => {
   return useQuery<BrandServiceType[], string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
-    queryFn: () =>
-      requestWithStringError(axios.get('/api/brand-service/types')),
+    url: '/api/brand-service/types',
   });
 };
 
@@ -106,8 +99,7 @@ export const useBrandServiceFormatsReq = (enabled?: boolean) => {
   return useQuery<BrandServiceFormat[], string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
-    queryFn: () =>
-      requestWithStringError(axios.get('/api/brand-service/formats')),
+    url: '/api/brand-service/formats',
   });
 };
 
@@ -117,25 +109,24 @@ export const useBrandServiceGendersReq = (enabled?: boolean) => {
   return useQuery<Gender[], string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
-    queryFn: () =>
-      requestWithStringError(axios.get('/api/brand-service/genders')),
+    url: '/api/brand-service/genders',
   });
 };
 
 export const useBrandServiceCurrentListReq = (props?: {
   params?: PaginationListParams;
 }) =>
-  useInfiniteQueryWrapper<BrandService>({
+  useInfiniteQuery<BrandService>({
     ...props,
     storeInitialData: true,
-    apUrl: '/api/brand-service',
+    url: '/api/brand-service',
     queryKey: [BrandServiceQueryKey.currentList, props?.params],
   });
 
 export const useServicesReq = (props?: { params?: PaginationListParams }) =>
-  useInfiniteQueryWrapper<BrandService>({
+  useInfiniteQuery<BrandService>({
     refetchOnMount: true,
-    apUrl: `/api/brand-service/services`,
+    url: `/api/brand-service/services`,
     queryKey: [BrandServiceQueryKey.services, props],
     ...props,
   });
@@ -144,9 +135,9 @@ export const useServicesListByLocationReq = (props: {
   location: string;
   params?: PaginationListParams;
 }) =>
-  useInfiniteQueryWrapper<BrandService>({
+  useInfiniteQuery<BrandService>({
     refetchOnMount: true,
-    apUrl: `/api/brand-service/location/${props.location}`,
+    url: `/api/brand-service/location/${props.location}`,
     queryKey: [BrandServiceQueryKey.locationServices, props],
     ...props,
   });
@@ -155,22 +146,21 @@ export const useServiceLocationsListReq = (props: {
   service: string;
   params?: PaginationListParams;
 }) =>
-  useInfiniteQueryWrapper<BrandLocation>({
+  useInfiniteQuery<BrandLocation>({
     refetchOnMount: true,
-    apUrl: `/api/brand-service/${props.service}/locations`,
+    url: `/api/brand-service/${props.service}/locations`,
     queryKey: [BrandServiceQueryKey.serviceLocations, props],
     ...props,
   });
 
 export const useCreateBrandServiceReq = () =>
   useMutation<BrandService, string, CreateBrandService>({
+    showAlert: true,
     mutationFn: async (data) => {
-      const service = await requestWithAlertOnError<BrandService>(
-        axios.post(
-          `/api/brand-service`,
-          await generateFormData<CreateBrandService>(data, ['avatar']),
-        ),
-      );
+      const service = (await axios.post(
+        `/api/brand-service`,
+        await generateFormData<CreateBrandService>(data, ['avatar']),
+      )) as BrandService;
 
       await refetchQueriesByServiceChanges({
         id: service.id,
@@ -183,15 +173,14 @@ export const useCreateBrandServiceReq = () =>
 
 export const useUpdateBrandServiceReq = () =>
   useMutation<BrandService, string, { id: string; data: UpdateBrandService }>({
+    showAlert: true,
     mutationFn: async ({ id, data }) => {
-      const service = await requestWithAlertOnError<BrandService>(
-        axios.put(
-          `/api/brand-service/${id}`,
-          await (data.avatar
-            ? generateFormData<UpdateBrandService>(data, ['avatar'])
-            : data),
-        ),
-      );
+      const service = (await axios.put(
+        `/api/brand-service/${id}`,
+        await (data.avatar
+          ? generateFormData<UpdateBrandService>(data, ['avatar'])
+          : data),
+      )) as BrandService;
 
       await refetchQueriesByServiceChanges(
         {
@@ -207,10 +196,9 @@ export const useUpdateBrandServiceReq = () =>
 
 export const useRemoveBrandServiceReq = () =>
   useMutation<void, string, { id: string }>({
+    showAlert: true,
     mutationFn: async ({ id }) => {
-      const response = await requestWithAlertOnError<void>(
-        axios.delete(`/api/brand-service/${id}`),
-      );
+      const response = (await axios.delete(`/api/brand-service/${id}`)) as void;
 
       await refetchQueriesByServiceChanges({
         id,

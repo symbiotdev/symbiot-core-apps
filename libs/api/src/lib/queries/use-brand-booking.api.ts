@@ -12,16 +12,13 @@ import {
   UpdateServiceBrandBooking,
   UpdateServiceBrandBookingClient,
 } from '../types/brand-booking';
-import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-  requestWithAlertOnError,
-  requestWithStringError,
-} from '../utils/request';
+import { useInfiniteQuery } from '../hooks/use-infinite-query';
 import axios from 'axios';
 import { queryClient } from '../utils/client';
 import { getBrandBookingType } from '../utils/brand-booking';
 import { PaginationList, PaginationListParams } from '../types/pagination';
+import { useQuery } from '../hooks/use-query';
+import { useMutation } from '../hooks/use-mutation';
 
 export enum BrandBookingQueryKey {
   unavailableCurrentList = 'brand-booking-unavailable-current-list',
@@ -65,11 +62,11 @@ export const useBrandBookingCurrentListReq = ({
   start: Date;
   params?: PaginationListParams;
 }) =>
-  useInfiniteQueryWrapper<AnyBrandBooking>({
+  useInfiniteQuery<AnyBrandBooking>({
     storeInitialData: true,
     refetchOnMount: true,
     afterKeys: ['id', 'start'],
-    apUrl: '/api/brand-booking',
+    url: '/api/brand-booking',
     queryKey: [start, params],
     params: {
       ...params,
@@ -85,13 +82,10 @@ export const useBrandBookingPeriodListReq = (props?: {
   };
 }) =>
   useQuery<PaginationList<AnyBrandBooking>>({
+    ...props,
     queryKey: [BrandBookingQueryKey.periodList, props?.params],
-    queryFn: () =>
-      requestWithAlertOnError(
-        axios.get(`/api/brand-booking`, {
-          params: props?.params,
-        }),
-      ),
+    url: `/api/brand-booking`,
+    showAlert: true,
   });
 
 export const useBrandBookingDetailedByIdReq = (
@@ -100,8 +94,7 @@ export const useBrandBookingDetailedByIdReq = (
 ) =>
   useQuery<AnyBrandBooking, string>({
     queryKey: [BrandBookingQueryKey.detailedById, id],
-    queryFn: () =>
-      requestWithStringError(axios.get(`/api/brand-booking/${type}/${id}`)),
+    url: `/api/brand-booking/${type}/${id}`,
   });
 
 export const useBrandBookingSlotsByServiceReq = (
@@ -114,20 +107,17 @@ export const useBrandBookingSlotsByServiceReq = (
     ...props,
     enabled: !!serviceId,
     queryKey: [BrandBookingQueryKey.slotsByService, serviceId, props.params],
-    queryFn: () =>
-      requestWithStringError(
-        axios.get(`/api/brand-booking/service/${serviceId}/slots`, {
-          params: props.params,
-        }),
-      ),
+    url: `/api/brand-booking/service/${serviceId}/slots`,
   });
 
 function useCreateBrandBookingReq<UT>(type: BrandBookingType) {
   return useMutation<AnyBrandBooking[], string, UT>({
+    showAlert: true,
     mutationFn: async (data) => {
-      const bookings = await requestWithAlertOnError<AnyBrandBooking[]>(
-        axios.post(`/api/brand-booking/${type}`, data),
-      );
+      const bookings = (await axios.post(
+        `/api/brand-booking/${type}`,
+        data,
+      )) as AnyBrandBooking[];
 
       void refetchQueriesByBookingChanges(
         bookings.map((booking) => ({
@@ -151,12 +141,14 @@ export const useCreateServiceBrandBookingReq = () =>
 
 const useCancelBrandBookingReq = (type: BrandBookingType) =>
   useMutation<AnyBrandBooking[], string, { id: string; recurring: boolean }>({
+    showAlert: true,
     mutationFn: async ({ id, recurring }) => {
-      const bookings = await requestWithAlertOnError<AnyBrandBooking[]>(
-        axios.post(`/api/brand-booking/${type}/${id}/cancel`, {
+      const bookings = (await axios.post(
+        `/api/brand-booking/${type}/${id}/cancel`,
+        {
           recurring,
-        }),
-      );
+        },
+      )) as AnyBrandBooking[];
 
       void refetchQueriesByBookingChanges(
         bookings.map((booking) => ({
@@ -183,12 +175,10 @@ export const useAddServiceBrandBookingClientReq = () =>
     { bookingId: string; data: CreateServiceBrandBookingClient }
   >({
     mutationFn: async ({ bookingId, data }) => {
-      const booking = await requestWithAlertOnError<ServiceBrandBooking>(
-        axios.post(
-          `/api/brand-booking/${BrandBookingType.service}/${bookingId}/client`,
-          data,
-        ),
-      );
+      const booking = (await axios.post(
+        `/api/brand-booking/${BrandBookingType.service}/${bookingId}/client`,
+        data,
+      )) as ServiceBrandBooking;
 
       void refetchQueriesByBookingChanges(
         [
@@ -214,9 +204,10 @@ function useUpdateBrandBookingQueryReq<UT>(type: BrandBookingType) {
     }
   >({
     mutationFn: async ({ id, data }) => {
-      const bookings = await requestWithAlertOnError<AnyBrandBooking[]>(
-        axios.put(`/api/brand-booking/${type}/${id}`, data),
-      );
+      const bookings = (await axios.put(
+        `/api/brand-booking/${type}/${id}`,
+        data,
+      )) as AnyBrandBooking[];
 
       void refetchQueriesByBookingChanges(
         bookings.map((booking) => ({
@@ -252,12 +243,10 @@ export const useUpdateServiceBrandBookingClientReq = () =>
     }
   >({
     mutationFn: async ({ bookingId, clientId, data }) => {
-      const booking = await requestWithAlertOnError<ServiceBrandBooking>(
-        axios.put(
-          `/api/brand-booking/${BrandBookingType.service}/${bookingId}/client/${clientId}`,
-          data,
-        ),
-      );
+      const booking = (await axios.put(
+        `/api/brand-booking/${BrandBookingType.service}/${bookingId}/client/${clientId}`,
+        data,
+      )) as ServiceBrandBooking;
 
       queryClient.setQueryData(
         [BrandBookingQueryKey.detailedById, bookingId],
@@ -278,11 +267,10 @@ export const useRemoveServiceBrandBookingClientReq = () =>
     }
   >({
     mutationFn: async ({ bookingId, clientId }) => {
-      const booking = await requestWithAlertOnError<ServiceBrandBooking>(
-        axios.delete(
-          `/api/brand-booking/${BrandBookingType.service}/${bookingId}/client/${clientId}`,
-        ),
-      );
+      const booking = (await axios.delete(
+        `/api/brand-booking/${BrandBookingType.service}/${bookingId}/client/${clientId}`,
+      )) as ServiceBrandBooking;
+
       void refetchQueriesByBookingChanges(
         [
           {

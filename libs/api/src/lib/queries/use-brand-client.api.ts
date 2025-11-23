@@ -1,4 +1,4 @@
-import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
+import { useInfiniteQuery } from '../hooks/use-infinite-query';
 import { PaginationListParams } from '../types/pagination';
 import {
   AnyBrandClientMembership,
@@ -10,17 +10,14 @@ import {
   UpdateBrandClient,
   UpdateBrandClientMembership,
 } from '../types/brand-client';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-  requestWithAlertOnError,
-  requestWithStringError,
-} from '../utils/request';
 import axios from 'axios';
 import { generateFormData } from '../utils/media';
 import { queryClient } from '../utils/client';
 import { refetchQueriesByChanges } from '../utils/query';
 import { Gender } from '../types/gender';
 import { BrandMembershipType } from '../types/brand-membership';
+import { useQuery } from '../hooks/use-query';
+import { useMutation } from '../hooks/use-mutation';
 
 export enum BrandClientQueryKey {
   genders = 'brand-client-genders',
@@ -50,9 +47,9 @@ const refetchQueriesByClientChanges = async (
 export const useBrandClientCurrentListReq = (props?: {
   params?: PaginationListParams;
 }) =>
-  useInfiniteQueryWrapper<BrandClient>({
+  useInfiniteQuery<BrandClient>({
     ...props,
-    apUrl: '/api/brand-client',
+    url: '/api/brand-client',
     queryKey: [BrandClientQueryKey.currentList, props?.params],
     storeInitialData: true,
   });
@@ -63,10 +60,10 @@ export const useBrandClientPeriodBasedMembershipsListReq = (
     params?: PaginationListParams;
   },
 ) =>
-  useInfiniteQueryWrapper<BrandClientPeriodBasedMembership>({
+  useInfiniteQuery<BrandClientPeriodBasedMembership>({
     ...props,
     refetchOnMount: true,
-    apUrl: `/api/brand-client/${clientId}/membership`,
+    url: `/api/brand-client/${clientId}/membership`,
     queryKey: [
       BrandClientQueryKey.periodBasedMembershipsList,
       clientId,
@@ -84,10 +81,10 @@ export const useBrandClientVisitsBasedMembershipsListReq = (
     params?: PaginationListParams;
   },
 ) =>
-  useInfiniteQueryWrapper<BrandClientVisitBasedMembership>({
+  useInfiniteQuery<BrandClientVisitBasedMembership>({
     ...props,
     refetchOnMount: true,
-    apUrl: `/api/brand-client/${clientId}/membership`,
+    url: `/api/brand-client/${clientId}/membership`,
     queryKey: [
       BrandClientQueryKey.visitsBasedMembershipsList,
       clientId,
@@ -102,19 +99,17 @@ export const useBrandClientVisitsBasedMembershipsListReq = (
 export const useBrandClientGendersReq = () =>
   useQuery<Gender[], string>({
     queryKey: [BrandClientQueryKey.genders],
-    queryFn: () =>
-      requestWithStringError(axios.get('/api/brand-client/genders')),
+    url: '/api/brand-client/genders',
   });
 
 export const useCreateBrandClientReq = () =>
   useMutation<BrandClient, string, CreateBrandClient>({
+    showAlert: true,
     mutationFn: async (data) => {
-      const client = await requestWithAlertOnError<BrandClient>(
-        axios.post(
-          `/api/brand-client`,
-          await generateFormData<CreateBrandClient>(data, ['avatar']),
-        ),
-      );
+      const client = (await axios.post(
+        `/api/brand-client`,
+        await generateFormData<CreateBrandClient>(data, ['avatar']),
+      )) as BrandClient;
 
       await refetchQueriesByClientChanges({
         id: client.id,
@@ -128,11 +123,9 @@ export const useCreateBrandClientReq = () =>
 export const useImportBrandClientsReq = () =>
   useMutation<BrandClient[], string, ImportBrandClient[]>({
     mutationFn: async (clients) => {
-      const importedClients = await requestWithAlertOnError<BrandClient[]>(
-        axios.post(`/api/brand-client/import`, {
-          clients,
-        }),
-      );
+      const importedClients = (await axios.post(`/api/brand-client/import`, {
+        clients,
+      })) as BrandClient[];
 
       importedClients.forEach((client) => {
         queryClient.setQueryData(
@@ -155,8 +148,7 @@ export const useBrandClientDetailedByIdReq = (id: string, enabled = true) => {
   return useQuery<BrandClient, string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
-    queryFn: () =>
-      requestWithStringError(axios.get(`/api/brand-client/detailed/${id}`)),
+    url: `/api/brand-client/detailed/${id}`,
   });
 };
 
@@ -170,24 +162,20 @@ export const useBrandClientMembershipByIdReq = (
   return useQuery<AnyBrandClientMembership, string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
-    queryFn: () =>
-      requestWithStringError(
-        axios.get(`/api/brand-client/${clientId}/membership/${membershipId}`),
-      ),
+    url: `/api/brand-client/${clientId}/membership/${membershipId}`,
   });
 };
 
 export const useUpdateBrandClientReq = () =>
   useMutation<BrandClient, string, { id: string; data: UpdateBrandClient }>({
+    showAlert: true,
     mutationFn: async ({ id, data }) => {
-      const client = await requestWithAlertOnError<BrandClient>(
-        axios.put(
-          `/api/brand-client/${id}`,
-          await (data.avatar
-            ? generateFormData<UpdateBrandClient>(data, ['avatar'])
-            : data),
-        ),
-      );
+      const client = (await axios.put(
+        `/api/brand-client/${id}`,
+        await (data.avatar
+          ? generateFormData<UpdateBrandClient>(data, ['avatar'])
+          : data),
+      )) as BrandClient;
 
       await refetchQueriesByClientChanges(
         {
@@ -211,14 +199,12 @@ export const useUpdateBrandClientMembershipReq = () =>
       data: UpdateBrandClientMembership;
     }
   >({
+    showAlert: true,
     mutationFn: async ({ clientId, membershipId, data }) => {
-      const updatedMembership =
-        await requestWithAlertOnError<AnyBrandClientMembership>(
-          axios.put(
-            `/api/brand-client/${clientId}/membership/${membershipId}`,
-            data,
-          ),
-        );
+      const updatedMembership = (await axios.put(
+        `/api/brand-client/${clientId}/membership/${membershipId}`,
+        data,
+      )) as AnyBrandClientMembership;
 
       const clientQueryKey = [BrandClientQueryKey.detailedById, clientId];
       const client = queryClient.getQueryData<BrandClient>(clientQueryKey);
@@ -245,10 +231,9 @@ export const useUpdateBrandClientMembershipReq = () =>
 
 export const useRemoveBrandClientReq = () =>
   useMutation<void, string, { id: string }>({
+    showAlert: true,
     mutationFn: async ({ id }) => {
-      const response = await requestWithAlertOnError<void>(
-        axios.delete(`/api/brand-client/${id}`),
-      );
+      const response = (await axios.delete(`/api/brand-client/${id}`)) as void;
 
       await refetchQueriesByClientChanges({
         id,
@@ -260,12 +245,11 @@ export const useRemoveBrandClientReq = () =>
 
 export const useRemoveBrandClientMembershipReq = () =>
   useMutation<void, string, { clientId: string; membershipId: string }>({
+    showAlert: true,
     mutationFn: async ({ clientId, membershipId }) => {
-      const response = await requestWithAlertOnError<void>(
-        axios.delete(
-          `/api/brand-client/${clientId}/membership/${membershipId}`,
-        ),
-      );
+      const response = (await axios.delete(
+        `/api/brand-client/${clientId}/membership/${membershipId}`,
+      )) as void;
 
       const clientQueryKey = [BrandClientQueryKey.detailedById, clientId];
       const client = queryClient.getQueryData<BrandClient>(clientQueryKey);
@@ -285,12 +269,11 @@ export const useRemoveBrandClientMembershipReq = () =>
 
 export const useBrandClientImportTemplateReq = () =>
   useMutation<ArrayBufferLike, string>({
+    showAlert: true,
     mutationFn: () =>
-      requestWithAlertOnError<ArrayBufferLike>(
-        axios.get(`/api/brand-client/template`, {
-          responseType: 'arraybuffer',
-        }),
-      ),
+      axios.get(`/api/brand-client/template`, {
+        responseType: 'arraybuffer',
+      }) as Promise<ArrayBufferLike>,
   });
 
 export const useBrandClientAddMembershipReq = () =>
@@ -299,13 +282,11 @@ export const useBrandClientAddMembershipReq = () =>
     string,
     { clientId: string; membershipId: string }
   >({
+    showAlert: true,
     mutationFn: async ({ clientId, membershipId }) => {
-      const membership =
-        await requestWithAlertOnError<AnyBrandClientMembership>(
-          axios.post(
-            `/api/brand-client/${clientId}/membership/${membershipId}`,
-          ),
-        );
+      const membership = (await axios.post(
+        `/api/brand-client/${clientId}/membership/${membershipId}`,
+      )) as AnyBrandClientMembership;
 
       const clientQueryKey = [BrandClientQueryKey.detailedById, clientId];
       const client = queryClient.getQueryData<BrandClient>(clientQueryKey);

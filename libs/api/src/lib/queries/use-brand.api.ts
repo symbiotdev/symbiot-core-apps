@@ -1,4 +1,3 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import {
   Brand,
@@ -7,13 +6,11 @@ import {
   CreateBrand,
   UpdateBrand,
 } from '../types/brand';
-import {
-  requestWithAlertOnError,
-  requestWithStringError,
-} from '../utils/request';
 import { generateFormData } from '../utils/media';
 import { AccountAuthTokens } from '../types/account-auth';
 import { queryClient } from '../utils/client';
+import { useQuery } from '../hooks/use-query';
+import { useMutation } from '../hooks/use-mutation';
 
 export enum BrandQueryKey {
   current = 'brand-current',
@@ -31,42 +28,39 @@ type CurrentBrandResponse = {
 export const useCurrentBrandReq = ({ enabled }: { enabled: boolean }) =>
   useQuery<CurrentBrandResponse, string>({
     enabled,
+    showAlert: true,
     queryKey: [BrandQueryKey.current],
-    queryFn: () =>
-      requestWithAlertOnError<CurrentBrandResponse>(
-        axios.get('/api/brand/current'),
-      ),
+    url: '/api/brand/current',
   });
 
 export const useBrandIndustriesReq = () =>
   useQuery<BrandIndustry[], string>({
     queryKey: [BrandQueryKey.industries],
-    queryFn: () => requestWithStringError(axios.get('/api/brand/industries')),
+    url: '/api/brand/industries',
   });
 
 export const useBrandCountriesReq = () =>
   useQuery<BrandCountry[], string>({
     queryKey: [BrandQueryKey.countries],
-    queryFn: () => requestWithStringError(axios.get('/api/brand/countries')),
+    url: '/api/brand/countries',
   });
 
 export const useBrandCurrenciesReq = () =>
   useQuery<BrandCountry[], string>({
     queryKey: [BrandQueryKey.currencies],
-    queryFn: () => requestWithStringError(axios.get('/api/brand/currencies')),
+    url: '/api/brand/currencies',
   });
 
 export const useCurrentBrandUpdateReq = () =>
   useMutation<Brand, string, UpdateBrand>({
+    showAlert: true,
     mutationFn: async (data) => {
-      const brand = await requestWithAlertOnError<Brand>(
-        axios.put(
-          '/api/brand/current',
-          await (data.avatar
-            ? generateFormData<UpdateBrand>(data, ['avatar'])
-            : data),
-        ),
-      );
+      const brand = (await axios.put(
+        '/api/brand/current',
+        await (data.avatar
+          ? generateFormData<UpdateBrand>(data, ['avatar'])
+          : data),
+      )) as Brand;
 
       queryClient.setQueryData([BrandQueryKey.current], { brand });
 
@@ -76,17 +70,16 @@ export const useCurrentBrandUpdateReq = () =>
 
 export const useBrandAuthReq = () =>
   useMutation<{ brand: Brand; tokens: AccountAuthTokens }, string, string>({
-    mutationFn: (id: string) =>
-      requestWithAlertOnError(axios.post(`/api/brand/auth/${id}`)),
+    showAlert: true,
+    mutationFn: (id: string) => axios.post(`/api/brand/auth/${id}`),
   });
 
 export const useBrandCreateReq = () =>
   useMutation<Brand, string, CreateBrand>({
+    showAlert: true,
     mutationFn: async (data) =>
-      requestWithAlertOnError(
-        axios.post(
-          '/api/brand',
-          await generateFormData<CreateBrand>(data, ['avatar']),
-        ),
+      axios.post(
+        '/api/brand',
+        await generateFormData<CreateBrand>(data, ['avatar']),
       ),
   });

@@ -1,7 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { requestWithStringError } from '../utils/request';
 import { FAQ } from '../types/faq';
+import { useQuery } from '../hooks/use-query';
 
 export enum AppFaqQueryKey {
   list = 'app-faq-list',
@@ -10,5 +8,5 @@ export enum AppFaqQueryKey {
 export const useAppFaqReq = () =>
   useQuery<FAQ[], string>({
     queryKey: [AppFaqQueryKey.list],
-    queryFn: () => requestWithStringError(axios.get('/api/app-faq')),
+    url: '/api/app-faq',
   });

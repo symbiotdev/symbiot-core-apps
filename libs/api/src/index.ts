@@ -1,7 +1,7 @@
 export * from './lib/components/api-provider';
 
 export * from './lib/hooks/use-auth-tokens';
-export * from './lib/hooks/use-infinite-query-wrapper';
+export * from './lib/hooks/use-infinite-query';
 export * from './lib/hooks/use-modal-update-form';
 
 export * from './lib/queries/use-account.api';

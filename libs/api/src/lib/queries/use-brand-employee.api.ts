@@ -1,8 +1,3 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-  requestWithAlertOnError,
-  requestWithStringError,
-} from '../utils/request';
 import axios from 'axios';
 import {
   BrandEmployee,
@@ -13,10 +8,12 @@ import {
 import { Account } from '../types/account';
 import { generateFormData } from '../utils/media';
 import { PaginationListParams } from '../types/pagination';
-import { useInfiniteQueryWrapper } from '../hooks/use-infinite-query-wrapper';
+import { useInfiniteQuery } from '../hooks/use-infinite-query';
 import { queryClient } from '../utils/client';
 import { refetchQueriesByChanges } from '../utils/query';
 import { Gender } from '../types/gender';
+import { useQuery } from '../hooks/use-query';
+import { useMutation } from '../hooks/use-mutation';
 
 export enum BrandEmployeesQueryKey {
   genders = 'brand-employee-genders',
@@ -58,47 +55,38 @@ export const useCurrentBrandEmployeeReq = ({ enabled }: { enabled: boolean }) =>
   useQuery<BrandEmployee>({
     enabled,
     queryKey: [BrandEmployeesQueryKey.current],
-    queryFn: async () =>
-      requestWithAlertOnError<BrandEmployee>(
-        axios.get('/api/brand-employee/current'),
-      ),
+    url: '/api/brand-employee/current',
+    showAlert: true,
   });
 
 export const useBrandEmployeeGendersReq = () =>
   useQuery<Gender[], string>({
     queryKey: [BrandEmployeesQueryKey.genders],
-    queryFn: () =>
-      requestWithStringError(axios.get('/api/brand-employee/genders')),
+    url: '/api/brand-employee/genders',
   });
 
 export const useBrandEmployeePermissionsReq = () =>
   useQuery<BrandEmployeePermission[], string>({
     enabled: !queryClient.getQueryData([BrandEmployeesQueryKey.permissions]),
     queryKey: [BrandEmployeesQueryKey.permissions],
-    queryFn: async () =>
-      requestWithStringError<BrandEmployeePermission[]>(
-        axios.get('/api/brand-employee/permissions'),
-      ),
+    url: '/api/brand-employee/permissions',
   });
 
 export const useBrandEmployeeNewAccountReq = () =>
   useMutation<Account, string, { id: string }>({
-    mutationFn: ({ id }) =>
-      requestWithAlertOnError<Account>(
-        axios.get(`/api/brand-employee/new/account/${id}`),
-      ),
+    showAlert: true,
+    mutationFn: ({ id }) => axios.get(`/api/brand-employee/new/account/${id}`),
   });
 
 export const useCreateBrandEmployeeReq = () =>
   useMutation<BrandEmployee, string, { id: string; data: CreateBrandEmployee }>(
     {
+      showAlert: true,
       mutationFn: async ({ id, data }) => {
-        const brandEmployee = await requestWithAlertOnError<BrandEmployee>(
-          axios.post(
-            `/api/brand-employee/add/account/${id}`,
-            await generateFormData<CreateBrandEmployee>(data, ['avatar']),
-          ),
-        );
+        const brandEmployee = (await axios.post(
+          `/api/brand-employee/add/account/${id}`,
+          await generateFormData<CreateBrandEmployee>(data, ['avatar']),
+        )) as BrandEmployee;
 
         await refetchQueriesByEmployeeChanges({
           id: brandEmployee.id,
@@ -113,15 +101,14 @@ export const useCreateBrandEmployeeReq = () =>
 export const useUpdateBrandEmployeeReq = () =>
   useMutation<BrandEmployee, string, { id: string; data: UpdateBrandEmployee }>(
     {
+      showAlert: true,
       mutationFn: async ({ id, data }) => {
-        const employee = await requestWithAlertOnError<BrandEmployee>(
-          axios.put(
-            `/api/brand-employee/${id}`,
-            await (data.avatar
-              ? generateFormData<UpdateBrandEmployee>(data, ['avatar'])
-              : data),
-          ),
-        );
+        const employee = (await axios.put(
+          `/api/brand-employee/${id}`,
+          await (data.avatar
+            ? generateFormData<UpdateBrandEmployee>(data, ['avatar'])
+            : data),
+        )) as BrandEmployee;
 
         await refetchQueriesByEmployeeChanges(
           {
@@ -138,10 +125,11 @@ export const useUpdateBrandEmployeeReq = () =>
 
 export const useRemoveBrandEmployeeReq = () =>
   useMutation<void, string, { id: string }>({
+    showAlert: true,
     mutationFn: async ({ id }) => {
-      const response = await requestWithAlertOnError<void>(
-        axios.delete(`/api/brand-employee/${id}`),
-      );
+      const response = (await axios.delete(
+        `/api/brand-employee/${id}`,
+      )) as void;
 
       await refetchQueriesByEmployeeChanges({
         id,
@@ -154,9 +142,9 @@ export const useRemoveBrandEmployeeReq = () =>
 export const useBrandEmployeeCurrentListReq = (props?: {
   params?: PaginationListParams;
 }) =>
-  useInfiniteQueryWrapper<BrandEmployee>({
+  useInfiniteQuery<BrandEmployee>({
     ...props,
-    apUrl: '/api/brand-employee',
+    url: '/api/brand-employee',
     queryKey: [BrandEmployeesQueryKey.currentList, props?.params],
     storeInitialData: true,
   });
@@ -164,9 +152,9 @@ export const useBrandEmployeeCurrentListReq = (props?: {
 export const useCurrentBrandEmployeeProvidersListReq = (props?: {
   params?: PaginationListParams;
 }) =>
-  useInfiniteQueryWrapper<BrandEmployee>({
+  useInfiniteQuery<BrandEmployee>({
     refetchOnMount: true,
-    apUrl: '/api/brand-employee/providers',
+    url: '/api/brand-employee/providers',
     queryKey: [BrandEmployeesQueryKey.providers, props?.params],
     ...props,
   });
@@ -175,9 +163,9 @@ export const useCurrentBrandEmployeeProvidersByLocationListReq = (props: {
   location: string;
   params?: PaginationListParams;
 }) =>
-  useInfiniteQueryWrapper<BrandEmployee>({
+  useInfiniteQuery<BrandEmployee>({
     refetchOnMount: true,
-    apUrl: `/api/brand-employee/location/${props.location}/providers`,
+    url: `/api/brand-employee/location/${props.location}/providers`,
     queryKey: [BrandEmployeesQueryKey.locationProviders, props],
     ...props,
   });
@@ -188,8 +176,7 @@ export const useBrandEmployeeProfileByIdReq = (id: string, enabled = true) => {
   return useQuery<BrandEmployee, string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
-    queryFn: () =>
-      requestWithStringError(axios.get(`/api/brand-employee/profile/${id}`)),
+    url: `/api/brand-employee/profile/${id}`,
   });
 };
 
@@ -199,8 +186,7 @@ export const useBrandEmployeeProviderByIdReq = (id: string, enabled = true) => {
   return useQuery<BrandEmployee, string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
-    queryFn: () =>
-      requestWithStringError(axios.get(`/api/brand-employee/provider/${id}`)),
+    url: `/api/brand-employee/provider/${id}`,
   });
 };
 
@@ -210,7 +196,6 @@ export const useBrandEmployeeDetailedByIdReq = (id: string, enabled = true) => {
   return useQuery<BrandEmployee, string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
-    queryFn: () =>
-      requestWithStringError(axios.get(`/api/brand-employee/detailed/${id}`)),
+    url: `/api/brand-employee/detailed/${id}`,
   });
 };

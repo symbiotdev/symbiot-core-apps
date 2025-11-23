@@ -1,13 +1,10 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Account, UpdateAccountData } from '../types/account';
-import {
-  requestWithAlertOnError,
-  requestWithStringError,
-} from '../utils/request';
 import { generateFormData } from '../utils/media';
 import { AccountPreferences } from '../types/account-preferences';
 import { Gender } from '../types/gender';
+import { useQuery } from '../hooks/use-query';
+import { useMutation } from '../hooks/use-mutation';
 
 export enum AccountQueryKey {
   me = 'account-me',
@@ -17,42 +14,43 @@ export enum AccountQueryKey {
 export const useAccountMeReq = ({ enabled }: { enabled: boolean }) =>
   useQuery<Account, string>({
     enabled,
+    showAlert: true,
     queryKey: [AccountQueryKey.me],
-    queryFn: () => requestWithAlertOnError(axios.get('/api/account/me')),
+    url: '/api/account/me',
   });
 
 export const useAccountGendersReq = () =>
   useQuery<Gender[], string>({
     queryKey: [AccountQueryKey.genders],
-    queryFn: () => requestWithStringError(axios.get('/api/account/genders')),
+    url: '/api/account/genders',
   });
 
 export const useAccountMeUpdateReq = () =>
   useMutation<Account, string, UpdateAccountData>({
+    showAlert: true,
     mutationFn: async (data) =>
-      requestWithAlertOnError(
-        axios.put(
-          '/api/account/me',
-          await (data.avatar
-            ? generateFormData<UpdateAccountData>(data, ['avatar'])
-            : data),
-        ),
+      axios.put(
+        '/api/account/me',
+        await (data.avatar
+          ? generateFormData<UpdateAccountData>(data, ['avatar'])
+          : data),
       ),
   });
 
 export const useAccountMeRemoveAvatarReq = () =>
   useMutation<Account, string>({
-    mutationFn: () =>
-      requestWithAlertOnError(axios.delete('/api/account/me/avatar')),
+    showAlert: true,
+    mutationFn: () => axios.delete('/api/account/me/avatar'),
   });
 
 export const useAccountRemoveMeReq = () =>
   useMutation({
-    mutationFn: () => requestWithAlertOnError(axios.delete('/api/account/me')),
+    showAlert: true,
+    mutationFn: () => axios.delete('/api/account/me'),
   });
 
 export const useUpdateAccountMePreferencesReq = () =>
   useMutation<AccountPreferences, string, Partial<AccountPreferences>>({
-    mutationFn: (data) =>
-      requestWithAlertOnError(axios.put('/api/account/me/preferences', data)),
+    showAlert: true,
+    mutationFn: (data) => axios.put('/api/account/me/preferences', data),
   });

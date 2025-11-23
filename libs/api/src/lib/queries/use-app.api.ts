@@ -1,9 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { requestWithStringError } from '../utils/request';
 import { AppConfig } from '../types/app-config';
 import { AppTranslations } from '../types/app-translations';
 import { BrandSourceOption } from '../types/brand';
+import { useQuery } from '../hooks/use-query';
 
 export enum AppQueryKey {
   config = 'app-config',
@@ -19,7 +17,7 @@ export const useAppConfigReq = ({ refetch }: { refetch: boolean }) =>
     refetchOnMount: refetch,
     refetchOnReconnect: refetch,
     queryKey: [AppQueryKey.config],
-    queryFn: () => requestWithStringError(axios.get('/api/app/config')),
+    url: '/api/app/config',
   });
 
 export const useAppTranslationsReq = ({ refetch }: { refetch: boolean }) =>
@@ -29,19 +27,19 @@ export const useAppTranslationsReq = ({ refetch }: { refetch: boolean }) =>
     refetchOnMount: refetch,
     refetchOnReconnect: refetch,
     queryKey: [AppQueryKey.translations],
-    queryFn: () => requestWithStringError(axios.get('/api/app/translations')),
+    url: '/api/app/translations',
   });
 
 export const useAppCompetitorsReq = () =>
   useQuery<BrandSourceOption[], string>({
     staleTime: Infinity,
     queryKey: [AppQueryKey.competitors],
-    queryFn: () => requestWithStringError(axios.get('/api/app/competitors')),
+    url: '/api/app/competitors',
   });
 
 export const useAppReferralsReq = () =>
   useQuery<BrandSourceOption[], string>({
     staleTime: Infinity,
     queryKey: [AppQueryKey.referrals],
-    queryFn: () => requestWithStringError(axios.get('/api/app/referrals')),
+    url: '/api/app/referrals',
   });

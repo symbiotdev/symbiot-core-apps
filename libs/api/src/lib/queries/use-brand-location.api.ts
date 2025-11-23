@@ -1,8 +1,3 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-  requestWithAlertOnError,
-  requestWithStringError,
-} from '../utils/request';
 import axios from 'axios';
 import {
   BrandLocation,
@@ -15,6 +10,8 @@ import { queryClient } from '../utils/client';
 import { generateFormData } from '../utils/media';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { refetchQueriesByChanges } from '../utils/query';
+import { useQuery } from '../hooks/use-query';
+import { useMutation } from '../hooks/use-mutation';
 
 export enum BrandLocationQueryKey {
   currentList = 'brand-location-current-list',
@@ -45,13 +42,12 @@ export const useUploadBrandLocationGalleryImagesReq = () =>
     string,
     { id: string; images: ImagePickerAsset[] }
   >({
+    showAlert: true,
     mutationFn: async ({ id, images }) => {
-      const location = await requestWithAlertOnError<BrandLocation>(
-        axios.put(
-          `/api/brand-location/${id}/gallery`,
-          await generateFormData({ images }, ['images']),
-        ),
-      );
+      const location = (await axios.put(
+        `/api/brand-location/${id}/gallery`,
+        await generateFormData({ images }, ['images']),
+      )) as BrandLocation;
 
       await refetchQueriesByLocationChanges(
         {
@@ -67,10 +63,11 @@ export const useUploadBrandLocationGalleryImagesReq = () =>
 
 export const useRemoveBrandLocationGalleryImagesReq = () =>
   useMutation<BrandLocation, string, { id: string; imageName: string }>({
+    showAlert: true,
     mutationFn: async ({ id, imageName }) => {
-      const location = await requestWithAlertOnError<BrandLocation>(
-        axios.delete(`/api/brand-location/${id}/gallery/${imageName}`),
-      );
+      const location = (await axios.delete(
+        `/api/brand-location/${id}/gallery/${imageName}`,
+      )) as BrandLocation;
 
       await refetchQueriesByLocationChanges(
         {
@@ -86,15 +83,14 @@ export const useRemoveBrandLocationGalleryImagesReq = () =>
 
 export const useCreateBrandLocationReq = () =>
   useMutation<BrandLocation, string, CreateBrandLocation>({
+    showAlert: true,
     mutationFn: async (data) => {
-      const location = await requestWithAlertOnError<BrandLocation>(
-        axios.post(
-          '/api/brand-location',
-          data.avatar
-            ? await generateFormData<UpdateBrandLocation>(data, ['avatar'])
-            : data,
-        ),
-      );
+      const location = (await axios.post(
+        '/api/brand-location',
+        data.avatar
+          ? await generateFormData<UpdateBrandLocation>(data, ['avatar'])
+          : data,
+      )) as BrandLocation;
 
       await refetchQueriesByLocationChanges({
         id: location.id,
@@ -108,15 +104,14 @@ export const useCreateBrandLocationReq = () =>
 export const useUpdateBrandLocationReq = () =>
   useMutation<BrandLocation, string, { id: string; data: UpdateBrandLocation }>(
     {
+      showAlert: true,
       mutationFn: async ({ id, data }) => {
-        const location = await requestWithAlertOnError<BrandLocation>(
-          axios.put(
-            `/api/brand-location/${id}`,
-            await (data.avatar
-              ? generateFormData<UpdateBrandLocation>(data, ['avatar'])
-              : data),
-          ),
-        );
+        const location = (await axios.put(
+          `/api/brand-location/${id}`,
+          await (data.avatar
+            ? generateFormData<UpdateBrandLocation>(data, ['avatar'])
+            : data),
+        )) as BrandLocation;
 
         await refetchQueriesByLocationChanges(
           {
@@ -133,10 +128,11 @@ export const useUpdateBrandLocationReq = () =>
 
 export const useRemoveBrandLocationReq = () =>
   useMutation<void, string, { id: string }>({
+    showAlert: true,
     mutationFn: async ({ id }) => {
-      const response = await requestWithAlertOnError<void>(
-        axios.delete(`/api/brand-location/${id}`),
-      );
+      const response = (await axios.delete(
+        `/api/brand-location/${id}`,
+      )) as void;
 
       await refetchQueriesByLocationChanges({
         id,
@@ -154,10 +150,7 @@ export const useCurrentBrandLocationsReq = ({
   useQuery<PaginationList<BrandLocation>, string>({
     enabled,
     queryKey: [BrandLocationQueryKey.currentList],
-    queryFn: () =>
-      requestWithStringError<PaginationList<BrandLocation>>(
-        axios.get('/api/brand-location/current'),
-      ),
+    url: '/api/brand-location/current',
   });
 
 export const useBrandLocationsByServiceIdReq = (
@@ -165,20 +158,15 @@ export const useBrandLocationsByServiceIdReq = (
   params?: PaginationListParams,
 ) =>
   useQuery<PaginationList<BrandLocation>, string>({
+    params,
     queryKey: [BrandLocationQueryKey.listByService, serviceId, params],
-    queryFn: () =>
-      requestWithStringError<PaginationList<BrandLocation>>(
-        axios.get(`/api/brand-location/service/${serviceId}`, {
-          params,
-        }),
-      ),
+    url: `/api/brand-location/service/${serviceId}`,
   });
 
 export const useBrandLocationAdvantagesReq = () =>
   useQuery<BrandLocationAdvantage[], string>({
     queryKey: [BrandLocationQueryKey.advantages],
-    queryFn: () =>
-      requestWithStringError(axios.get(`/api/brand-location/advantages`)),
+    url: `/api/brand-location/advantages`,
   });
 
 export const useBrandLocationByIdReq = (id: string, enabled = true) => {
@@ -187,7 +175,6 @@ export const useBrandLocationByIdReq = (id: string, enabled = true) => {
   return useQuery<BrandLocation, string>({
     queryKey,
     enabled: enabled || !queryClient.getQueryData(queryKey),
-    queryFn: () =>
-      requestWithStringError(axios.get(`/api/brand-location/${id}`)),
+    url: `/api/brand-location/${id}`,
   });
 };

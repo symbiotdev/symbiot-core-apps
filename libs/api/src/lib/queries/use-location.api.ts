@@ -1,17 +1,14 @@
-import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
-import { requestWithAlertOnError } from '../utils/request';
 import { LocationReverseParams } from '../types/location';
+import { useMutation } from '../hooks/use-mutation';
 
-export enum LocationQueryKey {
-}
+export enum LocationQueryKey {}
 
 export const useLocationReverseReq = () =>
   useMutation<{ address: string }, string, LocationReverseParams>({
+    showAlert: true,
     mutationFn: (params) =>
-      requestWithAlertOnError(
-        axios.get('/api/location/reverse', {
-          params,
-        }),
-      ),
+      axios.get('/api/location/reverse', {
+        params,
+      }),
   });

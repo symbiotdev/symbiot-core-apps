@@ -10,7 +10,6 @@ import {
 } from '@symbiot-core-apps/shared';
 import { Platform } from 'react-native';
 import { RequestError } from './request';
-import { AccountAuthTokens } from '../types/account-auth';
 import { authTokenHeaderKey } from '../hooks/use-auth-tokens';
 
 export type InterceptorParams = {
@@ -19,7 +18,6 @@ export type InterceptorParams = {
   languageCode: string;
   onNoRespond: () => void;
   onUnauthorized: () => void;
-  refreshTokens: () => Promise<AccountAuthTokens>;
 };
 
 const cancelableRequests = new Map<string, Canceler>();
@@ -145,19 +143,7 @@ const onErrorResponse = async (
   if (response.status === 0) {
     params.onNoRespond();
   } else if (response.status === 401) {
-    try {
-      const { access } = await params.refreshTokens();
-
-      return axios.request({
-        ...requestConfig,
-        headers: {
-          ...requestConfig.headers,
-          [authTokenHeaderKey.access]: access,
-        },
-      });
-    } catch {
-      params.onUnauthorized();
-    }
+    params.onUnauthorized();
   }
 
   throw error;

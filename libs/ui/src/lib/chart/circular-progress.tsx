@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme, View, ViewProps, YStack } from 'tamagui';
+import { useTheme, View, ViewProps } from 'tamagui';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { Circle } from 'react-native-svg';
 import { MediumText, RegularText } from '../text/text';
@@ -49,7 +49,7 @@ export const CircularProgress = ({
         )}
       >
         {() => (
-          <YStack alignItems="center" gap={3} paddingHorizontal={5}>
+          <View alignItems="center" gap={3} paddingHorizontal={5}>
             {!!title && (
               <MediumText
                 fontSize={titleFontSize || radius / 8}
@@ -70,7 +70,7 @@ export const CircularProgress = ({
                 {subtitle}
               </RegularText>
             )}
-          </YStack>
+          </View>
         )}
       </AnimatedCircularProgress>
     </View>

@@ -251,7 +251,7 @@ export default () => {
             )}
 
             <RegularText color="$placeholderColor" textAlign="center">
-              Powered by Symbiot Development
+              Powered by Symbiot
             </RegularText>
           </View>
         </FormView>

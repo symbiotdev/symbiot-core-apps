@@ -1,12 +1,5 @@
 import { setAxiosInterceptors } from '../utils/axios-interceptors';
-import {
-  PropsWithChildren,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { PropsWithChildren, useEffect, useLayoutEffect, useState } from 'react';
 import socket from '../utils/socket';
 import { authTokenHeaderKey, useAuthTokens } from '../hooks/use-auth-tokens';
 import { useDevId } from '../hooks/use-dev-id';
@@ -26,54 +19,28 @@ type SocketState = {
 
 export const ApiProvider = ({
   children,
-  onConnected,
   onUnauthorized,
   onNoRespond,
 }: PropsWithChildren<{
   onNoRespond: () => void;
   onUnauthorized: () => void;
-  onConnected?: () => void;
 }>) => {
   const devId = useDevId();
   const { now } = useNativeNow();
   const { i18n } = useTranslation();
-  const { tokens, nextRefreshDate, setTokens } = useAuthTokens();
+  const { tokens, nextRefreshDate } = useAuthTokens();
   const refreshTokens = useAccountAuthRefreshTokenReq();
 
+  const [interceptorDefined, setInterceptorDefined] = useState(false);
   const [loaded, setLoaded] = useState(false);
-
-  const stateRef = useRef<SocketState>({
+  const [socketState, setSocketState] = useState<SocketState>({
     connecting: false,
     connected: false,
     connectError: undefined,
   });
-  const [value, setValue] = useState(stateRef.current);
-
-  const updateState = useCallback((state: Partial<SocketState>) => {
-    stateRef.current = {
-      ...stateRef.current,
-      ...state,
-    };
-
-    setValue((prev) => ({
-      ...prev,
-      ...state,
-    }));
-  }, []);
-
-  const disconnectSocket = useCallback(() => {
-    if (stateRef.current.connecting) {
-      updateState({ connecting: false });
-    }
-
-    socket.disconnect();
-    socket.close();
-  }, [updateState]);
 
   useLayoutEffect(() => {
-    if (!devId || !loaded) {
-      return;
-    }
+    if (!devId || !tokens) return;
 
     setAxiosInterceptors({
       devId,
@@ -83,8 +50,17 @@ export const ApiProvider = ({
       onNoRespond,
     });
 
+    setInterceptorDefined(true);
+  }, [devId, i18n.language, onNoRespond, onUnauthorized, tokens]);
+
+  useLayoutEffect(() => {
+    if (!interceptorDefined) return;
+
     if (tokens.access) {
-      updateState({ connecting: true });
+      setSocketState((prev) => ({
+        ...prev,
+        connecting: true,
+      }));
 
       socket.io.opts.query = {
         ...(Platform.OS !== 'web'
@@ -96,61 +72,52 @@ export const ApiProvider = ({
     } else {
       queryClient.clear();
       clearInitialQueryData();
-      disconnectSocket();
     }
 
     return () => {
-      disconnectSocket();
+      socket.disconnect();
+      socket.close();
+
+      setSocketState((prev) => ({
+        ...prev,
+        connecting: false,
+        connected: false,
+        connectError: undefined,
+      }));
     };
-  }, [
-    tokens,
-    loaded,
-    i18n.language,
-    devId,
-    disconnectSocket,
-    updateState,
-    onNoRespond,
-    onUnauthorized,
-    setTokens,
-  ]);
+  }, [i18n.language, interceptorDefined, tokens]);
 
   useLayoutEffect(() => {
     socket.on('connect', () => {
-      updateState({
+      setSocketState((prev) => ({
+        ...prev,
         connecting: false,
         connected: socket.connected,
         connectError: undefined,
-      });
+      }));
     });
     socket.on('disconnect', () => {
-      updateState({
+      setSocketState((prev) => ({
+        ...prev,
         connecting: false,
         connected: socket.connected,
-      });
+      }));
     });
     socket.on('connect_error', (reason) => {
-      updateState({
+      setSocketState((prev) => ({
+        ...prev,
         connecting: false,
         connected: socket.connected,
         connectError: reason,
-      });
+      }));
     });
-  }, [updateState]);
-
-  useLayoutEffect(() => {
-    if (value.connected) {
-      onConnected?.();
-    }
-  }, [value.connected, onConnected]);
+  }, []);
 
   useEffect(() => {
-    if (!devId || !tokens) {
-      return;
-    }
+    if (!interceptorDefined) return;
 
     if (
       nextRefreshDate &&
-      tokens.refresh &&
       (DateHelper.isAfter(now, nextRefreshDate) ||
         DateHelper.isSame(now, nextRefreshDate))
     ) {
@@ -158,7 +125,7 @@ export const ApiProvider = ({
     } else {
       setLoaded(true);
     }
-  }, [devId, nextRefreshDate, now, refreshTokens, tokens]);
+  }, [interceptorDefined, nextRefreshDate, now, refreshTokens]);
 
   return (
     <QueryClientProvider client={queryClient}>

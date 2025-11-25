@@ -17,18 +17,18 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { defaultPageVerticalPadding } from '../view/page-view';
-import { router, usePathname } from 'expo-router';
 
 export const CustomTabBar = ({
   hidden,
   insets,
   DynamicButton,
+  state,
+  navigation,
   descriptors,
 }: BottomTabBarProps & {
   hidden?: boolean;
   DynamicButton?: ReactElement;
 }) => {
-  const pathname = usePathname();
   const theme = useTheme();
 
   const animatedStyle = useAnimatedStyle(
@@ -77,14 +77,12 @@ export const CustomTabBar = ({
       >
         <NavigationBackground blurIntensity={70} />
 
-        {Object.values(descriptors).map((descriptor) => {
-          const name = descriptor.route.name;
-          const path = `/${name}`;
-          const focused = pathname === path;
+        {Object.values(descriptors).map(({ route, options }, index) => {
+          const focused = index === state.index;
 
           return (
             <View
-              key={descriptor.route.key}
+              key={route.key}
               height={55}
               width={55}
               cursor="pointer"
@@ -93,11 +91,11 @@ export const CustomTabBar = ({
               pressStyle={{ opacity: 0.8 }}
               onPress={() => {
                 emitHaptic();
-                router.navigate(path);
-                eventEmitter.emit('tabPress', name);
+                eventEmitter.emit('tabPress', route.name);
+                navigation.navigate(route.name);
               }}
             >
-              {descriptor.options.tabBarIcon?.({
+              {options.tabBarIcon?.({
                 focused,
                 size: 24,
                 color: focused

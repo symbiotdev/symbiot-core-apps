@@ -1,13 +1,11 @@
 import {
   Accordion,
-  ActionCard,
   Button,
   DocumentPicker,
   FileChip,
   FormView,
+  H3,
   Icon,
-  Label,
-  Link,
   MediumText,
   PageView,
   RegularText,
@@ -175,54 +173,66 @@ export const ImportBrandClient = () => {
           />
         </FormView>
       ) : (
-        <FormView gap="$5">
-          {!clients.length || !file ? (
-            <DocumentPicker
-              label={t('brand_client.import.upload.label')}
-              uploadLabel={t('brand_client.import.upload.file')}
-              type={['text/csv', 'application/vnd.ms-excel', '.csv']}
-              error={fileError}
-              onUpload={onUploadFile}
-            />
-          ) : (
-            <View gap="$2">
-              <FileChip
-                label={t('brand_client.import.upload.label')}
-                removable={!clientsImporting}
-                file={file}
-                onRemove={removeFile}
-              />
-
-              <Button
-                label={t('brand_client.import.upload.button.label')}
-                loading={clientsImporting}
-                disabled={clientsImporting}
-                onPress={uploadClients}
-              />
-            </View>
-          )}
-
+        <FormView gap="$1" flex={1} justifyContent="center">
           <View gap="$2">
-            <Label paddingHorizontal="$4">
-              {t('brand_client.import.guide.subtitle')}
-            </Label>
+            <View marginVertical="$5">
+              <Icon name="Import" size={60} style={{ alignSelf: 'center' }} />
 
-            <Accordion
-              items={[
-                {
-                  title: t('brand_client.import.guide.title'),
-                  content: <ImportGuide />,
-                },
-              ]}
-            />
+              <H3 marginTop="$3" textAlign="center">
+                {t('brand_client.import.title')}
+              </H3>
+              <RegularText marginTop="$2" textAlign="center">
+                {t('brand_client.import.subtitle')}
+              </RegularText>
+            </View>
+
+            {!clients.length || !file ? (
+              <DocumentPicker
+                type={['text/csv', 'application/vnd.ms-excel', '.csv']}
+                error={fileError}
+                onUpload={onUploadFile}
+              />
+            ) : (
+              <>
+                <FileChip
+                  removable={!clientsImporting}
+                  file={file}
+                  onRemove={removeFile}
+                />
+
+                <Button
+                  label={t('brand_client.import.upload.button.label')}
+                  loading={clientsImporting}
+                  disabled={clientsImporting}
+                  onPress={uploadClients}
+                />
+              </>
+            )}
           </View>
 
-          <ActionCard
-            title={t('brand_client.import.template.title')}
-            subtitle={t('brand_client.import.template.subtitle')}
-            buttonLabel={t('brand_client.import.template.button.label')}
-            buttonLoading={templateLoading || sharing}
-            buttonIcon={<Icon name="Import" />}
+          <MediumText
+            fontSize={12}
+            color="$placeholderColor"
+            marginHorizontal="$3"
+          >
+            *{t('brand_client.import.guide.warning')}
+          </MediumText>
+
+          <Accordion
+            marginTop="$5"
+            paddingVertical={0}
+            items={[
+              {
+                title: t('brand_client.import.guide.title'),
+                content: <ImportGuide />,
+              },
+            ]}
+          />
+
+          <Button
+            marginTop="$2"
+            label={t('brand_client.import.template.button.label')}
+            loading={templateLoading || sharing}
             onPress={downloadTemplate}
           />
         </FormView>
@@ -233,10 +243,6 @@ export const ImportBrandClient = () => {
 
 const ImportGuide = () => {
   const { t } = useTranslation();
-
-  const openHelp = useCallback(() => {
-    router.navigate('/app/help-feedback');
-  }, []);
 
   return (
     <View gap="$5" marginTop="$2">
@@ -254,17 +260,6 @@ const ImportGuide = () => {
           ))}
         </View>
       ))}
-
-      <MediumText fontSize={12} color="$placeholderColor">
-        *{t('brand_client.import.guide.warning')}
-      </MediumText>
-
-      <MediumText>
-        {t('brand_client.import.guide.help.title')}{' '}
-        <Link onPress={openHelp}>
-          {t('brand_client.import.guide.help.button.label')}
-        </Link>
-      </MediumText>
     </View>
   );
 };

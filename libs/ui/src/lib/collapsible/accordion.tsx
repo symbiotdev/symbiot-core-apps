@@ -1,4 +1,4 @@
-import { useTheme, View, XStack } from 'tamagui';
+import { useTheme, View, ViewProps, XStack } from 'tamagui';
 import Collapsible from 'react-native-collapsible';
 import { ReactElement, useCallback, useState } from 'react';
 import { Icon } from '../icons';
@@ -11,9 +11,12 @@ type AccordionItem = {
   content: ReactElement;
 };
 
-export const Accordion = ({ items }: { items: AccordionItem[] }) => {
+export const Accordion = ({
+  items,
+  ...viewProps
+}: ViewProps & { items: AccordionItem[] }) => {
   return (
-    <Card paddingVertical="$2">
+    <Card paddingVertical="$2" {...viewProps}>
       {items.map((item, index) => (
         <Item
           key={index}

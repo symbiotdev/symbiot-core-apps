@@ -70,12 +70,13 @@ export const ApiProvider = ({
   }, [updateState]);
 
   useLayoutEffect(() => {
-    if (!devId) {
+    if (!devId || !tokens) {
       return;
     }
 
     if (
       nextRefreshDate &&
+      tokens.refresh &&
       (DateHelper.isAfter(now, nextRefreshDate) ||
         DateHelper.isSame(now, nextRefreshDate))
     ) {
@@ -83,10 +84,10 @@ export const ApiProvider = ({
     } else {
       setLoaded(true);
     }
-  }, [devId, nextRefreshDate, now, refreshTokens]);
+  }, [devId, nextRefreshDate, now, refreshTokens, tokens]);
 
   useLayoutEffect(() => {
-    if (!devId) {
+    if (!devId || !tokens) {
       return;
     }
 

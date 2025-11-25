@@ -2,6 +2,7 @@ import { setAxiosInterceptors } from '../utils/axios-interceptors';
 import {
   PropsWithChildren,
   useCallback,
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
@@ -70,24 +71,7 @@ export const ApiProvider = ({
   }, [updateState]);
 
   useLayoutEffect(() => {
-    if (!devId || !tokens) {
-      return;
-    }
-
-    if (
-      nextRefreshDate &&
-      tokens.refresh &&
-      (DateHelper.isAfter(now, nextRefreshDate) ||
-        DateHelper.isSame(now, nextRefreshDate))
-    ) {
-      void refreshTokens();
-    } else {
-      setLoaded(true);
-    }
-  }, [devId, nextRefreshDate, now, refreshTokens, tokens]);
-
-  useLayoutEffect(() => {
-    if (!devId || !tokens) {
+    if (!devId || !loaded) {
       return;
     }
 
@@ -98,10 +82,6 @@ export const ApiProvider = ({
       onUnauthorized,
       onNoRespond,
     });
-
-    if (!loaded) {
-      return;
-    }
 
     if (tokens.access) {
       updateState({ connecting: true });
@@ -162,6 +142,23 @@ export const ApiProvider = ({
       onConnected?.();
     }
   }, [value.connected, onConnected]);
+
+  useEffect(() => {
+    if (!devId || !tokens) {
+      return;
+    }
+
+    if (
+      nextRefreshDate &&
+      tokens.refresh &&
+      (DateHelper.isAfter(now, nextRefreshDate) ||
+        DateHelper.isSame(now, nextRefreshDate))
+    ) {
+      void refreshTokens();
+    } else {
+      setLoaded(true);
+    }
+  }, [devId, nextRefreshDate, now, refreshTokens, tokens]);
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -120,7 +120,7 @@ export const useAccountAuthRefreshTokenReq = () => {
 
   return useCallback(async () => {
     const newTokens = (await axios.post(
-      '/api/account-auth/refresh',
+      `${process.env.EXPO_PUBLIC_API_URL}/api/account-auth/refresh`,
       {},
       Platform.OS !== 'web'
         ? {

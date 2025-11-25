@@ -116,25 +116,27 @@ export const useAccountAuthResetPasswordReq = () => {
 };
 
 export const useAccountAuthRefreshTokenReq = () => {
-  const { setTokens, tokens } = useAuthTokens();
+  const { setTokens, removeTokens, tokens } = useAuthTokens();
 
   return useCallback(async () => {
-    const newTokens = (await axios.post(
-      `${process.env.EXPO_PUBLIC_API_URL}/api/account-auth/refresh`,
-      {},
-      Platform.OS !== 'web'
-        ? {
-            headers: {
-              [authTokenHeaderKey.refresh]: tokens.refresh,
-            },
-          }
-        : {},
-    )) as AccountAuthTokens;
+    try {
+      const newTokens = (await axios.post(
+        `${process.env.EXPO_PUBLIC_API_URL}/api/account-auth/refresh`,
+        {},
+        Platform.OS !== 'web'
+          ? {
+              headers: {
+                [authTokenHeaderKey.refresh]: tokens.refresh,
+              },
+            }
+          : {},
+      )) as AccountAuthTokens;
 
-    setTokens(newTokens);
-
-    return newTokens;
-  }, [setTokens, tokens.refresh]);
+      setTokens(newTokens);
+    } catch {
+      removeTokens();
+    }
+  }, [setTokens, removeTokens, tokens.refresh]);
 };
 
 export const useAccountAuthSignOutReq = () => {

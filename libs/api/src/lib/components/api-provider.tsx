@@ -154,7 +154,7 @@ export const ApiProvider = ({
       (DateHelper.isAfter(now, nextRefreshDate) ||
         DateHelper.isSame(now, nextRefreshDate))
     ) {
-      void refreshTokens();
+      refreshTokens().finally(() => setLoaded(true));
     } else {
       setLoaded(true);
     }

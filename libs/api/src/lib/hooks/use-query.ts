@@ -5,7 +5,6 @@ import {
   requestWithAlertOnError,
   requestWithStringError,
 } from '../utils/request';
-import { useQueryEnabled } from './use-query-enabled';
 
 export function useQuery<
   TQueryFnData = unknown,
@@ -23,11 +22,8 @@ export function useQuery<
   refetchOnReconnect?: boolean;
   params?: Record<string, unknown>;
 }) {
-  const enabled = useQueryEnabled(options.enabled);
-
   return useTanStackQuery<TQueryFnData, TError, TData, TQueryKey>({
     ...options,
-    enabled,
     queryFn: () =>
       (options.showAlert
         ? requestWithAlertOnError<TQueryFnData>

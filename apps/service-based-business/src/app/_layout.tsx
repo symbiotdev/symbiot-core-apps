@@ -20,13 +20,14 @@ if (Platform.OS !== 'web') {
 
 export default () => {
   const [fontsLoaded] = useFixelFont();
-  const { removeTokens } = useAuthTokens();
+  const { removeTokens, tokens } = useAuthTokens();
   const onNoRespond = useCallback(() => {
     alert('noRespond');
   }, []);
 
   return (
-    fontsLoaded && (
+    fontsLoaded &&
+    tokens && (
       <ApiProvider onNoRespond={onNoRespond} onUnauthorized={removeTokens}>
         <AppProvider>
           <Slot />

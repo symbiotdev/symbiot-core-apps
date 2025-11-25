@@ -6,7 +6,7 @@ import { DateHelper } from '@symbiot-core-apps/shared';
 
 export type OnboardingState = {
   tokens: AccountAuthTokens;
-  nextRefreshDate?: string;
+  accessToDate?: Date;
   setTokens: (tokens: AccountAuthTokens) => Promise<void>;
   removeTokens: () => Promise<void>;
 };
@@ -26,14 +26,14 @@ export const useAuthTokens = create<OnboardingState>()(
       setTokens: async (tokens) => {
         set({
           tokens,
-          nextRefreshDate: DateHelper.addMinutes(new Date(), 5).toUTCString(),
+          accessToDate: DateHelper.addMinutes(new Date(), 5),
         });
 
         return Promise.resolve();
       },
       removeTokens: async () => {
         set({
-          nextRefreshDate: undefined,
+          accessToDate: undefined,
           tokens: {
             access: '',
             refresh: '',

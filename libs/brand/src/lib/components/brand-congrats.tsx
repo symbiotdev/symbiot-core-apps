@@ -12,7 +12,7 @@ import { Brand } from '@symbiot-core-apps/api';
 
 export const BrandCongrats = ({ brand }: { brand: Brand }) => {
   const { t } = useTranslation();
-  const { now } = useNativeNow(secondsInHour);
+  const { now } = useNativeNow({ intervalInSeconds: secondsInHour });
   const { byBrandId: anniversaryById, hide: hideAnniversary } =
     useAnniversaryState();
 

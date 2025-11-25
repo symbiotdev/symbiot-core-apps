@@ -18,7 +18,7 @@ export const BrandEmployeeProfileCompletion = ({
 }) => {
   const { t } = useTranslation();
   const { byEmployeeId, ignore } = useIgnoredProfileCompletionState();
-  const { now } = useNativeNow(secondsInHour);
+  const { now } = useNativeNow({ intervalInSeconds: secondsInHour });
 
   const progress = useMemo(() => {
     let percentage = 0;

@@ -20,7 +20,7 @@ export const BrandProfileCompletion = ({
 }) => {
   const { t } = useTranslation();
   const { byBrandId, ignore } = useIgnoredProfileCompletionState();
-  const { now } = useNativeNow(secondsInHour);
+  const { now } = useNativeNow({ intervalInSeconds: secondsInHour });
 
   const progress = useMemo(() => {
     let percentage = 0;

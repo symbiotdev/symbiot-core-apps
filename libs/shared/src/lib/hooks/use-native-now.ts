@@ -2,11 +2,17 @@ import { useEffect, useState } from 'react';
 import { useRestoreApp } from './use-app-state';
 import { secondsInDay } from '../utils/date-helper';
 
-export const useNativeNow = (intervalInSeconds?: number) => {
+export const useNativeNow = ({
+  intervalInSeconds,
+  skipOnRestoreAppUpdate,
+}: {
+  intervalInSeconds?: number;
+  skipOnRestoreAppUpdate?: boolean;
+} = {}) => {
   const [now, setNow] = useState(new Date());
 
   useRestoreApp(() => {
-    setNow(new Date());
+    !skipOnRestoreAppUpdate && setNow(new Date());
   });
 
   useEffect(() => {

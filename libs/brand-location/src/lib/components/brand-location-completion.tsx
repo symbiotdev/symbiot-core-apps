@@ -18,7 +18,7 @@ export const BrandLocationCompletion = ({
 }) => {
   const { t } = useTranslation();
   const { byLocationId, ignore } = useIgnoredProfileCompletionState();
-  const { now } = useNativeNow(secondsInHour);
+  const { now } = useNativeNow({ intervalInSeconds: secondsInHour });
 
   const progress = useMemo(() => {
     let percentage = 0;

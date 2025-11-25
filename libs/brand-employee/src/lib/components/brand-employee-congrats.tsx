@@ -23,7 +23,7 @@ export const BrandEmployeeCongrats = ({
   const { byEmployeeId: anniversaryById, hide: hideAnniversary } =
     useAnniversaryState();
   const { byEmployeeId: birthdayById, hide: hideBirthday } = useBirthdayState();
-  const { now } = useNativeNow(secondsInHour);
+  const { now } = useNativeNow({ intervalInSeconds: secondsInHour });
 
   const isBirthdayToday = useMemo(
     () =>

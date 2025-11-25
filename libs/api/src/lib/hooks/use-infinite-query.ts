@@ -8,7 +8,6 @@ import { requestWithStringError } from '../utils/request';
 import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
 import { getInitialQueryDataStoreQueryKey } from '../utils/initial-query-data';
 import type { UseInfiniteQueryResult } from '@tanstack/react-query/src/types';
-import { useQueryEnabled } from './use-query-enabled';
 
 function getNextPageParam<T>(page: PaginationList<T>) {
   return page.items.length < page.count
@@ -29,7 +28,7 @@ export type InfiniteQuery<T> = UseInfiniteQueryResult<
 export function useInfiniteQuery<T extends { id: string }>({
   url,
   queryKey,
-  enabled: enabledByProps,
+  enabled,
   params,
   refetchOnMount = false,
   afterKeys = ['id'],
@@ -43,8 +42,6 @@ export function useInfiniteQuery<T extends { id: string }>({
   storeInitialData?: boolean;
   params?: PaginationListParams & Record<string, unknown>;
 }) {
-  const enabled = useQueryEnabled(enabledByProps);
-
   const [isManualRefetching, setIsManualRefetching] = useState(false);
 
   const query = useTanStackInfiniteQuery<

@@ -100,7 +100,7 @@ export const BrandLocationProfile = ({
             {location.name}
           </H3>
 
-          <XStack justifyContent="center" gap="$2" marginTop="$4">
+          <XStack justifyContent="center" gap="$2" marginTop="$2">
             <ButtonIcon
               iconName="Phone"
               size={40}

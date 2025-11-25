@@ -16,7 +16,6 @@ import { router, useNavigation } from 'expo-router';
 import {
   ActionCard,
   Avatar,
-  Card,
   FormView,
   H3,
   HeaderButton,
@@ -145,12 +144,14 @@ export default () => {
             />
           )}
 
-          <Card
+          <ListItemGroup
             flexDirection="row"
             alignItems="center"
             cursor="pointer"
+            paddingVertical="$4"
             pressStyle={{ opacity: 0.8 }}
             gap="$4"
+            title={t('shared.my_profile')}
             onPress={onAccountPress}
           >
             <XStack alignItems="center" gap="$4" flex={1}>
@@ -179,7 +180,7 @@ export default () => {
               qrValue={me.id}
               qrContent={<RegularText fontSize={30}>🤩</RegularText>}
             />
-          </Card>
+          </ListItemGroup>
 
           <ListItemGroup title={t('shared.preferences.title')}>
             <ListItem
@@ -206,7 +207,9 @@ export default () => {
               icon={<Icon name="Calendar" />}
               onPress={onCalendarPress}
             />
+          </ListItemGroup>
 
+          <ListItemGroup title={t('shared.application')}>
             {Platform.OS !== 'web' && (
               <ListItem
                 label={t('shared.preferences.system.title')}
@@ -214,9 +217,6 @@ export default () => {
                 onPress={Linking.openSettings}
               />
             )}
-          </ListItemGroup>
-
-          <ListItemGroup title={t('shared.application')}>
             <ListItem
               label={t('shared.share_app')}
               icon={<Icon name="Share" />}

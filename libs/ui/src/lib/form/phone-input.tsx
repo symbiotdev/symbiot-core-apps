@@ -79,11 +79,11 @@ export const PhoneInput = ({
           initialValue={value}
           flagStyle={{ display: 'none' }}
           textStyle={{
-            fontFamily: 'BodyRegular',
+            fontFamily: 'BodyLight',
             outlineWidth: 0,
             fontSize: 14,
             marginLeft: -10,
-            color: disabled ? theme.disabled?.val : theme.color?.val,
+            color: disabled ? theme.$placeholderColor?.val : theme.$color?.val,
           }}
           style={{
             backgroundColor: 'transparent',

@@ -5,7 +5,6 @@ import {
   ButtonIcon,
   FormView,
   H3,
-  Link,
   MapsTrigger,
   PageView,
   RegularText,
@@ -74,14 +73,6 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
             </RegularText>
           )}
 
-          {client.addresses?.map((address, index) => (
-            <MapsTrigger
-              key={index}
-              address={address}
-              trigger={<Link>{address}</Link>}
-            />
-          ))}
-
           <XStack justifyContent="center" gap="$2" marginTop="$2">
             <ButtonIcon
               iconName="Phone"
@@ -105,6 +96,15 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
               popoverRef={topUpBalanceRef}
               trigger={<ButtonIcon iconName="Wallet" size={40} iconSize={20} />}
             />
+
+            {!!client.addresses?.length && (
+              <MapsTrigger
+                address={client.addresses[0]}
+                trigger={
+                  <ButtonIcon iconName="MapPoint" size={40} iconSize={20} />
+                }
+              />
+            )}
           </XStack>
         </View>
 

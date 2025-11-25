@@ -80,7 +80,7 @@ export const PlusActionAdaptiveModal = ({
         ignoreHapticOnOpen
         trigger={trigger}
       >
-        <View gap="$3" marginVertical={-(defaultPageVerticalPadding / 2)}>
+        <View marginVertical={-(defaultPageVerticalPadding / 2)}>
           {hasAnyOfPermissions(['employees', 'locations']) && (
             <>
               {hasPermission('locations') && (
@@ -103,7 +103,9 @@ export const PlusActionAdaptiveModal = ({
 
           {hasPermission('catalog') && (
             <>
-              {hasAnyOfPermissions(['employees', 'locations']) && <Br />}
+              {hasAnyOfPermissions(['employees', 'locations']) && (
+                <Br marginVertical="$2" />
+              )}
 
               <ListItem
                 icon={<Icon name={icons.Service} />}
@@ -130,7 +132,7 @@ export const PlusActionAdaptiveModal = ({
           {hasPermission('clients') && (
             <>
               {hasAnyOfPermissions(['employees', 'locations', 'catalog']) && (
-                <Br />
+                <Br marginVertical="$2" />
               )}
 
               <ListItem
@@ -148,7 +150,7 @@ export const PlusActionAdaptiveModal = ({
 
           {hasPermission('bookings') && (
             <>
-              {hasAnyOfPermissions(['clients']) && <Br />}
+              {hasAnyOfPermissions(['clients']) && <Br marginVertical="$2" />}
 
               <ListItem
                 icon={<Icon name={icons.ServiceBooking} />}

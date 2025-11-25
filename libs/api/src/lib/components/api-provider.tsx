@@ -74,6 +74,22 @@ export const ApiProvider = ({
       return;
     }
 
+    if (
+      nextRefreshDate &&
+      (DateHelper.isAfter(now, nextRefreshDate) ||
+        DateHelper.isSame(now, nextRefreshDate))
+    ) {
+      void refreshTokens();
+    } else {
+      setLoaded(true);
+    }
+  }, [devId, nextRefreshDate, now, refreshTokens]);
+
+  useLayoutEffect(() => {
+    if (!devId) {
+      return;
+    }
+
     setAxiosInterceptors({
       devId,
       accessToken: tokens.access,
@@ -81,6 +97,10 @@ export const ApiProvider = ({
       onUnauthorized,
       onNoRespond,
     });
+
+    if (!loaded) {
+      return;
+    }
 
     if (tokens.access) {
       updateState({ connecting: true });
@@ -103,6 +123,7 @@ export const ApiProvider = ({
     };
   }, [
     tokens,
+    loaded,
     i18n.language,
     devId,
     disconnectSocket,
@@ -111,22 +132,6 @@ export const ApiProvider = ({
     onUnauthorized,
     setTokens,
   ]);
-
-  useLayoutEffect(() => {
-    if (!devId) {
-      return;
-    }
-
-    if (
-      nextRefreshDate &&
-      (DateHelper.isAfter(now, nextRefreshDate) ||
-        DateHelper.isSame(now, nextRefreshDate))
-    ) {
-      void refreshTokens();
-    } else {
-      setLoaded(true);
-    }
-  }, [devId, nextRefreshDate, now, refreshTokens]);
 
   useLayoutEffect(() => {
     socket.on('connect', () => {

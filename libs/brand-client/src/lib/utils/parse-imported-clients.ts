@@ -51,7 +51,10 @@ export const parseImportedClients = (
         ? String(client[keys.address]).trim().substring(0, 150)
         : '';
     const avatar =
-      client[keys.avatar] && client[keys.avatar] !== '-'
+      client[keys.avatar] &&
+      client[keys.avatar] !== '-' &&
+      client[keys.avatar].indexOf('http') === 0 &&
+        new URL(client[keys.avatar]).pathname !== '/'
         ? String(client[keys.avatar])
         : '';
     const gender =
@@ -110,7 +113,7 @@ export const parseImportedClients = (
       gender,
       birthday: birthday
         ? DateHelper.startOfDay(
-            parse(birthday, 'dd-MM-yyyy', new Date()),
+            parse(birthday, 'MM-dd-yyyy', new Date()),
           ).toUTCString()
         : null,
       addresses: address ? [address.trim()] : [],

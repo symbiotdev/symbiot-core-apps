@@ -9,6 +9,7 @@ import {
 import { BrandTransactionItem } from '@symbiot-core-apps/brand';
 import { BrandTransaction } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const BrandTransactionsList = ({
   transactions,
@@ -29,10 +30,19 @@ export const BrandTransactionsList = ({
   onRefresh?: () => void;
   onEndReached?: () => void;
 }) => {
+  const { t } = useTranslation();
   const ListEmptyComponent = useCallback(() => <EmptyView />, []);
 
-  if (!transactions) {
-    return <InitView loading={isLoading} error={error} />;
+  if (!transactions?.length) {
+    return (
+      <InitView
+        loading={isLoading}
+        error={error}
+        noDataIcon="Bill"
+        noDataTitle={t('brand_transaction.empty.title')}
+        noDataMessage={t('brand_transaction.empty.subtitle')}
+      />
+    );
   }
 
   return (

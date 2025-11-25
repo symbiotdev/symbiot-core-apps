@@ -1,7 +1,9 @@
 import {
   AnyBrandClientMembership,
-  InfiniteQuery,
-  PaginationListParams,
+  AppConfigIconName,
+  BrandMembershipType,
+  useBrandClientPeriodBasedMembershipsListReq,
+  useBrandClientVisitsBasedMembershipsListReq,
 } from '@symbiot-core-apps/api';
 import React, { ReactElement, useCallback } from 'react';
 import {
@@ -11,23 +13,39 @@ import {
   defaultPageVerticalPadding,
   InitView,
 } from '@symbiot-core-apps/ui';
+import { useApp } from '@symbiot-core-apps/app';
+import { useTranslation } from 'react-i18next';
+
+const byType = {
+  [BrandMembershipType.period]: {
+    query: useBrandClientPeriodBasedMembershipsListReq,
+    icon: 'PeriodBasedMembership',
+    noDataTitle: 'brand_client.history.visit_based_memberships.empty.title',
+    noDataMessage: 'brand_client.history.visit_based_memberships.empty.subtitle',
+  },
+  [BrandMembershipType.visits]: {
+    query: useBrandClientVisitsBasedMembershipsListReq,
+    icon: 'VisitBasedMembership',
+    noDataTitle: 'brand_client.history.period_based_memberships.empty.title',
+    noDataMessage: 'brand_client.history.period_based_memberships.empty.subtitle',
+  },
+};
 
 export const BrandClientMembershipsList = ({
   clientId,
+  type,
   offsetTop,
-  query,
   renderItem,
 }: {
   clientId: string;
+  type: BrandMembershipType;
   offsetTop?: number;
-  query: (
-    clientId: string,
-    props?: {
-      params?: PaginationListParams;
-    },
-  ) => InfiniteQuery<AnyBrandClientMembership>;
   renderItem: (props: { item: AnyBrandClientMembership }) => ReactElement;
 }) => {
+  const config = byType[type];
+  const { t } = useTranslation();
+  const { icons } = useApp();
+
   const {
     items: memberships,
     isFetchingNextPage,
@@ -36,11 +54,27 @@ export const BrandClientMembershipsList = ({
     error,
     onRefresh,
     onEndReached,
-  } = query(clientId);
+  } = config.query(clientId);
 
   const ListEmptyComponent = useCallback(
-    () => <InitView loading={isLoading} error={error} />,
-    [error, isLoading],
+    () => (
+      <InitView
+        error={error}
+        loading={isLoading}
+        noDataIcon={icons[config.icon as AppConfigIconName]}
+        noDataTitle={t(config.noDataTitle)}
+        noDataMessage={t(config.noDataMessage)}
+      />
+    ),
+    [
+      config.icon,
+      config.noDataMessage,
+      config.noDataTitle,
+      error,
+      icons,
+      isLoading,
+      t,
+    ],
   );
 
   return (

@@ -80,7 +80,7 @@ export const BrandClientTopUpBalance = ({
           loading: isMembershipLoading,
         })}
         ref={popoverRef}
-        sheetTitle={t('brand_client.balance.top_up')}
+        sheetTitle={t('brand_client.balance.top_up.title')}
       >
         <View>
           <ListItem
@@ -117,7 +117,15 @@ export const BrandClientTopUpBalance = ({
               }}
             />
           )}
-          Intro={InitView}
+          Intro={({ loading, error }) => (
+            <InitView
+              loading={loading}
+              error={error}
+              noDataIcon={icons.VisitBasedMembership}
+              noDataTitle={t('brand_client.balance.top_up.visit_based_memberships.empty.title')}
+              noDataMessage={t('brand_client.balance.top_up.visit_based_memberships.empty.subtitle')}
+            />
+          )}
         />
       </SlideSheetModal>
 
@@ -142,7 +150,15 @@ export const BrandClientTopUpBalance = ({
               }}
             />
           )}
-          Intro={InitView}
+          Intro={({ loading, error }) => (
+            <InitView
+              loading={loading}
+              error={error}
+              noDataIcon={icons.PeriodBasedMembership}
+              noDataTitle={t('brand_client.balance.top_up.period_based_memberships.empty.title')}
+              noDataMessage={t('brand_client.balance.top_up.period_based_memberships.empty.subtitle')}
+            />
+          )}
         />
       </SlideSheetModal>
     </>

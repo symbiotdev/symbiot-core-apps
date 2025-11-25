@@ -25,7 +25,10 @@ import { Linking, useWindowDimensions } from 'react-native';
 import { openBrowserAsync } from 'expo-web-browser';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
-import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
+import {
+  useCurrentBrandEmployee,
+  useCurrentBrandState,
+} from '@symbiot-core-apps/state';
 import { BrandLocationCompletion } from './brand-location-completion';
 import { Image } from 'expo-image';
 
@@ -35,6 +38,7 @@ export const BrandLocationProfile = ({
   location: BrandLocation;
 }) => {
   const { t } = useTranslation();
+  const { brand } = useCurrentBrandState();
   const { height } = useWindowDimensions();
   const { hasPermission } = useCurrentBrandEmployee();
   const { items, isPending, error } =
@@ -92,7 +96,7 @@ export const BrandLocationProfile = ({
           <Avatar
             name={location.name}
             size={100}
-            url={location.avatar?.url}
+            url={location.avatar?.url || brand?.avatar?.url}
             color="$background1"
           />
 

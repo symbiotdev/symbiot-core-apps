@@ -1,6 +1,7 @@
 import {
   Accordion,
   Button,
+  Card,
   DocumentPicker,
   FileChip,
   FormView,
@@ -140,11 +141,13 @@ export const ImportBrandClient = () => {
   return (
     <PageView scrollable withHeaderHeight>
       {uploaded ? (
-        <FormView flex={1} justifyContent="center" alignItems="center">
-          <Icon name="SmileCircle" size={60} />
+        <FormView flex={1} justifyContent="center" gap="$5">
+          <Icon name="SmileCircle" size={60} style={{ alignSelf: 'center' }} />
+
+          <H3 textAlign="center">{t('brand_client.import.uploaded.title')}</H3>
 
           {summary && (
-            <View gap="$3" marginTop="$5">
+            <Card gap="$3" marginVertical="$2">
               <XStack alignItems="center">
                 <RegularText>
                   {t('brand_client.import.uploaded.summary.total')}:
@@ -163,11 +166,10 @@ export const ImportBrandClient = () => {
                 </RegularText>
                 <SemiBoldText> {summary.failed}</SemiBoldText>
               </XStack>
-            </View>
+            </Card>
           )}
 
           <Button
-            marginTop="$10"
             label={t('brand_client.import.uploaded.button.label')}
             onPress={goToClients}
           />

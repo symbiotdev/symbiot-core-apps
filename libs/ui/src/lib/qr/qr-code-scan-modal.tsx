@@ -58,10 +58,10 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
   );
 
   useEffect(() => {
-    if (rendered) {
+    if (rendered && !permission?.granted) {
       void requestPermission();
     }
-  }, [rendered, requestPermission]);
+  }, [permission?.granted, rendered, requestPermission]);
 
   if (!rendered) {
     return <LoadingView />;

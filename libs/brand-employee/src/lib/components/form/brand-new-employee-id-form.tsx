@@ -9,6 +9,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useCallback, useState } from 'react';
 import { View } from 'tamagui';
+import { requestCameraPermissionsAsync } from 'expo-image-picker';
 
 type FormValue = {
   id: string;
@@ -28,7 +29,11 @@ export const BrandNewEmployeeIdForm = ({
 
   const [scanQrVisible, setScanQrVisible] = useState<boolean>(false);
 
-  const openScanQr = useCallback(() => setScanQrVisible(true), []);
+  const openScanQr = useCallback(async () => {
+    await requestCameraPermissionsAsync();
+
+    setScanQrVisible(true);
+  }, []);
   const closeScanQr = useCallback(() => setScanQrVisible(false), []);
   const onScan = useCallback((id: string) => onAdd({ id }), [onAdd]);
 

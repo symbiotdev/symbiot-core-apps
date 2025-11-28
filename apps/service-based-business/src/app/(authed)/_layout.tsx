@@ -27,6 +27,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { PlusActionAdaptiveModal } from '../../components/tabs/plus-action-adaptive-modal';
 import { isEqual } from '@symbiot-core-apps/shared';
+import { BrandSubscriptionProvider } from '@symbiot-core-apps/brand-subscription';
 
 const PlusButton = () => {
   const pathname = usePathname();
@@ -91,398 +92,400 @@ export default () => {
   }
 
   return (
-    <SocketProvider>
-      <NotificationsProvider onPressNotification={onPressNotification}>
-        <XStack flex={1}>
-          {drawerVisible && <DrawerMenu />}
+    <BrandSubscriptionProvider>
+      <SocketProvider>
+        <NotificationsProvider onPressNotification={onPressNotification}>
+          <XStack flex={1}>
+            {drawerVisible && <DrawerMenu />}
 
-          {!currentEntitiesLoaded ? (
-            <LoadingView />
-          ) : (
-            <Stack screenOptions={screenOptions}>
-              <Stack.Screen
-                name="(tabs)"
-                options={{
-                  headerShown: false,
-                  ...(drawerVisible && {
-                    animation: 'none',
-                  }),
-                }}
-              />
+            {!currentEntitiesLoaded ? (
+              <LoadingView />
+            ) : (
+              <Stack screenOptions={screenOptions}>
+                <Stack.Screen
+                  name="(tabs)"
+                  options={{
+                    headerShown: false,
+                    ...(drawerVisible && {
+                      animation: 'none',
+                    }),
+                  }}
+                />
 
-              {/*ACCOUNT*/}
+                {/*ACCOUNT*/}
 
-              <Stack.Screen
-                name="account/update"
-                options={{
-                  headerTitle: t('shared.profile'),
-                }}
-              />
-              <Stack.Screen name="account/remove" />
+                <Stack.Screen
+                  name="account/update"
+                  options={{
+                    headerTitle: t('shared.profile'),
+                  }}
+                />
+                <Stack.Screen name="account/remove" />
 
-              {/*APP*/}
+                {/*APP*/}
 
-              <Stack.Screen
-                name="app/follow-us"
-                options={{
-                  headerTitle: t('shared.follow_us'),
-                }}
-              />
+                <Stack.Screen
+                  name="app/follow-us"
+                  options={{
+                    headerTitle: t('shared.follow_us'),
+                  }}
+                />
 
-              <Stack.Screen
-                name="app/help-feedback"
-                options={{
-                  headerTitle: t('shared.faq.title'),
-                  ...(drawerVisible && {
-                    animation: 'none',
-                  }),
-                }}
-              />
+                <Stack.Screen
+                  name="app/help-feedback"
+                  options={{
+                    headerTitle: t('shared.faq.title'),
+                    ...(drawerVisible && {
+                      animation: 'none',
+                    }),
+                  }}
+                />
 
-              <Stack.Screen
-                name="app/terms-privacy"
-                options={{
-                  headerTitle: t('shared.docs.terms_privacy'),
-                }}
-              />
+                <Stack.Screen
+                  name="app/terms-privacy"
+                  options={{
+                    headerTitle: t('shared.docs.terms_privacy'),
+                  }}
+                />
 
-              {/*APPEARANCE*/}
+                {/*APPEARANCE*/}
 
-              <Stack.Screen
-                name="appearance/preferences"
-                options={{
-                  headerTitle: t('shared.preferences.appearance.title'),
-                }}
-              />
+                <Stack.Screen
+                  name="appearance/preferences"
+                  options={{
+                    headerTitle: t('shared.preferences.appearance.title'),
+                  }}
+                />
 
-              {/*BOOKINGS*/}
+                {/*BOOKINGS*/}
 
-              <Stack.Protected guard={hasPermission('bookings')}>
-                <Stack.Protected guard={hasPermission('analytics')}>
-                  <Stack.Screen name="bookings/[type]/[id]/analytics" />
+                <Stack.Protected guard={hasPermission('bookings')}>
+                  <Stack.Protected guard={hasPermission('analytics')}>
+                    <Stack.Screen name="bookings/[type]/[id]/analytics" />
+                  </Stack.Protected>
+                  <Stack.Screen name="bookings/[type]/create" />
                 </Stack.Protected>
-                <Stack.Screen name="bookings/[type]/create" />
-              </Stack.Protected>
 
-              <Stack.Screen name="bookings/[type]/[id]/profile" />
-              <Stack.Screen
-                name="bookings/index"
-                options={{
-                  headerTitle: t(`brand_booking.schedule`),
-                  ...(drawerVisible && {
-                    animation: 'none',
-                  }),
-                }}
-              />
-
-              {/*BRAND*/}
-
-              <Stack.Protected
-                guard={
-                  !!currentBrands && !currentBrands.length && !currentBrand
-                }
-              >
-                <Stack.Screen name="brand/create" />
+                <Stack.Screen name="bookings/[type]/[id]/profile" />
                 <Stack.Screen
-                  name="brand/new"
+                  name="bookings/index"
                   options={{
-                    headerTitle: t('brand.create.new_brand'),
-                  }}
-                />
-              </Stack.Protected>
-
-              <Stack.Protected guard={!!currentBrand}>
-                <Stack.Screen
-                  name="brand/profile"
-                  options={{
-                    headerTitle: t('brand.profile.title'),
+                    headerTitle: t(`brand_booking.schedule`),
+                    ...(drawerVisible && {
+                      animation: 'none',
+                    }),
                   }}
                 />
 
-                <Stack.Protected guard={hasPermission('analytics')}>
+                {/*BRAND*/}
+
+                <Stack.Protected
+                  guard={
+                    !!currentBrands && !currentBrands.length && !currentBrand
+                  }
+                >
+                  <Stack.Screen name="brand/create" />
                   <Stack.Screen
-                    name="brand/analytics"
+                    name="brand/new"
+                    options={{
+                      headerTitle: t('brand.create.new_brand'),
+                    }}
+                  />
+                </Stack.Protected>
+
+                <Stack.Protected guard={!!currentBrand}>
+                  <Stack.Screen
+                    name="brand/profile"
+                    options={{
+                      headerTitle: t('brand.profile.title'),
+                    }}
+                  />
+
+                  <Stack.Protected guard={hasPermission('analytics')}>
+                    <Stack.Screen
+                      name="brand/analytics"
+                      options={{
+                        ...(drawerVisible && {
+                          animation: 'none',
+                        }),
+                        headerTitle: t('brand.analytics.title'),
+                      }}
+                    />
+                  </Stack.Protected>
+
+                  <Stack.Protected guard={hasPermission('brand')}>
+                    <Stack.Screen
+                      name="brand/update"
+                      options={{
+                        headerTitle: t('brand.update.title'),
+                      }}
+                    />
+                  </Stack.Protected>
+                </Stack.Protected>
+
+                {/*CALENDAR*/}
+
+                <Stack.Screen
+                  name="calendar/preferences"
+                  options={{
+                    headerTitle: t('shared.preferences.calendar.title'),
+                  }}
+                />
+
+                {/*CLIENTS*/}
+
+                <Stack.Protected guard={hasPermission('clients')}>
+                  <Stack.Protected guard={hasPermission('analytics')}>
+                    <Stack.Screen
+                      name="clients/[id]/analytics"
+                      options={{
+                        headerTitle: t('brand_client.analytics.title'),
+                      }}
+                    />
+                  </Stack.Protected>
+
+                  <Stack.Protected guard={hasPermission('catalog')}>
+                    <Stack.Screen name="clients/[id]/memberships/[membershipId]/update" />
+                    <Stack.Screen name="clients/[id]/memberships/[membershipId]/remove" />
+                    <Stack.Screen name="clients/[id]/memberships/[type]/index" />
+                  </Stack.Protected>
+
+                  <Stack.Protected guard={hasPermission('finances')}>
+                    <Stack.Screen name="clients/[id]/transactions" />
+                  </Stack.Protected>
+
+                  <Stack.Screen name="clients/[id]/remove" />
+                  <Stack.Screen
+                    name="clients/[id]/update"
+                    options={{
+                      headerTitle: t('brand_client.update.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="clients/[id]/profile"
+                    options={{
+                      headerTitle: t('brand_client.profile.title'),
+                    }}
+                  />
+
+                  <Stack.Screen
+                    name="clients/create"
+                    options={{
+                      headerTitle: t('brand_client.create.new_client'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="clients/import"
+                    options={{
+                      headerTitle: t('brand_client.import.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="clients/index"
                     options={{
                       ...(drawerVisible && {
                         animation: 'none',
                       }),
-                      headerTitle: t('brand.analytics.title'),
+                      headerTitle: t('brand_client.title'),
                     }}
                   />
                 </Stack.Protected>
 
-                <Stack.Protected guard={hasPermission('brand')}>
+                {/*EMPLOYEES*/}
+
+                <Stack.Protected guard={hasPermission('employees')}>
+                  <Stack.Protected guard={hasPermission('analytics')}>
+                    <Stack.Screen
+                      name="employees/[id]/analytics"
+                      options={{
+                        headerTitle: t('brand_employee.analytics.title'),
+                      }}
+                    />
+                  </Stack.Protected>
+                  <Stack.Screen name="employees/[id]/remove" />
                   <Stack.Screen
-                    name="brand/update"
+                    name="employees/[id]/create"
                     options={{
-                      headerTitle: t('brand.update.title'),
+                      headerTitle: t('brand_employee.create.new_employee'),
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
                     }}
                   />
-                </Stack.Protected>
-              </Stack.Protected>
-
-              {/*CALENDAR*/}
-
-              <Stack.Screen
-                name="calendar/preferences"
-                options={{
-                  headerTitle: t('shared.preferences.calendar.title'),
-                }}
-              />
-
-              {/*CLIENTS*/}
-
-              <Stack.Protected guard={hasPermission('clients')}>
-                <Stack.Protected guard={hasPermission('analytics')}>
                   <Stack.Screen
-                    name="clients/[id]/analytics"
+                    name="employees/[id]/update"
                     options={{
-                      headerTitle: t('brand_client.analytics.title'),
+                      headerTitle: t('brand_employee.update.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="employees/[id]/profile"
+                    options={{
+                      headerTitle: t('brand_employee.profile.title'),
+                    }}
+                  />
+
+                  <Stack.Screen name="employees/create" />
+                  <Stack.Screen
+                    name="employees/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                      headerTitle: t('brand_employee.title'),
                     }}
                   />
                 </Stack.Protected>
+
+                {/*LANGUAGE*/}
+
+                <Stack.Screen
+                  name="language/preferences"
+                  options={{
+                    headerTitle: t('shared.preferences.language.title'),
+                  }}
+                />
+
+                {/*LOCATIONS*/}
+
+                <Stack.Protected guard={hasPermission('locations')}>
+                  <Stack.Protected guard={hasPermission('analytics')}>
+                    <Stack.Screen
+                      name="locations/[id]/analytics"
+                      options={{
+                        headerTitle: t('brand_location.analytics.title'),
+                      }}
+                    />
+                  </Stack.Protected>
+                  <Stack.Screen name="locations/[id]/remove" />
+                  <Stack.Screen
+                    name="locations/[id]/update"
+                    options={{
+                      headerTitle: t('brand_location.update.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="locations/[id]/profile"
+                    options={{
+                      headerTitle: t('brand_location.profile.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="locations/create"
+                    options={{
+                      headerTitle: t('brand_location.new_location'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="locations/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                      headerTitle: t('brand_location.title'),
+                    }}
+                  />
+                </Stack.Protected>
+
+                {/*MEMBERSHIPS*/}
 
                 <Stack.Protected guard={hasPermission('catalog')}>
-                  <Stack.Screen name="clients/[id]/memberships/[membershipId]/update" />
-                  <Stack.Screen name="clients/[id]/memberships/[membershipId]/remove" />
-                  <Stack.Screen name="clients/[id]/memberships/[type]/index" />
+                  <Stack.Protected guard={hasPermission('analytics')}>
+                    <Stack.Screen name="memberships/[type]/[id]/analytics" />
+                  </Stack.Protected>
+                  <Stack.Screen name="memberships/[type]/[id]/remove" />
+                  <Stack.Screen name="memberships/[type]/[id]/update" />
+                  <Stack.Screen name="memberships/[type]/[id]/profile" />
+                  <Stack.Screen name="memberships/[type]/create" />
+                  <Stack.Screen
+                    name="memberships/[type]/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                    }}
+                  />
                 </Stack.Protected>
+
+                {/*NOTIFICATIONS*/}
+
+                <Stack.Screen
+                  name="notifications/index"
+                  options={{
+                    ...(drawerVisible && {
+                      animation: 'none',
+                    }),
+                    headerTitle: t('shared.notifications.title'),
+                  }}
+                />
+                <Stack.Screen
+                  name="notifications/preferences"
+                  options={{
+                    headerTitle: t('shared.preferences.notifications.title'),
+                  }}
+                />
+
+                {/*SERVICES*/}
+
+                <Stack.Protected guard={hasPermission('catalog')}>
+                  <Stack.Protected guard={hasPermission('analytics')}>
+                    <Stack.Screen
+                      name="services/[id]/analytics"
+                      options={{
+                        headerTitle: t('brand_service.analytics.title'),
+                      }}
+                    />
+                  </Stack.Protected>
+                  <Stack.Screen name="services/[id]/remove" />
+                  <Stack.Screen
+                    name="services/[id]/update"
+                    options={{
+                      headerTitle: t('brand_service.update.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="services/[id]/profile"
+                    options={{
+                      headerTitle: t('brand_service.profile.title'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="services/create"
+                    options={{
+                      headerTitle: t('brand_service.create.new_service'),
+                    }}
+                  />
+                  <Stack.Screen
+                    name="services/index"
+                    options={{
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                      headerTitle: t('brand_service.title'),
+                    }}
+                  />
+                </Stack.Protected>
+
+                {/*TRANSACTIONS*/}
 
                 <Stack.Protected guard={hasPermission('finances')}>
-                  <Stack.Screen name="clients/[id]/transactions" />
-                </Stack.Protected>
-
-                <Stack.Screen name="clients/[id]/remove" />
-                <Stack.Screen
-                  name="clients/[id]/update"
-                  options={{
-                    headerTitle: t('brand_client.update.title'),
-                  }}
-                />
-                <Stack.Screen
-                  name="clients/[id]/profile"
-                  options={{
-                    headerTitle: t('brand_client.profile.title'),
-                  }}
-                />
-
-                <Stack.Screen
-                  name="clients/create"
-                  options={{
-                    headerTitle: t('brand_client.create.new_client'),
-                  }}
-                />
-                <Stack.Screen
-                  name="clients/import"
-                  options={{
-                    headerTitle: t('brand_client.import.title'),
-                  }}
-                />
-                <Stack.Screen
-                  name="clients/index"
-                  options={{
-                    ...(drawerVisible && {
-                      animation: 'none',
-                    }),
-                    headerTitle: t('brand_client.title'),
-                  }}
-                />
-              </Stack.Protected>
-
-              {/*EMPLOYEES*/}
-
-              <Stack.Protected guard={hasPermission('employees')}>
-                <Stack.Protected guard={hasPermission('analytics')}>
                   <Stack.Screen
-                    name="employees/[id]/analytics"
+                    name="transactions/index"
                     options={{
-                      headerTitle: t('brand_employee.analytics.title'),
+                      ...(drawerVisible && {
+                        animation: 'none',
+                      }),
+                      headerTitle: t('brand_transaction.title'),
                     }}
                   />
                 </Stack.Protected>
-                <Stack.Screen name="employees/[id]/remove" />
-                <Stack.Screen
-                  name="employees/[id]/create"
-                  options={{
-                    headerTitle: t('brand_employee.create.new_employee'),
-                    ...(drawerVisible && {
-                      animation: 'none',
-                    }),
-                  }}
-                />
-                <Stack.Screen
-                  name="employees/[id]/update"
-                  options={{
-                    headerTitle: t('brand_employee.update.title'),
-                  }}
-                />
-                <Stack.Screen
-                  name="employees/[id]/profile"
-                  options={{
-                    headerTitle: t('brand_employee.profile.title'),
-                  }}
-                />
+              </Stack>
+            )}
 
-                <Stack.Screen name="employees/create" />
-                <Stack.Screen
-                  name="employees/index"
-                  options={{
-                    ...(drawerVisible && {
-                      animation: 'none',
-                    }),
-                    headerTitle: t('brand_employee.title'),
-                  }}
-                />
-              </Stack.Protected>
-
-              {/*LANGUAGE*/}
-
-              <Stack.Screen
-                name="language/preferences"
-                options={{
-                  headerTitle: t('shared.preferences.language.title'),
-                }}
-              />
-
-              {/*LOCATIONS*/}
-
-              <Stack.Protected guard={hasPermission('locations')}>
-                <Stack.Protected guard={hasPermission('analytics')}>
-                  <Stack.Screen
-                    name="locations/[id]/analytics"
-                    options={{
-                      headerTitle: t('brand_location.analytics.title'),
-                    }}
-                  />
-                </Stack.Protected>
-                <Stack.Screen name="locations/[id]/remove" />
-                <Stack.Screen
-                  name="locations/[id]/update"
-                  options={{
-                    headerTitle: t('brand_location.update.title'),
-                  }}
-                />
-                <Stack.Screen
-                  name="locations/[id]/profile"
-                  options={{
-                    headerTitle: t('brand_location.profile.title'),
-                  }}
-                />
-                <Stack.Screen
-                  name="locations/create"
-                  options={{
-                    headerTitle: t('brand_location.new_location'),
-                  }}
-                />
-                <Stack.Screen
-                  name="locations/index"
-                  options={{
-                    ...(drawerVisible && {
-                      animation: 'none',
-                    }),
-                    headerTitle: t('brand_location.title'),
-                  }}
-                />
-              </Stack.Protected>
-
-              {/*MEMBERSHIPS*/}
-
-              <Stack.Protected guard={hasPermission('catalog')}>
-                <Stack.Protected guard={hasPermission('analytics')}>
-                  <Stack.Screen name="memberships/[type]/[id]/analytics" />
-                </Stack.Protected>
-                <Stack.Screen name="memberships/[type]/[id]/remove" />
-                <Stack.Screen name="memberships/[type]/[id]/update" />
-                <Stack.Screen name="memberships/[type]/[id]/profile" />
-                <Stack.Screen name="memberships/[type]/create" />
-                <Stack.Screen
-                  name="memberships/[type]/index"
-                  options={{
-                    ...(drawerVisible && {
-                      animation: 'none',
-                    }),
-                  }}
-                />
-              </Stack.Protected>
-
-              {/*NOTIFICATIONS*/}
-
-              <Stack.Screen
-                name="notifications/index"
-                options={{
-                  ...(drawerVisible && {
-                    animation: 'none',
-                  }),
-                  headerTitle: t('shared.notifications.title'),
-                }}
-              />
-              <Stack.Screen
-                name="notifications/preferences"
-                options={{
-                  headerTitle: t('shared.preferences.notifications.title'),
-                }}
-              />
-
-              {/*SERVICES*/}
-
-              <Stack.Protected guard={hasPermission('catalog')}>
-                <Stack.Protected guard={hasPermission('analytics')}>
-                  <Stack.Screen
-                    name="services/[id]/analytics"
-                    options={{
-                      headerTitle: t('brand_service.analytics.title'),
-                    }}
-                  />
-                </Stack.Protected>
-                <Stack.Screen name="services/[id]/remove" />
-                <Stack.Screen
-                  name="services/[id]/update"
-                  options={{
-                    headerTitle: t('brand_service.update.title'),
-                  }}
-                />
-                <Stack.Screen
-                  name="services/[id]/profile"
-                  options={{
-                    headerTitle: t('brand_service.profile.title'),
-                  }}
-                />
-                <Stack.Screen
-                  name="services/create"
-                  options={{
-                    headerTitle: t('brand_service.create.new_service'),
-                  }}
-                />
-                <Stack.Screen
-                  name="services/index"
-                  options={{
-                    ...(drawerVisible && {
-                      animation: 'none',
-                    }),
-                    headerTitle: t('brand_service.title'),
-                  }}
-                />
-              </Stack.Protected>
-
-              {/*TRANSACTIONS*/}
-
-              <Stack.Protected guard={hasPermission('finances')}>
-                <Stack.Screen
-                  name="transactions/index"
-                  options={{
-                    ...(drawerVisible && {
-                      animation: 'none',
-                    }),
-                    headerTitle: t('brand_transaction.title'),
-                  }}
-                />
-              </Stack.Protected>
-            </Stack>
-          )}
-
-          {drawerVisible && !!currentBrand && <PlusButton />}
-        </XStack>
-      </NotificationsProvider>
-    </SocketProvider>
+            {drawerVisible && !!currentBrand && <PlusButton />}
+          </XStack>
+        </NotificationsProvider>
+      </SocketProvider>
+    </BrandSubscriptionProvider>
   );
 };

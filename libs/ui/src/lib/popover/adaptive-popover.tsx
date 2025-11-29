@@ -53,11 +53,12 @@ export const AdaptivePopover = forwardRef(
       ignoreScrollTopOnClose,
       ignoreHapticOnOpen,
       ignoreHapticOnClose,
+      unmountChildrenWhenHidden,
       sheetTitle,
       triggerType,
       minWidth,
       maxWidth,
-      maxHeight,
+      maxHeight = 600,
       trigger,
       topFixedContent,
       onOpen,
@@ -71,6 +72,7 @@ export const AdaptivePopover = forwardRef(
       ignoreScrollTopOnClose?: boolean;
       ignoreHapticOnOpen?: boolean;
       ignoreHapticOnClose?: boolean;
+      unmountChildrenWhenHidden?: boolean;
       sheetTitle?: string;
       triggerType?: 'manual';
       minWidth?: number;
@@ -86,7 +88,7 @@ export const AdaptivePopover = forwardRef(
     const { media } = useScreenSize();
     const { height } = useWindowDimensions();
     const { top, bottom, left, right } = useSafeAreaInsets();
-    const { rendered } = useRendered({ delay: 500 });
+    const { rendered } = useRendered({ delay: unmountChildrenWhenHidden ? 100 : 500 });
 
     const popoverListRef = useRef<ScrollView>(null);
     const sheetListRef = useRef<ScrollView>(null);
@@ -94,7 +96,7 @@ export const AdaptivePopover = forwardRef(
     const [opened, setOpened] = useState(false);
 
     const adjustedMaxHeight = useMemo(
-      () => Math.min(maxHeight || 600, height - top - 50),
+      () => Math.min(maxHeight, height - top - 50),
       [height, maxHeight, top],
     );
 
@@ -228,6 +230,7 @@ export const AdaptivePopover = forwardRef(
             <Popover.Sheet
               modal
               dismissOnSnapToBottom
+              unmountChildrenWhenHidden={unmountChildrenWhenHidden}
               dismissOnOverlayPress={!disabled}
               disableDrag={disableDrag}
               animation="quick"

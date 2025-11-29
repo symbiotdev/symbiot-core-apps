@@ -63,6 +63,7 @@
     "react": "*",
     "react-dom": "*",
     "react-native": "*",
+    "react-native-purchases": "*",
     "react-i18next": "*",
     "i18next": "*",
     "countries-and-timezones": "*",

@@ -75,6 +75,7 @@ export const PlusActionAdaptiveModal = ({
   return (
     hasAnyOfPermissions(['employees', 'locations', 'catalog', 'clients']) && (
       <AdaptivePopover
+        unmountChildrenWhenHidden
         ref={popoverRef}
         placement={placement}
         ignoreHapticOnOpen

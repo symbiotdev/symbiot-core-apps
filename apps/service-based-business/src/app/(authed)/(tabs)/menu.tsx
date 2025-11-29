@@ -5,16 +5,10 @@ import {
   ShowNativeSuccessAlert,
   useShareApp,
 } from '@symbiot-core-apps/shared';
-import {
-  useCurrentAccountState,
-  useCurrentBrandEmployee,
-  useCurrentBrandState,
-  useScheme,
-} from '@symbiot-core-apps/state';
+import { useCurrentAccountState, useScheme } from '@symbiot-core-apps/state';
 import React, { useCallback, useLayoutEffect } from 'react';
 import { router, useNavigation } from 'expo-router';
 import {
-  ActionCard,
   Avatar,
   FormView,
   H3,
@@ -36,16 +30,15 @@ import { GestureResponderEvent, Linking, Platform } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useAccountAuthSignOutReq } from '@symbiot-core-apps/api';
 import { Image } from 'expo-image';
+import { BrandCurrentSubscription } from '@symbiot-core-apps/brand-subscription';
 
 export default () => {
-  const { me } = useCurrentAccountState();
-  const { brand: currentBrand } = useCurrentBrandState();
-  const share = useShareApp();
-  const { scheme } = useScheme();
   const { t } = useTranslation();
+  const { me } = useCurrentAccountState();
   const { languages } = useApp();
-  const { currentEmployee } = useCurrentBrandEmployee();
+  const { scheme } = useScheme();
   const { visible: drawerVisible } = useDrawer();
+  const share = useShareApp();
   const { mutate: signOut } = useAccountAuthSignOutReq();
   const navigation = useNavigation();
 
@@ -131,18 +124,7 @@ export default () => {
     me && (
       <TabsPageView scrollable withHeaderHeight>
         <FormView gap="$3" flex={1}>
-          {(!currentBrand ||
-            currentEmployee?.id === currentBrand.owner?.id) && (
-            <ActionCard
-              title={t('subscription.card.title')}
-              subtitle={t('subscription.card.subtitle')}
-              buttonLabel={t('subscription.card.button.label')}
-              buttonIcon={<Icon name="Rocket" />}
-              onPress={() => {
-                alert('get pro');
-              }}
-            />
-          )}
+          <BrandCurrentSubscription />
 
           <ListItemGroup
             flexDirection="row"

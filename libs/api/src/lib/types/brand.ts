@@ -27,6 +27,7 @@ export type Brand = {
   avatarColor: string;
   about: string;
   birthday: string;
+  offering: string;
   owner: Account;
   avatar: Attachment;
   industries: BrandIndustry[];

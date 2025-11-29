@@ -1,16 +1,10 @@
 import { View } from 'tamagui';
-import { useVideoPlayer, VideoSource, VideoView } from 'expo-video';
-import { Platform, ScrollView, StyleSheet } from 'react-native';
-import { useRestoreApp } from '@symbiot-core-apps/shared';
-import { ReactElement, useCallback, useEffect } from 'react';
-import { Image } from 'expo-image';
-import { Blur, H2, H4 } from '@symbiot-core-apps/ui';
+import { VideoSource } from 'expo-video';
+import { Platform, ScrollView } from 'react-native';
+import { ReactElement } from 'react';
+import { H2, H4, MediaBackground } from '@symbiot-core-apps/ui';
 import { SignInButtons } from './sign-in-buttons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Animated, { FadeIn } from 'react-native-reanimated';
-import { useFocusEffect } from 'expo-router';
-
-const AnimatedVideo = Animated.createAnimatedComponent(VideoView);
 
 export const Auth = ({
   title,
@@ -28,49 +22,10 @@ export const Auth = ({
   logo: ReactElement;
 }) => {
   const { bottom } = useSafeAreaInsets();
-  const player = useVideoPlayer(videoSource, (player) => {
-    player.muted = true;
-    player.loop = true;
-    player.playbackRate = 0.5;
-  });
-
-  useEffect(() => {
-    player.play();
-  }, [player]);
-
-  useRestoreApp(() => {
-    player.play();
-  });
-
-  useFocusEffect(
-    useCallback(() => {
-      player.play();
-    }, [player]),
-  );
 
   return (
     <View flex={1} position="relative">
-      <Image
-        style={styles.Media}
-        placeholder={{ blurhash }}
-        contentFit="cover"
-      />
-
-      {Platform.OS !== 'android' && (
-        <>
-          <AnimatedVideo
-            entering={Platform.OS !== 'web' ? FadeIn.duration(1000) : undefined}
-            player={player}
-            nativeControls={false}
-            contentFit="cover"
-            style={styles.Media}
-          />
-
-          <Blur style={styles.BlurView} />
-        </>
-      )}
-
-      <View flex={1} zIndex={20}>
+      <MediaBackground blurhash={blurhash} videoSource={videoSource}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ flexGrow: 1 }}
@@ -102,22 +57,7 @@ export const Auth = ({
             <SignInButtons />
           </View>
         </ScrollView>
-      </View>
+      </MediaBackground>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  Media: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    zIndex: 1,
-  },
-  BlurView: {
-    position: 'absolute',
-    zIndex: 10,
-    width: '100%',
-    height: '100%',
-  },
-});

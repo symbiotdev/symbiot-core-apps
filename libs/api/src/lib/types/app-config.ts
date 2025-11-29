@@ -36,6 +36,10 @@ export type ThemeConfig = {
   calendarServiceSlotBackgroundColor: string;
   calendarServiceSlotColor: string;
   calendarServiceSlotMarkerColor: string;
+  subscriptionBorderColor: string;
+  subscriptionBackgroundColor: string;
+  selectedSubscriptionBorderColor: string;
+  selectedSubscriptionBackgroundColor: string;
 };
 
 export type AppConfigIconName =

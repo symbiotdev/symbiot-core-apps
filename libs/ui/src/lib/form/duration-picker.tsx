@@ -88,26 +88,26 @@ export const DurationPicker = ({
     [],
   );
   const yearsOptions = useMemo(
-    () => formatOptions(11, t('shared.datetime.unit.years'), yearsInterval),
+    () => formatOptions(11, t('shared.datetime.short_format.years'), yearsInterval),
     [formatOptions, t, yearsInterval],
   );
   const monthsOptions = useMemo(
-    () => formatOptions(12, t('shared.datetime.unit.months'), monthsInterval),
+    () => formatOptions(12, t('shared.datetime.short_format.months'), monthsInterval),
     [formatOptions, monthsInterval, t],
   );
   const daysOptions = useMemo(
-    () => formatOptions(31, t('shared.datetime.unit.days'), daysInterval),
+    () => formatOptions(31, t('shared.datetime.short_format.days'), daysInterval),
     [daysInterval, formatOptions, t],
   );
   const hoursOptions = useMemo(
-    () => formatOptions(24, t('shared.datetime.unit.hours'), hoursInterval),
+    () => formatOptions(24, t('shared.datetime.short_format.hours'), hoursInterval),
     [formatOptions, hoursInterval, t],
   );
   const minutesOptions = useMemo(
     () =>
       formatOptions(
         minutesInHour,
-        t('shared.datetime.unit.minutes'),
+        t('shared.datetime.short_format.minutes'),
         minutesInterval || 5,
       ),
     [formatOptions, minutesInterval, t],

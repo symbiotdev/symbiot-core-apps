@@ -3,6 +3,7 @@ import { Scheme } from '@symbiot-core-apps/shared';
 export type ThemeConfig = {
   background: string;
   background1: string;
+  background2: string;
   color: string;
   colorPress: string;
   error: string;

@@ -18,6 +18,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import { defaultPageVerticalPadding } from '../view/page-view';
 
+export const tabBarHeight = 100;
+
 export const CustomTabBar = ({
   hidden,
   insets,

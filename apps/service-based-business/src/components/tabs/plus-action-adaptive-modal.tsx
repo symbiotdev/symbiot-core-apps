@@ -4,7 +4,7 @@ import {
   Br,
   defaultPageVerticalPadding,
   Icon,
-  ListItem,
+  ListItem
 } from '@symbiot-core-apps/ui';
 import React, { ReactElement, useCallback, useRef } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
@@ -75,13 +75,16 @@ export const PlusActionAdaptiveModal = ({
   return (
     hasAnyOfPermissions(['employees', 'locations', 'catalog', 'clients']) && (
       <AdaptivePopover
+        ignoreHapticOnOpen
         unmountChildrenWhenHidden
         ref={popoverRef}
         placement={placement}
-        ignoreHapticOnOpen
         trigger={trigger}
       >
-        <View marginVertical={-(defaultPageVerticalPadding / 2)}>
+        <View
+          marginVertical={-(defaultPageVerticalPadding / 2)}
+          paddingHorizontal="$1"
+        >
           {hasAnyOfPermissions(['employees', 'locations']) && (
             <>
               {hasPermission('locations') && (

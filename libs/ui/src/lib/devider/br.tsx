@@ -4,5 +4,5 @@ import { Platform } from 'react-native';
 const height = Platform.OS === 'web' ? 2 : 1;
 
 export const Br = (props: ViewProps) => (
-  <View height={height} backgroundColor="$background" {...props} />
+  <View height={height} backgroundColor="$disabled" opacity={0.2} {...props} />
 );

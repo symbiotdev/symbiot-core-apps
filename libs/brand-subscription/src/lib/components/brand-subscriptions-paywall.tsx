@@ -135,8 +135,6 @@ export const BrandSubscriptionsPaywall = ({
             pressStyle={{ opacity: 0.8 }}
             onPress={() => {
               emitHaptic();
-
-              console.log('pkg', pkg);
               setSelectedPackage(pkg);
             }}
           >

@@ -6,7 +6,6 @@ import {
   eventEmitter,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import {
   AdaptivePopover,
   AdaptivePopoverRef,
@@ -18,6 +17,7 @@ import {
   Icon,
   MediumText,
   Picker,
+  tabBarHeight,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { View, XStack } from 'tamagui';
@@ -42,7 +42,6 @@ export default () => {
   const { now } = useNativeNow();
   const route = useRoute();
   const headerHeight = useScreenHeaderHeight();
-  const bottomTabBarHeight = useBottomTabBarHeight();
   const navigation = useNavigation();
   const { location, setLocation } = useCurrentBrandBookingsState();
   const { hasPermission } = useCurrentBrandEmployee();
@@ -197,7 +196,7 @@ export default () => {
       timeGridRef={timeGridRef}
       isFetching={isFetching || locationsLoading}
       offsetTop={headerHeight}
-      offsetBottom={bottomTabBarHeight}
+      offsetBottom={tabBarHeight}
       selectedDate={selectedDate}
       onChangeSelectedDate={setSelectedDate}
     />

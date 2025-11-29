@@ -31,6 +31,7 @@ import {
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
 } from '../view/page-view';
+import { NavigationBackground } from '../navigation/background';
 
 const adaptiveMediaSize = (
   Platform.OS === 'web' ? 'md' : 'xl'
@@ -88,7 +89,9 @@ export const AdaptivePopover = forwardRef(
     const { media } = useScreenSize();
     const { height } = useWindowDimensions();
     const { top, bottom, left, right } = useSafeAreaInsets();
-    const { rendered } = useRendered({ delay: unmountChildrenWhenHidden ? 100 : 500 });
+    const { rendered } = useRendered({
+      delay: unmountChildrenWhenHidden ? 100 : 500,
+    });
 
     const popoverListRef = useRef<ScrollView>(null);
     const sheetListRef = useRef<ScrollView>(null);
@@ -178,29 +181,32 @@ export const AdaptivePopover = forwardRef(
         )}
 
         <Popover.Content
-          animation="quick"
-          enterStyle={{ opacity: 0, y: -10 }}
-          exitStyle={{ opacity: 0, y: -10 }}
-          opacity={1}
-          y={0}
-          backgroundColor="$background1"
-          borderRadius="$10"
+          overflow="hidden"
+          backgroundColor="transparent"
+          borderColor="$background1"
+          borderWidth={1}
+          borderRadius={30}
           maxHeight={adjustedMaxHeight}
           width={maxWidth}
           minWidth={minWidth}
           padding={0}
           zIndex={100_000}
         >
-          {SCREEN_MEDIA_SIZE[media] > SCREEN_MEDIA_SIZE[adaptiveMediaSize] &&
-            !!topFixedContent && (
-              <View
-                width="100%"
-                paddingHorizontal={defaultPageHorizontalPadding}
-                paddingVertical={defaultPageVerticalPadding}
-              >
-                {topFixedContent}
-              </View>
-            )}
+          {SCREEN_MEDIA_SIZE[media] > SCREEN_MEDIA_SIZE[adaptiveMediaSize] && (
+            <>
+              <NavigationBackground />
+
+              {!!topFixedContent && (
+                <View
+                  width="100%"
+                  paddingHorizontal={defaultPageHorizontalPadding}
+                  paddingVertical={defaultPageVerticalPadding}
+                >
+                  {topFixedContent}
+                </View>
+              )}
+            </>
+          )}
 
           {!ignoreScroll ? (
             <Popover.ScrollView
@@ -233,22 +239,34 @@ export const AdaptivePopover = forwardRef(
               unmountChildrenWhenHidden={unmountChildrenWhenHidden}
               dismissOnOverlayPress={!disabled}
               disableDrag={disableDrag}
-              animation="quick"
+              animation="quickest"
               snapPointsMode="fit"
             >
               <Popover.Sheet.Overlay
-                backgroundColor="$background"
-                animation="quick"
+                backgroundColor="$overlay"
+                animation="quickest"
                 enterStyle={{ opacity: 0 }}
                 exitStyle={{ opacity: 0 }}
-                opacity={0.8}
+                opacity={1}
+              >
+                <NavigationBackground opacity={0} backgroundColor="transparent" />
+              </Popover.Sheet.Overlay>
+
+              <NavigationBackground
+                backgroundColor="$background1"
+                borderColor="$background1"
+                borderWidth={1}
+                height="120%"
+                borderRadius={30}
+                blurStyle={{
+                  height: '120%',
+                  borderRadius: 30,
+                }}
               />
 
               <Popover.Sheet.Frame
-                borderTopLeftRadius="$10"
-                borderTopRightRadius="$10"
-                backgroundColor="$background1"
-                position="relative"
+                backgroundColor="transparent"
+                borderBottomWidth={0}
                 paddingLeft={left}
                 paddingRight={right}
               >
@@ -289,6 +307,7 @@ export const AdaptivePopover = forwardRef(
                 {!ignoreScroll ? (
                   <Popover.Sheet.ScrollView
                     ref={sheetListRef}
+                    bounces={false} // temp fix
                     keyboardShouldPersistTaps="handled"
                     keyboardDismissMode="none"
                     showsVerticalScrollIndicator={false}

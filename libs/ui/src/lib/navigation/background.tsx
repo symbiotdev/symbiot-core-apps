@@ -1,22 +1,33 @@
 import { View, ViewProps } from 'tamagui';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, ViewStyle } from 'react-native';
 import { Blur } from '../blur/blur';
 
 export const NavigationBackground = ({
   blurIntensity,
+  blurStyle,
+  opacity = 0.8,
   ...props
-}: ViewProps & { blurIntensity?: number }) => (
+}: ViewProps & { blurIntensity?: number; blurStyle?: ViewStyle }) => (
   <View style={StyleSheet.absoluteFillObject}>
     <View
       position="absolute"
       width="100%"
       height="100%"
-      opacity={Platform.OS !== 'android' ? 0.4 : 1}
+      opacity={Platform.OS !== 'android' ? opacity : 1}
       backgroundColor="$background"
       {...props}
     />
+
     {Platform.OS !== 'android' && (
-      <Blur style={{ flex: 1 }} intensity={blurIntensity} />
+      <Blur
+        style={{
+          width: '100%',
+          height: '100%',
+          overflow: 'hidden',
+          ...blurStyle,
+        }}
+        intensity={blurIntensity}
+      />
     )}
   </View>
 );

@@ -1,5 +1,6 @@
 import {
   getApp,
+  getBuildType,
   getEnv,
   getPlatform,
   getStartCommand,
@@ -12,12 +13,14 @@ import { spawn } from 'child_process';
 
   const app = await getApp();
   const env = await getEnv();
+  const buildType = env === 'production' ? await getBuildType() : 'livereload';
   const platform = await getPlatform();
+
   const buildApp = 'service-based-business';
 
   await mergeAppAssets(app, buildApp, env);
 
-  spawn(getStartCommand(buildApp, env, platform), {
+  spawn(getStartCommand(buildApp, buildType, env, platform), {
     stdio: 'inherit',
     shell: true,
   });

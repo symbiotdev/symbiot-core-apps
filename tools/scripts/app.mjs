@@ -70,6 +70,21 @@ export const getPlatform = (nativeOnly = false) =>
     ],
   });
 
+export const getBuildType = () =>
+  select({
+    message: 'Platform',
+    choices: [
+      {
+        name: 'Livereload',
+        value: 'livereload',
+      },
+      {
+        name: 'Release',
+        value: 'release',
+      },
+    ],
+  });
+
 export const getEasProfile = (env, buildTo) => `${env}_${buildTo}`;
 
 export const getExportCommand = (app) =>
@@ -88,21 +103,23 @@ export const getSubmitCommand = (app, profile, buildTo) =>
     ? `nx submit ${app} -- --profile=${profile}`
     : 'echo "Ready!"';
 
-export const getStartCommand = (app, env, platform) => {
+export const getStartCommand = (app, buildType, env, platform) => {
+  const isRelease = env === 'production' && buildType === 'release';
+
   if (platform !== 'web') {
     const prebuild = getPrebuildCommand(app, platform);
 
-    const buildType =
-      env === 'production'
-        ? platform === 'ios'
-          ? '--configuration=Release'
-          : '--variant=release'
-        : '';
+    const buildType = isRelease
+      ? platform === 'ios'
+        ? '--configuration=Release'
+        : '--variant=release'
+      : '';
 
     return `nx reset && ${prebuild} && nx run ${app}:run-${platform} -- --device ${buildType}`;
   } else {
-    const additionalParams =
-      env === 'production' ? '-- --no-dev --minify --clear' : '-- --clear';
+    const additionalParams = isRelease
+      ? '-- --no-dev --minify --clear'
+      : '-- --clear';
 
     return `nx reset && nx start ${app} ${additionalParams}`;
   }

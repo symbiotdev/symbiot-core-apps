@@ -260,7 +260,7 @@ export const AdaptivePopover = forwardRef(
                     marginHorizontal="auto"
                   />
                 ) : (
-                  <View height={defaultPageVerticalPadding * 2} />
+                  <View height={defaultPageVerticalPadding * 2 + 2} />
                 )}
 
                 {!!sheetTitle && (

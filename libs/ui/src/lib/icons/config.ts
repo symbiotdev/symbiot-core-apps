@@ -64,6 +64,7 @@ export type SolarIconName =
   | 'QrCode'
   | 'QuestionCircle'
   | 'Rocket'
+  | 'Rocket2'
   | 'SettingsMinimalistic'
   | 'Share'
   | 'ShareCircle'

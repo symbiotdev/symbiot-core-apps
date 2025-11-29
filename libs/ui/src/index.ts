@@ -58,6 +58,7 @@ export * from './lib/maps/maps-trigger';
 
 export * from './lib/media/avatar';
 export * from './lib/media/file-chip';
+export * from './lib/media/media-background';
 
 export * from './lib/modal/full-screen-transparent-modal';
 export * from './lib/modal/slide-sheet-modal';

@@ -80,6 +80,7 @@ import { Balloon } from './Balloon';
 import { Confetti } from './Confetti';
 import { Link } from './Link';
 import { Pallete2 } from './Pallete2';
+import { Rocket2 } from './Rocket2';
 
 export const Map: IconMap = {
   AddCircle,
@@ -144,6 +145,7 @@ export const Map: IconMap = {
   QrCode,
   QuestionCircle,
   Rocket,
+  Rocket2,
   SettingsMinimalistic,
   Share,
   SmileCircle,

@@ -172,7 +172,7 @@ export const BrandSubscriptionsPaywall = ({
 
   return (
     <FormView flex={1}>
-      <View gap="$3" alignItems="center">
+      <View gap="$3" marginTop="$5" alignItems="center">
         <Animated.View entering={LightSpeedInLeft.delay(200).duration(1000)}>
           <Icon name="Rocket2" type="SolarBoldDuotone" size={60} />
         </Animated.View>

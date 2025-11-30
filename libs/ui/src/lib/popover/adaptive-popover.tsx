@@ -60,6 +60,7 @@ export const AdaptivePopover = forwardRef(
       minWidth,
       maxWidth,
       maxHeight = 600,
+      hideHandle,
       trigger,
       topFixedContent,
       onOpen,
@@ -79,6 +80,7 @@ export const AdaptivePopover = forwardRef(
       minWidth?: number;
       maxWidth?: number;
       maxHeight?: number;
+      hideHandle?: boolean;
       trigger?: ReactElement;
       topFixedContent?: ReactElement;
       onOpen?: () => void;
@@ -249,7 +251,10 @@ export const AdaptivePopover = forwardRef(
                 exitStyle={{ opacity: 0 }}
                 opacity={1}
               >
-                <NavigationBackground opacity={0} backgroundColor="transparent" />
+                <NavigationBackground
+                  opacity={0}
+                  backgroundColor="transparent"
+                />
               </Popover.Sheet.Overlay>
 
               <NavigationBackground
@@ -270,18 +275,22 @@ export const AdaptivePopover = forwardRef(
                 paddingLeft={left}
                 paddingRight={right}
               >
-                {!disableDrag ? (
-                  <View
-                    width={50}
-                    height={4}
-                    borderRadius="$10"
-                    cursor="pointer"
-                    backgroundColor="$disabled"
-                    marginVertical={defaultPageVerticalPadding}
-                    marginHorizontal="auto"
-                  />
+                {!hideHandle ? (
+                  !disableDrag ? (
+                    <View
+                      width={50}
+                      height={4}
+                      borderRadius="$10"
+                      cursor="pointer"
+                      backgroundColor="$disabled"
+                      marginVertical={defaultPageVerticalPadding}
+                      marginHorizontal="auto"
+                    />
+                  ) : (
+                    <View height={defaultPageVerticalPadding * 2 + 2} />
+                  )
                 ) : (
-                  <View height={defaultPageVerticalPadding * 2 + 2} />
+                  <View />
                 )}
 
                 {!!sheetTitle && (

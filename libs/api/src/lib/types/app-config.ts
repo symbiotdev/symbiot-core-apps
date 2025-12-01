@@ -1,5 +1,14 @@
 import { Scheme } from '@symbiot-core-apps/shared';
 
+export type AppLimits = {
+  employees?: number;
+  locations?: number;
+  clients?: number;
+  services?: number;
+  periodMemberships?: number;
+  visitMemberships?: number;
+};
+
 export type ThemeConfig = {
   background: string;
   background1: string;
@@ -58,6 +67,7 @@ export type AppConfigIconName =
   | 'More';
 
 export type AppConfigFunctionality = {
+  limits: Record<string, AppLimits>;
   availability: {
     servicePrice: boolean;
     brandIndustry: boolean;

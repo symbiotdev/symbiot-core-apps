@@ -21,6 +21,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandServiceItem } from '@symbiot-core-apps/brand';
+import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 
 export const CurrentBrandServices = ({
   offsetTop,
@@ -126,6 +127,7 @@ const Intro = ({
 }) => {
   const { t } = useTranslation();
   const { icons } = useApp();
+  const { canDo } = useAccountLimits();
 
   if (loading || error) {
     return <InitView loading={loading} error={error} />;
@@ -144,10 +146,12 @@ const Intro = ({
           title={t('brand_service.create.intro.title')}
           message={t('brand_service.create.intro.subtitle')}
         >
-          <Button
-            label={t('brand_service.create.intro.button.label')}
-            onPress={() => router.push('/services/create')}
-          />
+          {canDo.addService && (
+            <Button
+              label={t('brand_service.create.intro.button.label')}
+              onPress={() => router.push('/services/create')}
+            />
+          )}
         </EmptyView>
       </PageView>
     );

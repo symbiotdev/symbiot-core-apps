@@ -2,6 +2,7 @@ import {
   Button,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
+  HeaderTitle,
   LoadingView,
   useDrawer,
   useStackScreenHeaderOptions,
@@ -27,7 +28,10 @@ import {
 import { useTranslation } from 'react-i18next';
 import { PlusActionAdaptiveModal } from '../../components/tabs/plus-action-adaptive-modal';
 import { isEqual } from '@symbiot-core-apps/shared';
-import { AccountSubscriptionProvider } from '@symbiot-core-apps/account-subscription';
+import {
+  AccountSubscriptionProvider,
+  useAccountLimits,
+} from '@symbiot-core-apps/account-subscription';
 
 const PlusButton = () => {
   const pathname = usePathname();
@@ -58,6 +62,7 @@ export default () => {
   const { tokens } = useAuthTokens();
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
   const { t } = useTranslation();
+  const { canDo, used } = useAccountLimits();
   const { visible: drawerVisible } = useDrawer();
   const screenOptions = useStackScreenHeaderOptions();
   const currentEntitiesLoaded = useCurrentEntitiesLoader();
@@ -268,25 +273,33 @@ export default () => {
                     }}
                   />
 
-                  <Stack.Screen
-                    name="clients/create"
-                    options={{
-                      headerTitle: t('brand_client.create.new_client'),
-                    }}
-                  />
-                  <Stack.Screen
-                    name="clients/import"
-                    options={{
-                      headerTitle: t('brand_client.import.title'),
-                    }}
-                  />
+                  <Stack.Protected guard={canDo.addClient}>
+                    <Stack.Screen
+                      name="clients/create"
+                      options={{
+                        headerTitle: t('brand_client.create.new_client'),
+                      }}
+                    />
+                    <Stack.Screen
+                      name="clients/import"
+                      options={{
+                        headerTitle: t('brand_client.import.title'),
+                      }}
+                    />
+                  </Stack.Protected>
+
                   <Stack.Screen
                     name="clients/index"
                     options={{
                       ...(drawerVisible && {
                         animation: 'none',
                       }),
-                      headerTitle: t('brand_client.title'),
+                      headerTitle: () => (
+                        <HeaderTitle
+                          title={t('brand_client.title')}
+                          subtitle={used.clients}
+                        />
+                      ),
                     }}
                   />
                 </Stack.Protected>
@@ -325,14 +338,22 @@ export default () => {
                     }}
                   />
 
-                  <Stack.Screen name="employees/create" />
+                  <Stack.Protected guard={canDo.addEmployee}>
+                    <Stack.Screen name="employees/create" />
+                  </Stack.Protected>
+
                   <Stack.Screen
                     name="employees/index"
                     options={{
                       ...(drawerVisible && {
                         animation: 'none',
                       }),
-                      headerTitle: t('brand_employee.title'),
+                      headerTitle: () => (
+                        <HeaderTitle
+                          title={t('brand_employee.title')}
+                          subtitle={used.employees}
+                        />
+                      ),
                     }}
                   />
                 </Stack.Protected>
@@ -370,19 +391,26 @@ export default () => {
                       headerTitle: t('brand_location.profile.title'),
                     }}
                   />
-                  <Stack.Screen
-                    name="locations/create"
-                    options={{
-                      headerTitle: t('brand_location.new_location'),
-                    }}
-                  />
+                  <Stack.Protected guard={canDo.addLocation}>
+                    <Stack.Screen
+                      name="locations/create"
+                      options={{
+                        headerTitle: t('brand_location.new_location'),
+                      }}
+                    />
+                  </Stack.Protected>
                   <Stack.Screen
                     name="locations/index"
                     options={{
                       ...(drawerVisible && {
                         animation: 'none',
                       }),
-                      headerTitle: t('brand_location.title'),
+                      headerTitle: () => (
+                        <HeaderTitle
+                          title={t('brand_location.title')}
+                          subtitle={used.locations}
+                        />
+                      ),
                     }}
                   />
                 </Stack.Protected>
@@ -396,7 +424,14 @@ export default () => {
                   <Stack.Screen name="memberships/[type]/[id]/remove" />
                   <Stack.Screen name="memberships/[type]/[id]/update" />
                   <Stack.Screen name="memberships/[type]/[id]/profile" />
-                  <Stack.Screen name="memberships/[type]/create" />
+                  <Stack.Protected
+                    guard={
+                      // need to be check with direct type
+                      canDo.addVisitMembership || canDo.addPeriodMembership
+                    }
+                  >
+                    <Stack.Screen name="memberships/[type]/create" />
+                  </Stack.Protected>
                   <Stack.Screen
                     name="memberships/[type]/index"
                     options={{
@@ -449,19 +484,26 @@ export default () => {
                       headerTitle: t('brand_service.profile.title'),
                     }}
                   />
-                  <Stack.Screen
-                    name="services/create"
-                    options={{
-                      headerTitle: t('brand_service.create.new_service'),
-                    }}
-                  />
+                  <Stack.Protected guard={canDo.addService}>
+                    <Stack.Screen
+                      name="services/create"
+                      options={{
+                        headerTitle: t('brand_service.create.new_service'),
+                      }}
+                    />
+                  </Stack.Protected>
                   <Stack.Screen
                     name="services/index"
                     options={{
                       ...(drawerVisible && {
                         animation: 'none',
                       }),
-                      headerTitle: t('brand_service.title'),
+                      headerTitle: () => (
+                        <HeaderTitle
+                          title={t('brand_service.title')}
+                          subtitle={used.services}
+                        />
+                      ),
                     }}
                   />
                 </Stack.Protected>

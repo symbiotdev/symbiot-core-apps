@@ -4,7 +4,7 @@ import {
   Br,
   defaultPageVerticalPadding,
   Icon,
-  ListItem
+  ListItem,
 } from '@symbiot-core-apps/ui';
 import React, { ReactElement, useCallback, useRef } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
@@ -14,6 +14,7 @@ import { View } from 'tamagui';
 import { Placement } from '@floating-ui/react-native';
 import { useApp } from '@symbiot-core-apps/app';
 import { BrandBookingType, BrandMembershipType } from '@symbiot-core-apps/api';
+import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 
 export const PlusActionAdaptiveModal = ({
   trigger,
@@ -24,6 +25,7 @@ export const PlusActionAdaptiveModal = ({
 }) => {
   const { t } = useTranslation();
   const { icons } = useApp();
+  const { canDo } = useAccountLimits();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
   const popoverRef = useRef<AdaptivePopoverRef>(null);
 
@@ -87,7 +89,7 @@ export const PlusActionAdaptiveModal = ({
         >
           {hasAnyOfPermissions(['employees', 'locations']) && (
             <>
-              {hasPermission('locations') && (
+              {canDo.addLocation && hasPermission('locations') && (
                 <ListItem
                   icon={<Icon name="MapPointWave" />}
                   label={t('navigation.tabs.plus.actions.add_location.label')}
@@ -95,7 +97,7 @@ export const PlusActionAdaptiveModal = ({
                 />
               )}
 
-              {hasPermission('employees') && (
+              {canDo.addEmployee && hasPermission('employees') && (
                 <ListItem
                   icon={<Icon name="UsersGroupRounded" />}
                   label={t('navigation.tabs.plus.actions.add_employee.label')}
@@ -107,37 +109,49 @@ export const PlusActionAdaptiveModal = ({
 
           {hasPermission('catalog') && (
             <>
-              {hasAnyOfPermissions(['employees', 'locations']) && (
-                <Br marginVertical="$2" />
-              )}
+              {(canDo.addLocation || canDo.addEmployee) &&
+                hasAnyOfPermissions(['employees', 'locations']) && (
+                  <Br marginVertical="$2" />
+                )}
 
-              <ListItem
-                icon={<Icon name={icons.Service} />}
-                label={t('navigation.tabs.plus.actions.add_service.label')}
-                onPress={addService}
-              />
-              <ListItem
-                icon={<Icon name={icons.VisitBasedMembership} />}
-                label={t(
-                  'navigation.tabs.plus.actions.add_visit_based_membership.label',
-                )}
-                onPress={addVisitBasedMembership}
-              />
-              <ListItem
-                icon={<Icon name={icons.PeriodBasedMembership} />}
-                label={t(
-                  'navigation.tabs.plus.actions.add_period_based_membership.label',
-                )}
-                onPress={addPeriodBasedMembership}
-              />
+              {canDo.addService && (
+                <ListItem
+                  icon={<Icon name={icons.Service} />}
+                  label={t('navigation.tabs.plus.actions.add_service.label')}
+                  onPress={addService}
+                />
+              )}
+              {canDo.addVisitMembership && (
+                <ListItem
+                  icon={<Icon name={icons.VisitBasedMembership} />}
+                  label={t(
+                    'navigation.tabs.plus.actions.add_visit_based_membership.label',
+                  )}
+                  onPress={addVisitBasedMembership}
+                />
+              )}
+              {canDo.addPeriodMembership && (
+                <ListItem
+                  icon={<Icon name={icons.PeriodBasedMembership} />}
+                  label={t(
+                    'navigation.tabs.plus.actions.add_period_based_membership.label',
+                  )}
+                  onPress={addPeriodBasedMembership}
+                />
+              )}
             </>
           )}
 
-          {hasPermission('clients') && (
+          {hasPermission('clients') && canDo.addClient && (
             <>
-              {hasAnyOfPermissions(['employees', 'locations', 'catalog']) && (
-                <Br marginVertical="$2" />
-              )}
+              {(canDo.addEmployee ||
+                canDo.addLocation ||
+                canDo.addService ||
+                canDo.addPeriodMembership ||
+                canDo.addVisitMembership) &&
+                hasAnyOfPermissions(['employees', 'locations', 'catalog']) && (
+                  <Br marginVertical="$2" />
+                )}
 
               <ListItem
                 icon={<Icon name="Import" />}
@@ -154,7 +168,7 @@ export const PlusActionAdaptiveModal = ({
 
           {hasPermission('bookings') && (
             <>
-              {hasAnyOfPermissions(['clients']) && <Br marginVertical="$2" />}
+              {hasPermission('clients') && <Br marginVertical="$2" />}
 
               <ListItem
                 icon={<Icon name={icons.ServiceBooking} />}

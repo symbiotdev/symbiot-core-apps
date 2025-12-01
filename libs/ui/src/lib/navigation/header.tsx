@@ -1,5 +1,5 @@
 import { Platform, Pressable } from 'react-native';
-import { TextProps, View, ViewProps, XStack } from 'tamagui';
+import { View, ViewProps, XStack } from 'tamagui';
 import {
   NativeStackHeaderProps,
   NativeStackNavigationOptions,
@@ -17,7 +17,7 @@ import { Icon, IconName } from '../icons';
 import { emitHaptic, isTablet } from '@symbiot-core-apps/shared';
 import { AttentionView } from '../view/attention-view';
 import { NavigationBackground } from './background';
-import { MediumText } from '../text/text';
+import { MediumText, RegularText } from '../text/text';
 
 export const headerHeight = 50;
 export const headerButtonSize = 24;
@@ -98,15 +98,29 @@ export const HeaderButton = memo(
   ),
 );
 
-export const HeaderTitle = (textProps: TextProps) => (
-  <MediumText
-    flex={4}
-    zIndex={1}
-    numberOfLines={2}
-    textAlign="center"
-    lineHeight={headerButtonSize}
-    {...textProps}
-  />
+export const HeaderTitle = ({
+  title,
+  subtitle,
+}: {
+  title: string;
+  subtitle?: string;
+}) => (
+  <View alignItems="center" flex={4} zIndex={1}>
+    <MediumText numberOfLines={subtitle ? 1 : 2} textAlign="center">
+      {title}
+    </MediumText>
+
+    {!!subtitle && (
+      <RegularText
+        color="$disabled"
+        textAlign="center"
+        numberOfLines={1}
+        fontSize={12}
+      >
+        {subtitle}
+      </RegularText>
+    )}
+  </View>
 );
 
 export const ScreenHeader = memo(
@@ -159,7 +173,7 @@ export const ScreenHeader = memo(
         />
 
         {typeof options.headerTitle === 'string' && (
-          <HeaderTitle>{options.headerTitle}</HeaderTitle>
+          <HeaderTitle title={options.headerTitle} />
         )}
 
         {typeof options.headerTitle === 'function' && (

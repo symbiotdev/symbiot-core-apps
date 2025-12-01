@@ -15,6 +15,7 @@ import { router } from 'expo-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrandLocationItem } from '@symbiot-core-apps/brand';
+import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 
 export const CurrentBrandLocations = ({
   onLocationPress,
@@ -70,6 +71,7 @@ const Intro = ({
   error?: string | null;
 }) => {
   const { t } = useTranslation();
+  const { canDo } = useAccountLimits();
 
   if (loading || error) {
     return <InitView loading={loading} error={error} />;
@@ -88,10 +90,12 @@ const Intro = ({
           title={t('brand_location.create.intro.title')}
           message={t('brand_location.create.intro.subtitle')}
         >
-          <Button
-            label={t('brand_location.create.intro.button.label')}
-            onPress={() => router.push('/locations/create')}
-          />
+          {canDo.addLocation && (
+            <Button
+              label={t('brand_location.create.intro.button.label')}
+              onPress={() => router.push('/locations/create')}
+            />
+          )}
         </EmptyView>
       </PageView>
     );

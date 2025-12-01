@@ -29,6 +29,7 @@ import {
   BrandCongrats,
   BrandProfileCompletion,
 } from '@symbiot-core-apps/brand';
+import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 
 export default () => {
   const { me, stats } = useCurrentAccountState();
@@ -102,6 +103,7 @@ const BrandHome = () => {
   const { t } = useTranslation();
   const { brand: currentBrand } = useCurrentBrandState();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
+  const { used } = useAccountLimits();
 
   const onLocationsPress = useCallback(() => router.push('/locations'), []);
   const onEmployeesPress = useCallback(() => router.push('/employees'), []);
@@ -148,24 +150,28 @@ const BrandHome = () => {
                 hidden: !hasPermission('clients'),
                 iconName: 'SmileCircle',
                 label: t('brand_client.title'),
+                text: used?.clients,
                 onPress: onClientsPress,
               },
               {
                 hidden: !hasPermission('catalog'),
                 iconName: icons.Service,
                 label: t('brand_service.title'),
+                text: used?.services,
                 onPress: onServicesPress,
               },
               {
                 hidden: !hasPermission('employees'),
                 iconName: 'UsersGroupRounded',
                 label: t('brand_employee.title'),
+                text: used?.employees,
                 onPress: onEmployeesPress,
               },
               {
                 hidden: !hasPermission('locations'),
                 iconName: 'MapPointWave',
                 label: t('brand_location.title'),
+                text: used?.locations,
                 onPress: onLocationsPress,
               },
             ]}
@@ -181,6 +187,7 @@ const BrandHome = () => {
                 label: t(
                   `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.title`,
                 ),
+                text: used?.visitMemberships,
                 onPress: onVisitBasedMembershipsPress,
               },
               {
@@ -188,6 +195,7 @@ const BrandHome = () => {
                 label: t(
                   `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.title`,
                 ),
+                text: used?.periodMemberships,
                 onPress: onPeriodBasedMembershipsPress,
               },
               {

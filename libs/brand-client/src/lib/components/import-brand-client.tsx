@@ -37,6 +37,8 @@ import {
   ImportedClientsSummary,
   parseImportedClients,
 } from '../utils/parse-imported-clients';
+import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
+import { useCurrentBrandState } from '@symbiot-core-apps/state';
 
 export const ImportBrandClient = () => {
   const { t } = useTranslation();
@@ -45,6 +47,8 @@ export const ImportBrandClient = () => {
   const { mutateAsync: importClients, isPending: clientsImporting } =
     useImportBrandClientsReq();
   const { data: genders } = useBrandClientGendersReq();
+  const { brand } = useCurrentBrandState();
+  const { limits } = useAccountLimits();
 
   const [sharing, setSharing] = useState(false);
   const [uploaded, setUploaded] = useState(false);
@@ -93,6 +97,8 @@ export const ImportBrandClient = () => {
 
   const onUploadFile = useCallback(
     async (assets: DocumentPickerAsset[]) => {
+      if (!brand?.stats) return;
+
       let fileContent: string;
       const asset = assets[0];
 
@@ -116,7 +122,11 @@ export const ImportBrandClient = () => {
               gendersWithoutEmptyOption(genders) || [],
             );
 
-            setClients(clients);
+            setClients(
+              limits.clients
+                ? clients.slice(0, limits.clients - brand.stats.clients)
+                : clients,
+            );
             setSummary(summary);
           } catch (error) {
             handleFileError(error);
@@ -127,7 +137,7 @@ export const ImportBrandClient = () => {
         },
       });
     },
-    [genders, handleFileError],
+    [brand?.stats, genders, handleFileError, limits.clients],
   );
 
   const uploadClients = useCallback(async () => {

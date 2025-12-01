@@ -1,6 +1,7 @@
 import {
   Account,
   AccountPreferences,
+  AccountSubscription,
   UpdateAccountData,
   useAccountMeRemoveAvatarReq,
   useAccountMeUpdateReq,
@@ -24,8 +25,9 @@ type CurrentAccountState = {
   stats: AccountStats;
   clear: () => void;
   setMe: (me?: Account) => void;
-  setMePreferences: (preferences: Partial<AccountPreferences>) => void;
-  setMeStats: (stats: AccountStats) => void;
+  setMyPreferences: (preferences: Partial<AccountPreferences>) => void;
+  setMySubscription: (subscription: AccountSubscription | undefined) => void;
+  setMyStats: (stats: AccountStats) => void;
 };
 
 export const useCurrentAccountState = create<CurrentAccountState>()(
@@ -38,7 +40,7 @@ export const useCurrentAccountState = create<CurrentAccountState>()(
           stats: {},
         }),
       setMe: (me) => set({ me }),
-      setMePreferences: (preferences) => {
+      setMyPreferences: (preferences) => {
         const { setMe, me } = get();
 
         if (me) {
@@ -51,7 +53,17 @@ export const useCurrentAccountState = create<CurrentAccountState>()(
           });
         }
       },
-      setMeStats: (newStats) => {
+      setMySubscription: (subscription) => {
+        const { setMe, me } = get();
+
+        if (me) {
+          setMe({
+            ...me,
+            subscription,
+          });
+        }
+      },
+      setMyStats: (newStats) => {
         const { stats } = get();
 
         set({
@@ -70,13 +82,14 @@ export const useCurrentAccountState = create<CurrentAccountState>()(
 );
 
 export const useCurrentAccount = () => {
-  const { me, stats, setMe, setMeStats } = useCurrentAccountState();
+  const { me, stats, setMe, setMyStats, setMySubscription } =
+    useCurrentAccountState();
   const { setScheme, removeScheme } = useAppSchemeState();
-  const { setMePreferences } = useCurrentAccountState();
+  const { setMyPreferences } = useCurrentAccountState();
 
   const updateMePreferences = useCallback(
     async (preferences: AccountPreferences) => {
-      setMePreferences(preferences);
+      setMyPreferences(preferences);
 
       if (preferences.scheme) {
         const scheme = schemes.includes(preferences.scheme as Scheme)
@@ -94,7 +107,7 @@ export const useCurrentAccount = () => {
         }
       }
     },
-    [removeScheme, setMePreferences, setScheme],
+    [removeScheme, setMyPreferences, setScheme],
   );
 
   return {
@@ -102,12 +115,13 @@ export const useCurrentAccount = () => {
     updateMePreferences,
     me,
     stats,
-    setMeStats,
+    setMyStats,
+    setMySubscription,
   };
 };
 
 export const useCurrentAccountUpdater = () => {
-  const { me, updateMe, setMeStats, updateMePreferences } = useCurrentAccount();
+  const { me, updateMe, setMyStats, updateMePreferences } = useCurrentAccount();
   const {
     mutateAsync: updatePreferences,
     isPending: arePreferencesUpdating,
@@ -175,7 +189,7 @@ export const useCurrentAccountUpdater = () => {
     updateAvatar$,
     removeAvatar$,
     me,
-    setMeStats,
+    setMyStats,
     updating: arePreferencesUpdating || isAccountUpdating,
     updateError: updatePreferencesError || updateAccountError,
     avatarUpdating: isAvatarUpdating || isAvatarRemoving,

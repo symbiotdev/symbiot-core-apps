@@ -1,5 +1,6 @@
 import {
   ConfirmAlert,
+  DateHelper,
   DeviceVersion,
   emitHaptic,
   ShowNativeSuccessAlert,
@@ -20,6 +21,7 @@ import {
   QrCodeModalWithTrigger,
   RegularText,
   SemiBoldText,
+  Spinner,
   TabsPageView,
   useDrawer,
 } from '@symbiot-core-apps/ui';
@@ -30,7 +32,10 @@ import { GestureResponderEvent, Linking, Platform } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useAccountAuthSignOutReq } from '@symbiot-core-apps/api';
 import { Image } from 'expo-image';
-import { BrandCurrentSubscription } from '@symbiot-core-apps/brand-subscription';
+import {
+  AccountRequestSubscription,
+  useAccountSubscription,
+} from '@symbiot-core-apps/account-subscription';
 
 export default () => {
   const { t } = useTranslation();
@@ -39,6 +44,8 @@ export default () => {
   const { scheme } = useScheme();
   const { visible: drawerVisible } = useDrawer();
   const share = useShareApp();
+  const { processing: subscriptionProcessing, manageSubscriptions } =
+    useAccountSubscription();
   const { mutate: signOut } = useAccountAuthSignOutReq();
   const navigation = useNavigation();
 
@@ -124,7 +131,7 @@ export default () => {
     me && (
       <TabsPageView scrollable withHeaderHeight>
         <FormView gap="$3" flex={1}>
-          <BrandCurrentSubscription />
+          <AccountRequestSubscription />
 
           <ListItemGroup
             flexDirection="row"
@@ -192,6 +199,26 @@ export default () => {
           </ListItemGroup>
 
           <ListItemGroup title={t('shared.application')}>
+            {Platform.OS !== 'web' && me?.subscription && (
+              <ListItem
+                disabled={subscriptionProcessing}
+                label={t('shared.preferences.subscriptions.title')}
+                icon={<Icon name="Rocket2" />}
+                iconAfter={subscriptionProcessing ? <Spinner /> : undefined}
+                color={!me.subscription.renewable ? '$error' : undefined}
+                text={
+                  !me.subscription.renewable && me.subscription.expiresDate
+                    ? t('shared.preferences.subscriptions.expires_on', {
+                        date: DateHelper.format(
+                          me.subscription.expiresDate,
+                          me.preferences.dateFormat,
+                        ),
+                      })
+                    : undefined
+                }
+                onPress={manageSubscriptions}
+              />
+            )}
             {Platform.OS !== 'web' && (
               <ListItem
                 label={t('shared.preferences.system.title')}

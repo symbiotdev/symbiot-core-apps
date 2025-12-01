@@ -28,7 +28,8 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     require('../../assets/audio/new_notification_sound.wav'),
   );
 
-  const { me, setMeStats, updateMe, updateMePreferences } = useCurrentAccount();
+  const { me, setMyStats, setMySubscription, updateMe, updateMePreferences } =
+    useCurrentAccount();
   const {
     brand: currentBrand,
     setBrand: setCurrentBrand,
@@ -79,7 +80,7 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
       }
 
       addNotificationToListQueryState(notification);
-      setMeStats({
+      setMyStats({
         newNotifications: 1,
       });
     },
@@ -87,17 +88,17 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
       currentBrand?.id,
       me?.preferences?.enableNotificationSound,
       addNotificationToListQueryState,
-      setMeStats,
+      setMyStats,
       soundPlayer,
     ],
   );
 
   const onNotificationsReadAll = useCallback(() => {
     markAllNotificationsAsRead();
-    setMeStats({
+    setMyStats({
       newNotifications: 0,
     });
-  }, [setMeStats, markAllNotificationsAsRead]);
+  }, [setMyStats, markAllNotificationsAsRead]);
 
   const onUpdateBookings = useCallback(
     (bookings: AnyBrandBooking[]) => {
@@ -130,6 +131,10 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     socket.on(WebsocketAction.accountUpdated, updateMe);
     socket.on(WebsocketAction.accountPreferencesUpdated, updateMePreferences);
+
+    socket.on(WebsocketAction.accountSubscriptionCreated, setMySubscription);
+    socket.on(WebsocketAction.accountSubscriptionUpdated, setMySubscription);
+    socket.on(WebsocketAction.accountSubscriptionRemoved, setMySubscription);
 
     socket.on(WebsocketAction.brandAssigned, onBrandAssigned);
     socket.on(WebsocketAction.brandUnassigned, onBrandUnassigned);
@@ -167,6 +172,7 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
   }, [
     updateMe,
     setCurrentBrand,
+    setMySubscription,
     setCurrentEmployee,
     onRemoveBookings,
     onUpdateBookings,

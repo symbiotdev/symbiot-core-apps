@@ -3,6 +3,10 @@ import io from 'socket.io-client';
 export enum WebsocketAction {
   accountUpdated = 'account_updated',
   accountPreferencesUpdated = 'account_preferences_updated',
+  // account subscription
+  accountSubscriptionCreated = 'account_subscription_created',
+  accountSubscriptionUpdated = 'account_subscription_updated',
+  accountSubscriptionRemoved = 'account_subscription_removed',
   // notifications
   notificationAdded = 'notification_added',
   notificationsRead = 'notifications_read',

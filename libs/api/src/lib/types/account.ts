@@ -2,6 +2,7 @@ import { AccountPreferences } from './account-preferences';
 import { Gender } from './gender';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { Attachment } from './attachment';
+import { AccountSubscription } from './account-subscription';
 
 export type Account = {
   id: string;
@@ -20,11 +21,13 @@ export type Account = {
   email: string;
   lastRateDate: string;
   birthday: string;
+  offering: string | null;
   avatar: Attachment;
   preferences: AccountPreferences;
   phones: string[];
   instagrams: string[];
   gender: Gender;
+  subscription?: AccountSubscription;
 };
 
 export type UpdateAccountData = {

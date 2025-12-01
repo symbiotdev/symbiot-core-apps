@@ -27,7 +27,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { PlusActionAdaptiveModal } from '../../components/tabs/plus-action-adaptive-modal';
 import { isEqual } from '@symbiot-core-apps/shared';
-import { BrandSubscriptionProvider } from '@symbiot-core-apps/brand-subscription';
+import { AccountSubscriptionProvider } from '@symbiot-core-apps/account-subscription';
 
 const PlusButton = () => {
   const pathname = usePathname();
@@ -92,7 +92,7 @@ export default () => {
   }
 
   return (
-    <BrandSubscriptionProvider>
+    <AccountSubscriptionProvider>
       <SocketProvider>
         <NotificationsProvider onPressNotification={onPressNotification}>
           <XStack flex={1}>
@@ -486,6 +486,6 @@ export default () => {
           </XStack>
         </NotificationsProvider>
       </SocketProvider>
-    </BrandSubscriptionProvider>
+    </AccountSubscriptionProvider>
   );
 };

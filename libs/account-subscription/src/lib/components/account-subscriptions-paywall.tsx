@@ -26,7 +26,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 
-export const BrandSubscriptionsPaywall = ({
+export const AccountSubscriptionsPaywall = ({
   offering,
   packages,
   subscribing,
@@ -110,13 +110,19 @@ export const BrandSubscriptionsPaywall = ({
               paddingVertical="$1"
               paddingHorizontal="$3"
               borderRadius="$10"
+              alignSelf="center"
               borderColor={backgroundColor}
               borderWidth={1}
               top={-10}
               zIndex={1}
-              alignSelf="center"
+              disabled={subscribing || restoring}
+              disabledStyle={{ opacity: 0.5 }}
+              onPress={() => {
+                emitHaptic();
+                setSelectedPackage(pkg);
+              }}
             >
-              <MediumText fontSize={12}>
+              <MediumText fontSize={12} color={selected ? 'white' : undefined}>
                 {t('subscription.discount', { value: profit })}
               </MediumText>
             </View>
@@ -129,10 +135,12 @@ export const BrandSubscriptionsPaywall = ({
             borderRadius="$10"
             position="relative"
             borderColor={borderColor}
-            borderWidth={1}
+            borderWidth={2}
             flex={1}
+            disabled={subscribing || restoring}
             backgroundColor={backgroundColor}
             pressStyle={{ opacity: 0.8 }}
+            disabledStyle={{ opacity: 0.5 }}
             onPress={() => {
               emitHaptic();
               setSelectedPackage(pkg);
@@ -157,7 +165,14 @@ export const BrandSubscriptionsPaywall = ({
         </Animated.View>
       );
     },
-    [cheepestPackage.identifier, profit, selectedPackage.identifier, t],
+    [
+      cheepestPackage.identifier,
+      profit,
+      restoring,
+      selectedPackage.identifier,
+      subscribing,
+      t,
+    ],
   );
 
   useLayoutEffect(() => {
@@ -173,7 +188,7 @@ export const BrandSubscriptionsPaywall = ({
   return (
     <FormView flex={1}>
       <View gap="$3" marginTop="$5" alignItems="center">
-        <Animated.View entering={LightSpeedInLeft.delay(200).duration(1000)}>
+        <Animated.View entering={LightSpeedInLeft.delay(100).duration(1000)}>
           <Icon name="Rocket2" type="SolarBoldDuotone" size={60} />
         </Animated.View>
 
@@ -190,18 +205,26 @@ export const BrandSubscriptionsPaywall = ({
         </Animated.View>
       </View>
 
-      <View gap="$2" marginTop="$2" marginHorizontal="auto">
+      <View gap="$2" marginTop="$5" marginBottom="$2">
         {(
-          t(`${translatePrefix}.benefits`, { returnObjects: true }) as string[]
-        ).map((benefit, index) => (
+          t(`${translatePrefix}.benefits`, { returnObjects: true }) as {
+            title: string;
+            subtitle: string;
+          }[]
+        ).map(({ title, subtitle }, index) => (
           <Animated.View
             key={index}
-            style={{ alignItems: 'center', flexDirection: 'row', gap: 6 }}
+            style={{ flexDirection: 'row', gap: 6 }}
             entering={FadeInDown.delay(600 + index * 100)}
           >
             <Icon name="Unread" />
 
-            <SemiBoldText>{benefit}</SemiBoldText>
+            <View gap="$1">
+              <SemiBoldText lineHeight={24}>{title}</SemiBoldText>
+              <RegularText color="$disabled" fontSize={12}>
+                {subtitle}
+              </RegularText>
+            </View>
           </Animated.View>
         ))}
       </View>

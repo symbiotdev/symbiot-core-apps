@@ -16,6 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@symbiot-core-apps/account": ["libs/account/src/index.ts"],
+      "@symbiot-core-apps/account-subscription": [
+        "libs/account-subscription/src/index.ts"
+      ],
       "@symbiot-core-apps/api": ["libs/api/src/index.ts"],
       "@symbiot-core-apps/app": ["libs/app/src/index.ts"],
       "@symbiot-core-apps/app-preferences": [
@@ -31,9 +34,6 @@
         "libs/brand-membership/src/index.ts"
       ],
       "@symbiot-core-apps/brand-service": ["libs/brand-service/src/index.ts"],
-      "@symbiot-core-apps/brand-subscription": [
-        "libs/brand-subscription/src/index.ts"
-      ],
       "@symbiot-core-apps/brand-transaction": [
         "libs/brand-transaction/src/index.ts"
       ],

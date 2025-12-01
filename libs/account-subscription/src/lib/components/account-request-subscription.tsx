@@ -16,12 +16,11 @@ export const AccountRequestSubscription = () => {
   const { packages, showPaywall } = useAccountSubscription();
 
   if (
-    !me ||
-    !!me?.subscription ||
-    !!me?.offering ||
+    !me?.offering ||
+    (me?.subscription && me.subscription.renewable) ||
     !packages.length ||
     !brand ||
-    currentEmployee?.id === brand.owner?.id
+    currentEmployee?.id !== brand.owner?.id
   )
     return null;
 

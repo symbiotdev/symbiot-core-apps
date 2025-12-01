@@ -34,6 +34,7 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     brand: currentBrand,
     setBrand: setCurrentBrand,
     setBrands: setCurrentBrands,
+    setBrandStats: setCurrentBrandStats,
   } = useCurrentBrandState();
   const { setCurrentEmployee } = useCurrentBrandEmployee();
   const { upsertBookings, removeBookings } = useCurrentBrandBookingsState();
@@ -140,6 +141,8 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     socket.on(WebsocketAction.brandUnassigned, onBrandUnassigned);
     socket.on(WebsocketAction.brandUpdated, setCurrentBrand);
 
+    socket.on(WebsocketAction.brandStatsUpdated, setCurrentBrandStats);
+
     socket.on(WebsocketAction.brandEmployeeUpdated, setCurrentEmployee);
 
     socket.on(WebsocketAction.notificationAdded, onNotificationAdded);
@@ -172,6 +175,7 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
   }, [
     updateMe,
     setCurrentBrand,
+    setCurrentBrandStats,
     setMySubscription,
     setCurrentEmployee,
     onRemoveBookings,

@@ -42,6 +42,7 @@ export * from './lib/types/brand-employee';
 export * from './lib/types/brand-location';
 export * from './lib/types/brand-membership';
 export * from './lib/types/brand-service';
+export * from './lib/types/brand-stats';
 export * from './lib/types/brand-transaction';
 export * from './lib/types/currency';
 

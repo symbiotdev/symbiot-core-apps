@@ -3,6 +3,7 @@ import { Account } from './account';
 import { BrandLocation } from './brand-location';
 import { Currency } from './currency';
 import { Attachment } from './attachment';
+import { BrandStats } from './brand-stats';
 
 export type BrandCountry = {
   flag: string;
@@ -28,6 +29,7 @@ export type Brand = {
   about: string;
   birthday: string;
   owner: Account;
+  stats: BrandStats;
   avatar: Attachment;
   industries: BrandIndustry[];
   countries: BrandCountry[];

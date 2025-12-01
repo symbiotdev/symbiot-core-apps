@@ -15,6 +15,8 @@ export enum WebsocketAction {
   brandUnassigned = 'brand_unassigned',
   brandCreated = 'brand_created',
   brandUpdated = 'brand_updated',
+  // brand stats
+  brandStatsUpdated = 'brand_stats_updated',
   // brand employee
   brandEmployeeUpdated = 'brand_employee_updated',
   // brand booking

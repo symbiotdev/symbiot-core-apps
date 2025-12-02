@@ -1,7 +1,7 @@
 import { XStack } from 'tamagui';
 import { DateHelper, Weekday } from '@symbiot-core-apps/shared';
 import { useCallback, useMemo, useState } from 'react';
-import { MediumText, RegularText } from '../text/text';
+import { LightText, MediumText } from '../text/text';
 import { InputFieldView } from '../view/input-field-view';
 import { AdaptivePopover } from '../popover/adaptive-popover';
 import { ToggleOnChange } from './toggle-group';
@@ -220,7 +220,7 @@ const WeekdayScheduleElement = ({
           disabled={disabled}
           pressStyle={{ opacity: 0.8 }}
         >
-          <RegularText>{weekday.label}</RegularText>
+          <LightText>{weekday.label}</LightText>
 
           <MediumText color={'$disabled'}>
             {isDayOff ? t('shared.schedule.day_off') : `${start} - ${end}`}

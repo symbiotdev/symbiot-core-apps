@@ -11,7 +11,7 @@ import {
   minutesInYear,
 } from '@symbiot-core-apps/shared';
 import { InputFieldView } from '../view/input-field-view';
-import { RegularText } from '../text/text';
+import { LightText } from '../text/text';
 import { minutesInDay, minutesInHour } from 'date-fns/constants';
 import { Picker } from './picker';
 import { useTranslation } from 'react-i18next';
@@ -88,19 +88,27 @@ export const DurationPicker = ({
     [],
   );
   const yearsOptions = useMemo(
-    () => formatOptions(11, t('shared.datetime.short_format.years'), yearsInterval),
+    () =>
+      formatOptions(11, t('shared.datetime.short_format.years'), yearsInterval),
     [formatOptions, t, yearsInterval],
   );
   const monthsOptions = useMemo(
-    () => formatOptions(12, t('shared.datetime.short_format.months'), monthsInterval),
+    () =>
+      formatOptions(
+        12,
+        t('shared.datetime.short_format.months'),
+        monthsInterval,
+      ),
     [formatOptions, monthsInterval, t],
   );
   const daysOptions = useMemo(
-    () => formatOptions(31, t('shared.datetime.short_format.days'), daysInterval),
+    () =>
+      formatOptions(31, t('shared.datetime.short_format.days'), daysInterval),
     [daysInterval, formatOptions, t],
   );
   const hoursOptions = useMemo(
-    () => formatOptions(24, t('shared.datetime.short_format.hours'), hoursInterval),
+    () =>
+      formatOptions(24, t('shared.datetime.short_format.hours'), hoursInterval),
     [formatOptions, hoursInterval, t],
   );
   const minutesOptions = useMemo(
@@ -138,13 +146,13 @@ export const DurationPicker = ({
             pressStyle={{ opacity: 0.8 }}
             {...viewProps}
           >
-            <RegularText
+            <LightText
               color={
                 !value ? '$placeholderColor' : disabled ? '$disabled' : '$color'
               }
             >
               {value ? DateHelper.formatDuration(value) : placeholder}
-            </RegularText>
+            </LightText>
           </InputFieldView>
         }
         onClose={onBlur}

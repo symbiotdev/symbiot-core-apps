@@ -6,13 +6,14 @@ export function BrandEmployeeRoleController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   required?: boolean;
+  noLabel?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
 
   return (
     <StringController
-      label={t('brand_employee.form.role.label')}
+      label={props.noLabel ? '' : t('brand_employee.form.role.label')}
       placeholder={t('brand_employee.form.role.placeholder')}
       rules={{
         required: {

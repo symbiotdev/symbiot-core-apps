@@ -61,7 +61,12 @@ export const PriceInput = ({
           textContentType="oneTimeCode" // https://github.com/facebook/react-native/issues/39411
           value={String(value || '')}
           placeholder={placeholder || '0.00'}
-          style={{ flex: 1, color: theme?.color?.val, outline: 'none' }}
+          style={{
+            flex: 1,
+            color: theme?.color?.val,
+            outline: 'none',
+            fontFamily: 'BodyLight',
+          }}
           readOnly={disabled}
           keyboardAppearance={scheme}
           keyboardType="numeric"

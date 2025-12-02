@@ -6,7 +6,7 @@ import { FormView, formViewStyles } from '../view/form-view';
 import { Segment } from '../segment/segment';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { AdaptivePopover } from '../popover/adaptive-popover';
-import { RegularText } from '../text/text';
+import { LightText, RegularText } from '../text/text';
 import { InputFieldView } from '../view/input-field-view';
 import { YStack } from 'tamagui';
 import { FormField } from './form-field';
@@ -112,9 +112,9 @@ export const TimeSchedule = ({
         <YStack gap="$1" disabled={disabled} pressStyle={{ opacity: 0.8 }}>
           <FormField label={label} error={error} required={required}>
             <InputFieldView>
-              <RegularText>
+              <LightText>
                 {`${DateHelper.format(value.start, 'p')} - ${DateHelper.format(value.end, 'p')}`}
-              </RegularText>
+              </LightText>
             </InputFieldView>
           </FormField>
           <RegularText color="$disabled" marginHorizontal="$4">

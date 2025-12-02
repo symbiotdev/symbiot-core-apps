@@ -8,7 +8,7 @@ import {
   AdaptivePopoverRef,
 } from '../popover/adaptive-popover';
 import { useTheme, View, ViewProps } from 'tamagui';
-import { RegularText } from '../text/text';
+import { LightText } from '../text/text';
 import { FormField } from './form-field';
 import { DateHelper, emitHaptic, Weekday } from '@symbiot-core-apps/shared';
 import { Platform } from 'react-native';
@@ -81,13 +81,13 @@ export const DatePicker = ({
             pressStyle={{ opacity: 0.8 }}
             {...viewProps}
           >
-            <RegularText
+            <LightText
               color={
                 !value ? '$placeholderColor' : disabled ? '$disabled' : '$color'
               }
             >
               {value ? DateHelper.format(value, formatStr) : placeholder}
-            </RegularText>
+            </LightText>
           </InputFieldView>
         }
         onClose={onBlur}

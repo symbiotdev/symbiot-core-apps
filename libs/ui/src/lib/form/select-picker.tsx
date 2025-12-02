@@ -6,7 +6,7 @@ import {
 } from '../popover/adaptive-popover';
 import { FormField } from './form-field';
 import { Spinner } from '../loading/spinner';
-import { RegularText } from '../text/text';
+import { LightText, RegularText } from '../text/text';
 import { InputFieldView } from '../view/input-field-view';
 import { Picker, PickerItem, PickerOnChange } from './picker';
 import { View } from 'tamagui';
@@ -111,29 +111,29 @@ export function SelectPicker({
             {trigger || (
               <InputFieldView disabled={disabled} gap="$3">
                 {!options?.length && optionsLoading ? (
-                  <RegularText
+                  <LightText
                     color="$placeholderColor"
                     numberOfLines={1}
                     flex={1}
                   >
                     {placeholder}
-                  </RegularText>
+                  </LightText>
                 ) : !formattedValue ? (
-                  <RegularText
+                  <LightText
                     color="$placeholderColor"
                     numberOfLines={1}
                     flex={1}
                   >
                     {placeholder}
-                  </RegularText>
+                  </LightText>
                 ) : (
-                  <RegularText
+                  <LightText
                     flex={1}
                     numberOfLines={1}
                     color={disabled ? '$disabled' : '$color'}
                   >
                     {formattedValue}
-                  </RegularText>
+                  </LightText>
                 )}
 
                 {(loading || (!options?.length && optionsLoading)) && (

@@ -349,6 +349,7 @@ export const CreateBrandEmployee = () => {
       >
         <BrandEmployeeRoleController
           required
+          noLabel
           name="role"
           control={professionalityControl}
         />

@@ -12,11 +12,15 @@ import Purchases, {
   PurchasesPackage,
 } from 'react-native-purchases';
 import { Platform } from 'react-native';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccountState,
+  useCurrentBrandState,
+} from '@symbiot-core-apps/state';
 import { AdaptivePopover, AdaptivePopoverRef } from '@symbiot-core-apps/ui';
 import { AccountSubscriptionsPaywall } from '../components/account-subscriptions-paywall';
 import {
   AccountSubscription,
+  UpdateAccountSubscription,
   useAccountCreateSubscription,
   useAccountDeleteSubscription,
   useAccountUpdateSubscription,
@@ -44,7 +48,8 @@ const apiKeyByPlatform: Record<string, string> = {
 export const AccountSubscriptionProvider = ({
   children,
 }: PropsWithChildren) => {
-  const { me, setMySubscription } = useCurrentAccountState();
+  const { me, setMySubscriptions } = useCurrentAccountState();
+  const { brand, setBrandSubscription } = useCurrentBrandState();
   const { mutateAsync: createSubscription, isPending: subscriptionCreating } =
     useAccountCreateSubscription();
   const { mutateAsync: updateSubscription, isPending: subscriptionUpdating } =
@@ -60,27 +65,49 @@ export const AccountSubscriptionProvider = ({
 
   const showPaywall = useCallback(() => paywallRef.current?.open(), []);
 
-  const onSubscribe = useCallback(
-    async (pkg: PurchasesPackage) => {
-      try {
-        setSubscribing(true);
+  const create = useCallback(
+    async (customerInfo: CustomerInfo) => {
+      const subscription = await createSubscription({
+        userId: customerInfo.originalAppUserId,
+        ...(mapCustomerInfoToAccountSubscription(
+          customerInfo,
+        ) as AccountSubscription),
+      });
 
-        const { customerInfo } = await Purchases.purchasePackage(pkg);
-
-        void createSubscription({
-          userId: customerInfo.originalAppUserId,
-          ...(mapCustomerInfoToAccountSubscription(
-            customerInfo,
-          ) as AccountSubscription),
-        });
-
-        paywallRef.current?.close();
-      } finally {
-        setSubscribing(false);
-      }
+      setMySubscriptions([subscription]);
+      setBrandSubscription(subscription);
     },
-    [createSubscription],
+    [createSubscription, setBrandSubscription, setMySubscriptions],
   );
+
+  const update = useCallback(
+    async (data: UpdateAccountSubscription) => {
+      const subscription = await updateSubscription(data);
+
+      setMySubscriptions([subscription]);
+      setBrandSubscription(subscription);
+    },
+    [setBrandSubscription, setMySubscriptions, updateSubscription],
+  );
+
+  const remove = useCallback(async () => {
+    await removeSubscription();
+
+    setMySubscriptions([]);
+    setBrandSubscription(undefined);
+  }, [removeSubscription, setBrandSubscription, setMySubscriptions]);
+
+  const onSubscribe = useCallback(async (pkg: PurchasesPackage) => {
+    try {
+      setSubscribing(true);
+
+      await Purchases.purchasePackage(pkg);
+
+      paywallRef.current?.close();
+    } finally {
+      setSubscribing(false);
+    }
+  }, []);
 
   const onRestore = useCallback(async () => {
     try {
@@ -112,19 +139,21 @@ export const AccountSubscriptionProvider = ({
   }, [me?.id]);
 
   useEffect(() => {
-    if (!me?.id) return;
+    if (!brand?.id) return;
 
-    const handleCustomerInfo = async (info: CustomerInfo) => {
-      if (!hasActiveSubscriptionChanges(info, me?.subscription)) return;
+    const handleCustomerInfo = async (customerInfo: CustomerInfo) => {
+      if (!hasActiveSubscriptionChanges(customerInfo, brand.subscription))
+        return;
 
-      const activeSubscription = mapCustomerInfoToAccountSubscription(info);
+      const activeSubscription =
+        mapCustomerInfoToAccountSubscription(customerInfo);
 
       if (activeSubscription) {
-        setMySubscription(await updateSubscription(activeSubscription));
+        await (brand.subscription
+          ? update(activeSubscription)
+          : create(customerInfo));
       } else {
-        await removeSubscription();
-
-        setMySubscription(undefined);
+        await remove();
       }
     };
 
@@ -133,13 +162,7 @@ export const AccountSubscriptionProvider = ({
     return () => {
       Purchases.removeCustomerInfoUpdateListener(handleCustomerInfo);
     };
-  }, [
-    me?.id,
-    me?.subscription,
-    removeSubscription,
-    setMySubscription,
-    updateSubscription,
-  ]);
+  }, [brand?.id, brand?.subscription, create, remove, update]);
 
   return (
     <Context.Provider

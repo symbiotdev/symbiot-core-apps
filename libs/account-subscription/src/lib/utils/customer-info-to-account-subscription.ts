@@ -2,6 +2,7 @@ import { CustomerInfo } from 'react-native-purchases';
 import {
   AccountSubscription,
   AccountSubscriptionEnvironment,
+  currentSubscriptionType,
 } from '@symbiot-core-apps/api';
 import { DateHelper } from '@symbiot-core-apps/shared';
 
@@ -18,6 +19,7 @@ export const mapCustomerInfoToAccountSubscription = (
   if (!subscription) return undefined;
 
   return {
+    type: currentSubscriptionType,
     store: subscription.store,
     product: subscription.productIdentifier,
     active: subscription.isActive,
@@ -38,6 +40,7 @@ export const hasActiveSubscriptionChanges = (
   if (!activeSubscription && !accountSubscription) return false;
 
   return (
+    activeSubscription?.type !== accountSubscription?.type ||
     activeSubscription?.store !== accountSubscription?.store ||
     activeSubscription?.active !== accountSubscription?.active ||
     activeSubscription?.product !== accountSubscription?.product ||

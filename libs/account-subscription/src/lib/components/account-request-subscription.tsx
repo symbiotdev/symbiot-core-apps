@@ -17,10 +17,10 @@ export const AccountRequestSubscription = () => {
 
   if (
     !me?.offering ||
-    (me?.subscription && me.subscription.renewable) ||
     !packages.length ||
     !brand ||
-    currentEmployee?.id !== brand.owner?.id
+    currentEmployee?.id !== brand.owner?.id ||
+    (brand?.subscription && brand.subscription.renewable)
   )
     return null;
 

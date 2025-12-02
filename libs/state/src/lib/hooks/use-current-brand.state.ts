@@ -1,4 +1,4 @@
-import { Brand, BrandStats } from '@symbiot-core-apps/api';
+import { AccountSubscription, Brand, BrandStats } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
@@ -8,6 +8,7 @@ type CurrentBrandState = {
   brands?: Brand[];
   clear: () => void;
   setBrand: (brand?: Brand) => void;
+  setBrandSubscription: (subscription?: AccountSubscription) => void;
   setBrandStats: (stats: BrandStats) => void;
   setBrands: (brands?: Brand[]) => void;
 };
@@ -31,6 +32,18 @@ export const useCurrentBrandState = create<CurrentBrandState>()(
           brand: {
             ...brand,
             stats,
+          },
+        });
+      },
+      setBrandSubscription: (subscription) => {
+        const brand = get().brand;
+
+        if (!brand) return;
+
+        set({
+          brand: {
+            ...brand,
+            subscription,
           },
         });
       },

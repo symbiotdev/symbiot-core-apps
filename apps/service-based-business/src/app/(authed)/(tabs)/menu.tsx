@@ -6,7 +6,11 @@ import {
   ShowNativeSuccessAlert,
   useShareApp,
 } from '@symbiot-core-apps/shared';
-import { useCurrentAccountState, useScheme } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccountState,
+  useCurrentBrandState,
+  useScheme,
+} from '@symbiot-core-apps/state';
 import React, { useCallback, useLayoutEffect } from 'react';
 import { router, useNavigation } from 'expo-router';
 import {
@@ -40,6 +44,7 @@ import {
 export default () => {
   const { t } = useTranslation();
   const { me } = useCurrentAccountState();
+  const { brand } = useCurrentBrandState();
   const { languages } = useApp();
   const { scheme } = useScheme();
   const { visible: drawerVisible } = useDrawer();
@@ -199,18 +204,19 @@ export default () => {
           </ListItemGroup>
 
           <ListItemGroup title={t('shared.application')}>
-            {Platform.OS !== 'web' && me?.subscription && (
+            {Platform.OS !== 'web' && brand?.subscription?.active && (
               <ListItem
                 disabled={subscriptionProcessing}
                 label={t('shared.preferences.subscriptions.title')}
                 icon={<Icon name="Rocket2" />}
                 iconAfter={subscriptionProcessing ? <Spinner /> : undefined}
-                color={!me.subscription.renewable ? '$error' : undefined}
+                color={!brand.subscription.renewable ? '$error' : undefined}
                 text={
-                  !me.subscription.renewable && me.subscription.expiresDate
+                  !brand.subscription.renewable &&
+                  brand.subscription.expiresDate
                     ? t('shared.preferences.subscriptions.expires_on', {
                         date: DateHelper.format(
-                          me.subscription.expiresDate,
+                          brand.subscription.expiresDate,
                           me.preferences.dateFormat,
                         ),
                       })

@@ -14,16 +14,16 @@ export const useAccountLimits = () => {
   const { brand } = useCurrentBrandState();
 
   const limits = useMemo(() => {
-    if (!me?.id) return {};
+    if (!brand?.id || !me?.offering) return {};
 
     return (
       functionality.limits[
-        me.subscription && me.subscription.active
-          ? me.subscription.product
+        brand?.subscription && brand.subscription.active
+          ? brand.subscription.product
           : 'default'
       ] || {}
     );
-  }, [functionality.limits, me?.id, me?.subscription]);
+  }, [brand?.id, brand?.subscription, me?.offering, functionality.limits]);
 
   const canDo = useMemo(() => {
     const limitByBrandStats = (key: keyof BrandStats) =>

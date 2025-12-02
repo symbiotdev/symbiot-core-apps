@@ -27,7 +27,7 @@ export type Account = {
   phones: string[];
   instagrams: string[];
   gender: Gender;
-  subscription?: AccountSubscription;
+  subscriptions: AccountSubscription[];
 };
 
 export type UpdateAccountData = {

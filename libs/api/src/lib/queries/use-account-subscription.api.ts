@@ -6,6 +6,9 @@ import {
 } from '../types/account-subscription';
 import axios from 'axios';
 
+export const currentSubscriptionType =
+  process.env['EXPO_PUBLIC_SUBSCRIPTION_TYPE'];
+
 export const useAccountCreateSubscription = () =>
   useMutation<AccountSubscription, string, CreateAccountSubscription>({
     showAlert: true,
@@ -15,11 +18,13 @@ export const useAccountCreateSubscription = () =>
 export const useAccountUpdateSubscription = () =>
   useMutation<AccountSubscription, string, UpdateAccountSubscription>({
     showAlert: true,
-    mutationFn: (data) => axios.put('/api/account-subscription', data),
+    mutationFn: (data) =>
+      axios.put(`/api/account-subscription/${currentSubscriptionType}`, data),
   });
 
 export const useAccountDeleteSubscription = () =>
   useMutation<void, string, void>({
     showAlert: true,
-    mutationFn: () => axios.delete('/api/account-subscription'),
+    mutationFn: () =>
+      axios.delete(`/api/account-subscription/${currentSubscriptionType}`),
   });

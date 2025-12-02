@@ -26,7 +26,7 @@ type CurrentAccountState = {
   clear: () => void;
   setMe: (me?: Account) => void;
   setMyPreferences: (preferences: Partial<AccountPreferences>) => void;
-  setMySubscription: (subscription: AccountSubscription | undefined) => void;
+  setMySubscriptions: (subscriptions: AccountSubscription[]) => void;
   setMyStats: (stats: AccountStats) => void;
 };
 
@@ -53,13 +53,13 @@ export const useCurrentAccountState = create<CurrentAccountState>()(
           });
         }
       },
-      setMySubscription: (subscription) => {
+      setMySubscriptions: (subscriptions) => {
         const { setMe, me } = get();
 
         if (me) {
           setMe({
             ...me,
-            subscription,
+            subscriptions,
           });
         }
       },
@@ -82,7 +82,7 @@ export const useCurrentAccountState = create<CurrentAccountState>()(
 );
 
 export const useCurrentAccount = () => {
-  const { me, stats, setMe, setMyStats, setMySubscription } =
+  const { me, stats, setMe, setMyStats, setMySubscriptions } =
     useCurrentAccountState();
   const { setScheme, removeScheme } = useAppSchemeState();
   const { setMyPreferences } = useCurrentAccountState();
@@ -116,7 +116,7 @@ export const useCurrentAccount = () => {
     me,
     stats,
     setMyStats,
-    setMySubscription,
+    setMySubscriptions,
   };
 };
 

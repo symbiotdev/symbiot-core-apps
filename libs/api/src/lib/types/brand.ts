@@ -4,6 +4,7 @@ import { BrandLocation } from './brand-location';
 import { Currency } from './currency';
 import { Attachment } from './attachment';
 import { BrandStats } from './brand-stats';
+import { AccountSubscription } from './account-subscription';
 
 export type BrandCountry = {
   flag: string;
@@ -35,6 +36,7 @@ export type Brand = {
   countries: BrandCountry[];
   currencies: Currency[];
   locations: BrandLocation[];
+  subscription?: AccountSubscription;
   instagrams: string[];
   websites: string[];
   cAt: string;

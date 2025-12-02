@@ -28,13 +28,14 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     require('../../assets/audio/new_notification_sound.wav'),
   );
 
-  const { me, setMyStats, setMySubscription, updateMe, updateMePreferences } =
+  const { me, setMyStats, setMySubscriptions, updateMe, updateMePreferences } =
     useCurrentAccount();
   const {
     brand: currentBrand,
     setBrand: setCurrentBrand,
     setBrands: setCurrentBrands,
     setBrandStats: setCurrentBrandStats,
+    setBrandSubscription: setCurrentBrandSubscription,
   } = useCurrentBrandState();
   const { setCurrentEmployee } = useCurrentBrandEmployee();
   const { upsertBookings, removeBookings } = useCurrentBrandBookingsState();
@@ -130,18 +131,26 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
   );
 
   useEffect(() => {
+    if (process.env.EXPO_PUBLIC_APP_MODE !== 'production') {
+      socket.onAny((data) => {
+        console.log('Socket: ', data);
+      })
+    }
+
     socket.on(WebsocketAction.accountUpdated, updateMe);
     socket.on(WebsocketAction.accountPreferencesUpdated, updateMePreferences);
 
-    socket.on(WebsocketAction.accountSubscriptionCreated, setMySubscription);
-    socket.on(WebsocketAction.accountSubscriptionUpdated, setMySubscription);
-    socket.on(WebsocketAction.accountSubscriptionRemoved, setMySubscription);
+    socket.on(WebsocketAction.accountSubscriptionsUpdated, setMySubscriptions);
 
     socket.on(WebsocketAction.brandAssigned, onBrandAssigned);
     socket.on(WebsocketAction.brandUnassigned, onBrandUnassigned);
     socket.on(WebsocketAction.brandUpdated, setCurrentBrand);
 
     socket.on(WebsocketAction.brandStatsUpdated, setCurrentBrandStats);
+    socket.on(
+      WebsocketAction.brandSubscriptionUpdated,
+      setCurrentBrandSubscription,
+    );
 
     socket.on(WebsocketAction.brandEmployeeUpdated, setCurrentEmployee);
 
@@ -176,7 +185,8 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     updateMe,
     setCurrentBrand,
     setCurrentBrandStats,
-    setMySubscription,
+    setMySubscriptions,
+    setCurrentBrandSubscription,
     setCurrentEmployee,
     onRemoveBookings,
     onUpdateBookings,

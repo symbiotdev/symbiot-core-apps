@@ -9,6 +9,7 @@ import {
   useUpdateServiceBrandBookingClientReq,
 } from '@symbiot-core-apps/api';
 import {
+  ActionCard,
   Br,
   Button,
   defaultPageVerticalPadding,
@@ -165,30 +166,51 @@ export const ServiceBrandBookingProfileClients = ({
   return (
     <>
       <ListItemGroup
-        title={`${t(booking.clients.length > booking.places ? `service_brand_booking.profile.clients.overbooking` : 'service_brand_booking.profile.clients.title')} (${booking.clients.length}/${booking.places})`}
+        title={`${t('service_brand_booking.profile.clients.title')} (${booking.clients.length}/${booking.places})`}
+        titleProps={{
+          ...(booking.clients.length > booking.places && {
+            color: '$error',
+          }),
+        }}
       >
-        {!booking.cancelAt && hasPermission('bookings') && (
-          <Button
-            loading={clientAdding}
-            type="clear"
-            minHeight="auto"
-            width="auto"
-            fontSize={14}
-            color="$link"
-            paddingVertical={0}
-            position="absolute"
-            right={0}
-            top={-24}
-            paddingHorizontal="$4"
-            label={t(`service_brand_booking.profile.clients.add`)}
-            onPress={openClientsModal}
-          />
-        )}
+        {!booking.cancelAt &&
+          !!booking.clients.length &&
+          hasPermission('bookings') && (
+            <Button
+              loading={clientAdding}
+              type="clear"
+              minHeight="auto"
+              width="auto"
+              fontSize={14}
+              color="$link"
+              paddingVertical={0}
+              position="absolute"
+              right={0}
+              top={-24}
+              paddingHorizontal="$4"
+              label={t(`service_brand_booking.profile.clients.add`)}
+              onPress={openClientsModal}
+            />
+          )}
 
         {!booking.clients?.length ? (
-          <EmptyView
-            message={t(`service_brand_booking.profile.clients.empty`)}
-          />
+          !hasPermission('bookings') ? (
+            <EmptyView
+              message={t(`service_brand_booking.profile.clients.empty`)}
+            />
+          ) : (
+            <ActionCard
+              title={t('service_brand_booking.profile.add_first_client.title')}
+              subtitle={t(
+                'service_brand_booking.profile.add_first_client.subtitle',
+              )}
+              buttonLabel={t(
+                'service_brand_booking.profile.add_first_client.button.label',
+              )}
+              buttonLoading={clientAdding}
+              onPress={openClientsModal}
+            />
+          )
         ) : (
           booking.clients
             .sort((a, b) => (a.firstname > b.firstname ? 1 : -1))
@@ -255,16 +277,6 @@ export const ServiceBrandBookingProfileClients = ({
         <View paddingLeft="$2" style={formViewStyles}>
           <ListItem
             label={t(
-              `service_brand_booking.profile.clients.actions.profile.label`,
-            )}
-            icon={<Icon name="SmileCircle" />}
-            onPress={() => {
-              setActionClient(undefined);
-              router.push(`/clients/${actionClient?.id}/profile`);
-            }}
-          />
-          <ListItem
-            label={t(
               `service_brand_booking.profile.clients.actions.use_balance.label`,
             )}
             icon={<Icon name="Wallet" />}
@@ -282,6 +294,16 @@ export const ServiceBrandBookingProfileClients = ({
               }}
             />
           )}
+          <ListItem
+            label={t(
+              `service_brand_booking.profile.clients.actions.profile.label`,
+            )}
+            icon={<Icon name="SmileCircle" />}
+            onPress={() => {
+              setActionClient(undefined);
+              router.push(`/clients/${actionClient?.id}/profile`);
+            }}
+          />
           <ListItem
             color="$error"
             label={t(

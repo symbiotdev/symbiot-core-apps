@@ -14,6 +14,7 @@ import {
   Popover,
   PopoverProps,
   ScrollView,
+  useTheme,
   View,
 } from 'tamagui';
 import { Platform, useWindowDimensions } from 'react-native';
@@ -89,6 +90,7 @@ export const AdaptivePopover = forwardRef(
     ref: ForwardedRef<AdaptivePopoverRef>,
   ) => {
     const { media } = useScreenSize();
+    const theme = useTheme();
     const { height } = useWindowDimensions();
     const { top, bottom, left, right } = useSafeAreaInsets();
     const { rendered } = useRendered({
@@ -185,7 +187,7 @@ export const AdaptivePopover = forwardRef(
         <Popover.Content
           overflow="hidden"
           backgroundColor="transparent"
-          borderColor="$background1"
+          borderColor={theme.$background1?.val}
           borderWidth={1}
           borderRadius={30}
           maxHeight={adjustedMaxHeight}
@@ -259,7 +261,7 @@ export const AdaptivePopover = forwardRef(
 
               <NavigationBackground
                 backgroundColor="$background1"
-                borderColor="$background1"
+                borderColor={theme.$background1?.val}
                 borderWidth={1}
                 height="120%"
                 borderRadius={30}

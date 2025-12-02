@@ -64,7 +64,8 @@ export const BrandBookingsCalendar = ({
     () =>
       bookings
         ?.filter(
-          ({ locations, employees }) =>
+          ({ locations, employees, cancelAt }) =>
+            !cancelAt &&
             (currentEmployee?.permissions?.bookings ||
               employees.some(({ id }) => id === currentEmployee?.id)) &&
             (!location ||

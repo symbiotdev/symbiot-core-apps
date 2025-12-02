@@ -1,24 +1,37 @@
 import React, { cloneElement, memo, ReactElement, useCallback } from 'react';
-import { ColorTokens, View, ViewProps, XStack, XStackProps } from 'tamagui';
+import {
+  ColorTokens,
+  TextProps,
+  View,
+  ViewProps,
+  XStack,
+  XStackProps,
+} from 'tamagui';
 import { MediumText, RegularText } from '../text/text';
 import { Card } from '../card/card';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { GestureResponderEvent } from 'react-native';
 import { defaultIconSize } from '../icons';
 
-export const ListItemGroup = memo((props: ViewProps & { title?: string }) => {
-  return (
-    <View gap="$1" width="100%">
-      {!!props.title && (
-        <MediumText color="$placeholderColor" marginHorizontal="$3">
-          {props.title}
-        </MediumText>
-      )}
+export const ListItemGroup = memo(
+  (props: ViewProps & { title?: string; titleProps?: TextProps }) => {
+    return (
+      <View gap="$1" width="100%">
+        {!!props.title && (
+          <MediumText
+            color="$placeholderColor"
+            marginHorizontal="$3"
+            {...props.titleProps}
+          >
+            {props.title}
+          </MediumText>
+        )}
 
-      <Card paddingVertical="$2" gap="$2" {...props} />
-    </View>
-  );
-});
+        <Card paddingVertical="$2" gap="$2" {...props} />
+      </View>
+    );
+  },
+);
 
 export const ListItem = memo(
   ({

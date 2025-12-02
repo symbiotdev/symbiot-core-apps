@@ -16,7 +16,7 @@ export const ActionCard = ({
   title: string;
   subtitle: string;
   buttonLabel: string;
-  buttonIcon: ReactElement<{ color?: string; size?: number }>;
+  buttonIcon?: ReactElement<{ color?: string; size?: number }>;
   buttonType?: ButtonType;
   buttonLoading?: boolean;
   buttonHidden?: boolean;
@@ -52,7 +52,9 @@ export const ActionCardWithCustomButton = ({
   return (
     <Card gap="$1" width="100%" {...viewProps}>
       <SemiBoldText fontSize={18}>{title}</SemiBoldText>
-      <RegularText marginBottom="$2" lineHeight={22}>{subtitle}</RegularText>
+      <RegularText marginBottom="$2" lineHeight={22}>
+        {subtitle}
+      </RegularText>
       {button}
     </Card>
   );

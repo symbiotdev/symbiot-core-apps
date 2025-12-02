@@ -8,7 +8,6 @@ import {
   H4,
   Icon,
   ListItemGroup,
-  MediumText,
   PageView,
   RegularText,
   SlideSheetModal,
@@ -189,9 +188,9 @@ export const UnavailableBrandBookingProfile = ({
               {!!booking.cancelAt && (
                 <XStack gap="$1">
                   <Icon name="Close" color="$error" />
-                  <MediumText color="$error" alignSelf="center">
+                  <RegularText color="$error" alignSelf="center">
                     {t('shared.canceled')}
-                  </MediumText>
+                  </RegularText>
                 </XStack>
               )}
             </XStack>

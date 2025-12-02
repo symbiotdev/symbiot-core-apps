@@ -7,7 +7,6 @@ import {
   H2,
   Icon,
   ListItemGroup,
-  MediumText,
   PageView,
   RegularText,
   SlideSheetModal,
@@ -205,9 +204,9 @@ export const ServiceBrandBookingProfile = ({
               {!!booking.cancelAt && (
                 <XStack gap="$1">
                   <Icon name="Close" color="$error" />
-                  <MediumText color="$error" alignSelf="center">
+                  <RegularText color="$error" alignSelf="center">
                     {t('shared.canceled')}
-                  </MediumText>
+                  </RegularText>
                 </XStack>
               )}
             </XStack>
@@ -217,6 +216,7 @@ export const ServiceBrandBookingProfile = ({
             <ListItemGroup
               paddingVertical={0}
               paddingHorizontal="$3"
+              title={t('service_brand_booking.profile.note')}
               backgroundColor="transparent"
             >
               <RegularText>{booking.note}</RegularText>

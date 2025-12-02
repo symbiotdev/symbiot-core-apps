@@ -262,7 +262,7 @@ export const CreateBrandMembership = ({
         <Card flexDirection="row" gap="$3">
           <Icon name="InfoCircle" />
 
-          <SemiBoldText>
+          <SemiBoldText flex={1}>
             {t(`${tPrefix}.create.steps.services.all_included`)}
           </SemiBoldText>
         </Card>

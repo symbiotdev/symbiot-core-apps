@@ -11,7 +11,6 @@ import {
 import {
   Br,
   Button,
-  Card,
   defaultPageVerticalPadding,
   EmptyView,
   FormView,
@@ -20,7 +19,7 @@ import {
   InitView,
   ListItem,
   ListItemGroup,
-  MediumText,
+  RegularText,
   Sheet,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
@@ -318,23 +317,14 @@ const Balance = ({
 
   return (
     <FormView paddingVertical={defaultPageVerticalPadding}>
-      <Card
-        alignItems="center"
-        gap="$2"
-        marginVertical="$2"
-        flexDirection="row"
-      >
-        <Icon name="InfoCircle" />
-        <MediumText flex={1}>
-          {t(`service_brand_booking.profile.clients.actions.use_balance.info`)}
-        </MediumText>
-      </Card>
+      <RegularText flex={1}>
+        {t(`service_brand_booking.profile.clients.actions.use_balance.info`)}
+      </RegularText>
 
       <BrandClientBalance
-        showEmptyMessage
-        showTopUpBalance
         preventNavigationToCreatedMembership
         client={client}
+        showTopUpBalance={!client.memberships?.length}
         disabledIds={membershipId ? [membershipId] : []}
         onPressMembership={onPressMembership}
       />

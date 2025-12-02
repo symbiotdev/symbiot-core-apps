@@ -13,14 +13,20 @@ import { useCurrentAccountState } from '@symbiot-core-apps/state';
 
 const startOfDay = DateHelper.startOfDay(new Date());
 
-export const BrandSchedule = ({ schedules }: { schedules: Schedule[] }) => {
+export const BrandSchedule = ({
+  label,
+  schedules,
+}: {
+  label?: string;
+  schedules: Schedule[];
+}) => {
   const { t } = useTranslation();
   const { me } = useCurrentAccountState();
   const { now } = useNativeNow();
 
   return schedules.length ? (
     <ListItemGroup
-      title={t('shared.schedule.working_hours')}
+      title={label || t('shared.schedule.working_hours')}
       paddingVertical="$4"
       gap="$2"
     >

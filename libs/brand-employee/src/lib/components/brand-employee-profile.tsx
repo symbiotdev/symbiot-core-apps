@@ -143,7 +143,10 @@ export const BrandEmployeeProfile = ({
           <BrandEmployeeProfileCompletion employee={employee} />
         )}
 
-        <BrandSchedule schedules={schedules} />
+        <BrandSchedule
+          label={t('brand_employee.profile.working_hours')}
+          schedules={schedules}
+        />
 
         {employee.locations?.length ? (
           <ListItemGroup
@@ -174,7 +177,7 @@ export const BrandEmployeeProfile = ({
         )}
 
         <ListItemGroup
-          title={t('shared.about')}
+          title={t('brand_employee.profile.about')}
           paddingVertical={0}
           paddingHorizontal="$3"
           backgroundColor="transparent"

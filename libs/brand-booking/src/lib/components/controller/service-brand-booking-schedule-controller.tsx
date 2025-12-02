@@ -264,7 +264,7 @@ const Providers = ({
         noValueItem={
           providers.length > 1
             ? {
-                label: 'Any provider',
+                label: t('service_brand_booking.form.provider.any_label'),
                 value: undefined,
                 icon: <Icon name="UsersGroupRounded" size={30} />,
               }

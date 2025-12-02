@@ -41,6 +41,7 @@ import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 import { capitalizeFirst } from './text';
 import { getDate } from 'date-fns/getDate';
 import { getMonth } from 'date-fns/getMonth';
+import { formatDistance } from 'date-fns/formatDistance';
 
 export const defaultWeekdayStartsOn: Day = 0;
 export const minutesInHour = 60;
@@ -87,6 +88,11 @@ export const DateHelper = {
   currentTimezone: () => Intl.DateTimeFormat().resolvedOptions().timeZone,
   isSameDateIgnoringYear: (d1: Date | string, d2: Date | string) =>
     getDate(d1) === getDate(d2) && getMonth(d1) === getMonth(d2),
+  formatDistance: (laterDate: Date | string, earlierDate: Date | string) => {
+    return formatDistance(laterDate, earlierDate, {
+      locale: getDateLocale(),
+    });
+  },
   formatDuration: (
     totalMinutes: number,
     params?: {

@@ -65,11 +65,9 @@ export const TodayBrandBookings = () => {
     return (
       <View gap="$1">
         <XStack alignItems="center" gap="$5" paddingHorizontal="$3">
-          {!!adjustedBookings.length && (
-            <MediumText color="$placeholderColor">
-              {t('brand_booking.today_schedule')}
-            </MediumText>
-          )}
+          <MediumText color="$placeholderColor">
+            {t('brand_booking.today_schedule')}
+          </MediumText>
 
           <Link
             marginLeft="auto"
@@ -97,11 +95,11 @@ export const TodayBrandBookings = () => {
 
         {!adjustedBookings.length && (
           <ActionCard
-            title={t('brand_booking.today_schedule')}
+            title={t('brand_booking.today_no_schedules.title')}
             subtitle={t(
               hasCompletedServices
                 ? 'brand_booking.today_schedules_completed'
-                : 'brand_booking.today_no_schedules',
+                : 'brand_booking.today_no_schedules.subtitle',
             )}
             buttonLabel={t('brand_booking.add_service_booking')}
             buttonHidden={!hasPermission('bookings')}

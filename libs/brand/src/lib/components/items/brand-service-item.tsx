@@ -108,7 +108,11 @@ export const BrandServiceItemChips = ({
       <Chip label={service.type.label} type={type} size={size} />
     )}
     {service.format?.value && (
-      <Chip label={service.format.label} type={type} size={size} />
+      <Chip
+        label={`${service.format.label}${!service.format.fixed ? ` (${service.places})` : ''}`}
+        type={type}
+        size={size}
+      />
     )}
     {service.gender?.value && (
       <Chip label={service.gender.label} type={type} size={size} />

@@ -200,6 +200,7 @@ export const ImportBrandClient = () => {
 
             {!clients.length || !file ? (
               <DocumentPicker
+                label={t('brand_client.import.upload.label')}
                 type={['text/csv', 'application/vnd.ms-excel', '.csv']}
                 error={fileError}
                 onUpload={onUploadFile}
@@ -222,13 +223,17 @@ export const ImportBrandClient = () => {
             )}
           </View>
 
-          <MediumText
-            fontSize={12}
-            color="$placeholderColor"
-            marginHorizontal="$3"
-          >
-            *{t('brand_client.import.guide.warning')}
-          </MediumText>
+          {/*<MediumText*/}
+          {/*  fontSize={12}*/}
+          {/*  color="$placeholderColor"*/}
+          {/*  marginHorizontal="$3"*/}
+          {/*>*/}
+          {/*  *{t('brand_client.import.guide.warning')}*/}
+          {/*</MediumText>*/}
+
+          <RegularText marginTop="$10" textAlign="center">
+            {t('brand_client.import.suggestion')}
+          </RegularText>
 
           <Accordion
             marginTop="$5"

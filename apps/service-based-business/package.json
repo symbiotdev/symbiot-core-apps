@@ -52,6 +52,7 @@
     "expo-media-library": "*",
     "expo-router": "*",
     "expo-splash-screen": "*",
+    "expo-localization": "*",
     "expo-status-bar": "*",
     "expo-sharing": "*",
     "expo-symbols": "*",

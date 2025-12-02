@@ -7,6 +7,7 @@ import {
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import i18n from 'i18next';
 import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
+import { getLocales } from 'expo-localization';
 
 const LANGUAGE_STORE_KEY = 'x-lang';
 const fallbackLanguage = 'en';
@@ -28,17 +29,20 @@ export const changeAppLanguage = (language: string) => {
 };
 
 export const changeAppLanguageToSystem = () => {
+  void i18n.changeLanguage(getPrimaryLanguage());
   mmkvGlobalStorage.remove(LANGUAGE_STORE_KEY);
-
-  const primaryLanguage =
-    i18n.languages.find((language) => language === fallbackLanguage) ||
-    i18n.languages[0];
-
-  if (primaryLanguage) {
-    void i18n.changeLanguage(primaryLanguage);
-  }
 };
 
+const getPrimaryLanguage = () => {
+  return (
+    getLocales().find(
+      ({ languageCode }) =>
+        languageCode && i18n.languages.includes(languageCode),
+    )?.languageCode ||
+    i18n.languages[0] ||
+    fallbackLanguage
+  );
+};
 export type Translations = {
   [key: string]: string | Translations;
 };
@@ -54,9 +58,8 @@ export const I18nProvider = ({
   const init = useCallback(async () => {
     const languages = Object.keys(translations);
     const storedLanguage = mmkvGlobalStorage.getString(LANGUAGE_STORE_KEY);
-    const primaryLanguage =
-      languages.find((language) => language === fallbackLanguage) ||
-      languages[0];
+
+    i18n.languages = languages;
 
     languages.forEach((language) => {
       i18n.addResourceBundle(language, 'translation', translations[language]);
@@ -64,7 +67,7 @@ export const I18nProvider = ({
 
     try {
       if (storedLanguage && !languages.includes(storedLanguage)) {
-        changeAppLanguage(primaryLanguage);
+        changeAppLanguage(getPrimaryLanguage());
       } else {
         await i18n.changeLanguage(storedLanguage);
       }

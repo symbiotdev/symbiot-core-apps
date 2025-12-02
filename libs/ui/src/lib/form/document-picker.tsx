@@ -57,7 +57,7 @@ export const DocumentPicker = ({
   }, [disabled, multiple, onUpload, type]);
 
   return (
-    <FormField label={label} error={error} {...viewProps}>
+    <FormField error={error} {...viewProps}>
       <Button
         label={label || t('shared.upload')}
         loading={uploading}

@@ -81,6 +81,8 @@ export const Picker = ({
     <View
       flex={1}
       disabled={disabled}
+      paddingTop={25}
+      paddingBottom={50}
       onMoveShouldSetResponder={(e) => {
         e.stopPropagation();
 

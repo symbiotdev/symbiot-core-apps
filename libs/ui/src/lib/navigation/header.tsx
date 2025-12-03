@@ -80,7 +80,6 @@ export const HeaderButton = memo(
     <AttentionView attention={Boolean(attention)}>
       <Pressable
         style={({ pressed }) => ({
-          flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
           opacity: pressed ? 0.8 : 1,

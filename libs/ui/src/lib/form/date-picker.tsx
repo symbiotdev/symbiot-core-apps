@@ -17,6 +17,7 @@ import { InputFieldView } from '../view/input-field-view';
 import { Icon } from '../icons';
 import RNDatepicker from 'react-native-date-picker';
 import { useTranslation } from 'react-i18next';
+import { ContainerView } from '../view/container-view';
 
 export const DatePicker = ({
   value,
@@ -92,9 +93,9 @@ export const DatePicker = ({
         }
         onClose={onBlur}
       >
-        <View
+        <ContainerView
+          alignItems="center"
           maxWidth={Platform.OS === 'web' ? 350 : undefined}
-          marginHorizontal="auto"
         >
           {Platform.OS === 'ios' ? (
             <RNDatepicker
@@ -196,7 +197,7 @@ export const DatePicker = ({
               onChange={onChangeDate}
             />
           )}
-        </View>
+        </ContainerView>
       </AdaptivePopover>
     </FormField>
   );

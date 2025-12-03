@@ -19,7 +19,7 @@ export default () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <XStack gap="$3" flex={1}>
+        <XStack flex={1} gap="$3" alignItems="center">
           {/*todo - analytics*/}
           {/*{hasPermission('analytics') && (*/}
           {/*  <HeaderButton*/}

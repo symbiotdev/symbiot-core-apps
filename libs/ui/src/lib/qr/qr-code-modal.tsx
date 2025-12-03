@@ -1,13 +1,12 @@
-import { Platform, StyleSheet } from 'react-native';
 import { BaseSyntheticEvent, ReactElement } from 'react';
 import { PageView } from '../view/page-view';
 import { QrCode } from './qr-code';
 import { Card } from '../card/card';
 import { H4 } from '../text/heading';
-import { Blur } from '../blur/blur';
 import { emitHaptic, useModal } from '@symbiot-core-apps/shared';
 import { FullScreenTransparentModal } from '../modal/full-screen-transparent-modal';
 import { View } from 'tamagui';
+import { NavigationBackground } from '../navigation/background';
 
 export const QrCodeModalWithTrigger = ({
   trigger,
@@ -62,10 +61,10 @@ export const QrCodeModal = ({
   return (
     <FullScreenTransparentModal
       visible={visible}
-      animationType={Platform.OS === 'android' ? 'fade' : 'slide'}
+      animationType="fade"
       onClose={onClose}
     >
-      <Blur style={StyleSheet.absoluteFillObject} />
+      <NavigationBackground opacity={0.4} />
 
       <PageView onPress={onClose}>
         <Card

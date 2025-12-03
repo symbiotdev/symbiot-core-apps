@@ -21,12 +21,12 @@ import {
   useFloating,
 } from '@floating-ui/react-native';
 import { Card } from '../card/card';
-import { Blur } from '../blur/blur';
 import { Spinner } from '../loading/spinner';
 import { ListItem } from '../list/list-item';
 import { emitHaptic, useScreenOrientation } from '@symbiot-core-apps/shared';
 import { Icon } from '../icons';
 import { FullScreenTransparentModal } from '../modal/full-screen-transparent-modal';
+import { NavigationBackground } from '../navigation/background';
 
 export type ContextMenuItem = {
   label: string;
@@ -146,7 +146,7 @@ const Menu = ({
       style={StyleSheet.absoluteFillObject}
       onPress={onClose}
     >
-      <Blur style={StyleSheet.absoluteFillObject} />
+      <NavigationBackground opacity={0.4} />
 
       <Trigger {...rect} ref={refs.setReference} collapsable={false} />
 

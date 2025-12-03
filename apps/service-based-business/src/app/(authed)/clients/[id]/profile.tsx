@@ -10,16 +10,12 @@ export default () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
-  const {
-    data: client,
-    error,
-    isPending,
-  } = useBrandClientDetailedByIdReq(id);
+  const { data: client, error, isPending } = useBrandClientDetailedByIdReq(id);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <XStack gap="$3" flex={1}>
+        <XStack flex={1} gap="$3" alignItems="center">
           {/*todo - analytics*/}
           {/*{hasPermission('analytics') && (*/}
           {/*  <HeaderButton*/}

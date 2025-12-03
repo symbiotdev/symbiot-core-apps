@@ -62,7 +62,6 @@ const SideElement = memo((props: ViewProps) => (
     zIndex={1}
     width={60}
     minWidth={60}
-    height={headerButtonSize}
     justifyContent="center"
     {...props}
   />
@@ -105,7 +104,7 @@ export const HeaderTitle = ({
   title: string;
   subtitle?: string;
 }) => (
-  <View alignItems="center" flex={4} zIndex={1}>
+  <View alignItems="center" justifyContent="center" flex={4} zIndex={1}>
     <MediumText numberOfLines={subtitle ? 1 : 2} textAlign="center">
       {title}
     </MediumText>

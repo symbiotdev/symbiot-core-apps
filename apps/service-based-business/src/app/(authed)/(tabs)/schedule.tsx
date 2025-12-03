@@ -11,12 +11,13 @@ import {
   AdaptivePopoverRef,
   Avatar,
   ButtonIcon,
-  defaultIconSize,
   H3,
+  H4,
   headerButtonSize,
   Icon,
   MediumText,
   Picker,
+  RegularText,
   tabBarHeight,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
@@ -86,9 +87,11 @@ export default () => {
     [allLocations, locations],
   );
 
-  const headerLeft = useCallback(
-    () => (
-      <XStack gap="$3" alignItems="center" width="100%">
+  const headerLeft = useCallback(() => {
+    const date = DateHelper.format(selectedDate, 'LLLL yyyy', i18n.language);
+
+    return (
+      <XStack gap="$3" alignItems="center" width="100%" flex={1}>
         <View position="relative" alignItems="center" justifyContent="center">
           <Icon name="CalendarMinimalistic" color="$buttonTextColor1" />
 
@@ -103,13 +106,29 @@ export default () => {
           </MediumText>
         </View>
 
-        <H3 flex={1} numberOfLines={1} lineHeight={defaultIconSize}>
-          {DateHelper.format(selectedDate, 'LLLL yyyy', i18n.language)}
-        </H3>
+        {locations?.items?.length ? (
+          <View flex={1} gap={1} marginTop={3} justifyContent="center">
+            <H4 numberOfLines={1}>{date}</H4>
+
+            {!!locations?.items?.length && (
+              <RegularText color="$disabled" fontSize={12} numberOfLines={1}>
+                {location?.name || allLocations.label}
+              </RegularText>
+            )}
+          </View>
+        ) : (
+          <H3 numberOfLines={1} marginTop={3}>{date}</H3>
+        )}
       </XStack>
-    ),
-    [i18n.language, now, selectedDate],
-  );
+    );
+  }, [
+    now,
+    selectedDate,
+    i18n.language,
+    allLocations.label,
+    location?.name,
+    locations?.items?.length,
+  ]);
 
   const headerRight = useCallback(
     () =>

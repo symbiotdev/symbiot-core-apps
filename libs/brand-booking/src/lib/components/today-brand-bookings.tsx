@@ -8,7 +8,11 @@ import {
 } from '@symbiot-core-apps/ui';
 import React, { useMemo } from 'react';
 import { useBrandBookingLoader } from '../hooks/use-brand-booking-loader';
-import { DateHelper, useNativeNow } from '@symbiot-core-apps/shared';
+import {
+  DateHelper,
+  emitHaptic,
+  useNativeNow,
+} from '@symbiot-core-apps/shared';
 import { useApp } from '@symbiot-core-apps/app';
 import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import {
@@ -72,7 +76,10 @@ export const TodayBrandBookings = () => {
           <Link
             marginLeft="auto"
             fontSize={14}
-            onPress={() => router.push('/bookings')}
+            onPress={() => {
+              emitHaptic();
+              router.push('/bookings');
+            }}
           >
             {t('brand_booking.see_all')}
           </Link>

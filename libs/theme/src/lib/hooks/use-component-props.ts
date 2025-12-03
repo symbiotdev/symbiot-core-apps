@@ -1,11 +1,12 @@
 import { DimensionValue, ViewProps, ViewStyle } from 'react-native';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   allStyleProps,
   colorStyleProps,
   dimensionStyleProps,
 } from '../utils/style-props';
 import { AnimatedProps } from 'react-native-reanimated';
+import { useTheme } from './use-theme';
 
 type OverrideStyle<T> = {
   [K in keyof T]: T[K] extends DimensionValue | undefined
@@ -17,37 +18,74 @@ export type Props<P extends ViewProps | AnimatedProps<ViewProps>> = P &
   OverrideStyle<P['style']> & {
     disabled?: boolean;
     disabledStyle?: OverrideStyle<ViewStyle>;
+    hoverStyle?: OverrideStyle<ViewStyle>;
+    pressStyle?: OverrideStyle<ViewStyle>;
   };
-
-const colors: Record<string, string> = {
-  $primary: '#FFFFFF',
-  $secondary: 'red',
-};
-
-const dimensions: Record<string, number> = {
-  $1: 5,
-  $2: 10,
-};
 
 export function useComponentProps<P extends ViewProps>({
   style,
   disabled,
   disabledStyle,
+  hoverStyle,
+  pressStyle,
   ...otherProps
 }: Partial<Props<P>>): ViewProps {
-  const props = useMemo(
-    () =>
-      Object.keys(otherProps)
-        .filter((key) => !allStyleProps[key])
-        .reduce(
-          (obj, key) => ({
-            ...obj,
-            [key]: otherProps[key as 'id'],
-          }),
-          {},
-        ),
-    [otherProps],
-  );
+  const { colors, dimensions } = useTheme();
+
+  const [state, setState] = useState({
+    hovered: false,
+    pressed: false,
+  });
+
+  const props: ViewProps = useMemo(() => {
+    const filteredProps = Object.keys(otherProps)
+      .filter((key) => !allStyleProps[key])
+      .reduce(
+        (obj, key) => ({
+          ...obj,
+          [key]: otherProps[key as 'id'],
+        }),
+        {},
+      );
+
+    return {
+      ...filteredProps,
+      ...(hoverStyle && {
+        onPointerEnter: (e) => {
+          setState((prev) => ({ ...prev, hovered: true }));
+
+          otherProps.onPointerEnter?.(e);
+        },
+        onPointerLeave: (e) => {
+          setState((prev) => ({ ...prev, hovered: false }));
+
+          otherProps.onPointerLeave?.(e);
+        },
+      }),
+      ...(pressStyle && {
+        onPointerDown: (e) => {
+          setState((prev) => ({ ...prev, pressed: true }));
+
+          otherProps.onPointerDown?.(e);
+        },
+        onPointerUp: (e) => {
+          setState((prev) => ({ ...prev, pressed: false }));
+
+          otherProps.onPointerUp?.(e);
+        },
+        onTouchStart: (e) => {
+          setState((prev) => ({ ...prev, pressed: true }));
+
+          otherProps.onTouchStart?.(e);
+        },
+        onTouchEnd: (e) => {
+          setState((prev) => ({ ...prev, pressed: false }));
+
+          otherProps.onTouchEnd?.(e);
+        },
+      }),
+    };
+  }, [otherProps, hoverStyle, pressStyle]);
 
   const _style = useMemo(
     () =>
@@ -59,6 +97,11 @@ export function useComponentProps<P extends ViewProps>({
             ? [style]
             : []),
         {
+          ...(state.hovered && hoverStyle),
+          ...(state.pressed && {
+            opacity: 0.8,
+            ...pressStyle,
+          }),
           ...(disabled && {
             opacity: 0.5,
             ...disabledStyle,
@@ -88,7 +131,18 @@ export function useComponentProps<P extends ViewProps>({
             }
           }, {}),
       ),
-    [disabled, disabledStyle, style, otherProps],
+    [
+      colors,
+      dimensions,
+      state.hovered,
+      state.pressed,
+      style,
+      disabled,
+      otherProps,
+      hoverStyle,
+      pressStyle,
+      disabledStyle,
+    ],
   );
 
   return {

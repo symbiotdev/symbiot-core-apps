@@ -1,4 +1,4 @@
-export * from './lib/components/div';
+export * from './lib/components/stack';
 export * from './lib/components/txt';
 
 export * from './lib/hooks/use-fixel-font';

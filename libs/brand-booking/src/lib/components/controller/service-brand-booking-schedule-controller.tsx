@@ -56,6 +56,9 @@ export function ServiceBrandBookingScheduleController({
     <Controller
       name="schedule"
       control={control}
+      rules={{
+        validate: (value) => value.start !== undefined,
+      }}
       render={({ field: { value, onChange } }) => {
         return (
           <>

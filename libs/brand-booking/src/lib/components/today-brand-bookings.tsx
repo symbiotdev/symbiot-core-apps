@@ -102,13 +102,23 @@ export const TodayBrandBookings = () => {
 
         {!adjustedBookings.length && (
           <ActionCard
-            title={t('brand_booking.today_no_schedules.title')}
-            subtitle={t(
-              hasCompletedServices
-                ? 'brand_booking.today_schedules_completed'
-                : 'brand_booking.today_no_schedules.subtitle',
-            )}
-            buttonLabel={t('brand_booking.add_service_booking')}
+            {...(hasCompletedServices
+              ? {
+                  title: t('brand_booking.today_schedules_completed.title'),
+                  subtitle: t(
+                    'brand_booking.today_schedules_completed.subtitle',
+                  ),
+                  buttonLabel: t(
+                    'brand_booking.today_schedules_completed.button.label',
+                  ),
+                }
+              : {
+                  title: t('brand_booking.today_no_schedules.title'),
+                  subtitle: t('brand_booking.today_no_schedules.subtitle'),
+                  buttonLabel: t(
+                    'brand_booking.today_no_schedules.button.label',
+                  ),
+                })}
             buttonHidden={!hasPermission('bookings')}
             buttonIcon={<Icon name={icons.ServiceBooking} />}
             onPress={() =>

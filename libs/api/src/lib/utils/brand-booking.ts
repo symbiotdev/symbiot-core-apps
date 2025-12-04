@@ -36,17 +36,18 @@ export const isBrandBookingAllDay = ({
 };
 
 export const getEndDateByBrandBookingFrequency = (
+  date: Date,
   frequency: BrandBookingFrequency,
 ) => {
   if (
     frequency === BrandBookingFrequency.everyWorkday ||
     frequency === BrandBookingFrequency.everyDay
   ) {
-    return DateHelper.addMonths(new Date(), 1);
+    return DateHelper.addMonths(date, 1);
   } else if (frequency === BrandBookingFrequency.everyWeek) {
-    return DateHelper.addMonths(new Date(), 6);
+    return DateHelper.addMonths(date, 6);
   } else if (frequency === BrandBookingFrequency.everyMonth) {
-    return DateHelper.addMonths(new Date(), 12);
+    return DateHelper.addMonths(date, 12);
   } else {
     return undefined;
   }

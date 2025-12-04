@@ -8,6 +8,7 @@ import {
   BrandBookingFrequency,
   getEndDateByBrandBookingFrequency,
 } from '@symbiot-core-apps/api';
+import { useCurrentAccountState } from '@symbiot-core-apps/state';
 
 export function BrandBookingFrequencyController<
   T extends FieldValues & {
@@ -22,6 +23,7 @@ export function BrandBookingFrequencyController<
   disableDrag?: boolean;
 }) {
   const { t } = useTranslation();
+  const { me } = useCurrentAccountState();
 
   const options = useMemo(
     () => [
@@ -62,6 +64,7 @@ export function BrandBookingFrequencyController<
               options={options}
               onChange={(type) => {
                 const maxDate = getEndDateByBrandBookingFrequency(
+                  props.minDate,
                   type as BrandBookingFrequency,
                 );
 
@@ -82,8 +85,11 @@ export function BrandBookingFrequencyController<
                 {...props}
                 value={value.endDate}
                 label={t('shared.schedule.frequency_until')}
-                minDate={props.minDate}
-                maxDate={getEndDateByBrandBookingFrequency(value.type)}
+                formatStr={me?.preferences?.dateFormat}
+                maxDate={getEndDateByBrandBookingFrequency(
+                  props.minDate,
+                  value.type,
+                )}
                 onChange={(endDate) => {
                   onChange({
                     ...value,

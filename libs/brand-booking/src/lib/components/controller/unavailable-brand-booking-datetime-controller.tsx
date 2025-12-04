@@ -5,6 +5,7 @@ import { DatePicker, SelectPicker } from '@symbiot-core-apps/ui';
 import { DateHelper } from '@symbiot-core-apps/shared';
 import { useTranslation } from 'react-i18next';
 import { isBrandBookingAllDay } from '@symbiot-core-apps/api';
+import { useCurrentAccountState } from '@symbiot-core-apps/state';
 
 enum Duration {
   allDay,
@@ -18,6 +19,7 @@ export function UnavailableBrandBookingDatetimeController(props: {
   onBlur?: () => void;
 }) {
   const { t } = useTranslation();
+  const { me } = useCurrentAccountState();
 
   return (
     <Controller
@@ -34,6 +36,7 @@ export function UnavailableBrandBookingDatetimeController(props: {
               value={value.start}
               error={error?.message}
               minDate={new Date()}
+              formatStr={me?.preferences?.dateFormat}
               onChange={(newDate) =>
                 onChange({
                   start: DateHelper.changeDateKeepTime(value.start, newDate),

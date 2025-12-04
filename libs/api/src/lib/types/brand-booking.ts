@@ -50,6 +50,7 @@ export type UnavailableBrandBooking = BrandBooking & {
 export type BrandBookingClient = BrandClient & {
   free: boolean;
   note: string;
+  cAt: string;
   membership: AnyBrandClientMembership;
 };
 

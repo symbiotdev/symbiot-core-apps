@@ -24,7 +24,7 @@ import {
   Sheet,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrandClientItem } from '@symbiot-core-apps/brand';
 import { useModal } from '@symbiot-core-apps/shared';
@@ -94,6 +94,14 @@ export const ServiceBrandBookingProfileClients = ({
 
   const [actionClient, setActionClient] = useState<BrandBookingClient>();
   const [loadingId, setLoadingId] = useState<string>();
+
+  const sortedClients = useMemo(
+    () =>
+      booking.clients?.sort(
+        (a, b) => new Date(b.cAt).getTime() - new Date(a.cAt).getTime(),
+      ),
+    [booking.clients],
+  );
 
   const onAdd = useCallback(
     async (client: BrandClient) => {
@@ -166,15 +174,15 @@ export const ServiceBrandBookingProfileClients = ({
   return (
     <>
       <ListItemGroup
-        title={`${t('service_brand_booking.profile.clients.title')} (${booking.clients.length}/${booking.places})`}
+        title={`${t('service_brand_booking.profile.clients.title')} (${sortedClients.length}/${booking.places})`}
         titleProps={{
-          ...(booking.clients.length > booking.places && {
+          ...(sortedClients?.length > booking.places && {
             color: '$error',
           }),
         }}
       >
         {!booking.cancelAt &&
-          !!booking.clients.length &&
+          !!sortedClients.length &&
           hasPermission('bookings') && (
             <Button
               loading={clientAdding}
@@ -193,7 +201,7 @@ export const ServiceBrandBookingProfileClients = ({
             />
           )}
 
-        {!booking.clients?.length ? (
+        {!sortedClients?.length ? (
           !hasPermission('bookings') ? (
             <EmptyView
               message={t(`service_brand_booking.profile.clients.empty`)}
@@ -212,19 +220,17 @@ export const ServiceBrandBookingProfileClients = ({
             />
           )
         ) : (
-          booking.clients
-            .sort((a, b) => (a.firstname > b.firstname ? 1 : -1))
-            .map((client) => (
-              <ClientItem
-                paddingVertical="$1"
-                key={client.id}
-                hideArrow={!!booking.cancelAt}
-                disabled={!!booking.cancelAt}
-                loading={loadingId === client.id}
-                client={client}
-                onPress={() => setActionClient(client)}
-              />
-            ))
+          sortedClients.map((client) => (
+            <ClientItem
+              paddingVertical="$1"
+              key={client.id}
+              hideArrow={!!booking.cancelAt}
+              disabled={!!booking.cancelAt}
+              loading={loadingId === client.id}
+              client={client}
+              onPress={() => setActionClient(client)}
+            />
+          ))
         )}
       </ListItemGroup>
 
@@ -238,7 +244,7 @@ export const ServiceBrandBookingProfileClients = ({
         <CurrentBrandClients
           hideArrow
           hideAddClientButton
-          disabledIds={booking.clients.map(({ id }) => id)}
+          disabledIds={sortedClients.map(({ id }) => id)}
           onClientPress={onAdd}
         />
       </SlideSheetModal>

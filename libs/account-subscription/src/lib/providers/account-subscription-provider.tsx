@@ -4,6 +4,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -14,6 +15,7 @@ import Purchases, {
 import { Platform } from 'react-native';
 import {
   useCurrentAccountState,
+  useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { AdaptivePopover, AdaptivePopoverRef } from '@symbiot-core-apps/ui';
@@ -33,6 +35,7 @@ import {
 type AccountSubscriptionContext = {
   packages: PurchasesPackage[];
   processing: boolean;
+  canSubscribe: boolean;
   showPaywall: () => void;
   manageSubscriptions: () => void;
 };
@@ -48,6 +51,7 @@ const apiKeyByPlatform: Record<string, string> = {
 export const AccountSubscriptionProvider = ({
   children,
 }: PropsWithChildren) => {
+  const { currentEmployee } = useCurrentBrandEmployee();
   const { me, setMySubscriptions } = useCurrentAccountState();
   const { brand, setBrandSubscription } = useCurrentBrandState();
   const { mutateAsync: createSubscription, isPending: subscriptionCreating } =
@@ -62,6 +66,15 @@ export const AccountSubscriptionProvider = ({
   const [subscribing, setSubscribing] = useState<boolean>(false);
   const [restoring, setRestoring] = useState<boolean>(false);
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
+
+  const canSubscribe = useMemo(
+    () =>
+      Platform.OS !== 'web' &&
+      !!packages.length &&
+      !!me?.offering &&
+      currentEmployee?.id === brand?.owner?.id,
+    [brand?.owner?.id, currentEmployee?.id, me?.offering, packages.length],
+  );
 
   const showPaywall = useCallback(() => paywallRef.current?.open(), []);
 
@@ -168,6 +181,7 @@ export const AccountSubscriptionProvider = ({
     <Context.Provider
       value={{
         packages,
+        canSubscribe,
         processing:
           subscribing ||
           restoring ||

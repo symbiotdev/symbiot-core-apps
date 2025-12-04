@@ -14,6 +14,7 @@ import {
 import React, { useCallback, useLayoutEffect } from 'react';
 import { router, useNavigation } from 'expo-router';
 import {
+  ActionCard,
   Avatar,
   FormView,
   H3,
@@ -36,10 +37,7 @@ import { GestureResponderEvent, Linking, Platform } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useAccountAuthSignOutReq } from '@symbiot-core-apps/api';
 import { Image } from 'expo-image';
-import {
-  AccountRequestSubscription,
-  useAccountSubscription,
-} from '@symbiot-core-apps/account-subscription';
+import { useAccountSubscription } from '@symbiot-core-apps/account-subscription';
 
 export default () => {
   const { t } = useTranslation();
@@ -49,8 +47,12 @@ export default () => {
   const { scheme } = useScheme();
   const { visible: drawerVisible } = useDrawer();
   const share = useShareApp();
-  const { processing: subscriptionProcessing, manageSubscriptions } =
-    useAccountSubscription();
+  const {
+    processing: subscriptionProcessing,
+    canSubscribe,
+    showPaywall,
+    manageSubscriptions,
+  } = useAccountSubscription();
   const { mutate: signOut } = useAccountAuthSignOutReq();
   const navigation = useNavigation();
 
@@ -136,7 +138,17 @@ export default () => {
     me && (
       <TabsPageView scrollable withHeaderHeight>
         <FormView gap="$3" flex={1}>
-          <AccountRequestSubscription />
+          {canSubscribe &&
+            brand &&
+            (!brand?.subscription || !brand.subscription.renewable) && (
+              <ActionCard
+                title={t('subscription.card.title')}
+                subtitle={t('subscription.card.subtitle')}
+                buttonLabel={t('subscription.card.button.label')}
+                buttonIcon={<Icon name="Rocket" />}
+                onPress={showPaywall}
+              />
+            )}
 
           <ListItemGroup
             flexDirection="row"
@@ -204,7 +216,7 @@ export default () => {
           </ListItemGroup>
 
           <ListItemGroup title={t('shared.application')}>
-            {Platform.OS !== 'web' && brand?.subscription?.active && (
+            {canSubscribe && brand?.subscription?.active && (
               <ListItem
                 disabled={subscriptionProcessing}
                 label={t('shared.preferences.subscriptions.title')}

@@ -7,7 +7,7 @@ import {
   AdaptivePopover,
   AdaptivePopoverRef,
 } from '../popover/adaptive-popover';
-import { useTheme, View, ViewProps } from 'tamagui';
+import { useTheme, ViewProps } from 'tamagui';
 import { LightText } from '../text/text';
 import { FormField } from './form-field';
 import { DateHelper, emitHaptic, Weekday } from '@symbiot-core-apps/shared';
@@ -61,7 +61,9 @@ export const DatePicker = ({
     ({ date }: { date: DateType }) => {
       popoverRef.current?.close();
 
-      onChange?.(DateHelper.toDate(date as Date));
+      onChange?.(
+        DateHelper.fromZonedTime(DateHelper.toDate(date as Date), 'UTC'),
+      );
       onBlur?.();
 
       emitHaptic();

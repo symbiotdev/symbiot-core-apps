@@ -127,7 +127,7 @@ export default () => {
         <BrandMembershipItem
           alignSelf="center"
           membership={item}
-          onPress={() => router.push(`/memberships/${type}/${item.id}/profile`)}
+          onPress={() => router.push(`/memberships/${item.id}/profile`)}
         />
       )}
       Intro={Intro}

@@ -419,11 +419,11 @@ export default () => {
 
                 <Stack.Protected guard={hasPermission('catalog')}>
                   <Stack.Protected guard={hasPermission('analytics')}>
-                    <Stack.Screen name="memberships/[type]/[id]/analytics" />
+                    <Stack.Screen name="memberships/[id]/analytics" />
                   </Stack.Protected>
-                  <Stack.Screen name="memberships/[type]/[id]/remove" />
-                  <Stack.Screen name="memberships/[type]/[id]/update" />
-                  <Stack.Screen name="memberships/[type]/[id]/profile" />
+                  <Stack.Screen name="memberships/[id]/remove" />
+                  <Stack.Screen name="memberships/[id]/update" />
+                  <Stack.Screen name="memberships/[id]/profile" />
                   <Stack.Protected
                     guard={
                       // need to be check with direct type

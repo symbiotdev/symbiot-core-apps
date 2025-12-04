@@ -1,6 +1,5 @@
 import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
 import {
-  BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
   useBrandMembershipProfileByIdReq,
 } from '@symbiot-core-apps/api';
@@ -16,9 +15,8 @@ export default () => {
   const { t } = useTranslation();
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
-  const { id, type } = useLocalSearchParams<{
+  const { id } = useLocalSearchParams<{
     id: string;
-    type: BrandMembershipType;
   }>();
   const {
     data: membership,
@@ -28,9 +26,11 @@ export default () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: t(
-        `${getTranslateKeyByBrandMembershipType(type)}.profile.title`,
-      ),
+      headerTitle: membership?.type
+        ? t(
+            `${getTranslateKeyByBrandMembershipType(membership.type)}.profile.title`,
+          )
+        : '',
       headerRight: () => (
         <XStack flex={1} gap="$3" alignItems="center">
           {/*todo - analytics*/}
@@ -38,20 +38,20 @@ export default () => {
           {/*  <HeaderButton*/}
           {/*    iconName="ChartSquare"*/}
           {/*    onPress={() =>*/}
-          {/*      router.push(`/memberships/${type}/${id}/analytics`)*/}
+          {/*      router.push(`/memberships/${id}/analytics`)*/}
           {/*    }*/}
           {/*  />*/}
           {/*)}*/}
           {hasPermission('catalog') && (
             <HeaderButton
               iconName="SettingsMinimalistic"
-              onPress={() => router.push(`/memberships/${type}/${id}/update`)}
+              onPress={() => router.push(`/memberships/${id}/update`)}
             />
           )}
         </XStack>
       ),
     });
-  }, [hasPermission, id, type, navigation, t]);
+  }, [hasPermission, id, membership?.type, navigation, t]);
 
   if (!membership || error) {
     return <InitView loading={isPending} error={error} />;

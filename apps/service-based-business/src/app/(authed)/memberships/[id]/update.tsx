@@ -5,7 +5,6 @@ import {
   InitView,
 } from '@symbiot-core-apps/ui';
 import {
-  BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
   useBrandMembershipDetailedByIdReq,
 } from '@symbiot-core-apps/api';
@@ -17,27 +16,30 @@ import { UpdateBrandMembership } from '@symbiot-core-apps/brand-membership';
 export default () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const { id, type } = useLocalSearchParams<{
+  const { id } = useLocalSearchParams<{
     id: string;
-    type: BrandMembershipType;
   }>();
   const {
     data: membership,
     isPending,
     error,
   } = useBrandMembershipDetailedByIdReq(id);
-  const tPrefix = getTranslateKeyByBrandMembershipType(type);
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
-    () => [
-      {
-        label: t(`${tPrefix}.update.context_menu.remove.label`),
-        icon: <Icon name="TrashBinMinimalistic" />,
-        color: '$error',
-        onPress: () => router.push(`/memberships/${type}/${id}/remove`),
-      } as ContextMenuItem,
-    ],
-    [id, type, t, tPrefix],
+    () =>
+      membership?.type
+        ? [
+            {
+              label: t(
+                `${getTranslateKeyByBrandMembershipType(membership.type)}.update.context_menu.remove.label`,
+              ),
+              icon: <Icon name="TrashBinMinimalistic" />,
+              color: '$error',
+              onPress: () => router.push(`/memberships/${id}/remove`),
+            } as ContextMenuItem,
+          ]
+        : [],
+    [id, membership?.type, t],
   );
 
   const headerRight = useCallback(
@@ -48,9 +50,13 @@ export default () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight,
-      headerTitle: t(`${tPrefix}.update.title`),
+      headerTitle: membership?.type
+        ? t(
+            `${getTranslateKeyByBrandMembershipType(membership.type)}.update.title`,
+          )
+        : '',
     });
-  }, [headerRight, navigation, tPrefix, t]);
+  }, [headerRight, membership?.type, navigation, t]);
 
   if (!membership || error) {
     return <InitView loading={isPending} error={error} />;

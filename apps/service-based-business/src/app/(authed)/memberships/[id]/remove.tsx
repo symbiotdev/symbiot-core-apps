@@ -1,15 +1,11 @@
 import { InitView } from '@symbiot-core-apps/ui';
-import {
-  BrandMembershipType,
-  useBrandMembershipProfileByIdReq,
-} from '@symbiot-core-apps/api';
+import { useBrandMembershipProfileByIdReq } from '@symbiot-core-apps/api';
 import { useLocalSearchParams } from 'expo-router';
 import { RemoveBrandMembership } from '@symbiot-core-apps/brand-membership';
 
 export default () => {
-  const { id, type } = useLocalSearchParams<{
+  const { id } = useLocalSearchParams<{
     id: string;
-    type: BrandMembershipType;
   }>();
   const {
     data: membership,
@@ -21,5 +17,7 @@ export default () => {
     return <InitView loading={isPending} error={error} />;
   }
 
-  return <RemoveBrandMembership type={type} membership={membership} />;
+  return (
+    <RemoveBrandMembership type={membership.type} membership={membership} />
+  );
 };

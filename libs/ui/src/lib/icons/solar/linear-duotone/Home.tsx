@@ -9,11 +9,5 @@ export const Home = (props: IconProps) => (
       stroke={props.color}
       strokeWidth={1.5}
     />
-    <Path
-      d="M15 18H9"
-      stroke={props.color}
-      strokeWidth={1.5}
-      strokeLinecap="round"
-    />
   </Svg>
 );

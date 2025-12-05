@@ -94,9 +94,10 @@ export const TodayBrandBookings = () => {
             key={booking.id}
             booking={booking}
             pressStyle={{ opacity: 0.8 }}
-            onPress={() =>
-              router.push(`/bookings/${booking.type}/${booking.id}/profile`)
-            }
+            onPress={() => {
+              router.push(`/bookings/${booking.type}/${booking.id}/profile`);
+              emitHaptic();
+            }}
           />
         ))}
 

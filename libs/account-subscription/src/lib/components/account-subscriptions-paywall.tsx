@@ -221,9 +221,9 @@ export const AccountSubscriptionsPaywall = ({
 
             <View gap="$1">
               <SemiBoldText lineHeight={24}>{title}</SemiBoldText>
-              <RegularText color="$disabled" fontSize={12}>
-                {subtitle}
-              </RegularText>
+              {/*<RegularText color="$disabled" fontSize={12}>*/}
+              {/*  {subtitle}*/}
+              {/*</RegularText>*/}
             </View>
           </Animated.View>
         ))}

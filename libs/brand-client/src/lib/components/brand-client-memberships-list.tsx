@@ -20,14 +20,16 @@ const byType = {
   [BrandMembershipType.period]: {
     query: useBrandClientPeriodBasedMembershipsListReq,
     icon: 'PeriodBasedMembership',
-    noDataTitle: 'brand_client.history.visit_based_memberships.empty.title',
-    noDataMessage: 'brand_client.history.visit_based_memberships.empty.subtitle',
+    noDataTitle: 'brand_client.history.period_based_memberships.empty.title',
+    noDataMessage:
+      'brand_client.history.period_based_memberships.empty.subtitle',
   },
   [BrandMembershipType.visits]: {
     query: useBrandClientVisitsBasedMembershipsListReq,
     icon: 'VisitBasedMembership',
-    noDataTitle: 'brand_client.history.period_based_memberships.empty.title',
-    noDataMessage: 'brand_client.history.period_based_memberships.empty.subtitle',
+    noDataTitle: 'brand_client.history.visit_based_memberships.empty.title',
+    noDataMessage:
+      'brand_client.history.visit_based_memberships.empty.subtitle',
   },
 };
 

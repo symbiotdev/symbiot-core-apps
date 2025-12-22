@@ -13,7 +13,7 @@
     ],
     "ios": {
       "appleTeamId": "8WPTDS74WX",
-      "bundleIdentifier": "com.symbiothub.dance",
+      "bundleIdentifier": "com.symbiothub.dance.dev",
       "buildNumber": "45",
       "googleServicesFile": "./google/GoogleService-Info.plist",
       "supportsTablet": true,
@@ -32,7 +32,7 @@
       }
     },
     "android": {
-      "package": "com.symbiothub.dance",
+      "package": "com.symbiothub.dance.dev",
       "versionCode": 45,
       "icon": "./assets/images/icon/ios-light.png",
       "adaptiveIcon": {

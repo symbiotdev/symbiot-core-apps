@@ -13,7 +13,6 @@ import { BrandWebsiteController } from './contoller/brand-website-controller';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { BrandReferralSourceController } from './contoller/brand-referral-source-controller';
 import { BrandCompetitorController } from './contoller/brand-competitor-controller';
-import { BrandPromoCodeController } from './contoller/brand-promo-code-controller';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { CountryCode, getCountry } from 'countries-and-timezones';
 import { BrandIndustryController } from './contoller/brand-industry-controller';
@@ -258,20 +257,20 @@ export const CreateBrand = () => {
         </SurveyStep>
       )}
 
-      {!me?.sourced && (
-        <SurveyStep
-          skippable
-          canGoNext={promoCodeFormState.isValid}
-          title={t('brand.create.steps.promo_code.title')}
-          subtitle={t('brand.create.steps.promo_code.subtitle')}
-        >
-          <BrandPromoCodeController
-            noLabel
-            name="promoCode"
-            control={promoCodeControl}
-          />
-        </SurveyStep>
-      )}
+      {/*{!me?.sourced && (*/}
+      {/*  <SurveyStep*/}
+      {/*    skippable*/}
+      {/*    canGoNext={promoCodeFormState.isValid}*/}
+      {/*    title={t('brand.create.steps.promo_code.title')}*/}
+      {/*    subtitle={t('brand.create.steps.promo_code.subtitle')}*/}
+      {/*  >*/}
+      {/*    <BrandPromoCodeController*/}
+      {/*      noLabel*/}
+      {/*      name="promoCode"*/}
+      {/*      control={promoCodeControl}*/}
+      {/*    />*/}
+      {/*  </SurveyStep>*/}
+      {/*)}*/}
     </Survey>
   );
 };

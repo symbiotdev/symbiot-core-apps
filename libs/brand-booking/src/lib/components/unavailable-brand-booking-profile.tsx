@@ -154,8 +154,9 @@ export const UnavailableBrandBookingProfile = ({
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight,
+      headerTitle: t(`unavailable_brand_booking.profile.title`),
     });
-  }, [navigation, headerRight]);
+  }, [navigation, headerRight, t]);
 
   return (
     <>
@@ -178,7 +179,7 @@ export const UnavailableBrandBookingProfile = ({
               </RegularText>
             )}
 
-            <XStack gap="$2" alignItems="center">
+            <XStack gap="$2" alignItems="center" marginTop="$1">
               <Icon name={icons.UnavailableBooking} size={18} />
 
               <H4 textDecorationLine={textDecorationLine}>

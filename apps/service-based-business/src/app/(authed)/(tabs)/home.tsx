@@ -198,12 +198,12 @@ const BrandHome = () => {
                 text: used?.periodMemberships,
                 onPress: onPeriodBasedMembershipsPress,
               },
-              {
-                disabled: true,
-                iconName: 'Gift',
-                label: t('brand_gift_card.title'),
-                text: t('shared.coming_soon'),
-              },
+              // {
+              //   disabled: true,
+              //   iconName: 'Gift',
+              //   label: t('brand_gift_card.title'),
+              //   text: t('shared.coming_soon'),
+              // },
             ]}
           />
         )}

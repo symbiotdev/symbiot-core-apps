@@ -194,7 +194,7 @@ export const ServiceBrandBookingProfile = ({
               </RegularText>
             )}
 
-            <XStack gap="$2" alignItems="center">
+            <XStack gap="$2" alignItems="center" marginTop="$1">
               <Icon name={icons.ServiceBooking} size={18} />
 
               <RegularText textDecorationLine={textDecorationLine}>

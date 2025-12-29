@@ -35,21 +35,21 @@ export const hasActiveSubscriptionChanges = (
   customerInfo: CustomerInfo,
   accountSubscription?: AccountSubscription,
 ) => {
-  const activeSubscription = mapCustomerInfoToAccountSubscription(customerInfo);
+  const targetSubscription = mapCustomerInfoToAccountSubscription(customerInfo);
 
-  if (!activeSubscription && !accountSubscription) return false;
+  if (!targetSubscription && !accountSubscription) return false;
 
   return (
-    activeSubscription?.type !== accountSubscription?.type ||
-    activeSubscription?.store !== accountSubscription?.store ||
-    activeSubscription?.active !== accountSubscription?.active ||
-    activeSubscription?.product !== accountSubscription?.product ||
-    activeSubscription?.renewable !== accountSubscription?.renewable ||
-    (activeSubscription?.expiresDate && accountSubscription?.expiresDate
+    targetSubscription?.type !== accountSubscription?.type ||
+    targetSubscription?.store !== accountSubscription?.store ||
+    targetSubscription?.active !== accountSubscription?.active ||
+    targetSubscription?.product !== accountSubscription?.product ||
+    targetSubscription?.renewable !== accountSubscription?.renewable ||
+    (targetSubscription?.expiresDate && accountSubscription?.expiresDate
       ? !DateHelper.isSame(
-          activeSubscription.expiresDate,
+          targetSubscription.expiresDate,
           accountSubscription.expiresDate,
         )
-      : activeSubscription?.expiresDate !== accountSubscription?.expiresDate)
+      : targetSubscription?.expiresDate !== accountSubscription?.expiresDate)
   );
 };

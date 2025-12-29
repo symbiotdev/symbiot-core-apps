@@ -70,10 +70,10 @@ export const AccountSubscriptionProvider = ({
   const canSubscribe = useMemo(
     () =>
       Platform.OS !== 'web' &&
-      !!packages.length &&
       !!me?.offering &&
-      currentEmployee?.id === brand?.owner?.id,
-    [brand?.owner?.id, currentEmployee?.id, me?.offering, packages.length],
+      !!brand?.owner?.id &&
+      currentEmployee?.id === brand.owner.id,
+    [brand?.owner?.id, currentEmployee?.id, me?.offering],
   );
 
   const showPaywall = useCallback(() => paywallRef.current?.open(), []);
@@ -135,7 +135,12 @@ export const AccountSubscriptionProvider = ({
   useEffect(() => {
     const apiKey = apiKeyByPlatform[Platform.OS];
 
-    if (!apiKey || !me?.id || process.env.EXPO_PUBLIC_APP_MODE !== 'production')
+    if (
+      !apiKey ||
+      !me?.id ||
+      !canSubscribe ||
+      process.env.EXPO_PUBLIC_APP_MODE !== 'production'
+    )
       return;
 
     Purchases.configure({
@@ -149,20 +154,20 @@ export const AccountSubscriptionProvider = ({
         ),
       ),
     );
-  }, [me?.id]);
+  }, [canSubscribe, me?.id]);
 
   useEffect(() => {
-    if (!brand?.id) return;
+    if (!canSubscribe) return;
 
     const handleCustomerInfo = async (customerInfo: CustomerInfo) => {
-      if (!hasActiveSubscriptionChanges(customerInfo, brand.subscription))
+      if (!hasActiveSubscriptionChanges(customerInfo, brand?.subscription))
         return;
 
       const activeSubscription =
         mapCustomerInfoToAccountSubscription(customerInfo);
 
       if (activeSubscription) {
-        await (brand.subscription
+        await (brand?.subscription
           ? update(activeSubscription)
           : create(customerInfo));
       } else {
@@ -175,7 +180,7 @@ export const AccountSubscriptionProvider = ({
     return () => {
       Purchases.removeCustomerInfoUpdateListener(handleCustomerInfo);
     };
-  }, [brand?.id, brand?.subscription, create, remove, update]);
+  }, [canSubscribe, brand?.subscription, create, remove, update]);
 
   return (
     <Context.Provider

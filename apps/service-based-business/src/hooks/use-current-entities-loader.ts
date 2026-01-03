@@ -25,7 +25,11 @@ export const useCurrentEntitiesLoader = () => {
     setBrand: setCurrentBrand,
     setBrands: setCurrentBrands,
   } = useCurrentBrandState();
-  const { data: meResponse, error: meResponseError } = useAccountMeReq({
+  const {
+    data: meResponse,
+    error: meResponseError,
+    refetch,
+  } = useAccountMeReq({
     enabled: !!tokens.access,
   });
   const { data: currentBrandResponse, error: currentBrandResponseError } =
@@ -93,5 +97,8 @@ export const useCurrentEntitiesLoader = () => {
     setCurrentEmployee,
   ]);
 
-  return !initializing;
+  return {
+    loaded: !initializing,
+    refetchCurrentAccount: refetch,
+  };
 };

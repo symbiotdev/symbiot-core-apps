@@ -22,7 +22,12 @@ import { ShowNativeSuccessAlert } from '@symbiot-core-apps/shared';
 import { useAudioPlayer } from 'expo-audio';
 import { router } from 'expo-router';
 
-export const SocketProvider = ({ children }: PropsWithChildren) => {
+export const SocketProvider = ({
+  children,
+  refetchCurrentAccount,
+}: PropsWithChildren<{
+  refetchCurrentAccount: () => void;
+}>) => {
   const switchBrand = useAuthBrand();
   const soundPlayer = useAudioPlayer(
     require('../../assets/audio/new_notification_sound.wav'),
@@ -61,8 +66,14 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
       router.replace('/');
       clearInitialQueryData();
       queryClient.clear();
+      refetchCurrentAccount();
     },
-    [setCurrentEmployee, setCurrentBrand, setCurrentBrands],
+    [
+      setCurrentEmployee,
+      setCurrentBrand,
+      setCurrentBrands,
+      refetchCurrentAccount,
+    ],
   );
 
   const onNotificationAdded = useCallback(
@@ -134,7 +145,7 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     if (process.env.EXPO_PUBLIC_APP_MODE !== 'production') {
       socket.onAny((data) => {
         console.log('Socket: ', data);
-      })
+      });
     }
 
     socket.on(WebsocketAction.accountUpdated, updateMe);

@@ -65,7 +65,8 @@ export default () => {
   const { canDo, used } = useAccountLimits();
   const { visible: drawerVisible } = useDrawer();
   const screenOptions = useStackScreenHeaderOptions();
-  const currentEntitiesLoaded = useCurrentEntitiesLoader();
+  const { loaded: currentEntitiesLoaded, refetchCurrentAccount } =
+    useCurrentEntitiesLoader();
   const { hasPermission } = useCurrentBrandEmployee();
   const { location, setLocation } = useCurrentBrandBookingsState();
 
@@ -98,7 +99,7 @@ export default () => {
 
   return (
     <AccountSubscriptionProvider>
-      <SocketProvider>
+      <SocketProvider refetchCurrentAccount={refetchCurrentAccount}>
         <NotificationsProvider onPressNotification={onPressNotification}>
           <XStack flex={1}>
             {drawerVisible && <DrawerMenu />}

@@ -150,14 +150,14 @@ const BrandHome = () => {
                 hidden: !hasPermission('clients'),
                 iconName: 'SmileCircle',
                 label: t('brand_client.title'),
-                text: used?.clients,
+                // text: used?.clients,
                 onPress: onClientsPress,
               },
               {
                 hidden: !hasPermission('catalog'),
                 iconName: icons.Service,
                 label: t('brand_service.title'),
-                text: used?.services,
+                // text: used?.services,
                 onPress: onServicesPress,
               },
               {
@@ -187,7 +187,7 @@ const BrandHome = () => {
                 label: t(
                   `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.title`,
                 ),
-                text: used?.visitMemberships,
+                // text: used?.visitMemberships,
                 onPress: onVisitBasedMembershipsPress,
               },
               {
@@ -195,7 +195,7 @@ const BrandHome = () => {
                 label: t(
                   `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.title`,
                 ),
-                text: used?.periodMemberships,
+                // text: used?.periodMemberships,
                 onPress: onPeriodBasedMembershipsPress,
               },
               // {

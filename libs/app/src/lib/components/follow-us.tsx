@@ -38,11 +38,11 @@ export const FollowUs = () => {
     <PageView scrollable withHeaderHeight>
       <FormView>
         <ListItemGroup>
-          <ListItem
-            label="@symbiothub"
-            icon={<Icon name="X" />}
-            onPress={openTwitter}
-          />
+          {/*<ListItem*/}
+          {/*  label="@symbiothub"*/}
+          {/*  icon={<Icon name="X" />}*/}
+          {/*  onPress={openTwitter}*/}
+          {/*/>*/}
           <ListItem
             label="@symbiothub"
             icon={<Icon name="Instagram" />}

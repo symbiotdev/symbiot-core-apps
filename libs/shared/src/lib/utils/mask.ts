@@ -11,9 +11,11 @@ export const formatPrice = (props: {
   discount?: number;
   symbol?: string;
 }) => {
-  const value = props.price - (props.discount || 0);
+  const isNegative = props.price < 0;
+  const divider = isNegative ? -1 : 1;
+  const value = (Math.abs(props.price) - (props.discount || 0)) * divider;
 
-  return `${value < 0 ? '-' : ''}${mask(
+  return `${isNegative ? '-' : ''}${mask(
     Math.abs(value),
     undefined,
     'currency',

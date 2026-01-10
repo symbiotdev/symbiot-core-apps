@@ -3,10 +3,10 @@ import {
   AnyBrandBooking,
   Brand,
   BrandBookingQueryKey,
-  clearInitialQueryData,
   Notification,
   queryClient,
   socket,
+  useAccountAuthSignOutReq,
   useNotificationReqState,
   WebsocketAction,
 } from '@symbiot-core-apps/api';
@@ -20,7 +20,6 @@ import { useAuthBrand } from '@symbiot-core-apps/brand';
 import { Platform } from 'react-native';
 import { ShowNativeSuccessAlert } from '@symbiot-core-apps/shared';
 import { useAudioPlayer } from 'expo-audio';
-import { router } from 'expo-router';
 
 export const SocketProvider = ({
   children,
@@ -38,7 +37,6 @@ export const SocketProvider = ({
   const {
     brand: currentBrand,
     setBrand: setCurrentBrand,
-    setBrands: setCurrentBrands,
     setBrandStats: setCurrentBrandStats,
     setBrandSubscription: setCurrentBrandSubscription,
   } = useCurrentBrandState();
@@ -48,6 +46,7 @@ export const SocketProvider = ({
     addToList: addNotificationToListQueryState,
     markAllAsRead: markAllNotificationsAsRead,
   } = useNotificationReqState();
+  const { mutate: signOut } = useAccountAuthSignOutReq();
 
   const onBrandAssigned = useCallback(
     (brand: Brand) => {
@@ -60,20 +59,9 @@ export const SocketProvider = ({
 
   const onBrandUnassigned = useCallback(
     (brand: Brand) => {
-      setCurrentEmployee(undefined);
-      setCurrentBrand(undefined);
-      setCurrentBrands([]);
-      router.replace('/');
-      clearInitialQueryData();
-      queryClient.clear();
-      refetchCurrentAccount();
+      signOut();
     },
-    [
-      setCurrentEmployee,
-      setCurrentBrand,
-      setCurrentBrands,
-      refetchCurrentAccount,
-    ],
+    [signOut],
   );
 
   const onNotificationAdded = useCallback(

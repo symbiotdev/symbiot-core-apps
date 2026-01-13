@@ -1,4 +1,4 @@
-import { DimensionValue, Modal } from 'react-native';
+import { DimensionValue, Modal, ModalProps } from 'react-native';
 import { BaseSyntheticEvent, PropsWithChildren, ReactElement } from 'react';
 import { View, ViewProps } from 'tamagui';
 import { headerHeight, ModalHeader } from '../navigation/header';
@@ -15,9 +15,10 @@ export const SlideSheetModal = ({
   headerRight,
   ignoreBottomSafeArea,
   transparentHeader,
+  supportedOrientations = ['portrait', 'landscape'],
   withKeyboard = true,
   onClose,
-  paddingTop,
+  paddingTop = isTablet ? undefined : headerHeight,
   ...viewProps
 }: PropsWithChildren<
   ViewProps & {
@@ -27,6 +28,7 @@ export const SlideSheetModal = ({
     withKeyboard?: boolean;
     transparentHeader?: boolean;
     ignoreBottomSafeArea?: boolean;
+    supportedOrientations?: ModalProps['supportedOrientations'];
     headerLeft?: () => ReactElement;
     headerTitle?: string | (() => ReactElement);
     headerRight?: () => ReactElement;
@@ -37,7 +39,7 @@ export const SlideSheetModal = ({
     visible={visible}
     animationType="slide"
     presentationStyle={isTablet ? 'fullScreen' : 'pageSheet'}
-    supportedOrientations={['portrait', 'landscape']}
+    supportedOrientations={supportedOrientations}
     onRequestClose={onClose}
   >
     <PortalProvider shouldAddRootHost>
@@ -56,7 +58,7 @@ export const SlideSheetModal = ({
           withKeyboard={withKeyboard}
           withHeaderHeight={isTablet}
           scrollable={scrollable}
-          paddingTop={paddingTop || (isTablet ? undefined : headerHeight)}
+          paddingTop={paddingTop}
           {...viewProps}
         >
           {children}

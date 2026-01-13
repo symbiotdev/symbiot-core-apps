@@ -44,7 +44,8 @@ export const Segment = memo(
         <View
           key={item.value}
           padding="$2"
-          borderRadius={50}
+          borderRadius={30}
+          overflow="hidden"
           gap="$1"
           minWidth={width ? (width - padding * 2) / items.length : undefined}
           alignItems="center"

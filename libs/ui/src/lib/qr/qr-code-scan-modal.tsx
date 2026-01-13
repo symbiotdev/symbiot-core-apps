@@ -7,7 +7,12 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { View } from 'tamagui';
 import { PermissionStatus } from 'expo-image-picker';
 import { SlideSheetModal } from '../modal/slide-sheet-modal';
-import { Linking, StyleSheet, useWindowDimensions } from 'react-native';
+import {
+  Linking,
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+} from 'react-native';
 import { EmptyView } from '../view/empty-view';
 import { Button } from '../button/button';
 import { FormView } from '../view/form-view';
@@ -56,12 +61,12 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
   const scannedRef = useRef(false);
 
   const { frameSize, frameX, frameY, frameRadius } = useMemo(() => {
-    const size = Math.min(width - 80, 400);
+    const size = Math.min(Math.min(width, height) - 80, 400);
 
     return {
       frameSize: size,
       frameX: (width - size) / 2,
-      frameY: (height - size) / 2 - headerHeight,
+      frameY: (height - size) / 2 - (Platform.OS === 'ios' ? headerHeight : 0),
       frameRadius: 50,
     };
   }, [width, height]);
@@ -130,7 +135,7 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
           }}
           onBarcodeScanned={onBarcodeScanned}
         >
-          <Svg width="100%" height="100%">
+          <Svg width={width} height={height}>
             <Mask id="mask">
               <Rect width="100%" height="100%" fill="white" />
               <Rect

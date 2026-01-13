@@ -59,6 +59,7 @@ export const Switch = ({
         </View>
       ) : (
         <UiSwitch
+          native="mobile"
           paddingHorizontal={2}
           cursor="pointer"
           width={switchWidth}

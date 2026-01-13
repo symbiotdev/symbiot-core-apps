@@ -201,7 +201,14 @@ export const ImportBrandClient = () => {
             {!clients.length || !file ? (
               <DocumentPicker
                 label={t('brand_client.import.upload.label')}
-                type={['text/csv', 'application/vnd.ms-excel', '.csv']}
+                type={[
+                  'text/csv',
+                  '.csv',
+                  'application/vnd.ms-excel',
+                  'application/csv',
+                  'text/comma-separated-values',
+                  'application/octet-stream',
+                ]}
                 error={fileError}
                 onUpload={onUploadFile}
               />

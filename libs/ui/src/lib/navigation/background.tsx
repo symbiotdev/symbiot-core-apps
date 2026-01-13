@@ -25,7 +25,7 @@ export const NavigationBackground = ({
       position="absolute"
       width="100%"
       height="100%"
-      opacity={Platform.OS !== 'android' ? opacity : 0.8}
+      opacity={Platform.OS !== 'android' ? opacity : 1}
       backgroundColor="$background"
       {...props}
     />

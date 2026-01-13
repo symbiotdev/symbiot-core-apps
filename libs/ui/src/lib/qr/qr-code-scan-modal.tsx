@@ -5,7 +5,6 @@ import {
 } from 'expo-camera';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { View } from 'tamagui';
-import { Spinner } from '../loading/spinner';
 import { PermissionStatus } from 'expo-image-picker';
 import { SlideSheetModal } from '../modal/slide-sheet-modal';
 import { Linking, StyleSheet, useWindowDimensions } from 'react-native';
@@ -15,6 +14,9 @@ import { FormView } from '../view/form-view';
 import { useTranslation } from 'react-i18next';
 import { useRendered } from '@symbiot-core-apps/shared';
 import { LoadingView } from '../view/loading-view';
+import { headerHeight } from '../navigation/header';
+import { Spinner } from '../loading/spinner';
+import Svg, { Mask, Rect } from 'react-native-svg';
 
 export const QrCodeScanModal = (props: {
   visible: boolean;
@@ -48,12 +50,21 @@ export const QrCodeScanModal = (props: {
 const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
   const [permission, requestPermission] = useCameraPermissions();
   const { t } = useTranslation();
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const { rendered } = useRendered({ delay: 200 });
 
   const scannedRef = useRef(false);
 
-  const scanSize = useMemo(() => Math.min(width - 80, 400), [width]);
+  const { frameSize, frameX, frameY, frameRadius } = useMemo(() => {
+    const size = Math.min(width - 80, 400);
+
+    return {
+      frameSize: size,
+      frameX: (width - size) / 2,
+      frameY: (height - size) / 2 - headerHeight,
+      frameRadius: 50,
+    };
+  }, [width, height]);
 
   const onBarcodeScanned = useCallback(
     (result: BarcodeScanningResult) => {
@@ -87,7 +98,22 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
     );
   }
 
-  if (permission?.status !== PermissionStatus.DENIED) {
+  if (permission?.status === PermissionStatus.DENIED) {
+    return (
+      <FormView flex={1}>
+        <EmptyView
+          iconName="Camera"
+          title={t('shared.camera.denied_permission.title')}
+          message={t('shared.camera.denied_permission.subtitle')}
+        >
+          <Button
+            label={t('shared.camera.denied_permission.action.label')}
+            onPress={Linking.openSettings}
+          />
+        </EmptyView>
+      </FormView>
+    );
+  } else {
     return (
       <>
         <Spinner position="absolute" />
@@ -104,33 +130,41 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
           }}
           onBarcodeScanned={onBarcodeScanned}
         >
-          <View
-            position="absolute"
-            borderWidth={2000}
-            borderColor="#00000080"
-            justifyContent="center"
-            alignItems="center"
-            borderRadius={2050}
-          >
-            <View width={scanSize} height={scanSize} />
-          </View>
+          <Svg width="100%" height="100%">
+            <Mask id="mask">
+              <Rect width="100%" height="100%" fill="white" />
+              <Rect
+                x={frameX}
+                y={frameY}
+                width={frameSize}
+                height={frameSize}
+                rx={frameRadius}
+                ry={frameRadius}
+                fill="black"
+              />
+            </Mask>
+
+            <Rect
+              width="100%"
+              height="100%"
+              fill="rgba(0,0,0,0.7)"
+              mask="url(#mask)"
+            />
+
+            <Rect
+              x={frameX}
+              y={frameY}
+              width={frameSize}
+              height={frameSize}
+              rx={frameRadius}
+              ry={frameRadius}
+              stroke="#FFFFFF50"
+              strokeWidth={2}
+              fill="transparent"
+            />
+          </Svg>
         </CameraView>
       </>
-    );
-  } else {
-    return (
-      <FormView flex={1}>
-        <EmptyView
-          iconName="Camera"
-          title={t('shared.camera.denied_permission.title')}
-          message={t('shared.camera.denied_permission.subtitle')}
-        >
-          <Button
-            label={t('shared.camera.denied_permission.action.label')}
-            onPress={Linking.openSettings}
-          />
-        </EmptyView>
-      </FormView>
     );
   }
 };

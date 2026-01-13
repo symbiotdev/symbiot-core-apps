@@ -14,6 +14,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "767164872646-2n4libqh04nhd2k8dc4qlpirdosvdt2b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.symbiothub.dance",
+            "certificate_hash": "3b95d4ab736046751b70bf6644aa3c87676c24f8"
+          }
+        },
+        {
+          "client_id": "767164872646-icjur1de8kjq1a27litjck6nttcalsio.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.symbiothub.dance",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "767164872646-vdl82ubrtpqb1jpssp8r3aud0ul13uhn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.symbiothub.dance",
+            "certificate_hash": "81099f9b187a427ba0ff5812cfe58746913c9472"
+          }
+        },
+        {
           "client_id": "767164872646-nb48arj2rf65jr6dak674o55omnjpr05.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -50,6 +74,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "767164872646-h2278amndaea2c4p5aihplorlu4ab7l8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.symbiothub.dance.dev",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "767164872646-o7f6q97st8p6npgfmlmsfl70ihk8cdj0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.symbiothub.dance.dev",
+            "certificate_hash": "3b95d4ab736046751b70bf6644aa3c87676c24f8"
+          }
+        },
         {
           "client_id": "767164872646-nb48arj2rf65jr6dak674o55omnjpr05.apps.googleusercontent.com",
           "client_type": 3

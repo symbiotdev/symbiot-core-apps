@@ -74,7 +74,7 @@ export const usePushNotificationsObserver = ({
         const request = response.notification.request;
         const identifier = request.identifier;
 
-        if (lastPushNotificationIdentifier === identifier) {
+        if (!identifier || lastPushNotificationIdentifier === identifier) {
           return;
         }
 

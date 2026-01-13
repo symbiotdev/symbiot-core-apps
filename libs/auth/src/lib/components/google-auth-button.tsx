@@ -1,15 +1,27 @@
 import { Button, Icon } from '@symbiot-core-apps/ui';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   GoogleSignin,
   isErrorWithCode,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import { useTranslation } from 'react-i18next';
+import { Platform } from 'react-native';
 
 GoogleSignin.configure({
   webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
 });
+
+const initWebScript = () => {
+  const scriptTag = document.createElement('script');
+  scriptTag.src = 'https://accounts.google.com/gsi/client';
+  scriptTag.async = true;
+  scriptTag.onerror = () => {
+    console.error('Failed to load Google script');
+  };
+
+  document.body.appendChild(scriptTag);
+};
 
 export const GoogleAuthButton = ({
   pending,
@@ -53,6 +65,10 @@ export const GoogleAuthButton = ({
       setLoading(false);
     }
   }, [onAuth, onError]);
+
+  useEffect(() => {
+    Platform.OS === 'web' && initWebScript();
+  }, []);
 
   return (
     <Button

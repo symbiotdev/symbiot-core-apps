@@ -9,6 +9,7 @@ import { router } from 'expo-router';
 import { useAccountAuthSignInWithFirebaseReq } from '@symbiot-core-apps/api';
 import { useTranslation } from 'react-i18next';
 
+// check why not available on web https://react-native-google-signin.github.io/docs/setting-up/web
 const isGoogleAuthAvailable = Platform.OS !== 'web';
 
 export const SignInButtons = () => {

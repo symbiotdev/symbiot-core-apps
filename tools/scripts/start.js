@@ -20,8 +20,12 @@ import { spawn } from 'child_process';
 
   await mergeAppAssets(app, buildApp, env);
 
-  spawn(getStartCommand(buildApp, buildType, env, platform), {
+  const startCommand = getStartCommand(buildApp, buildType, env, platform);
+
+  spawn(startCommand, {
     stdio: 'inherit',
     shell: true,
   });
+
+  console.log('[command]: ', startCommand);
 })();

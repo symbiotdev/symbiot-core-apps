@@ -7,7 +7,6 @@ export * from './lib/hooks/use-modal-update-form';
 export * from './lib/queries/use-account.api';
 export * from './lib/queries/use-account-auth.api';
 export * from './lib/queries/use-account-device.api';
-export * from './lib/queries/use-account-subscription.api';
 export * from './lib/queries/use-notification.api';
 
 export * from './lib/queries/use-app.api';

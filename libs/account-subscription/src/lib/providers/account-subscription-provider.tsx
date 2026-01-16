@@ -8,11 +8,8 @@ import {
   useRef,
   useState,
 } from 'react';
-import Purchases, {
-  CustomerInfo,
-  PurchasesPackage,
-} from 'react-native-purchases';
-import { Platform } from 'react-native';
+import Purchases, { PurchasesPackage } from 'react-native-purchases';
+import { Linking, Platform } from 'react-native';
 import {
   useCurrentAccountState,
   useCurrentBrandEmployee,
@@ -20,24 +17,13 @@ import {
 } from '@symbiot-core-apps/state';
 import { AdaptivePopover, AdaptivePopoverRef } from '@symbiot-core-apps/ui';
 import { AccountSubscriptionsPaywall } from '../components/account-subscriptions-paywall';
-import {
-  AccountSubscription,
-  UpdateAccountSubscription,
-  useAccountCreateSubscription,
-  useAccountDeleteSubscription,
-  useAccountUpdateSubscription,
-} from '@symbiot-core-apps/api';
-import {
-  hasActiveSubscriptionChanges,
-  mapCustomerInfoToAccountSubscription,
-} from '../utils/customer-info-to-account-subscription';
 
 type AccountSubscriptionContext = {
   packages: PurchasesPackage[];
   processing: boolean;
   canSubscribe: boolean;
   showPaywall: () => void;
-  manageSubscriptions: () => void;
+  manageSubscriptions: () => Promise<void>;
 };
 
 const Context = createContext<AccountSubscriptionContext | undefined>(
@@ -52,14 +38,8 @@ export const AccountSubscriptionProvider = ({
   children,
 }: PropsWithChildren) => {
   const { currentEmployee } = useCurrentBrandEmployee();
-  const { me, setMySubscriptions } = useCurrentAccountState();
-  const { brand, setBrandSubscription } = useCurrentBrandState();
-  const { mutateAsync: createSubscription, isPending: subscriptionCreating } =
-    useAccountCreateSubscription();
-  const { mutateAsync: updateSubscription, isPending: subscriptionUpdating } =
-    useAccountUpdateSubscription();
-  const { mutateAsync: removeSubscription, isPending: subscriptionRemoving } =
-    useAccountDeleteSubscription();
+  const { me } = useCurrentAccountState();
+  const { brand } = useCurrentBrandState();
 
   const paywallRef = useRef<AdaptivePopoverRef>(null);
 
@@ -77,38 +57,6 @@ export const AccountSubscriptionProvider = ({
   );
 
   const showPaywall = useCallback(() => paywallRef.current?.open(), []);
-
-  const create = useCallback(
-    async (customerInfo: CustomerInfo) => {
-      const subscription = await createSubscription({
-        userId: customerInfo.originalAppUserId,
-        ...(mapCustomerInfoToAccountSubscription(
-          customerInfo,
-        ) as AccountSubscription),
-      });
-
-      setMySubscriptions([subscription]);
-      setBrandSubscription(subscription);
-    },
-    [createSubscription, setBrandSubscription, setMySubscriptions],
-  );
-
-  const update = useCallback(
-    async (data: UpdateAccountSubscription) => {
-      const subscription = await updateSubscription(data);
-
-      setMySubscriptions([subscription]);
-      setBrandSubscription(subscription);
-    },
-    [setBrandSubscription, setMySubscriptions, updateSubscription],
-  );
-
-  const remove = useCallback(async () => {
-    await removeSubscription();
-
-    setMySubscriptions([]);
-    setBrandSubscription(undefined);
-  }, [removeSubscription, setBrandSubscription, setMySubscriptions]);
 
   const onSubscribe = useCallback(async (pkg: PurchasesPackage) => {
     try {
@@ -132,6 +80,18 @@ export const AccountSubscriptionProvider = ({
     }
   }, []);
 
+  const manageSubscriptions = useCallback(async () => {
+    if (Platform.OS === 'ios') {
+      return Purchases.showManageSubscriptions();
+    } else if (Platform.OS === 'android') {
+      return Linking.openURL(
+        `https://play.google.com/store/account/subscriptions`,
+      );
+    } else {
+      return alert('Impossible to open Manage Subscriptions');
+    }
+  }, []);
+
   useEffect(() => {
     const apiKey = apiKeyByPlatform[Platform.OS];
 
@@ -143,10 +103,7 @@ export const AccountSubscriptionProvider = ({
     )
       return;
 
-    Purchases.configure({
-      apiKey,
-      appUserID: me.id,
-    });
+    Purchases.configure({ apiKey, appUserID: me.id });
     Purchases.getOfferings().then(({ all }) =>
       setPackages(
         Object.values(all).flatMap(
@@ -156,45 +113,14 @@ export const AccountSubscriptionProvider = ({
     );
   }, [canSubscribe, me?.id]);
 
-  useEffect(() => {
-    if (!canSubscribe) return;
-
-    const handleCustomerInfo = async (customerInfo: CustomerInfo) => {
-      if (!hasActiveSubscriptionChanges(customerInfo, brand?.subscription))
-        return;
-
-      const activeSubscription =
-        mapCustomerInfoToAccountSubscription(customerInfo);
-
-      if (activeSubscription) {
-        await (brand?.subscription
-          ? update(activeSubscription)
-          : create(customerInfo));
-      } else {
-        await remove();
-      }
-    };
-
-    Purchases.addCustomerInfoUpdateListener(handleCustomerInfo);
-
-    return () => {
-      Purchases.removeCustomerInfoUpdateListener(handleCustomerInfo);
-    };
-  }, [canSubscribe, brand?.subscription, create, remove, update]);
-
   return (
     <Context.Provider
       value={{
         packages,
         canSubscribe,
-        processing:
-          subscribing ||
-          restoring ||
-          subscriptionCreating ||
-          subscriptionUpdating ||
-          subscriptionRemoving,
+        processing: subscribing || restoring,
         showPaywall,
-        manageSubscriptions: Purchases.showManageSubscriptions,
+        manageSubscriptions,
       }}
     >
       {children}

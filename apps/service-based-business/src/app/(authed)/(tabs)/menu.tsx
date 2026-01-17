@@ -35,7 +35,10 @@ import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
 import { GestureResponderEvent, Linking, Platform } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
-import { useAccountAuthSignOutReq } from '@symbiot-core-apps/api';
+import {
+  AccountSubscriptionEnvironment,
+  useAccountAuthSignOutReq,
+} from '@symbiot-core-apps/api';
 import { Image } from 'expo-image';
 import { useAccountSubscription } from '@symbiot-core-apps/account-subscription';
 
@@ -140,7 +143,7 @@ export default () => {
         <FormView gap="$3" flex={1}>
           {canSubscribe &&
             brand &&
-            (!brand?.subscription || !brand.subscription.renewable) && (
+            (!brand?.subscription || brand.subscription.canceled) && (
               <ActionCard
                 title={t('subscription.card.title')}
                 subtitle={t('subscription.card.subtitle')}
@@ -222,18 +225,17 @@ export default () => {
                 label={t('shared.preferences.subscriptions.title')}
                 icon={<Icon name="Rocket2" />}
                 iconAfter={subscriptionProcessing ? <Spinner /> : undefined}
-                color={!brand.subscription.renewable ? '$error' : undefined}
-                text={
-                  !brand.subscription.renewable &&
-                  brand.subscription.expiresDate
+                color={brand.subscription.canceled ? '$error' : undefined}
+                text={`${brand.subscription.environment === AccountSubscriptionEnvironment.sandbox ? '[Sandbox] ' : ''}${
+                  brand.subscription.canceled && brand.subscription.expiresDate
                     ? t('shared.preferences.subscriptions.expires_on', {
                         date: DateHelper.format(
                           brand.subscription.expiresDate,
                           me.preferences.dateFormat,
                         ),
                       })
-                    : undefined
-                }
+                    : ''
+                }`}
                 onPress={manageSubscriptions}
               />
             )}

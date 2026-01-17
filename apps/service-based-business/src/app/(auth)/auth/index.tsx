@@ -12,7 +12,7 @@ export default () => {
       title={t('auth.title')}
       subtitle={t('auth.subtitle')}
       videoSource={require('../../../../assets/video/auth/bg.mp4')}
-      logo={<AdaptiveLogo />}
+      logo={<AdaptiveLogo forceDark />}
     />
   );
 };

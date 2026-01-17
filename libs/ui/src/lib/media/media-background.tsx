@@ -2,7 +2,6 @@ import { Platform, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useVideoPlayer, VideoSource, VideoView } from 'expo-video';
-import { Blur } from '../blur/blur';
 import { useCallback, useEffect } from 'react';
 import { useRestoreApp } from '@symbiot-core-apps/shared';
 import { useFocusEffect } from 'expo-router';
@@ -48,19 +47,19 @@ export const MediaBackground = ({
         contentFit="cover"
       />
 
-      {Platform.OS !== 'android' && (
-        <>
-          <AnimatedVideo
-            entering={Platform.OS !== 'web' ? FadeIn.duration(1000) : undefined}
-            player={player}
-            nativeControls={false}
-            contentFit="cover"
-            style={styles.Media}
-          />
+      <AnimatedVideo
+        entering={Platform.OS === 'ios' ? FadeIn.duration(1000) : undefined}
+        player={player}
+        nativeControls={false}
+        contentFit="cover"
+        style={styles.Media}
+      />
 
-          <Blur intensity={50} style={styles.BlurView} />
-        </>
-      )}
+      <View
+        backgroundColor="rgba(17,17,17,0.7)"
+        style={StyleSheet.absoluteFillObject}
+        zIndex={2}
+      />
 
       <View flex={1} zIndex={20} {...viewProps} />
     </>
@@ -73,11 +72,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     zIndex: 1,
-  },
-  BlurView: {
-    ...StyleSheet.absoluteFillObject,
-    width: '100%',
-    height: '100%',
-    zIndex: 10,
+    opacity: 0.5,
   },
 });

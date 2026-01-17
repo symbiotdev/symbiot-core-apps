@@ -22,6 +22,7 @@ type AccountSubscriptionContext = {
   packages: PurchasesPackage[];
   processing: boolean;
   canSubscribe: boolean;
+  isSubscriptionsAvailable: boolean;
   showPaywall: () => void;
   manageSubscriptions: () => Promise<void>;
 };
@@ -47,13 +48,24 @@ export const AccountSubscriptionProvider = ({
   const [restoring, setRestoring] = useState<boolean>(false);
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
 
-  const canSubscribe = useMemo(
+  const isSubscriptionsAvailable = useMemo(
     () =>
       Platform.OS !== 'web' &&
       !!me?.offering &&
       !!brand?.owner?.id &&
       currentEmployee?.id === brand.owner.id,
     [brand?.owner?.id, currentEmployee?.id, me?.offering],
+  );
+
+  const canSubscribe = useMemo(
+    () =>
+      isSubscriptionsAvailable &&
+      (!brand?.subscription?.active || !!brand?.subscription?.canceled),
+    [
+      brand?.subscription?.active,
+      brand?.subscription?.canceled,
+      isSubscriptionsAvailable,
+    ],
   );
 
   const showPaywall = useCallback(() => paywallRef.current?.open(), []);
@@ -118,6 +130,7 @@ export const AccountSubscriptionProvider = ({
       value={{
         packages,
         canSubscribe,
+        isSubscriptionsAvailable,
         processing: subscribing || restoring,
         showPaywall,
         manageSubscriptions,

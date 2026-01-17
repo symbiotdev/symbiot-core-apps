@@ -53,6 +53,7 @@ export default () => {
   const {
     processing: subscriptionProcessing,
     canSubscribe,
+    isSubscriptionsAvailable,
     showPaywall,
     manageSubscriptions,
   } = useAccountSubscription();
@@ -141,17 +142,15 @@ export default () => {
     me && (
       <TabsPageView scrollable withHeaderHeight>
         <FormView gap="$3" flex={1}>
-          {canSubscribe &&
-            brand &&
-            (!brand?.subscription || brand.subscription.canceled) && (
-              <ActionCard
-                title={t('subscription.card.title')}
-                subtitle={t('subscription.card.subtitle')}
-                buttonLabel={t('subscription.card.button.label')}
-                buttonIcon={<Icon name="Rocket" />}
-                onPress={showPaywall}
-              />
-            )}
+          {canSubscribe && (
+            <ActionCard
+              title={t('subscription.card.title')}
+              subtitle={t('subscription.card.subtitle')}
+              buttonLabel={t('subscription.card.button.label')}
+              buttonIcon={<Icon name="Rocket" />}
+              onPress={showPaywall}
+            />
+          )}
 
           <ListItemGroup
             flexDirection="row"
@@ -219,7 +218,7 @@ export default () => {
           </ListItemGroup>
 
           <ListItemGroup title={t('shared.application')}>
-            {canSubscribe && brand?.subscription?.active && (
+            {isSubscriptionsAvailable && brand?.subscription?.active && (
               <ListItem
                 disabled={subscriptionProcessing}
                 label={t('shared.preferences.subscriptions.title')}

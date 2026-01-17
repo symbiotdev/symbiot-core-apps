@@ -166,20 +166,20 @@ export const getIncrementType = (env) =>
         value: '',
       },
       {
-        name: 'Bump buildNumber & versionCode',
+        name: 'Testing',
         value: 'bump',
       },
       {
-        name: 'Major',
-        value: 'major',
+        name: 'Patch',
+        value: 'patch',
       },
       {
         name: 'Minor',
         value: 'minor',
       },
       {
-        name: 'Patch',
-        value: 'patch',
+        name: 'Major',
+        value: 'major',
       },
     ],
   });
@@ -189,7 +189,7 @@ export const getEnvConfig = (app, env) =>
     readFileSync(`${__dirname}/../../apps/${app}/.env.${env}`, 'utf8'),
   );
 
-export const updateAppJson = async (app, dest, incrementType) => {
+export const updateAppJson = async (app, dest, incrementType, platform) => {
   const appConfigPath = `${__dirname}/../../app-assets/${app}/config/app.json`;
   const appConfig = JSON.parse(readFileSync(appConfigPath, 'utf8'));
   const destConfigPath = `${dest}/app.json`;
@@ -208,10 +208,15 @@ export const updateAppJson = async (app, dest, incrementType) => {
       )
       .join('.');
 
-    appConfig.expo.ios.buildNumber = String(
-      Number(appConfig.expo.ios.buildNumber) + 1,
-    );
-    appConfig.expo.android.versionCode += 1;
+    if (platform === 'ios') {
+      appConfig.expo.ios.buildNumber = String(
+        Number(appConfig.expo.ios.buildNumber) + 1,
+      );
+    }
+
+    if (platform === 'android') {
+      appConfig.expo.android.versionCode += 1;
+    }
 
     writeFileSync(appConfigPath, JSON.stringify(appConfig, null, 2), 'utf8');
   }
@@ -229,7 +234,13 @@ export const updateAppJson = async (app, dest, incrementType) => {
   writeFileSync(destConfigPath, JSON.stringify(destConfig, null, 2), 'utf8');
 };
 
-export const mergeAppAssets = async (baseApp, buildApp, env, incrementType) => {
+export const mergeAppAssets = async (
+  baseApp,
+  buildApp,
+  env,
+  incrementType,
+  platform,
+) => {
   const appAssetsPath = `${__dirname}/../../app-assets/${baseApp}`;
   const appPath = `${__dirname}/../../apps/${buildApp}`;
 
@@ -242,7 +253,7 @@ export const mergeAppAssets = async (baseApp, buildApp, env, incrementType) => {
   console.log(`📁 Google copied! ➕`);
   await createEnvFile(`${appAssetsPath}/env/.env.${env}`, `${appPath}/.env`);
   console.log(`📁 .env created! ➕`);
-  await updateAppJson(baseApp, appPath, incrementType);
+  await updateAppJson(baseApp, appPath, incrementType, platform);
   console.log(`📁 app.json updated! ➕`);
 };
 

@@ -49,7 +49,6 @@
     "expo-file-system": "*",
     "expo-image-picker": "*",
     "expo-linking": "*",
-    "expo-media-library": "*",
     "expo-router": "*",
     "expo-splash-screen": "*",
     "expo-localization": "*",

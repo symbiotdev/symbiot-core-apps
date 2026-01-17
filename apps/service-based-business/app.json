@@ -4,7 +4,7 @@
     "name": "DanceHub",
     "slug": "symbiothub-dance",
     "scheme": "symbiothub-dance",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "userInterfaceStyle": "automatic",
     "orientation": "default",
     "icon": "./assets/images/icon/adaptive-icon.png",
@@ -13,8 +13,8 @@
     ],
     "ios": {
       "appleTeamId": "8WPTDS74WX",
-      "bundleIdentifier": "com.symbiothub.dance.dev",
-      "buildNumber": "48",
+      "bundleIdentifier": "com.symbiothub.dance",
+      "buildNumber": "50",
       "googleServicesFile": "./google/GoogleService-Info.plist",
       "supportsTablet": true,
       "usesAppleSignIn": true,
@@ -32,9 +32,10 @@
       }
     },
     "android": {
-      "package": "com.symbiothub.dance.dev",
-      "versionCode": 1,
+      "package": "com.symbiothub.dance",
+      "versionCode": 3,
       "icon": "./assets/images/icon/ios-light.png",
+      "enableProguardInReleaseBuilds": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon/adaptive-icon.png",
         "backgroundColor": "#080726"
@@ -107,14 +108,6 @@
         {
           "photosPermission": "Allow $(PRODUCT_NAME) to access your photos to upload and share images with customers and teammates.",
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera to capture and share photos directly within the app."
-        }
-      ],
-      [
-        "expo-media-library",
-        {
-          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos to display and manage your media for sharing or editing within the app.",
-          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos to your device after editing or creating new media in the app.",
-          "isAccessMediaLocationEnabled": true
         }
       ],
       [

@@ -3,12 +3,12 @@
     "name": "DanceHub",
     "slug": "symbiothub-dance",
     "scheme": "symbiothub-dance",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "ios": {
-      "buildNumber": "48"
+      "buildNumber": "50"
     },
     "android": {
-      "versionCode": 1
+      "versionCode": 3
     },
     "extra": {
       "eas": {

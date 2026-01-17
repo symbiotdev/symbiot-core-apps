@@ -28,7 +28,7 @@ import { spawn } from 'child_process';
   const build = getBuildCommand(buildApp, profile, platform, buildTo);
   const submit = getSubmitCommand(buildApp, profile, build);
 
-  await mergeAppAssets(app, buildApp, env, incrementType);
+  await mergeAppAssets(app, buildApp, env, incrementType, platform);
   addEnvToEasConfig(buildApp, env, profile);
 
   const childProcess = spawn(

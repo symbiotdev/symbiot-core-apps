@@ -33,7 +33,7 @@
     },
     "android": {
       "package": "com.symbiothub.dance",
-      "versionCode": 5,
+      "versionCode": 7,
       "icon": "./assets/images/icon/ios-light.png",
       "enableProguardInReleaseBuilds": true,
       "adaptiveIcon": {

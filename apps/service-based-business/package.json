@@ -89,7 +89,8 @@
     "@symbiot.dev/react-native-timegrid-pro": "*",
     "zustand": "*",
     "react-native-qr-svg": "*",
-    "date-fns": "*"
+    "date-fns": "*",
+    "expo-system-ui": "*"
   },
   "devDependencies": {}
 }

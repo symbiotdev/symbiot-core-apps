@@ -2,7 +2,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/service-based-business",
+    "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/service-brand",
     "android": "expo run:android",
     "ios": "expo run:ios"
   },
@@ -18,7 +18,6 @@
     "@react-native-picker/picker": "*",
     "@react-native-clipboard/clipboard": "*",
     "@symbiot.dev/react-native-heatmap": "*",
-    "@tamagui/config": "*",
     "@tanstack/react-query": "*",
     "@floating-ui/react-native": "*",
     "tamagui": "*",
@@ -89,8 +88,7 @@
     "@symbiot.dev/react-native-timegrid-pro": "*",
     "zustand": "*",
     "react-native-qr-svg": "*",
-    "date-fns": "*",
-    "expo-system-ui": "*"
+    "date-fns": "*"
   },
   "devDependencies": {}
 }

@@ -6,7 +6,7 @@ import { getApp, getEnv, getExportCommand, mergeAppAssets } from './app.mjs';
 
   const app = await getApp();
   const env = await getEnv(true);
-  const buildApp = 'service-based-business';
+  const buildApp = 'service-brand';
 
   await mergeAppAssets(app, buildApp, env);
 

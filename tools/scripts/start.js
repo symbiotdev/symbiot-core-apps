@@ -16,7 +16,7 @@ import { spawn } from 'child_process';
   const buildType = env === 'production' ? await getBuildType() : 'livereload';
   const platform = await getPlatform();
 
-  const buildApp = 'service-based-business';
+  const buildApp = 'service-brand';
 
   await mergeAppAssets(app, buildApp, env);
 

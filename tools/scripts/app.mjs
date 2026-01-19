@@ -190,7 +190,7 @@ export const getEnvConfig = (app, env) =>
   );
 
 export const updateAppJson = async (app, dest, incrementType, platform) => {
-  const appConfigPath = `${__dirname}/../../app-assets/${app}/config/app.json`;
+  const appConfigPath = `${__dirname}/../../app-build-config/service-brand/${app}/app.json`;
   const appConfig = JSON.parse(readFileSync(appConfigPath, 'utf8'));
   const destConfigPath = `${dest}/app.json`;
   const destConfig = JSON.parse(readFileSync(destConfigPath, 'utf8'));
@@ -241,7 +241,7 @@ export const mergeAppAssets = async (
   incrementType,
   platform,
 ) => {
-  const appAssetsPath = `${__dirname}/../../app-assets/${baseApp}`;
+  const appAssetsPath = `${__dirname}/../../app-build-config/service-brand/${baseApp}`;
   const appPath = `${__dirname}/../../apps/${buildApp}`;
 
   await copyFiles(`${appAssetsPath}/assets`, `${appPath}/assets`);
@@ -251,7 +251,7 @@ export const mergeAppAssets = async (
     `${appPath}/google`,
   );
   console.log(`📁 Google copied! ➕`);
-  await createEnvFile(`${appAssetsPath}/env/.env.${env}`, `${appPath}/.env`);
+  await createEnvFile(`${appAssetsPath}/.env.${env}`, `${appPath}/.env`);
   console.log(`📁 .env created! ➕`);
   await updateAppJson(baseApp, appPath, incrementType, platform);
   console.log(`📁 app.json updated! ➕`);

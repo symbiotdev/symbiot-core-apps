@@ -22,7 +22,7 @@ import { spawn } from 'child_process';
   const platform = await getPlatform(true);
   const buildTo = await getBuildTo(env);
   const incrementType = await getIncrementType(env);
-  const buildApp = 'service-based-business';
+  const buildApp = 'service-brand';
   const profile = getEasProfile(env.split('_')[0], buildTo);
   const prebuild = getPrebuildCommand(buildApp, platform);
   const build = getBuildCommand(buildApp, profile, platform, buildTo);

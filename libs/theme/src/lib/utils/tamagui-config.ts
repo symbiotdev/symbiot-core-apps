@@ -1,5 +1,4 @@
 import { createFont } from 'tamagui';
-import { defaultConfig } from '@tamagui/config/v4';
 import { createAnimations } from '@tamagui/animations-react-native';
 import { SCREEN_MEDIA_SIZE } from '@symbiot-core-apps/shared';
 
@@ -46,7 +45,7 @@ export const animations = createAnimations({
 });
 export const fonts = {
   body: createFont({
-    ...defaultConfig.fonts.body,
+    size: {},
     family: 'BodyRegular',
     face: {
       100: { normal: 'BodyThin', italic: 'BodyThinItalic' },

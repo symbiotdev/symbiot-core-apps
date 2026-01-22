@@ -13,18 +13,21 @@ import { join } from 'path';
 import { readFileSync, writeFileSync } from 'node:fs';
 import * as dotenv from 'dotenv';
 import { Platform } from './platform';
+import chokidar, { FSWatcher } from 'chokidar';
 
 export const syncAssets = async ({
   app,
   env,
   platform,
   increment = Increment.skip,
+  watchChanges = false,
 }: {
   app: App;
   env: Env;
   platform?: Platform;
   increment?: Increment;
-}): Promise<void> => {
+  watchChanges?: boolean;
+}) => {
   const sourcePath = appBuildConfigPath[app];
   const destinationPath = appDestinationPath[app];
 
@@ -36,10 +39,10 @@ export const syncAssets = async ({
     dest: `${destinationPath}/assets`,
   });
 
-  await copyFiles({
-    type: 'i18n',
-    src: `${sourcePath}/i18n`,
-    dest: `${destinationPath}/i18n`,
+  const i18nWatcher = await syncI18n({
+    sourcePath,
+    destinationPath,
+    watchChanges,
   });
 
   await copyFiles({
@@ -60,6 +63,35 @@ export const syncAssets = async ({
     src: `${sourcePath}/app.json`,
     dest: `${destinationPath}/app.json`,
   });
+
+  return [i18nWatcher].filter(Boolean);
+};
+
+const syncI18n = async ({
+  sourcePath,
+  destinationPath,
+  watchChanges,
+}: {
+  sourcePath: string;
+  destinationPath: string;
+  watchChanges: boolean;
+}) => {
+  const src = `${sourcePath}/i18n`;
+  const dest = `${destinationPath}/i18n`;
+
+  await copyFiles({ type: 'i18n', src, dest });
+
+  let watcher: FSWatcher;
+
+  if (watchChanges) {
+    watcher = chokidar.watch(dest);
+
+    watcher.on('change', (changedFile) =>
+      copyFile(changedFile, changedFile.replace(dest, src)),
+    );
+  }
+
+  return watcher;
 };
 
 const copyFiles = async ({

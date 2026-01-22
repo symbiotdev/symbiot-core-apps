@@ -15,7 +15,7 @@ import { spawn } from 'child_process';
   const buildType =
     env === Env.production ? await selectBuildType() : BuildType.livereaload;
 
-  await syncAssets({ app, env });
+  const watchers = await syncAssets({ app, env, watchChanges: true });
 
   const startCommand = getStartCommand({
     app,
@@ -24,12 +24,16 @@ import { spawn } from 'child_process';
     buildType,
   });
 
-  spawn(startCommand, {
+  const childProcess = spawn(startCommand, {
     stdio: 'inherit',
     shell: true,
   });
 
   console.log('>_ Start command: ', startCommand);
+
+  childProcess.on('close', () => {
+    watchers.forEach((watcher) => watcher.close());
+  });
 })();
 
 const getStartCommand = ({

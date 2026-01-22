@@ -10,7 +10,7 @@
       "extends": "production",
       "distribution": "internal"
     },
-    "production_device": {
+    "production_device_eas": {
       "extends": "production_local",
       "android": {
         "buildType": "apk"
@@ -44,7 +44,7 @@
     "development_eas": {
       "extends": "development"
     },
-    "development_device": {
+    "development_device_eas": {
       "environment": "development",
       "distribution": "internal",
       "android": {

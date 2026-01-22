@@ -116,13 +116,25 @@ const updateAppJson = async ({
   if (increment && increment !== Increment.skip) {
     appConfig.expo.version = appConfig.expo.version
       .split('.')
-      .map((value: Increment, index: number) =>
-        (increment === Increment.major && index === 0) ||
-        (increment === Increment.minor && index === 1) ||
-        (increment === Increment.patch && index === 2)
-          ? Number(value) + 1
-          : value,
-      )
+      .map((value: Increment, index: number) => {
+        if (increment === Increment.major) {
+          return index === 0 ? Number(value) + 1 : 0;
+        } else if (increment === Increment.minor) {
+          if (index === 1) {
+            return Number(value) + 1;
+          } else {
+            return index > 1 ? 0 : value;
+          }
+        } else if (increment === Increment.patch) {
+          if (index === 2) {
+            return Number(value) + 1;
+          } else {
+            return index > 2 ? 0 : value;
+          }
+        } else {
+          return value;
+        }
+      })
       .join('.');
 
     if (platform === Platform.ios) {

@@ -47,7 +47,7 @@ const getStartCommand = ({
   const isRelease = env === Env.production && buildType === BuildType.release;
 
   if (platform !== Platform.web) {
-    const prebuild = getPrebuildCommand({ appName, platform });
+    const prebuildCommand = getPrebuildCommand({ appName, platform });
     const configuration = isRelease
       ? `${
           platform === Platform.ios
@@ -56,7 +56,7 @@ const getStartCommand = ({
         }`
       : '';
 
-    return `nx reset && ${prebuild} && nx run ${appName}:run-${platform} -- --device ${configuration}`;
+    return `nx reset && ${prebuildCommand} && nx run ${appName}:run-${platform} -- --device ${configuration}`;
   } else {
     const additionalParams = isRelease
       ? '-- --no-dev --minify --clear'

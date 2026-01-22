@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "npx tsx tools/scripts/start.ts",
-    "deploy": "node tools/scripts/deploy.js",
+    "deploy": "npx tsx tools/scripts/deploy.ts",
     "export": "node tools/scripts/export.js",
     "generate": "node tools/scripts/generate.js"
   },

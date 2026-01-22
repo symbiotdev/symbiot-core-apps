@@ -37,6 +37,12 @@ export const syncAssets = async ({
   });
 
   await copyFiles({
+    type: 'i18n',
+    src: `${sourcePath}/i18n`,
+    dest: `${destinationPath}/i18n`,
+  });
+
+  await copyFiles({
     type: 'Google',
     src: `${sourcePath}/google/${env.split('_')[0]}/`,
     dest: `${destinationPath}/google`,

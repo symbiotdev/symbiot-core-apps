@@ -1,0 +1,437 @@
+{
+  "next": "Next",
+  "skip": "Skip",
+  "continue": "Continue",
+  "cancel": "Cancel",
+  "canceled": "Canceled",
+  "and": "and",
+  "version": "Version",
+  "language": "Language",
+  "follow_us": "Follow us",
+  "profile": "Profile",
+  "share_app": "Share application",
+  "subscription": "Subscription",
+  "qr_code": "QR code",
+  "calendar": "Calendar",
+  "application": "Application",
+  "email": "Email",
+  "settings": "Settings",
+  "its_empty": "It's empty",
+  "or": "or",
+  "other": "Other",
+  "country": "Country",
+  "us_state": "State",
+  "currency": "Currency",
+  "finish": "Finish",
+  "add": "Add",
+  "greeting_firstname": "\uD83D\uDC4B Hello, {{firstname}}",
+  "contact_information": "Contacts",
+  "locale": "Locale",
+  "timezone": "Timezone",
+  "media_files": "Media files",
+  "logotype": "Logotype",
+  "not_specified": "Not specified",
+  "syncing": "Synchronization",
+  "copied": "Copied",
+  "upload": "Upload",
+  "nothing_found": "Nothing found",
+  "about": "About",
+  "catalog": "Catalog",
+  "coming_soon": "Coming soon",
+  "free": "Free",
+  "deleted": "Deleted",
+  "expires_in": "expires in {{value}}",
+  "duration": "Duration",
+  "no": "No",
+  "yes": "Yes",
+  "type_here": "Type here...",
+  "local_time": "Local time",
+  "my_profile": "My profile",
+  "limited": "Limited",
+  "used_value": "Used: {{value}}",
+  "maps": {
+    "open": {
+      "title": "Open in Maps",
+      "subtitle": "What app would you like to use?"
+    },
+    "error": {
+      "title": "Error",
+      "subtitle": "Unable to open maps"
+    }
+  },
+  "docs": {
+    "terms_privacy": "Terms & Privacy",
+    "privacy_policy": "Privacy Policy",
+    "terms_conditions": "Terms & Conditions"
+  },
+  "error": {
+    "unknown_error": "Unknown error",
+    "validation_error": {
+      "media_size": "The size of uploading file exceeds {{size}}. Please select another and try again."
+    }
+  },
+  "account": {
+    "update": {
+      "context_menu": {
+        "remove_account": {
+          "label": "Delete profile"
+        }
+      }
+    },
+    "remove": {
+      "title": "Delete profile",
+      "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
+      "button": {
+        "label": "Delete"
+      },
+      "confirm_dialog": {
+        "title": "Are you sure?",
+        "message": "This action cannot be undone."
+      }
+    },
+    "form": {
+      "firstname": {
+        "label": "First name",
+        "placeholder": "Enter your first name",
+        "error": {
+          "required": "First name is required"
+        }
+      },
+      "lastname": {
+        "label": "Last name",
+        "placeholder": "Enter your last name",
+        "error": {
+          "required": "Last name is required"
+        }
+      },
+      "email": {
+        "label": "Email"
+      },
+      "birthday": {
+        "label": "Date of birth",
+        "placeholder": "Add your birthday"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "Enter phone number with country code",
+        "error": {
+          "validation": "Invalid phone number",
+          "required": "Phone is required"
+        }
+      },
+      "instagram": {
+        "label": "Instagram",
+        "placeholder": "Enter your instagram nickname"
+      },
+      "gender": {
+        "label": "Gender",
+        "placeholder": "Select your gender"
+      }
+    }
+  },
+  "preferences": {
+    "title": "Settings",
+    "media": {
+      "trigger": {
+        "label": "Select an action"
+      },
+      "action": {
+        "choose_from_gallery": {
+          "label": "Choose from gallery",
+          "error": {
+            "permissions_denied": "Gallery permissions are denied"
+          }
+        },
+        "take_phone": {
+          "label": "Take a photo",
+          "error": {
+            "permission_denied": "Camera permissions denied"
+          }
+        },
+        "delete": {
+          "label": "Delete file",
+          "confirm": {
+            "title": "Delete file?",
+            "message": "Do you want to delete this file?"
+          }
+        }
+      }
+    },
+    "language": {
+      "title": "Language"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "posh_notifications": {
+        "label": "Push notifications",
+        "permissions_denied": "No push notification permissions allowed. Open the app settings and enable it."
+      },
+      "sound": {
+        "label": "Sound"
+      }
+    },
+    "appearance": {
+      "title": "Appearance",
+      "theme": {
+        "title": "Theme",
+        "light": "Light",
+        "dark": "Dark",
+        "auto": {
+          "label": "Auto"
+        }
+      }
+    },
+    "calendar": {
+      "title": "Calendar",
+      "week_starts_on": {
+        "label": "Week starts on"
+      }
+    },
+    "system": {
+      "title": "App settings"
+    },
+    "subscriptions": {
+      "title": "Subscriptions",
+      "expires_on": "Expires on {{date}}"
+    }
+  },
+  "notifications": {
+    "title": "Notifications"
+  },
+  "schedule": {
+    "working_hours": "Working Hours",
+    "all_day": "All day",
+    "day_off": "Day off",
+    "start": "Start",
+    "end": "End",
+    "frequency_until": "Repeat until",
+    "duration": {
+      "all_day": "All day",
+      "custom": "Custom time"
+    },
+    "frequency": {
+      "no_repeat": "No repeat",
+      "specific_dates": "Select dates",
+      "every_workday": "Every workday",
+      "every_day": "Daily",
+      "every_week": "Weekly",
+      "every_month": "Monthly"
+    }
+  },
+  "auth": {
+    "workspace": {
+      "button": {
+        "continue_with_apple": "Continue with Apple",
+        "continue_with_google": "Continue with Google",
+        "sign_up_with_email": "Sign up with email",
+        "sign_in": "Sign in"
+      }
+    },
+    "sign_up": {
+      "title": "Create account",
+      "subtitle": "Add your email address and password",
+      "external_link": {
+        "already_have_account": "Already have an account?",
+        "sign_in": "Sign in"
+      },
+      "form": {
+        "firstname": {
+          "label": "",
+          "placeholder": "First name",
+          "error": {
+            "required": "First name is required"
+          }
+        },
+        "lastname": {
+          "label": "",
+          "placeholder": "Last name",
+          "error": {
+            "required": "Last name is required"
+          }
+        },
+        "email": {
+          "label": "",
+          "placeholder": "Email",
+          "error": {
+            "required": "Email is required",
+            "validation": "Invalid format"
+          }
+        },
+        "password": {
+          "label": "",
+          "placeholder": "Password",
+          "error": {
+            "required": "Password is required",
+            "validation": "Please enter a password with 8 or more characters, including at least 1 number"
+          }
+        },
+        "confirm_password": {
+          "label": "",
+          "placeholder": "Confirm password",
+          "error": {
+            "required": "Confirm password is required",
+            "match": "Passwords do not match",
+            "validation": "Please enter a password with 8 or more characters, including at least 1 number"
+          }
+        },
+        "agreement": {
+          "prefix": "I agree to the ",
+          "error": {
+            "required": "Please agree to proceed"
+          }
+        }
+      }
+    },
+    "sign_in": {
+      "title": "Welcome back",
+      "subtitle": "Add your email address and password",
+      "forgot_password_link": "Forgot password?",
+      "external_link": {
+        "already_have_account": "Don't have an account?",
+        "sign_up": "Sign up"
+      },
+      "form": {
+        "email": {
+          "label": "",
+          "placeholder": "Email",
+          "error": {
+            "required": "Email is required",
+            "validation": "Invalid format"
+          }
+        },
+        "password": {
+          "label": "",
+          "placeholder": "Password",
+          "error": {
+            "required": "Password is required",
+            "validation": "Please enter a password with 8 or more characters, including at least 1 number"
+          }
+        }
+      }
+    },
+    "forgot_password": {
+      "title": "Forgot password?",
+      "subtitle": "Enter your account's email address",
+      "external_link": {
+        "already_have_account": "Don't have an account?",
+        "sign_up": "Sign up"
+      },
+      "form": {
+        "email": {
+          "label": "",
+          "placeholder": "Email",
+          "error": {
+            "required": "Email is required",
+            "validation": "Invalid format"
+          }
+        }
+      }
+    },
+    "verify_email": {
+      "title": "Email Verification",
+      "subtitle": "A verification code has been sent to {{email}}.",
+      "your_email": "your email",
+      "resend": {
+        "message": "Didn't receive the email? Please check spam folder or",
+        "button": {
+          "label": "Resend code"
+        }
+      },
+      "external_link": {
+        "message": "Used an incorrect email?",
+        "link": "Change"
+      }
+    },
+    "reset_password": {
+      "title": "Reset password",
+      "subtitle": "Enter new password",
+      "form": {
+        "password": {
+          "label": "",
+          "placeholder": "Password",
+          "error": {
+            "required": "Password is required",
+            "validation": "Please enter a password with 8 or more characters, including at least 1 number"
+          }
+        },
+        "confirm_password": {
+          "label": "",
+          "placeholder": "Confirm password",
+          "error": {
+            "required": "Confirm password is required",
+            "match": "Passwords do not match",
+            "validation": "Please enter a password with 8 or more characters, including at least 1 number"
+          }
+        }
+      }
+    },
+    "sign_out": {
+      "confirm": {
+        "title": "Press 'Continue' to confirm sign out"
+      },
+      "button": {
+        "label": "Sign out"
+      }
+    }
+  },
+  "faq": {
+    "title": "FAQ",
+    "contact_us": {
+      "title": "Didn't find what you were looking for?",
+      "subtitle": "If you couldn't find an answer to your question or need further assistance, feel free to contact us.",
+      "button": {
+        "label": "Email"
+      }
+    }
+  },
+  "location": {
+    "current": "Current location",
+    "denied_permission": {
+      "title": "Enable Your Location",
+      "subtitle": "It seems you previously denied location access. \nPlease enable it in your device settings to let the app determine your location automatically.",
+      "action": {
+        "label": "Settings"
+      }
+    }
+  },
+  "camera": {
+    "denied_permission": {
+      "title": "Enable Camera Permission",
+      "subtitle": "It seems you previously denied camera permission. \nPlease enable it in your device settings to let the app determine your permission automatically.",
+      "action": {
+        "label": "Settings"
+      }
+    }
+  },
+  "datetime": {
+    "time_before": "{{value}} before",
+    "short_format": {
+      "minute": "m",
+      "minutes": "m",
+      "hour": "h",
+      "hours": "hrs",
+      "day": "d",
+      "days": "d",
+      "week": "w",
+      "weeks": "w",
+      "month": "m",
+      "months": "m",
+      "year": "y",
+      "years": "y"
+    },
+    "unit": {
+      "minute": "min",
+      "minutes": "min",
+      "hour": "hour",
+      "hours": "hrs",
+      "day": "day",
+      "days": "days",
+      "week": "week",
+      "weeks": "weeks",
+      "month": "month",
+      "months": "months",
+      "year": "year",
+      "years": "years"
+    }
+  }
+}

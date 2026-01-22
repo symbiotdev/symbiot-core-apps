@@ -10,17 +10,20 @@
       "extends": "production",
       "distribution": "internal"
     },
-    "production_device_eas": {
+    "production_device_local": {
       "extends": "production_local",
       "android": {
         "buildType": "apk"
       }
     },
-    "production_device_local": {
-      "extends": "production_device"
-    },
     "production_eas": {
       "extends": "production"
+    },
+    "production_device_eas": {
+      "extends": "production_eas",
+      "android": {
+        "buildType": "apk"
+      }
     },
     "production_store": {
       "extends": "production_eas",
@@ -35,8 +38,7 @@
       "distribution": "internal"
     },
     "development_device_local": {
-      "environment": "development",
-      "distribution": "internal",
+      "environment": "development_local",
       "android": {
         "buildType": "apk"
       }
@@ -46,7 +48,6 @@
     },
     "development_device_eas": {
       "environment": "development",
-      "distribution": "internal",
       "android": {
         "buildType": "apk"
       }

@@ -3,7 +3,7 @@ import { Env } from './env';
 import { BuildSource } from './build-source';
 import * as dotenv from 'dotenv';
 import { readFileSync, writeFileSync } from 'node:fs';
-import { App, appDestinationPath } from './app';
+import { App, appPath } from './app';
 
 export const getEasProfile = ({
   env,
@@ -53,7 +53,7 @@ export const getExportCommand = ({ appName }: { appName: string }) =>
   `nx run ${appName}:export --platform=web --clear --skip-nx-cache`;
 
 export const addEnvToEasConfig = ({ app, env }: { app: App; env: Env }) => {
-  const dest = appDestinationPath[app];
+  const dest = appPath[app];
   const envConfig = dotenv.parse(readFileSync(`${dest}/.env`, 'utf8'));
   const easConfigPath = `${dest}/eas.json`;
   const easConfig = readFileSync(easConfigPath, 'utf8');
@@ -75,7 +75,7 @@ export const removeEnvFromEasConfig = ({
   app: App;
   env: Env;
 }) => {
-  const dest = appDestinationPath[app];
+  const dest = appPath[app];
   const easConfigPath = `${dest}/eas.json`;
   const easConfig = readFileSync(easConfigPath, 'utf8');
   const updatedEasConfig = JSON.parse(easConfig);

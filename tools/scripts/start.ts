@@ -1,10 +1,11 @@
-import { App, realAppName, selectApp } from './utils/app';
+import { App, getAppSyncPaths, realAppName, selectApp } from './utils/app';
 import { Env, selectEnv } from './utils/env';
 import { BuildType, selectBuildType } from './utils/build-type';
 import { Platform, selectPlatform } from './utils/platform';
-import { syncAssets } from './utils/assets';
+import { syncAppJson, syncFiles } from './utils/sync-files';
 import { getPrebuildCommand } from './utils/nx-expo';
 import { spawn } from 'child_process';
+import { rm } from 'node:fs/promises';
 
 (async () => {
   console.log(`Starting... 🚀🚀`);
@@ -14,15 +15,13 @@ import { spawn } from 'child_process';
   const platform = await selectPlatform();
   const buildType =
     env === Env.production ? await selectBuildType() : BuildType.livereaload;
-
-  const watchers = await syncAssets({ app, env, watchChanges: true });
-
-  const startCommand = getStartCommand({
+  const syncPaths = getAppSyncPaths({ app, env });
+  const fileWatchers = await Promise.all(syncPaths.map(syncFiles));
+  const { watcher: appJsonWatcher, reset: resetAppJson } = await syncAppJson({
     app,
-    env,
-    platform,
-    buildType,
   });
+
+  const startCommand = getStartCommand({ app, env, platform, buildType });
 
   const childProcess = spawn(startCommand, {
     stdio: 'inherit',
@@ -32,7 +31,11 @@ import { spawn } from 'child_process';
   console.log('>_ Start command: ', startCommand);
 
   childProcess.on('close', () => {
-    watchers.forEach((watcher) => watcher.close());
+    appJsonWatcher.close();
+    resetAppJson();
+
+    fileWatchers.forEach((watcher) => watcher.close());
+    syncPaths.forEach(({ dest }) => rm(dest, { recursive: true }));
   });
 })();
 

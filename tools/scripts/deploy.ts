@@ -1,4 +1,4 @@
-import { realAppName, selectApp } from './utils/app';
+import { getAppSyncPaths, realAppName, selectApp } from './utils/app';
 import { Env, selectEnv } from './utils/env';
 import { selectPlatform } from './utils/platform';
 import { selectIncrement } from './utils/increment';
@@ -11,8 +11,9 @@ import {
   getSubmitCommand,
   removeEnvFromEasConfig,
 } from './utils/nx-expo';
-import { syncAssets } from './utils/assets';
+import { syncAppJson, syncFiles } from './utils/sync-files';
 import { spawn } from 'child_process';
+import { rm } from 'node:fs/promises';
 
 (async () => {
   console.log(`Deploying... 📦⬆️`);
@@ -35,8 +36,13 @@ import { spawn } from 'child_process';
     buildSource,
   });
   const submitCommand = getSubmitCommand({ appName, easProfile, buildSource });
-
-  await syncAssets({ app, env, platform, increment });
+  const syncPaths = getAppSyncPaths({ app, env });
+  const fileWatchers = await Promise.all(syncPaths.map(syncFiles));
+  const { watcher: appJsonWatcher, reset: resetAppJson } = await syncAppJson({
+    app,
+    platform,
+    increment,
+  });
 
   addEnvToEasConfig({ app, env });
 
@@ -50,6 +56,12 @@ import { spawn } from 'child_process';
 
   childProcess.on('close', () => {
     removeEnvFromEasConfig({ app, env });
+
+    appJsonWatcher.close();
+    resetAppJson();
+
+    fileWatchers.forEach((watcher) => watcher.close());
+    syncPaths.forEach(({ dest }) => rm(dest, { recursive: true }));
 
     console.log(`✅ Deployed... 🚀`);
   });

@@ -7,7 +7,7 @@
     "start": "npx tsx tools/scripts/start.ts",
     "deploy": "npx tsx tools/scripts/deploy.ts",
     "export": "npx tsx tools/scripts/export.ts",
-    "generate": "node tools/scripts/generate.js"
+    "generate": "npx tsx tools/scripts/generate.ts"
   },
   "dependencies": {
     "@expo/metro-config": "~0.19.12",

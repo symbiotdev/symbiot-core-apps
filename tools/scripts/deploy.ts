@@ -50,5 +50,7 @@ import { spawn } from 'child_process';
 
   childProcess.on('close', () => {
     removeEnvFromEasConfig({ app, env });
+
+    console.log(`✅ Deployed... 🚀`);
   });
 })();

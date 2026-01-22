@@ -49,6 +49,9 @@ export const getSubmitCommand = ({
     ? `nx submit ${appName} -- --profile=${easProfile}`
     : 'echo "Ready!"';
 
+export const getExportCommand = ({ appName }: { appName: string }) =>
+  `nx run ${appName}:export --platform=web --clear --skip-nx-cache`;
+
 export const addEnvToEasConfig = ({ app, env }: { app: App; env: Env }) => {
   const dest = appDestinationPath[app];
   const envConfig = dotenv.parse(readFileSync(`${dest}/.env`, 'utf8'));
@@ -65,7 +68,13 @@ export const addEnvToEasConfig = ({ app, env }: { app: App; env: Env }) => {
   );
 };
 
-export const removeEnvFromEasConfig = ({ app, env }: { app: App; env: Env }) => {
+export const removeEnvFromEasConfig = ({
+  app,
+  env,
+}: {
+  app: App;
+  env: Env;
+}) => {
   const dest = appDestinationPath[app];
   const easConfigPath = `${dest}/eas.json`;
   const easConfig = readFileSync(easConfigPath, 'utf8');

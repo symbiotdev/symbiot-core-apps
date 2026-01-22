@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npx tsx tools/scripts/start.ts",
     "deploy": "npx tsx tools/scripts/deploy.ts",
-    "export": "node tools/scripts/export.js",
+    "export": "npx tsx tools/scripts/export.ts",
     "generate": "node tools/scripts/generate.js"
   },
   "dependencies": {

@@ -1,17 +1,8 @@
 import { Platform } from './platform';
-import { Env } from './env';
 import { BuildSource } from './build-source';
-import * as dotenv from 'dotenv';
-import { readFileSync, writeFileSync } from 'node:fs';
 import { App, appConfig } from './app';
-
-export const getEasProfile = ({
-  env,
-  buildSource,
-}: {
-  env: Env;
-  buildSource: BuildSource;
-}) => `${env}_${buildSource}`;
+import { Env } from './env';
+import { BuildType } from './build-type';
 
 export const getPrebuildCommand = ({
   app,
@@ -28,34 +19,34 @@ export const getPrebuildCommand = ({
 export const getBuildCommand = ({
   app,
   platform,
-  easProfile,
+  profile,
   buildSource,
 }: {
   app: App;
-  easProfile: string;
+  profile: string;
   platform: Platform;
   buildSource: BuildSource;
 }) => {
   const { name } = appConfig[app];
 
-  return `nx run ${name}:build -- --profile=${easProfile} --platform=${platform} --clear-cache ${
+  return `nx run ${name}:build -- --profile=${profile} --platform=${platform} --clear-cache ${
     buildSource.indexOf('local') !== -1 ? '--local' : ''
   }`;
 };
 
 export const getSubmitCommand = ({
   app,
-  easProfile,
+  profile,
   buildSource,
 }: {
   app: App;
-  easProfile: string;
+  profile: string;
   buildSource: BuildSource;
 }) => {
   const { name } = appConfig[app];
 
   return buildSource === BuildSource.store
-    ? `nx submit ${name} -- --profile=${easProfile}`
+    ? `nx submit ${name} -- --profile=${profile}`
     : 'echo "Ready!"';
 };
 
@@ -65,39 +56,36 @@ export const getExportCommand = ({ app }: { app: App }) => {
   return `nx run ${name}:export --platform=web --clear --skip-nx-cache`;
 };
 
-export const addEnvToEasConfig = ({ app, env }: { app: App; env: Env }) => {
-  const { dest } = appConfig[app];
-  const envConfig = dotenv.parse(readFileSync(`${dest}/.env`, 'utf8'));
-  const easConfigPath = `${dest}/eas.json`;
-  const easConfig = readFileSync(easConfigPath, 'utf8');
-  const updatedEasConfig = JSON.parse(easConfig);
-
-  updatedEasConfig['build'][env]['env'] = envConfig;
-
-  writeFileSync(
-    easConfigPath,
-    JSON.stringify(updatedEasConfig, null, 2),
-    'utf8',
-  );
-};
-
-export const removeEnvFromEasConfig = ({
+export const getStartCommand = ({
   app,
   env,
+  platform,
+  buildType,
 }: {
   app: App;
   env: Env;
+  platform: Platform;
+  buildType: BuildType;
 }) => {
-  const { dest } = appConfig[app];
-  const easConfigPath = `${dest}/eas.json`;
-  const easConfig = readFileSync(easConfigPath, 'utf8');
-  const updatedEasConfig = JSON.parse(easConfig);
+  const { name } = appConfig[app];
+  const isRelease = env === Env.production && buildType === BuildType.release;
 
-  delete updatedEasConfig['build'][env]['env'];
+  if (platform !== Platform.web) {
+    const prebuildCommand = getPrebuildCommand({ app, platform });
+    const configuration = isRelease
+      ? `${
+          platform === Platform.ios
+            ? '--configuration=Release'
+            : '--variant=release'
+        }`
+      : '';
 
-  writeFileSync(
-    easConfigPath,
-    JSON.stringify(updatedEasConfig, null, 2),
-    'utf8',
-  );
+    return `nx reset && ${prebuildCommand} && nx run ${name}:run-${platform} -- --device ${configuration}`;
+  } else {
+    const additionalParams = isRelease
+      ? '-- --no-dev --minify --clear'
+      : '-- --clear';
+
+    return `nx reset && nx start ${name} ${additionalParams}`;
+  }
 };

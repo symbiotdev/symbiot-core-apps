@@ -4,17 +4,20 @@ import { selectPlatform } from './utils/platform';
 import { selectIncrement } from './utils/increment';
 import { selectBuildSource } from './utils/build-source';
 import {
-  addEnvToEasConfig,
   getBuildCommand,
-  getEasProfile,
   getPrebuildCommand,
   getSubmitCommand,
-  removeEnvFromEasConfig,
 } from './utils/nx-expo';
 import { syncFiles } from './utils/sync-files';
 import { spawn } from 'child_process';
 import { rm } from 'node:fs/promises';
 import { syncAppJson } from './utils/expo-app-json';
+import {
+  addEasJsonFile,
+  addEnvToEasConfig,
+  getEasProfile,
+  removeEasJsonFile,
+} from './utils/expo-eas-json';
 
 (async () => {
   console.log(`Deploying... 📦⬆️`);
@@ -31,18 +34,13 @@ import { syncAppJson } from './utils/expo-app-json';
   });
   const buildSource = await selectBuildSource({ env });
   const increment = await selectIncrement({ env });
-  const easProfile = getEasProfile({
+  const profile = getEasProfile({
     buildSource,
     env: env.split('_')[0] as Env,
   });
   const prebuildCommand = getPrebuildCommand({ app, platform });
-  const buildCommand = getBuildCommand({
-    app,
-    platform,
-    easProfile,
-    buildSource,
-  });
-  const submitCommand = getSubmitCommand({ app, easProfile, buildSource });
+  const buildCommand = getBuildCommand({ app, platform, profile, buildSource });
+  const submitCommand = getSubmitCommand({ app, profile, buildSource });
   const syncPaths = getAppSyncPaths({ app, env });
   const fileWatchers = await Promise.all(syncPaths.map(syncFiles));
   const appJson = await syncAppJson({
@@ -52,6 +50,7 @@ import { syncAppJson } from './utils/expo-app-json';
     dynamic: dynamicAppJson,
   });
 
+  await addEasJsonFile({ app });
   addEnvToEasConfig({ app, env });
 
   const childProcess = spawn(
@@ -63,7 +62,7 @@ import { syncAppJson } from './utils/expo-app-json';
   );
 
   childProcess.on('exit', () => {
-    removeEnvFromEasConfig({ app, env });
+    removeEasJsonFile({ app });
     appJson.reset();
 
     fileWatchers.forEach((watcher) => watcher.close());

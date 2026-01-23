@@ -19,13 +19,14 @@ export type AppConfig = {
 };
 
 const repoPath = process.cwd();
+export const appBuildConfigPath = `${repoPath}/app-build-config`;
 
 export const appConfig: Record<App, AppConfig> = {
   [App.Symbify]: {
     app: App.Symbify,
     label: 'Symbify',
     name: 'symbify',
-    src: `${repoPath}/app-build-config/symbify`,
+    src: `${appBuildConfigPath}/symbify`,
     dest: `${repoPath}/apps/symbify`,
     dynamicAppJson: false,
     supportDevPlatforms: [Platform.web, Platform.ios, Platform.android],
@@ -35,7 +36,7 @@ export const appConfig: Record<App, AppConfig> = {
     app: App.DanceHub,
     label: 'DanceHub',
     name: 'service-brand',
-    src: `${repoPath}/app-build-config/service-brand/symbiothub-dance`,
+    src: `${appBuildConfigPath}/service-brand/symbiothub-dance`,
     dest: `${repoPath}/apps/service-brand`,
     dynamicAppJson: true,
     supportDevPlatforms: [Platform.web, Platform.ios, Platform.android],
@@ -45,7 +46,7 @@ export const appConfig: Record<App, AppConfig> = {
     app: App.Spanday,
     label: 'Spanday',
     name: 'service-brand',
-    src: `${repoPath}/app-build-config/service-brand/spanday`,
+    src: `${appBuildConfigPath}/service-brand/spanday`,
     dest: `${repoPath}/apps/service-brand`,
     dynamicAppJson: true,
     supportDevPlatforms: [Platform.web, Platform.ios, Platform.android],

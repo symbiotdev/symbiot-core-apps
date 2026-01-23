@@ -3,9 +3,9 @@
     "name": "DanceHub",
     "slug": "symbiothub-dance",
     "scheme": "symbiothub-dance",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "ios": {
-      "buildNumber": "63"
+      "buildNumber": "65"
     },
     "android": {
       "versionCode": 7

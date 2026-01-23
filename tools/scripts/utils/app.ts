@@ -96,7 +96,7 @@ export const getAppConfig = async (): Promise<AppConfig> => {
   } else {
     const app = await select<App>({
       message: 'Application',
-      choices: apps.map((key) => ({
+      choices: filteredApps.map((key) => ({
         name: appConfig[key].label,
         value: key,
       })),

@@ -113,11 +113,13 @@ const getJsonWithIncrementation = ({
     .join('.');
 
   if (platform === Platform.ios) {
-    json.expo.ios.buildNumber = String(Number(json.expo.ios.buildNumber) + 1);
+    json.expo.ios.buildNumber = String(
+      Number(json.expo.ios.buildNumber || 0) + 1,
+    );
   }
 
   if (platform === Platform.android) {
-    json.expo.android.versionCode += 1;
+    json.expo.android.versionCode = (json.expo.android.versionCode || 0) + 1;
   }
 
   return json;

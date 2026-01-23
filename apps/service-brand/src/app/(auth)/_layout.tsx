@@ -65,7 +65,7 @@ export default () => {
       </Stack.Protected>
       <Stack.Protected guard={!!onboardingFinished}>
         <Stack.Screen
-          name="auth/index"
+          name="index"
           options={{ headerShown: false, animation: 'none' }}
         />
         <Stack.Screen name="forgot-password/[secret]/verify" />

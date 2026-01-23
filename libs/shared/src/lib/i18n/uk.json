@@ -1,0 +1,437 @@
+{
+  "next": "Далі",
+  "skip": "Пропустити",
+  "continue": "Продовжити",
+  "cancel": "Відміна",
+  "canceled": "Відмінено",
+  "and": "та",
+  "version": "Версія",
+  "language": "Мова",
+  "follow_us": "Слідкуйте за нами",
+  "profile": "Профіль",
+  "share_app": "Поділитись застосунком",
+  "subscription": "Підписка",
+  "qr_code": "QR код",
+  "calendar": "Календар",
+  "application": "Застосунок",
+  "email": "Email",
+  "settings": "Налаштування",
+  "its_empty": "Тут порожньо",
+  "or": "або",
+  "other": "Other",
+  "country": "Країна",
+  "us_state": "Штат",
+  "currency": "Валюта",
+  "finish": "Завершити",
+  "add": "Додати",
+  "greeting_firstname": "\uD83D\uDC4B Привіт, {{firstname}}",
+  "contact_information": "Контакти",
+  "locale": "Локаль",
+  "timezone": "Часовний пояс",
+  "media_files": "Медіафайли",
+  "logotype": "Логотип",
+  "not_specified": "Не задано",
+  "syncing": "Синхронізація",
+  "copied": "Скопійовано",
+  "upload": "Завантажити",
+  "nothing_found": "Нічого не знайдено",
+  "about": "Про",
+  "catalog": "Каталог",
+  "coming_soon": "Незабаром",
+  "free": "Безкоштовно",
+  "deleted": "Видалено",
+  "expires_in": "дійсний {{value}}",
+  "duration": "Тривалість",
+  "no": "Ні",
+  "yes": "Так",
+  "type_here": "Вкажіть деталі",
+  "local_time": "Місцевий час",
+  "my_profile": "Мій профіль",
+  "limited": "Обмежено",
+  "used_value": "Використано: {{value}}",
+  "maps": {
+    "open": {
+      "title": "Відкрити в застосунку",
+      "subtitle": "Який застосунок бажаєте використати?"
+    },
+    "error": {
+      "title": "Помилка",
+      "subtitle": "Неможливо відкрити карти"
+    }
+  },
+  "docs": {
+    "terms_privacy": "Terms & Privacy",
+    "privacy_policy": "Privacy Policy",
+    "terms_conditions": "Terms & Conditions"
+  },
+  "error": {
+    "unknown_error": "Невідома помилка",
+    "validation_error": {
+      "media_size": "Розмір завантаження файлу перевищує {{size}}. Виберіть інший і повторіть спробу."
+    }
+  },
+  "account": {
+    "update": {
+      "context_menu": {
+        "remove_account": {
+          "label": "Видалити профіль"
+        }
+      }
+    },
+    "remove": {
+      "title": "Видалити профіль",
+      "subtitle": "Видалення \"{{name}}\" призведе до остаточного видалення всіх пов’язаних даних. Цю дію не можна скасувати.",
+      "button": {
+        "label": "Видалити"
+      },
+      "confirm_dialog": {
+        "title": "Ви впевнені?",
+        "message": "Цю дію не можна скасувати."
+      }
+    },
+    "form": {
+      "firstname": {
+        "label": "Імʼя",
+        "placeholder": "Введіть імʼя",
+        "error": {
+          "required": "Імʼя обовʼязкове до заповнення"
+        }
+      },
+      "lastname": {
+        "label": "Прізвище",
+        "placeholder": "Введіть прізвище",
+        "error": {
+          "required": "Прізвище обовʼязкове до заповнення"
+        }
+      },
+      "email": {
+        "label": "Email"
+      },
+      "birthday": {
+        "label": "Дата народження",
+        "placeholder": "Додайте дату народження"
+      },
+      "phone": {
+        "label": "Номер телефону",
+        "placeholder": "Вкажіть номер телефону з кодом країни",
+        "error": {
+          "validation": "Введено некоректний номер телефону",
+          "required": "Номер телефону обовʼязковий до введення"
+        }
+      },
+      "instagram": {
+        "label": "Instagram",
+        "placeholder": "Ваш нікнейм в instagram"
+      },
+      "gender": {
+        "label": "Стать",
+        "placeholder": "Вкажіть Вашу стать"
+      }
+    }
+  },
+  "preferences": {
+    "title": "Параметри",
+    "media": {
+      "trigger": {
+        "label": "Виберіть дію"
+      },
+      "action": {
+        "choose_from_gallery": {
+          "label": "Вибрати з галереї",
+          "error": {
+            "permissions_denied": "Відхилені дозволи для відкриття глереї"
+          }
+        },
+        "take_phone": {
+          "label": "Зробити фото",
+          "error": {
+            "permissions_denied": "Відхилені дозволи для використання камери"
+          }
+        },
+        "delete": {
+          "label": "Видалити файл",
+          "confirm": {
+            "title": "Видалити файл?",
+            "message": "Ви хочете видалити цей файл?"
+          }
+        }
+      }
+    },
+    "language": {
+      "title": "Мова"
+    },
+    "notifications": {
+      "title": "Сповіщення",
+      "posh_notifications": {
+        "label": "Push-сповіщення",
+        "permissions_denied": "Відхилені дозволи на push-сповіщення. Відкрийте налаштування програми та ввімкніть."
+      },
+      "sound": {
+        "label": "Звук"
+      }
+    },
+    "appearance": {
+      "title": "Тема",
+      "theme": {
+        "title": "Тема",
+        "light": "Світла",
+        "dark": "Темна",
+        "auto": {
+          "label": "Авто"
+        }
+      }
+    },
+    "calendar": {
+      "title": "Календар",
+      "week_starts_on": {
+        "label": "Перший день тижня"
+      }
+    },
+    "system": {
+      "title": "Налаштування застосунку"
+    },
+    "subscriptions": {
+      "title": "Активна підписка",
+      "expires_on": "Діє до {{date}}"
+    }
+  },
+  "notifications": {
+    "title": "Сповіщення"
+  },
+  "schedule": {
+    "working_hours": "Робочі години",
+    "all_day": "24 год",
+    "day_off": "Вихідний",
+    "start": "Від",
+    "end": "До",
+    "frequency_until": "Повторювати до",
+    "duration": {
+      "all_day": "Весь день",
+      "custom": "Встановити час"
+    },
+    "frequency": {
+      "no_repeat": "Не повторювати",
+      "specific_dates": "Вказати дати",
+      "every_workday": "Щоденно (робочі дні)",
+      "every_day": "Щоденно",
+      "every_week": "Щотижня",
+      "every_month": "Щомісяця"
+    }
+  },
+  "auth": {
+    "workspace": {
+      "button": {
+        "continue_with_apple": "Продовжити з Apple",
+        "continue_with_google": "Продовжити з Google",
+        "sign_up_with_email": "Зареєструватися з email",
+        "sign_in": "Увійти"
+      }
+    },
+    "sign_up": {
+      "title": "Створити акаунт",
+      "subtitle": "Введіть адресу електронної пошти та пароль",
+      "external_link": {
+        "already_have_account": "Уже маєте акаунт?",
+        "sign_in": "Увійти"
+      },
+      "form": {
+        "firstname": {
+          "label": "",
+          "placeholder": "Імʼя",
+          "error": {
+            "required": "Імʼя обовʼязкове поле до заповнення"
+          }
+        },
+        "lastname": {
+          "label": "",
+          "placeholder": "Прізвище",
+          "error": {
+            "required": "Прізвище обовʼязкове поле до заповнення"
+          }
+        },
+        "email": {
+          "label": "",
+          "placeholder": "Email",
+          "error": {
+            "required": "Email обовʼязкове поле до заповнення",
+            "validation": "Невалідний формат"
+          }
+        },
+        "password": {
+          "label": "",
+          "placeholder": "Пароль",
+          "error": {
+            "required": "Пароль обовʼязкове поле до заповнення",
+            "validation": "Пароль повинен містити 8 або більше символів, включаючи принаймні 1 цифру"
+          }
+        },
+        "confirm_password": {
+          "label": "",
+          "placeholder": "Підтвердження паролю",
+          "error": {
+            "required": "Підтвердження паролю обовʼязкове поле до заповнення",
+            "match": "Паролі не збігаються",
+            "validation": "Пароль повинен містити 8 або більше символів, включаючи принаймні 1 цифру"
+          }
+        },
+        "agreement": {
+          "prefix": "Я погоджуюсь з ",
+          "error": {
+            "required": "Реєстрація вимагає підтвердження"
+          }
+        }
+      }
+    },
+    "sign_in": {
+      "title": "З поверненням",
+      "subtitle": "Введіть адресу електронної пошти та пароль",
+      "forgot_password_link": "Забули пароль?",
+      "external_link": {
+        "already_have_account": "Немає акаунту?",
+        "sign_up": "Зареєстуватись"
+      },
+      "form": {
+        "email": {
+          "label": "",
+          "placeholder": "Email",
+          "error": {
+            "required": "Email обовʼязкове поле до заповнення",
+            "validation": "Невалідний формат"
+          }
+        },
+        "password": {
+          "label": "",
+          "placeholder": "Пароль",
+          "error": {
+            "required": "Пароль обовʼязкове поле до заповнення",
+            "validation": "Пароль повинен містити 8 або більше символів, включаючи принаймні 1 цифру"
+          }
+        }
+      }
+    },
+    "forgot_password": {
+      "title": "Забули пароль?",
+      "subtitle": "Введіть адресу електронної вашого акаунту",
+      "external_link": {
+        "already_have_account": "Немає акаунту?",
+        "sign_up": "Зареєстуватись"
+      },
+      "form": {
+        "email": {
+          "label": "",
+          "placeholder": "Email",
+          "error": {
+            "required": "Email обовʼязкове поле до заповнення",
+            "validation": "Невалідний формат"
+          }
+        }
+      }
+    },
+    "verify_email": {
+      "title": "Верифікація Email",
+      "subtitle": "Верифікаційний код надіслано на {{email}}.",
+      "your_email": "вказану при реєстрації",
+      "resend": {
+        "message": "Не отримали листа? Перевірте spam або",
+        "button": {
+          "label": "Відправити повторно"
+        }
+      },
+      "external_link": {
+        "message": "Вказали невірну електронну адресу?",
+        "link": "Змінити"
+      }
+    },
+    "reset_password": {
+      "title": "Скинути пароль",
+      "subtitle": "Введіть новий пароль",
+      "form": {
+        "password": {
+          "label": "",
+          "placeholder": "Пароль",
+          "error": {
+            "required": "Пароль обовʼязкове поле до заповнення",
+            "validation": "Пароль повинен містити 8 або більше символів, включаючи принаймні 1 цифру"
+          }
+        },
+        "confirm_password": {
+          "label": "",
+          "placeholder": "Підтвердження паролю",
+          "error": {
+            "required": "Підтвердження паролю обовʼязкове поле до заповнення",
+            "match": "Паролі не збігаються",
+            "validation": "Пароль повинен містити 8 або більше символів, включаючи принаймні 1 цифру"
+          }
+        }
+      }
+    },
+    "sign_out": {
+      "confirm": {
+        "title": "Натисність 'Продовжити', щоб підтвердити вихід"
+      },
+      "button": {
+        "label": "Вихід"
+      }
+    }
+  },
+  "faq": {
+    "title": "Поширені запитання",
+    "contact_us": {
+      "title": "Не знайшли потрібної інформації?",
+      "subtitle": "Якщо ви не знайшли відповіді на своє запитання або потребуєте зворотного зв’язку, будь ласка, зв’яжіться з нами.",
+      "button": {
+        "label": "Email"
+      }
+    }
+  },
+  "location": {
+    "current": "Моє місце розташування",
+    "denied_permission": {
+      "title": "Активуйте ваше місцезнаходження",
+      "subtitle": "Здається, ви раніше відмовили у доступі до місцезнаходження. Увімкніть його в налаштуваннях пристрою, щоб застосунок автоматично визначав вашу локацію.",
+      "action": {
+        "label": "Налаштування"
+      }
+    }
+  },
+  "camera": {
+    "denied_permission": {
+      "title": "Активуйте доступ до камери",
+      "subtitle": "Здається, ви раніше відмовили у доступі до камери. Увімкніть його в налаштуваннях пристрою, щоб застосунок автоматично відкривав камеру.",
+      "action": {
+        "label": "Налаштування"
+      }
+    }
+  },
+  "datetime": {
+    "time_before": "за {{value}} до",
+    "short_format": {
+      "minute": "хв",
+      "minutes": "хв",
+      "hour": "год",
+      "hours": "год",
+      "day": "дн",
+      "days": "дн",
+      "week": "тиж",
+      "weeks": "тиж",
+      "month": "міс",
+      "months": "міс",
+      "year": "р",
+      "years": "р"
+    },
+    "unit": {
+      "minute": "хв",
+      "minutes": "хв",
+      "hour": "год",
+      "hours": "год",
+      "day": "дн",
+      "days": "дн",
+      "week": "тиж",
+      "weeks": "тиж",
+      "month": "міс",
+      "months": "міс",
+      "year": "р",
+      "years": "р"
+    }
+  }
+}

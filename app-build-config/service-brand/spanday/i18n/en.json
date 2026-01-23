@@ -1,0 +1,1931 @@
+{
+  "navigation": {
+    "drawer": {
+      "notifications": {
+        "label": "Notifications"
+      },
+      "actions": {
+        "label": "Take action"
+      },
+      "home": {
+        "label": "Home"
+      },
+      "calendar": {
+        "label": "Calendar"
+      },
+      "brands": {
+        "label": "Business profile"
+      },
+      "share": {
+        "label": "Share application"
+      },
+      "faq": {
+        "label": "FAQ"
+      },
+      "terms_privacy": {
+        "label": "Terms & Privacy"
+      },
+      "follow_us": {
+        "label": "Follow us"
+      },
+      "more": {
+        "label": "More"
+      },
+      "locations": {
+        "label": "Locations"
+      },
+      "employees": {
+        "label": "Staff"
+      },
+      "clients": {
+        "label": "Clients"
+      },
+      "analytics": {
+        "label": "Analytics"
+      },
+      "transactions": {
+        "label": "Transactions"
+      },
+      "services": {
+        "label": "Services"
+      },
+      "period_based_memberships": {
+        "label": "Memberships"
+      },
+      "visit_based_memberships": {
+        "label": "Packs"
+      }
+    },
+    "tabs": {
+      "plus": {
+        "actions": {
+          "add_client": {
+            "label": "New client"
+          },
+          "import_client": {
+            "label": "Import clients"
+          },
+          "add_location": {
+            "label": "New location"
+          },
+          "add_employee": {
+            "label": "New staff member"
+          },
+          "add_service": {
+            "label": "New service"
+          },
+          "add_period_based_membership": {
+            "label": "New membership"
+          },
+          "add_visit_based_membership": {
+            "label": "New service pack"
+          },
+          "add_service_booking": {
+            "label": "New booking"
+          },
+          "add_unavailable_booking": {
+            "label": "New unavailable time"
+          }
+        }
+      }
+    }
+  },
+  "onboarding": {
+    "slides": {
+      "slide0": {
+        "title": "For service pros",
+        "subtitle": "Work solo or with a team - everything in one place."
+      },
+      "slide1": {
+        "title": "Your schedule, your way",
+        "subtitle": "Create one-on-one or group bookings."
+      },
+      "slide2": {
+        "title": "Clients & payments",
+        "subtitle": "Track attendance and keep payments on point."
+      },
+      "slide3": {
+        "title": "Team on board",
+        "subtitle": "Invite teammates and manage business together."
+      }
+    }
+  },
+  "auth": {
+    "title": "Be PRO in your niche",
+    "subtitle": "Smart Scheduling for Your Business"
+  },
+  "initial_actions": {
+    "title": "Take the first step",
+    "subtitle": "Select whether you want to create your own workspace or join the team.",
+    "join_workspace": {
+      "title": "Join a workspace",
+      "subtitle": "Already part of a team? Use a QR code to join your Spanday PRO workspace.",
+      "button": {
+        "label": "Join"
+      }
+    },
+    "create_workspace": {
+      "title": "Create a workspace",
+      "subtitle": "Set up your space, add clients, and manage bookings with ease.",
+      "button": {
+        "label": "Create"
+      }
+    }
+  },
+  "subscription": {
+    "discount": "{{value}}% OFF",
+    "type": {
+      "monthly": "Monthly",
+      "annual": "Annual"
+    },
+    "card": {
+      "title": "Next level starts here!",
+      "subtitle": "Reach more clients, expand services, and grow your team with confidence.",
+      "button": {
+        "label": "Go Unlimited"
+      }
+    },
+    "paywall": {
+      "starter": {
+        "title": "Unlock PRO",
+        "subtitle": "Your next level begins here. Step into PRO mode.",
+        "description": {
+          "ios": "Payment will be charged to your Apple ID account. Your subscription will automatically renew at your selected interval unless you cancel at least 24 hours before the end of the current period. After the introductory offer, the subscription renews at the standard price. The amount charged may change with notice. You can manage or cancel your subscription in your App Store account settings. Cancel anytime.",
+          "android": "Payment will be charged to your Google Play account. Your subscription will automatically renew unless you cancel at least 24 hours before the end of the current billing period. After any introductory offer, the subscription renews at the full price. The subscription price may change with notice. You can manage or cancel your subscription in your Google Play account settings. Cancel anytime.",
+          "web": ""
+        },
+        "benefits": [
+          {
+            "title": "Unlimited clients",
+            "subtitle": "Add as many clients as your brand grows."
+          },
+          {
+            "title": "Unlimited services",
+            "subtitle": "Create an endless flow of services."
+          },
+          {
+            "title": "Unlimited staff members",
+            "subtitle": "Expand your professional crew freely."
+          },
+          {
+            "title": "Unlimited locations",
+            "subtitle": "Open new spaces for your brand."
+          }
+        ],
+        "action": {
+          "subscribe": "Go PRO",
+          "restore": "Restore Purchases",
+          "terms_privacy": "Terms & Privacy"
+        }
+      }
+    }
+  },
+  "brand": {
+    "title": "Business",
+    "analytics": {
+      "title": "Business analytics"
+    },
+    "profile": {
+      "title": "Business Profile",
+      "locations": "Locations",
+      "about": "About",
+      "birthday": "Date of Foundation",
+      "assets": "Assets",
+      "schedule": "Schedule",
+      "stakeholders": "Stakeholders",
+      "finance": "Finances"
+    },
+    "form": {
+      "name": {
+        "label": "Business name",
+        "placeholder": "For example, Symbiot Development",
+        "error": {
+          "required": "Business name is required"
+        }
+      },
+      "industry": {
+        "label": "Industry",
+        "placeholder": "Select industry",
+        "error": {
+          "required": "Industry is required"
+        }
+      },
+      "birthday": {
+        "label": "Date of foundation",
+        "placeholder": "Indicate the date of foundation",
+        "error": {
+          "required": "Date of foundation is required"
+        }
+      },
+      "website": {
+        "label": "Website",
+        "placeholder": "For example, symbiothub.com",
+        "error": {
+          "validation": "Provide valid domain address",
+          "required": "Provide valid domain address"
+        }
+      },
+      "instagram": {
+        "label": "Instagram",
+        "placeholder": "Enter business's instagram nickname",
+        "error": {
+          "required": "Instagram is required"
+        }
+      },
+      "about": {
+        "label": "About",
+        "placeholder": "Provide useful information about the business",
+        "error": {
+          "required": "About is required"
+        }
+      },
+      "country": {
+        "label": "Country",
+        "placeholder": "Provide country",
+        "error": {
+          "required": "Country is required"
+        }
+      },
+      "currency": {
+        "label": "Currency",
+        "placeholder": "Provide currency",
+        "error": {
+          "required": "Currency is required"
+        }
+      },
+      "referral_source": {
+        "label": "Where You Heard About Us?",
+        "placeholder": "Select source",
+        "custom_placeholder": "Type here",
+        "error": {
+          "required": "Referral source is required"
+        }
+      },
+      "competitor_source": {
+        "label": "Previously Used Service",
+        "placeholder": "Select source",
+        "custom_placeholder": "Type here",
+        "error": {
+          "required": "Source is required"
+        }
+      },
+      "promo_code": {
+        "label": "Promo Code",
+        "placeholder": "For example, SYMBIOT50",
+        "error": {
+          "required": "Promo code is required"
+        }
+      }
+    },
+    "create": {
+      "new_brand": "New business",
+      "intro": {
+        "title": "Build a strong business",
+        "subtitle": "Just a few details to set up your workspace, attract more clients, and manage your business with ease.",
+        "button": {
+          "label": "Let's go"
+        }
+      },
+      "discard": {
+        "title": "Discard creation?",
+        "message": "Are you sure you want to go back and discard?"
+      },
+      "steps": {
+        "name": {
+          "title": "Name",
+          "subtitle": "Enter your business name so clients can easily recognize you."
+        },
+        "avatar": {
+          "title": "Business Logo",
+          "subtitle": "Upload your logo to make your business stand out and look professional."
+        },
+        "referral_source": {
+          "title": "Where You Heard About Us?",
+          "subtitle": "Let us know how you found Spanday PRO - so we can better support your business journey."
+        },
+        "competitor_source": {
+          "title": "Previously Used Service",
+          "subtitle": "Share the service you previously used so we can improve your workspace experience."
+        },
+        "industry": {
+          "title": "Industry",
+          "subtitle": "Choose your industry to customize features for your business."
+        },
+        "country": {
+          "title": "Country",
+          "subtitle": "Select the country where your business services are available."
+        },
+        "website": {
+          "title": "Website",
+          "subtitle": "Add a website link to showcase your business professionally and share all the details clients need."
+        },
+        "promo_code": {
+          "title": "Promo Code",
+          "subtitle": "Have a promo code? Apply it now to enjoy exclusive benefits from a Spanday PRO partner."
+        }
+      }
+    },
+    "update": {
+      "title": "Business Settings",
+      "groups": {
+        "information": {
+          "title": "Information"
+        },
+        "localization": {
+          "title": "Localization"
+        },
+        "links": {
+          "title": "External links"
+        }
+      }
+    },
+    "information": {
+      "title": "Business information"
+    },
+    "congrats": {
+      "anniversary": {
+        "title": "Anniversary!",
+        "message": "Congratulations on your anniversary!\nWishing {{brandName}} continuous growth, inspiration, and new achievements. May each coming year be even more successful!"
+      },
+      "opening": {
+        "title": "Grand Opening!",
+        "message": "Congratulations on your grand opening!\nMay your launch be bright, your customers loyal, and your brand quickly find its place in people’s hearts. Wishing you a successful journey ahead!"
+      }
+    },
+    "completion": {
+      "title": "Business Profile",
+      "subtitle": "Add more business information to present a complete and professional profile.",
+      "action": {
+        "label": "Complete Profile"
+      }
+    }
+  },
+  "brand_location": {
+    "title": "Locations",
+    "new_location": "New location",
+    "analytics": {
+      "title": "Location analytics"
+    },
+    "profile": {
+      "title": "Location Profile",
+      "advantages": "Benefits",
+      "entrance": "Entrance number",
+      "floor": "Floor number",
+      "address": "Address",
+      "providers": "Providers",
+      "remark": "Additional Information"
+    },
+    "create": {
+      "intro": {
+        "title": "Business locations",
+        "subtitle": "Add your business locations details so clients can easily find you and book your services.",
+        "button": {
+          "label": "Add first location"
+        }
+      },
+      "discard": {
+        "title": "Discard creation?",
+        "message": "Are you sure you want to go back and discard?"
+      },
+      "steps": {
+        "name": {
+          "title": "Location Name",
+          "subtitle": "Enter a clear name for this location to help identify it easily."
+        },
+        "country": {
+          "title": "Country",
+          "subtitle": "Specify the country for this business location."
+        },
+        "currency": {
+          "title": "Currency",
+          "subtitle": "Choose the currency for payments at this business location."
+        },
+        "schedule": {
+          "title": "Working Hours",
+          "subtitle": "Add the current working hours for this location."
+        },
+        "contact": {
+          "title": "Contacts",
+          "subtitle": "Add location contact details so clients can stay connected."
+        },
+        "address": {
+          "title": "Address",
+          "subtitle": "Enter the address that will help students and team members reach you easily."
+        },
+        "advantages": {
+          "title": "Benefits",
+          "subtitle": "Highlight the key benefits of this location to enhance the student experience."
+        }
+      }
+    },
+    "update": {
+      "title": "Location Settings",
+      "context_menu": {
+        "remove": {
+          "label": "Delete location"
+        }
+      },
+      "groups": {
+        "address": {
+          "title": "Address"
+        },
+        "schedule": {
+          "title": "Working Hours"
+        },
+        "locale": {
+          "title": "Locale"
+        },
+        "advantages": {
+          "title": "Benefits"
+        },
+        "contact": {
+          "title": "Contacts"
+        }
+      }
+    },
+    "remove": {
+      "title": "Delete business location",
+      "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
+      "button": {
+        "label": "Delete"
+      },
+      "confirm_dialog": {
+        "title": "Are you sure?",
+        "message": "This action cannot be undone."
+      }
+    },
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "For example, {{brandName}} New York",
+        "error": {
+          "required": "Location name is required"
+        }
+      },
+      "country": {
+        "label": "Country",
+        "placeholder": "United States",
+        "error": {
+          "required": "Country is required"
+        }
+      },
+      "us_state": {
+        "label": "State",
+        "placeholder": "For example, Alabama",
+        "error": {
+          "required": "State is required"
+        }
+      },
+      "timezone": {
+        "label": "Timezone",
+        "placeholder": "For example, -05:00",
+        "error": {
+          "required": "Timezone is required"
+        }
+      },
+      "schedule": {
+        "label": "Working Hours",
+        "error": {
+          "required": "Working Hours are required"
+        }
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "For example, +1 415-555-5555",
+        "error": {
+          "validation": "Invalid phone number",
+          "required": "Phone is required"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "For example, info@symbiothub.com",
+        "error": {
+          "required": "Email is required",
+          "validation": "Invalid format"
+        }
+      },
+      "instagram": {
+        "label": "Instagram",
+        "placeholder": "For example, symbiothub",
+        "error": {
+          "required": "Instagram is required",
+          "validation": "Invalid format"
+        }
+      },
+      "remark": {
+        "label": "Additional Information",
+        "placeholder": "If needed, include helpful details to ensure a smooth arrival (e.g., parking, entry).",
+        "error": {
+          "required": "Additional information is required"
+        }
+      },
+      "gallery": {
+        "label": "Gallery"
+      },
+      "advantages": {
+        "label": "Benefits",
+        "error": {
+          "required": "Add at least one advantage"
+        }
+      },
+      "address": {
+        "label": "Full address",
+        "placeholder": "For example, 9497 Wall St. Corona, NY",
+        "error": {
+          "required": "Address is required"
+        }
+      },
+      "floor": {
+        "label": "Floor number",
+        "placeholder": "For example, 2",
+        "error": {
+          "required": "Floor is required"
+        }
+      },
+      "entrance": {
+        "label": "Entrance number",
+        "placeholder": "For example, 13a",
+        "error": {
+          "required": "Entrance is required"
+        }
+      },
+      "dynamic": {
+        "label": "Flexible location",
+        "placeholder": "Location-independent"
+      },
+      "any": {
+        "label": "Undefined",
+        "placeholder": "Location-independent"
+      },
+      "all": {
+        "label": "All locations",
+        "placeholder": "Location-independent"
+      }
+    },
+    "completion": {
+      "title": "Location Profile",
+      "subtitle": "Add more location details to present a professional profile.",
+      "action": {
+        "label": "Complete Profile"
+      }
+    }
+  },
+  "brand_client": {
+    "title": "Clients",
+    "analytics": {
+      "title": "Client analytics"
+    },
+    "search": {
+      "placeholder": "Search by name or phone"
+    },
+    "profile": {
+      "title": "Client profile",
+      "note": "Note",
+      "empty_note": "Add important information about the client"
+    },
+    "balance": {
+      "title": "Balance",
+      "empty": "Balance is empty",
+      "menu": {
+        "add_visit_based_membership": "Add Service Pack",
+        "add_period_based_membership": "Add Membership"
+      },
+      "extend": {
+        "title": "Empty Balance",
+        "subtitle": "Add a service pack or membership to the client’s balance in just one click.",
+        "button": {
+          "label": "Top up"
+        }
+      },
+      "top_up": {
+        "title": "Top up balance",
+        "visit_based_memberships": {
+          "empty": {
+            "title": "No service packs added yet",
+            "subtitle": "Go to the «Service Packs» section to add the first one."
+          }
+        },
+        "period_based_memberships": {
+          "empty": {
+            "title": "No memberships added yet",
+            "subtitle": "Go to the «Memberships» section to add the first one."
+          }
+        }
+      }
+    },
+    "history": {
+      "title": "History",
+      "menu": {
+        "visit_based_memberships": "Service Packs",
+        "period_based_memberships": "Memberships",
+        "transactions": "Transactions"
+      },
+      "visit_based_memberships": {
+        "empty": {
+          "title": "No service packs assigned",
+          "subtitle": "Assigned service packs will appear here."
+        }
+      },
+      "period_based_memberships": {
+        "empty": {
+          "title": "No memberships assigned",
+          "subtitle": "Assigned memberships will be shown here."
+        }
+      }
+    },
+    "form": {
+      "firstname": {
+        "label": "First name",
+        "placeholder": "Enter client's first name",
+        "error": {
+          "required": "First name is required"
+        }
+      },
+      "lastname": {
+        "label": "Last name",
+        "placeholder": "Enter client's last name",
+        "error": {
+          "required": "Last name is required"
+        }
+      },
+      "gender": {
+        "label": "Gender",
+        "placeholder": "Select client's gender",
+        "error": {
+          "required": "Gender is required"
+        }
+      },
+      "birthday": {
+        "label": "Birth Date",
+        "placeholder": "Add client's birthday",
+        "error": {
+          "required": "Birth date is required"
+        }
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "For example, +1 415-555-5555",
+        "error": {
+          "validation": "Invalid phone number",
+          "required": "Phone is required"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "For example, info@symbiothub.com",
+        "error": {
+          "required": "Email is required",
+          "validation": "Invalid format"
+        }
+      },
+      "address": {
+        "label": "Address",
+        "placeholder": "Enter client’s address",
+        "error": {
+          "required": "Address is required"
+        }
+      },
+      "avatar": {
+        "title": "Photo",
+        "subtitle": "Add the client’s photo to make the profile easier to find in the list."
+      },
+      "note": {
+        "label": "Note",
+        "placeholder": "For example, avoid jumps in choreography due to a previous knee injury.",
+        "error": {
+          "required": "Note is required"
+        }
+      }
+    },
+    "import": {
+      "title": "Import clients",
+      "subtitle": "Upload your CSV file to start importing clients",
+      "suggestion": "Before uploading, check the Import Guide and review the sample file.",
+      "upload": {
+        "label": "Upload CSV file",
+        "button": {
+          "label": "Import"
+        }
+      },
+      "uploaded": {
+        "title": "Import Complete!",
+        "summary": {
+          "total": "Total clients found",
+          "success": "Successfully imported",
+          "failed": "Not imported"
+        },
+        "button": {
+          "label": "Go to Clients"
+        }
+      },
+      "guide": {
+        "title": "Import guide",
+        "warning": "Rows with invalid or incorrectly formatted data will be skipped. If certain information is unavailable, leave the field empty.",
+        "fields": [
+          {
+            "name": "First Name",
+            "options": ["Limit: Maximum 50 characters.", "For example, Olivia"]
+          },
+          {
+            "name": "Last Name",
+            "options": ["Limit: Maximum 50 characters.", "For example, Johnson"]
+          },
+          {
+            "name": "Email",
+            "options": [
+              "Format: Must be a valid email address.",
+              "For example, olivia.johnson@email.com"
+            ]
+          },
+          {
+            "name": "Phone",
+            "options": [
+              "Format: Include the international country code.",
+              "For example, +1 202 555 0147"
+            ]
+          },
+          {
+            "name": "Birthday",
+            "options": ["Format: MM-DD-YYYY", "For example, 09-15-1997"]
+          },
+          {
+            "name": "Gender",
+            "options": [
+              "Options: Male, Female, Non-binary, Other",
+              "For example, Female"
+            ]
+          },
+          {
+            "name": "Address",
+            "options": [
+              "Limit: Maximum 150 characters.",
+              "For example, 221B Baker Street, London, UK"
+            ]
+          },
+          {
+            "name": "Avatar",
+            "options": [
+              "Format: URL link to the image",
+              "For example, https://example.com/avatar.jpg"
+            ]
+          }
+        ]
+      },
+      "template": {
+        "title": "Still have questions? Check the example.",
+        "subtitle": "Use the sample to ensure accurate entry of client information.",
+        "button": {
+          "label": "Download template"
+        }
+      }
+    },
+    "create": {
+      "new_client": "New client",
+      "discard": {
+        "title": "Discard creation?",
+        "message": "Are you sure you want to go back and discard?"
+      },
+      "intro": {
+        "title": "Add Your First Client",
+        "subtitle": "Start building your client base and manage profiles with ease.",
+        "button": {
+          "label": "Get started"
+        }
+      },
+      "steps": {
+        "personality": {
+          "title": "Personal Information",
+          "subtitle": "Add the client's personal information to verify their identity."
+        },
+        "contact": {
+          "title": "Contacts",
+          "subtitle": "Add client’s contact details to enable effective communication."
+        },
+        "avatar": {
+          "title": "Photo",
+          "subtitle": "Add the client’s photo to make the profile easier to find in the list."
+        },
+        "note": {
+          "title": "Note",
+          "subtitle": "Add important details about the student that team members need to know."
+        }
+      }
+    },
+    "update": {
+      "title": "Client settings",
+      "context_menu": {
+        "remove": {
+          "label": "Delete client"
+        }
+      },
+      "groups": {
+        "personality": {
+          "title": "Personal Information"
+        },
+        "contact": {
+          "title": "Contacts"
+        },
+        "note": {
+          "title": "Note"
+        }
+      }
+    },
+    "remove": {
+      "title": "Delete client",
+      "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
+      "button": {
+        "label": "Delete"
+      },
+      "confirm_dialog": {
+        "title": "Are you sure?",
+        "message": "This action cannot be undone."
+      }
+    }
+  },
+  "brand_client_membership": {
+    "form": {
+      "end_at": {
+        "label": "Expires in",
+        "placeholder": "Set end date",
+        "error": {
+          "required": "End date is required"
+        }
+      }
+    },
+    "profile": {
+      "context_menu": {
+        "remove": {
+          "label": "Delete"
+        }
+      },
+      "groups": {
+        "end_date": {
+          "title": "End date"
+        }
+      }
+    },
+    "remove": {
+      "title": "",
+      "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
+      "button": {
+        "label": "Delete"
+      },
+      "confirm_dialog": {
+        "title": "Are you sure?",
+        "message": "This action cannot be undone."
+      }
+    }
+  },
+  "brand_employee": {
+    "title": "Staff",
+    "analytics": {
+      "title": "Employee analytics"
+    },
+    "search": {
+      "placeholder": "Search by name, role or phone"
+    },
+    "profile": {
+      "working_hours": "Schedule",
+      "title": "Staff member profile",
+      "locations": "Location",
+      "dynamic_location": "Flexible location",
+      "not_provider": "Not a service provider",
+      "about": "Bio"
+    },
+    "form": {
+      "new_employee_id": {
+        "label": "Personal ID",
+        "placeholder": "Enter new staff member personal ID",
+        "error": {
+          "required": "Personal ID is required"
+        }
+      },
+      "firstname": {
+        "label": "First name",
+        "placeholder": "Enter staff member's first name",
+        "error": {
+          "required": "First name is required"
+        }
+      },
+      "lastname": {
+        "label": "Last name",
+        "placeholder": "Enter staff member's last name",
+        "error": {
+          "required": "Last name is required"
+        }
+      },
+      "role": {
+        "label": "Role",
+        "placeholder": "Enter staff member's role",
+        "error": {
+          "required": "Role is required"
+        }
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "For example, +1 415-555-5555",
+        "error": {
+          "validation": "Invalid phone number",
+          "required": "Phone is required"
+        }
+      },
+      "location_custom_schedule": {
+        "label": "Custom Schedule",
+        "description": "Works according to a separate schedule that does not match the main schedule of the location."
+      },
+      "employee_schedule": {
+        "label": "Working Hours",
+        "description": "Works according to the standard work schedule"
+      },
+      "provider": {
+        "label": "Provides services",
+        "description": "Enable to assign this team member to services."
+      },
+      "schedule": {
+        "title": "Working Hours",
+        "subtitle": "Set the staff member’s working hours so clients know when they’re available.",
+        "label": "Working Hours",
+        "error": {
+          "required": "Working Hours are required"
+        }
+      },
+      "birthday": {
+        "label": "Birth Date",
+        "placeholder": "Add team member's birthday",
+        "error": {
+          "required": "Birth date is required"
+        }
+      },
+      "gender": {
+        "label": "Gender",
+        "placeholder": "Select staff member's gender",
+        "error": {
+          "required": "Gender is required"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "For example, info@symbiothub.com",
+        "error": {
+          "required": "Email is required",
+          "validation": "Invalid format"
+        }
+      },
+      "address": {
+        "label": "Address",
+        "placeholder": "Enter staff member’s address",
+        "error": {
+          "required": "Address is required"
+        }
+      },
+      "passport": {
+        "label": "Passport Number",
+        "placeholder": "Enter staff member’s passport number",
+        "error": {
+          "required": "Passport number is required"
+        }
+      },
+      "tax_id": {
+        "label": "Tax ID",
+        "placeholder": "Enter staff member’s tax id",
+        "error": {
+          "required": "Tax ID is required"
+        }
+      },
+      "about": {
+        "label": "Bio",
+        "placeholder": "For example, breakdance coach with 5 years of experience...",
+        "error": {
+          "required": "Bio is required"
+        }
+      },
+      "location": {
+        "label": "Location",
+        "placeholder": "Select staff member's location",
+        "error": {
+          "required": "Location is required"
+        }
+      }
+    },
+    "create": {
+      "new_employee": "New staff member",
+      "discard": {
+        "title": "Discard creation?",
+        "message": "Are you sure you want to go back and discard?"
+      },
+      "intro": {
+        "title": "Staff expansion",
+        "subtitle": "Quickly add a staff member by scanning their\n QR code or searching with their personal ID.",
+        "qr": {
+          "action": {
+            "label": "Scan"
+          }
+        },
+        "by_id": {
+          "action": {
+            "label": "Add"
+          }
+        }
+      },
+      "steps": {
+        "personality": {
+          "title": "Personal Information",
+          "subtitle": "Add the new staff member’s personal information to verify their identity."
+        },
+        "avatar": {
+          "title": "Photo",
+          "subtitle": "Upload a clear, high-quality photo of the new staff member that fits your brand."
+        },
+        "contact": {
+          "title": "Contacts",
+          "subtitle": "Add the new staff member’s contact details for quick communication."
+        },
+        "professionality": {
+          "title": "Role",
+          "subtitle": "Define the staff member’s role and service assignments if needed."
+        },
+        "location": {
+          "title": "Location & Schedule",
+          "subtitle": "Set the new staff member’s primary location and work schedule."
+        },
+        "permissions": {
+          "title": "Permissions",
+          "subtitle": "Enable the features the new staff member needs to manage their work effectively."
+        },
+        "about": {
+          "title": "Bio",
+          "subtitle": "Add a short bio to highlight the staff member's background and specialization."
+        }
+      }
+    },
+    "update": {
+      "title": "Team member settings",
+      "context_menu": {
+        "remove": {
+          "label": "Delete staff member"
+        }
+      },
+      "groups": {
+        "personality": {
+          "title": "Personal Information"
+        },
+        "professionality": {
+          "title": "Role"
+        },
+        "about": {
+          "title": "Bio"
+        },
+        "location": {
+          "title": "Location & Schedule"
+        },
+        "contact": {
+          "title": "Contacts"
+        },
+        "identification": {
+          "title": "Personal Identification"
+        },
+        "permissions": {
+          "title": "Permissions"
+        }
+      }
+    },
+    "remove": {
+      "title": "Delete staff member",
+      "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
+      "button": {
+        "label": "Delete"
+      },
+      "confirm_dialog": {
+        "title": "Are you sure?",
+        "message": "This action cannot be undone."
+      }
+    },
+    "permissions": {
+      "brand": {
+        "all": {
+          "title": "Access to Brand",
+          "subtitle": "Enable adding, editing, and deleting brand-related information."
+        }
+      },
+      "notification": {
+        "all": {
+          "title": "Access to Brand Notifications",
+          "subtitle": "Enable receiving all brand notifications, not only those related to this staff member."
+        }
+      },
+      "client": {
+        "all": {
+          "title": "Access to Client",
+          "subtitle": "Enable adding, editing, and deleting client information."
+        }
+      },
+      "catalog": {
+        "all": {
+          "title": "Access to Catalog",
+          "subtitle": "Enable adding, editing, and deleting services, service packs, and memberships."
+        }
+      },
+      "employee": {
+        "all": {
+          "title": "Access to Staff Members",
+          "subtitle": "Enable adding, editing, and deleting staff member information."
+        }
+      },
+      "location": {
+        "all": {
+          "title": "Access to Locations",
+          "subtitle": "Enable adding, editing, and deleting location-related information."
+        }
+      },
+      "analytic": {
+        "all": {
+          "title": "Access to Analytics",
+          "subtitle": "Access is provided to view and analyze performance data."
+        }
+      },
+      "finance": {
+        "all": {
+          "title": "Access to Finances",
+          "subtitle": "Enable viewing client payment transactions."
+        }
+      },
+      "booking": {
+        "all": {
+          "title": "Access to Service Bookings",
+          "subtitle": "Enable adding, editing, and deleting service bookings."
+        }
+      }
+    },
+    "congrats": {
+      "anniversary": {
+        "title": "Work Anniversary!",
+        "message": "Today marks a work anniversary. Thank you for your contributions and wishing you continued success!"
+      },
+      "birthday": {
+        "title": "Birthday!",
+        "message": "Today is a birthday celebration. Wishing you a wonderful day and a great mood!"
+      }
+    },
+    "completion": {
+      "title": "Staff Member Profile",
+      "subtitle": "Add more staff member details to present a professional profile.",
+      "action": {
+        "label": "Complete Profile"
+      }
+    }
+  },
+  "brand_service": {
+    "title": "Services",
+    "free": "Free",
+    "unavailable": "Unavailable for booking",
+    "analytics": {
+      "title": "Service analytics"
+    },
+    "profile": {
+      "title": "Service profile",
+      "locations": "Locations",
+      "employees": "Staff members",
+      "description": "Description",
+      "note": "Note"
+    },
+    "search": {
+      "placeholder": "Search by name"
+    },
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter a service name",
+        "error": {
+          "required": "Name is required"
+        }
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Add a description that inspires clients to book this service.",
+        "error": {
+          "required": "Description is required"
+        }
+      },
+      "type": {
+        "label": "Service Type",
+        "placeholder": "Choose the service type",
+        "error": {
+          "required": "Service type is required"
+        }
+      },
+      "format": {
+        "label": "Format",
+        "placeholder": "Select the service format",
+        "error": {
+          "required": "Format is required"
+        }
+      },
+      "places": {
+        "label": "Group size",
+        "placeholder": "Enter groups size",
+        "error": {
+          "required": "Groups size is required",
+          "min": "Minimum value is {{value}}",
+          "max": "Maximum value is {{value}}"
+        }
+      },
+      "duration": {
+        "label": "Duration",
+        "placeholder": "Add service duration",
+        "error": {
+          "required": "Duration is required",
+          "min": "Minimum value is {{value}}",
+          "max": "Maximum value is {{value}}"
+        }
+      },
+      "currency": {
+        "label": "Currency",
+        "placeholder": "USD",
+        "error": {
+          "required": "Currency is required"
+        }
+      },
+      "price": {
+        "label": "Price",
+        "placeholder": "Set service price",
+        "error": {
+          "required": "Price is required"
+        }
+      },
+      "discount": {
+        "label": "Discount",
+        "placeholder": "Set service discount",
+        "error": {
+          "required": "Discount is required"
+        }
+      },
+      "note": {
+        "label": "Note",
+        "placeholder": "For example, arrive 15 minutes early if it’s your first time.",
+        "error": {
+          "required": "Note is required"
+        }
+      },
+      "available": {
+        "label": "Available for booking"
+      },
+      "gender": {
+        "label": "Gender",
+        "placeholder": "Choose the gender",
+        "error": {
+          "required": "Gender is required"
+        }
+      },
+      "location": {
+        "label": "Location",
+        "placeholder": "Select a service location",
+        "error": {
+          "required": "Location is required"
+        }
+      },
+      "providers": {
+        "label": "Staff Members",
+        "error": {
+          "required": "Staff member is required"
+        }
+      },
+      "any": {
+        "label": "Any service",
+        "placeholder": "All services included"
+      }
+    },
+    "create": {
+      "new_service": "New service",
+      "intro": {
+        "title": "Add Your First Service",
+        "subtitle": "Set up your first service in just a few clicks.",
+        "button": {
+          "label": "Get started"
+        }
+      },
+      "discard": {
+        "title": "Discard creation?",
+        "message": "Are you sure you want to go back and discard?"
+      },
+      "steps": {
+        "about": {
+          "title": "About Service",
+          "subtitle": "Define a name and description that reflect the true value and uniqueness of your service."
+        },
+        "avatar": {
+          "title": "Image",
+          "subtitle": "Upload an image that visually represents this service for new clients."
+        },
+        "structure": {
+          "title": "Structure",
+          "subtitle": "Select the service type and format so clients instantly understand how it is delivered."
+        },
+        "location": {
+          "title": "Location",
+          "subtitle": "Select your brand’s location where this service will be available."
+        },
+        "providers": {
+          "title": "Staff Members",
+          "subtitle": "Add the staff members who provide this service."
+        },
+        "pricing": {
+          "title": "Pricing",
+          "subtitle": "Set pricing and discounts to reflect your service’s value and motivate clients to book."
+        },
+        "note": {
+          "title": "Note",
+          "subtitle": "Add important details clients should know before booking this service."
+        }
+      }
+    },
+    "update": {
+      "title": "Service settings",
+      "context_menu": {
+        "remove": {
+          "label": "Delete service"
+        }
+      },
+      "groups": {
+        "about": {
+          "title": "About Service"
+        },
+        "structure": {
+          "title": "Structure"
+        },
+        "location_providers": {
+          "title": "Location & Providers"
+        },
+        "pricing": {
+          "title": "Pricing"
+        },
+        "note": {
+          "title": "Note"
+        }
+      }
+    },
+    "remove": {
+      "title": "Delete service",
+      "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
+      "button": {
+        "label": "Delete"
+      },
+      "confirm_dialog": {
+        "title": "Are you sure?",
+        "message": "This action cannot be undone."
+      }
+    }
+  },
+  "brand_period_based_membership": {
+    "title": "Memberships",
+    "expired": "Expired",
+    "unavailable": "Not available for purchase",
+    "analytics": {
+      "title": "Membership Analytics"
+    },
+    "profile": {
+      "title": "Membership profile",
+      "locations": "Locations",
+      "services": "Included Services",
+      "description": "Description",
+      "note": "Note"
+    },
+    "search": {
+      "placeholder": "Search by name"
+    },
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter membership name",
+        "error": {
+          "required": "Name is required"
+        }
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Add a description that inspires clients to buy this membership.",
+        "error": {
+          "required": "Description is required"
+        }
+      },
+      "note": {
+        "label": "Note",
+        "placeholder": "For example, unused services do not carry over to the next period.",
+        "error": {
+          "required": "Note is required"
+        }
+      },
+      "location": {
+        "label": "Location",
+        "placeholder": "Select a membership location",
+        "error": {
+          "required": "Location is required"
+        }
+      },
+      "services": {
+        "label": "Services",
+        "error": {
+          "required": "Services is required"
+        }
+      },
+      "available": {
+        "label": "Available for purchase"
+      },
+      "period": {
+        "label": "Valid for",
+        "placeholder": "Select validity",
+        "error": {
+          "required": "Validity is required"
+        }
+      },
+      "currency": {
+        "label": "Currency",
+        "placeholder": "USD",
+        "error": {
+          "required": "Currency is required"
+        }
+      },
+      "price": {
+        "label": "Price",
+        "placeholder": "Set membership price",
+        "error": {
+          "required": "Price is required"
+        }
+      },
+      "discount": {
+        "label": "Discount",
+        "placeholder": "Set membership discount",
+        "error": {
+          "required": "Discount is required"
+        }
+      }
+    },
+    "create": {
+      "new": "New membership",
+      "intro": {
+        "title": "Add Your First Membership",
+        "subtitle": "Set up your first membership in just a few clicks.",
+        "button": {
+          "label": "Get started"
+        }
+      },
+      "discard": {
+        "title": "Discard creation?",
+        "message": "Are you sure you want to go back and discard?"
+      },
+      "steps": {
+        "about": {
+          "title": "About Membership",
+          "subtitle": "Add a name and description that highlight the membership’s benefits and value for your clients."
+        },
+        "location": {
+          "title": "Location",
+          "subtitle": "Select your brand’s location where this membership will be available."
+        },
+        "services": {
+          "title": "Included Services",
+          "subtitle": "Choose the services to include in this membership to help clients see exactly what it offers.",
+          "empty": "No services added yet. Go to the 'Services' section to add the first one.",
+          "all_included": "If you skip this step, all services will be included in the membership."
+        },
+        "pricing": {
+          "title": "Pricing",
+          "subtitle": "Set the membership price and discount to match the value of all included services."
+        },
+        "note": {
+          "title": "Note",
+          "subtitle": "Add the key details clients should know before buying this membership."
+        }
+      }
+    },
+    "update": {
+      "title": "Membership settings",
+      "context_menu": {
+        "remove": {
+          "label": "Delete membership"
+        }
+      },
+      "groups": {
+        "about": {
+          "title": "About Membership"
+        },
+        "location_services": {
+          "title": "Location & Services"
+        },
+        "pricing": {
+          "title": "Pricing"
+        },
+        "note": {
+          "title": "Note"
+        }
+      }
+    },
+    "remove": {
+      "title": "Delete membership",
+      "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
+      "button": {
+        "label": "Delete"
+      },
+      "confirm_dialog": {
+        "title": "Are you sure?",
+        "message": "This action cannot be undone."
+      }
+    }
+  },
+  "brand_visit_based_membership": {
+    "title": "Packs",
+    "count_visits": "Visits: {{count}}",
+    "expired": "Expired",
+    "limit_reached": "Visits limit reached",
+    "unavailable": "Not available for purchase",
+    "analytics": {
+      "title": "Pack analytics"
+    },
+    "profile": {
+      "title": "Pack details",
+      "locations": "Locations",
+      "services": "Included Services",
+      "description": "Description",
+      "note": "Note"
+    },
+    "search": {
+      "placeholder": "Search by name"
+    },
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter pack name",
+        "error": {
+          "required": "Name is required"
+        }
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Add a description that inspires clients to buy this service pack.",
+        "error": {
+          "required": "Description is required"
+        }
+      },
+      "note": {
+        "label": "Note",
+        "placeholder": "For example, if a client books a service but doesn’t show up, it will be automatically deducted from their pack.",
+        "error": {
+          "required": "Note is required"
+        }
+      },
+      "location": {
+        "label": "Location",
+        "placeholder": "Select a pack location",
+        "error": {
+          "required": "Location is required"
+        }
+      },
+      "services": {
+        "label": "Services",
+        "error": {
+          "required": "Services is required"
+        }
+      },
+      "available": {
+        "label": "Available for purchase"
+      },
+      "visits": {
+        "label": "Number of services",
+        "placeholder": "Select number",
+        "error": {
+          "required": "Number is required"
+        }
+      },
+      "currency": {
+        "label": "Currency",
+        "placeholder": "USD",
+        "error": {
+          "required": "Currency is required"
+        }
+      },
+      "price": {
+        "label": "Price",
+        "placeholder": "Set pack price",
+        "error": {
+          "required": "Price is required"
+        }
+      },
+      "discount": {
+        "label": "Discount",
+        "placeholder": "Set pack discount",
+        "error": {
+          "required": "Discount is required"
+        }
+      }
+    },
+    "create": {
+      "new": "New pack",
+      "intro": {
+        "title": "Set up your first pack in seconds",
+        "subtitle": "Add the pack details that turn first-time clients into loyal ones.",
+        "button": {
+          "label": "Get started"
+        }
+      },
+      "discard": {
+        "title": "Discard creation?",
+        "message": "Are you sure you want to go back and discard?"
+      },
+      "steps": {
+        "about": {
+          "title": "About Pack",
+          "subtitle": "Add a name and description to highlight the service pack’s idea and value for your clients."
+        },
+        "location": {
+          "title": "Location",
+          "subtitle": "Select your brand’s location where this service pack will be available."
+        },
+        "services": {
+          "title": "Included Services",
+          "subtitle": "Choose the services to include in this pack to help clients see exactly what it offers.",
+          "empty": "No services added yet. Go to the 'Services' section to add the first one.",
+          "all_included": "If you skip this step, all services will be included in the service pack."
+        },
+        "pricing": {
+          "title": "Pricing",
+          "subtitle": "Set the pack price and discount to match the value of all included services."
+        },
+        "note": {
+          "title": "Note",
+          "subtitle": "Add the key details students should know before buying this service pack."
+        }
+      }
+    },
+    "update": {
+      "title": "Service Pack Settings",
+      "context_menu": {
+        "remove": {
+          "label": "Delete service pack"
+        }
+      },
+      "groups": {
+        "about": {
+          "title": "About Pack"
+        },
+        "location_services": {
+          "title": "Location & Services"
+        },
+        "pricing": {
+          "title": "Pricing"
+        },
+        "note": {
+          "title": "Note"
+        }
+      }
+    },
+    "remove": {
+      "title": "Delete service pack",
+      "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
+      "button": {
+        "label": "Delete"
+      },
+      "confirm_dialog": {
+        "title": "Are you sure?",
+        "message": "This action cannot be undone."
+      }
+    }
+  },
+  "brand_gift_card": {
+    "title": "Gift cards"
+  },
+  "brand_transaction": {
+    "title": "Transactions",
+    "price": "Price",
+    "discount": "Discount",
+    "transaction_id": "Transaction ID",
+    "payer": "Payer",
+    "name": "Name",
+    "date": "Payment Time",
+    "total": "Total",
+    "type": "Type",
+    "by_type": {
+      "manual": "Manual",
+      "client-period-based-membership": "Membership",
+      "client-visit-based-membership": "Service Pack"
+    },
+    "empty": {
+      "title": "No transactions yet",
+      "subtitle": "Payment history will appear here once service packs or memberships are assigned."
+    }
+  },
+  "brand_booking": {
+    "schedule": "Schedule",
+    "today_schedule": "Today",
+    "add_service_booking": "New booking",
+    "see_all": "Upcoming",
+    "today_no_schedules": {
+      "title": "No scheduled classes today. \uD83D\uDCA4",
+      "subtitle": "Take this time to recharge or prepare for upcoming classes.",
+      "button": {
+        "label": "New booking"
+      }
+    },
+    "today_schedules_completed": {
+      "title": "Today's services completed. \uD83D\uDC4F",
+      "subtitle": "All services are provided. Well done!",
+      "button": {
+        "label": "New booking"
+      }
+    },
+    "empty": {
+      "title": "Upcoming Timeline",
+      "subtitle": "Your schedule is currently clear.",
+      "button": {
+        "label": "New booking"
+      }
+    }
+  },
+  "unavailable_brand_booking": {
+    "title": "Unavailable time",
+    "create": {
+      "new": "New unavailable time",
+      "discard": {
+        "title": "Discard creation?",
+        "message": "Are you sure you want to go back and discard?"
+      },
+      "steps": {
+        "datetime": {
+          "title": "Date and Time",
+          "subtitle": "Select the date and time for unavailability. No bookings can be created during this period."
+        },
+        "recurrence": {
+          "title": "Repeat",
+          "subtitle": "Set repeat options if this unavailable time occurs regularly (e.g., every week)."
+        },
+        "employee": {
+          "title": "Staff Member",
+          "subtitle": "Select the staff member to whom this unavailable time applies."
+        }
+      }
+    },
+    "form": {
+      "date": {
+        "label": "Date"
+      },
+      "duration": {
+        "label": "Duration"
+      },
+      "employee": {
+        "label": "Staff member",
+        "placeholder": "Select staff member"
+      },
+      "note": {
+        "label": "Reason",
+        "placeholder": "Indicate the reason for this unavailable time (e.g., “Vacation”, “Meeting”, “Personal time”).",
+        "error": {
+          "required": "Reason is required"
+        }
+      }
+    },
+    "profile": {
+      "title": "Unavailable time",
+      "employee": "Staff member",
+      "settings": "Settings",
+      "datetime": "Date & Time",
+      "note": "Reason",
+      "location": "Location",
+      "update_recurring": "This is a recurring unavailable period. Apply changes to the entire series?",
+      "context_menu": {
+        "cancel": {
+          "label": "Cancel"
+        },
+        "reschedule": {
+          "label": "Reschedule"
+        },
+        "change_reason": {
+          "label": "Edit reason"
+        }
+      }
+    }
+  },
+  "service_brand_booking": {
+    "title": "Bookings",
+    "create": {
+      "new": "New booking",
+      "discard": {
+        "title": "Discard creation?",
+        "message": "Are you sure you want to go back and discard?"
+      },
+      "steps": {
+        "service": {
+          "title": "Service",
+          "subtitle": "Select a service from the list to continue the booking process."
+        },
+        "schedule": {
+          "title": "Date & Team Member",
+          "subtitle": "Select a date and an available time slot of the chosen staff member."
+        },
+        "recurrence": {
+          "title": "Repeat & Reminders",
+          "subtitle": "Set up the repeat and reminder options for this service booking."
+        }
+      }
+    },
+    "form": {
+      "service": {
+        "label": "Service",
+        "placeholder": "Select service from your list",
+        "error": {
+          "required": "Service is required"
+        }
+      },
+      "note": {
+        "label": "Note",
+        "placeholder": "For example, arrive 15 minutes early if it’s your first time.",
+        "error": {
+          "required": "Note is required"
+        }
+      },
+      "date": {
+        "label": "Date",
+        "placeholder": "Select start date",
+        "error": {
+          "required": "Date is required"
+        }
+      },
+      "slots": {
+        "label": "Time",
+        "empty": "No available time on this date",
+        "error": {
+          "required": "Time is required"
+        }
+      },
+      "location": {
+        "label": "Location",
+        "placeholder": "Select location",
+        "error": {
+          "required": "Location is required"
+        }
+      },
+      "provider": {
+        "label": "Provider",
+        "any_label": "Any staff member",
+        "placeholder": "Select service provider",
+        "error": {
+          "required": "Provider is required"
+        }
+      },
+      "frequency": {
+        "label": "Repeat"
+      },
+      "reminders": {
+        "label": "Reminders"
+      }
+    },
+    "profile": {
+      "title": "Booking",
+      "employee": "Provider",
+      "reschedule": "Reschedule",
+      "note": "Note",
+      "location": "Location",
+      "datetime": "Date & Time",
+      "update_recurring": "This is a recurring service. Apply changes to the entire series?",
+      "context_menu": {
+        "cancel": {
+          "label": "Cancel"
+        },
+        "reschedule": {
+          "label": "Reschedule"
+        },
+        "change_note": {
+          "label": "Edit note"
+        }
+      },
+      "clients": {
+        "title": "Clients",
+        "empty": "No clients yet",
+        "add": "Add",
+        "need_pay": "No payment",
+        "overbooking": "Overbooking",
+        "free_visit": "Free visit",
+        "actions": {
+          "profile": {
+            "label": "View profile"
+          },
+          "cancel_by_brand": {
+            "label": "Cancel visit"
+          },
+          "use_balance": {
+            "label": "Use balance",
+            "info": "Select a service pack or membership to use for this booking, or top up the balance if needed."
+          },
+          "mark_as_free": {
+            "label": "Free visit"
+          }
+        }
+      },
+      "add_first_client": {
+        "title": "Клієнтів ще немає",
+        "subtitle": "Додайте клієнта, щоб зробити запис на послугу більш інформативним.",
+        "button": {
+          "label": "Додати клієнта"
+        }
+      }
+    }
+  }
+}

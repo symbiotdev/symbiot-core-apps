@@ -1,0 +1,59 @@
+{
+  "build": {
+    "production": {
+      "environment": "production",
+      "android": {
+        "buildType": "app-bundle"
+      }
+    },
+    "production_local": {
+      "extends": "production",
+      "distribution": "internal"
+    },
+    "production_device_local": {
+      "extends": "production_local",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production_eas": {
+      "extends": "production"
+    },
+    "production_device_eas": {
+      "extends": "production_eas",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production_store": {
+      "extends": "production_eas",
+      "distribution": "store"
+    },
+    "development": {
+      "environment": "development",
+      "developmentClient": true
+    },
+    "development_local": {
+      "extends": "development",
+      "distribution": "internal"
+    },
+    "development_device_local": {
+      "environment": "development_local",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "development_eas": {
+      "extends": "development"
+    },
+    "development_device_eas": {
+      "environment": "development",
+      "android": {
+        "buildType": "apk"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

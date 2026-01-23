@@ -18,9 +18,8 @@ export type AppConfig = {
   supportDeployPlatforms: Platform[];
 };
 
-const repoPath = process.cwd();
+export const repoPath = process.cwd();
 export const appBuildConfigPath = `${repoPath}/app-build-config`;
-
 export const appConfig: Record<App, AppConfig> = {
   [App.Symbify]: {
     app: App.Symbify,

@@ -1,4 +1,4 @@
-import { App, appBuildConfigPath, appConfig } from './app';
+import { App, appConfig, repoPath } from './app';
 import { copyFile, rm } from 'node:fs/promises';
 import { Env } from './env';
 import { BuildSource } from './build-source';
@@ -16,7 +16,7 @@ export const getEasProfile = ({
 export const addEasJsonFile = async ({ app }: { app: App }) => {
   const { dest } = appConfig[app];
 
-  await copyFile(`${appBuildConfigPath}/eas.json`, `${dest}/eas.json`);
+  await copyFile(`${repoPath}/eas.json`, `${dest}/eas.json`);
 };
 
 export const removeEasJsonFile = async ({ app }: { app: App }) => {

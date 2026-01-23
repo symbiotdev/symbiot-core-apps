@@ -60,6 +60,7 @@
     "expo-web-browser": "*",
     "filesize": "*",
     "i18next": "*",
+    "merge-anything": "*",
     "mime": "*",
     "mitt": "*",
     "papaparse": "*",

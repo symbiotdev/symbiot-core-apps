@@ -1,4 +1,4 @@
-import { App, appConfig, getAppSyncPaths, selectApp } from './utils/app';
+import { App, appConfig, getAppConfig, getAppSyncPaths } from './utils/app';
 import { Env, selectEnv } from './utils/env';
 import { BuildType, selectBuildType } from './utils/build-type';
 import { Platform, selectPlatform } from './utils/platform';
@@ -11,19 +11,15 @@ import { syncAppJson } from './utils/expo-app-json';
 (async () => {
   console.log(`Starting... 🚀🚀`);
 
-  const app = await selectApp();
+  const { app, dynamicAppJson, supportDevPlatforms } = await getAppConfig();
   const env = await selectEnv();
-  const platform = await selectPlatform();
+  const platform = await selectPlatform({ platforms: supportDevPlatforms });
   const buildType =
     env === Env.production ? await selectBuildType() : BuildType.livereaload;
   const syncPaths = getAppSyncPaths({ app, env });
   const fileWatchers = await Promise.all(syncPaths.map(syncFiles));
-  const { reset: resetAppJson } = await syncAppJson({
-    app,
-  });
-
+  const appJson = await syncAppJson({ dynamic: dynamicAppJson, app });
   const startCommand = getStartCommand({ app, env, platform, buildType });
-
   const childProcess = spawn(startCommand, {
     stdio: 'inherit',
     shell: true,
@@ -32,7 +28,7 @@ import { syncAppJson } from './utils/expo-app-json';
   console.log('>_ Start command: ', startCommand);
 
   childProcess.on('exit', () => {
-    resetAppJson();
+    appJson.reset();
 
     fileWatchers.forEach((watcher) => watcher.close());
     syncPaths.forEach(({ dest }) => rm(dest, { recursive: true }));

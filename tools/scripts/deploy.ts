@@ -1,4 +1,4 @@
-import { getAppSyncPaths, selectApp } from './utils/app';
+import { getAppConfig, getAppSyncPaths } from './utils/app';
 import { Env, selectEnv } from './utils/env';
 import { selectPlatform } from './utils/platform';
 import { selectIncrement } from './utils/increment';
@@ -19,9 +19,16 @@ import { syncAppJson } from './utils/expo-app-json';
 (async () => {
   console.log(`Deploying... 📦⬆️`);
 
-  const app = await selectApp();
+  const {
+    app,
+    dynamicAppJson,
+    supportDeployPlatforms: supportedPlatforms,
+  } = await getAppConfig();
   const env = await selectEnv({ ignoreLocal: true });
-  const platform = await selectPlatform({ nativeOnly: true });
+  const platform = await selectPlatform({
+    platforms: supportedPlatforms,
+    nativeOnly: true,
+  });
   const buildSource = await selectBuildSource({ env });
   const increment = await selectIncrement({ env });
   const easProfile = getEasProfile({
@@ -38,10 +45,11 @@ import { syncAppJson } from './utils/expo-app-json';
   const submitCommand = getSubmitCommand({ app, easProfile, buildSource });
   const syncPaths = getAppSyncPaths({ app, env });
   const fileWatchers = await Promise.all(syncPaths.map(syncFiles));
-  const { reset: resetAppJson } = await syncAppJson({
+  const appJson = await syncAppJson({
     app,
     platform,
     increment,
+    dynamic: dynamicAppJson,
   });
 
   addEnvToEasConfig({ app, env });
@@ -56,7 +64,7 @@ import { syncAppJson } from './utils/expo-app-json';
 
   childProcess.on('exit', () => {
     removeEnvFromEasConfig({ app, env });
-    resetAppJson();
+    appJson.reset();
 
     fileWatchers.forEach((watcher) => watcher.close());
     syncPaths.forEach(({ dest }) => rm(dest, { recursive: true }));

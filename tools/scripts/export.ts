@@ -1,4 +1,4 @@
-import { getAppSyncPaths, selectApp } from './utils/app';
+import { getAppConfig, getAppSyncPaths } from './utils/app';
 import { selectEnv } from './utils/env';
 import { syncFiles } from './utils/sync-files';
 import { spawn } from 'child_process';
@@ -11,15 +11,21 @@ import { syncAppJson } from './utils/expo-app-json';
 (async () => {
   console.log(`Exporting... 🌐⬆️`);
 
-  const app = await selectApp();
+  const { app, dynamicAppJson, supportDeployPlatforms } = await getAppConfig();
+
+  if (!supportDeployPlatforms.includes(Platform.web)) {
+    throw new Error('Web deploy is not supported');
+  }
+
   const env = await selectEnv({ ignoreLocal: true });
   const increment = await selectIncrement({ env });
   const syncPaths = getAppSyncPaths({ app, env });
   const fileWatchers = await Promise.all(syncPaths.map(syncFiles));
-  const { reset: resetAppJson } = await syncAppJson({
+  const appJson = await syncAppJson({
     app,
     increment,
     platform: Platform.web,
+    dynamic: dynamicAppJson,
   });
   const childProcess = spawn(getExportCommand({ app }), {
     stdio: 'inherit',
@@ -27,7 +33,7 @@ import { syncAppJson } from './utils/expo-app-json';
   });
 
   childProcess.on('exit', () => {
-    resetAppJson();
+    appJson.reset();
 
     fileWatchers.forEach((watcher) => watcher.close());
     syncPaths.forEach(({ dest }) => rm(dest, { recursive: true }));

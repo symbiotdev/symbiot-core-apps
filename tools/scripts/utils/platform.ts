@@ -7,27 +7,27 @@ export enum Platform {
 }
 
 export const selectPlatform = ({
+  platforms,
   nativeOnly,
-}: { nativeOnly?: boolean } = {}): Promise<Platform> =>
-  Platform[process.env['NODE_PLATFORM']] ||
-  select({
+}: {
+  platforms: Platform[];
+  nativeOnly?: boolean;
+}): Promise<Platform> => {
+  const selectedPlatform = Platform[process.env['NODE_PLATFORM']] as Platform;
+
+  if (selectedPlatform) return Promise.resolve(selectedPlatform);
+
+  const filteredPlatforms = platforms.filter((platform) =>
+    nativeOnly ? platform !== Platform.web : true,
+  );
+
+  if (!filteredPlatforms.length) throw new Error(`No supported platform`);
+
+  return select({
     message: 'Platform',
-    choices: [
-      ...(!nativeOnly
-        ? [
-            {
-              name: 'Web',
-              value: Platform.web,
-            },
-          ]
-        : []),
-      {
-        name: 'IOS',
-        value: Platform.ios,
-      },
-      {
-        name: 'Android',
-        value: Platform.android,
-      },
-    ],
+    choices: filteredPlatforms.map((platform) => ({
+      name: platform,
+      value: platform,
+    })),
   });
+};

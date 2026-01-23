@@ -7,12 +7,31 @@ import * as dotenv from 'dotenv';
 // @ts-ignore
 import { merge } from 'merge-anything';
 
+type AppJson = {
+  expo: {
+    [key: string]: unknown;
+    version: string;
+    ios: {
+      [key: string]: unknown;
+      bundleIdentifier: string;
+      buildNumber: string;
+    };
+    android: {
+      [key: string]: unknown;
+      package: string;
+      versionCode: number;
+    };
+  };
+};
+
 export const syncAppJson = async ({
   app,
+  dynamic,
   platform,
   increment,
 }: {
   app: App;
+  dynamic: boolean;
   platform?: Platform;
   increment?: Increment;
 }) => {
@@ -22,42 +41,54 @@ export const syncAppJson = async ({
   const envJson = dotenv.parse(readFileSync(`${dest}/.env`, 'utf8'));
   const destJson = JSON.parse(readFileSync(destJsonPath, 'utf8'));
   const shouldIncrement = increment && increment !== Increment.skip;
-  const srcJson = shouldIncrement
-    ? getJsonWithIncrementation({
+
+  if (!dynamic) {
+    if (shouldIncrement) {
+      const updatedJson = getJsonWithIncrementation({
         platform,
         increment,
-        jsonPath: srcJsonPath,
-      })
-    : JSON.parse(readFileSync(srcJsonPath, 'utf8'));
+        json: destJson,
+      });
 
-  const mergedJson = merge(destJson, srcJson);
+      writeFileSync(destJsonPath, JSON.stringify(updatedJson, null, 2), 'utf8');
+    }
+  } else {
+    let srcJson = JSON.parse(readFileSync(srcJsonPath, 'utf8'));
 
-  mergedJson.expo.ios.bundleIdentifier = envJson['EXPO_PUBLIC_APP_ID'];
-  mergedJson.expo.android.package = envJson['EXPO_PUBLIC_APP_ID'];
+    if (shouldIncrement) {
+      srcJson = getJsonWithIncrementation({
+        platform,
+        increment,
+        json: srcJson,
+      });
 
-  if (shouldIncrement) {
-    writeFileSync(srcJsonPath, JSON.stringify(srcJson, null, 2), 'utf8');
+      writeFileSync(srcJsonPath, JSON.stringify(srcJson, null, 2), 'utf8');
+    }
+
+    const mergedJson = merge(destJson, srcJson);
+
+    mergedJson.expo.ios.bundleIdentifier = envJson['EXPO_PUBLIC_APP_ID'];
+    mergedJson.expo.android.package = envJson['EXPO_PUBLIC_APP_ID'];
+
+    writeFileSync(destJsonPath, JSON.stringify(mergedJson, null, 2), 'utf8');
   }
-
-  writeFileSync(destJsonPath, JSON.stringify(mergedJson, null, 2), 'utf8');
 
   return {
     reset: () =>
+      dynamic &&
       writeFileSync(destJsonPath, JSON.stringify(destJson, null, 2), 'utf8'),
   };
 };
 
 const getJsonWithIncrementation = ({
-  jsonPath,
+  json,
   platform,
   increment,
 }: {
-  jsonPath: string;
+  json: AppJson;
   platform: Platform;
   increment: Increment;
 }) => {
-  const json = JSON.parse(readFileSync(jsonPath, 'utf8'));
-
   json.expo.version = json.expo.version
     .split('.')
     .map((value: Increment, index: number) => {

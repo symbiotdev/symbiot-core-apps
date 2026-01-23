@@ -1,11 +1,12 @@
-import { App, getAppSyncPaths, realAppName, selectApp } from './utils/app';
+import { App, appConfig, getAppSyncPaths, selectApp } from './utils/app';
 import { Env, selectEnv } from './utils/env';
 import { BuildType, selectBuildType } from './utils/build-type';
 import { Platform, selectPlatform } from './utils/platform';
-import { syncAppJson, syncFiles } from './utils/sync-files';
+import { syncFiles } from './utils/sync-files';
 import { getPrebuildCommand } from './utils/nx-expo';
 import { spawn } from 'child_process';
 import { rm } from 'node:fs/promises';
+import { syncAppJson } from './utils/expo-app-json';
 
 (async () => {
   console.log(`Starting... 🚀🚀`);
@@ -17,7 +18,7 @@ import { rm } from 'node:fs/promises';
     env === Env.production ? await selectBuildType() : BuildType.livereaload;
   const syncPaths = getAppSyncPaths({ app, env });
   const fileWatchers = await Promise.all(syncPaths.map(syncFiles));
-  const { watcher: appJsonWatcher, reset: resetAppJson } = await syncAppJson({
+  const { reset: resetAppJson } = await syncAppJson({
     app,
   });
 
@@ -30,8 +31,7 @@ import { rm } from 'node:fs/promises';
 
   console.log('>_ Start command: ', startCommand);
 
-  childProcess.on('close', () => {
-    appJsonWatcher.close();
+  childProcess.on('exit', () => {
     resetAppJson();
 
     fileWatchers.forEach((watcher) => watcher.close());
@@ -50,11 +50,11 @@ const getStartCommand = ({
   platform: Platform;
   buildType: BuildType;
 }) => {
-  const appName = realAppName[app];
+  const { name } = appConfig[app];
   const isRelease = env === Env.production && buildType === BuildType.release;
 
   if (platform !== Platform.web) {
-    const prebuildCommand = getPrebuildCommand({ appName, platform });
+    const prebuildCommand = getPrebuildCommand({ app, platform });
     const configuration = isRelease
       ? `${
           platform === Platform.ios
@@ -63,12 +63,12 @@ const getStartCommand = ({
         }`
       : '';
 
-    return `nx reset && ${prebuildCommand} && nx run ${appName}:run-${platform} -- --device ${configuration}`;
+    return `nx reset && ${prebuildCommand} && nx run ${name}:run-${platform} -- --device ${configuration}`;
   } else {
     const additionalParams = isRelease
       ? '-- --no-dev --minify --clear'
       : '-- --clear';
 
-    return `nx reset && nx start ${appName} ${additionalParams}`;
+    return `nx reset && nx start ${name} ${additionalParams}`;
   }
 };

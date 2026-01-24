@@ -39,6 +39,7 @@ import { getDate } from 'date-fns/getDate';
 import { getMonth } from 'date-fns/getMonth';
 import { formatDistance } from 'date-fns/formatDistance';
 import { enUS, Locale, uk } from 'date-fns/locale';
+import { getAppLanguage } from '../i18n/i18n-provider';
 
 export const defaultWeekdayStartsOn: Day = 0;
 export const minutesInHour = 60;
@@ -63,7 +64,7 @@ export const getDateLocale = (lang: string) => {
   return DATE_FNS_SUPPORTED_LANGUAGES[lang] || enUS;
 };
 
-const getAppDateLocale = () => getDateLocale(i18n.language);
+const getAppDateLocale = () => getDateLocale(getAppLanguage());
 
 export const DateHelper = {
   set,

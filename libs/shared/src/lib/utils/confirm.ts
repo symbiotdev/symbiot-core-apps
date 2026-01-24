@@ -1,5 +1,5 @@
 import { Alert, Platform } from 'react-native';
-import i18n from 'i18next';
+import { translate } from '../i18n/i18n-provider';
 
 export const ConfirmAlert = (props: {
   title: string;
@@ -18,13 +18,13 @@ export const ConfirmAlert = (props: {
   } else {
     Alert.alert(props.title, props.message || '', [
       {
-        text: props.cancelText || i18n.t('shared.cancel'),
+        text: props.cancelText || translate('shared.cancel'),
         style: 'cancel',
         isPreferred: true,
         onPress: props.onCancel,
       },
       {
-        text: props.confirmText || i18n.t('shared.continue'),
+        text: props.confirmText || translate('shared.continue'),
         onPress: props.onAgree,
       },
     ]);

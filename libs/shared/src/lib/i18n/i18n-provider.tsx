@@ -28,6 +28,8 @@ type I18nContext = {
 const Context = createContext<I18nContext | undefined>(undefined);
 
 export const useI18n = () => useContext(Context) as I18nContext;
+export const translate = (key: string) => i18n.t(key);
+export const getAppLanguage = () => i18n.language;
 
 export const I18nProvider = ({
   children,

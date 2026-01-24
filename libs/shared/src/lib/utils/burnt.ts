@@ -1,6 +1,6 @@
 import { alert, dismissAllAlerts } from 'burnt';
 import { Keyboard, Platform } from 'react-native';
-import i18n from 'i18next';
+import { translate } from '../i18n/i18n-provider';
 
 export const ShowNativeSuccessAlert = (options: {
   title: unknown;
@@ -44,7 +44,7 @@ export const ShowNativeLoadingAlert = (options?: { title: unknown }) => {
     title:
       typeof options === 'object' && options.title
         ? String(options.title)
-        : i18n.t('loading'),
+        : translate('loading'),
     duration: 60,
     preset: 'spinner',
     shouldDismissByTap: false,

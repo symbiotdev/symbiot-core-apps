@@ -24,13 +24,15 @@ import { getStartCommand } from './utils/nx-expo';
     stdio: 'inherit',
     shell: true,
   });
-
-  console.log('>_ Start command: ', startCommand);
-
-  childProcess.on('exit', () => {
+  const reset = () => {
     appJson.reset();
 
     fileWatchers.forEach((watcher) => watcher.close());
     syncPaths.forEach(({ dest }) => rm(dest, { recursive: true }));
-  });
+  };
+
+  console.log('>_ Start command: ', startCommand);
+
+  childProcess.on('close', reset);
+  childProcess.on('exit', reset);
 })();

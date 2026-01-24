@@ -14,7 +14,7 @@ import {
   InitView,
 } from '@symbiot-core-apps/ui';
 import { useApp } from '@symbiot-core-apps/app';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 const byType = {
   [BrandMembershipType.period]: {
@@ -45,7 +45,7 @@ export const BrandClientMembershipsList = ({
   renderItem: (props: { item: AnyBrandClientMembership }) => ReactElement;
 }) => {
   const config = byType[type];
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { icons } = useApp();
 
   const {

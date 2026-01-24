@@ -27,7 +27,6 @@ import {
   useBookingScheduleFormattedTime,
 } from '@symbiot-core-apps/brand';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
-import { useTranslation } from 'react-i18next';
 import {
   useCurrentAccountState,
   useCurrentBrandEmployee,
@@ -40,7 +39,12 @@ import React, {
   useRef,
 } from 'react';
 import { useForm } from 'react-hook-form';
-import { ConfirmAlert, DateHelper, useModal } from '@symbiot-core-apps/shared';
+import {
+  ConfirmAlert,
+  DateHelper,
+  useI18n,
+  useModal,
+} from '@symbiot-core-apps/shared';
 import { ServiceBrandBookingScheduleController } from './controller/service-brand-booking-schedule-controller';
 import { router, useNavigation } from 'expo-router';
 import { BrandBookingNoteController } from './controller/brand-booking-note-controller';
@@ -55,7 +59,7 @@ export const ServiceBrandBookingProfile = ({
   booking: ServiceBrandBooking;
 }) => {
   const { icons } = useApp();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { me } = useCurrentAccountState();
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
@@ -405,7 +409,7 @@ const NoteForm = ({
   booking: ServiceBrandBooking;
   onUpdate: (data: UpdateBrandBooking) => Promise<void>;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { control, getValues } = useForm<{ note: string }>({
     defaultValues: {
       note: booking.note || '',

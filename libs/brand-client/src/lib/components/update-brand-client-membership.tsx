@@ -18,9 +18,8 @@ import {
 } from '@symbiot-core-apps/ui';
 import { BrandClientMembershipItem } from '@symbiot-core-apps/brand';
 import React, { useCallback } from 'react';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
-import { useTranslation } from 'react-i18next';
 import { SingeElementForm } from '@symbiot-core-apps/form-controller';
 import { BrandClientBirthdayController } from './controller/brand-client-membership-end-at-controller';
 import { View, XStack } from 'tamagui';
@@ -76,7 +75,7 @@ const Visits = ({
       controllerProps={{
         loading: isPending,
         disabled: isPending,
-        includeZero: true
+        includeZero: true,
       }}
       onUpdate={update}
       Controller={BrandClientMembershipVisitsController}
@@ -92,7 +91,7 @@ const EndAt = ({
   membership: AnyBrandClientMembership;
 }) => {
   const { me } = useCurrentAccountState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByQueryParamsForm<
       { clientId: string; membershipId: string },

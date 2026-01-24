@@ -1,4 +1,4 @@
-import { Slot } from 'expo-router';
+import { Stack } from 'expo-router';
 import { useCallback } from 'react';
 import { ApiProvider, useAuthTokens } from '@symbiot-core-apps/api';
 import { Toaster } from 'burnt/web';
@@ -25,15 +25,26 @@ export default () => {
     alert('noRespond');
   }, []);
 
+  if (!fontsLoaded || !tokens) return null;
+
   return (
-    fontsLoaded &&
-    tokens && (
-      <ApiProvider onNoRespond={onNoRespond} onUnauthorized={removeTokens}>
-        <AppProvider>
-          <Slot />
-          <Toaster position="top-right" />
-        </AppProvider>
-      </ApiProvider>
-    )
+    <ApiProvider onNoRespond={onNoRespond} onUnauthorized={removeTokens}>
+      <AppProvider>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Protected guard={!tokens.access}>
+            <Stack.Screen name="(auth)" />
+          </Stack.Protected>
+          <Stack.Protected guard={!!tokens.access}>
+            <Stack.Screen name="(authed)" />
+          </Stack.Protected>
+        </Stack>
+
+        <Toaster position="top-right" />
+      </AppProvider>
+    </ApiProvider>
   );
 };

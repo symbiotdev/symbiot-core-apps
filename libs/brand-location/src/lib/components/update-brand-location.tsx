@@ -17,9 +17,8 @@ import {
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import { BrandLocationMediaForm } from './form/brand-location-media-form';
-import { useTranslation } from 'react-i18next';
 import { useCallback, useMemo } from 'react';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
   useCurrentAccountState,
   useCurrentBrandState,
@@ -98,7 +97,7 @@ const Name = ({ location }: { location: BrandLocation }) => {
 };
 
 const Address = ({ location }: { location: BrandLocation }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandLocation,
@@ -168,7 +167,7 @@ const Address = ({ location }: { location: BrandLocation }) => {
 
 const Schedule = ({ location }: { location: BrandLocation }) => {
   const { me } = useCurrentAccountState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandLocation,
@@ -258,7 +257,7 @@ const NoDragForm = SingeElementForm<{
 }>;
 
 const Locale = ({ location }: { location: BrandLocation }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { brand } = useCurrentBrandState();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
@@ -345,7 +344,7 @@ const Locale = ({ location }: { location: BrandLocation }) => {
 };
 
 const Advantages = ({ location }: { location: BrandLocation }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandLocation,
@@ -394,7 +393,7 @@ const Advantages = ({ location }: { location: BrandLocation }) => {
 };
 
 const Contact = ({ location }: { location: BrandLocation }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandLocation,

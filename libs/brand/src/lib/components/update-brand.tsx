@@ -23,8 +23,7 @@ import {
 } from '@symbiot-core-apps/api';
 import React, { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { useTranslation } from 'react-i18next';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
   DateFrom,
   SingeElementForm,
@@ -104,7 +103,7 @@ const Name = ({ brand, onUpdated }: GroupProps) => {
 
 const Information = ({ brand, onUpdated }: GroupProps) => {
   const { me } = useCurrentAccountState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateForm<
       Brand,
@@ -172,7 +171,7 @@ const NoDragForm = SingleElementToArrayForm<{
 }>;
 
 const Localization = ({ brand, onUpdated }: GroupProps) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const { value, modalVisible, openModal, closeModal, updateValue, updating } =
     useModalUpdateForm<
@@ -237,7 +236,7 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
 };
 
 const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateForm<
       Brand,

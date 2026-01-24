@@ -6,14 +6,13 @@ import {
   Spinner,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
-import { DateHelper, Weekday } from '@symbiot-core-apps/shared';
+import { DateHelper, useI18n, Weekday } from '@symbiot-core-apps/shared';
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
 
 export const Calendar = () => {
   const navigation = useNavigation();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
 
   const weekdaysOptions = useMemo(() => DateHelper.getWeekdays(), []);

@@ -11,7 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image, ImageSource } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useOnboardingState } from '@symbiot-core-apps/state';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export type OnboardingSlide = {
   id: string;
@@ -21,7 +21,7 @@ export type OnboardingSlide = {
 };
 
 export const Onboarding = memo(({ slides }: { slides: OnboardingSlide[] }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const theme = useTheme();
   const { finish } = useOnboardingState();
   const { bottom, left, right } = useSafeAreaInsets();

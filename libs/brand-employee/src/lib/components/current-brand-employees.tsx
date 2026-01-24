@@ -13,10 +13,10 @@ import {
   useBrandEmployeeCurrentListReq,
 } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const CurrentBrandEmployees = ({
   offsetTop,
@@ -25,7 +25,7 @@ export const CurrentBrandEmployees = ({
   offsetTop?: number;
   onEmployeePress: (employee: BrandEmployee) => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { bottom } = useSafeAreaInsets();
 
   const [search, setSearch] = useState('');
@@ -98,9 +98,7 @@ export const CurrentBrandEmployees = ({
           zIndex: 1,
         }}
       >
-        <NavigationBackground
-          backgroundColor="$background1"
-        />
+        <NavigationBackground backgroundColor="$background1" />
 
         <Search
           value={search}

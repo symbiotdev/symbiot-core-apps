@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { TextController } from '@symbiot-core-apps/form-controller';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandBookingNoteController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -9,7 +9,7 @@ export function BrandBookingNoteController<T extends FieldValues>(props: {
   placeholder?: string;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   return (
     <TextController

@@ -6,11 +6,11 @@ import {
 } from '@symbiot-core-apps/api';
 import { ReactElement, useCallback } from 'react';
 import { useLocalSearchParams } from 'expo-router';
-import { useTranslation } from 'react-i18next';
 import { PasswordController } from '@symbiot-core-apps/form-controller';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const ResetPassword = ({ logo }: { logo: ReactElement }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync, error } = useAccountAuthResetPasswordReq();
   const { secret, email, code } = useLocalSearchParams<{
     secret: string;

@@ -5,10 +5,10 @@ import {
 } from '@symbiot-core-apps/state';
 import { useMemo } from 'react';
 import { BrandStats } from '@symbiot-core-apps/api';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const useAccountLimits = () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { functionality } = useApp();
   const { me } = useCurrentAccountState();
   const { brand } = useCurrentBrandState();

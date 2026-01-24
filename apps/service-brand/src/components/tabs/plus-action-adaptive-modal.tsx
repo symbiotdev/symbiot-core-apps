@@ -8,13 +8,13 @@ import {
 } from '@symbiot-core-apps/ui';
 import React, { ReactElement, useCallback, useRef } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
-import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { View } from 'tamagui';
 import { Placement } from '@floating-ui/react-native';
 import { useApp } from '@symbiot-core-apps/app';
 import { BrandBookingType, BrandMembershipType } from '@symbiot-core-apps/api';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const PlusActionAdaptiveModal = ({
   trigger,
@@ -23,7 +23,7 @@ export const PlusActionAdaptiveModal = ({
   trigger: ReactElement;
   placement?: Placement;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { icons } = useApp();
   const { canDo } = useAccountLimits();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();

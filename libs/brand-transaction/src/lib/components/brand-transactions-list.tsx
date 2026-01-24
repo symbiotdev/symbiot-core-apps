@@ -9,7 +9,7 @@ import {
 import { BrandTransactionItem } from '@symbiot-core-apps/brand';
 import { BrandTransaction } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const BrandTransactionsList = ({
   transactions,
@@ -30,7 +30,7 @@ export const BrandTransactionsList = ({
   onRefresh?: () => void;
   onEndReached?: () => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const ListEmptyComponent = useCallback(() => <EmptyView />, []);
 
   if (!transactions?.length) {

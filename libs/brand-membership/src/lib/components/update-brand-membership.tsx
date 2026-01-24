@@ -29,8 +29,11 @@ import {
 } from '@symbiot-core-apps/form-controller';
 import { BrandMembershipAvailabilityController } from './controller/brand-membership-availability-controller';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
-import { useTranslation } from 'react-i18next';
-import { formatDiscount, formatPrice } from '@symbiot-core-apps/shared';
+import {
+  formatDiscount,
+  formatPrice,
+  useI18n,
+} from '@symbiot-core-apps/shared';
 import { BrandMembershipCurrencyController } from './controller/brand-membership-currency-controller';
 import { BrandMembershipPriceController } from './controller/brand-membership-price-controller';
 import { BrandMembershipDiscountController } from './controller/brand-membership-discount-controller';
@@ -182,7 +185,7 @@ const Visits = ({ membership }: { membership: BrandVisitBasedMembership }) => {
 
 const Pricing = ({ membership }: { membership: BrandMembership }) => {
   const { brand } = useCurrentBrandState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const type = getBrandMembershipType(membership);
   const tPrefix = getTranslateKeyByBrandMembership(membership);
   const { value, modalVisible, openModal, closeModal, updateValue } =
@@ -281,7 +284,7 @@ const Pricing = ({ membership }: { membership: BrandMembership }) => {
 };
 
 const LocationServices = ({ membership }: { membership: BrandMembership }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const tPrefix = getTranslateKeyByBrandMembership(membership);
   const type = getBrandMembershipType(membership);
   const allLocations = useAllBrandLocation();
@@ -366,7 +369,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
 };
 
 const About = ({ membership }: { membership: BrandMembership }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const tPrefix = getTranslateKeyByBrandMembership(membership);
   const type = getBrandMembershipType(membership);
   const { value, modalVisible, openModal, closeModal, updateValue } =
@@ -430,7 +433,7 @@ const About = ({ membership }: { membership: BrandMembership }) => {
 };
 
 const Note = ({ membership }: { membership: BrandMembership }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const tPrefix = getTranslateKeyByBrandMembership(membership);
 
   const { value, modalVisible, openModal, closeModal, updateValue } =
@@ -454,7 +457,9 @@ const Note = ({ membership }: { membership: BrandMembership }) => {
         icon={<Icon name="ChatRoundDots" />}
         iconAfter={<Icon name="ArrowRight" />}
         label={t(`${tPrefix}.update.groups.note.title`)}
-        text={value.note?.replace(/\n/gi, ' ')?.trim() || t('shared.not_specified')}
+        text={
+          value.note?.replace(/\n/gi, ' ')?.trim() || t('shared.not_specified')
+        }
         onPress={openModal}
       />
 

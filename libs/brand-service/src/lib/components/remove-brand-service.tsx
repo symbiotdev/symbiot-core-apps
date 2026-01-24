@@ -1,15 +1,11 @@
 import { ActionCard, FormView, Icon, PageView } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
-import { ConfirmAlert } from '@symbiot-core-apps/shared';
-import {
-  BrandService,
-  useRemoveBrandServiceReq,
-} from '@symbiot-core-apps/api';
-import { useTranslation } from 'react-i18next';
+import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
+import { BrandService, useRemoveBrandServiceReq } from '@symbiot-core-apps/api';
 import { router } from 'expo-router';
 
 export const RemoveBrandService = ({ service }: { service: BrandService }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync, isPending } = useRemoveBrandServiceReq();
 
   const onPress = useCallback(

@@ -10,11 +10,11 @@ import {
 import { useCallback, useEffect, useMemo } from 'react';
 import { Linking } from 'react-native';
 import { useFaqState } from '@symbiot-core-apps/state';
-import { useTranslation } from 'react-i18next';
 import { useAppFaqReq } from '@symbiot-core-apps/api';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const Faq = () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { data } = useAppFaqReq();
   const { faq, setFAQ } = useFaqState();
 

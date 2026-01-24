@@ -7,10 +7,9 @@ import {
   useCreateBrandEmployeeReq,
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import { useTranslation } from 'react-i18next';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import { useForm } from 'react-hook-form';
 import { BrandEmployeeFirstnameController } from './controller/brand-employee-firstname-controller';
 import { BrandEmployeeLastnameController } from './controller/brand-employee-lastname-controller';
@@ -33,7 +32,7 @@ import { BrandEmployeeAboutController } from './controller/brand-employee-about-
 import { defaultEmployeeSchedule } from '../utils/schedule';
 
 export const CreateBrandEmployee = () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync: createEmployee, isPending } =
     useCreateBrandEmployeeReq();
   const { id } = useLocalSearchParams<{ id: string }>();

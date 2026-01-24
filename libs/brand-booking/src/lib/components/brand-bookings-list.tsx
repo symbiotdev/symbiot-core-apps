@@ -13,7 +13,7 @@ import {
   useBrandBookingCurrentListReq,
 } from '@symbiot-core-apps/api';
 import React, { useCallback, useMemo } from 'react';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
   useCurrentAccountState,
   useCurrentBrandEmployee,
@@ -22,7 +22,6 @@ import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
 import { useApp } from '@symbiot-core-apps/app';
-import { useTranslation } from 'react-i18next';
 
 export const BrandBookingsList = () => {
   const { timezone } = useBookingDatetime();
@@ -123,7 +122,7 @@ const Intro = ({
   error?: string | null;
 }) => {
   const { icons } = useApp();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { hasPermission } = useCurrentBrandEmployee();
 
   if (loading || error) {

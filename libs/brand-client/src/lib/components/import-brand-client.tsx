@@ -12,7 +12,6 @@ import {
   RegularText,
   SemiBoldText,
 } from '@symbiot-core-apps/ui';
-import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
 import {
   gendersWithoutEmptyOption,
@@ -29,7 +28,11 @@ import {
   readAsStringAsync,
   writeAsStringAsync,
 } from 'expo-file-system';
-import { downloadArrayBuffer, readFileWeb } from '@symbiot-core-apps/shared';
+import {
+  downloadArrayBuffer,
+  readFileWeb,
+  useI18n,
+} from '@symbiot-core-apps/shared';
 import { router } from 'expo-router';
 import { DocumentPickerAsset } from 'expo-document-picker';
 import { parse } from 'papaparse';
@@ -41,7 +44,7 @@ import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 
 export const ImportBrandClient = () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync, isPending: templateLoading } =
     useBrandClientImportTemplateReq();
   const { mutateAsync: importClients, isPending: clientsImporting } =
@@ -266,7 +269,7 @@ export const ImportBrandClient = () => {
 };
 
 const ImportGuide = () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   return (
     <View gap="$5" marginTop="$2">

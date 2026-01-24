@@ -9,12 +9,12 @@ import {
   DateHelper,
   minutesInMonth,
   minutesInYear,
+  useI18n,
 } from '@symbiot-core-apps/shared';
 import { InputFieldView } from '../view/input-field-view';
 import { LightText } from '../text/text';
 import { minutesInDay, minutesInHour } from 'date-fns/constants';
 import { Picker } from './picker';
-import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
 
 export type DurationPickerUnit =
@@ -55,7 +55,7 @@ export const DurationPicker = ({
   onChange?: (value: number) => void;
   onBlur?: () => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const popoverRef = useRef<AdaptivePopoverRef>(null);
 

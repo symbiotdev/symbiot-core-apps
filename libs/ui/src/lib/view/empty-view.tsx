@@ -2,8 +2,8 @@ import { View, ViewProps } from 'tamagui';
 import { H3 } from '../text/heading';
 import { RegularText } from '../text/text';
 import { Icon, IconName } from '../icons';
-import { useTranslation } from 'react-i18next';
 import { FormView } from './form-view';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const EmptyView = ({
   iconName,
@@ -16,7 +16,7 @@ export const EmptyView = ({
   title?: string;
   message?: string;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   return (
     <FormView

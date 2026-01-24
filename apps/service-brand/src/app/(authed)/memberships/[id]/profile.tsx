@@ -9,10 +9,10 @@ import { XStack } from 'tamagui';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandMembershipProfile } from '@symbiot-core-apps/brand-membership';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
   const { id } = useLocalSearchParams<{

@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import {
   ActionCard,
   Icon,
@@ -11,6 +10,7 @@ import { useBrandBookingLoader } from '../hooks/use-brand-booking-loader';
 import {
   DateHelper,
   emitHaptic,
+  useI18n,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import { useApp } from '@symbiot-core-apps/app';
@@ -24,7 +24,7 @@ import { router } from 'expo-router';
 import { BrandBookingType } from '@symbiot-core-apps/api';
 
 export const TodayBrandBookings = () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { icons } = useApp();
   const { now } = useNativeNow();
   const { currentEmployee, hasPermission } = useCurrentBrandEmployee();

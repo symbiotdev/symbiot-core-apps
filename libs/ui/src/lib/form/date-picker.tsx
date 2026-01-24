@@ -10,13 +10,17 @@ import {
 import { useTheme, ViewProps } from 'tamagui';
 import { LightText } from '../text/text';
 import { FormField } from './form-field';
-import { DateHelper, emitHaptic, Weekday } from '@symbiot-core-apps/shared';
+import {
+  DateHelper,
+  emitHaptic,
+  useI18n,
+  Weekday,
+} from '@symbiot-core-apps/shared';
 import { Platform } from 'react-native';
 import { useScheme } from '@symbiot-core-apps/state';
 import { InputFieldView } from '../view/input-field-view';
 import { Icon } from '../icons';
 import RNDatepicker from 'react-native-date-picker';
-import { useTranslation } from 'react-i18next';
 import { ContainerView } from '../view/container-view';
 
 export const DatePicker = ({
@@ -52,7 +56,7 @@ export const DatePicker = ({
 }) => {
   const theme = useTheme();
   const { scheme } = useScheme();
-  const { i18n } = useTranslation();
+  const { lang } = useI18n();
   const defaultStyles = useDefaultStyles(scheme);
 
   const popoverRef = useRef<AdaptivePopoverRef>(null);
@@ -103,7 +107,7 @@ export const DatePicker = ({
             <RNDatepicker
               date={new Date(value || Date.now())}
               mode="date"
-              locale={i18n.language}
+              locale={lang}
               minimumDate={minDate}
               maximumDate={maxDate}
               theme={scheme}
@@ -114,7 +118,7 @@ export const DatePicker = ({
               showOutsideDays
               mode="single"
               date={value ?? undefined}
-              locale={i18n.language}
+              locale={lang}
               startDate={startDate}
               minDate={minDate}
               maxDate={maxDate}

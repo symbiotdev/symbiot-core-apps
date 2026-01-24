@@ -25,9 +25,8 @@ import {
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import React, { useCallback, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { BrandClientItem } from '@symbiot-core-apps/brand';
-import { useModal } from '@symbiot-core-apps/shared';
+import { useI18n, useModal } from '@symbiot-core-apps/shared';
 import {
   useCurrentBrandBookingsState,
   useCurrentBrandEmployee,
@@ -49,7 +48,7 @@ const ClientItem = ({
   hideArrow?: boolean;
   loading?: boolean;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   return (
     <BrandClientItem
@@ -74,7 +73,7 @@ export const ServiceBrandBookingProfileClients = ({
 }: {
   booking: ServiceBrandBooking;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { hasPermission } = useCurrentBrandEmployee();
   const { mutateAsync: addClient, isPending: clientAdding } =
     useAddServiceBrandBookingClientReq();
@@ -336,7 +335,7 @@ const Balance = ({
   membershipId?: string;
   onPressMembership: (membership: AnyBrandClientMembership) => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { data: client, error, isPending } = useBrandClientDetailedByIdReq(id);
 
   if (!client || error) {

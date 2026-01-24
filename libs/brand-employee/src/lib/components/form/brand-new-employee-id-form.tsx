@@ -6,10 +6,10 @@ import {
   MediumText,
   QrCodeScanModal,
 } from '@symbiot-core-apps/ui';
-import { useTranslation } from 'react-i18next';
 import { useCallback, useState } from 'react';
 import { View } from 'tamagui';
 import { requestCameraPermissionsAsync } from 'expo-image-picker';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 type FormValue = {
   id: string;
@@ -20,7 +20,7 @@ export const BrandNewEmployeeIdForm = ({
 }: {
   onAdd: (value: FormValue) => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { control, handleSubmit } = useForm<FormValue>({
     defaultValues: {
       id: '',

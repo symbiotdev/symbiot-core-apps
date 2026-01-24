@@ -1,5 +1,4 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
@@ -8,6 +7,7 @@ import {
 import { SelectController } from '@symbiot-core-apps/form-controller';
 import { useMemo } from 'react';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandMembershipLocationController<
   T extends FieldValues,
@@ -19,7 +19,7 @@ export function BrandMembershipLocationController<
   noLabel?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { data, isPending, error } = useCurrentBrandLocationsReq();
   const allLocations = useAllBrandLocation();
   const tPrefix = getTranslateKeyByBrandMembershipType(props.type);

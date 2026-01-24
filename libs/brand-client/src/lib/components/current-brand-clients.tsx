@@ -17,11 +17,11 @@ import {
 } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
 import { router } from 'expo-router';
-import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandClientItem } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const CurrentBrandClients = ({
   offsetTop,
@@ -36,7 +36,7 @@ export const CurrentBrandClients = ({
   disabledIds?: string[];
   onClientPress: (client: BrandClient) => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { bottom } = useSafeAreaInsets();
 
   const [search, setSearch] = useState('');
@@ -141,7 +141,7 @@ const Intro = ({
   hideAddClientButton?: boolean;
   error?: string | null;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   if (loading || error) {
     return <InitView loading={loading} error={error} />;

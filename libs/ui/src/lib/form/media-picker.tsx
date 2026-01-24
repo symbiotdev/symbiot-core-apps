@@ -7,14 +7,17 @@ import {
   PermissionStatus,
   useMediaLibraryPermissions,
 } from 'expo-image-picker';
-import { useTranslation } from 'react-i18next';
 import { useCameraPermissions } from 'expo-camera';
 import { ReactElement, useCallback, useRef, useState } from 'react';
 import {
   AdaptivePopover,
   AdaptivePopoverRef,
 } from '../popover/adaptive-popover';
-import { ConfirmAlert, ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
+import {
+  ConfirmAlert,
+  ShowNativeFailedAlert,
+  useI18n,
+} from '@symbiot-core-apps/shared';
 import { filesize } from 'filesize';
 import { ListItem } from '../list/list-item';
 import { Icon } from '../icons';
@@ -37,7 +40,7 @@ export const MediaPicker = ({
   onAdd: (images: ImagePickerAsset[]) => Promise<void>;
   onRemove?: () => Promise<void>;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const [galleryPermissions, requestGalleryPermissions] =
     useMediaLibraryPermissions();
   const [cameraPermissions, requestCameraPermissions] = useCameraPermissions();
@@ -163,9 +166,7 @@ export const MediaPicker = ({
       <View gap="$2">
         <ListItem
           icon={<Icon name="Gallery" />}
-          label={t(
-            'shared.preferences.media.action.choose_from_gallery.label',
-          )}
+          label={t('shared.preferences.media.action.choose_from_gallery.label')}
           disabled={galleryPermissions?.status === PermissionStatus.DENIED}
           iconAfter={
             galleryPermissions?.status === PermissionStatus.DENIED && (
@@ -203,7 +204,7 @@ export const MediaPicker = ({
 };
 
 const AppSettings = () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   return (
     <Link cursor="pointer" onPress={Linking.openSettings}>

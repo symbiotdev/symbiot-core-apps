@@ -1,10 +1,10 @@
 import { BrandEmployee } from '@symbiot-core-apps/api';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
-import { useTranslation } from 'react-i18next';
 import { useIgnoredProfileCompletionState } from '@symbiot-core-apps/state';
 import {
   DateHelper,
   secondsInHour,
+  useI18n,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import { useMemo } from 'react';
@@ -16,7 +16,7 @@ export const BrandEmployeeProfileCompletion = ({
 }: {
   employee: BrandEmployee;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { byEmployeeId, ignore } = useIgnoredProfileCompletionState();
   const { now } = useNativeNow({ intervalInSeconds: secondsInHour });
 

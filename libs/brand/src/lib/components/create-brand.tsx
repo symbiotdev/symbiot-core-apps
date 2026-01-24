@@ -2,9 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AvatarPicker, Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useForm } from 'react-hook-form';
 import { BrandNameController } from './contoller/brand-name-controller';
-import { useTranslation } from 'react-i18next';
 import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import { router, useNavigation } from 'expo-router';
 import { useAuthBrand, useBrandAuthState } from '../hooks/use-brand-auth';
 import { useBrandCreateReq } from '@symbiot-core-apps/api';
@@ -25,7 +24,7 @@ const defaultCountryCode = Intl?.DateTimeFormat()
 export const CreateBrand = () => {
   const { me } = useCurrentAccountState();
   const { processing: authProcessing } = useBrandAuthState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const navigation = useNavigation();
   const { functionality } = useApp();
   const { mutateAsync, isPending } = useBrandCreateReq();

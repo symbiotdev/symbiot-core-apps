@@ -1,5 +1,4 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { ToggleController } from '@symbiot-core-apps/form-controller';
 import {
   BrandMembershipType,
@@ -9,6 +8,7 @@ import {
   useServicesReq,
 } from '@symbiot-core-apps/api';
 import { useMemo } from 'react';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 type ControllerProps<T extends FieldValues> = {
   type?: BrandMembershipType;
@@ -78,7 +78,7 @@ function ServicesController<T extends FieldValues>(
     itemsError?: string | null;
   },
 ) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const tPrefix = getTranslateKeyByBrandMembershipType(props.type);
 
   const items = useMemo(

@@ -1,14 +1,14 @@
 import { BrandClient, BrandMembershipType } from '@symbiot-core-apps/api';
-import { useTranslation } from 'react-i18next';
 import { useApp } from '@symbiot-core-apps/app';
 import { Icon, ListItem, ListItemGroup } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import React from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const BrandClientHistory = ({ client }: { client: BrandClient }) => {
   const { icons } = useApp();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
 
   return (

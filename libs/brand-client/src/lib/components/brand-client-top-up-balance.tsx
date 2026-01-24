@@ -16,9 +16,8 @@ import {
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import { View } from 'tamagui';
-import { useTranslation } from 'react-i18next';
 import { useApp } from '@symbiot-core-apps/app';
-import { useModal } from '@symbiot-core-apps/shared';
+import { useI18n, useModal } from '@symbiot-core-apps/shared';
 import { BrandMembershipsCurrentList } from '@symbiot-core-apps/brand-membership';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
@@ -36,7 +35,7 @@ export const BrandClientTopUpBalance = ({
   preventNavigationToProfile?: boolean;
 }) => {
   const { icons } = useApp();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { hasPermission } = useCurrentBrandEmployee();
   const { mutateAsync: addMembership, isPending: isMembershipLoading } =
     useBrandClientAddMembershipReq();
@@ -122,8 +121,12 @@ export const BrandClientTopUpBalance = ({
               loading={loading}
               error={error}
               noDataIcon={icons.VisitBasedMembership}
-              noDataTitle={t('brand_client.balance.top_up.visit_based_memberships.empty.title')}
-              noDataMessage={t('brand_client.balance.top_up.visit_based_memberships.empty.subtitle')}
+              noDataTitle={t(
+                'brand_client.balance.top_up.visit_based_memberships.empty.title',
+              )}
+              noDataMessage={t(
+                'brand_client.balance.top_up.visit_based_memberships.empty.subtitle',
+              )}
             />
           )}
         />
@@ -155,8 +158,12 @@ export const BrandClientTopUpBalance = ({
               loading={loading}
               error={error}
               noDataIcon={icons.PeriodBasedMembership}
-              noDataTitle={t('brand_client.balance.top_up.period_based_memberships.empty.title')}
-              noDataMessage={t('brand_client.balance.top_up.period_based_memberships.empty.subtitle')}
+              noDataTitle={t(
+                'brand_client.balance.top_up.period_based_memberships.empty.title',
+              )}
+              noDataMessage={t(
+                'brand_client.balance.top_up.period_based_memberships.empty.subtitle',
+              )}
             />
           )}
         />

@@ -6,8 +6,7 @@ import {
   isBrandBookingAllDay,
 } from '@symbiot-core-apps/api';
 import { Icon, MediumText, RegularText } from '@symbiot-core-apps/ui';
-import { useTranslation } from 'react-i18next';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { useMemo } from 'react';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 
@@ -50,7 +49,7 @@ export const BrandBookingItem = ({
   timezone?: string;
   booking: AnyBrandBooking;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const config = configByType[booking.type];
 
   return (
@@ -115,7 +114,7 @@ export const useBookingScheduleFormattedTime = ({
   booking: AnyBrandBooking;
   timezone?: string;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { me } = useCurrentAccountState();
 
   return useMemo(() => {
@@ -168,7 +167,7 @@ const Schedule = ({
   timezone?: string;
   showLocalTime?: boolean;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const config = configByType[booking.type];
   const { zonedTime, localTime } = useBookingScheduleFormattedTime({
     booking,

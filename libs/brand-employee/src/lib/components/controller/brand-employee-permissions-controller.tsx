@@ -5,8 +5,8 @@ import {
   BrandEmployeePermissions,
   useBrandEmployeePermissionsReq,
 } from '@symbiot-core-apps/api';
-import { useTranslation } from 'react-i18next';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandEmployeePermissionsController<
   T extends FieldValues,
@@ -15,7 +15,7 @@ export function BrandEmployeePermissionsController<
   control: Control<T>;
   onChange?: (key: keyof BrandEmployeePermissions, value: boolean) => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { currentEmployee } = useCurrentBrandEmployee();
   const { data, isPending, error } = useBrandEmployeePermissionsReq();
 

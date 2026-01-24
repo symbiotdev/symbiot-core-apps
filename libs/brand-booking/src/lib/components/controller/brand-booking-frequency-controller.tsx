@@ -1,9 +1,8 @@
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { View } from 'tamagui';
 import { useMemo } from 'react';
 import { DatePicker, SelectPicker } from '@symbiot-core-apps/ui';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
   BrandBookingFrequency,
   getEndDateByBrandBookingFrequency,
@@ -22,7 +21,7 @@ export function BrandBookingFrequencyController<
   disabled?: boolean;
   disableDrag?: boolean;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { me } = useCurrentAccountState();
 
   const options = useMemo(

@@ -6,18 +6,16 @@ import {
   ContextMenuPopover,
   Icon,
 } from '@symbiot-core-apps/ui';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const navigation = useNavigation();
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [
       {
-        label: t(
-          'shared.account.update.context_menu.remove_account.label',
-        ),
+        label: t('shared.account.update.context_menu.remove_account.label'),
         icon: <Icon name="TrashBinMinimalistic" />,
         color: '$error',
         onPress: () => router.push('/account/remove'),

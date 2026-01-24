@@ -9,7 +9,7 @@ import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { View, ViewProps } from 'tamagui';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const BrandLocationMediaForm = ({
   location,
@@ -18,7 +18,7 @@ export const BrandLocationMediaForm = ({
   location: BrandLocation;
 }) => {
   const { brand } = useCurrentBrandState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
     useUpdateBrandLocationReq();
   const { mutateAsync: uploadGalleryImages } =

@@ -1,5 +1,5 @@
 import { XStack } from 'tamagui';
-import { DateHelper, Weekday } from '@symbiot-core-apps/shared';
+import { DateHelper, useI18n, Weekday } from '@symbiot-core-apps/shared';
 import { useCallback, useMemo, useState } from 'react';
 import { LightText, MediumText } from '../text/text';
 import { InputFieldView } from '../view/input-field-view';
@@ -10,7 +10,6 @@ import { Switch } from './switch';
 import { Segment } from '../segment/segment';
 import { EmptyView } from '../view/empty-view';
 import { Picker } from './picker';
-import { useTranslation } from 'react-i18next';
 import { FormField } from './form-field';
 import { FormView } from '../view/form-view';
 
@@ -98,7 +97,7 @@ const WeekdayScheduleElement = ({
   onChange: (value: WeekdaySchedule) => void;
   onBlur?: () => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const [activeSegment, setActiveSegment] = useState<string>('start');
 
@@ -147,7 +146,7 @@ const WeekdayScheduleElement = ({
   const onClose = useCallback(() => {
     resetSegment();
     onBlur?.();
-  }, [onBlur]);
+  }, [onBlur, resetSegment]);
 
   const toggleDayOff = useCallback(
     (active: boolean) => {

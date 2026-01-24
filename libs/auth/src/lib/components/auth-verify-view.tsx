@@ -2,7 +2,7 @@ import { CodeInput, Link, RegularText } from '@symbiot-core-apps/ui';
 import { AuthFormView } from './auth-form-view';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { router } from 'expo-router';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const authCodeLength = 6;
 export const verifySecondsLimit = 60;
@@ -22,7 +22,7 @@ export const AuthVerifyView = ({
   onResend: () => Promise<void>;
   onChange: (code: string) => false | Promise<void>;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const [secondsTo, setSecondsTo] = useState(verifySecondsLimit);
 

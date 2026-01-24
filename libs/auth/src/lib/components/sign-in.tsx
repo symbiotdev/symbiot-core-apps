@@ -7,14 +7,14 @@ import {
 import { ReactElement, useCallback } from 'react';
 import { Link, RegularText } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
-import { useTranslation } from 'react-i18next';
 import {
   EmailController,
   PasswordController,
 } from '@symbiot-core-apps/form-controller';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const SignIn = ({ logo }: { logo: ReactElement }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync, error } = useAccountAuthSignInReq();
 
   const {

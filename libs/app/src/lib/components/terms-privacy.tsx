@@ -11,10 +11,10 @@ import {
   WebBrowserPresentationStyle,
 } from 'expo-web-browser';
 import { ReactNativeLegal } from 'react-native-legal';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const TermsPrivacy = () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const openTermsConditions = useCallback(
     () =>

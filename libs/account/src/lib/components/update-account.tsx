@@ -7,7 +7,6 @@ import {
 } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { useTranslation } from 'react-i18next';
 import {
   DateFrom,
   SingeElementForm,
@@ -20,10 +19,11 @@ import { AccountBirthdayController } from './controller/account-birthday-control
 import { AccountInstagramController } from './controller/account-instagram-controller';
 import { AccountPhoneController } from './controller/account-phone-controller';
 import { View } from 'tamagui';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const UpdateAccount = () => {
   const { me, setMe } = useCurrentAccountState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync } = useAccountMeUpdateReq();
   const { mutateAsync: uploadAvatar, isPending: avatarUploading } =
     useAccountMeUpdateReq();

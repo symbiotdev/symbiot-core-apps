@@ -7,13 +7,13 @@ import { Platform } from 'react-native';
 import { Button, Error, FormView, Icon } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useAccountAuthSignInWithFirebaseReq } from '@symbiot-core-apps/api';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 // check why not available on web https://react-native-google-signin.github.io/docs/setting-up/web
 const isGoogleAuthAvailable = Platform.OS !== 'web';
 
 export const SignInButtons = () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const {
     mutate: appleAuth,
     error: appleAuthError,

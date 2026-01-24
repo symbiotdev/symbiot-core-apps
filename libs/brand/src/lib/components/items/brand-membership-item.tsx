@@ -15,6 +15,7 @@ import {
   DateHelper,
   emitHaptic,
   formatPrice,
+  useI18n,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -28,7 +29,6 @@ import {
   RegularText,
 } from '@symbiot-core-apps/ui';
 import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useAllBrandLocation } from '../../hooks/use-additional-brand-location';
 
 export const BrandMembershipItem = ({
@@ -125,7 +125,7 @@ const BrandPeriodBasedMembershipItemView = ({
   removed?: boolean;
   period: BrandMembershipPeriod;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const allLocations = useAllBrandLocation();
   const { now } = useNativeNow();
 
@@ -264,7 +264,7 @@ const BrandVisitBasedMembershipItemView = ({
   endAt?: string;
 }) => {
   const { now } = useNativeNow();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const allLocations = useAllBrandLocation();
 
   const expired = useMemo(

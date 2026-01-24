@@ -1,17 +1,17 @@
 import { ClosableCard, formViewStyles } from '@symbiot-core-apps/ui';
 import { useAnniversaryState } from '@symbiot-core-apps/state';
-import { useTranslation } from 'react-i18next';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 import {
   DateHelper,
   secondsInHour,
+  useI18n,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import { useMemo } from 'react';
 import { Brand } from '@symbiot-core-apps/api';
 
 export const BrandCongrats = ({ brand }: { brand: Brand }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { now } = useNativeNow({ intervalInSeconds: secondsInHour });
   const { byBrandId: anniversaryById, hide: hideAnniversary } =
     useAnniversaryState();

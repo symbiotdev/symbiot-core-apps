@@ -1,7 +1,7 @@
 import { useBrandIndustriesReq } from '@symbiot-core-apps/api';
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { SelectController } from '@symbiot-core-apps/form-controller';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandIndustryController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -9,7 +9,7 @@ export function BrandIndustryController<T extends FieldValues>(props: {
   noLabel?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { data, isPending, error } = useBrandIndustriesReq();
 
   return (

@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { StringController } from '@symbiot-core-apps/form-controller';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandEmployeeLastnameController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -8,7 +8,7 @@ export function BrandEmployeeLastnameController<T extends FieldValues>(props: {
   required?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   return (
     <StringController

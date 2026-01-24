@@ -10,9 +10,10 @@ import { View } from 'tamagui';
 
 import {
   KeyboardAwareScrollView,
+  KeyboardAwareScrollViewRef,
   KeyboardStickyView,
 } from 'react-native-keyboard-controller';
-import { Platform, ScrollView } from 'react-native';
+import { Platform } from 'react-native';
 import { useScreenHeaderHeight } from '../navigation/header';
 import {
   defaultPageHorizontalPadding,
@@ -34,9 +35,9 @@ import { Icon } from '../icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { formViewStyles } from '../view/form-view';
 import { Button } from '../button/button';
-import { useTranslation } from 'react-i18next';
 import {
   emitHaptic,
+  useI18n,
   useKeyboardDismisser,
   useRendered,
 } from '@symbiot-core-apps/shared';
@@ -71,7 +72,7 @@ export const Survey = ({
   ignoreNavigation?: boolean;
   onFinish: () => void;
 }>) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { bottom } = useSafeAreaInsets();
   const headerHeight = useScreenHeaderHeight();
   const animatedValue$ = useSharedValue(0);
@@ -87,7 +88,7 @@ export const Survey = ({
   const isLastStep = selectedIndex === childrenArr.length - 1;
 
   const currentSelectedIndexRef = useRef(selectedIndex);
-  const scrollViewRef = useRef<ScrollView>(null);
+  const scrollViewRef = useRef<KeyboardAwareScrollViewRef>(null);
 
   const animatedStyle = useAnimatedStyle(
     () => ({

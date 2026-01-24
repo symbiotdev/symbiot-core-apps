@@ -1,5 +1,4 @@
 import { UpdateBrandClient } from '@symbiot-core-apps/brand-client';
-import { useTranslation } from 'react-i18next';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useBrandClientDetailedByIdReq } from '@symbiot-core-apps/api';
 import {
@@ -9,16 +8,13 @@ import {
   InitView,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { id } = useLocalSearchParams<{ id: string }>();
   const navigation = useNavigation();
-  const {
-    data: client,
-    error,
-    isPending,
-  } = useBrandClientDetailedByIdReq(id);
+  const { data: client, error, isPending } = useBrandClientDetailedByIdReq(id);
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [

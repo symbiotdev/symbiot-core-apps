@@ -15,8 +15,7 @@ import {
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
-import { DateHelper } from '@symbiot-core-apps/shared';
-import { useTranslation } from 'react-i18next';
+import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
   DateFrom,
   SingeElementForm,
@@ -74,7 +73,7 @@ export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
 
 const Personality = ({ client }: { client: BrandClient }) => {
   const { me } = useCurrentAccountState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandClient,
@@ -136,7 +135,7 @@ const Personality = ({ client }: { client: BrandClient }) => {
             name="gender"
             value={value.gender}
             controllerProps={{
-              disableDrag: true
+              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandClientGenderController}
@@ -145,7 +144,7 @@ const Personality = ({ client }: { client: BrandClient }) => {
             name="birthday"
             value={value.birthday}
             controllerProps={{
-              disableDrag: true
+              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandClientBirthdayController}
@@ -157,7 +156,7 @@ const Personality = ({ client }: { client: BrandClient }) => {
 };
 
 const Contact = ({ client }: { client: BrandClient }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, updateValue, openModal, closeModal } =
     useModalUpdateByIdForm<
       BrandClient,
@@ -235,7 +234,7 @@ const Contact = ({ client }: { client: BrandClient }) => {
 };
 
 const Note = ({ client }: { client: BrandClient }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, updateValue, openModal, closeModal } =
     useModalUpdateByIdForm<
       BrandClient,
@@ -257,7 +256,9 @@ const Note = ({ client }: { client: BrandClient }) => {
         icon={<Icon name="Document" />}
         iconAfter={<Icon name="ArrowRight" />}
         label={t('brand_client.update.groups.note.title')}
-        text={value.note?.replace(/\n/gi, ' ')?.trim() || t('shared.not_specified')}
+        text={
+          value.note?.replace(/\n/gi, ' ')?.trim() || t('shared.not_specified')
+        }
         onPress={openModal}
       />
 

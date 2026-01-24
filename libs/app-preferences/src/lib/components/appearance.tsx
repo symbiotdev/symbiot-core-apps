@@ -12,12 +12,11 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { AccountScheme } from '@symbiot-core-apps/api';
 import { useNavigation } from '@react-navigation/native';
-import { defaultSystemScheme } from '@symbiot-core-apps/shared';
-import { useTranslation } from 'react-i18next';
+import { defaultSystemScheme, useI18n } from '@symbiot-core-apps/shared';
 
 export const Appearance = () => {
   const navigation = useNavigation();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
   const scheme = me?.preferences?.scheme;
 

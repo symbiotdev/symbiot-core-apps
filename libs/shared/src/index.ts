@@ -9,6 +9,8 @@ export * from './lib/hooks/use-screen-size';
 export * from './lib/hooks/use-share-app';
 export * from './lib/hooks/use-system-scheme';
 
+export * from './lib/i18n/use-i18n';
+
 export * from './lib/types/helpers';
 
 export * from './lib/utils/burnt';

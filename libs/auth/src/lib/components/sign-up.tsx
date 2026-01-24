@@ -11,16 +11,16 @@ import {
   WebBrowserPresentationStyle,
 } from 'expo-web-browser';
 import { router } from 'expo-router';
-import { useTranslation } from 'react-i18next';
 import {
   CheckboxController,
   EmailController,
   PasswordController,
   StringController,
 } from '@symbiot-core-apps/form-controller';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const SignUp = ({ logo }: { logo: ReactElement }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const { mutateAsync, error } = useAccountAuthSignUpReq();
 

@@ -9,11 +9,10 @@ import {
 } from '@symbiot-core-apps/ui';
 import React, { useRef } from 'react';
 import { AnyBrandClientMembership, BrandClient } from '@symbiot-core-apps/api';
-import { useTranslation } from 'react-i18next';
 import { BrandClientMembershipItem } from '@symbiot-core-apps/brand';
 import { BrandClientTopUpBalance } from './brand-client-top-up-balance';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 
 export const BrandClientBalance = ({
   client,
@@ -30,7 +29,7 @@ export const BrandClientBalance = ({
   showEmptyMessage?: boolean;
   onPressMembership: (membership: AnyBrandClientMembership) => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { hasPermission } = useCurrentBrandEmployee();
   const topUpBalancePopoverRef = useRef<AdaptivePopoverRef>(null);
 

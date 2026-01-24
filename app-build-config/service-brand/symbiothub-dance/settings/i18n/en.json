@@ -5,7 +5,7 @@
         "label": "Notifications"
       },
       "actions": {
-        "label": "Take action"
+        "label": "Take Action"
       },
       "home": {
         "label": "Home"
@@ -14,10 +14,10 @@
         "label": "Calendar"
       },
       "brands": {
-        "label": "Brand profile"
+        "label": "Brand Profile"
       },
       "share": {
-        "label": "Share application"
+        "label": "Share Application"
       },
       "faq": {
         "label": "FAQ"
@@ -26,7 +26,7 @@
         "label": "Terms & Privacy"
       },
       "follow_us": {
-        "label": "Follow us"
+        "label": "Follow Us"
       },
       "more": {
         "label": "More"
@@ -50,41 +50,41 @@
         "label": "Classes"
       },
       "period_based_memberships": {
-        "label": "Memberships"
+        "label": "VIP Passes"
       },
       "visit_based_memberships": {
-        "label": "Class Packs"
+        "label": "Passes"
       }
     },
     "tabs": {
       "plus": {
         "actions": {
           "add_client": {
-            "label": "New student"
+            "label": "New Student"
           },
           "import_client": {
-            "label": "Import students"
+            "label": "Import Students"
           },
           "add_location": {
-            "label": "New location"
+            "label": "New Location"
           },
           "add_employee": {
-            "label": "New team member"
+            "label": "New Team Member"
           },
           "add_service": {
-            "label": "New class"
+            "label": "New Class"
           },
           "add_period_based_membership": {
-            "label": "New membership"
+            "label": "New VIP Pass"
           },
           "add_visit_based_membership": {
-            "label": "New class pack"
+            "label": "New Pass"
           },
           "add_service_booking": {
-            "label": "New class booking"
+            "label": "New Class Booking"
           },
           "add_unavailable_booking": {
-            "label": "New unavailable time"
+            "label": "New Unavailable Time"
           }
         }
       }
@@ -111,21 +111,21 @@
     }
   },
   "auth": {
-    "title": "Your rhythm. Your system.",
+    "title": "Your Rhythm. Your System.",
     "subtitle": "A flexible platform for dance instructors and studio teams"
   },
   "initial_actions": {
-    "title": "Take the first step",
+    "title": "Take the First Step",
     "subtitle": "Select whether you want to create your own brand or join the team.",
     "join_workspace": {
-      "title": "Join a team",
+      "title": "Join a Team",
       "subtitle": "Already part of the team? Scan the QR code to join or use your ID.",
       "button": {
         "label": "Join"
       }
     },
     "create_workspace": {
-      "title": "Create a brand",
+      "title": "Create a Brand",
       "subtitle": "Add your dance brand and manage classes, students, and team members in one place.",
       "button": {
         "label": "Create"
@@ -139,7 +139,7 @@
       "annual": "Annual"
     },
     "card": {
-      "title": "Next level starts here!",
+      "title": "Next Level Starts Here!",
       "subtitle": "Grow your dance team, open new locations, and attract more students to your classes.",
       "button": {
         "label": "Go Unlimited"
@@ -147,7 +147,7 @@
     },
     "paywall": {
       "starter": {
-        "title": "Unlock PRO.\nDance without limits.",
+        "title": "Unlock PRO.\nDance Without Limits.",
         "subtitle": "Your next level begins here",
         "description": {
           "ios": "Payment will be charged to your Apple ID account. Your subscription will automatically renew at your selected interval unless you cancel at least 24 hours before the end of the current period. After the introductory offer, the subscription renews at the standard price. The amount charged may change with notice. You can manage or cancel your subscription in your App Store account settings. Cancel anytime.",
@@ -156,27 +156,27 @@
         },
         "benefits": [
           {
-            "title": "Unlimited classes",
+            "title": "Unlimited Classes",
             "subtitle": "Create an endless flow of classes."
           },
           {
-            "title": "Unlimited class packs",
+            "title": "Unlimited Passes",
             "subtitle": ""
           },
           {
-            "title": "Unlimited memberships",
+            "title": "Unlimited VIP Passes",
             "subtitle": ""
           },
           {
-            "title": "Unlimited students",
+            "title": "Unlimited Students",
             "subtitle": "Add as many dancers as your brand grows."
           },
           {
-            "title": "Unlimited team members",
+            "title": "Unlimited Team Members",
             "subtitle": "Expand your professional crew freely."
           },
           {
-            "title": "Unlimited locations",
+            "title": "Unlimited Locations",
             "subtitle": "Open new spaces for your dance community."
           }
         ],
@@ -191,7 +191,7 @@
   "brand": {
     "title": "Business",
     "analytics": {
-      "title": "Brand analytics"
+      "title": "Brand Analytics"
     },
     "profile": {
       "title": "Brand Profile",
@@ -205,7 +205,7 @@
     },
     "form": {
       "name": {
-        "label": "Brand name",
+        "label": "Brand Name",
         "placeholder": "For example, SYMBIOT",
         "error": {
           "required": "Brand name is required"
@@ -219,7 +219,7 @@
         }
       },
       "birthday": {
-        "label": "Date of foundation",
+        "label": "Date of Foundation",
         "placeholder": "Indicate the date of foundation",
         "error": {
           "required": "Date of foundation is required"
@@ -288,14 +288,14 @@
     "create": {
       "new_brand": "New brand",
       "intro": {
-        "title": "Build a strong dance brand",
+        "title": "Build a Strong Dance Brand",
         "subtitle": "Just a few details to set up your brand, grow your student base, and manage every class effortlessly.",
         "button": {
-          "label": "Let's go"
+          "label": "Let's Go"
         }
       },
       "discard": {
-        "title": "Discard creation?",
+        "title": "Discard Creation?",
         "message": "Are you sure you want to go back and discard?"
       },
       "steps": {
@@ -343,12 +343,12 @@
           "title": "Localization"
         },
         "links": {
-          "title": "External links"
+          "title": "External Links"
         }
       }
     },
     "information": {
-      "title": "Brand information"
+      "title": "Brand Information"
     },
     "congrats": {
       "anniversary": {
@@ -372,7 +372,7 @@
     "title": "Locations",
     "new_location": "New location",
     "analytics": {
-      "title": "Location analytics"
+      "title": "Location Analytics"
     },
     "profile": {
       "title": "Location Profile",
@@ -385,14 +385,14 @@
     },
     "create": {
       "intro": {
-        "title": "Brand locations",
+        "title": "Brand Locations",
         "subtitle": "Add the locations where your brand’s classes take place.",
         "button": {
-          "label": "Add first location"
+          "label": "Add First Location"
         }
       },
       "discard": {
-        "title": "Discard creation?",
+        "title": "Discard Creation?",
         "message": "Are you sure you want to go back and discard?"
       },
       "steps": {
@@ -430,7 +430,7 @@
       "title": "Location Settings",
       "context_menu": {
         "remove": {
-          "label": "Delete location"
+          "label": "Delete Location"
         }
       },
       "groups": {
@@ -452,13 +452,13 @@
       }
     },
     "remove": {
-      "title": "Delete brand location",
+      "title": "Delete Brand Location",
       "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
       "button": {
         "label": "Delete"
       },
       "confirm_dialog": {
-        "title": "Are you sure?",
+        "title": "Are You Sure?",
         "message": "This action cannot be undone."
       }
     },
@@ -538,28 +538,28 @@
         }
       },
       "address": {
-        "label": "Full address",
+        "label": "Full Address",
         "placeholder": "For example, 9497 Wall St. Corona, NY",
         "error": {
           "required": "Address is required"
         }
       },
       "floor": {
-        "label": "Floor number",
+        "label": "Floor Number",
         "placeholder": "For example, 2",
         "error": {
           "required": "Floor is required"
         }
       },
       "entrance": {
-        "label": "Entrance number",
+        "label": "Entrance Number",
         "placeholder": "For example, 13a",
         "error": {
           "required": "Entrance is required"
         }
       },
       "dynamic": {
-        "label": "Flexible location",
+        "label": "Flexible Location",
         "placeholder": "Location-independent"
       },
       "any": {
@@ -567,7 +567,7 @@
         "placeholder": "Location-independent"
       },
       "all": {
-        "label": "All locations",
+        "label": "All Locations",
         "placeholder": "Location-independent"
       }
     },
@@ -582,7 +582,7 @@
   "brand_client": {
     "title": "Students",
     "analytics": {
-      "title": "Student analytics"
+      "title": "Student Analytics"
     },
     "search": {
       "placeholder": "Search by name or phone"
@@ -596,28 +596,28 @@
       "title": "Balance",
       "empty": "Balance is empty",
       "menu": {
-        "add_visit_based_membership": "Add Class Pack",
-        "add_period_based_membership": "Add Membership"
+        "add_visit_based_membership": "Add Pass",
+        "add_period_based_membership": "Add VIP Pass"
       },
       "extend": {
         "title": "Empty Balance",
-        "subtitle": "Add a class pack or membership to the student’s balance in just one click.",
+        "subtitle": "Add a pass or VIP pass to the student’s balance in just one click.",
         "button": {
-          "label": "Top up"
+          "label": "Top Up"
         }
       },
       "top_up": {
-        "title": "Top up balance",
+        "title": "Top up Balance",
         "visit_based_memberships": {
           "empty": {
-            "title": "No class packs added yet",
-            "subtitle": "Go to the Class Packs section to add the first one."
+            "title": "No Passes Added Yet",
+            "subtitle": "Go to the Passes section to add the first one."
           }
         },
         "period_based_memberships": {
           "empty": {
-            "title": "No memberships added yet",
-            "subtitle": "Go to the Memberships section to add the first one."
+            "title": "No VIP Passes Added Yet",
+            "subtitle": "Go to the VIP Passes section to add the first one."
           }
         }
       }
@@ -625,33 +625,33 @@
     "history": {
       "title": "History",
       "menu": {
-        "visit_based_memberships": "Class Packs",
-        "period_based_memberships": "Memberships",
+        "visit_based_memberships": "Passes",
+        "period_based_memberships": "VIP Passes",
         "transactions": "Transactions"
       },
       "visit_based_memberships": {
         "empty": {
-          "title": "No class packs assigned",
-          "subtitle": "Assigned class packs will appear here."
+          "title": "No Passes Assigned",
+          "subtitle": "Assigned passes will appear here."
         }
       },
       "period_based_memberships": {
         "empty": {
-          "title": "No memberships assigned",
-          "subtitle": "Assigned memberships will be shown here."
+          "title": "No VIP Passes Assigned",
+          "subtitle": "Assigned VIP passes will be shown here."
         }
       }
     },
     "form": {
       "firstname": {
-        "label": "First name",
+        "label": "First Name",
         "placeholder": "Enter student's first name",
         "error": {
           "required": "First name is required"
         }
       },
       "lastname": {
-        "label": "Last name",
+        "label": "Last Name",
         "placeholder": "Enter student's last name",
         "error": {
           "required": "Last name is required"
@@ -707,11 +707,11 @@
       }
     },
     "import": {
-      "title": "Import students",
+      "title": "Import Students",
       "subtitle": "Upload your CSV file to start importing students",
       "suggestion": "Before uploading, check the Import Guide and review the sample file.",
       "upload": {
-        "label": "Upload CSV file",
+        "label": "Upload CSV File",
         "button": {
           "label": "Import"
         }
@@ -728,7 +728,7 @@
         }
       },
       "guide": {
-        "title": "Import guide",
+        "title": "Import Guide",
         "warning": "Rows with invalid or incorrectly formatted data will be skipped. If certain information is unavailable, leave the field empty.",
         "fields": [
           {
@@ -784,21 +784,21 @@
         "title": "Still have questions? Check the example.",
         "subtitle": "Use the sample to ensure accurate entry of student information.",
         "button": {
-          "label": "Download template"
+          "label": "Download Template"
         }
       }
     },
     "create": {
       "new_client": "New student",
       "discard": {
-        "title": "Discard creation?",
+        "title": "Discard Creation?",
         "message": "Are you sure you want to go back and discard?"
       },
       "intro": {
         "title": "Add Your First Student",
         "subtitle": "Start building your student base and manage profiles with ease.",
         "button": {
-          "label": "Get started"
+          "label": "Get Started"
         }
       },
       "steps": {
@@ -821,10 +821,10 @@
       }
     },
     "update": {
-      "title": "Student settings",
+      "title": "Student Settings",
       "context_menu": {
         "remove": {
-          "label": "Delete student"
+          "label": "Delete Student"
         }
       },
       "groups": {
@@ -840,13 +840,13 @@
       }
     },
     "remove": {
-      "title": "Delete student",
+      "title": "Delete Student",
       "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
       "button": {
         "label": "Delete"
       },
       "confirm_dialog": {
-        "title": "Are you sure?",
+        "title": "Are You Sure?",
         "message": "This action cannot be undone."
       }
     }
@@ -869,7 +869,7 @@
       },
       "groups": {
         "end_date": {
-          "title": "End date"
+          "title": "End Date"
         }
       }
     },
@@ -880,7 +880,7 @@
         "label": "Delete"
       },
       "confirm_dialog": {
-        "title": "Are you sure?",
+        "title": "Are You Sure?",
         "message": "This action cannot be undone."
       }
     }
@@ -888,14 +888,14 @@
   "brand_employee": {
     "title": "Team",
     "analytics": {
-      "title": "Employee analytics"
+      "title": "Employee Analytics"
     },
     "search": {
       "placeholder": "Search by name, role or phone"
     },
     "profile": {
       "working_hours": "Schedule",
-      "title": "Team member profile",
+      "title": "Team Member Profile",
       "locations": "Location",
       "dynamic_location": "Flexible location",
       "not_provider": "Does not run classes",
@@ -910,14 +910,14 @@
         }
       },
       "firstname": {
-        "label": "First name",
+        "label": "First Name",
         "placeholder": "Enter team member's first name",
         "error": {
           "required": "First name is required"
         }
       },
       "lastname": {
-        "label": "Last name",
+        "label": "Last Name",
         "placeholder": "Enter team member's last name",
         "error": {
           "required": "Last name is required"
@@ -947,7 +947,7 @@
         "description": "Works according to the standard work schedule"
       },
       "provider": {
-        "label": "Run classes",
+        "label": "Run Classes",
         "description": "Enable to allow this team member to be assigned to classes."
       },
       "schedule": {
@@ -1019,7 +1019,7 @@
     "create": {
       "new_employee": "New team member",
       "discard": {
-        "title": "Discard creation?",
+        "title": "Discard Creation?",
         "message": "Are you sure you want to go back and discard?"
       },
       "intro": {
@@ -1068,10 +1068,10 @@
       }
     },
     "update": {
-      "title": "Team member settings",
+      "title": "Team Member Settings",
       "context_menu": {
         "remove": {
-          "label": "Delete team member"
+          "label": "Delete Team Member"
         }
       },
       "groups": {
@@ -1099,13 +1099,13 @@
       }
     },
     "remove": {
-      "title": "Delete team member",
+      "title": "Delete Team Member",
       "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
       "button": {
         "label": "Delete"
       },
       "confirm_dialog": {
-        "title": "Are you sure?",
+        "title": "Are You Sure?",
         "message": "This action cannot be undone."
       }
     },
@@ -1131,7 +1131,7 @@
       "catalog": {
         "all": {
           "title": "Access to Catalog",
-          "subtitle": "Enable adding, editing, and deleting classes, class packs, and memberships."
+          "subtitle": "Enable adding, editing, and deleting classes, passes, and VIP passes."
         }
       },
       "employee": {
@@ -1188,10 +1188,10 @@
     "free": "Free",
     "unavailable": "Unavailable for booking",
     "analytics": {
-      "title": "Class analytics"
+      "title": "Class Analytics"
     },
     "profile": {
-      "title": "Class profile",
+      "title": "Class Profile",
       "locations": "Locations",
       "employees": "Team members",
       "description": "Description",
@@ -1216,7 +1216,7 @@
         }
       },
       "type": {
-        "label": "Dance style",
+        "label": "Dance Style",
         "placeholder": "Choose the style/discipline",
         "error": {
           "required": "Style type is required"
@@ -1230,7 +1230,7 @@
         }
       },
       "places": {
-        "label": "Group size",
+        "label": "Group Size",
         "placeholder": "Enter group size",
         "error": {
           "required": "Groups size is required",
@@ -1276,7 +1276,7 @@
         }
       },
       "available": {
-        "label": "Available for booking"
+        "label": "Available for Booking"
       },
       "gender": {
         "label": "Gender",
@@ -1299,7 +1299,7 @@
         }
       },
       "any": {
-        "label": "Any class",
+        "label": "Any Class",
         "placeholder": "All classes included"
       }
     },
@@ -1309,7 +1309,7 @@
         "title": "Add Your First Class",
         "subtitle": "Set up your first class in just a few clicks.",
         "button": {
-          "label": "Get started"
+          "label": "Get Started"
         }
       },
       "discard": {
@@ -1348,10 +1348,10 @@
       }
     },
     "update": {
-      "title": "Class settings",
+      "title": "Class Settings",
       "context_menu": {
         "remove": {
-          "label": "Delete class"
+          "label": "Delete Class"
         }
       },
       "groups": {
@@ -1373,26 +1373,26 @@
       }
     },
     "remove": {
-      "title": "Delete class",
+      "title": "Delete Class",
       "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
       "button": {
         "label": "Delete"
       },
       "confirm_dialog": {
-        "title": "Are you sure?",
+        "title": "Are You Sure?",
         "message": "This action cannot be undone."
       }
     }
   },
   "brand_period_based_membership": {
-    "title": "Memberships",
+    "title": "VIP Passes",
     "expired": "Expired",
     "unavailable": "Not available for purchase",
     "analytics": {
-      "title": "Membership analytics"
+      "title": "VIP Pass Analytics"
     },
     "profile": {
-      "title": "Membership profile",
+      "title": "VIP Pass Profile",
       "locations": "Locations",
       "services": "Included Classes",
       "description": "Description",
@@ -1404,14 +1404,14 @@
     "form": {
       "name": {
         "label": "Name",
-        "placeholder": "Enter membership name",
+        "placeholder": "Enter VIP pass name",
         "error": {
           "required": "Name is required"
         }
       },
       "description": {
         "label": "Description",
-        "placeholder": "Add a description that inspires students to buy this membership.",
+        "placeholder": "Add a description that inspires students to buy this VIP pass.",
         "error": {
           "required": "Description is required"
         }
@@ -1425,7 +1425,7 @@
       },
       "location": {
         "label": "Location",
-        "placeholder": "Select a membership location",
+        "placeholder": "Select a VIP pass location",
         "error": {
           "required": "Location is required"
         }
@@ -1437,7 +1437,7 @@
         }
       },
       "available": {
-        "label": "Available for purchase"
+        "label": "Available for Purchase"
       },
       "period": {
         "label": "Valid for",
@@ -1455,67 +1455,67 @@
       },
       "price": {
         "label": "Price",
-        "placeholder": "Set membership price",
+        "placeholder": "Set VIP pass price",
         "error": {
           "required": "Price is required"
         }
       },
       "discount": {
         "label": "Discount",
-        "placeholder": "Set membership discount",
+        "placeholder": "Set VIP pass discount",
         "error": {
           "required": "Discount is required"
         }
       }
     },
     "create": {
-      "new": "New membership",
+      "new": "New VIP Pass",
       "intro": {
-        "title": "Add Your First Membership",
-        "subtitle": "Set up your first membership in just a few clicks.",
+        "title": "Add Your First VIP Pass",
+        "subtitle": "Set up your first VIP pass in just a few clicks.",
         "button": {
-          "label": "Get started"
+          "label": "Get Started"
         }
       },
       "discard": {
-        "title": "Discard creation?",
+        "title": "Discard Creation?",
         "message": "Are you sure you want to go back and discard?"
       },
       "steps": {
         "about": {
-          "title": "About Membership",
-          "subtitle": "Add a name and description that highlight the membership’s benefits and value for your students."
+          "title": "About VIP Pass",
+          "subtitle": "Add a name and description that highlight the VIP pass benefits and value for your students."
         },
         "location": {
           "title": "Location",
-          "subtitle": "Select your brand’s location where this membership will be available."
+          "subtitle": "Select your brand’s location where this VIP pass will be available."
         },
         "services": {
           "title": "Included Classes",
-          "subtitle": "Choose the classes to include in this membership to help students see exactly what it offers.",
+          "subtitle": "Choose the classes to include in this VIP pass to help students see exactly what it offers.",
           "empty": "No classes added yet. Go to the Classes section to add the first one.",
-          "all_included": "If you skip this step, all classes will be included in the membership."
+          "all_included": "If you skip this step, all classes will be included in the VIP pass."
         },
         "pricing": {
           "title": "Pricing",
-          "subtitle": "Set the membership price and discount to match the value of all included classes."
+          "subtitle": "Set the VIP pass price and discount to match the value of all included classes."
         },
         "note": {
           "title": "Note",
-          "subtitle": "Add the key details students should know before buying this membership."
+          "subtitle": "Add the key details students should know before buying this VIP pass."
         }
       }
     },
     "update": {
-      "title": "Membership settings",
+      "title": "VIP Pass Settings",
       "context_menu": {
         "remove": {
-          "label": "Delete membership"
+          "label": "Delete VIP Pass"
         }
       },
       "groups": {
         "about": {
-          "title": "About Membership"
+          "title": "About VIP Pass"
         },
         "location_services": {
           "title": "Location & Classes"
@@ -1529,28 +1529,28 @@
       }
     },
     "remove": {
-      "title": "Delete membership",
+      "title": "Delete VIP Pass",
       "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
       "button": {
         "label": "Delete"
       },
       "confirm_dialog": {
-        "title": "Are you sure?",
+        "title": "Are You Sure?",
         "message": "This action cannot be undone."
       }
     }
   },
   "brand_visit_based_membership": {
-    "title": "Class packs",
+    "title": "Passes",
     "count_visits": "Number of classes: {{count}}",
     "expired": "Expired",
     "limit_reached": "Visits limit reached",
     "unavailable": "Not available for purchase",
     "analytics": {
-      "title": "Class Pack analytics"
+      "title": "Pass Analytics"
     },
     "profile": {
-      "title": "Class Pack Profile",
+      "title": "Pass Profile",
       "locations": "Locations",
       "services": "Included Classes",
       "description": "Description",
@@ -1569,7 +1569,7 @@
       },
       "description": {
         "label": "Description",
-        "placeholder": "Add a description that inspires students to buy this class pack.",
+        "placeholder": "Add a description that inspires students to buy this pass.",
         "error": {
           "required": "Description is required"
         }
@@ -1595,10 +1595,10 @@
         }
       },
       "available": {
-        "label": "Available for purchase"
+        "label": "Available for Purchase"
       },
       "visits": {
-        "label": "Number of classes",
+        "label": "Number of Classes",
         "placeholder": "Select number",
         "error": {
           "required": "Number is required"
@@ -1627,32 +1627,32 @@
       }
     },
     "create": {
-      "new": "New Class Pack",
+      "new": "New Pass",
       "intro": {
-        "title": "Add Your First Class Pack",
-        "subtitle": "Set up your first class pack in just a few clicks.",
+        "title": "Add Your First Pass",
+        "subtitle": "Set up your first pass in just a few clicks.",
         "button": {
-          "label": "Get started"
+          "label": "Get Started"
         }
       },
       "discard": {
-        "title": "Discard creation?",
+        "title": "Discard Creation?",
         "message": "Are you sure you want to go back and discard?"
       },
       "steps": {
         "about": {
-          "title": "About Class Pack",
-          "subtitle": "Add a name and description to highlight the class pack’s idea and value for your students."
+          "title": "About Pass",
+          "subtitle": "Add a name and description to highlight the pass idea and value for your students."
         },
         "location": {
           "title": "Location",
-          "subtitle": "Select your brand’s location where this class pack will be available."
+          "subtitle": "Select your brand’s location where this pass will be available."
         },
         "services": {
           "title": "Included Classes",
           "subtitle": "Choose the classes to include in this pack to help students see exactly what it offers.",
           "empty": "No classes added yet. Go to the Classes section to add the first one.",
-          "all_included": "If you skip this step, all classes will be included in the class pack."
+          "all_included": "If you skip this step, all classes will be included in the pass."
         },
         "pricing": {
           "title": "Pricing",
@@ -1660,20 +1660,20 @@
         },
         "note": {
           "title": "Note",
-          "subtitle": "Add the key details students should know before buying this class pack."
+          "subtitle": "Add the key details students should know before buying this pass."
         }
       }
     },
     "update": {
-      "title": "Class Pack Settings",
+      "title": "Pass Settings",
       "context_menu": {
         "remove": {
-          "label": "Delete class pack"
+          "label": "Delete Pass"
         }
       },
       "groups": {
         "about": {
-          "title": "About Class Pack"
+          "title": "About Pass"
         },
         "location_services": {
           "title": "Location & Classes"
@@ -1687,19 +1687,19 @@
       }
     },
     "remove": {
-      "title": "Delete class pack",
+      "title": "Delete Pass",
       "subtitle": "Deleting \"{{name}}\" will permanently remove all related data. This action cannot be undone.",
       "button": {
         "label": "Delete"
       },
       "confirm_dialog": {
-        "title": "Are you sure?",
+        "title": "Are You Sure?",
         "message": "This action cannot be undone."
       }
     }
   },
   "brand_gift_card": {
-    "title": "Gift cards"
+    "title": "Gift Cards"
   },
   "brand_transaction": {
     "title": "Transactions",
@@ -1713,12 +1713,12 @@
     "type": "Type",
     "by_type": {
       "manual": "Manual",
-      "client-period-based-membership": "Membership",
-      "client-visit-based-membership": "Class Pack"
+      "client-period-based-membership": "VIP Pass",
+      "client-visit-based-membership": "Pass"
     },
     "empty": {
-      "title": "No transactions yet",
-      "subtitle": "Payment history will appear here once class packs or memberships are assigned."
+      "title": "No Transactions Yet",
+      "subtitle": "Payment history will appear here once passes or VIP passes are assigned."
     }
   },
   "brand_booking": {
@@ -1727,33 +1727,33 @@
     "add_service_booking": "Book a Class",
     "see_all": "Upcoming",
     "today_no_schedules": {
-      "title": "No scheduled classes today. \uD83D\uDCA4",
+      "title": "No Scheduled Classes Today. \uD83D\uDCA4",
       "subtitle": "Take this time to recharge or prepare for upcoming classes.",
       "button": {
-        "label": "Book a class"
+        "label": "Book a Class"
       }
     },
     "today_schedules_completed": {
-      "title": "Today's classes completed. \uD83D\uDC4F",
+      "title": "Today's Classes Completed. \uD83D\uDC4F",
       "subtitle": "Take this time to recharge or prepare for upcoming classes.",
       "button": {
-        "label": "Book a class"
+        "label": "Book a Class"
       }
     },
     "empty": {
       "title": "No Class Bookings",
       "subtitle": "You have no upcoming class bookings at the moment.",
       "button": {
-        "label": "Book a class"
+        "label": "Book a Class"
       }
     }
   },
   "unavailable_brand_booking": {
-    "title": "Unavailable time",
+    "title": "Unavailable Time",
     "create": {
       "new": "New unavailable time",
       "discard": {
-        "title": "Discard creation?",
+        "title": "Discard Creation?",
         "message": "Are you sure you want to go back and discard?"
       },
       "steps": {
@@ -1779,7 +1779,7 @@
         "label": "Duration"
       },
       "employee": {
-        "label": "Team member",
+        "label": "Team Member",
         "placeholder": "Select team member"
       },
       "note": {
@@ -1791,7 +1791,7 @@
       }
     },
     "profile": {
-      "title": "Unavailable time",
+      "title": "Unavailable Time",
       "employee": "Team member",
       "settings": "Settings",
       "datetime": "Date & Time",
@@ -1806,7 +1806,7 @@
           "label": "Reschedule"
         },
         "change_reason": {
-          "label": "Edit reason"
+          "label": "Edit Reason"
         }
       }
     }
@@ -1816,12 +1816,12 @@
     "create": {
       "new": "New class booking",
       "discard": {
-        "title": "Discard creation?",
+        "title": "Discard Creation?",
         "message": "Are you sure you want to go back and discard?"
       },
       "steps": {
         "service": {
-          "title": "Class booking",
+          "title": "Class Booking",
           "subtitle": "Select a class from the list to continue with the booking."
         },
         "schedule": {
@@ -1871,7 +1871,7 @@
         }
       },
       "provider": {
-        "label": "Team member",
+        "label": "Team Member",
         "any_label": "Any team member",
         "placeholder": "Select a class provider",
         "error": {
@@ -1886,7 +1886,7 @@
       }
     },
     "profile": {
-      "title": "Class booking",
+      "title": "Class Booking",
       "employee": "Team Member",
       "reschedule": "Reschedule",
       "note": "Note",
@@ -1901,7 +1901,7 @@
           "label": "Reschedule"
         },
         "change_note": {
-          "label": "Edit note"
+          "label": "Edit Note"
         }
       },
       "clients": {
@@ -1913,25 +1913,25 @@
         "free_visit": "Free visit",
         "actions": {
           "profile": {
-            "label": "View profile"
+            "label": "View Profile"
           },
           "cancel_by_brand": {
-            "label": "Cancel visit"
+            "label": "Cancel Visit"
           },
           "use_balance": {
-            "label": "Use balance",
-            "info": "Select a class pack or membership to use for this booking, or top up the balance if needed."
+            "label": "Use Balance",
+            "info": "Select a pass or VIP pass to use for this booking, or top up the balance if needed."
           },
           "mark_as_free": {
-            "label": "Free visit"
+            "label": "Free Visit"
           }
         }
       },
       "add_first_client": {
-        "title": "No students yet",
+        "title": "No Students Yet",
         "subtitle": "Add a student to provide more context for this booking.",
         "button": {
-          "label": "Add a student"
+          "label": "Add a Student"
         }
       }
     }

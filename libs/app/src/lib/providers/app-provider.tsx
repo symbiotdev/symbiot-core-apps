@@ -4,6 +4,7 @@ import {
   useContext,
   useLayoutEffect,
   useMemo,
+  useRef,
 } from 'react';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { ThemeProvider } from '@symbiot-core-apps/theme';
@@ -45,6 +46,8 @@ export const AppProvider = ({
   const { data: remoteOverrides, error: remoteOverridesError } =
     useAppSettingsOverridesReq();
 
+  const loadedRef = useRef(false);
+
   const appSettings = useMemo(
     () => merge(defaultSettings, overrides),
     [defaultSettings, overrides],
@@ -52,6 +55,7 @@ export const AppProvider = ({
 
   const loaded = useMemo(
     () =>
+      loadedRef.current ||
       !!remoteOverrides ||
       !!remoteOverridesError ||
       !!Object.keys(overrides).length,
@@ -59,7 +63,10 @@ export const AppProvider = ({
   );
 
   useLayoutEffect(() => {
-    if (remoteOverrides) setOverrides(remoteOverrides);
+    if (!remoteOverrides) return;
+
+    setOverrides(remoteOverrides);
+    loadedRef.current = true;
   }, [remoteOverrides, setOverrides]);
 
   useLayoutEffect(() => {

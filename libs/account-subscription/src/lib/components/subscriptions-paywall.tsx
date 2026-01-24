@@ -25,7 +25,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 
-export const AccountSubscriptionsPaywall = ({
+export const SubscriptionsPaywall = ({
   offering,
   packages,
   subscribing,

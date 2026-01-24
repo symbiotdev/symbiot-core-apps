@@ -7,19 +7,20 @@ import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 export default () => {
   const navigation = useNavigation();
   const headerHeight = useScreenHeaderHeight();
-  const { canDo } = useAccountLimits();
+  const { tryAction } = useAccountLimits();
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () =>
-        canDo.addEmployee && (
-          <HeaderButton
-            iconName="AddCircle"
-            onPress={() => router.push('/employees/create')}
-          />
-        ),
+      headerRight: () => (
+        <HeaderButton
+          iconName="AddCircle"
+          onPress={tryAction('addEmployee', () =>
+            router.push('/employees/create'),
+          )}
+        />
+      ),
     });
-  }, [canDo.addEmployee, navigation]);
+  }, [tryAction, navigation]);
 
   return (
     <CurrentBrandEmployees

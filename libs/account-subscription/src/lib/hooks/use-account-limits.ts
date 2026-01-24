@@ -3,13 +3,24 @@ import {
   useCurrentAccountState,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { useMemo } from 'react';
-import { BrandStats } from '@symbiot-core-apps/api';
+import { useCallback, useMemo } from 'react';
+import { BrandMembershipType, BrandStats } from '@symbiot-core-apps/api';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { useAccountSubscription } from '../providers/account-subscription-provider';
+
+export type AccountLimitActions = {
+  addClient: boolean;
+  addEmployee: boolean;
+  addLocation: boolean;
+  addService: boolean;
+  addPeriodMembership: boolean;
+  addVisitMembership: boolean;
+};
 
 export const useAccountLimits = () => {
   const { t } = useI18n();
   const { functionality } = useAppSettings();
+  const { showPaywall } = useAccountSubscription();
   const { me } = useCurrentAccountState();
   const { brand } = useCurrentBrandState();
 
@@ -25,7 +36,7 @@ export const useAccountLimits = () => {
     );
   }, [brand?.id, brand?.subscription, me?.offering, functionality.limits]);
 
-  const canDo = useMemo(() => {
+  const canDo: AccountLimitActions = useMemo(() => {
     const limitByBrandStats = (key: keyof BrandStats) =>
       brand?.stats &&
       limits &&
@@ -60,9 +71,34 @@ export const useAccountLimits = () => {
     };
   }, [brand?.stats, limits, t]);
 
+  const tryAction = useCallback(
+    (action: keyof AccountLimitActions, func: () => unknown) =>
+      canDo[action] ? func : showPaywall,
+    [canDo, showPaywall],
+  );
+
+  const getMembershipDetails = useCallback(
+    (type: BrandMembershipType) =>
+      (type === BrandMembershipType.visits
+        ? {
+            used: used.visitMemberships,
+            limitAction: 'addVisitMembership',
+          }
+        : {
+            used: used.periodMemberships,
+            limitAction: 'addPeriodMembership',
+          }) as {
+        limitAction: keyof AccountLimitActions;
+        used?: string;
+      },
+    [used.periodMemberships, used.visitMemberships],
+  );
+
   return {
     used,
     canDo,
     limits,
+    tryAction,
+    getMembershipDetails,
   };
 };

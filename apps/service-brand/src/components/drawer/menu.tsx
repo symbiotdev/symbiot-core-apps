@@ -52,11 +52,11 @@ const MenuItem = memo(
 
     const focused =
       pathname === route ||
-      pathname === '/' ||
-      additionalRoutes?.some(
-        (additionalRoute) => additionalRoute.indexOf(pathname) !== -1,
-      );
-
+      (pathname === '/'
+        ? additionalRoutes?.includes(pathname)
+        : additionalRoutes?.some(
+            (additionalRoute) => additionalRoute.indexOf(pathname) !== -1,
+          ));
     const onPress = useCallback(() => {
       if (pathname !== route) {
         if (router.canDismiss()) {
@@ -193,6 +193,7 @@ export const DrawerMenu = () => {
               ? 'navigation.drawer.actions.label'
               : 'navigation.drawer.home.label',
           )}
+          additionalRoutes={['/']}
           icon={icons.Home}
         />
 

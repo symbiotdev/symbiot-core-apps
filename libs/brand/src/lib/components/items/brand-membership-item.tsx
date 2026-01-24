@@ -135,7 +135,6 @@ const BrandPeriodBasedMembershipItemView = ({
       maxWidth={400}
       width="100%"
       marginHorizontal="auto"
-      backgroundColor="#051529"
       borderRadius="$10"
       overflow="hidden"
       padding="$4"
@@ -156,7 +155,12 @@ const BrandPeriodBasedMembershipItemView = ({
         })}
     >
       <LinearGradient
-        colors={['#FFFFFF05', '#FFFFFF30', '#FFFFFF30', '#FFFFFF05']}
+        colors={[
+          'rgba(232,98,17,0.3)',
+          'rgba(232,98,17,0.6)',
+          'rgba(232,98,17,0.6)',
+          'rgba(232,98,17,0.3)',
+        ]}
         start={{ x: 1, y: 1 }}
         end={{ x: 0, y: -1 }}
         style={StyleSheet.absoluteFill}
@@ -204,7 +208,7 @@ const BrandPeriodBasedMembershipItemView = ({
         <H3 numberOfLines={2} color="white" zIndex={1}>
           {name}
         </H3>
-        <RegularText color="$placeholderColor" numberOfLines={2}>
+        <RegularText color="white" numberOfLines={2}>
           {locations?.map(({ name }) => name)?.join(', ') || allLocations.label}
         </RegularText>
       </View>
@@ -297,6 +301,7 @@ const BrandVisitBasedMembershipItemView = ({
       overflow="hidden"
       position="relative"
       justifyContent="space-between"
+      backgroundColor="#051529"
       borderRadius="$10"
       height={200}
       maxWidth={400}
@@ -315,7 +320,7 @@ const BrandVisitBasedMembershipItemView = ({
         })}
     >
       <LinearGradient
-        colors={['#5A3A2560', '#5A3A2599', '#5A3A2599', '#5A3A2560']}
+        colors={['#FFFFFF05', '#FFFFFF30', '#FFFFFF30', '#FFFFFF05']}
         start={{ x: 1, y: 1 }}
         end={{ x: 0, y: -1 }}
         style={StyleSheet.absoluteFill}
@@ -358,7 +363,7 @@ const BrandVisitBasedMembershipItemView = ({
         <H3 numberOfLines={2} color="white">
           {name}
         </H3>
-        <RegularText color="$disabled" numberOfLines={2}>
+        <RegularText color="white" numberOfLines={2}>
           {locations?.map(({ name }) => name)?.join(', ') || allLocations.label}
         </RegularText>
       </View>

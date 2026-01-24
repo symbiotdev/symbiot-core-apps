@@ -7,24 +7,22 @@ import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 export default () => {
   const navigation = useNavigation();
   const headerHeight = useScreenHeaderHeight();
-  const { canDo } = useAccountLimits();
+  const { tryAction } = useAccountLimits();
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () =>
-        canDo.addClient && (
-          <HeaderButton
-            iconName="AddCircle"
-            onPress={() => router.push('/clients/create')}
-          />
-        ),
+      headerRight: () => (
+        <HeaderButton
+          iconName="AddCircle"
+          onPress={tryAction('addClient', () => router.push('/clients/create'))}
+        />
+      ),
     });
-  }, [canDo.addClient, navigation]);
+  }, [tryAction, navigation]);
 
   return (
     <CurrentBrandClients
       offsetTop={headerHeight}
-      hideAddClientButton={!canDo.addClient}
       onClientPress={(client) => router.push(`/clients/${client.id}/profile`)}
     />
   );

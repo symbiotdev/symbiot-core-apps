@@ -21,6 +21,7 @@ export * from './lib/utils/event-emitter';
 export * from './lib/utils/file';
 export * from './lib/utils/haptic';
 export * from './lib/utils/mask';
+export * from './lib/utils/navigation';
 export * from './lib/utils/object';
 export * from './lib/utils/patterns';
 export * from './lib/utils/performance';

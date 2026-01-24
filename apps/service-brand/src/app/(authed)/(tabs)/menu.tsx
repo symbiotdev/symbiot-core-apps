@@ -9,6 +9,7 @@ import {
 } from '@symbiot-core-apps/shared';
 import {
   useCurrentAccountState,
+  useCurrentBrandEmployee,
   useCurrentBrandState,
   useScheme,
 } from '@symbiot-core-apps/state';
@@ -45,6 +46,7 @@ export default () => {
   const { t, supportedLanguages } = useI18n();
   const { me } = useCurrentAccountState();
   const { brand } = useCurrentBrandState();
+  const { currentEmployee } = useCurrentBrandEmployee();
   const { scheme } = useScheme();
   const { visible: drawerVisible } = useDrawer();
   const share = useShareApp();
@@ -58,9 +60,14 @@ export default () => {
   const { mutate: signOut } = useAccountAuthSignOutReq();
   const navigation = useNavigation();
 
-  const onAccountPress = useCallback(() => {
+  const onIdCardPress = useCallback(() => {
     emitHaptic();
     router.push('/account/update');
+  }, []);
+
+  const onMyProfilePress = useCallback(() => {
+    emitHaptic();
+    router.push(`/employees/me`);
   }, []);
   const onAppearancePress = useCallback(
     () => router.push('/appearance/preferences'),
@@ -150,43 +157,76 @@ export default () => {
             />
           )}
 
-          <ListItemGroup
-            flexDirection="row"
-            alignItems="center"
-            cursor="pointer"
-            paddingVertical="$4"
-            pressStyle={{ opacity: 0.8 }}
-            gap="$4"
-            title={t('shared.my_profile')}
-            onPress={onAccountPress}
-          >
-            <XStack alignItems="center" gap="$4" flex={1}>
-              <Avatar
-                url={me.avatar?.xsUrl}
-                name={me.name}
-                color={me.avatarColor}
-                size={50}
+          {!currentEmployee ? (
+            <ListItemGroup
+              flexDirection="row"
+              alignItems="center"
+              cursor="pointer"
+              paddingVertical="$4"
+              pressStyle={{ opacity: 0.8 }}
+              gap="$4"
+              title={t('shared.id_card')}
+              onPress={onIdCardPress}
+            >
+              <XStack alignItems="center" gap="$4" flex={1}>
+                <Avatar
+                  url={me.avatar?.xsUrl}
+                  name={me.name}
+                  color={me.avatarColor}
+                  size={50}
+                />
+                <View flex={1} gap="$2">
+                  <H3 numberOfLines={1}>{me.name}</H3>
+
+                  <MediumText
+                    alignSelf="flex-start"
+                    color="$placeholderColor"
+                    numberOfLines={1}
+                    onPress={copyId}
+                  >
+                    ID: {me.id}
+                  </MediumText>
+                </View>
+              </XStack>
+
+              <QrCodeModalWithTrigger
+                trigger={<Icon name="QrCode" />}
+                qrValue={me.id}
+                qrContent={<RegularText fontSize={30}>🤩</RegularText>}
               />
-              <View flex={1} gap="$2">
-                <H3 numberOfLines={1}>{me.name}</H3>
+            </ListItemGroup>
+          ) : (
+            <ListItemGroup
+              flexDirection="row"
+              alignItems="center"
+              cursor="pointer"
+              paddingVertical="$4"
+              pressStyle={{ opacity: 0.8 }}
+              gap="$4"
+              title={t('shared.my_profile')}
+              onPress={onMyProfilePress}
+            >
+              <XStack alignItems="center" gap="$4" flex={1}>
+                <Avatar
+                  url={currentEmployee.avatar?.xsUrl}
+                  name={currentEmployee.name}
+                  color={currentEmployee.avatarColor}
+                  size={50}
+                />
+                <View flex={1} gap="$2">
+                  <H3 numberOfLines={1}>{currentEmployee.name}</H3>
 
-                <MediumText
-                  alignSelf="flex-start"
-                  color="$placeholderColor"
-                  numberOfLines={1}
-                  onPress={copyId}
-                >
-                  ID: {me.id}
-                </MediumText>
-              </View>
-            </XStack>
-
-            <QrCodeModalWithTrigger
-              trigger={<Icon name="QrCode" />}
-              qrValue={me.id}
-              qrContent={<RegularText fontSize={30}>🤩</RegularText>}
-            />
-          </ListItemGroup>
+                  <MediumText
+                    alignSelf="flex-start"
+                    color="$placeholderColor"
+                    numberOfLines={1}
+                  >
+                    {currentEmployee.role}
+                  </MediumText>
+                </View>
+              </XStack>
+            </ListItemGroup>
+          )}
 
           <ListItemGroup title={t('shared.preferences.title')}>
             <ListItem

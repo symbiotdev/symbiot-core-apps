@@ -5,7 +5,6 @@ import {
   useCurrentBrandReq,
 } from '@symbiot-core-apps/api';
 import { useEffect } from 'react';
-import { changeAppLanguage } from '@symbiot-core-apps/i18n';
 import {
   useCurrentAccount,
   useCurrentBrandEmployee,
@@ -13,9 +12,11 @@ import {
 } from '@symbiot-core-apps/state';
 import { useInitializing } from './use-initializing';
 import { useApp } from '@symbiot-core-apps/app';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const useCurrentEntitiesLoader = () => {
   const { languages } = useApp();
+  const { changeLanguage } = useI18n();
   const initializing = useInitializing();
   const { updateMe, updateMePreferences } = useCurrentAccount();
   const { tokens, setTokens } = useAuthTokens();
@@ -53,14 +54,21 @@ export const useCurrentEntitiesLoader = () => {
         meResponse.language &&
         languages.some(({ code }) => code === meResponse.language)
       ) {
-        changeAppLanguage(meResponse.language);
+        changeLanguage(meResponse.language);
       }
 
       if (meResponse.preferences) {
         void updateMePreferences(meResponse.preferences);
       }
     }
-  }, [meResponse, meResponseError, updateMe, updateMePreferences, languages]);
+  }, [
+    meResponse,
+    meResponseError,
+    updateMe,
+    languages,
+    updateMePreferences,
+    changeLanguage,
+  ]);
 
   useEffect(() => {
     if (currentBrandResponseError) {

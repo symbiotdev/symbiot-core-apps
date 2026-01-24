@@ -70,8 +70,8 @@ export const getAppSyncPaths = ({ app, env }: { app: App; env: string }) => {
         dest: `${dest}/assets`,
       },
       {
-        src: `${src}/i18n`,
-        dest: `${dest}/i18n`,
+        src: `${src}/settings`,
+        dest: `${dest}/settings`,
       },
       {
         src: `${src}/google/${env.split('_')[0]}`,

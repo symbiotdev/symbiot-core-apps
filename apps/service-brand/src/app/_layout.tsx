@@ -7,6 +7,8 @@ import { Platform } from 'react-native';
 import { useFixelFont } from '@symbiot-core-apps/theme';
 import { preventAutoHideAsync, setOptions } from 'expo-splash-screen';
 import { AppProvider } from '@symbiot-core-apps/app';
+import { I18nProvider } from '@symbiot-core-apps/shared';
+import { appSettings } from '../../settings';
 
 void preventAutoHideAsync();
 setOptions({
@@ -28,23 +30,28 @@ export default () => {
   if (!fontsLoaded || !tokens) return null;
 
   return (
-    <ApiProvider onNoRespond={onNoRespond} onUnauthorized={removeTokens}>
-      <AppProvider>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Protected guard={!tokens.access}>
-            <Stack.Screen name="(auth)" />
-          </Stack.Protected>
-          <Stack.Protected guard={!!tokens.access}>
-            <Stack.Screen name="(authed)" />
-          </Stack.Protected>
-        </Stack>
+    <I18nProvider
+      defaultLanguage={appSettings.language.default}
+      appTranslations={appSettings.language.translations}
+    >
+      <ApiProvider onNoRespond={onNoRespond} onUnauthorized={removeTokens}>
+        <AppProvider>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Protected guard={!tokens.access}>
+              <Stack.Screen name="(auth)" />
+            </Stack.Protected>
+            <Stack.Protected guard={!!tokens.access}>
+              <Stack.Screen name="(authed)" />
+            </Stack.Protected>
+          </Stack>
 
-        <Toaster position="top-right" />
-      </AppProvider>
-    </ApiProvider>
+          <Toaster position="top-right" />
+        </AppProvider>
+      </ApiProvider>
+    </I18nProvider>
   );
 };

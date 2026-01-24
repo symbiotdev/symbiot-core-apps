@@ -146,7 +146,7 @@ export const I18nProvider = ({
   );
 };
 
-export const appLanguages = [
+export const allLanguages = [
   {
     name: 'English',
     shortName: 'Eng',

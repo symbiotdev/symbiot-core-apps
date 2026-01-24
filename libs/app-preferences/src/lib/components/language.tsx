@@ -10,7 +10,7 @@ import { useEffect, useMemo } from 'react';
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { queryClient } from '@symbiot-core-apps/api';
-import { appLanguages, useI18n } from '@symbiot-core-apps/shared';
+import { allLanguages, useI18n } from '@symbiot-core-apps/shared';
 
 export const Language = () => {
   const { lang, supportedLanguages, changeLanguage } = useI18n();
@@ -19,7 +19,7 @@ export const Language = () => {
 
   const items = useMemo(
     () =>
-      appLanguages
+      allLanguages
         .filter(({ code }) => supportedLanguages.includes(code))
         .map(({ flag, code, name }) => ({
           icon: <RegularText fontSize={28}>{flag}</RegularText>,

@@ -63,9 +63,8 @@ export const AppProvider = ({
   }, [remoteOverrides, setOverrides]);
 
   useLayoutEffect(() => {
-    if (overrides?.language?.translations) {
+    if (overrides?.language?.translations)
       updateTranslates(overrides.language.translations);
-    }
   }, [overrides, updateTranslates]);
 
   return (

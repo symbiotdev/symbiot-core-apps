@@ -27,6 +27,17 @@ type I18nContext = {
 
 const Context = createContext<I18nContext | undefined>(undefined);
 
+void i18n.use(initReactI18next).init({
+  fallbackLng: 'en',
+  compatibilityJSON: 'v4',
+  interpolation: {
+    escapeValue: false,
+  },
+  react: {
+    useSuspense: false,
+  },
+});
+
 export const useI18n = () => useContext(Context) as I18nContext;
 export const translate = (key: string) => i18n.t(key);
 export const getAppLanguage = () => i18n.language;
@@ -41,7 +52,7 @@ export const I18nProvider = ({
 }>) => {
   const { t, i18n: i18nTranslation } = useTranslation();
 
-  const [loaded, setLoaded] = useState(true);
+  const [loaded, setLoaded] = useState(false);
 
   const primaryLang = useMemo(() => {
     const languages = Object.keys(appTranslations);
@@ -65,38 +76,25 @@ export const I18nProvider = ({
 
   const init = useCallback(async () => {
     const languages = Object.keys(appTranslations);
+    const storedLanguage = mmkvGlobalStorage.getString(LANGUAGE_STORE_KEY);
 
     try {
-      await i18n.use(initReactI18next).init({
-        compatibilityJSON: 'v4',
-        fallbackLng: primaryLang,
-        interpolation: {
-          escapeValue: false,
-        },
-        react: {
-          useSuspense: false,
-        },
-        resources: languages.reduce(
-          (obj, lang) => ({
-            ...obj,
-            [lang]: {
-              translation: {
-                ...appTranslations[lang],
-                shared: loadShared(lang),
-              },
-            },
-          }),
-          {},
-        ),
-      });
+      i18n.languages = languages;
 
-      const storedLanguage = mmkvGlobalStorage.getString(LANGUAGE_STORE_KEY);
+      languages.forEach((lang) =>
+        i18n.addResourceBundle(lang, 'translation', {
+          ...appTranslations[lang],
+          shared: loadShared(lang),
+        }),
+      );
 
       if (storedLanguage && !languages.includes(storedLanguage)) {
         changeLanguage(primaryLang);
       } else {
-        await i18n.changeLanguage(storedLanguage);
+        await i18n.changeLanguage(storedLanguage || primaryLang);
       }
+    } catch (e) {
+      console.log('i18n initialize error: ', e);
     } finally {
       setLoaded(true);
     }
@@ -115,7 +113,7 @@ export const I18nProvider = ({
         changeToDefaultLanguage,
       }}
     >
-      <I18nextProvider i18n={i18n}>{loaded && children}</I18nextProvider>
+      {loaded && <I18nextProvider i18n={i18n}>{children}</I18nextProvider>}
     </Context.Provider>
   );
 };

@@ -59,7 +59,7 @@ export const AppProvider = ({
   );
 
   useLayoutEffect(() => {
-    if (remoteOverrides) setOverrides(remoteOverrides || {});
+    if (remoteOverrides) setOverrides(remoteOverrides);
   }, [remoteOverrides, setOverrides]);
 
   useLayoutEffect(() => {

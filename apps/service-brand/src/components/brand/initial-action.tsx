@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import { useApp } from '@symbiot-core-apps/app';
 import {
   useCurrentAccountState,
@@ -6,7 +5,7 @@ import {
 } from '@symbiot-core-apps/state';
 import { useCallback, useState } from 'react';
 import { router } from 'expo-router';
-import { emitHaptic } from '@symbiot-core-apps/shared';
+import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 import {
   ActionCard,
   FormView,
@@ -23,7 +22,7 @@ import { View } from 'tamagui';
 export const InitialAction = () => {
   const { me } = useCurrentAccountState();
   const { brands: currentBrands } = useCurrentBrandState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { icons } = useApp();
 
   const [qrCodeVisible, setQrCodeVisible] = useState(false);

@@ -11,10 +11,10 @@ import {
   InitView,
 } from '@symbiot-core-apps/ui';
 import React, { useCallback, useLayoutEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const navigation = useNavigation();
   const { id, membershipId } = useLocalSearchParams<{
     id: string;

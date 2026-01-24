@@ -1,10 +1,10 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { TextController } from '@symbiot-core-apps/form-controller';
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandMembershipDescriptionController<
   T extends FieldValues,
@@ -16,7 +16,7 @@ export function BrandMembershipDescriptionController<
   noLabel?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const tPrefix = getTranslateKeyByBrandMembershipType(props.type);
 
   return (

@@ -1,12 +1,12 @@
 import { EmptyView, PageView } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 import { View } from 'tamagui';
 import { router } from 'expo-router';
 import { BrandNewEmployeeIdForm } from './form/brand-new-employee-id-form';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const NewBrandEmployee = () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const onAdd = useCallback(
     ({ id }: { id: string }) => router.push(`/employees/${id}/create`),

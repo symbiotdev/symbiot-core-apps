@@ -1,10 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Picker } from './picker';
 import { ToggleOnChange } from './toggle-group';
 import { FormView, formViewStyles } from '../view/form-view';
 import { Segment } from '../segment/segment';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { AdaptivePopover } from '../popover/adaptive-popover';
 import { LightText, RegularText } from '../text/text';
 import { InputFieldView } from '../view/input-field-view';
@@ -32,7 +31,7 @@ export const TimeSchedule = ({
   onChange: (params: { start: Date; end: Date }) => void;
   onBlur?: () => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const startOfDay = DateHelper.startOfDay(value.start);
 
   const [activeSegment, setActiveSegment] = useState<string>('start');

@@ -10,7 +10,6 @@ import {
   SemiBoldText,
   Spinner,
 } from '@symbiot-core-apps/ui';
-import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
 import { PurchasesPackage } from 'react-native-purchases';
 import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
@@ -24,7 +23,7 @@ import Animated, {
   LightSpeedInLeft,
   ZoomInEasyDown,
 } from 'react-native-reanimated';
-import { emitHaptic } from '@symbiot-core-apps/shared';
+import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 
 export const AccountSubscriptionsPaywall = ({
   offering,
@@ -41,7 +40,7 @@ export const AccountSubscriptionsPaywall = ({
   onSubscribe: (pkg: PurchasesPackage) => void;
   onRestore: () => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const adjustedOffering = offering || 'default';
   const translatePrefix = `subscription.paywall.${adjustedOffering}`;
   const description = t(`${translatePrefix}.description.${Platform.OS}`);

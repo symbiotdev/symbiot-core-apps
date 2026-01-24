@@ -1,11 +1,11 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 import { useMemo } from 'react';
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandClientMembershipVisitsController<
   T extends FieldValues,
@@ -20,7 +20,7 @@ export function BrandClientMembershipVisitsController<
   disableDrag?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const tPrefix = getTranslateKeyByBrandMembershipType(props.type);
 
   const options = useMemo(() => {

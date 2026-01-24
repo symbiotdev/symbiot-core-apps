@@ -1,11 +1,10 @@
 import { ActionCard, FormView, Icon, PageView } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
-import { ConfirmAlert } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import {
   BrandLocation,
   useRemoveBrandLocationReq,
 } from '@symbiot-core-apps/api';
-import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 
 export const RemoveBrandLocation = ({
@@ -13,7 +12,7 @@ export const RemoveBrandLocation = ({
 }: {
   location: BrandLocation;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync, isPending } = useRemoveBrandLocationReq();
 
   const onActionPress = useCallback(

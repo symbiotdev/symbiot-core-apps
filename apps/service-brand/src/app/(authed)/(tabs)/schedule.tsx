@@ -4,6 +4,7 @@ import { useNavigation } from 'expo-router';
 import {
   DateHelper,
   eventEmitter,
+  useI18n,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import {
@@ -22,7 +23,6 @@ import {
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { View, XStack } from 'tamagui';
-import { useTranslation } from 'react-i18next';
 import {
   BrandBookingsCalendar,
   useBrandBookingLoader,
@@ -39,7 +39,7 @@ import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 const today = new Date();
 
 export default () => {
-  const { i18n } = useTranslation();
+  const { lang } = useI18n();
   const { now } = useNativeNow();
   const route = useRoute();
   const headerHeight = useScreenHeaderHeight();
@@ -88,7 +88,7 @@ export default () => {
   );
 
   const headerLeft = useCallback(() => {
-    const date = DateHelper.format(selectedDate, 'LLLL yyyy', i18n.language);
+    const date = DateHelper.format(selectedDate, 'LLLL yyyy', lang);
 
     return (
       <XStack gap="$3" alignItems="center" width="100%" flex={1}>
@@ -117,14 +117,16 @@ export default () => {
             )}
           </View>
         ) : (
-          <H3 numberOfLines={1} marginTop={3}>{date}</H3>
+          <H3 numberOfLines={1} marginTop={3}>
+            {date}
+          </H3>
         )}
       </XStack>
     );
   }, [
     now,
     selectedDate,
-    i18n.language,
+    lang,
     allLocations.label,
     location?.name,
     locations?.items?.length,

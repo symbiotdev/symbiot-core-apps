@@ -8,7 +8,6 @@ import {
   PageView,
   RegularText,
 } from '@symbiot-core-apps/ui';
-import { useTranslation } from 'react-i18next';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import {
   BrandLocationItem,
@@ -17,6 +16,7 @@ import {
 } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import React, { ReactElement, useMemo } from 'react';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const BrandMembershipProfile = ({
   membership,
@@ -25,7 +25,7 @@ export const BrandMembershipProfile = ({
   membership: BrandMembership;
   Item: ReactElement;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const anyService = useAnyBrandService();
   const tPrefix = getTranslateKeyByBrandMembership(membership);
   const { brand } = useCurrentBrandState();

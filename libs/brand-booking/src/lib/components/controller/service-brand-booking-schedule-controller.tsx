@@ -1,7 +1,6 @@
 import { Control, Controller } from 'react-hook-form';
 import { BrandBookingSlot, BrandEmployee } from '@symbiot-core-apps/api';
 import { useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   AnimatedList,
   Avatar,
@@ -20,6 +19,7 @@ import {
   arraysOfObjectsEqual,
   DateHelper,
   shortName,
+  useI18n,
 } from '@symbiot-core-apps/shared';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { useApp } from '@symbiot-core-apps/app';
@@ -49,7 +49,7 @@ export function ServiceBrandBookingScheduleController({
   disabled?: boolean;
   disableDrag?: boolean;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { me } = useCurrentAccountState();
 
   return (
@@ -159,7 +159,7 @@ const Locations = ({
   data: BrandBookingSlot[];
   onChange: PickerOnChange;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const locations = useMemo(
     () =>
@@ -218,7 +218,7 @@ const Providers = ({
   onSelectEmployee: HorizontalPickerOnChange;
   onLoadProviders: (providers: BrandEmployee[]) => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const providers = useMemo(
     () =>
@@ -294,7 +294,7 @@ const TimeSlots = ({
   onSelect: (minutes: number | undefined) => void;
 }) => {
   const { icons } = useApp();
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const slots = useMemo(() => {
     const minutes = Array.from(

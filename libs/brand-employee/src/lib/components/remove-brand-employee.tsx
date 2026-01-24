@@ -1,11 +1,10 @@
 import { ActionCard, FormView, Icon, PageView } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
-import { ConfirmAlert } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import {
   BrandEmployee,
   useRemoveBrandEmployeeReq,
 } from '@symbiot-core-apps/api';
-import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 
 export const RemoveBrandEmployee = ({
@@ -13,7 +12,7 @@ export const RemoveBrandEmployee = ({
 }: {
   employee: BrandEmployee;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync, isPending } = useRemoveBrandEmployeeReq();
 
   const onPress = useCallback(
@@ -24,7 +23,7 @@ export const RemoveBrandEmployee = ({
         onAgree: async () => {
           await mutateAsync({ id: employee.id });
 
-          router.dismissAll()
+          router.dismissAll();
           router.push('/employees');
         },
       }),

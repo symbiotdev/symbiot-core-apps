@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { TimezoneController } from '@symbiot-core-apps/form-controller';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandLocationTimezoneController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -11,7 +11,7 @@ export function BrandLocationTimezoneController<T extends FieldValues>(props: {
   disableDrag?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   return (
     <TimezoneController

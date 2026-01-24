@@ -4,19 +4,19 @@ import { useIgnoredProfileCompletionState } from '@symbiot-core-apps/state';
 import {
   DateHelper,
   secondsInHour,
+  useI18n,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import { Button, formViewStyles, ProgressCard } from '@symbiot-core-apps/ui';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 import { router } from 'expo-router';
-import { useTranslation } from 'react-i18next';
 
 export const BrandLocationCompletion = ({
   location,
 }: {
   location: BrandLocation;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { byLocationId, ignore } = useIgnoredProfileCompletionState();
   const { now } = useNativeNow({ intervalInSeconds: secondsInHour });
 

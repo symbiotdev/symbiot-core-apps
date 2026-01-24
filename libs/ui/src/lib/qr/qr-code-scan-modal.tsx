@@ -16,8 +16,7 @@ import {
 import { EmptyView } from '../view/empty-view';
 import { Button } from '../button/button';
 import { FormView } from '../view/form-view';
-import { useTranslation } from 'react-i18next';
-import { useRendered } from '@symbiot-core-apps/shared';
+import { useI18n, useRendered } from '@symbiot-core-apps/shared';
 import { LoadingView } from '../view/loading-view';
 import { headerHeight } from '../navigation/header';
 import { Spinner } from '../loading/spinner';
@@ -54,7 +53,7 @@ export const QrCodeScanModal = (props: {
 
 const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
   const [permission, requestPermission] = useCameraPermissions();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { width, height } = useWindowDimensions();
   const { rendered } = useRendered({ delay: 200 });
 

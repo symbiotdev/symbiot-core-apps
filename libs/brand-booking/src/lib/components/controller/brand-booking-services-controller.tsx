@@ -1,7 +1,6 @@
 import { Control, Controller } from 'react-hook-form';
 import { BrandService, useServicesReq } from '@symbiot-core-apps/api';
 import { useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   ButtonIcon,
   PickerOnChange,
@@ -10,6 +9,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { BrandServiceItem } from '@symbiot-core-apps/brand';
 import { XStack } from 'tamagui';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandBookingServicesController(props: {
   control: Control<{ details: { service: string; note: string } }>;
@@ -17,7 +17,7 @@ export function BrandBookingServicesController(props: {
   disabled?: boolean;
   disableDrag?: boolean;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { items, isPending, error } = useServicesReq({
     params: {
       take: 999,
@@ -90,7 +90,7 @@ const SelectService = ({
   disableDrag?: boolean;
   onChange: PickerOnChange;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const items = useMemo(
     () =>

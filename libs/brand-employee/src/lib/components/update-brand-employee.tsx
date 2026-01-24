@@ -22,8 +22,7 @@ import {
 } from '@symbiot-core-apps/api';
 import React, { useCallback, useState } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { DateHelper } from '@symbiot-core-apps/shared';
-import { useTranslation } from 'react-i18next';
+import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
   useCurrentAccountState,
   useCurrentBrandEmployee,
@@ -111,7 +110,7 @@ export const UpdateBrandEmployee = ({
 
 const Personality = ({ employee }: { employee: BrandEmployee }) => {
   const { me } = useCurrentAccountState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandEmployee,
@@ -194,7 +193,7 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
 };
 
 const Professionality = ({ employee }: { employee: BrandEmployee }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandEmployee,
@@ -248,7 +247,7 @@ const Professionality = ({ employee }: { employee: BrandEmployee }) => {
 };
 
 const About = ({ employee }: { employee: BrandEmployee }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandEmployee,
@@ -297,7 +296,7 @@ const About = ({ employee }: { employee: BrandEmployee }) => {
 };
 
 const Location = ({ employee }: { employee: BrandEmployee }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const dynamicLocation = useDynamicBrandLocation();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
@@ -437,7 +436,7 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
 };
 
 const Contact = ({ employee }: { employee: BrandEmployee }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandEmployee,
@@ -515,7 +514,7 @@ const Contact = ({ employee }: { employee: BrandEmployee }) => {
 };
 
 const Identification = ({ employee }: { employee: BrandEmployee }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandEmployee,
@@ -572,7 +571,7 @@ const Identification = ({ employee }: { employee: BrandEmployee }) => {
 };
 
 const Permissions = ({ employee }: { employee: BrandEmployee }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { data, error } = useBrandEmployeePermissionsReq();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<

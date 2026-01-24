@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import {
   BrandBookingFrequency,
   BrandBookingType,
@@ -11,7 +10,7 @@ import { useCurrentBrandBookingsState } from '@symbiot-core-apps/state';
 import { useForm } from 'react-hook-form';
 import { useCallback, useEffect, useRef } from 'react';
 import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, DateHelper } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { BrandBookingServicesController } from './controller/brand-booking-services-controller';
 import { ServiceBrandBookingScheduleController } from './controller/service-brand-booking-schedule-controller';
@@ -20,7 +19,7 @@ import { BrandBookingRemindersController } from './controller/brand-booking-remi
 import { getSlotsRandomEmployee } from '../utils/get-slots-random-employee';
 
 export const CreateServiceBrandBooking = ({ start }: { start: Date }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync: createBooking, isPending: isBookingLoading } =
     useCreateServiceBrandBookingReq();
   const navigation = useNavigation();

@@ -1,11 +1,11 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { SwitchController } from '@symbiot-core-apps/form-controller';
 import { Card } from '@symbiot-core-apps/ui';
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandMembershipAvailabilityController<
   T extends FieldValues,
@@ -15,7 +15,7 @@ export function BrandMembershipAvailabilityController<
   control: Control<T>;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   return (
     <Card>

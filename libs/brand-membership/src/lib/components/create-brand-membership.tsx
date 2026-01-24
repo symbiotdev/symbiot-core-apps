@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
-import { useTranslation } from 'react-i18next';
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
@@ -9,7 +8,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { router, useNavigation } from 'expo-router';
 import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import {
   Card,
   Icon,
@@ -36,7 +35,7 @@ export const CreateBrandMembership = ({
   type: BrandMembershipType;
 }) => {
   const { brand } = useCurrentBrandState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const {
     mutateAsync: createPeriodBasedMembership,
     isPending: isPeriodBasedMembershipLoading,

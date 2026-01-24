@@ -4,6 +4,7 @@ import {
   DeviceVersion,
   emitHaptic,
   ShowNativeSuccessAlert,
+  useI18n,
   useShareApp,
 } from '@symbiot-core-apps/shared';
 import {
@@ -31,7 +32,6 @@ import {
   useDrawer,
 } from '@symbiot-core-apps/ui';
 import { useApp } from '@symbiot-core-apps/app';
-import { useTranslation } from 'react-i18next';
 import { View, XStack } from 'tamagui';
 import { GestureResponderEvent, Linking, Platform } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -43,7 +43,7 @@ import { Image } from 'expo-image';
 import { useAccountSubscription } from '@symbiot-core-apps/account-subscription';
 
 export default () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { me } = useCurrentAccountState();
   const { brand } = useCurrentBrandState();
   const { languages } = useApp();

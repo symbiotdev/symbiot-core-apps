@@ -1,7 +1,7 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { StringController } from '@symbiot-core-apps/form-controller';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandLocationNameController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -10,7 +10,7 @@ export function BrandLocationNameController<T extends FieldValues>(props: {
   disabled?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { brand } = useCurrentBrandState();
 
   return (

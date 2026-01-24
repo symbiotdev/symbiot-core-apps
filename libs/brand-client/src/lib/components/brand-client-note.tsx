@@ -4,7 +4,6 @@ import {
   useModalUpdateByIdForm,
   useUpdateBrandClientReq,
 } from '@symbiot-core-apps/api';
-import { useTranslation } from 'react-i18next';
 import {
   defaultPageVerticalPadding,
   FormView,
@@ -15,9 +14,10 @@ import {
 import { SingeElementForm } from '@symbiot-core-apps/form-controller';
 import { BrandClientNoteController } from './controller/brand-client-note-controller';
 import React from 'react';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const BrandClientNote = ({ client }: { client: BrandClient }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const { modalVisible, updateValue, openModal, closeModal } =
     useModalUpdateByIdForm<

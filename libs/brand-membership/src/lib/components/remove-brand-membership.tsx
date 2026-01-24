@@ -1,13 +1,12 @@
 import { ActionCard, FormView, Icon, PageView } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
-import { ConfirmAlert } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import {
   BrandMembership,
   BrandMembershipType,
   getTranslateKeyByBrandMembership,
   useRemoveBrandMembershipReq,
 } from '@symbiot-core-apps/api';
-import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 
 export const RemoveBrandMembership = ({
@@ -17,7 +16,7 @@ export const RemoveBrandMembership = ({
   membership: BrandMembership;
   type: BrandMembershipType;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync, isPending } = useRemoveBrandMembershipReq();
   const tPrefix = getTranslateKeyByBrandMembership(membership);
 

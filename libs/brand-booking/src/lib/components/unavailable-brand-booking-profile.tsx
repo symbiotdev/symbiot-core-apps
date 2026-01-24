@@ -23,9 +23,13 @@ import {
   useBookingScheduleFormattedTime,
 } from '@symbiot-core-apps/brand';
 import { router, useNavigation } from 'expo-router';
-import { useTranslation } from 'react-i18next';
 import React, { useCallback, useLayoutEffect, useMemo } from 'react';
-import { ConfirmAlert, DateHelper, useModal } from '@symbiot-core-apps/shared';
+import {
+  ConfirmAlert,
+  DateHelper,
+  useI18n,
+  useModal,
+} from '@symbiot-core-apps/shared';
 import {
   useCurrentAccountState,
   useCurrentBrandEmployee,
@@ -43,7 +47,7 @@ export const UnavailableBrandBookingProfile = ({
   booking: UnavailableBrandBooking;
 }) => {
   const { icons } = useApp();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { me } = useCurrentAccountState();
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
@@ -310,7 +314,7 @@ const NoteForm = ({
   booking: UnavailableBrandBooking;
   onUpdate: (data: UpdateBrandBooking) => Promise<void>;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { control, getValues } = useForm<{ note: string }>({
     defaultValues: {
       note: booking.note || '',

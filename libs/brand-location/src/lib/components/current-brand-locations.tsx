@@ -13,9 +13,9 @@ import {
 } from '@symbiot-core-apps/api';
 import { router } from 'expo-router';
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { BrandLocationItem } from '@symbiot-core-apps/brand';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const CurrentBrandLocations = ({
   onLocationPress,
@@ -70,7 +70,7 @@ const Intro = ({
   loading?: boolean;
   error?: string | null;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { canDo } = useAccountLimits();
 
   if (loading || error) {

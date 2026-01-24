@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import {
   BrandBookingFrequency,
   BrandBookingType,
@@ -7,7 +6,7 @@ import {
 import { router, useNavigation } from 'expo-router';
 import { useCallback, useEffect, useRef } from 'react';
 import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, DateHelper } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useForm } from 'react-hook-form';
 import { UnavailableBrandBookingDatetimeController } from './controller/unavailable-brand-booking-datetime-controller';
@@ -19,7 +18,7 @@ import {
 } from '@symbiot-core-apps/state';
 
 export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync: createBooking, isPending: isBookingLoading } =
     useCreateUnavailableBrandBookingReq();
   const navigation = useNavigation();

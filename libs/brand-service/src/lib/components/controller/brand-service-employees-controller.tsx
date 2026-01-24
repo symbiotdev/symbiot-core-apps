@@ -1,5 +1,4 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { ToggleController } from '@symbiot-core-apps/form-controller';
 import {
   BrandEmployee,
@@ -8,6 +7,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { useMemo } from 'react';
 import { Avatar } from '@symbiot-core-apps/ui';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 type ControllerProps<T extends FieldValues> = {
   name: Path<T>;
@@ -31,13 +31,11 @@ export function BrandServiceEmployeesController<T extends FieldValues>(
 }
 
 function BrandEmployees<T extends FieldValues>(props: ControllerProps<T>) {
-  const { items, isPending, error } = useCurrentBrandEmployeeProvidersListReq(
-    {
-      params: {
-        take: 999,
-      },
+  const { items, isPending, error } = useCurrentBrandEmployeeProvidersListReq({
+    params: {
+      take: 999,
     },
-  );
+  });
 
   return (
     <EmployeesController
@@ -79,7 +77,7 @@ function EmployeesController<T extends FieldValues>(
     itemsError?: string | null;
   },
 ) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const items = useMemo(
     () =>

@@ -4,7 +4,6 @@ import {
   useCreateBrandServiceReq,
 } from '@symbiot-core-apps/api';
 import { router, useNavigation } from 'expo-router';
-import { useTranslation } from 'react-i18next';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { useForm } from 'react-hook-form';
@@ -24,13 +23,13 @@ import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { BrandServiceCurrencyController } from './controller/brand-service-currency-controller';
 import { BrandServiceNoteController } from './controller/brand-service-note-controller';
 import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import { BrandServiceDurationController } from './controller/brand-service-duration-controller';
 import { useApp } from '@symbiot-core-apps/app';
 
 export const CreateBrandService = () => {
   const { brand } = useCurrentBrandState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { functionality } = useApp();
   const { height } = useWindowDimensions();
   const { mutateAsync, isPending } = useCreateBrandServiceReq();

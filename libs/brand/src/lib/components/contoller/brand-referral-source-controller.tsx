@@ -1,7 +1,7 @@
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { BrandSource } from './brand-source';
-import { useTranslation } from 'react-i18next';
 import { useAppReferralsReq } from '@symbiot-core-apps/api';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandReferralSourceController<T extends FieldValues>({
   name,
@@ -14,7 +14,7 @@ export function BrandReferralSourceController<T extends FieldValues>({
   noLabel?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { data, isPending, error } = useAppReferralsReq();
 
   return (

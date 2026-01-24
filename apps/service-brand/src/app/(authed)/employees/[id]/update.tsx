@@ -8,15 +8,15 @@ import {
 } from '@symbiot-core-apps/ui';
 import { UpdateBrandEmployee } from '@symbiot-core-apps/brand-employee';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
   const { brand } = useCurrentBrandState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { id } = useLocalSearchParams<{ id: string }>();
   const navigation = useNavigation();
   const { currentEmployee } = useCurrentBrandEmployee();

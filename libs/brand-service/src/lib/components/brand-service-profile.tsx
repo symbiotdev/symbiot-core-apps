@@ -16,17 +16,16 @@ import {
   BrandLocationItem,
   BrandServiceItemChips,
 } from '@symbiot-core-apps/brand';
-import { useTranslation } from 'react-i18next';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { router } from 'expo-router';
 import { View } from 'tamagui';
 import { useApp } from '@symbiot-core-apps/app';
-import { formatPrice } from '@symbiot-core-apps/shared';
+import { formatPrice, useI18n } from '@symbiot-core-apps/shared';
 import React, { useMemo } from 'react';
 
 export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
   const { brand } = useCurrentBrandState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { functionality } = useApp();
   const { height } = useWindowDimensions();
 

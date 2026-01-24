@@ -11,11 +11,11 @@ import { changeAppLanguage } from '@symbiot-core-apps/i18n';
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { useApp } from '@symbiot-core-apps/app';
-import { useTranslation } from 'react-i18next';
 import { queryClient } from '@symbiot-core-apps/api';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const Language = () => {
-  const { i18n } = useTranslation();
+  const { lang } = useI18n();
   const { languages } = useApp();
   const navigation = useNavigation();
   const { updateAccount$, updating } = useCurrentAccountUpdater();
@@ -42,7 +42,7 @@ export const Language = () => {
         <Card paddingVertical={0}>
           <ToggleGroup
             items={items}
-            value={i18n.language}
+            value={lang}
             onChange={async (language) => {
               await updateAccount$({ language: language as string });
               changeAppLanguage(language as string);

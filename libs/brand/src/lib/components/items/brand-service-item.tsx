@@ -1,4 +1,9 @@
-import { DateHelper, emitHaptic, formatPrice } from '@symbiot-core-apps/shared';
+import {
+  DateHelper,
+  emitHaptic,
+  formatPrice,
+  useI18n,
+} from '@symbiot-core-apps/shared';
 import { ViewProps, XStack } from 'tamagui';
 import {
   Chip,
@@ -9,7 +14,6 @@ import {
   RegularText,
 } from '@symbiot-core-apps/ui';
 import { BrandService } from '@symbiot-core-apps/api';
-import { useTranslation } from 'react-i18next';
 import { useApp } from '@symbiot-core-apps/app';
 
 export const BrandServiceItem = ({
@@ -22,7 +26,7 @@ export const BrandServiceItem = ({
   hidePricing?: boolean;
 }) => {
   const { functionality } = useApp();
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   return (
     <FormView

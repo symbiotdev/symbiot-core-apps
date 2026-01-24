@@ -5,11 +5,11 @@ import {
   useBirthdayState,
 } from '@symbiot-core-apps/state';
 import { ClosableCard, formViewStyles } from '@symbiot-core-apps/ui';
-import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
 import {
   DateHelper,
   secondsInHour,
+  useI18n,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import { View } from 'tamagui';
@@ -19,7 +19,7 @@ export const BrandEmployeeCongrats = ({
 }: {
   employee: BrandEmployee;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { byEmployeeId: anniversaryById, hide: hideAnniversary } =
     useAnniversaryState();
   const { byEmployeeId: birthdayById, hide: hideBirthday } = useBirthdayState();

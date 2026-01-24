@@ -2,8 +2,11 @@ import { ViewProps } from 'tamagui';
 import { FormField } from './form-field';
 import { DocumentPickerAsset, getDocumentAsync } from 'expo-document-picker';
 import { useCallback, useState } from 'react';
-import { emitHaptic, ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
-import { useTranslation } from 'react-i18next';
+import {
+  emitHaptic,
+  ShowNativeFailedAlert,
+  useI18n,
+} from '@symbiot-core-apps/shared';
 import { Button } from '../button/button';
 
 export const DocumentPicker = ({
@@ -22,7 +25,7 @@ export const DocumentPicker = ({
   type: string[];
   onUpload: (data: DocumentPickerAsset[]) => unknown;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const [uploading, setUploading] = useState(false);
 

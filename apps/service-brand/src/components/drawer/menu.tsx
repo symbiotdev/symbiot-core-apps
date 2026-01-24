@@ -17,7 +17,7 @@ import {
 import { router, usePathname } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { memo, ReactElement, useCallback } from 'react';
-import { emitHaptic } from '@symbiot-core-apps/shared';
+import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 import Animated, {
   useAnimatedStyle,
   withTiming,
@@ -28,7 +28,6 @@ import {
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useApp } from '@symbiot-core-apps/app';
-import { useTranslation } from 'react-i18next';
 import { BrandMembershipType } from '@symbiot-core-apps/api';
 
 export const drawerMenuMaxWidth = 250;
@@ -97,7 +96,7 @@ export const DrawerMenu = () => {
   const { brand: currentBrand } = useCurrentBrandState();
   const { compressed, toggleCompressed } = useDrawerState();
   const { icons } = useApp();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { permanent } = useDrawer();
   const theme = useTheme();
   const { top, bottom, left } = useSafeAreaInsets();

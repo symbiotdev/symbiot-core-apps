@@ -11,11 +11,10 @@ import {
 } from '@symbiot-core-apps/ui';
 import React, { useEffect, useMemo } from 'react';
 import { View, XStack } from 'tamagui';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { openBrowserAsync } from 'expo-web-browser';
 import { BrandLocationItem } from './items/brand-location-item';
 import { router } from 'expo-router';
-import { useTranslation } from 'react-i18next';
 import {
   useCurrentAccountState,
   useCurrentBrandEmployee,
@@ -28,7 +27,7 @@ export const CurrentBrandProfile = () => {
   const { me } = useCurrentAccountState();
   const { brand: currentBrand, setBrand } = useCurrentBrandState();
   const { hasPermission } = useCurrentBrandEmployee();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const {
     data: currentBrandResponse,
     isPending,

@@ -23,7 +23,6 @@ import React, { useState } from 'react';
 import { View, XStack } from 'tamagui';
 import { Linking, useWindowDimensions } from 'react-native';
 import { openBrowserAsync } from 'expo-web-browser';
-import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import {
   useCurrentBrandEmployee,
@@ -31,13 +30,14 @@ import {
 } from '@symbiot-core-apps/state';
 import { BrandLocationCompletion } from './brand-location-completion';
 import { Image } from 'expo-image';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const BrandLocationProfile = ({
   location,
 }: {
   location: BrandLocation;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { brand } = useCurrentBrandState();
   const { height } = useWindowDimensions();
   const { hasPermission } = useCurrentBrandEmployee();

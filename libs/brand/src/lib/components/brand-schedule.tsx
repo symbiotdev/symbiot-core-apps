@@ -5,10 +5,9 @@ import {
   SemiBoldText,
   WeekdaySchedule,
 } from '@symbiot-core-apps/ui';
-import { DateHelper, useNativeNow } from '@symbiot-core-apps/shared';
+import { DateHelper, useI18n, useNativeNow } from '@symbiot-core-apps/shared';
 import { View, XStack } from 'tamagui';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 
 const startOfDay = DateHelper.startOfDay(new Date());
@@ -20,7 +19,7 @@ export const BrandSchedule = ({
   label?: string;
   schedules: Schedule[];
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { me } = useCurrentAccountState();
   const { now } = useNativeNow();
 

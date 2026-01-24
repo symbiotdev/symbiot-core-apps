@@ -5,16 +5,18 @@ import {
   getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
 import { useLayoutEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const navigation = useNavigation();
   const { type } = useLocalSearchParams<{ type: BrandMembershipType }>();
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: t(`${getTranslateKeyByBrandMembershipType(type)}.create.new`),
+      headerTitle: t(
+        `${getTranslateKeyByBrandMembershipType(type)}.create.new`,
+      ),
     });
   }, [navigation, type, t]);
 

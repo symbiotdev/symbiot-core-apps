@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { TextController } from '@symbiot-core-apps/form-controller';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandAboutController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -9,7 +9,7 @@ export function BrandAboutController<T extends FieldValues>(props: {
   required?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   return (
     <TextController
@@ -17,7 +17,7 @@ export function BrandAboutController<T extends FieldValues>(props: {
       placeholder={t('brand.form.about.placeholder')}
       rules={{
         required: {
-          value: props.required,
+          value: Boolean(props.required),
           message: t('brand.form.about.error.required'),
         },
       }}

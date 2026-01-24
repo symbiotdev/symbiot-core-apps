@@ -21,7 +21,6 @@ import {
 import { useWindowDimensions } from 'react-native';
 import React, { useCallback, useMemo } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { useTranslation } from 'react-i18next';
 import {
   SingeElementForm,
   SingleElementToArrayForm,
@@ -37,6 +36,7 @@ import {
   DateHelper,
   formatDiscount,
   formatPrice,
+  useI18n,
 } from '@symbiot-core-apps/shared';
 import { BrandServiceDurationController } from './controller/brand-service-duration-controller';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
@@ -152,7 +152,7 @@ const Availability = ({ service }: { service: BrandService }) => {
 
 const Pricing = ({ service }: { service: BrandService }) => {
   const { brand } = useCurrentBrandState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandService,
@@ -247,7 +247,7 @@ const Pricing = ({ service }: { service: BrandService }) => {
 };
 
 const LocationProviders = ({ service }: { service: BrandService }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const allLocations = useAllBrandLocation();
   const { value, modalVisible, openModal, closeModal, updateValue, updating } =
     useModalUpdateByIdForm<
@@ -329,7 +329,7 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
 };
 
 const About = ({ service }: { service: BrandService }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandService,
@@ -385,7 +385,7 @@ const About = ({ service }: { service: BrandService }) => {
 };
 
 const Structure = ({ service }: { service: BrandService }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { data: formats } = useBrandServiceFormatsReq();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
@@ -488,7 +488,7 @@ const Structure = ({ service }: { service: BrandService }) => {
 };
 
 const Note = ({ service }: { service: BrandService }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
       BrandService,
@@ -510,7 +510,9 @@ const Note = ({ service }: { service: BrandService }) => {
         icon={<Icon name="ChatRoundDots" />}
         iconAfter={<Icon name="ArrowRight" />}
         label={t('brand_service.update.groups.note.title')}
-        text={value.note?.replace(/\n/gi, ' ')?.trim() || t('shared.not_specified')}
+        text={
+          value.note?.replace(/\n/gi, ' ')?.trim() || t('shared.not_specified')
+        }
         onPress={openModal}
       />
 

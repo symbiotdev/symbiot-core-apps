@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import {
   AnimatedList,
   ContainerView,
@@ -23,6 +22,7 @@ import {
   PaginationListParams,
 } from '@symbiot-core-apps/api';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const BrandMembershipsCurrentList = ({
   offsetTop,
@@ -41,7 +41,7 @@ export const BrandMembershipsCurrentList = ({
   renderItem: (props: { item: AnyBrandMembership }) => ReactElement;
   Intro: ComponentType<{ loading?: boolean; error?: string | null }>;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { bottom } = useSafeAreaInsets();
   const tPrefix = getTranslateKeyByBrandMembershipType(type);
 

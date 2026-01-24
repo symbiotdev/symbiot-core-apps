@@ -1,9 +1,9 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
 import { SelectController } from '@symbiot-core-apps/form-controller';
 import { useMemo } from 'react';
 import { useDynamicBrandLocation } from '@symbiot-core-apps/brand';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandEmployeeLocationController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -11,7 +11,7 @@ export function BrandEmployeeLocationController<T extends FieldValues>(props: {
   disabled?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const dynamicLocation = useDynamicBrandLocation();
   const { data, isPending, error } = useCurrentBrandLocationsReq();
 

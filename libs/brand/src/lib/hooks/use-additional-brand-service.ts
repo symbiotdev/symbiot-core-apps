@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const useAnyBrandService = () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   return useMemo(
     () => ({

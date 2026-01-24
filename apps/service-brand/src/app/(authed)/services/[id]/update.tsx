@@ -7,11 +7,11 @@ import {
 import { useBrandServiceDetailedByIdReq } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { UpdateBrandService } from '@symbiot-core-apps/brand-service';
-import { useTranslation } from 'react-i18next';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const navigation = useNavigation();
   const { id } = useLocalSearchParams<{ id: string }>();
   const {

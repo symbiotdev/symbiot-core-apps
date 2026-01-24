@@ -1,11 +1,11 @@
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import {
   BrandServiceFormat,
   useBrandServiceFormatsReq,
 } from '@symbiot-core-apps/api';
 import { PickerOnChange, SelectPicker } from '@symbiot-core-apps/ui';
 import { useEffect } from 'react';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandServiceFormatController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -15,7 +15,7 @@ export function BrandServiceFormatController<T extends FieldValues>(props: {
   required?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { data, isPending, error } = useBrandServiceFormatsReq();
 
   return (
@@ -63,7 +63,7 @@ const SelectFormat = ({
   onChange: PickerOnChange;
   onBlur?: () => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   useEffect(() => {
     if (

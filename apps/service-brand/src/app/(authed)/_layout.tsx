@@ -9,12 +9,12 @@ import {
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { useTranslation } from 'react-i18next';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { canDo, used } = useAccountLimits();
   const { visible: drawerVisible } = useDrawer();
   const screenOptions = useStackScreenHeaderOptions();

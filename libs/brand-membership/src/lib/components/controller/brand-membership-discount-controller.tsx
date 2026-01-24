@@ -1,11 +1,11 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { PriceController } from '@symbiot-core-apps/form-controller';
 import {
   BrandMembershipType,
   Currency,
   getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandMembershipDiscountController<
   T extends FieldValues,
@@ -20,7 +20,7 @@ export function BrandMembershipDiscountController<
   currency?: Currency;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const tPrefix = getTranslateKeyByBrandMembershipType(props.type);
 
   return (

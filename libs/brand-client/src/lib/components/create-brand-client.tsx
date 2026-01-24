@@ -3,8 +3,7 @@ import { useCreateBrandClientReq } from '@symbiot-core-apps/api';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { router, useNavigation } from 'expo-router';
 import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert } from '@symbiot-core-apps/shared';
-import { useTranslation } from 'react-i18next';
+import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import { useForm } from 'react-hook-form';
 import { BrandClientFirstnameController } from './controller/brand-client-firstname-controller';
 import { BrandClientLastnameController } from './controller/brand-client-lastname-controller';
@@ -17,7 +16,7 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { BrandClientNoteController } from './controller/brand-client-note-controller';
 
 export const CreateBrandClient = () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync, isPending } = useCreateBrandClientReq();
   const navigation = useNavigation();
 

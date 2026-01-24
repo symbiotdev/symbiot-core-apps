@@ -14,13 +14,12 @@ import {
 } from '@symbiot-core-apps/ui';
 import React, { useMemo } from 'react';
 import { View, XStack } from 'tamagui';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
   useCurrentAccountState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { useTranslation } from 'react-i18next';
 import { openBrowserAsync } from 'expo-web-browser';
 import { BrandLocationItem, BrandSchedule } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
@@ -35,8 +34,8 @@ export const BrandEmployeeProfile = ({
 }) => {
   const { me } = useCurrentAccountState();
   const { brand } = useCurrentBrandState();
+  const { t } = useI18n();
   const { hasPermission } = useCurrentBrandEmployee();
-  const { t } = useTranslation();
 
   const { instagram, email, phone, address } = useMemo(
     () => ({

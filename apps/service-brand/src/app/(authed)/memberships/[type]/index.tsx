@@ -17,12 +17,12 @@ import {
   useBrandVisitBasedMembershipCurrentListReq,
 } from '@symbiot-core-apps/api';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
-import { useTranslation } from 'react-i18next';
 import { useApp } from '@symbiot-core-apps/app';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const navigation = useNavigation();
   const headerHeight = useScreenHeaderHeight();
   const { canDo, used } = useAccountLimits();

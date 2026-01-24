@@ -7,10 +7,10 @@ import {
   formatDiscount,
   formatPrice,
   ShowNativeSuccessAlert,
+  useI18n,
 } from '@symbiot-core-apps/shared';
 import { useCallback } from 'react';
 import Clipboard from '@react-native-clipboard/clipboard';
-import { useTranslation } from 'react-i18next';
 
 export const BrandTransactionItem = ({
   transaction,
@@ -19,7 +19,7 @@ export const BrandTransactionItem = ({
 }: ViewProps & {
   transaction: BrandTransaction;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const copyId = useCallback(() => {
     emitHaptic();
 

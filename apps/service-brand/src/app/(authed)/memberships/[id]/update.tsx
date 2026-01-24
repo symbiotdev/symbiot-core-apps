@@ -9,12 +9,12 @@ import {
   useBrandMembershipDetailedByIdReq,
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import { useTranslation } from 'react-i18next';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
 import { UpdateBrandMembership } from '@symbiot-core-apps/brand-membership';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const navigation = useNavigation();
   const { id } = useLocalSearchParams<{
     id: string;

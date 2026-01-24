@@ -1,7 +1,7 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import states from 'states-us';
 import { SelectController } from '@symbiot-core-apps/form-controller';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export function BrandLocationUsStateController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -11,7 +11,7 @@ export function BrandLocationUsStateController<T extends FieldValues>(props: {
   disableDrag?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const options = states.map((state) => ({
     value: state.abbreviation,

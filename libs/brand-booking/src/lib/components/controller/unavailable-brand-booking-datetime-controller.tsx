@@ -2,8 +2,7 @@ import { Control, Controller } from 'react-hook-form';
 import { TimeScheduleController } from '@symbiot-core-apps/form-controller';
 import { View } from 'tamagui';
 import { DatePicker, SelectPicker } from '@symbiot-core-apps/ui';
-import { DateHelper } from '@symbiot-core-apps/shared';
-import { useTranslation } from 'react-i18next';
+import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { isBrandBookingAllDay } from '@symbiot-core-apps/api';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 
@@ -18,7 +17,7 @@ export function UnavailableBrandBookingDatetimeController(props: {
   disableDrag?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { me } = useCurrentAccountState();
 
   return (

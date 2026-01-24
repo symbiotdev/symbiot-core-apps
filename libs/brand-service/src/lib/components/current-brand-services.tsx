@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import {
   AnimatedList,
   Button,
@@ -22,6 +21,7 @@ import {
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandServiceItem } from '@symbiot-core-apps/brand';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const CurrentBrandServices = ({
   offsetTop,
@@ -30,7 +30,7 @@ export const CurrentBrandServices = ({
   offsetTop?: number;
   onServicePress: (service: BrandService) => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { bottom } = useSafeAreaInsets();
 
   const [search, setSearch] = useState('');
@@ -125,7 +125,7 @@ const Intro = ({
   loading?: boolean;
   error?: string | null;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { icons } = useApp();
   const { canDo } = useAccountLimits();
 

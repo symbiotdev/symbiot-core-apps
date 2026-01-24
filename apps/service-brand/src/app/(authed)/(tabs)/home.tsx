@@ -17,9 +17,8 @@ import { InitialAction } from '../../../components/brand/initial-action';
 import { router, useNavigation } from 'expo-router';
 import React, { useCallback, useLayoutEffect } from 'react';
 import { useApp } from '@symbiot-core-apps/app';
-import { useTranslation } from 'react-i18next';
 import { XStack } from 'tamagui';
-import { emitHaptic } from '@symbiot-core-apps/shared';
+import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
@@ -35,7 +34,7 @@ export default () => {
   const { me, stats } = useCurrentAccountState();
   const { brand: currentBrand } = useCurrentBrandState();
   const { icons } = useApp();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { visible: drawerVisible } = useDrawer();
   const navigation = useNavigation();
 
@@ -100,7 +99,7 @@ export default () => {
 
 const BrandHome = () => {
   const { icons } = useApp();
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { brand: currentBrand } = useCurrentBrandState();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
   const { used } = useAccountLimits();

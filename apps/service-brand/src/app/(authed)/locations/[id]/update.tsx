@@ -8,10 +8,10 @@ import {
   InitView,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const navigation = useNavigation();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: location, error, isPending } = useBrandLocationByIdReq(id);

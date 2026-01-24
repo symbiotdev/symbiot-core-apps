@@ -7,11 +7,11 @@ import {
 } from '@symbiot-core-apps/api';
 import { ReactElement, useCallback } from 'react';
 import { router } from 'expo-router';
-import { useTranslation } from 'react-i18next';
 import { EmailController } from '@symbiot-core-apps/form-controller';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const ForgotPassword = ({ logo }: { logo: ReactElement }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { mutateAsync, error } = useAccountAuthForgotPasswordReq();
 
   const {

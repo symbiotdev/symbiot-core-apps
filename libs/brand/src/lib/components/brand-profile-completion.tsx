@@ -1,12 +1,12 @@
 import { Brand } from '@symbiot-core-apps/api';
 import { Button, formViewStyles, ProgressCard } from '@symbiot-core-apps/ui';
-import { useTranslation } from 'react-i18next';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 import { useIgnoredProfileCompletionState } from '@symbiot-core-apps/state';
 import { useMemo } from 'react';
 import {
   DateHelper,
   secondsInHour,
+  useI18n,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import { router } from 'expo-router';
@@ -18,7 +18,7 @@ export const BrandProfileCompletion = ({
   brand: Brand;
   showAction?: boolean;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const { byBrandId, ignore } = useIgnoredProfileCompletionState();
   const { now } = useNativeNow({ intervalInSeconds: secondsInHour });
 

@@ -3,9 +3,9 @@ import {
   AdaptivePopover,
   AdaptivePopoverRef,
 } from '../popover/adaptive-popover';
-import { useTranslation } from 'react-i18next';
 import { Alert, Linking } from 'react-native';
 import { ListItem } from '../list/list-item';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export const MapsTrigger = ({
   address,
@@ -18,7 +18,7 @@ export const MapsTrigger = ({
   disabled?: boolean;
   trigger: ReactElement;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
   const popoverRef = useRef<AdaptivePopoverRef>(null);
 
   const open = useCallback(

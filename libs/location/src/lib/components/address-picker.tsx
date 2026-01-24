@@ -18,9 +18,8 @@ import {
 import { useCallback, useRef, useState } from 'react';
 import { useLocationReverseReq } from '@symbiot-core-apps/api';
 import { View, XStack } from 'tamagui';
-import { useTranslation } from 'react-i18next';
 import { Linking, TextInputProps } from 'react-native';
-import { emitHaptic } from '@symbiot-core-apps/shared';
+import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 
 export const AddressPicker = ({
   onChange,
@@ -39,7 +38,7 @@ export const AddressPicker = ({
   onChange?: onChangeInput;
   onBlur?: () => void;
 }) => {
-  const { t } = useTranslation();
+  const { t } = useI18n();
 
   const [loading, setLoading] = useState(false);
   const [permissionDeniedModalVisible, setPermissionDeniedModalVisible] =

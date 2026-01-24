@@ -6,19 +6,20 @@ import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 
 export default () => {
   const navigation = useNavigation();
-  const { canDo } = useAccountLimits();
+  const { tryAction } = useAccountLimits();
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () =>
-        canDo.addLocation && (
-          <HeaderButton
-            iconName="AddCircle"
-            onPress={() => router.push('/locations/create')}
-          />
-        ),
+      headerRight: () => (
+        <HeaderButton
+          iconName="AddCircle"
+          onPress={tryAction('addLocation', () =>
+            router.push('/locations/create'),
+          )}
+        />
+      ),
     });
-  }, [canDo.addLocation, navigation]);
+  }, [tryAction, navigation]);
 
   return (
     <CurrentBrandLocations

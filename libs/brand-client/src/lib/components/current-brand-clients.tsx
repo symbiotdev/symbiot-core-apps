@@ -22,17 +22,16 @@ import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandClientItem } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 
 export const CurrentBrandClients = ({
   offsetTop,
   hideArrow,
-  hideAddClientButton,
   disabledIds,
   onClientPress,
 }: {
   offsetTop?: number;
   hideArrow?: boolean;
-  hideAddClientButton?: boolean;
   disabledIds?: string[];
   onClientPress: (client: BrandClient) => void;
 }) => {
@@ -63,13 +62,7 @@ export const CurrentBrandClients = ({
   );
 
   if (!clients?.length && !search) {
-    return (
-      <Intro
-        loading={isLoading}
-        error={error}
-        hideAddClientButton={hideAddClientButton}
-      />
-    );
+    return <Intro loading={isLoading} error={error} />;
   }
 
   return (
@@ -142,6 +135,7 @@ const Intro = ({
   error?: string | null;
 }) => {
   const { t } = useI18n();
+  const { tryAction } = useAccountLimits();
 
   if (loading || error) {
     return <InitView loading={loading} error={error} />;
@@ -164,13 +158,17 @@ const Intro = ({
             <View width="100%" gap="$1">
               <Button
                 label={t('brand_client.create.intro.button.label')}
-                onPress={() => router.push('/clients/create')}
+                onPress={tryAction('addClient', () =>
+                  router.push('/clients/create'),
+                )}
               />
               <Button
                 type="clear"
                 icon={<Icon name="Import" />}
                 label={t('navigation.tabs.plus.actions.import_client.label')}
-                onPress={() => router.push('/clients/import')}
+                onPress={tryAction('addClient', () =>
+                  router.push('/clients/import'),
+                )}
               />
             </View>
           )}

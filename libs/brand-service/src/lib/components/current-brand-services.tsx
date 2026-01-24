@@ -127,7 +127,7 @@ const Intro = ({
 }) => {
   const { t } = useI18n();
   const { icons } = useAppSettings();
-  const { canDo } = useAccountLimits();
+  const { tryAction } = useAccountLimits();
 
   if (loading || error) {
     return <InitView loading={loading} error={error} />;
@@ -146,12 +146,12 @@ const Intro = ({
           title={t('brand_service.create.intro.title')}
           message={t('brand_service.create.intro.subtitle')}
         >
-          {canDo.addService && (
-            <Button
-              label={t('brand_service.create.intro.button.label')}
-              onPress={() => router.push('/services/create')}
-            />
-          )}
+          <Button
+            label={t('brand_service.create.intro.button.label')}
+            onPress={tryAction('addService', () =>
+              router.push('/services/create'),
+            )}
+          />
         </EmptyView>
       </PageView>
     );

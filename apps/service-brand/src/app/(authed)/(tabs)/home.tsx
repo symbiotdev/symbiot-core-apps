@@ -28,7 +28,6 @@ import {
   BrandCongrats,
   BrandProfileCompletion,
 } from '@symbiot-core-apps/brand';
-import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 
 export default () => {
   const { me, stats } = useCurrentAccountState();
@@ -102,7 +101,6 @@ const BrandHome = () => {
   const { t } = useI18n();
   const { brand: currentBrand } = useCurrentBrandState();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
-  const { used } = useAccountLimits();
 
   const onLocationsPress = useCallback(() => router.push('/locations'), []);
   const onEmployeesPress = useCallback(() => router.push('/employees'), []);
@@ -163,14 +161,14 @@ const BrandHome = () => {
                 hidden: !hasPermission('employees'),
                 iconName: 'UsersGroupRounded',
                 label: t('brand_employee.title'),
-                text: used?.employees,
+                // text: used?.employees,
                 onPress: onEmployeesPress,
               },
               {
                 hidden: !hasPermission('locations'),
                 iconName: 'MapPointWave',
                 label: t('brand_location.title'),
-                text: used?.locations,
+                // text: used?.locations,
                 onPress: onLocationsPress,
               },
             ]}

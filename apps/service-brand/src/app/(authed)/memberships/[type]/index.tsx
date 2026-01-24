@@ -25,30 +25,15 @@ export default () => {
   const { t } = useI18n();
   const navigation = useNavigation();
   const headerHeight = useScreenHeaderHeight();
-  const { canDo, used } = useAccountLimits();
+  const { tryAction, getMembershipDetails } = useAccountLimits();
   const { type } = useLocalSearchParams<{
     type: BrandMembershipType;
   }>();
   const { icons } = useAppSettings();
 
-  const config = useMemo(
-    () =>
-      type === BrandMembershipType.visits
-        ? {
-            canAdd: canDo.addVisitMembership,
-            used: used.visitMemberships,
-          }
-        : {
-            canAdd: canDo.addPeriodMembership,
-            used: used.periodMemberships,
-          },
-    [
-      canDo.addPeriodMembership,
-      canDo.addVisitMembership,
-      type,
-      used.periodMemberships,
-      used.visitMemberships,
-    ],
+  const limitDetails = useMemo(
+    () => getMembershipDetails(type),
+    [type, getMembershipDetails],
   );
 
   const Intro = useCallback(
@@ -76,23 +61,24 @@ export default () => {
               title={t(`${tPrefix}.title`)}
               message={t(`${tPrefix}.subtitle`)}
             >
-              {config.canAdd && (
-                <Button
-                  label={t(`${tPrefix}.button.label`)}
-                  onPress={() => router.push(`/memberships/${type}/create`)}
-                />
-              )}
+              <Button
+                label={t(`${tPrefix}.button.label`)}
+                onPress={tryAction(limitDetails.limitAction, () =>
+                  router.push(`/memberships/${type}/create`),
+                )}
+              />
             </EmptyView>
           </PageView>
         );
       }
     },
     [
-      config.canAdd,
-      icons.PeriodBasedMembership,
-      icons.VisitBasedMembership,
       t,
       type,
+      limitDetails.limitAction,
+      icons.PeriodBasedMembership,
+      icons.VisitBasedMembership,
+      tryAction,
     ],
   );
 
@@ -101,18 +87,26 @@ export default () => {
       headerTitle: () => (
         <HeaderTitle
           title={t(`${getTranslateKeyByBrandMembershipType(type)}.title`)}
-          subtitle={config.used}
+          subtitle={limitDetails.used}
         />
       ),
-      headerRight: () =>
-        config.canAdd && (
-          <HeaderButton
-            iconName="AddCircle"
-            onPress={() => router.push(`/memberships/${type}/create`)}
-          />
-        ),
+      headerRight: () => (
+        <HeaderButton
+          iconName="AddCircle"
+          onPress={tryAction(limitDetails.limitAction, () =>
+            router.push(`/memberships/${type}/create`),
+          )}
+        />
+      ),
     });
-  }, [config.canAdd, config.used, navigation, t, type]);
+  }, [
+    t,
+    type,
+    navigation,
+    limitDetails.used,
+    limitDetails.limitAction,
+    tryAction,
+  ]);
 
   return (
     <BrandMembershipsCurrentList

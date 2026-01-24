@@ -25,44 +25,48 @@ export const PlusActionAdaptiveModal = ({
 }) => {
   const { t } = useI18n();
   const { icons } = useAppSettings();
-  const { canDo } = useAccountLimits();
+  const { tryAction } = useAccountLimits();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
   const popoverRef = useRef<AdaptivePopoverRef>(null);
 
   const addClient = useCallback(() => {
     popoverRef.current?.close();
-    router.push('/clients/create');
-  }, []);
+    tryAction('addClient', () => router.push('/clients/create'))();
+  }, [tryAction]);
 
   const importClients = useCallback(() => {
     popoverRef.current?.close();
-    router.push('/clients/import');
-  }, []);
+    tryAction('addClient', () => router.push('/clients/import'))();
+  }, [tryAction]);
 
   const addEmployee = useCallback(() => {
     popoverRef.current?.close();
-    router.push('/employees/create');
-  }, []);
+    tryAction('addEmployee', () => router.push('/employees/create'))();
+  }, [tryAction]);
 
   const addLocation = useCallback(() => {
     popoverRef.current?.close();
-    router.push('/locations/create');
-  }, []);
+    tryAction('addLocation', () => router.push('/locations/create'))();
+  }, [tryAction]);
 
   const addService = useCallback(() => {
     popoverRef.current?.close();
-    router.push('/services/create');
-  }, []);
+    tryAction('addService', () => router.push('/services/create'))();
+  }, [tryAction]);
 
   const addPeriodBasedMembership = useCallback(() => {
     popoverRef.current?.close();
-    router.push(`/memberships/${BrandMembershipType.period}/create`);
-  }, []);
+    tryAction('addPeriodMembership', () =>
+      router.push(`/memberships/${BrandMembershipType.period}/create`),
+    )();
+  }, [tryAction]);
 
   const addVisitBasedMembership = useCallback(() => {
     popoverRef.current?.close();
-    router.push(`/memberships/${BrandMembershipType.visits}/create`);
-  }, []);
+    tryAction('addVisitMembership', () =>
+      router.push(`/memberships/${BrandMembershipType.visits}/create`),
+    )();
+  }, [tryAction]);
 
   const addServiceBooking = useCallback(() => {
     popoverRef.current?.close();
@@ -89,7 +93,7 @@ export const PlusActionAdaptiveModal = ({
         >
           {hasAnyOfPermissions(['employees', 'locations']) && (
             <>
-              {canDo.addLocation && hasPermission('locations') && (
+              {hasPermission('locations') && (
                 <ListItem
                   icon={<Icon name="MapPointWave" />}
                   label={t('navigation.tabs.plus.actions.add_location.label')}
@@ -97,7 +101,7 @@ export const PlusActionAdaptiveModal = ({
                 />
               )}
 
-              {canDo.addEmployee && hasPermission('employees') && (
+              {hasPermission('employees') && (
                 <ListItem
                   icon={<Icon name="UsersGroupRounded" />}
                   label={t('navigation.tabs.plus.actions.add_employee.label')}
@@ -109,49 +113,37 @@ export const PlusActionAdaptiveModal = ({
 
           {hasPermission('catalog') && (
             <>
-              {(canDo.addLocation || canDo.addEmployee) &&
-                hasAnyOfPermissions(['employees', 'locations']) && (
-                  <Br marginVertical="$2" />
-                )}
+              {hasAnyOfPermissions(['employees', 'locations']) && (
+                <Br marginVertical="$2" />
+              )}
 
-              {canDo.addService && (
-                <ListItem
-                  icon={<Icon name={icons.Service} />}
-                  label={t('navigation.tabs.plus.actions.add_service.label')}
-                  onPress={addService}
-                />
-              )}
-              {canDo.addVisitMembership && (
-                <ListItem
-                  icon={<Icon name={icons.VisitBasedMembership} />}
-                  label={t(
-                    'navigation.tabs.plus.actions.add_visit_based_membership.label',
-                  )}
-                  onPress={addVisitBasedMembership}
-                />
-              )}
-              {canDo.addPeriodMembership && (
-                <ListItem
-                  icon={<Icon name={icons.PeriodBasedMembership} />}
-                  label={t(
-                    'navigation.tabs.plus.actions.add_period_based_membership.label',
-                  )}
-                  onPress={addPeriodBasedMembership}
-                />
-              )}
+              <ListItem
+                icon={<Icon name={icons.Service} />}
+                label={t('navigation.tabs.plus.actions.add_service.label')}
+                onPress={addService}
+              />
+              <ListItem
+                icon={<Icon name={icons.VisitBasedMembership} />}
+                label={t(
+                  'navigation.tabs.plus.actions.add_visit_based_membership.label',
+                )}
+                onPress={addVisitBasedMembership}
+              />
+              <ListItem
+                icon={<Icon name={icons.PeriodBasedMembership} />}
+                label={t(
+                  'navigation.tabs.plus.actions.add_period_based_membership.label',
+                )}
+                onPress={addPeriodBasedMembership}
+              />
             </>
           )}
 
-          {hasPermission('clients') && canDo.addClient && (
+          {hasPermission('clients') && (
             <>
-              {(canDo.addEmployee ||
-                canDo.addLocation ||
-                canDo.addService ||
-                canDo.addPeriodMembership ||
-                canDo.addVisitMembership) &&
-                hasAnyOfPermissions(['employees', 'locations', 'catalog']) && (
-                  <Br marginVertical="$2" />
-                )}
+              {hasAnyOfPermissions(['employees', 'locations', 'catalog']) && (
+                <Br marginVertical="$2" />
+              )}
 
               <ListItem
                 icon={<Icon name="Import" />}

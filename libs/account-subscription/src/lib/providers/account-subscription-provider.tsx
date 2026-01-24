@@ -15,11 +15,15 @@ import {
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { AdaptivePopover, AdaptivePopoverRef } from '@symbiot-core-apps/ui';
-import { AccountSubscriptionsPaywall } from '../components/account-subscriptions-paywall';
+import {
+  AdaptivePopover,
+  AdaptivePopoverRef,
+  LoadingView,
+} from '@symbiot-core-apps/ui';
+import { SubscriptionsPaywall } from '../components/subscriptions-paywall';
+import { DevelopmentPaywall } from '../components/development-paywall';
 
 type AccountSubscriptionContext = {
-  packages: PurchasesPackage[];
   processing: boolean;
   canSubscribe: boolean;
   isSubscriptionsAvailable: boolean;
@@ -27,6 +31,8 @@ type AccountSubscriptionContext = {
   manageSubscriptions: () => Promise<void>;
 };
 
+const isDevMode =
+  process.env['EXPO_PUBLIC_APP_MODE']?.indexOf('development') === 0;
 const Context = createContext<AccountSubscriptionContext | undefined>(
   undefined,
 );
@@ -50,10 +56,11 @@ export const AccountSubscriptionProvider = ({
 
   const isSubscriptionsAvailable = useMemo(
     () =>
-      Platform.OS !== 'web' &&
-      !!me?.offering &&
-      !!brand?.owner?.id &&
-      currentEmployee?.id === brand.owner.id,
+      isDevMode ||
+      (Platform.OS !== 'web' &&
+        !!me?.offering &&
+        !!brand?.owner?.id &&
+        currentEmployee?.id === brand.owner.id),
     [brand?.owner?.id, currentEmployee?.id, me?.offering],
   );
 
@@ -128,7 +135,6 @@ export const AccountSubscriptionProvider = ({
   return (
     <Context.Provider
       value={{
-        packages,
         canSubscribe,
         isSubscriptionsAvailable,
         processing: subscribing || restoring,
@@ -138,7 +144,7 @@ export const AccountSubscriptionProvider = ({
     >
       {children}
 
-      {!!me?.offering && !!packages.length && (
+      {!!me?.offering && (
         <AdaptivePopover
           hideHandle
           unmountChildrenWhenHidden
@@ -148,14 +154,24 @@ export const AccountSubscriptionProvider = ({
           disableDrag={subscribing || restoring}
           ref={paywallRef}
         >
-          <AccountSubscriptionsPaywall
-            offering={me.offering}
-            packages={packages}
-            subscribing={subscribing}
-            restoring={restoring}
-            onSubscribe={onSubscribe}
-            onRestore={onRestore}
-          />
+          {isDevMode ? (
+            <DevelopmentPaywall />
+          ) : (
+            <>
+              {!packages.length && <LoadingView />}
+
+              {!!packages.length && (
+                <SubscriptionsPaywall
+                  offering={me.offering}
+                  packages={packages}
+                  subscribing={subscribing}
+                  restoring={restoring}
+                  onSubscribe={onSubscribe}
+                  onRestore={onRestore}
+                />
+              )}
+            </>
+          )}
         </AdaptivePopover>
       )}
     </Context.Provider>

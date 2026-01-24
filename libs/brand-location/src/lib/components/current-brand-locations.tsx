@@ -71,7 +71,7 @@ const Intro = ({
   error?: string | null;
 }) => {
   const { t } = useI18n();
-  const { canDo } = useAccountLimits();
+  const { tryAction } = useAccountLimits();
 
   if (loading || error) {
     return <InitView loading={loading} error={error} />;
@@ -90,12 +90,12 @@ const Intro = ({
           title={t('brand_location.create.intro.title')}
           message={t('brand_location.create.intro.subtitle')}
         >
-          {canDo.addLocation && (
-            <Button
-              label={t('brand_location.create.intro.button.label')}
-              onPress={() => router.push('/locations/create')}
-            />
-          )}
+          <Button
+            label={t('brand_location.create.intro.button.label')}
+            onPress={tryAction('addLocation', () =>
+              router.push('/locations/create'),
+            )}
+          />
         </EmptyView>
       </PageView>
     );

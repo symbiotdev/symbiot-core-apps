@@ -16,12 +16,12 @@ import {
 } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import { useScheme } from '@symbiot-core-apps/state';
-import { AppConfig, ThemeConfig } from '@symbiot-core-apps/api';
+import { AppConfigLegacy, ThemeConfigLegacy } from '@symbiot-core-apps/api';
 
 export const ThemeProvider = ({
   children,
   theme,
-}: PropsWithChildren<{ theme: AppConfig['theme'] }>) => {
+}: PropsWithChildren<{ theme: AppConfigLegacy['theme'] }>) => {
   const { scheme } = useScheme();
 
   const barStyle = useMemo(
@@ -74,7 +74,7 @@ export const ThemeProvider = ({
             ...Object.keys(theme.dark).reduce(
               (obj, key) => ({
                 ...obj,
-                [`o_${key}`]: theme.dark[key as keyof ThemeConfig],
+                [`o_${key}`]: theme.dark[key as keyof ThemeConfigLegacy],
               }),
               {},
             ),
@@ -84,7 +84,7 @@ export const ThemeProvider = ({
             ...Object.keys(theme.light).reduce(
               (obj, key) => ({
                 ...obj,
-                [`o_${key}`]: theme.light[key as keyof ThemeConfig],
+                [`o_${key}`]: theme.light[key as keyof ThemeConfigLegacy],
               }),
               {},
             ),

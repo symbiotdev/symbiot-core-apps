@@ -1,4 +1,4 @@
-import { AppConfig } from '../types/app-config';
+import { AppConfigLegacy } from '../types/app-config-legacy';
 import { AppTranslations } from '../types/app-translations';
 import { BrandSourceOption } from '../types/brand';
 import { useQuery } from '../hooks/use-query';
@@ -11,7 +11,7 @@ export enum AppQueryKey {
 }
 
 export const useAppConfigReq = ({ refetch }: { refetch: boolean }) =>
-  useQuery<AppConfig, string>({
+  useQuery<AppConfigLegacy, string>({
     staleTime: Infinity,
     refetchOnWindowFocus: refetch,
     refetchOnMount: refetch,

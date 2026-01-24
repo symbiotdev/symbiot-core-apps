@@ -60,14 +60,17 @@ import {
       shell: true,
     },
   );
-
-  childProcess.on('exit', () => {
+  const reset = () => {
     removeEasJsonFile({ app });
     appJson.reset();
 
     fileWatchers.forEach((watcher) => watcher.close());
     syncPaths.forEach(({ dest }) => rm(dest, { recursive: true }));
+  };
 
+  childProcess.on('close', reset);
+  childProcess.on('exit', () => {
+    reset();
     console.log(`✅ Deployed... 🚀`);
   });
 })();

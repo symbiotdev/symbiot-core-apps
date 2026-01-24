@@ -1,6 +1,6 @@
 import { Scheme } from '@symbiot-core-apps/shared';
 
-export type AppLimits = {
+export type AppLimitsLegacy = {
   employees?: number;
   locations?: number;
   clients?: number;
@@ -9,7 +9,7 @@ export type AppLimits = {
   visitMemberships?: number;
 };
 
-export type ThemeConfig = {
+export type ThemeConfigLegacy = {
   background: string;
   background1: string;
   background2: string;
@@ -52,7 +52,7 @@ export type ThemeConfig = {
   selectedSubscriptionBackgroundColor: string;
 };
 
-export type AppConfigIconName =
+export type AppConfigIconNameLegacy =
   | 'Home'
   | 'Notifications'
   | 'Calendar'
@@ -66,8 +66,8 @@ export type AppConfigIconName =
   | 'ServiceBooking'
   | 'More';
 
-export type AppConfigFunctionality = {
-  limits: Record<string, AppLimits>;
+export type AppConfigFunctionalityLegacy = {
+  limits: Record<string, AppLimitsLegacy>;
   availability: {
     servicePrice: boolean;
     brandIndustry: boolean;
@@ -75,8 +75,8 @@ export type AppConfigFunctionality = {
   };
 };
 
-export type AppConfig = {
-  icons: Record<AppConfigIconName, string>;
-  theme: Record<Scheme, ThemeConfig>;
-  functionality: AppConfigFunctionality;
+export type AppConfigLegacy = {
+  icons: Record<AppConfigIconNameLegacy, string>;
+  theme: Record<Scheme, ThemeConfigLegacy>;
+  functionality: AppConfigFunctionalityLegacy;
 };

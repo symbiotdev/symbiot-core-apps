@@ -12,10 +12,11 @@ import { useStackScreenHeaderOptions } from '@symbiot-core-apps/ui';
 import { Platform } from 'react-native';
 import { useEffect } from 'react';
 import { hideAsync } from 'expo-splash-screen';
-import { changeAppLanguageToSystem } from '@symbiot-core-apps/i18n';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
   const { tokens } = useAuthTokens();
+  const { changeToDefaultLanguage } = useI18n();
   const { finished: onboardingFinished } = useOnboardingState();
   const { clear: clearCurrentAccountState } = useCurrentAccountState();
   const { clear: clearCurrentBrandState } = useCurrentBrandState();
@@ -29,7 +30,7 @@ export default () => {
   useEffect(() => {
     if (!tokens.access) {
       void hideAsync();
-      changeAppLanguageToSystem();
+      changeToDefaultLanguage();
 
       clearCurrentAccountState();
       clearCurrentBrandState();
@@ -44,6 +45,7 @@ export default () => {
     clearCurrentBrandBookingsState,
     clearCurrentBrandEmployeeState,
     clearFaq,
+    changeToDefaultLanguage,
   ]);
 
   if (tokens.access) {

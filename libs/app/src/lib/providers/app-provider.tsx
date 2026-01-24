@@ -6,12 +6,11 @@ import {
   useState,
 } from 'react';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
-import { I18nProvider } from '@symbiot-core-apps/i18n';
 import { ThemeProvider } from '@symbiot-core-apps/theme';
 import {
-  AppConfig,
-  AppConfigFunctionality,
-  AppConfigIconName,
+  AppConfigLegacy,
+  AppConfigFunctionalityLegacy,
+  AppConfigIconNameLegacy,
   AppTranslations,
   useAppConfigReq,
   useAppTranslationsReq,
@@ -25,21 +24,21 @@ import { LoadAssetsFailed } from '../components/load-assets-failed';
 import { AssetsLoading } from '../components/assets-loading';
 
 type AppState = {
-  theme?: AppConfig['theme'];
-  icons?: Record<AppConfigIconName, IconName>;
+  theme?: AppConfigLegacy['theme'];
+  icons?: Record<AppConfigIconNameLegacy, IconName>;
   languages?: AppTranslations['languages'];
   translations?: AppTranslations['translations'];
-  functionality?: AppConfigFunctionality;
-  setTheme: (theme: AppConfig['theme']) => void;
-  setIcons: (icons: Record<AppConfigIconName, IconName>) => void;
+  functionality?: AppConfigFunctionalityLegacy;
+  setTheme: (theme: AppConfigLegacy['theme']) => void;
+  setIcons: (icons: Record<AppConfigIconNameLegacy, IconName>) => void;
   setTranslations: (translations: AppTranslations) => void;
-  setFunctionality: (functionality: AppConfigFunctionality) => void;
+  setFunctionality: (functionality: AppConfigFunctionalityLegacy) => void;
 };
 
 type AppContext = {
-  icons: Record<AppConfigIconName, IconName>;
-  theme: AppConfig['theme'];
-  functionality: AppConfigFunctionality;
+  icons: Record<AppConfigIconNameLegacy, IconName>;
+  theme: AppConfigLegacy['theme'];
+  functionality: AppConfigFunctionalityLegacy;
   languages: AppTranslations['languages'];
 };
 
@@ -94,7 +93,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
       ) {
         setLoadConfigFailed(true);
       } else {
-        setIcons(appConfig.icons as Record<AppConfigIconName, IconName>);
+        setIcons(appConfig.icons as Record<AppConfigIconNameLegacy, IconName>);
         setTheme(appConfig.theme);
         setFunctionality(appConfig.functionality);
       }
@@ -136,9 +135,9 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   return (
     <Context.Provider value={{ icons, theme, languages, functionality }}>
       <KeyboardProvider>
-        <I18nProvider translations={translations}>
-          <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        </I18nProvider>
+        {/*<I18nProvider translations={translations}>*/}
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        {/*</I18nProvider>*/}
       </KeyboardProvider>
     </Context.Provider>
   );

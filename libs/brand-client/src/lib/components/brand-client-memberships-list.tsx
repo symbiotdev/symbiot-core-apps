@@ -1,6 +1,6 @@
 import {
   AnyBrandClientMembership,
-  AppConfigIconName,
+  AppConfigIconNameLegacy,
   BrandMembershipType,
   useBrandClientPeriodBasedMembershipsListReq,
   useBrandClientVisitsBasedMembershipsListReq,
@@ -63,7 +63,7 @@ export const BrandClientMembershipsList = ({
       <InitView
         error={error}
         loading={isLoading}
-        noDataIcon={icons[config.icon as AppConfigIconName]}
+        noDataIcon={icons[config.icon as AppConfigIconNameLegacy]}
         noDataTitle={t(config.noDataTitle)}
         noDataMessage={t(config.noDataMessage)}
       />

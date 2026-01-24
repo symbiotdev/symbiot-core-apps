@@ -1,7 +1,7 @@
 import { TextProps, View, ViewProps, XStack } from 'tamagui';
 import {
   AnyBrandBooking,
-  AppConfigIconName,
+  AppConfigIconNameLegacy,
   BrandBookingType,
   isBrandBookingAllDay,
 } from '@symbiot-core-apps/api';
@@ -16,7 +16,7 @@ export const configByType: Record<
     backgroundColor: string;
     color: string;
     markerColor: string;
-    iconKey: AppConfigIconName;
+    iconKey: AppConfigIconNameLegacy;
   }
 > = {
   [BrandBookingType.unavailable]: {

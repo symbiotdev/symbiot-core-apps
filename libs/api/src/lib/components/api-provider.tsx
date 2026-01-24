@@ -48,7 +48,7 @@ export const ApiProvider = ({
     connectError: undefined,
   });
 
-  const tryToRefreshTokens = useCallback(async () => {
+  const refreshTokensIfRequired = useCallback(async () => {
     if (areTokensRefreshingRef.current) return;
 
     const now = new Date();
@@ -150,7 +150,7 @@ export const ApiProvider = ({
       onlineManager.setOnline(false);
     } else {
       const refetch = () => {
-        tryToRefreshTokens().finally(() => onlineManager.setOnline(true));
+        refreshTokensIfRequired().finally(() => onlineManager.setOnline(true));
       };
 
       timeout = setInterval(refetch, 60 * 1000);
@@ -161,7 +161,7 @@ export const ApiProvider = ({
     return () => {
       if (timeout) clearTimeout(timeout);
     };
-  }, [appState, apiConfigured, tryToRefreshTokens]);
+  }, [appState, apiConfigured, refreshTokensIfRequired]);
 
   return (
     <QueryClientProvider client={queryClient}>

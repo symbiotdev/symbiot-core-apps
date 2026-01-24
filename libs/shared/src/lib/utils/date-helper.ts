@@ -18,10 +18,6 @@ import { eachDayOfInterval } from 'date-fns/eachDayOfInterval';
 import { isAfter } from 'date-fns/isAfter';
 import { differenceInYears } from 'date-fns/differenceInYears';
 import { addYears } from 'date-fns/addYears';
-import {
-  DATE_FNS_SUPPORTED_LANGUAGES,
-  getDateLocale,
-} from '@symbiot-core-apps/i18n';
 import { isSameMonth } from 'date-fns/isSameMonth';
 import { set } from 'date-fns/set';
 import { isValid } from 'date-fns/isValid';
@@ -42,6 +38,7 @@ import { capitalizeFirst } from './text';
 import { getDate } from 'date-fns/getDate';
 import { getMonth } from 'date-fns/getMonth';
 import { formatDistance } from 'date-fns/formatDistance';
+import { enUS, Locale, uk } from 'date-fns/locale';
 
 export const defaultWeekdayStartsOn: Day = 0;
 export const minutesInHour = 60;
@@ -56,6 +53,17 @@ export const secondsInDay = secondsInHour * 24;
 export const secondsInMonth = minutesInMonth * 60;
 
 export type Weekday = Day;
+
+export const DATE_FNS_SUPPORTED_LANGUAGES: Record<string, Locale> = {
+  en: enUS,
+  uk: uk,
+};
+
+export const getDateLocale = (lang: string) => {
+  return DATE_FNS_SUPPORTED_LANGUAGES[lang] || enUS;
+};
+
+const getAppDateLocale = () => getDateLocale(i18n.language);
 
 export const DateHelper = {
   set,
@@ -90,7 +98,7 @@ export const DateHelper = {
     getDate(d1) === getDate(d2) && getMonth(d1) === getMonth(d2),
   formatDistance: (laterDate: Date | string, earlierDate: Date | string) => {
     return formatDistance(laterDate, earlierDate, {
-      locale: getDateLocale(),
+      locale: getAppDateLocale(),
     });
   },
   formatDuration: (
@@ -193,7 +201,7 @@ export const DateHelper = {
     }
 
     return formatDuration(duration, {
-      locale: getDateLocale(),
+      locale: getAppDateLocale(),
     });
   },
   startOfWeek: (date: Date, weekStartsOn: Day = defaultWeekdayStartsOn) =>
@@ -201,7 +209,7 @@ export const DateHelper = {
       weekStartsOn,
     }),
   format: (date: Date | string, formatStr?: string, lang?: string) => {
-    if (formatStr === 'p' && getDateLocale().code === 'uk') {
+    if (formatStr === 'p' && getAppDateLocale().code === 'uk') {
       formatStr = 'HH:mm';
     } else if (!formatStr) {
       formatStr = 'dd.MM.yyyy';
@@ -209,7 +217,7 @@ export const DateHelper = {
 
     return capitalizeFirst(
       format(date, formatStr, {
-        locale: lang ? DATE_FNS_SUPPORTED_LANGUAGES[lang] : getDateLocale(),
+        locale: lang ? DATE_FNS_SUPPORTED_LANGUAGES[lang] : getAppDateLocale(),
       }),
     );
   },

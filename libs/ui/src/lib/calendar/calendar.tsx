@@ -4,12 +4,12 @@ import {
   TimeGridRef,
 } from '@symbiot.dev/react-native-timegrid-pro';
 import { LayoutChangeEvent, Platform } from 'react-native';
-import { useDateLocale } from '@symbiot-core-apps/i18n';
 import { Ref, useCallback, useMemo, useState } from 'react';
 import { useTheme, View, XStack } from 'tamagui';
 import {
   DateHelper,
   DeviceInfo,
+  getDateLocale,
   isTablet,
   useNativeNow,
   useScreenOrientation,
@@ -20,6 +20,7 @@ import { Orientation } from 'expo-screen-orientation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { DeviceType } from 'expo-device';
 import { DeterminedProgressBar } from '../loading/determined-progress';
+import { useTranslation } from 'react-i18next';
 
 export const Calendar = ({
   loading,
@@ -30,7 +31,7 @@ export const Calendar = ({
   timeGridRef?: Ref<TimeGridRef>;
   gridBottomOffset?: number;
 }) => {
-  const locale = useDateLocale();
+  const { i18n } = useTranslation();
   const theme = useTheme();
   const { media } = useScreenSize();
   const { orientation } = useScreenOrientation();
@@ -38,6 +39,8 @@ export const Calendar = ({
   const { now } = useNativeNow();
 
   const [width, setWidth] = useState(0);
+
+  const locale = useMemo(() => getDateLocale(i18n.language), [i18n.language]);
 
   const numberOfDays = useMemo(
     () =>

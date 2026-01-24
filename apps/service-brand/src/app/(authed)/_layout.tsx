@@ -143,7 +143,7 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
       <Stack.Screen
         name="account/update"
         options={{
-          headerTitle: t('shared.profile'),
+          headerTitle: t('shared.id_card'),
         }}
       />
       <Stack.Screen name="account/remove" />

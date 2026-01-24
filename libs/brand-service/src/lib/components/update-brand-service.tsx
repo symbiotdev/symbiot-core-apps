@@ -48,11 +48,11 @@ import { BrandServiceLocationController } from './controller/brand-service-locat
 import { BrandServiceEmployeesController } from './controller/brand-service-employees-controller';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 
 export const UpdateBrandService = ({ service }: { service: BrandService }) => {
   const { height } = useWindowDimensions();
-  const { functionality } = useApp();
+  const { functionality } = useAppSettings();
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
     useUpdateBrandServiceReq();
 

@@ -19,14 +19,14 @@ import {
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { router } from 'expo-router';
 import { View } from 'tamagui';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import { formatPrice, useI18n } from '@symbiot-core-apps/shared';
 import React, { useMemo } from 'react';
 
 export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
   const { brand } = useCurrentBrandState();
   const { t } = useI18n();
-  const { functionality } = useApp();
+  const { functionality } = useAppSettings();
   const { height } = useWindowDimensions();
 
   const locations = useMemo(

@@ -1,4 +1,4 @@
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import {
   useCurrentAccountState,
   useCurrentBrandState,
@@ -9,7 +9,7 @@ import { useI18n } from '@symbiot-core-apps/shared';
 
 export const useAccountLimits = () => {
   const { t } = useI18n();
-  const { functionality } = useApp();
+  const { functionality } = useAppSettings();
   const { me } = useCurrentAccountState();
   const { brand } = useCurrentBrandState();
 

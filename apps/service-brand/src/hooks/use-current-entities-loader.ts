@@ -11,12 +11,10 @@ import {
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useInitializing } from './use-initializing';
-import { useApp } from '@symbiot-core-apps/app';
 import { useI18n } from '@symbiot-core-apps/shared';
 
 export const useCurrentEntitiesLoader = () => {
-  const { languages } = useApp();
-  const { changeLanguage } = useI18n();
+  const { changeLanguage, supportedLanguages } = useI18n();
   const initializing = useInitializing();
   const { updateMe, updateMePreferences } = useCurrentAccount();
   const { tokens, setTokens } = useAuthTokens();
@@ -52,7 +50,7 @@ export const useCurrentEntitiesLoader = () => {
 
       if (
         meResponse.language &&
-        languages.some(({ code }) => code === meResponse.language)
+        supportedLanguages.includes(meResponse.language)
       ) {
         changeLanguage(meResponse.language);
       }
@@ -65,7 +63,7 @@ export const useCurrentEntitiesLoader = () => {
     meResponse,
     meResponseError,
     updateMe,
-    languages,
+    supportedLanguages,
     updateMePreferences,
     changeLanguage,
   ]);

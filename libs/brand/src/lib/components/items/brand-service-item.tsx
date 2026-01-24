@@ -14,7 +14,7 @@ import {
   RegularText,
 } from '@symbiot-core-apps/ui';
 import { BrandService } from '@symbiot-core-apps/api';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 
 export const BrandServiceItem = ({
   service,
@@ -25,7 +25,7 @@ export const BrandServiceItem = ({
   service: BrandService;
   hidePricing?: boolean;
 }) => {
-  const { functionality } = useApp();
+  const { functionality } = useAppSettings();
   const { t } = useI18n();
 
   return (

@@ -13,7 +13,7 @@ import {
   useI18n,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import {
   useCurrentBrandBookingsState,
@@ -25,7 +25,7 @@ import { BrandBookingType } from '@symbiot-core-apps/api';
 
 export const TodayBrandBookings = () => {
   const { t } = useI18n();
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
   const { now } = useNativeNow();
   const { currentEmployee, hasPermission } = useCurrentBrandEmployee();
   const { bookings } = useCurrentBrandBookingsState();

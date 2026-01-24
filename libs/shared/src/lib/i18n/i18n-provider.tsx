@@ -15,17 +15,31 @@ import {
 import i18n, { TFunction } from 'i18next';
 import { getLocales } from 'expo-localization';
 import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
+import { merge } from 'merge-anything';
 
 const LANGUAGE_STORE_KEY = 'x-lang';
 
 type I18nContext = {
   t: TFunction;
   lang: string;
+  supportedLanguages: string[];
   changeLanguage: (lang: string) => void;
   changeToDefaultLanguage: () => void;
+  updateTranslates: (newTranslates: Record<string, unknown>) => void;
 };
 
 const Context = createContext<I18nContext | undefined>(undefined);
+
+void i18n.use(initReactI18next).init({
+  fallbackLng: 'en',
+  compatibilityJSON: 'v4',
+  interpolation: {
+    escapeValue: false,
+  },
+  react: {
+    useSuspense: false,
+  },
+});
 
 export const useI18n = () => useContext(Context) as I18nContext;
 export const translate = (key: string) => i18n.t(key);
@@ -41,17 +55,35 @@ export const I18nProvider = ({
 }>) => {
   const { t, i18n: i18nTranslation } = useTranslation();
 
-  const [loaded, setLoaded] = useState(true);
+  const [loaded, setLoaded] = useState(false);
 
-  const primaryLang = useMemo(() => {
+  const { languages, primaryLang } = useMemo(() => {
     const languages = Object.keys(appTranslations);
 
-    return (
-      getLocales().find(
-        ({ languageCode }) => languageCode && languages.includes(languageCode),
-      )?.languageCode || defaultLanguage
-    );
+    return {
+      languages,
+      primaryLang:
+        getLocales().find(
+          ({ languageCode }) =>
+            languageCode && languages.includes(languageCode),
+        )?.languageCode || defaultLanguage,
+    };
   }, [appTranslations, defaultLanguage]);
+
+  const defaultTranslations: Record<string, unknown> = useMemo(
+    () =>
+      languages.reduce(
+        (obj, lang) => ({
+          ...obj,
+          [lang]: {
+            ...appTranslations[lang],
+            shared: loadShared(lang),
+          },
+        }),
+        {},
+      ),
+    [appTranslations, languages],
+  );
 
   const changeLanguage = useCallback((lang: string) => {
     void i18n.changeLanguage(lang);
@@ -63,44 +95,36 @@ export const I18nProvider = ({
     mmkvGlobalStorage.remove(LANGUAGE_STORE_KEY);
   }, [primaryLang]);
 
+  const updateTranslates = useCallback(
+    (newTranslations: Record<string, unknown>) => {
+      const mergedJson = merge(defaultTranslations, newTranslations);
+
+      Object.keys(defaultTranslations).forEach((lang) => {
+        i18n.addResourceBundle(lang, 'translation', mergedJson[lang]);
+      });
+    },
+    [defaultTranslations],
+  );
+
   const init = useCallback(async () => {
-    const languages = Object.keys(appTranslations);
+    const storedLanguage = mmkvGlobalStorage.getString(LANGUAGE_STORE_KEY);
 
     try {
-      await i18n.use(initReactI18next).init({
-        compatibilityJSON: 'v4',
-        fallbackLng: primaryLang,
-        interpolation: {
-          escapeValue: false,
-        },
-        react: {
-          useSuspense: false,
-        },
-        resources: languages.reduce(
-          (obj, lang) => ({
-            ...obj,
-            [lang]: {
-              translation: {
-                ...appTranslations[lang],
-                shared: loadShared(lang),
-              },
-            },
-          }),
-          {},
-        ),
-      });
-
-      const storedLanguage = mmkvGlobalStorage.getString(LANGUAGE_STORE_KEY);
+      Object.keys(defaultTranslations).forEach((lang) =>
+        i18n.addResourceBundle(lang, 'translation', defaultTranslations[lang]),
+      );
 
       if (storedLanguage && !languages.includes(storedLanguage)) {
         changeLanguage(primaryLang);
       } else {
-        await i18n.changeLanguage(storedLanguage);
+        await i18n.changeLanguage(storedLanguage || primaryLang);
       }
+    } catch (e) {
+      console.log('i18n initialize error: ', e);
     } finally {
       setLoaded(true);
     }
-  }, [appTranslations, primaryLang, changeLanguage]);
+  }, [defaultTranslations, languages, primaryLang, changeLanguage]);
 
   useLayoutEffect(() => {
     void init();
@@ -110,15 +134,32 @@ export const I18nProvider = ({
     <Context.Provider
       value={{
         t,
+        supportedLanguages: languages,
         lang: i18nTranslation.language,
         changeLanguage,
+        updateTranslates,
         changeToDefaultLanguage,
       }}
     >
-      <I18nextProvider i18n={i18n}>{loaded && children}</I18nextProvider>
+      {loaded && <I18nextProvider i18n={i18n}>{children}</I18nextProvider>}
     </Context.Provider>
   );
 };
+
+export const allLanguages = [
+  {
+    name: 'English',
+    shortName: 'Eng',
+    flag: '🇺🇸',
+    code: 'en',
+  },
+  {
+    name: 'Українська',
+    shortName: 'Укр',
+    flag: '🇺🇦',
+    code: 'uk',
+  },
+];
 
 const loadShared = (lang: string) => {
   switch (lang) {

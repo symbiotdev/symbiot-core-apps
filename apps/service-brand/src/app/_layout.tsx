@@ -35,7 +35,7 @@ export default () => {
       appTranslations={appSettings.language.translations}
     >
       <ApiProvider onNoRespond={onNoRespond} onUnauthorized={removeTokens}>
-        <AppProvider>
+        <AppProvider defaultSettings={appSettings}>
           <Stack
             screenOptions={{
               headerShown: false,

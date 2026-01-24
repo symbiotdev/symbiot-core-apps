@@ -38,7 +38,7 @@ import { useForm } from 'react-hook-form';
 import { UnavailableBrandBookingDatetimeController } from './controller/unavailable-brand-booking-datetime-controller';
 import { BrandBookingNoteController } from './controller/brand-booking-note-controller';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import { View, XStack } from 'tamagui';
 
 export const UnavailableBrandBookingProfile = ({
@@ -46,7 +46,7 @@ export const UnavailableBrandBookingProfile = ({
 }: {
   booking: UnavailableBrandBooking;
 }) => {
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
   const { t } = useI18n();
   const { me } = useCurrentAccountState();
   const { hasPermission } = useCurrentBrandEmployee();

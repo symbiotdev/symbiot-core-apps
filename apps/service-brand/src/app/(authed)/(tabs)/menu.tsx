@@ -31,7 +31,6 @@ import {
   TabsPageView,
   useDrawer,
 } from '@symbiot-core-apps/ui';
-import { useApp } from '@symbiot-core-apps/app';
 import { View, XStack } from 'tamagui';
 import { GestureResponderEvent, Linking, Platform } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -43,10 +42,9 @@ import { Image } from 'expo-image';
 import { useAccountSubscription } from '@symbiot-core-apps/account-subscription';
 
 export default () => {
-  const { t } = useI18n();
+  const { t, supportedLanguages } = useI18n();
   const { me } = useCurrentAccountState();
   const { brand } = useCurrentBrandState();
-  const { languages } = useApp();
   const { scheme } = useScheme();
   const { visible: drawerVisible } = useDrawer();
   const share = useShareApp();
@@ -202,7 +200,7 @@ export default () => {
               onPress={onAppearancePress}
             />
 
-            {languages?.length > 1 && (
+            {supportedLanguages?.length > 1 && (
               <ListItem
                 label={t('shared.preferences.language.title')}
                 icon={<Icon name="Global" />}

@@ -27,7 +27,7 @@ import {
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import { BrandMembershipType } from '@symbiot-core-apps/api';
 
 export const drawerMenuMaxWidth = 250;
@@ -95,7 +95,7 @@ export const DrawerMenu = () => {
   const { stats } = useCurrentAccountState();
   const { brand: currentBrand } = useCurrentBrandState();
   const { compressed, toggleCompressed } = useDrawerState();
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
   const { t } = useI18n();
   const { permanent } = useDrawer();
   const theme = useTheme();

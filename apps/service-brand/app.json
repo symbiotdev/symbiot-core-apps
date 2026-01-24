@@ -8,9 +8,7 @@
     "userInterfaceStyle": "automatic",
     "orientation": "default",
     "icon": "./assets/images/icon/adaptive-icon.png",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "appleTeamId": "8WPTDS74WX",
       "bundleIdentifier": "",
@@ -116,9 +114,7 @@
       [
         "expo-notifications",
         {
-          "sounds": [
-            "./assets/audio/new_notification_sound.wav"
-          ]
+          "sounds": ["./assets/audio/new_notification_sound.wav"]
         }
       ],
       [

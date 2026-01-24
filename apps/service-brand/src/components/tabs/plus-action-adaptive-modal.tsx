@@ -11,7 +11,7 @@ import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { router } from 'expo-router';
 import { View } from 'tamagui';
 import { Placement } from '@floating-ui/react-native';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import { BrandBookingType, BrandMembershipType } from '@symbiot-core-apps/api';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
@@ -24,7 +24,7 @@ export const PlusActionAdaptiveModal = ({
   placement?: Placement;
 }) => {
   const { t } = useI18n();
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
   const { canDo } = useAccountLimits();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
   const popoverRef = useRef<AdaptivePopoverRef>(null);

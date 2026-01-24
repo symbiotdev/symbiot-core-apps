@@ -22,7 +22,7 @@ import {
   useI18n,
 } from '@symbiot-core-apps/shared';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 
 type ScheduleControl = Control<{
   schedule: {
@@ -293,7 +293,7 @@ const TimeSlots = ({
   data: BrandBookingSlot[];
   onSelect: (minutes: number | undefined) => void;
 }) => {
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
   const { t } = useI18n();
 
   const slots = useMemo(() => {

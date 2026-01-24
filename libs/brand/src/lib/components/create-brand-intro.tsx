@@ -1,10 +1,10 @@
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import { Button, EmptyView, PageView } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useI18n } from '@symbiot-core-apps/shared';
 
 export const CreateBrandIntro = () => {
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
   const { t } = useI18n();
 
   return (

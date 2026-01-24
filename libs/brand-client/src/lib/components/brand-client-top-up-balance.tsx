@@ -16,7 +16,7 @@ import {
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import { View } from 'tamagui';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import { useI18n, useModal } from '@symbiot-core-apps/shared';
 import { BrandMembershipsCurrentList } from '@symbiot-core-apps/brand-membership';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
@@ -34,7 +34,7 @@ export const BrandClientTopUpBalance = ({
   trigger: ReactElement<{ loading?: boolean }>;
   preventNavigationToProfile?: boolean;
 }) => {
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
   const { t } = useI18n();
   const { hasPermission } = useCurrentBrandEmployee();
   const { mutateAsync: addMembership, isPending: isMembershipLoading } =

@@ -51,14 +51,14 @@ import { BrandBookingNoteController } from './controller/brand-booking-note-cont
 import { getSlotsRandomEmployee } from '../utils/get-slots-random-employee';
 import { ServiceBrandBookingProfileClients } from './service-brand-booking-profile-clients';
 import { View, XStack } from 'tamagui';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 
 export const ServiceBrandBookingProfile = ({
   booking,
 }: {
   booking: ServiceBrandBooking;
 }) => {
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
   const { t } = useI18n();
   const { me } = useCurrentAccountState();
   const { hasPermission } = useCurrentBrandEmployee();

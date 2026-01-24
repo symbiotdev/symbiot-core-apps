@@ -7,7 +7,7 @@ import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import { router, useNavigation } from 'expo-router';
 import { useAuthBrand, useBrandAuthState } from '../hooks/use-brand-auth';
 import { useBrandCreateReq } from '@symbiot-core-apps/api';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import { BrandWebsiteController } from './contoller/brand-website-controller';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { BrandReferralSourceController } from './contoller/brand-referral-source-controller';
@@ -26,7 +26,7 @@ export const CreateBrand = () => {
   const { processing: authProcessing } = useBrandAuthState();
   const { t } = useI18n();
   const navigation = useNavigation();
-  const { functionality } = useApp();
+  const { functionality } = useAppSettings();
   const { mutateAsync, isPending } = useBrandCreateReq();
   const switchBrand = useAuthBrand();
 

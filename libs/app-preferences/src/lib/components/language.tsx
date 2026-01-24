@@ -9,24 +9,24 @@ import {
 import { useEffect, useMemo } from 'react';
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
-import { useApp } from '@symbiot-core-apps/app';
 import { queryClient } from '@symbiot-core-apps/api';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { appLanguages, useI18n } from '@symbiot-core-apps/shared';
 
 export const Language = () => {
-  const { lang, changeLanguage } = useI18n();
-  const { languages } = useApp();
+  const { lang, supportedLanguages, changeLanguage } = useI18n();
   const navigation = useNavigation();
   const { updateAccount$, updating } = useCurrentAccountUpdater();
 
   const items = useMemo(
     () =>
-      languages.map(({ flag, code, name }) => ({
-        icon: <RegularText fontSize={28}>{flag}</RegularText>,
-        label: name,
-        value: code,
-      })),
-    [languages],
+      appLanguages
+        .filter(({ code }) => supportedLanguages.includes(code))
+        .map(({ flag, code, name }) => ({
+          icon: <RegularText fontSize={28}>{flag}</RegularText>,
+          label: name,
+          value: code,
+        })),
+    [supportedLanguages],
   );
 
   useEffect(() => {

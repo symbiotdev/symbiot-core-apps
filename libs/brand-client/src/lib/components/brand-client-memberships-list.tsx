@@ -13,7 +13,7 @@ import {
   defaultPageVerticalPadding,
   InitView,
 } from '@symbiot-core-apps/ui';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import { useI18n } from '@symbiot-core-apps/shared';
 
 const byType = {
@@ -46,7 +46,7 @@ export const BrandClientMembershipsList = ({
 }) => {
   const config = byType[type];
   const { t } = useI18n();
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
 
   const {
     items: memberships,

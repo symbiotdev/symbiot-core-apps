@@ -11,7 +11,7 @@ import {
   Search,
 } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCallback, useState } from 'react';
 import {
@@ -126,7 +126,7 @@ const Intro = ({
   error?: string | null;
 }) => {
   const { t } = useI18n();
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
   const { canDo } = useAccountLimits();
 
   if (loading || error) {

@@ -34,7 +34,6 @@ export * from './lib/types/account-preferences';
 
 export * from './lib/types/app-config-legacy';
 export * from './lib/types/app-settings';
-export * from './lib/types/app-translations';
 export * from './lib/types/brand';
 export * from './lib/types/brand-booking';
 export * from './lib/types/brand-client';

@@ -21,7 +21,7 @@ import {
 import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 
 export const BrandBookingsList = () => {
   const { timezone } = useBookingDatetime();
@@ -121,7 +121,7 @@ const Intro = ({
   loading: boolean;
   error?: string | null;
 }) => {
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
   const { t } = useI18n();
   const { hasPermission } = useCurrentBrandEmployee();
 

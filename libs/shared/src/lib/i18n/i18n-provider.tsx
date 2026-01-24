@@ -15,14 +15,17 @@ import {
 import i18n, { TFunction } from 'i18next';
 import { getLocales } from 'expo-localization';
 import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
+import { merge } from 'merge-anything';
 
 const LANGUAGE_STORE_KEY = 'x-lang';
 
 type I18nContext = {
   t: TFunction;
   lang: string;
+  supportedLanguages: string[];
   changeLanguage: (lang: string) => void;
   changeToDefaultLanguage: () => void;
+  updateTranslates: (newTranslates: Record<string, unknown>) => void;
 };
 
 const Context = createContext<I18nContext | undefined>(undefined);
@@ -54,15 +57,33 @@ export const I18nProvider = ({
 
   const [loaded, setLoaded] = useState(false);
 
-  const primaryLang = useMemo(() => {
+  const { languages, primaryLang } = useMemo(() => {
     const languages = Object.keys(appTranslations);
 
-    return (
-      getLocales().find(
-        ({ languageCode }) => languageCode && languages.includes(languageCode),
-      )?.languageCode || defaultLanguage
-    );
+    return {
+      languages,
+      primaryLang:
+        getLocales().find(
+          ({ languageCode }) =>
+            languageCode && languages.includes(languageCode),
+        )?.languageCode || defaultLanguage,
+    };
   }, [appTranslations, defaultLanguage]);
+
+  const defaultTranslations: Record<string, unknown> = useMemo(
+    () =>
+      languages.reduce(
+        (obj, lang) => ({
+          ...obj,
+          [lang]: {
+            ...appTranslations[lang],
+            shared: loadShared(lang),
+          },
+        }),
+        {},
+      ),
+    [appTranslations, languages],
+  );
 
   const changeLanguage = useCallback((lang: string) => {
     void i18n.changeLanguage(lang);
@@ -74,18 +95,23 @@ export const I18nProvider = ({
     mmkvGlobalStorage.remove(LANGUAGE_STORE_KEY);
   }, [primaryLang]);
 
+  const updateTranslates = useCallback(
+    (newTranslations: Record<string, unknown>) => {
+      const mergedJson = merge(defaultTranslations, newTranslations);
+
+      Object.keys(defaultTranslations).forEach((lang) => {
+        i18n.addResourceBundle(lang, 'translation', mergedJson[lang]);
+      });
+    },
+    [defaultTranslations],
+  );
+
   const init = useCallback(async () => {
-    const languages = Object.keys(appTranslations);
     const storedLanguage = mmkvGlobalStorage.getString(LANGUAGE_STORE_KEY);
 
     try {
-      i18n.languages = languages;
-
-      languages.forEach((lang) =>
-        i18n.addResourceBundle(lang, 'translation', {
-          ...appTranslations[lang],
-          shared: loadShared(lang),
-        }),
+      Object.keys(defaultTranslations).forEach((lang) =>
+        i18n.addResourceBundle(lang, 'translation', defaultTranslations[lang]),
       );
 
       if (storedLanguage && !languages.includes(storedLanguage)) {
@@ -98,7 +124,7 @@ export const I18nProvider = ({
     } finally {
       setLoaded(true);
     }
-  }, [appTranslations, primaryLang, changeLanguage]);
+  }, [defaultTranslations, languages, primaryLang, changeLanguage]);
 
   useLayoutEffect(() => {
     void init();
@@ -108,8 +134,10 @@ export const I18nProvider = ({
     <Context.Provider
       value={{
         t,
+        supportedLanguages: languages,
         lang: i18nTranslation.language,
         changeLanguage,
+        updateTranslates,
         changeToDefaultLanguage,
       }}
     >
@@ -117,6 +145,21 @@ export const I18nProvider = ({
     </Context.Provider>
   );
 };
+
+export const appLanguages = [
+  {
+    name: 'English',
+    shortName: 'Eng',
+    flag: '🇺🇸',
+    code: 'en',
+  },
+  {
+    name: 'Українська',
+    shortName: 'Укр',
+    flag: '🇺🇦',
+    code: 'uk',
+  },
+];
 
 const loadShared = (lang: string) => {
   switch (lang) {

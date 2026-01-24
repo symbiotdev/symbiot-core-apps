@@ -14,13 +14,13 @@ import {
 } from '@symbiot-core-apps/state';
 import React, { useEffect } from 'react';
 import { useCountNewNotificationsReq } from '@symbiot-core-apps/api';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import { PlusActionAdaptiveModal } from '../../../components/tabs/plus-action-adaptive-modal';
 
 export default () => {
   const { brand: currentBrand } = useCurrentBrandState();
   const { stats, setMyStats } = useCurrentAccountState();
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
   const segments = useSegments();
   const { visible: drawerVisible } = useDrawer();
   const { data: countNewNotifications } = useCountNewNotificationsReq();

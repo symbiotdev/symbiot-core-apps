@@ -16,7 +16,7 @@ import {
 import { InitialAction } from '../../../components/brand/initial-action';
 import { router, useNavigation } from 'expo-router';
 import React, { useCallback, useLayoutEffect } from 'react';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import { XStack } from 'tamagui';
 import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 import {
@@ -33,7 +33,7 @@ import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 export default () => {
   const { me, stats } = useCurrentAccountState();
   const { brand: currentBrand } = useCurrentBrandState();
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
   const { t } = useI18n();
   const { visible: drawerVisible } = useDrawer();
   const navigation = useNavigation();
@@ -98,7 +98,7 @@ export default () => {
 };
 
 const BrandHome = () => {
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
   const { t } = useI18n();
   const { brand: currentBrand } = useCurrentBrandState();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();

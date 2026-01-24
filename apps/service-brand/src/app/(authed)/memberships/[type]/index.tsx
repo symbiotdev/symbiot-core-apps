@@ -17,7 +17,7 @@ import {
   useBrandVisitBasedMembershipCurrentListReq,
 } from '@symbiot-core-apps/api';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
 
@@ -29,7 +29,7 @@ export default () => {
   const { type } = useLocalSearchParams<{
     type: BrandMembershipType;
   }>();
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
 
   const config = useMemo(
     () =>

@@ -1,4 +1,4 @@
-import { useApp } from '@symbiot-core-apps/app';
+import { useAppSettings } from '@symbiot-core-apps/app';
 import {
   useCurrentAccountState,
   useCurrentBrandState,
@@ -23,7 +23,7 @@ export const InitialAction = () => {
   const { me } = useCurrentAccountState();
   const { brands: currentBrands } = useCurrentBrandState();
   const { t } = useI18n();
-  const { icons } = useApp();
+  const { icons } = useAppSettings();
 
   const [qrCodeVisible, setQrCodeVisible] = useState(false);
 

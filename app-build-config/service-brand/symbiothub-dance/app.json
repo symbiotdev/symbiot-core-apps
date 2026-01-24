@@ -5,7 +5,7 @@
     "scheme": "symbiothub-dance",
     "version": "1.0.2",
     "ios": {
-      "buildNumber": "65"
+      "buildNumber": "66"
     },
     "android": {
       "versionCode": 7

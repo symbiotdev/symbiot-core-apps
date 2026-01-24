@@ -317,6 +317,13 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
 
       {/*EMPLOYEES*/}
 
+      <Stack.Screen
+        name="employees/me"
+        options={{
+          headerTitle: t('shared.my_profile'),
+        }}
+      />
+
       <Stack.Protected guard={hasPermission('employees')}>
         <Stack.Protected guard={hasPermission('analytics')}>
           <Stack.Screen

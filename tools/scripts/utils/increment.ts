@@ -19,7 +19,7 @@ export const selectIncrement = ({ env }: { env: Env }): Promise<Increment> =>
         value: Increment.skip,
       },
       {
-        name: 'Testing',
+        name: 'Bump native version',
         value: Increment.bump,
       },
       {

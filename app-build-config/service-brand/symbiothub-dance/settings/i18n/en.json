@@ -1386,6 +1386,7 @@
   },
   "brand_period_based_membership": {
     "title": "VIP Passes",
+    "subtitle": "Unlimited classes",
     "expired": "Expired",
     "unavailable": "Not available for purchase",
     "analytics": {
@@ -1542,6 +1543,7 @@
   },
   "brand_visit_based_membership": {
     "title": "Passes",
+    "subtitle": "Limited classes",
     "count_visits": "Number of classes: {{count}}",
     "expired": "Expired",
     "limit_reached": "Visits limit reached",

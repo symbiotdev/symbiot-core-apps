@@ -117,13 +117,7 @@ export const AccountSubscriptionProvider = ({
   useEffect(() => {
     const apiKey = apiKeyByPlatform[Platform.OS];
 
-    if (
-      !apiKey ||
-      !me?.id ||
-      !canSubscribe ||
-      process.env.EXPO_PUBLIC_APP_MODE !== 'production'
-    )
-      return;
+    if (isDevMode || !apiKey || !me?.id || !canSubscribe) return;
 
     Purchases.configure({ apiKey, appUserID: me.id });
     Purchases.getOfferings().then(({ all }) =>

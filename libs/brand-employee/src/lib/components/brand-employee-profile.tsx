@@ -5,7 +5,6 @@ import {
   Card,
   FormView,
   H3,
-  HeaderButton,
   Icon,
   ListItemGroup,
   MapsTrigger,
@@ -13,7 +12,7 @@ import {
   PageView,
   RegularText,
 } from '@symbiot-core-apps/ui';
-import React, { useLayoutEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { View, XStack } from 'tamagui';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
@@ -23,7 +22,7 @@ import {
 } from '@symbiot-core-apps/state';
 import { openBrowserAsync } from 'expo-web-browser';
 import { BrandLocationItem, BrandSchedule } from '@symbiot-core-apps/brand';
-import { router, useNavigation } from 'expo-router';
+import { router } from 'expo-router';
 import { Linking } from 'react-native';
 import { BrandEmployeeCongrats } from './brand-employee-congrats';
 import { BrandEmployeeProfileCompletion } from './brand-employee-profile-completion';
@@ -37,7 +36,6 @@ export const BrandEmployeeProfile = ({
   const { brand } = useCurrentBrandState();
   const { t } = useI18n();
   const { hasPermission } = useCurrentBrandEmployee();
-  const navigation = useNavigation();
 
   const { instagram, email, phone, address } = useMemo(
     () => ({
@@ -69,28 +67,6 @@ export const BrandEmployeeProfile = ({
         : employee.locations?.[0]?.schedules) || [],
     [employee.locations, employee.schedules],
   );
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <XStack flex={1} gap="$3" alignItems="center">
-          {/*todo - analytics*/}
-          {/*{hasPermission('analytics') && (*/}
-          {/*  <HeaderButton*/}
-          {/*    iconName="ChartSquare"*/}
-          {/*    onPress={() => router.push(`/employees/${id}/analytics`)}*/}
-          {/*  />*/}
-          {/*)}*/}
-          {hasPermission('employees') && (
-            <HeaderButton
-              iconName="SettingsMinimalistic"
-              onPress={() => router.push(`/employees/${employee.id}/update`)}
-            />
-          )}
-        </XStack>
-      ),
-    });
-  }, [hasPermission, employee.id, navigation]);
 
   return (
     <PageView scrollable withHeaderHeight>

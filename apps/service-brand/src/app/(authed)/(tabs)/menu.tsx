@@ -71,7 +71,7 @@ export default () => {
     router.push(`/employees/me`);
   }, []);
   const onAppearancePress = useCallback(
-    () => router.push('/appearance/preferences'),
+    () => router.push('/preferences/scheme'),
     [],
   );
   const onDateTimePress = useCallback(
@@ -243,7 +243,7 @@ export default () => {
             />
 
             <ListItem
-              label={t('shared.preferences.appearance.title')}
+              label={t('shared.preferences.scheme.title')}
               icon={<Icon name="Pallete2" />}
               onPress={onAppearancePress}
             />

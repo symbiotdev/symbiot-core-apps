@@ -1,4 +1,4 @@
-import { Scheme, Weekday } from '@symbiot-core-apps/shared';
+import { SystemScheme, Weekday } from '@symbiot-core-apps/shared';
 
 export type AccountPreferences = {
   pushNotifications: boolean;
@@ -10,7 +10,7 @@ export type AccountPreferences = {
 };
 
 export type AccountAppearance = {
-  scheme?: Scheme | null;
+  scheme?: SystemScheme | null;
   calendar?: {
     weekStartsOn?: Weekday;
     countDays?: {

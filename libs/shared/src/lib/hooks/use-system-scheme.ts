@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Appearance } from 'react-native';
 
-export type Scheme = 'light' | 'dark';
+export type SystemScheme = 'light' | 'dark';
 
-export const schemes: Scheme[] = ['light', 'dark'] as const;
+export const systemSchemes: SystemScheme[] = ['light', 'dark'] as const;
 
 export const defaultSystemScheme = () =>
-  Appearance.getColorScheme() || schemes[0];
+  Appearance.getColorScheme() || systemSchemes[0];
 
 export const useSystemScheme = () => {
-  const [scheme, setScheme] = useState<Scheme>(defaultSystemScheme());
+  const [scheme, setScheme] = useState<SystemScheme>(defaultSystemScheme());
 
   useEffect(() => {
     const listener = Appearance.addChangeListener(({ colorScheme }) =>

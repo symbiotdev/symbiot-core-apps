@@ -1,9 +1,9 @@
-import { Scheme } from '@symbiot-core-apps/shared';
+import { SystemScheme } from '@symbiot-core-apps/shared';
 
 export type AppSettings = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icons: Record<AppConfigIconName, any>;
-  theme: Record<Scheme, ThemeConfig>;
+  theme: Record<SystemScheme, ThemeConfig>;
   language: {
     default: string;
     translations: Record<string, Record<string, unknown>>;

@@ -10,7 +10,7 @@ import {
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useCallback } from 'react';
-import { schemes } from '@symbiot-core-apps/shared';
+import { systemSchemes } from '@symbiot-core-apps/shared';
 import { useAppSchemeState } from './use-app-theme.state';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
@@ -93,7 +93,7 @@ export const useCurrentAccount = () => {
       const preferScheme = preferences?.appearance?.scheme;
 
       const scheme =
-        preferScheme && schemes.includes(preferScheme)
+        preferScheme && systemSchemes.includes(preferScheme)
           ? preferScheme
           : undefined;
 

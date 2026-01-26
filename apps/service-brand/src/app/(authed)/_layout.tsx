@@ -172,15 +172,6 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
         }}
       />
 
-      {/*APPEARANCE*/}
-
-      <Stack.Screen
-        name="appearance/preferences"
-        options={{
-          headerTitle: t('shared.preferences.appearance.title'),
-        }}
-      />
-
       {/*BOOKINGS*/}
 
       <Stack.Protected guard={hasPermission('bookings')}>
@@ -456,6 +447,13 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
         name="preferences/datetime"
         options={{
           headerTitle: t('shared.preferences.datetime.title'),
+        }}
+      />
+
+      <Stack.Screen
+        name="preferences/scheme"
+        options={{
+          headerTitle: t('shared.preferences.scheme.title'),
         }}
       />
 

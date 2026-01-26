@@ -13,11 +13,11 @@ import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import {
   defaultSystemScheme,
-  Scheme,
+  SystemScheme,
   useI18n,
 } from '@symbiot-core-apps/shared';
 
-export const Appearance = () => {
+export const Scheme = () => {
   const navigation = useNavigation();
   const { t } = useI18n();
   const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
@@ -27,12 +27,12 @@ export const Appearance = () => {
     () => [
       {
         icon: <Icon name="Sun" />,
-        label: t('shared.preferences.appearance.theme.light'),
+        label: t('shared.preferences.scheme.theme.light'),
         value: 'light',
       },
       {
         icon: <Icon name="Moon" />,
-        label: t('shared.preferences.appearance.theme.dark'),
+        label: t('shared.preferences.scheme.theme.dark'),
         value: 'dark',
       },
     ],
@@ -40,7 +40,7 @@ export const Appearance = () => {
   );
 
   const onChange = useCallback(
-    (scheme: Scheme | null) =>
+    (scheme: SystemScheme | null) =>
       updatePreferences$({
         appearance: {
           scheme,
@@ -59,14 +59,14 @@ export const Appearance = () => {
     <PageView scrollable withHeaderHeight>
       <FormView>
         <ListItemGroup
-          // title={t('shared.preferences.appearance.theme.title')}
+          // title={t('shared.preferences.scheme.theme.title')}
           gap="$4"
           paddingVertical="$4"
         >
           <Switch
             checked={!scheme}
             disabled={updating}
-            label={t('shared.preferences.appearance.theme.auto.label')}
+            label={t('shared.preferences.scheme.theme.auto.label')}
             onChange={(checked) =>
               onChange(checked ? null : defaultSystemScheme())
             }

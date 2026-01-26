@@ -1,4 +1,4 @@
-import { Scheme } from '@symbiot-core-apps/shared';
+import { SystemScheme } from '@symbiot-core-apps/shared';
 
 export type AppLimitsLegacy = {
   employees?: number;
@@ -77,6 +77,6 @@ export type AppConfigFunctionalityLegacy = {
 
 export type AppConfigLegacy = {
   icons: Record<AppConfigIconNameLegacy, string>;
-  theme: Record<Scheme, ThemeConfigLegacy>;
+  theme: Record<SystemScheme, ThemeConfigLegacy>;
   functionality: AppConfigFunctionalityLegacy;
 };

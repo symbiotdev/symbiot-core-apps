@@ -1,4 +1,7 @@
-import { useInfiniteQuery as useTanStackInfiniteQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery as useTanStackInfiniteQuery,
+  UseInfiniteQueryResult,
+} from '@tanstack/react-query';
 import type { InfiniteData, QueryKey } from '@tanstack/query-core';
 import axios from 'axios';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -7,7 +10,6 @@ import { queryClient } from '../utils/client';
 import { requestWithStringError } from '../utils/request';
 import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
 import { getInitialQueryDataStoreQueryKey } from '../utils/initial-query-data';
-import type { UseInfiniteQueryResult } from '@tanstack/react-query/src/types';
 
 function getNextPageParam<T>(page: PaginationList<T>) {
   return page.items.length < page.count

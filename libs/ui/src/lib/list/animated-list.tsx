@@ -16,7 +16,6 @@ export function AnimatedList<T>({
   ignoreAnimation,
   progressViewOffset,
   onRefresh,
-  onEndReached,
   ...flatListProps
 }: FlatListPropsWithLayout<T> & {
   listRef?: ForwardedRef<FlatList>;

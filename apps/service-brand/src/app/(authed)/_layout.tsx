@@ -354,15 +354,6 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
         />
       </Stack.Protected>
 
-      {/*LANGUAGE*/}
-
-      <Stack.Screen
-        name="language/preferences"
-        options={{
-          headerTitle: t('shared.preferences.language.title'),
-        }}
-      />
-
       {/*LOCATIONS*/}
 
       <Stack.Protected guard={hasPermission('locations')}>
@@ -434,12 +425,6 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
           headerTitle: t('shared.notifications.title'),
         }}
       />
-      <Stack.Screen
-        name="notifications/preferences"
-        options={{
-          headerTitle: t('shared.preferences.notifications.title'),
-        }}
-      />
 
       {/*CALENDAR*/}
 
@@ -449,7 +434,18 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
           headerTitle: t('shared.preferences.datetime.title'),
         }}
       />
-
+      <Stack.Screen
+        name="preferences/language"
+        options={{
+          headerTitle: t('shared.preferences.language.title'),
+        }}
+      />
+      <Stack.Screen
+        name="preferences/notifications"
+        options={{
+          headerTitle: t('shared.preferences.notifications.title'),
+        }}
+      />
       <Stack.Screen
         name="preferences/scheme"
         options={{

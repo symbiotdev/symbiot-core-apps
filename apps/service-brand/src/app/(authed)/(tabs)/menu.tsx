@@ -79,11 +79,11 @@ export default () => {
     [],
   );
   const onLanguagePress = useCallback(
-    () => router.push('/language/preferences'),
+    () => router.push('/preferences/language'),
     [],
   );
   const onNotificationsPress = useCallback(
-    () => router.push('/notifications/preferences'),
+    () => router.push('/preferences/notifications'),
     [],
   );
   const onTermsPrivacyPress = useCallback(

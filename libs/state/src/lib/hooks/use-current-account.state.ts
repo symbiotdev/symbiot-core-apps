@@ -10,7 +10,7 @@ import {
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useCallback } from 'react';
-import { Scheme, schemes } from '@symbiot-core-apps/shared';
+import { schemes } from '@symbiot-core-apps/shared';
 import { useAppSchemeState } from './use-app-theme.state';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
@@ -90,21 +90,21 @@ export const useCurrentAccount = () => {
   const updateMePreferences = useCallback(
     async (preferences: AccountPreferences) => {
       setMyPreferences(preferences);
+      const preferScheme = preferences?.appearance?.scheme;
 
-      if (preferences.scheme) {
-        const scheme = schemes.includes(preferences.scheme as Scheme)
-          ? (preferences.scheme as Scheme)
+      const scheme =
+        preferScheme && schemes.includes(preferScheme)
+          ? preferScheme
           : undefined;
 
-        if (Platform.OS === 'web') {
-          if (scheme) {
-            setScheme(scheme);
-          } else {
-            removeScheme();
-          }
+      if (Platform.OS === 'web') {
+        if (scheme) {
+          setScheme(scheme);
         } else {
-          Appearance.setColorScheme(scheme);
+          removeScheme();
         }
+      } else {
+        Appearance.setColorScheme(scheme);
       }
     },
     [removeScheme, setMyPreferences, setScheme],

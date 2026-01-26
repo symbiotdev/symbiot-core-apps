@@ -1,4 +1,3 @@
-import { Day, Duration } from 'date-fns/types';
 import { startOfWeek } from 'date-fns/startOfWeek';
 import { format } from 'date-fns/format';
 import { addDays } from 'date-fns/addDays';
@@ -41,7 +40,18 @@ import { formatDistance } from 'date-fns/formatDistance';
 import { enUS, Locale, uk } from 'date-fns/locale';
 import { getAppLanguage } from '../i18n/i18n-provider';
 
-export const defaultWeekdayStartsOn: Day = 0;
+export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export type Duration = {
+  years?: number;
+  months?: number;
+  weeks?: number;
+  days?: number;
+  hours?: number;
+  minutes?: number;
+  seconds?: number;
+};
+
+export const defaultWeekdayStartsOn: Weekday = 0;
 export const minutesInHour = 60;
 export const hoursInDay = 24;
 export const minutesInDay = hoursInDay * minutesInHour;
@@ -52,8 +62,6 @@ export const minutesInMonth = averageDaysInMonth * minutesInDay;
 export const secondsInHour = minutesInHour * 60;
 export const secondsInDay = secondsInHour * 24;
 export const secondsInMonth = minutesInMonth * 60;
-
-export type Weekday = Day;
 
 export const DATE_FNS_SUPPORTED_LANGUAGES: Record<string, Locale> = {
   en: enUS,
@@ -205,7 +213,7 @@ export const DateHelper = {
       locale: getAppDateLocale(),
     });
   },
-  startOfWeek: (date: Date, weekStartsOn: Day = defaultWeekdayStartsOn) =>
+  startOfWeek: (date: Date, weekStartsOn: Weekday = defaultWeekdayStartsOn) =>
     startOfWeek(date, {
       weekStartsOn,
     }),
@@ -222,7 +230,7 @@ export const DateHelper = {
       }),
     );
   },
-  getWeekdays: (props?: { formatStr?: string; weekStartsOn?: Day }) => {
+  getWeekdays: (props?: { formatStr?: string; weekStartsOn?: Weekday }) => {
     const formatStr = props?.formatStr ?? 'EEEE';
     const start = DateHelper.startOfWeek(
       new Date(),

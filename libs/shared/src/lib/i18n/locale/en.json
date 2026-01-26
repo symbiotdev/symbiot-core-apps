@@ -182,10 +182,40 @@
         }
       }
     },
-    "calendar": {
-      "title": "Calendar",
+    "datetime": {
+      "title": "Date & Time",
       "week_starts_on": {
         "label": "Week starts on"
+      },
+      "date_format": {
+        "label": "Date format",
+        "formats": [
+          {
+            "label": "MM/DD/YYYY",
+            "value": "MM/dd/yyyy"
+          },
+          {
+            "label": "DD.MM.YYYY",
+            "value": "dd.MM.yyyy"
+          }
+        ]
+      },
+      "time_format": {
+        "label": "Time format",
+        "formats": [
+          {
+            "label": "Default",
+            "value": "p"
+          },
+          {
+            "label": "12-hour clock",
+            "value": "h:mm a"
+          },
+          {
+            "label": "24-hour clock",
+            "value": "HH:mm"
+          }
+        ]
       }
     },
     "system": {

@@ -36,14 +36,14 @@ export const Notifications = () => {
   }, [updating, navigation]);
 
   const togglePushNotifications = useCallback(
-    (enablePushNotifications: boolean) =>
-      updatePreferences$({ enablePushNotifications }),
+    (pushNotifications: boolean) =>
+      updatePreferences$({ pushNotifications }),
     [updatePreferences$],
   );
 
   const toggleNotificationSound = useCallback(
-    (enableNotificationSound: boolean) =>
-      updatePreferences$({ enableNotificationSound }),
+    (notificationsSound: boolean) =>
+      updatePreferences$({ notificationsSound }),
     [updatePreferences$],
   );
 
@@ -70,7 +70,7 @@ export const Notifications = () => {
               checked={
                 pushNotificationsDenied
                   ? false
-                  : me?.preferences?.enablePushNotifications
+                  : me?.preferences?.pushNotifications
               }
               disabled={pushNotificationsDenied}
               onChange={togglePushNotifications}
@@ -78,7 +78,7 @@ export const Notifications = () => {
           )}
           <Switch
             label={t('shared.preferences.notifications.sound.label')}
-            checked={me?.preferences?.enableNotificationSound}
+            checked={me?.preferences?.notificationsSound}
             onChange={toggleNotificationSound}
           />
         </Card>

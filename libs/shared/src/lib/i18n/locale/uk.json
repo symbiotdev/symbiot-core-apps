@@ -182,10 +182,40 @@
         }
       }
     },
-    "calendar": {
-      "title": "Календар",
+    "datetime": {
+      "title": "Дата & Час",
       "week_starts_on": {
         "label": "Перший день тижня"
+      },
+      "date_format": {
+        "label": "Формат дати",
+        "formats": [
+          {
+            "label": "ММ/ДД/РРРР",
+            "value": "MM/dd/yyyy"
+          },
+          {
+            "label": "ДД.ММ.РРРР",
+            "value": "dd.MM.yyyy"
+          }
+        ]
+      },
+      "time_format": {
+        "label": "Формат часу",
+        "formats": [
+          {
+            "label": "За замовчуванням",
+            "value": "p"
+          },
+          {
+            "label": "12 год",
+            "value": "h:mm a"
+          },
+          {
+            "label": "24 год",
+            "value": "HH:mm"
+          }
+        ]
       }
     },
     "system": {

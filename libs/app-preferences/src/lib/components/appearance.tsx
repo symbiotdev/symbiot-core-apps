@@ -10,15 +10,18 @@ import {
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
-import { AccountScheme } from '@symbiot-core-apps/api';
 import { useNavigation } from '@react-navigation/native';
-import { defaultSystemScheme, useI18n } from '@symbiot-core-apps/shared';
+import {
+  defaultSystemScheme,
+  Scheme,
+  useI18n,
+} from '@symbiot-core-apps/shared';
 
 export const Appearance = () => {
   const navigation = useNavigation();
   const { t } = useI18n();
   const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
-  const scheme = me?.preferences?.scheme;
+  const scheme = me?.preferences?.appearance?.scheme;
 
   const items = useMemo(
     () => [
@@ -37,7 +40,12 @@ export const Appearance = () => {
   );
 
   const onChange = useCallback(
-    (scheme: AccountScheme) => updatePreferences$({ scheme }),
+    (scheme: Scheme | null) =>
+      updatePreferences$({
+        appearance: {
+          scheme,
+        },
+      }),
     [updatePreferences$],
   );
 
@@ -56,14 +64,15 @@ export const Appearance = () => {
           paddingVertical="$4"
         >
           <Switch
-            checked={scheme === 'system'}
+            checked={!scheme}
             disabled={updating}
             label={t('shared.preferences.appearance.theme.auto.label')}
             onChange={(checked) =>
-              onChange(checked ? 'system' : defaultSystemScheme())
+              onChange(checked ? null : defaultSystemScheme())
             }
           />
-          {scheme !== 'system' && (
+
+          {!!scheme && (
             <ToggleGroup
               disabled={updating}
               items={items}

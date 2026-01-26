@@ -9,8 +9,13 @@ export type AccountPreferences = {
   appearance: AccountAppearance;
 };
 
+export type DateElementType = 'calendar' | 'input' | null;
+
 export type AccountAppearance = {
   scheme?: SystemScheme | null;
+  date?: {
+    element?: DateElementType;
+  };
   calendar?: {
     weekStartsOn?: Weekday;
     countDays?: {

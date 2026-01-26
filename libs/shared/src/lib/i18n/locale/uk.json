@@ -216,6 +216,23 @@
             "value": "HH:mm"
           }
         ]
+      },
+      "date_element": {
+        "label": "Поле для вибору дати",
+        "types": [
+          {
+            "label": "За замовчуванням",
+            "value": null
+          },
+          {
+            "label": "Календар",
+            "value": "calendar"
+          },
+          {
+            "label": "Текстове поле (ручне введення)",
+            "value": "input"
+          }
+        ]
       }
     },
     "system": {

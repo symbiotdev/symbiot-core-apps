@@ -216,6 +216,23 @@
             "value": "HH:mm"
           }
         ]
+      },
+      "date_element": {
+        "label": "Date element",
+        "types": [
+          {
+            "label": "Default",
+            "value": null
+          },
+          {
+            "label": "Calendar",
+            "value": "calendar"
+          },
+          {
+            "label": "Text field (manual input)",
+            "value": "input"
+          }
+        ]
       }
     },
     "system": {

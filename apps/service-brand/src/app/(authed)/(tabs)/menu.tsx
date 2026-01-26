@@ -74,8 +74,8 @@ export default () => {
     () => router.push('/appearance/preferences'),
     [],
   );
-  const onCalendarPress = useCallback(
-    () => router.push('/calendar/preferences'),
+  const onDateTimePress = useCallback(
+    () => router.push('/preferences/datetime'),
     [],
   );
   const onLanguagePress = useCallback(
@@ -235,6 +235,13 @@ export default () => {
               icon={<Icon name="Bell" />}
               onPress={onNotificationsPress}
             />
+
+            <ListItem
+              label={t('shared.preferences.datetime.title')}
+              icon={<Icon name="CalendarMinimalistic" />}
+              onPress={onDateTimePress}
+            />
+
             <ListItem
               label={t('shared.preferences.appearance.title')}
               icon={<Icon name="Pallete2" />}
@@ -248,12 +255,6 @@ export default () => {
                 onPress={onLanguagePress}
               />
             )}
-
-            <ListItem
-              label={t('shared.calendar')}
-              icon={<Icon name="Calendar" />}
-              onPress={onCalendarPress}
-            />
           </ListItemGroup>
 
           <ListItemGroup title={t('shared.application')}>

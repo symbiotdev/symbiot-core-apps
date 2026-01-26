@@ -241,15 +241,6 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
         </Stack.Protected>
       </Stack.Protected>
 
-      {/*CALENDAR*/}
-
-      <Stack.Screen
-        name="calendar/preferences"
-        options={{
-          headerTitle: t('shared.preferences.calendar.title'),
-        }}
-      />
-
       {/*CLIENTS*/}
 
       <Stack.Protected guard={hasPermission('clients')}>
@@ -456,6 +447,15 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
         name="notifications/preferences"
         options={{
           headerTitle: t('shared.preferences.notifications.title'),
+        }}
+      />
+
+      {/*CALENDAR*/}
+
+      <Stack.Screen
+        name="preferences/datetime"
+        options={{
+          headerTitle: t('shared.preferences.datetime.title'),
         }}
       />
 

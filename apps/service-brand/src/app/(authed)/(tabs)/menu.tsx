@@ -41,6 +41,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { Image } from 'expo-image';
 import { useAccountSubscription } from '@symbiot-core-apps/account-subscription';
+import { SymbiotLogo } from '../../../components/symbiot/logo/symbiot-logo';
 
 export default () => {
   const { t, supportedLanguages } = useI18n();
@@ -307,18 +308,18 @@ export default () => {
             />
           </ListItemGroup>
 
-          <View alignItems="center" gap="$1" marginTop="auto">
-            <Icon name="CodeCircle" color="$placeholderColor" />
-
-            {Platform.OS !== 'web' && (
-              <SemiBoldText>
-                {t('shared.version')}: {DeviceVersion}
-              </SemiBoldText>
-            )}
+          <View alignItems="center" marginTop="auto">
+            <SymbiotLogo />
 
             <RegularText color="$placeholderColor" textAlign="center">
               Powered by Symbiot
             </RegularText>
+
+            {Platform.OS !== 'web' && (
+              <SemiBoldText marginTop="$1">
+                {t('shared.version')}: {DeviceVersion}
+              </SemiBoldText>
+            )}
           </View>
         </FormView>
       </TabsPageView>

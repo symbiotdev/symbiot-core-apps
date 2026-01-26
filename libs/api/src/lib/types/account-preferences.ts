@@ -1,14 +1,21 @@
-import { Scheme, schemes, Weekday } from '@symbiot-core-apps/shared';
-
-export type AccountScheme = Scheme | 'system';
-
-export const accountSchemes: AccountScheme[] = [...schemes, 'system'] as const;
+import { Scheme, Weekday } from '@symbiot-core-apps/shared';
 
 export type AccountPreferences = {
-  scheme: AccountScheme;
-  enablePushNotifications: boolean;
-  enableNotificationSound: boolean;
-  enableNotificationVibration: boolean;
-  weekStartsOn: Weekday;
+  pushNotifications: boolean;
+  notificationsSound: boolean;
+  notificationsVibration: boolean;
   dateFormat: string;
+  timeFormat: string;
+  appearance: AccountAppearance;
+};
+
+export type AccountAppearance = {
+  scheme?: Scheme | null;
+  calendar?: {
+    weekStartsOn?: Weekday;
+    countDays?: {
+      landscape?: number;
+      portrait?: number;
+    };
+  };
 };

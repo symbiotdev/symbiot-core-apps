@@ -12,7 +12,6 @@ import { QuestionCircle } from './QuestionCircle';
 import { FileText } from './FileText';
 import { ShareCircle } from './ShareCircle';
 import { Logout2 } from './Logout2';
-import { CodeCircle } from './CodeCircle';
 import { TrashBinMinimalistic } from './TrashBinMinimalistic';
 import { Letter } from './Letter';
 import { Moon } from './Moon';
@@ -42,7 +41,6 @@ import { AltArrowRight } from './AltArrowRight';
 import { IconMap } from '../../config';
 import { Maximize } from './Maximize';
 import { Minimize } from './Minimize';
-import { Code } from './Code';
 import { SettingsMinimalistic } from './SettingsMinimalistic';
 import { Rocket } from './Rocket';
 import { InfoCircle } from './InfoCircle';
@@ -105,8 +103,6 @@ export const Map: IconMap = {
   ChecklistMinimalistic,
   Close,
   CloseCircle,
-  Code,
-  CodeCircle,
   Confetti,
   Copy,
   CrownLine,

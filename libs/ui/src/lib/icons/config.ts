@@ -24,8 +24,6 @@ export type SolarIconName =
   | 'ChecklistMinimalistic'
   | 'Close'
   | 'CloseCircle'
-  | 'Code'
-  | 'CodeCircle'
   | 'Confetti'
   | 'Copy'
   | 'CrownLine'

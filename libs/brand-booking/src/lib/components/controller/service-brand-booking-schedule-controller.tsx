@@ -68,7 +68,7 @@ export function ServiceBrandBookingScheduleController({
               disableDrag={disableDrag}
               value={value.date}
               formatStr={me?.preferences?.dateFormat}
-              weekStartsOn={me?.preferences?.weekStartsOn}
+              weekStartsOn={me?.preferences?.appearance?.calendar?.weekStartsOn}
               minDate={new Date()}
               maxDate={DateHelper.addYears(new Date(), 100)}
               label={t('service_brand_booking.form.date.label')}

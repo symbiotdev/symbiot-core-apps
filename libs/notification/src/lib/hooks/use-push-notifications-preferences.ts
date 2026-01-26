@@ -18,12 +18,12 @@ export const usePushNotificationsPreferences = () => {
         shouldShowBanner: true,
         shouldShowList: true,
         shouldSetBadge: false,
-        shouldPlaySound: !!me?.preferences?.enableNotificationSound,
+        shouldPlaySound: !!me?.preferences?.notificationsSound,
       }),
     });
 
     notificationListener.current = addNotificationReceivedListener(() => {
-      if (me?.preferences?.enableNotificationVibration) {
+      if (me?.preferences?.notificationsVibration) {
         void notificationAsync(NotificationFeedbackType.Success);
       }
     });
@@ -32,7 +32,7 @@ export const usePushNotificationsPreferences = () => {
       notificationListener.current?.remove();
     };
   }, [
-    me?.preferences?.enableNotificationSound,
-    me?.preferences?.enableNotificationVibration,
+    me?.preferences?.notificationsSound,
+    me?.preferences?.notificationsVibration,
   ]);
 };

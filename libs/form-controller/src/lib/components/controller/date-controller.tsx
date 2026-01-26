@@ -44,7 +44,7 @@ export function DateController<T extends FieldValues>({
           value={value}
           error={error?.message}
           formatStr={me?.preferences?.dateFormat}
-          weekStartsOn={me?.preferences?.weekStartsOn}
+          weekStartsOn={me?.preferences?.appearance?.calendar?.weekStartsOn}
           minDate={minDate || DateHelper.addYears(new Date(), -100)}
           maxDate={maxDate || DateHelper.addYears(new Date(), 100)}
           label={label}

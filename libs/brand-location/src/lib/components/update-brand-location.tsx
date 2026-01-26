@@ -184,7 +184,7 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
   const text = useMemo(() => {
     const date = DateHelper.startOfDay(new Date());
     const weekdays = DateHelper.getWeekdays({
-      weekStartsOn: me?.preferences?.weekStartsOn,
+      weekStartsOn: me?.preferences?.appearance?.calendar?.weekStartsOn,
       formatStr: 'eee',
     });
 
@@ -214,7 +214,7 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
         return `${weekday.label} ${dayValue}`;
       })
       .join(' · ');
-  }, [me?.preferences?.weekStartsOn, t, value]);
+  }, [me?.preferences?.appearance?.calendar?.weekStartsOn, t, value]);
 
   return (
     <>

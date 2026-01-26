@@ -31,7 +31,7 @@ export const usePushNotificationsInitializer = ({
         name: 'default',
         sound: 'new_notification_sound.wav',
         importance: AndroidImportance.MAX,
-        vibrationPattern: me?.preferences?.enableNotificationVibration
+        vibrationPattern: me?.preferences?.notificationsVibration
           ? [0, 250, 0, 250]
           : [],
       });
@@ -67,7 +67,7 @@ export const usePushNotificationsInitializer = ({
       }
     }
   }, [
-    me?.preferences?.enableNotificationVibration,
+    me?.preferences?.notificationsVibration,
     mutateAsync,
     onPermissionsDenied,
   ]);

@@ -66,7 +66,7 @@ export const SocketProvider = ({
 
   const onNotificationAdded = useCallback(
     (notification: Notification) => {
-      if (Platform.OS === 'web' && !!me?.preferences?.enableNotificationSound) {
+      if (Platform.OS === 'web' && !!me?.preferences?.notificationsSound) {
         soundPlayer.play();
 
         ShowNativeSuccessAlert({
@@ -87,7 +87,7 @@ export const SocketProvider = ({
     },
     [
       currentBrand?.id,
-      me?.preferences?.enableNotificationSound,
+      me?.preferences?.notificationsSound,
       addNotificationToListQueryState,
       setMyStats,
       soundPlayer,

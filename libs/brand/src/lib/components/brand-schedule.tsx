@@ -30,7 +30,7 @@ export const BrandSchedule = ({
       gap="$2"
     >
       {DateHelper.getWeekdays({
-        weekStartsOn: me?.preferences?.weekStartsOn,
+        weekStartsOn: me?.preferences?.appearance?.calendar?.weekStartsOn,
       })
         .map((weekday) => ({
           ...weekday,

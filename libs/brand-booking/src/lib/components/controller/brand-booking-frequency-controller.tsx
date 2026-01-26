@@ -1,13 +1,13 @@
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { View } from 'tamagui';
 import { useMemo } from 'react';
-import { DatePicker, SelectPicker } from '@symbiot-core-apps/ui';
+import { SelectPicker } from '@symbiot-core-apps/ui';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
   BrandBookingFrequency,
   getEndDateByBrandBookingFrequency,
 } from '@symbiot-core-apps/api';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { DatePicker } from '@symbiot-core-apps/form-controller';
 
 export function BrandBookingFrequencyController<
   T extends FieldValues & {
@@ -22,7 +22,6 @@ export function BrandBookingFrequencyController<
   disableDrag?: boolean;
 }) {
   const { t } = useI18n();
-  const { me } = useCurrentAccountState();
 
   const options = useMemo(
     () => [
@@ -85,15 +84,17 @@ export function BrandBookingFrequencyController<
                 value={value.endDate}
                 label={t('shared.schedule.frequency_until')}
                 formatStr={me?.preferences?.dateFormat}
+                minDate={new Date()}
                 maxDate={getEndDateByBrandBookingFrequency(
                   props.minDate,
                   value.type,
                 )}
                 onChange={(endDate) => {
-                  onChange({
-                    ...value,
-                    endDate,
-                  });
+                  endDate &&
+                    onChange({
+                      ...value,
+                      endDate,
+                    });
                 }}
               />
             )}

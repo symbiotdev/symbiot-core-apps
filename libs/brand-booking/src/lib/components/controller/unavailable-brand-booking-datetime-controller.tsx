@@ -1,10 +1,12 @@
 import { Control, Controller } from 'react-hook-form';
-import { TimeScheduleController } from '@symbiot-core-apps/form-controller';
+import {
+  DatePicker,
+  TimeScheduleController,
+} from '@symbiot-core-apps/form-controller';
 import { View } from 'tamagui';
-import { DatePicker, SelectPicker } from '@symbiot-core-apps/ui';
+import { SelectPicker } from '@symbiot-core-apps/ui';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { isBrandBookingAllDay } from '@symbiot-core-apps/api';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
 
 enum Duration {
   allDay,
@@ -18,7 +20,6 @@ export function UnavailableBrandBookingDatetimeController(props: {
   onBlur?: () => void;
 }) {
   const { t } = useI18n();
-  const { me } = useCurrentAccountState();
 
   return (
     <Controller
@@ -35,8 +36,8 @@ export function UnavailableBrandBookingDatetimeController(props: {
               value={value.start}
               error={error?.message}
               minDate={new Date()}
-              formatStr={me?.preferences?.dateFormat}
               onChange={(newDate) =>
+                newDate &&
                 onChange({
                   start: DateHelper.changeDateKeepTime(value.start, newDate),
                   end: DateHelper.changeDateKeepTime(value.end, newDate),

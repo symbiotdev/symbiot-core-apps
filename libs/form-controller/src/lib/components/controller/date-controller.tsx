@@ -1,4 +1,3 @@
-import { DatePicker } from '@symbiot-core-apps/ui';
 import {
   Control,
   Controller,
@@ -7,7 +6,7 @@ import {
   Path,
 } from 'react-hook-form';
 import { DateHelper } from '@symbiot-core-apps/shared';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { DatePicker } from '../form-element/date-picker';
 
 export function DateController<T extends FieldValues>({
   name,
@@ -34,8 +33,6 @@ export function DateController<T extends FieldValues>({
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
 }) {
-  const { me } = useCurrentAccountState();
-
   return (
     <Controller
       control={control}
@@ -48,8 +45,6 @@ export function DateController<T extends FieldValues>({
           disableDrag={disableDrag}
           value={value}
           error={error?.message}
-          formatStr={me?.preferences?.dateFormat}
-          weekStartsOn={me?.preferences?.appearance?.calendar?.weekStartsOn}
           minDate={minDate || DateHelper.addYears(new Date(), -100)}
           maxDate={maxDate || DateHelper.addYears(new Date(), 100)}
           label={label}

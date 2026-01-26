@@ -24,3 +24,5 @@ export * from './lib/components/form/date-form';
 export * from './lib/components/form/multi-elements-form';
 export * from './lib/components/form/singe-element-form';
 export * from './lib/components/form/single-element-to-array-form';
+
+export * from './lib/components/form-element/date-picker';

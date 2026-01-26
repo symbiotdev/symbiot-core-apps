@@ -1,3 +1,4 @@
+import i18n from 'i18next';
 import { startOfWeek } from 'date-fns/startOfWeek';
 import { format } from 'date-fns/format';
 import { addDays } from 'date-fns/addDays';
@@ -20,7 +21,6 @@ import { addYears } from 'date-fns/addYears';
 import { isSameMonth } from 'date-fns/isSameMonth';
 import { set } from 'date-fns/set';
 import { isValid } from 'date-fns/isValid';
-import i18n from 'i18next';
 import { endOfDay } from 'date-fns/endOfDay';
 import { toDate } from 'date-fns/toDate';
 import { setHours } from 'date-fns/setHours';
@@ -39,6 +39,7 @@ import { getMonth } from 'date-fns/getMonth';
 import { formatDistance } from 'date-fns/formatDistance';
 import { enUS, Locale, uk } from 'date-fns/locale';
 import { getAppLanguage } from '../i18n/i18n-provider';
+import { parse } from 'date-fns';
 
 export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export type Duration = {
@@ -103,6 +104,13 @@ export const DateHelper = {
   intervalToDuration,
   eachDayOfInterval,
   currentTimezone: () => Intl.DateTimeFormat().resolvedOptions().timeZone,
+  getDateFromFormattedString: (value: string, dateFormat: string) =>
+    parse(value, dateFormat, new Date()),
+  isValidByFormat: (value: string, dateFormat: string) => {
+    const parsed = DateHelper.getDateFromFormattedString(value, dateFormat);
+
+    return isValid(parsed) && format(parsed, dateFormat) === value;
+  },
   isSameDateIgnoringYear: (d1: Date | string, d2: Date | string) =>
     getDate(d1) === getDate(d2) && getMonth(d1) === getMonth(d2),
   formatDistance: (laterDate: Date | string, earlierDate: Date | string) => {

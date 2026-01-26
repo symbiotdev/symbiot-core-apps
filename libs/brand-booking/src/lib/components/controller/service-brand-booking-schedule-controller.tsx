@@ -5,7 +5,6 @@ import {
   AnimatedList,
   Avatar,
   Button,
-  DatePicker,
   EmptyView,
   HorizontalPicker,
   HorizontalPickerOnChange,
@@ -21,8 +20,8 @@ import {
   shortName,
   useI18n,
 } from '@symbiot-core-apps/shared';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { useAppSettings } from '@symbiot-core-apps/app';
+import { DatePicker } from '@symbiot-core-apps/form-controller';
 
 type ScheduleControl = Control<{
   schedule: {
@@ -50,7 +49,6 @@ export function ServiceBrandBookingScheduleController({
   disableDrag?: boolean;
 }) {
   const { t } = useI18n();
-  const { me } = useCurrentAccountState();
 
   return (
     <Controller
@@ -67,13 +65,12 @@ export function ServiceBrandBookingScheduleController({
               disabled={disabled}
               disableDrag={disableDrag}
               value={value.date}
-              formatStr={me?.preferences?.dateFormat}
-              weekStartsOn={me?.preferences?.appearance?.calendar?.weekStartsOn}
               minDate={new Date()}
               maxDate={DateHelper.addYears(new Date(), 100)}
               label={t('service_brand_booking.form.date.label')}
               placeholder={t('service_brand_booking.form.date.placeholder')}
               onChange={(date) =>
+                date &&
                 onChange({
                   ...value,
                   date,

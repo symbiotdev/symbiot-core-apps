@@ -1,6 +1,11 @@
 import { Input } from '@symbiot-core-apps/ui';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import type { ControllerProps } from 'react-hook-form/dist/types';
+import {
+  Control,
+  Controller,
+  ControllerProps,
+  FieldValues,
+  Path,
+} from 'react-hook-form';
 
 export function StringController<T extends FieldValues>({
   name,

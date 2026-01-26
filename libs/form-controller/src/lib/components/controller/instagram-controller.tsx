@@ -1,6 +1,11 @@
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  ControllerProps,
+  FieldValues,
+  Path,
+} from 'react-hook-form';
 import { InstagramInput } from '@symbiot-core-apps/ui';
-import type { ControllerProps } from 'react-hook-form/dist/types';
 
 export function InstagramController<T extends FieldValues>({
   name,

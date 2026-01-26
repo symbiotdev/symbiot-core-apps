@@ -1,6 +1,6 @@
+import type { SvgProps } from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
 
-import Svg, { Path } from "react-native-svg";
-import type { SvgProps } from "react-native-svg";
 export const SmileCircle = (props: SvgProps) => (
   <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" {...props}>
     <Path
@@ -11,4 +11,3 @@ export const SmileCircle = (props: SvgProps) => (
     />
   </Svg>
 );
-

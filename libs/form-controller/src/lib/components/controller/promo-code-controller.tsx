@@ -1,6 +1,5 @@
 import { Input } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import type { ControllerProps } from 'react-hook-form/dist/types';
 
 export function PromoCodeController<T extends FieldValues>({
   name,

@@ -1,6 +1,6 @@
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { AddressPicker } from '@symbiot-core-apps/location';
-import type { ControllerProps } from 'react-hook-form/dist/types';
+import { ControllerProps } from 'react-hook-form/dist/types';
 
 export function AddressController<T extends FieldValues>({
   name,

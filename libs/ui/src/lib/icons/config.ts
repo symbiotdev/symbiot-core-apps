@@ -22,6 +22,7 @@ export type SolarIconName =
   | 'ChartSquare'
   | 'ChatRoundDots'
   | 'ChecklistMinimalistic'
+  | 'ClockCircle'
   | 'Close'
   | 'CloseCircle'
   | 'Confetti'

@@ -429,6 +429,13 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
       {/*CALENDAR*/}
 
       <Stack.Screen
+        name="preferences/calendar"
+        options={{
+          headerTitle: t('shared.preferences.calendar.title'),
+        }}
+      />
+
+      <Stack.Screen
         name="preferences/datetime"
         options={{
           headerTitle: t('shared.preferences.datetime.title'),

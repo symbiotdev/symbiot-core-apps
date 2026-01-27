@@ -74,6 +74,10 @@ export default () => {
     () => router.push('/preferences/scheme'),
     [],
   );
+  const onCalendarPress = useCallback(
+    () => router.push('/preferences/calendar'),
+    [],
+  );
   const onDateTimePress = useCallback(
     () => router.push('/preferences/datetime'),
     [],
@@ -237,8 +241,14 @@ export default () => {
             />
 
             <ListItem
+              label={t('shared.preferences.calendar.title')}
+              icon={<Icon name="Calendar" />}
+              onPress={onCalendarPress}
+            />
+
+            <ListItem
               label={t('shared.preferences.datetime.title')}
-              icon={<Icon name="CalendarMinimalistic" />}
+              icon={<Icon name="ClockCircle" />}
               onPress={onDateTimePress}
             />
 

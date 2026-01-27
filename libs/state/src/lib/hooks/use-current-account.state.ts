@@ -15,6 +15,7 @@ import { useAppSchemeState } from './use-app-theme.state';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 import { Appearance, Platform } from 'react-native';
+import { merge } from 'merge-anything';
 
 type AccountStats = {
   newNotifications?: number;
@@ -165,10 +166,7 @@ export const useCurrentAccountUpdater = () => {
 
       try {
         if (initialPreferences) {
-          void updateMePreferences({
-            ...initialPreferences,
-            ...data,
-          });
+          void updateMePreferences(merge(initialPreferences, data));
         }
 
         const preferences = await updatePreferences(data);

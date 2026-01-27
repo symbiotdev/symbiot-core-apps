@@ -287,10 +287,9 @@ export const DrawerMenu = () => {
           />
         )}
 
-        <Br marginHorizontal={defaultPageHorizontalPadding} />
+        <Br marginTop="auto" marginHorizontal={defaultPageHorizontalPadding} />
 
         <MenuItem
-          marginTop="auto"
           icon="QuestionCircle"
           label={t('navigation.drawer.faq.label')}
           route="/app/help-feedback"

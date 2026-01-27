@@ -184,9 +184,6 @@
     },
     "datetime": {
       "title": "Date & Time",
-      "week_starts_on": {
-        "label": "Week starts on"
-      },
       "date_format": {
         "label": "Date format",
         "formats": [
@@ -231,6 +228,43 @@
           {
             "label": "Text field (manual input)",
             "value": "input"
+          }
+        ]
+      }
+    },
+    "calendar": {
+      "title": "Calendar",
+      "week_starts_on": {
+        "label": "Week starts on"
+      },
+      "number_of_days": {
+        "label": "Number of days",
+        "landscape_label": "Number of days (landscape)",
+        "portrait_label": "Number of days (portrait)",
+        "options": [
+          {
+            "label": "Default",
+            "value": null
+          },
+          {
+            "label": "1",
+            "value": 1
+          },
+          {
+            "label": "2",
+            "value": 2
+          },
+          {
+            "label": "3",
+            "value": 3
+          },
+          {
+            "label": "5",
+            "value": 5
+          },
+          {
+            "label": "7",
+            "value": 7
           }
         ]
       }

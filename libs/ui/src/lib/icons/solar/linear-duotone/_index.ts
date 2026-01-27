@@ -79,6 +79,7 @@ import { Confetti } from './Confetti';
 import { Link } from './Link';
 import { Pallete2 } from './Pallete2';
 import { Rocket2 } from './Rocket2';
+import { ClockCircle } from './ClockCircle';
 
 export const Map: IconMap = {
   AddCircle,
@@ -101,6 +102,7 @@ export const Map: IconMap = {
   ChartSquare,
   ChatRoundDots,
   ChecklistMinimalistic,
+  ClockCircle,
   Close,
   CloseCircle,
   Confetti,

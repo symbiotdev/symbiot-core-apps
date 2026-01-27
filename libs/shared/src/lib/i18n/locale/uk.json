@@ -184,9 +184,6 @@
     },
     "datetime": {
       "title": "Дата & Час",
-      "week_starts_on": {
-        "label": "Перший день тижня"
-      },
       "date_format": {
         "label": "Формат дати",
         "formats": [
@@ -231,6 +228,43 @@
           {
             "label": "Текстове поле (ручне введення)",
             "value": "input"
+          }
+        ]
+      }
+    },
+    "calendar": {
+      "title": "Календар",
+      "week_starts_on": {
+        "label": "Перший день тижня"
+      },
+      "number_of_days": {
+        "label": "Кількість днів",
+        "landscape_label": "Кількість днів (горизонтально)",
+        "portrait_label": "Кількість днів (вертикально)",
+        "options": [
+          {
+            "label": "За замовчуванням",
+            "value": null
+          },
+          {
+            "label": "1",
+            "value": 1
+          },
+          {
+            "label": "2",
+            "value": 2
+          },
+          {
+            "label": "3",
+            "value": 3
+          },
+          {
+            "label": "5",
+            "value": 5
+          },
+          {
+            "label": "7",
+            "value": 7
           }
         ]
       }

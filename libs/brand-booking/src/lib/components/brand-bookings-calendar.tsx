@@ -22,13 +22,18 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   DateHelper,
+  DeviceInfo,
   emitHaptic,
   minutesInDay,
+  useScreenOrientation,
+  useScreenSize,
 } from '@symbiot-core-apps/shared';
 import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { getTimezone } from 'countries-and-timezones';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
+import { DeviceType } from 'expo-device';
+import { Orientation } from 'expo-screen-orientation';
 
 export const BrandBookingsCalendar = ({
   offsetTop,
@@ -45,10 +50,13 @@ export const BrandBookingsCalendar = ({
   selectedDate: Date;
   onChangeSelectedDate: (date: Date) => void;
 }) => {
+  const { media } = useScreenSize();
   const { me } = useCurrentAccountState();
-  const { location, bookings } = useCurrentBrandBookingsState();
-  const { currentEmployee } = useCurrentBrandEmployee();
+  const { timezone } = useBookingDatetime();
+  const { orientation } = useScreenOrientation();
   const { hasPermission } = useCurrentBrandEmployee();
+  const { currentEmployee } = useCurrentBrandEmployee();
+  const { location, bookings } = useCurrentBrandBookingsState();
   const {
     mutateAsync: updateUnavailableBooking,
     isPending: unavailableBookingUpdating,
@@ -58,7 +66,18 @@ export const BrandBookingsCalendar = ({
     isPending: serviceBookingUpdating,
   } = useUpdateServiceBrandBookingReq();
 
-  const { timezone } = useBookingDatetime();
+  const numberOfDays = useMemo(() => {
+    const countDays = me?.preferences?.appearance?.calendar?.countDays;
+    const supportPortrait =
+      DeviceInfo.deviceType === DeviceType.PHONE &&
+      (orientation === Orientation.PORTRAIT_UP ||
+        orientation === Orientation.PORTRAIT_DOWN);
+
+    return supportPortrait
+      ? countDays?.portrait || 3
+      : countDays?.landscape ||
+          (['sm', 'md', 'lg', 'xl'].includes(media) ? 7 : 3);
+  }, [me?.preferences?.appearance?.calendar?.countDays, media, orientation]);
 
   const events: TimeGridEvent[] = useMemo(
     () =>
@@ -194,9 +213,11 @@ export const BrandBookingsCalendar = ({
         }
         timeGridRef={timeGridRef}
         startDate={selectedDate}
+        numberOfDays={numberOfDays}
         events={events}
         draggable={hasPermission('bookings')}
         weekStartsOn={me?.preferences?.appearance?.calendar?.weekStartsOn}
+        timelineTextFormat={me?.preferences?.timeFormat}
         unavailableTime={unavailableTime}
         timezone={timezone}
         eventBorderRadius={10}

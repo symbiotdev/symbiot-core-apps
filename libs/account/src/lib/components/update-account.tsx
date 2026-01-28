@@ -1,4 +1,4 @@
-import { AvatarPicker, FormView, Input, PageView } from '@symbiot-core-apps/ui';
+import { FormView, Input, PageView } from '@symbiot-core-apps/ui';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import {
   UpdateAccountData,
@@ -8,6 +8,7 @@ import {
 import { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import {
+  AvatarPicker,
   DateFrom,
   SingeElementForm,
   SingleElementToArrayForm,

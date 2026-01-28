@@ -16,10 +16,10 @@ import {
   Icon,
   LightText,
 } from '@symbiot-core-apps/ui';
-import { FormField } from './form-field';
-import { InputFieldView } from './input-field-view';
 import RNDatepicker from 'react-native-date-picker';
 import { MaskedTextInput } from 'react-native-mask-text';
+import { FormField } from '../wrapper/form-field';
+import { InputFieldView } from '../wrapper/input-field-view';
 
 type Value = Date | null | string;
 

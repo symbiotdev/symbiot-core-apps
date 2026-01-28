@@ -1,5 +1,4 @@
 import {
-  AvatarPicker,
   Card,
   defaultPageVerticalPadding,
   FormView,
@@ -29,6 +28,7 @@ import {
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import {
+  AvatarPicker,
   DateFrom,
   MultiElementsForm,
   SingeElementForm,

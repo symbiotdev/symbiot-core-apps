@@ -1,4 +1,4 @@
-import { AvatarPicker, Survey, SurveyStep } from '@symbiot-core-apps/ui';
+import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useCreateBrandClientReq } from '@symbiot-core-apps/api';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { router, useNavigation } from 'expo-router';
@@ -14,6 +14,7 @@ import { BrandClientEmailController } from './controller/brand-client-email-cont
 import { BrandClientAddressController } from './controller/brand-client-address-controller';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { BrandClientNoteController } from './controller/brand-client-note-controller';
+import { AvatarPicker } from '@symbiot-core-apps/form-controller';
 
 export const CreateBrandClient = () => {
   const { t } = useI18n();

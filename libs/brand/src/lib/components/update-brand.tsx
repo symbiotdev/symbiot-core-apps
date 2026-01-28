@@ -1,5 +1,4 @@
 import {
-  AvatarPicker,
   defaultPageVerticalPadding,
   FormView,
   getNicknameFromUrl,
@@ -25,6 +24,7 @@ import React, { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
+  AvatarPicker,
   DateFrom,
   SingeElementForm,
   SingleElementToArrayForm,

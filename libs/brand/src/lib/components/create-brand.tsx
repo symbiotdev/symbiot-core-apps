@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { AvatarPicker, Survey, SurveyStep } from '@symbiot-core-apps/ui';
+import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useForm } from 'react-hook-form';
 import { BrandNameController } from './contoller/brand-name-controller';
 import { EventArg, NavigationAction } from '@react-navigation/native';
@@ -16,6 +16,7 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { CountryCode, getCountry } from 'countries-and-timezones';
 import { BrandIndustryController } from './contoller/brand-industry-controller';
 import { BrandCountryController } from './contoller/brand-country-controller';
+import { AvatarPicker } from '@symbiot-core-apps/form-controller';
 
 const defaultCountryCode = Intl?.DateTimeFormat()
   ?.resolvedOptions()

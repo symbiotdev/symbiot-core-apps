@@ -7,7 +7,6 @@ import {
   useUpdateBrandServiceReq,
 } from '@symbiot-core-apps/api';
 import {
-  AvatarPicker,
   defaultPageVerticalPadding,
   FormView,
   formViewStyles,
@@ -22,6 +21,7 @@ import { useWindowDimensions } from 'react-native';
 import React, { useCallback, useMemo } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import {
+  AvatarPicker,
   SingeElementForm,
   SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';

@@ -1,4 +1,4 @@
-import { AvatarPicker, Survey, SurveyStep } from '@symbiot-core-apps/ui';
+import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import {
   Account,
   BrandEmployeePermissions,
@@ -30,6 +30,7 @@ import { BrandEmployeeProviderController } from './controller/brand-employee-pro
 import { BrandEmployeePermissionsController } from './controller/brand-employee-permissions-controller';
 import { BrandEmployeeAboutController } from './controller/brand-employee-about-controller';
 import { defaultEmployeeSchedule } from '../utils/schedule';
+import { AvatarPicker } from '@symbiot-core-apps/form-controller';
 
 export const CreateBrandEmployee = () => {
   const { t } = useI18n();

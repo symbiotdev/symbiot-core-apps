@@ -20,14 +20,11 @@ export * from './lib/collapsible/accordion';
 
 export * from './lib/devider/br';
 
-export * from './lib/form/avatar-picker';
 export * from './lib/form/checkbox';
 export * from './lib/form/code-input';
 export * from './lib/form/time-schedule';
 export * from './lib/form/document-picker';
 export * from './lib/form/duration-picker';
-export * from './lib/form/gallery-picker';
-export * from './lib/form/media-picker';
 export * from './lib/form/horizontal-picker';
 export * from './lib/form/input';
 export * from './lib/form/instagram-input';

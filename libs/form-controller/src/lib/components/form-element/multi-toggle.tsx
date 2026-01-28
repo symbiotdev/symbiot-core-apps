@@ -1,8 +1,8 @@
 import { View, XStack } from 'tamagui';
 import { RegularText } from '@symbiot-core-apps/ui';
-import { FormField } from './form-field';
 import { useCallback } from 'react';
 import { emitHaptic, isEqual } from '@symbiot-core-apps/shared';
+import { FormField } from '../wrapper/form-field';
 
 export type OnChangeMultiToggle = (value?: unknown[]) => unknown;
 export type MultiToggleItem = {

@@ -1,4 +1,4 @@
-import { AvatarPicker, FormView, GalleryPicker } from '@symbiot-core-apps/ui';
+import { FormView } from '@symbiot-core-apps/ui';
 import {
   BrandLocation,
   useRemoveBrandLocationGalleryImagesReq,
@@ -10,6 +10,10 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { View, ViewProps } from 'tamagui';
 import { useI18n } from '@symbiot-core-apps/shared';
+import {
+  AvatarPicker,
+  GalleryPicker,
+} from '@symbiot-core-apps/form-controller';
 
 export const BrandLocationMediaForm = ({
   location,

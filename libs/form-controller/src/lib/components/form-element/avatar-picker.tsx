@@ -1,12 +1,10 @@
-import { Avatar, AvatarSize } from '../media/avatar';
 import { View, ViewProps } from 'tamagui';
 import { ImageSource } from 'expo-image';
-import { Spinner } from '../loading/spinner';
 import { useCallback, useState } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { FormField } from './form-field';
-import { ButtonIcon } from '../button/button';
+import { Avatar, AvatarSize, ButtonIcon, Spinner } from '@symbiot-core-apps/ui';
 import { MediaPicker } from './media-picker';
+import { FormField } from '../wrapper/form-field';
 
 export const AvatarPicker = ({
   name,

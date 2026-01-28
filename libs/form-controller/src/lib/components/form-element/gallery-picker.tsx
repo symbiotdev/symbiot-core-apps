@@ -1,15 +1,17 @@
 import { Image, ImageSource } from 'expo-image';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { FormField } from './form-field';
 import { View, XStack } from 'tamagui';
 import { useCallback, useState } from 'react';
-import { RegularText } from '../text/text';
-import { avatarBlurhash } from '../media/avatar';
-import { ButtonIcon } from '../button/button';
 import { MediaPicker } from './media-picker';
 import { FlatList, Platform } from 'react-native';
-import { Spinner } from '../loading/spinner';
-import { defaultPageHorizontalPadding } from '../view/page-view';
+import {
+  avatarBlurhash,
+  ButtonIcon,
+  defaultPageHorizontalPadding,
+  RegularText,
+  Spinner,
+} from '@symbiot-core-apps/ui';
+import { FormField } from '../wrapper/form-field';
 
 const MediaList = FlatList<ImageSource | string>;
 

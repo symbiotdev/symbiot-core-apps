@@ -5,7 +5,6 @@ import {
   useUpdateBrandClientReq,
 } from '@symbiot-core-apps/api';
 import {
-  AvatarPicker,
   defaultPageVerticalPadding,
   FormView,
   Icon,
@@ -17,6 +16,7 @@ import {
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
+  AvatarPicker,
   DateFrom,
   SingeElementForm,
   SingleElementToArrayForm,

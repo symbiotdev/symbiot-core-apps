@@ -10,20 +10,20 @@ import {
 import { useCameraPermissions } from 'expo-camera';
 import { ReactElement, useCallback, useRef, useState } from 'react';
 import {
-  AdaptivePopover,
-  AdaptivePopoverRef,
-} from '../popover/adaptive-popover';
-import {
   ConfirmAlert,
   ShowNativeFailedAlert,
   useI18n,
 } from '@symbiot-core-apps/shared';
 import { filesize } from 'filesize';
-import { ListItem } from '../list/list-item';
-import { Icon } from '../icons';
 import { Linking, Platform } from 'react-native';
 import { View } from 'tamagui';
-import { Link } from '../text/custom';
+import {
+  AdaptivePopover,
+  AdaptivePopoverRef,
+  Icon,
+  Link,
+  ListItem,
+} from '@symbiot-core-apps/ui';
 
 export const maxAvatarFileSize = 10485760;
 

@@ -1,4 +1,4 @@
-import { ActionCard, FormView, Icon, PageView } from '@symbiot-core-apps/ui';
+import { ActionCard, FrameView, Icon, PageView } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import {
@@ -33,7 +33,7 @@ export const RemoveBrandClientMembership = ({
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FormView>
+      <FrameView>
         <ActionCard
           title={t('brand_client_membership.remove.title')}
           subtitle={t('brand_client_membership.remove.subtitle', {
@@ -45,7 +45,7 @@ export const RemoveBrandClientMembership = ({
           buttonType="danger"
           onPress={onPress}
         />
-      </FormView>
+      </FrameView>
     </PageView>
   );
 };

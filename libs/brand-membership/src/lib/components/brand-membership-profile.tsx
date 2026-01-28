@@ -3,7 +3,7 @@ import {
   getTranslateKeyByBrandMembership,
 } from '@symbiot-core-apps/api';
 import {
-  FormView,
+  FrameView,
   ListItemGroup,
   PageView,
   RegularText,
@@ -42,7 +42,7 @@ export const BrandMembershipProfile = ({
     <PageView scrollable withHeaderHeight>
       {Item}
 
-      <FormView gap="$5" marginVertical="$5">
+      <FrameView gap="$5" marginVertical="$5">
         {!!membership.description && (
           <ListItemGroup
             paddingVertical={0}
@@ -115,7 +115,7 @@ export const BrandMembershipProfile = ({
             {membership.note?.trim() || t('shared.not_specified')}
           </RegularText>
         </ListItemGroup>
-      </FormView>
+      </FrameView>
     </PageView>
   );
 };

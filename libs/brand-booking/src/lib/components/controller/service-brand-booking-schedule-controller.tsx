@@ -6,13 +6,8 @@ import {
   Avatar,
   Button,
   EmptyView,
-  HorizontalPicker,
-  HorizontalPickerOnChange,
   Icon,
   InitView,
-  PickerItem,
-  PickerOnChange,
-  SelectPicker,
 } from '@symbiot-core-apps/ui';
 import {
   arraysOfObjectsEqual,
@@ -21,7 +16,14 @@ import {
   useI18n,
 } from '@symbiot-core-apps/shared';
 import { useAppSettings } from '@symbiot-core-apps/app';
-import { DatePicker } from '@symbiot-core-apps/form-controller';
+import {
+  DatePicker,
+  HorizontalPicker,
+  HorizontalPickerOnChange,
+  PickerItem,
+  PickerOnChange,
+  SelectPicker,
+} from '@symbiot-core-apps/form-controller';
 
 type ScheduleControl = Control<{
   schedule: {

@@ -1,4 +1,3 @@
-import { Input } from '@symbiot-core-apps/ui';
 import {
   Control,
   Controller,
@@ -6,6 +5,7 @@ import {
   FieldValues,
   Path,
 } from 'react-hook-form';
+import { Input } from '../form-element/input';
 
 export function NumberController<T extends FieldValues>({
   name,

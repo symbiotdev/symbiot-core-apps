@@ -1,8 +1,9 @@
-import { CodeInput, Link, RegularText } from '@symbiot-core-apps/ui';
+import { Link, RegularText } from '@symbiot-core-apps/ui';
 import { AuthFormView } from './auth-form-view';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { CodeInput } from '@symbiot-core-apps/form-controller';
 
 export const authCodeLength = 6;
 export const verifySecondsLimit = 60;

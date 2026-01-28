@@ -1,11 +1,14 @@
-import { Card } from '../card/card';
 import { filesize } from 'filesize';
 import { useMemo } from 'react';
-import { RegularText, SemiBoldText } from '../text/text';
 import { DocumentPickerAsset } from 'expo-document-picker';
 import { View } from 'tamagui';
-import { ButtonIcon } from '../button/button';
-import { FormField } from '../form/form-field';
+import { FormField } from '../wrapper/form-field';
+import {
+  ButtonIcon,
+  Card,
+  RegularText,
+  SemiBoldText,
+} from '@symbiot-core-apps/ui';
 
 export const FileChip = ({
   file,

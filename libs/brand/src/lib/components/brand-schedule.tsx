@@ -3,12 +3,12 @@ import {
   ListItemGroup,
   RegularText,
   SemiBoldText,
-  WeekdaySchedule,
 } from '@symbiot-core-apps/ui';
 import { DateHelper, useI18n, useNativeNow } from '@symbiot-core-apps/shared';
 import { View, XStack } from 'tamagui';
 import React from 'react';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { WeekdaySchedule } from '@symbiot-core-apps/form-controller';
 
 const startOfDay = DateHelper.startOfDay(new Date());
 

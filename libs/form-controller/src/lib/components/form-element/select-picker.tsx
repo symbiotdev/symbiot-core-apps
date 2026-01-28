@@ -1,15 +1,16 @@
 import { DimensionValue, Platform } from 'react-native';
 import { ReactElement, useCallback, useMemo, useRef } from 'react';
+import { Picker, PickerItem, PickerOnChange } from './picker';
+import { View } from 'tamagui';
 import {
   AdaptivePopover,
   AdaptivePopoverRef,
-} from '../popover/adaptive-popover';
-import { FormField } from './form-field';
-import { Spinner } from '../loading/spinner';
-import { LightText, RegularText } from '../text/text';
-import { InputFieldView } from '../view/input-field-view';
-import { Picker, PickerItem, PickerOnChange } from './picker';
-import { View } from 'tamagui';
+  LightText,
+  RegularText,
+  Spinner,
+} from '@symbiot-core-apps/ui';
+import { FormField } from '../wrapper/form-field';
+import { InputFieldView } from '../wrapper/input-field-view';
 
 export function SelectPicker({
   value,

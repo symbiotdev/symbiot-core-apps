@@ -1,12 +1,12 @@
-import { InputFieldView, InputHeight } from '../view/input-field-view';
 import { TextInputProps } from 'react-native';
 import { Input as InputUi, InputProps, XStackProps } from 'tamagui';
-import { Icon } from '../icons';
 import { InputCursorPosition, useInputSelection } from './input';
 import { useScheme } from '@symbiot-core-apps/state';
 import { useDebounceCallback } from '@symbiot-core-apps/shared';
 import { forwardRef, Ref, useCallback, useMemo, useState } from 'react';
-import { FormField } from './form-field';
+import { FormField } from '../wrapper/form-field';
+import { InputFieldView, InputHeight } from '../wrapper/input-field-view';
+import { Icon } from '@symbiot-core-apps/ui';
 
 export const Search = forwardRef(
   (

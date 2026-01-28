@@ -1,12 +1,9 @@
 import {
-  FormView,
+  FrameView,
   Icon,
   ListItemGroup,
   PageView,
   Spinner,
-  Switch,
-  ToggleGroup,
-  ToggleOnChange,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
@@ -16,6 +13,11 @@ import {
   SystemScheme,
   useI18n,
 } from '@symbiot-core-apps/shared';
+import {
+  Switch,
+  ToggleGroup,
+  ToggleOnChange,
+} from '@symbiot-core-apps/form-controller';
 
 export const Scheme = () => {
   const navigation = useNavigation();
@@ -57,7 +59,7 @@ export const Scheme = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FormView>
+      <FrameView>
         <ListItemGroup
           // title={t('shared.preferences.scheme.theme.title')}
           gap="$4"
@@ -81,7 +83,7 @@ export const Scheme = () => {
             />
           )}
         </ListItemGroup>
-      </FormView>
+      </FrameView>
     </PageView>
   );
 };

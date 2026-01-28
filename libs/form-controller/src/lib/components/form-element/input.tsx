@@ -1,10 +1,10 @@
 import { InputModeOptions, KeyboardType, TextInputProps } from 'react-native';
 import { forwardRef, Ref, useCallback, useMemo } from 'react';
 import { Input as InputUi, InputProps } from 'tamagui';
-import { FormField } from './form-field';
 import { useDebounceCallback } from '@symbiot-core-apps/shared';
 import { useScheme } from '@symbiot-core-apps/state';
-import { InputHeight } from '../view/input-field-view';
+import { FormField } from '../wrapper/form-field';
+import { InputHeight } from '../wrapper/input-field-view';
 
 export type InputValue = string | number | null;
 export type onChangeInput = (value: InputValue) => void;

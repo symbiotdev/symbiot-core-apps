@@ -3,7 +3,7 @@ import {
   Avatar,
   ButtonIcon,
   Card,
-  FormView,
+  FrameView,
   H3,
   Icon,
   ListItemGroup,
@@ -70,7 +70,7 @@ export const BrandEmployeeProfile = ({
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FormView alignItems="center" gap="$5" flex={1}>
+      <FrameView alignItems="center" gap="$5" flex={1}>
         <BrandEmployeeCongrats employee={employee} />
 
         {!employee.provider && (
@@ -185,7 +185,7 @@ export const BrandEmployeeProfile = ({
             {employee.about?.trim() || t('shared.not_specified')}
           </RegularText>
         </ListItemGroup>
-      </FormView>
+      </FrameView>
     </PageView>
   );
 };

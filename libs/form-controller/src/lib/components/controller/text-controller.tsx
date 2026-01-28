@@ -1,4 +1,3 @@
-import { Textarea } from '@symbiot-core-apps/ui';
 import {
   Control,
   Controller,
@@ -6,6 +5,7 @@ import {
   FieldValues,
   Path,
 } from 'react-hook-form';
+import { Textarea } from '../form-element/textarea';
 
 export function TextController<T extends FieldValues>({
   name,

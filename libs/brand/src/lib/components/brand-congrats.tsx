@@ -1,4 +1,4 @@
-import { ClosableCard, formViewStyles } from '@symbiot-core-apps/ui';
+import { ClosableCard, frameViewStyles } from '@symbiot-core-apps/ui';
 import { useAnniversaryState } from '@symbiot-core-apps/state';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 import {
@@ -28,7 +28,7 @@ export const BrandCongrats = ({ brand }: { brand: Brand }) => {
   return (
     isAnniversaryToday && (
       <Animated.View
-        style={formViewStyles}
+        style={frameViewStyles}
         entering={FadeInUp}
         exiting={FadeOutUp}
       >

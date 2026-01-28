@@ -1,17 +1,20 @@
 import { XStack } from 'tamagui';
 import { DateHelper, useI18n, Weekday } from '@symbiot-core-apps/shared';
 import { useCallback, useMemo, useState } from 'react';
-import { LightText, MediumText } from '../text/text';
-import { InputFieldView } from '../view/input-field-view';
-import { AdaptivePopover } from '../popover/adaptive-popover';
-import { ToggleOnChange } from './toggle-group';
-import { H4 } from '../text/heading';
-import { Switch } from './switch';
-import { Segment } from '../segment/segment';
-import { EmptyView } from '../view/empty-view';
 import { Picker } from './picker';
-import { FormField } from './form-field';
-import { FormView } from '../view/form-view';
+import {
+  AdaptivePopover,
+  EmptyView,
+  FrameView,
+  H4,
+  LightText,
+  MediumText,
+  Segment,
+} from '@symbiot-core-apps/ui';
+import { FormField } from '../wrapper/form-field';
+import { InputFieldView } from '../wrapper/input-field-view';
+import { ToggleOnChange } from './toggle-group';
+import { Switch } from './switch';
 
 export type WeekdaySchedule = {
   day: number;
@@ -227,7 +230,7 @@ const WeekdayScheduleElement = ({
         </InputFieldView>
       }
       topFixedContent={
-        <FormView gap="$3">
+        <FrameView gap="$3">
           <XStack
             flex={1}
             alignItems="center"
@@ -244,13 +247,13 @@ const WeekdayScheduleElement = ({
             items={segmentItems}
             onChange={setActiveSegment}
           />
-        </FormView>
+        </FrameView>
       }
       onOpen={resetSegment}
       onClose={onClose}
     >
       {!isDayOff ? (
-        <FormView>
+        <FrameView>
           {activeSegment === 'start' && (
             <Picker
               lazy
@@ -268,7 +271,7 @@ const WeekdayScheduleElement = ({
               onChange={onChangeEndValue as ToggleOnChange}
             />
           )}
-        </FormView>
+        </FrameView>
       ) : (
         <EmptyView
           padding={75.5}

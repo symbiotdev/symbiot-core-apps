@@ -1,8 +1,6 @@
 import {
   defaultPageVerticalPadding,
-  FormView,
-  getNicknameFromUrl,
-  getWebsiteDomain,
+  FrameView,
   Icon,
   ListItem,
   ListItemGroup,
@@ -26,6 +24,8 @@ import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
   AvatarPicker,
   DateFrom,
+  getNicknameFromUrl,
+  getWebsiteDomain,
   SingeElementForm,
   SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
@@ -69,7 +69,7 @@ export const UpdateBrand = () => {
           />
         </View>
 
-        <FormView>
+        <FrameView>
           <Name brand={brand} onUpdated={setBrand} />
 
           <ListItemGroup>
@@ -77,7 +77,7 @@ export const UpdateBrand = () => {
             <Localization brand={brand} onUpdated={setBrand} />
             <ExternalLinks brand={brand} onUpdated={setBrand} />
           </ListItemGroup>
-        </FormView>
+        </FrameView>
       </PageView>
     )
   );
@@ -143,7 +143,7 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <DateFrom
             name="birthday"
             value={brand.birthday}
@@ -159,7 +159,7 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
             onUpdate={updateValue}
             Controller={BrandAboutController}
           />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );
@@ -208,7 +208,7 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <NoDragForm
             name="countries"
             value={value.countries}
@@ -229,7 +229,7 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
             onUpdate={updateValue}
             Controller={BrandCurrencyController}
           />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );
@@ -272,7 +272,7 @@ const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="websites"
             value={value.websites}
@@ -285,7 +285,7 @@ const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
             onUpdate={updateValue}
             Controller={BrandInstagramController}
           />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );

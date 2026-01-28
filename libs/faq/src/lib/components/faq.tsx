@@ -1,7 +1,7 @@
 import {
   Accordion,
   ActionCard,
-  FormView,
+  FrameView,
   Icon,
   LoadingView,
   PageView,
@@ -36,7 +36,7 @@ export const Faq = () => {
       {!sortedFaq ? (
         <LoadingView />
       ) : (
-        <FormView>
+        <FrameView>
           <Accordion
             items={sortedFaq.map((item) => ({
               title: item.title,
@@ -51,7 +51,7 @@ export const Faq = () => {
             buttonIcon={<Icon name="Letter" />}
             onPress={openMail}
           />
-        </FormView>
+        </FrameView>
       )}
     </PageView>
   );

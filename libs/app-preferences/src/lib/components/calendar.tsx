@@ -1,10 +1,7 @@
 import {
-  FormView,
+  FrameView,
   LoadingView,
   PageView,
-  PickerItem,
-  PickerOnChange,
-  SelectPicker,
   Spinner,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
@@ -20,6 +17,9 @@ import { DeviceType } from 'expo-device';
 import {
   MultiToggle,
   OnChangeMultiToggle,
+  PickerItem,
+  PickerOnChange,
+  SelectPicker,
 } from '@symbiot-core-apps/form-controller';
 
 const supportPortraitNumberOfDays = DeviceInfo.deviceType === DeviceType.PHONE;
@@ -91,7 +91,7 @@ export const Calendar = () => {
       {!me?.preferences ? (
         <LoadingView />
       ) : (
-        <FormView>
+        <FrameView>
           <SelectPicker
             label={t('shared.preferences.calendar.week_starts_on.label')}
             sheetLabel={t('shared.preferences.calendar.week_starts_on.label')}
@@ -145,7 +145,7 @@ export const Calendar = () => {
             items={hiddenDays}
             onChange={onChangeHiddenDays as OnChangeMultiToggle}
           />
-        </FormView>
+        </FrameView>
       )}
     </PageView>
   );

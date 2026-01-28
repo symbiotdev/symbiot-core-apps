@@ -6,7 +6,6 @@ import {
   EmptyView,
   InitView,
   NavigationBackground,
-  Search,
 } from '@symbiot-core-apps/ui';
 import {
   BrandEmployee,
@@ -17,6 +16,7 @@ import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { Search } from '@symbiot-core-apps/form-controller';
 
 export const CurrentBrandEmployees = ({
   offsetTop,

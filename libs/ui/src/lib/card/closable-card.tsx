@@ -1,5 +1,5 @@
 import { ViewProps, XStack } from 'tamagui';
-import { formViewStyles } from '../view/form-view';
+import { frameViewStyles } from '../view/frame-view';
 import { defaultIconSize, Icon, IconName } from '../icons';
 import { Card } from './card';
 import { ButtonIcon } from '../button/button';
@@ -18,7 +18,7 @@ export const ClosableCard = ({
   onClose: () => void;
 }) => {
   return (
-    <Card style={formViewStyles} gap="$2">
+    <Card style={frameViewStyles} gap="$2">
       <XStack alignItems="flex-start" justifyContent="space-between" gap="$3">
         {!!iconName && <Icon name={iconName} />}
 

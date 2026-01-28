@@ -1,6 +1,6 @@
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { isValidURL } from '@symbiot-core-apps/shared';
-import { WebsiteInput } from '@symbiot-core-apps/ui';
+import { WebsiteInput } from '../form-element/website-input';
 
 export function WebsiteController<T extends FieldValues>({
   name,

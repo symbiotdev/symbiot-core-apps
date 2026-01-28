@@ -1,4 +1,3 @@
-import { Switch } from '@symbiot-core-apps/ui';
 import {
   Control,
   Controller,
@@ -6,6 +5,7 @@ import {
   FieldValues,
   Path,
 } from 'react-hook-form';
+import { Switch } from '../form-element/switch';
 
 export function SwitchController<T extends FieldValues>({
   name,

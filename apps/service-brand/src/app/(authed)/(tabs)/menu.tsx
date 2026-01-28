@@ -18,7 +18,7 @@ import { router, useNavigation } from 'expo-router';
 import {
   ActionCard,
   Avatar,
-  FormView,
+  FrameView,
   H3,
   HeaderButton,
   Icon,
@@ -151,7 +151,7 @@ export default () => {
   return (
     me && (
       <TabsPageView scrollable withHeaderHeight>
-        <FormView gap="$3" flex={1}>
+        <FrameView gap="$3" flex={1}>
           {canSubscribe && (
             <ActionCard
               title={t('subscription.card.title')}
@@ -332,7 +332,7 @@ export default () => {
               </SemiBoldText>
             )}
           </View>
-        </FormView>
+        </FrameView>
       </TabsPageView>
     )
   );

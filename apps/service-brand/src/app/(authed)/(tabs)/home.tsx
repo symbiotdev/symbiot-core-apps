@@ -1,7 +1,7 @@
 import {
   Avatar,
   CardsGrid,
-  FormView,
+  FrameView,
   H3,
   HeaderButton,
   headerButtonSize,
@@ -118,7 +118,7 @@ const BrandHome = () => {
 
   return (
     <TabsPageView scrollable withHeaderHeight>
-      <FormView gap="$3">
+      <FrameView gap="$3">
         {!!currentBrand && <BrandCongrats brand={currentBrand} />}
 
         <TodayBrandBookings />
@@ -206,7 +206,7 @@ const BrandHome = () => {
             ]}
           />
         )}
-      </FormView>
+      </FrameView>
     </TabsPageView>
   );
 };

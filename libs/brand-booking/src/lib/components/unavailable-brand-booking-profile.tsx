@@ -2,7 +2,7 @@ import {
   ContextMenuItem,
   ContextMenuPopover,
   defaultPageVerticalPadding,
-  FormView,
+  FrameView,
   H1,
   H2,
   H4,
@@ -165,7 +165,7 @@ export const UnavailableBrandBookingProfile = ({
   return (
     <>
       <PageView scrollable withHeaderHeight>
-        <FormView gap="$4">
+        <FrameView gap="$4">
           <View gap="$2" marginVertical="$3">
             <H2 textDecorationLine={textDecorationLine}>
               {t(`unavailable_brand_booking.profile.title`)}
@@ -225,7 +225,7 @@ export const UnavailableBrandBookingProfile = ({
               {booking.note?.trim() || t('shared.not_specified')}
             </RegularText>
           </ListItemGroup>
-        </FormView>
+        </FrameView>
       </PageView>
 
       <SlideSheetModal
@@ -234,9 +234,9 @@ export const UnavailableBrandBookingProfile = ({
         visible={rescheduleModalVisible}
         onClose={closeRescheduleModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <RescheduleForm booking={booking} onUpdate={onUpdate} />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
 
       <SlideSheetModal
@@ -245,9 +245,9 @@ export const UnavailableBrandBookingProfile = ({
         visible={noteModalVisible}
         onClose={closeNoteModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <NoteForm booking={booking} onUpdate={onUpdate} />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );

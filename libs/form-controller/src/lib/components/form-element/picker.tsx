@@ -9,15 +9,15 @@ import {
 } from 'react';
 import { useTheme, View, ViewProps, XStack } from 'tamagui';
 import { FlatList, Platform, ViewStyle } from 'react-native';
-import { InitView } from '../view/init-view';
-import { RegularText } from '../text/text';
-import { toggleItemMinHeight } from './toggle-group';
+import { emitHaptic, useRendered } from '@symbiot-core-apps/shared';
 import {
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
-} from '../view/page-view';
-import { emitHaptic, useRendered } from '@symbiot-core-apps/shared';
-import { LoadingView } from '../view/loading-view';
+  InitView,
+  LoadingView,
+  RegularText,
+} from '@symbiot-core-apps/ui';
+import { toggleItemMinHeight } from './toggle-group';
 
 export type PickerItem = {
   label: string;

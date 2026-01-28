@@ -7,11 +7,9 @@ import {
 import {
   Button,
   EmptyView,
-  FormView,
+  FrameView,
   Icon,
-  Input,
   MediumText,
-  onChangeInput,
   SlideSheetModal,
   Spinner,
 } from '@symbiot-core-apps/ui';
@@ -20,6 +18,7 @@ import { useLocationReverseReq } from '@symbiot-core-apps/api';
 import { View, XStack } from 'tamagui';
 import { Linking, TextInputProps } from 'react-native';
 import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
+import { Input, onChangeInput } from './input';
 
 export const AddressPicker = ({
   onChange,
@@ -129,7 +128,7 @@ export const AddressPicker = ({
         visible={permissionDeniedModalVisible}
         onClose={closeDeniedPermissionModal}
       >
-        <FormView flex={1}>
+        <FrameView flex={1}>
           <EmptyView
             iconName="MapPointWave"
             title={t('shared.location.denied_permission.title')}
@@ -140,7 +139,7 @@ export const AddressPicker = ({
               onPress={Linking.openSettings}
             />
           </EmptyView>
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );

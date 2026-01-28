@@ -8,7 +8,7 @@ import {
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import { useMemo } from 'react';
-import { Button, formViewStyles, ProgressCard } from '@symbiot-core-apps/ui';
+import { Button, frameViewStyles, ProgressCard } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 
 export const BrandEmployeeProfileCompletion = ({
@@ -73,7 +73,7 @@ export const BrandEmployeeProfileCompletion = ({
   return (
     isVisible && (
       <Animated.View
-        style={formViewStyles}
+        style={frameViewStyles}
         entering={FadeInUp}
         exiting={FadeOutUp}
       >

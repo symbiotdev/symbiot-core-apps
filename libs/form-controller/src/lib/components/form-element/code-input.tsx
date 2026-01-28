@@ -8,8 +8,7 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import { View } from 'tamagui';
-import { Error } from '../text/custom';
-import { RegularText } from '../text/text';
+import { Error, RegularText } from '@symbiot-core-apps/ui';
 
 export const CodeInput = ({
   cellCount,

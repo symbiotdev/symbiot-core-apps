@@ -14,8 +14,8 @@ import {
   Button,
   defaultPageVerticalPadding,
   EmptyView,
-  FormView,
-  formViewStyles,
+  FrameView,
+  frameViewStyles,
   Icon,
   InitView,
   ListItem,
@@ -54,7 +54,7 @@ const ClientItem = ({
     <BrandClientItem
       loading={loading}
       hideArrow={hideArrow}
-      style={formViewStyles}
+      style={frameViewStyles}
       client={client}
       subtitleColor={!client.membership && !client.free ? '$error' : undefined}
       subtitle={
@@ -242,7 +242,6 @@ export const ServiceBrandBookingProfileClients = ({
       >
         <CurrentBrandClients
           hideArrow
-          hideAddClientButton
           disabledIds={sortedClients.map(({ id }) => id)}
           onClientPress={onAdd}
         />
@@ -277,9 +276,9 @@ export const ServiceBrandBookingProfileClients = ({
           <ClientItem hideArrow paddingVertical="$2" client={actionClient} />
         )}
 
-        <Br style={formViewStyles} />
+        <Br style={frameViewStyles} />
 
-        <View paddingLeft="$2" style={formViewStyles}>
+        <View paddingLeft="$2" style={frameViewStyles}>
           <ListItem
             label={t(
               `service_brand_booking.profile.clients.actions.use_balance.label`,
@@ -343,7 +342,7 @@ const Balance = ({
   }
 
   return (
-    <FormView paddingVertical={defaultPageVerticalPadding}>
+    <FrameView paddingVertical={defaultPageVerticalPadding}>
       <RegularText flex={1}>
         {t(`service_brand_booking.profile.clients.actions.use_balance.info`)}
       </RegularText>
@@ -355,6 +354,6 @@ const Balance = ({
         disabledIds={membershipId ? [membershipId] : []}
         onPressMembership={onPressMembership}
       />
-    </FormView>
+    </FrameView>
   );
 };

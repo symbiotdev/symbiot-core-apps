@@ -1,9 +1,8 @@
 import { ReactElement, useCallback } from 'react';
 import { View } from 'tamagui';
-import { AnimatedList } from '../list/animated-list';
-import { RegularText } from '../text/text';
-import { FormField } from './form-field';
 import { Platform } from 'react-native';
+import { AnimatedList, RegularText } from '@symbiot-core-apps/ui';
+import { FormField } from '../wrapper/form-field';
 
 export type HorizontalPickerItem = {
   value: unknown;

@@ -1,6 +1,5 @@
 import { forwardRef, Ref, useCallback, useMemo, useState } from 'react';
 import { Input, InputProps } from 'tamagui';
-import { FormField } from './form-field';
 import {
   NativeSyntheticEvent,
   Platform,
@@ -9,8 +8,9 @@ import {
 } from 'react-native';
 import { useScheme } from '@symbiot-core-apps/state';
 import { useDebounceCallback } from '@symbiot-core-apps/shared';
-import { MediumText } from '../text/text';
+import { FormField } from '../wrapper/form-field';
 import { InputCursorPosition, useInputSelection } from './input';
+import { MediumText } from '@symbiot-core-apps/ui';
 
 export const Textarea = forwardRef(
   (

@@ -1,4 +1,3 @@
-import { TimeSchedule } from '@symbiot-core-apps/ui';
 import {
   Control,
   Controller,
@@ -6,6 +5,7 @@ import {
   FieldValues,
   Path,
 } from 'react-hook-form';
+import { TimeSchedule } from '../form-element/time-schedule';
 
 export function TimeScheduleController<T extends FieldValues>({
   name,

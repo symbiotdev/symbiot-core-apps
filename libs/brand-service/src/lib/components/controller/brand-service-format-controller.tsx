@@ -3,9 +3,12 @@ import {
   BrandServiceFormat,
   useBrandServiceFormatsReq,
 } from '@symbiot-core-apps/api';
-import { PickerOnChange, SelectPicker } from '@symbiot-core-apps/ui';
 import { useEffect } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
+import {
+  PickerOnChange,
+  SelectPicker,
+} from '@symbiot-core-apps/form-controller';
 
 export function BrandServiceFormatController<T extends FieldValues>(props: {
   name: Path<T>;

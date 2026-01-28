@@ -1,9 +1,7 @@
 import { Switch as UiSwitch, View, XStack } from 'tamagui';
-import { Label } from '../text/custom';
-import { RegularText } from '../text/text';
-import { Spinner } from '../loading/spinner';
 import { useCallback } from 'react';
 import { emitHaptic } from '@symbiot-core-apps/shared';
+import { Label, RegularText, Spinner } from '@symbiot-core-apps/ui';
 
 const switchHeight = 26;
 const switchWidth = 42;

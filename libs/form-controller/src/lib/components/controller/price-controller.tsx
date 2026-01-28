@@ -1,4 +1,3 @@
-import { PriceInput } from '@symbiot-core-apps/ui';
 import {
   Control,
   Controller,
@@ -7,6 +6,7 @@ import {
   Path,
 } from 'react-hook-form';
 import { Currency } from '@symbiot-core-apps/api';
+import { PriceInput } from '../form-element/price-input';
 
 export function PriceController<T extends FieldValues>({
   name,

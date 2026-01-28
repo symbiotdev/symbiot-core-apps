@@ -1,13 +1,12 @@
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { View } from 'tamagui';
 import { useMemo } from 'react';
-import { SelectPicker } from '@symbiot-core-apps/ui';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
   BrandBookingFrequency,
   getEndDateByBrandBookingFrequency,
 } from '@symbiot-core-apps/api';
-import { DatePicker } from '@symbiot-core-apps/form-controller';
+import { DatePicker, SelectPicker } from '@symbiot-core-apps/form-controller';
 
 export function BrandBookingFrequencyController<
   T extends FieldValues & {

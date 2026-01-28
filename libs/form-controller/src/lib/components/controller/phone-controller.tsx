@@ -1,6 +1,6 @@
-import { PhoneInput } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { PhoneNumber } from 'react-native-phone-input/dist';
+import { PhoneInput } from '../form-element/phone-input';
 
 export function PhoneController<T extends FieldValues>({
   name,

@@ -1,4 +1,4 @@
-import { FormView, Input, PageView } from '@symbiot-core-apps/ui';
+import { FrameView, PageView } from '@symbiot-core-apps/ui';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import {
   UpdateAccountData,
@@ -10,6 +10,7 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import {
   AvatarPicker,
   DateFrom,
+  Input,
   SingeElementForm,
   SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
@@ -63,7 +64,7 @@ export const UpdateAccount = () => {
           />
         </View>
 
-        <FormView>
+        <FrameView>
           <Input
             disabled
             value={me.email}
@@ -106,7 +107,7 @@ export const UpdateAccount = () => {
             onUpdate={update}
             Controller={AccountInstagramController}
           />
-        </FormView>
+        </FrameView>
       </PageView>
     )
   );

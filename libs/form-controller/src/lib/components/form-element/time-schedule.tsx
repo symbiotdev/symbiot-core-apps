@@ -1,14 +1,18 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Picker } from './picker';
 import { ToggleOnChange } from './toggle-group';
-import { FormView, formViewStyles } from '../view/form-view';
-import { Segment } from '../segment/segment';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
-import { AdaptivePopover } from '../popover/adaptive-popover';
-import { LightText, RegularText } from '../text/text';
-import { InputFieldView } from '../view/input-field-view';
 import { YStack } from 'tamagui';
-import { FormField } from './form-field';
+import {
+  AdaptivePopover,
+  FrameView,
+  frameViewStyles,
+  LightText,
+  RegularText,
+  Segment,
+} from '@symbiot-core-apps/ui';
+import { FormField } from '../wrapper/form-field';
+import { InputFieldView } from '../wrapper/input-field-view';
 
 const timeInterval = 5;
 
@@ -125,7 +129,7 @@ export const TimeSchedule = ({
       }
       topFixedContent={
         <Segment
-          style={formViewStyles}
+          style={frameViewStyles}
           disabled={disabled}
           value={activeSegment}
           items={segmentItems}
@@ -134,7 +138,7 @@ export const TimeSchedule = ({
       }
       onClose={onBlur}
     >
-      <FormView>
+      <FrameView>
         {activeSegment === 'start' && (
           <Picker
             lazy
@@ -152,7 +156,7 @@ export const TimeSchedule = ({
             onChange={onChangeEndValue as ToggleOnChange}
           />
         )}
-      </FormView>
+      </FrameView>
     </AdaptivePopover>
   );
 };

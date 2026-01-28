@@ -1,10 +1,10 @@
 import { Control, Controller } from 'react-hook-form';
 import {
   DatePicker,
+  SelectPicker,
   TimeScheduleController,
 } from '@symbiot-core-apps/form-controller';
 import { View } from 'tamagui';
-import { SelectPicker } from '@symbiot-core-apps/ui';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { isBrandBookingAllDay } from '@symbiot-core-apps/api';
 

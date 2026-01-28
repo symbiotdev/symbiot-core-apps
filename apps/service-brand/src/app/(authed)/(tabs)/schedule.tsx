@@ -17,7 +17,6 @@ import {
   headerButtonSize,
   Icon,
   MediumText,
-  Picker,
   RegularText,
   tabBarHeight,
   useScreenHeaderHeight,
@@ -35,6 +34,7 @@ import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
 import { Platform } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
+import { Picker } from '@symbiot-core-apps/form-controller';
 
 const today = new Date();
 

@@ -1,11 +1,10 @@
 import {
   Card,
-  FormView,
+  FrameView,
   Link,
   PageView,
   RegularText,
   Spinner,
-  Switch,
 } from '@symbiot-core-apps/ui';
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useCallback, useEffect, useState } from 'react';
@@ -16,6 +15,7 @@ import {
 } from 'expo-notifications';
 import { Linking, Platform } from 'react-native';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { Switch } from '@symbiot-core-apps/form-controller';
 
 export const Notifications = () => {
   const { t } = useI18n();
@@ -36,20 +36,18 @@ export const Notifications = () => {
   }, [updating, navigation]);
 
   const togglePushNotifications = useCallback(
-    (pushNotifications: boolean) =>
-      updatePreferences$({ pushNotifications }),
+    (pushNotifications: boolean) => updatePreferences$({ pushNotifications }),
     [updatePreferences$],
   );
 
   const toggleNotificationSound = useCallback(
-    (notificationsSound: boolean) =>
-      updatePreferences$({ notificationsSound }),
+    (notificationsSound: boolean) => updatePreferences$({ notificationsSound }),
     [updatePreferences$],
   );
 
   return (
     <PageView scrollable withHeaderHeight gap="$2">
-      <FormView>
+      <FrameView>
         {pushNotificationsDenied && (
           <Card>
             <RegularText>
@@ -82,7 +80,7 @@ export const Notifications = () => {
             onChange={toggleNotificationSound}
           />
         </Card>
-      </FormView>
+      </FrameView>
     </PageView>
   );
 };

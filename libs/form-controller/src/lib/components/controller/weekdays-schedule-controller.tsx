@@ -1,4 +1,3 @@
-import { WeekdaySchedule, WeekdaysSchedule } from '@symbiot-core-apps/ui';
 import {
   Control,
   Controller,
@@ -7,6 +6,10 @@ import {
   Path,
 } from 'react-hook-form';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import {
+  WeekdaySchedule,
+  WeekdaysSchedule,
+} from '../form-element/weekdays-schedule';
 
 export function WeekdaysScheduleController<T extends FieldValues>({
   name,

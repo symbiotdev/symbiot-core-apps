@@ -3,7 +3,7 @@ import {
   Avatar,
   defaultPageHorizontalPadding,
   ExtraBoldText,
-  FormView,
+  FrameView,
   H2,
   ListItemGroup,
   MediumText,
@@ -54,7 +54,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
         }}
       />
 
-      <FormView
+      <FrameView
         marginTop="$3"
         gap="$5"
         paddingHorizontal={defaultPageHorizontalPadding}
@@ -165,7 +165,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
             {service.note?.trim() || t('shared.not_specified')}
           </RegularText>
         </ListItemGroup>
-      </FormView>
+      </FrameView>
     </PageView>
   );
 };

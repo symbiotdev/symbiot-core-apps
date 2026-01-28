@@ -13,8 +13,8 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   defaultPageVerticalPadding,
-  FormView,
-  formViewStyles,
+  FrameView,
+  frameViewStyles,
   Icon,
   ListItem,
   ListItemGroup,
@@ -55,16 +55,16 @@ export const UpdateBrandMembership = ({
     <PageView scrollable withHeaderHeight withKeyboard gap="$5">
       <Availability membership={membership} />
 
-      <FormView>
+      <FrameView>
         {getBrandMembershipType(membership) === BrandMembershipType.period && (
           <Period membership={membership as BrandPeriodBasedMembership} />
         )}
         {getBrandMembershipType(membership) === BrandMembershipType.visits && (
           <Visits membership={membership as BrandVisitBasedMembership} />
         )}
-      </FormView>
+      </FrameView>
 
-      <ListItemGroup style={formViewStyles}>
+      <ListItemGroup style={frameViewStyles}>
         <About membership={membership} />
         <Pricing membership={membership} />
         <LocationServices membership={membership} />
@@ -111,7 +111,7 @@ const Availability = ({ membership }: { membership: BrandMembership }) => {
   );
 
   return (
-    <FormView>
+    <FrameView>
       <LoadingForm
         name="hidden"
         value={!membership.hidden}
@@ -123,7 +123,7 @@ const Availability = ({ membership }: { membership: BrandMembership }) => {
         onUpdate={onUpdate}
         Controller={BrandMembershipAvailabilityController}
       />
-    </FormView>
+    </FrameView>
   );
 };
 
@@ -242,7 +242,7 @@ const Pricing = ({ membership }: { membership: BrandMembership }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           {brand?.currencies && brand.currencies.length > 1 && (
             <SingeElementForm
               name="currency"
@@ -277,7 +277,7 @@ const Pricing = ({ membership }: { membership: BrandMembership }) => {
             onUpdate={updateValue}
             Controller={BrandMembershipDiscountController}
           />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );
@@ -329,7 +329,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="locations"
             value={
@@ -362,7 +362,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
           ) : (
             <LoadingView />
           )}
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );
@@ -407,7 +407,7 @@ const About = ({ membership }: { membership: BrandMembership }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="name"
             value={value.name}
@@ -426,7 +426,7 @@ const About = ({ membership }: { membership: BrandMembership }) => {
             onUpdate={updateValue}
             Controller={BrandMembershipDescriptionController}
           />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );
@@ -469,7 +469,7 @@ const Note = ({ membership }: { membership: BrandMembership }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="note"
             value={value.note}
@@ -480,7 +480,7 @@ const Note = ({ membership }: { membership: BrandMembership }) => {
             onUpdate={updateValue}
             Controller={BrandMembershipNoteController}
           />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );

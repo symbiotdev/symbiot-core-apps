@@ -1,15 +1,15 @@
 import { Control, Controller } from 'react-hook-form';
 import { BrandService, useServicesReq } from '@symbiot-core-apps/api';
 import { useEffect, useMemo } from 'react';
-import {
-  ButtonIcon,
-  PickerOnChange,
-  SelectPicker,
-  Textarea,
-} from '@symbiot-core-apps/ui';
+import { ButtonIcon } from '@symbiot-core-apps/ui';
 import { BrandServiceItem } from '@symbiot-core-apps/brand';
 import { XStack } from 'tamagui';
 import { useI18n } from '@symbiot-core-apps/shared';
+import {
+  PickerOnChange,
+  SelectPicker,
+  Textarea,
+} from '@symbiot-core-apps/form-controller';
 
 export function BrandBookingServicesController(props: {
   control: Control<{ details: { service: string; note: string } }>;

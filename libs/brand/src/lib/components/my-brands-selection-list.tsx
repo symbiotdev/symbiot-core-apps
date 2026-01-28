@@ -2,14 +2,14 @@ import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { XStack } from 'tamagui';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { useAuthBrand } from '../hooks/use-brand-auth';
-import { Avatar, FormView, Icon, SemiBoldText } from '@symbiot-core-apps/ui';
+import { Avatar, FrameView, Icon, SemiBoldText } from '@symbiot-core-apps/ui';
 
 export const MyBrandsSelectionList = () => {
   const switchBrand = useAuthBrand();
   const { brands: currentBrands } = useCurrentBrandState();
 
   return (
-    <FormView gap="$1" width="100%">
+    <FrameView gap="$1" width="100%">
       {currentBrands?.map((brand) => (
         <XStack
           key={brand.id}
@@ -40,6 +40,6 @@ export const MyBrandsSelectionList = () => {
           <Icon name="Login" />
         </XStack>
       ))}
-    </FormView>
+    </FrameView>
   );
 };

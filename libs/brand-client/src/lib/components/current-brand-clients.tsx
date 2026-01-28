@@ -9,7 +9,6 @@ import {
   InitView,
   NavigationBackground,
   PageView,
-  Search,
 } from '@symbiot-core-apps/ui';
 import {
   BrandClient,
@@ -23,6 +22,7 @@ import { BrandClientItem } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
+import { Search } from '@symbiot-core-apps/form-controller';
 
 export const CurrentBrandClients = ({
   offsetTop,

@@ -1,6 +1,6 @@
-import { Input } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { PasswordPattern } from '@symbiot-core-apps/shared';
+import { Input } from '../form-element/input';
 
 export function PasswordController<T extends FieldValues>({
   name,

@@ -1,4 +1,4 @@
-import { ActionCard, FormView, Icon, PageView } from '@symbiot-core-apps/ui';
+import { ActionCard, FrameView, Icon, PageView } from '@symbiot-core-apps/ui';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
 import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
@@ -21,7 +21,7 @@ export const RemoveAccount = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FormView>
+      <FrameView>
         <ActionCard
           title={t('shared.account.remove.title')}
           subtitle={t('shared.account.remove.subtitle', {
@@ -33,7 +33,7 @@ export const RemoveAccount = () => {
           buttonType="danger"
           onPress={onPress}
         />
-      </FormView>
+      </FrameView>
     </PageView>
   );
 };

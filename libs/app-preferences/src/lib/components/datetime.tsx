@@ -1,10 +1,7 @@
 import {
-  FormView,
+  FrameView,
   LoadingView,
   PageView,
-  PickerItem,
-  PickerOnChange,
-  SelectPicker,
   Spinner,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect } from 'react';
@@ -12,6 +9,11 @@ import { useI18n } from '@symbiot-core-apps/shared';
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { DateElementType } from '@symbiot-core-apps/api';
+import {
+  PickerItem,
+  PickerOnChange,
+  SelectPicker,
+} from '@symbiot-core-apps/form-controller';
 
 export const Datetime = () => {
   const navigation = useNavigation();
@@ -51,7 +53,7 @@ export const Datetime = () => {
       {!me?.preferences ? (
         <LoadingView />
       ) : (
-        <FormView>
+        <FrameView>
           <SelectPicker
             label={t('shared.preferences.datetime.date_format.label')}
             sheetLabel={t('shared.preferences.datetime.date_format.label')}
@@ -87,7 +89,7 @@ export const Datetime = () => {
             }
             onChange={onChangeDateElement as PickerOnChange}
           />
-        </FormView>
+        </FrameView>
       )}
     </PageView>
   );

@@ -1,9 +1,12 @@
 import { AnimatePresence, View, XStack } from 'tamagui';
 import { ReactElement, useCallback } from 'react';
-import { Error } from '../text/custom';
-import { RegularText } from '../text/text';
-import { defaultIconSize, Icon } from '../icons';
 import { emitHaptic } from '@symbiot-core-apps/shared';
+import {
+  defaultIconSize,
+  Error,
+  Icon,
+  RegularText,
+} from '@symbiot-core-apps/ui';
 
 export const Checkbox = ({
   value,

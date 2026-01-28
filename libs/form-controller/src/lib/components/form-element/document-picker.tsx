@@ -1,5 +1,3 @@
-import { ViewProps } from 'tamagui';
-import { FormField } from './form-field';
 import { DocumentPickerAsset, getDocumentAsync } from 'expo-document-picker';
 import { useCallback, useState } from 'react';
 import {
@@ -7,7 +5,9 @@ import {
   ShowNativeFailedAlert,
   useI18n,
 } from '@symbiot-core-apps/shared';
-import { Button } from '../button/button';
+import { ViewProps } from 'tamagui';
+import { FormField } from '../wrapper/form-field';
+import { Button } from '@symbiot-core-apps/ui';
 
 export const DocumentPicker = ({
   type,

@@ -1,4 +1,4 @@
-import { Survey, SurveyStep, WeekdaySchedule } from '@symbiot-core-apps/ui';
+import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useCreateBrandLocationReq } from '@symbiot-core-apps/api';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
@@ -18,6 +18,7 @@ import { BrandLocationPhoneController } from './controller/brand-location-phone-
 import { router, useNavigation } from 'expo-router';
 import { EventArg, NavigationAction } from '@react-navigation/native';
 import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
+import { WeekdaySchedule } from '@symbiot-core-apps/form-controller';
 
 export const CreateBrandLocation = () => {
   const { brand } = useCurrentBrandState();

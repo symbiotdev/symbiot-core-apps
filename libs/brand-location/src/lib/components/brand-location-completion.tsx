@@ -7,7 +7,7 @@ import {
   useI18n,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
-import { Button, formViewStyles, ProgressCard } from '@symbiot-core-apps/ui';
+import { Button, frameViewStyles, ProgressCard } from '@symbiot-core-apps/ui';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 import { router } from 'expo-router';
 
@@ -81,7 +81,7 @@ export const BrandLocationCompletion = ({
   return (
     isVisible && (
       <Animated.View
-        style={formViewStyles}
+        style={frameViewStyles}
         entering={FadeInUp}
         exiting={FadeOutUp}
       >

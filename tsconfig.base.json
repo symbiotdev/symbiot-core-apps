@@ -41,7 +41,6 @@
       "@symbiot-core-apps/form-controller": [
         "libs/form-controller/src/index.ts"
       ],
-      "@symbiot-core-apps/location": ["libs/location/src/index.ts"],
       "@symbiot-core-apps/notification": ["libs/notification/src/index.ts"],
       "@symbiot-core-apps/onboarding": ["libs/onboarding/src/index.ts"],
       "@symbiot-core-apps/shared": ["libs/shared/src/index.ts"],

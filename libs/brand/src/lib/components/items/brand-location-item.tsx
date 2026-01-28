@@ -2,7 +2,7 @@ import { Brand, BrandLocation } from '@symbiot-core-apps/api';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import {
   Avatar,
-  FormView,
+  FrameView,
   Icon,
   RegularText,
   SemiBoldText,
@@ -21,7 +21,7 @@ export const BrandLocationItem = ({
   hideArrow?: boolean;
 }) => {
   return (
-    <FormView
+    <FrameView
       alignItems="center"
       gap="$4"
       flexDirection="row"
@@ -50,6 +50,6 @@ export const BrandLocationItem = ({
       </View>
 
       {!hideArrow && <Icon name="ArrowRight" />}
-    </FormView>
+    </FrameView>
   );
 };

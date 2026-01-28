@@ -1,10 +1,7 @@
-import {
-  defaultPageHorizontalPadding,
-  ToggleGroup,
-  ToggleGroupItem,
-} from '@symbiot-core-apps/ui';
+import { defaultPageHorizontalPadding } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { useEffect } from 'react';
+import { ToggleGroup, ToggleGroupItem } from '../form-element/toggle-group';
 
 export function ToggleController<T extends FieldValues>({
   name,

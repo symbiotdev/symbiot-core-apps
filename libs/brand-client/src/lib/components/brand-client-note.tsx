@@ -6,7 +6,7 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   defaultPageVerticalPadding,
-  FormView,
+  FrameView,
   ListItemGroup,
   RegularText,
   SlideSheetModal,
@@ -57,14 +57,14 @@ export const BrandClientNote = ({ client }: { client: BrandClient }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="note"
             value={client.note}
             onUpdate={updateValue}
             Controller={BrandClientNoteController}
           />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );

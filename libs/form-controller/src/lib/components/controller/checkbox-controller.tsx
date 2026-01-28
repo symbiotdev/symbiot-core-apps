@@ -1,4 +1,3 @@
-import { Checkbox } from '@symbiot-core-apps/ui';
 import {
   Control,
   Controller,
@@ -7,6 +6,7 @@ import {
   Path,
 } from 'react-hook-form';
 import { ReactElement } from 'react';
+import { Checkbox } from '../form-element/checkbox';
 
 export function CheckboxController<T extends FieldValues>({
   name,

@@ -1,11 +1,11 @@
-import { FormField } from './form-field';
-import { InputFieldView } from '../view/input-field-view';
 import { useTheme } from 'tamagui';
 import { useScheme } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
 import { MaskedTextInput } from 'react-native-mask-text';
-import { MediumText } from '../text/text';
 import { priceMaskOptions } from '@symbiot-core-apps/shared';
+import { FormField } from '../wrapper/form-field';
+import { InputFieldView } from '../wrapper/input-field-view';
+import { MediumText } from '@symbiot-core-apps/ui';
 
 export const PriceInput = ({
   value,

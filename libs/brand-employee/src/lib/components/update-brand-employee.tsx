@@ -1,13 +1,12 @@
 import {
   Card,
   defaultPageVerticalPadding,
-  FormView,
+  FrameView,
   Icon,
   ListItem,
   ListItemGroup,
   PageView,
   SlideSheetModal,
-  Switch,
 } from '@symbiot-core-apps/ui';
 import {
   BrandEmployee,
@@ -33,6 +32,7 @@ import {
   MultiElementsForm,
   SingeElementForm,
   SingleElementToArrayForm,
+  Switch,
 } from '@symbiot-core-apps/form-controller';
 import { BrandEmployeeFirstnameController } from './controller/brand-employee-firstname-controller';
 import { BrandEmployeeLastnameController } from './controller/brand-employee-lastname-controller';
@@ -90,7 +90,7 @@ export const UpdateBrandEmployee = ({
         />
       </View>
 
-      <FormView gap="$10" paddingVertical="$5">
+      <FrameView gap="$10" paddingVertical="$5">
         <ListItemGroup>
           <Personality employee={employee} />
           <Professionality employee={employee} />
@@ -103,7 +103,7 @@ export const UpdateBrandEmployee = ({
             employee.id !== currentEmployee?.id &&
             hasAnyPermission && <Permissions employee={employee} />}
         </ListItemGroup>
-      </FormView>
+      </FrameView>
     </PageView>
   );
 };
@@ -155,7 +155,7 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="firstname"
             value={value.firstname}
@@ -186,7 +186,7 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
             onUpdate={updateValue}
             Controller={BrandEmployeeGenderController}
           />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );
@@ -227,7 +227,7 @@ const Professionality = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView paddingVertical={defaultPageVerticalPadding}>
+        <FrameView paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="role"
             value={value.role}
@@ -240,7 +240,7 @@ const Professionality = ({ employee }: { employee: BrandEmployee }) => {
             onUpdate={updateValue}
             Controller={BrandEmployeeProviderController}
           />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );
@@ -282,14 +282,14 @@ const About = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView paddingVertical={defaultPageVerticalPadding}>
+        <FrameView paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="about"
             value={value.about}
             onUpdate={updateValue}
             Controller={BrandEmployeeAboutController}
           />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );
@@ -384,7 +384,7 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView paddingVertical={defaultPageVerticalPadding}>
+        <FrameView paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="locations"
             value={
@@ -429,7 +429,7 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
               Controller={BrandEmployeeLocationScheduleController}
             />
           )}
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );
@@ -488,7 +488,7 @@ const Contact = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView paddingVertical={defaultPageVerticalPadding}>
+        <FrameView paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="phones"
             value={value.phones}
@@ -507,7 +507,7 @@ const Contact = ({ employee }: { employee: BrandEmployee }) => {
             onUpdate={updateValue}
             Controller={BrandEmployeeAddressController}
           />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );
@@ -551,7 +551,7 @@ const Identification = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView paddingVertical={defaultPageVerticalPadding}>
+        <FrameView paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="passport"
             value={value.passport}
@@ -564,7 +564,7 @@ const Identification = ({ employee }: { employee: BrandEmployee }) => {
             onUpdate={updateValue}
             Controller={BrandEmployeeTaxIdController}
           />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );
@@ -637,13 +637,13 @@ const Permissions = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView paddingVertical={defaultPageVerticalPadding}>
+        <FrameView paddingVertical={defaultPageVerticalPadding}>
           <BrandEmployeePermissionsController
             loadingKey={updatingKey}
             control={control}
             onChange={onChange}
           />
-        </FormView>
+        </FrameView>
       </SlideSheetModal>
     </>
   );

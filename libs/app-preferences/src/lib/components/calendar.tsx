@@ -17,6 +17,10 @@ import {
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { DeviceType } from 'expo-device';
+import {
+  MultiToggle,
+  OnChangeMultiToggle,
+} from '@symbiot-core-apps/form-controller';
 
 const supportPortraitNumberOfDays = DeviceInfo.deviceType === DeviceType.PHONE;
 const numberOfDaysLandscapeLabel = supportPortraitNumberOfDays
@@ -29,6 +33,14 @@ export const Calendar = () => {
   const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
 
   const weekdaysOptions = useMemo(() => DateHelper.getWeekdays(), []);
+  const hiddenDays = useMemo(
+    () =>
+      DateHelper.getWeekdays({
+        formatStr: 'EEEEEE',
+        weekStartsOn: me?.preferences?.appearance?.calendar?.weekStartsOn,
+      }),
+    [me?.preferences?.appearance?.calendar?.weekStartsOn],
+  );
 
   const onChangeWeekdayStartsOn = useCallback(
     (weekStartsOn: Weekday) =>
@@ -36,6 +48,18 @@ export const Calendar = () => {
         appearance: {
           calendar: {
             weekStartsOn,
+          },
+        },
+      }),
+    [updatePreferences$],
+  );
+
+  const onChangeHiddenDays = useCallback(
+    (hiddenDays: Weekday[]) =>
+      updatePreferences$({
+        appearance: {
+          calendar: {
+            hiddenDays,
           },
         },
       }),
@@ -112,6 +136,14 @@ export const Calendar = () => {
             onChange={(value) =>
               onChangeNumberOfDays(value as number, 'landscape')
             }
+          />
+
+          <MultiToggle
+            max={6}
+            label={t('shared.preferences.calendar.hidden_days.label')}
+            value={me.preferences.appearance?.calendar?.hiddenDays}
+            items={hiddenDays}
+            onChange={onChangeHiddenDays as OnChangeMultiToggle}
           />
         </FormView>
       )}

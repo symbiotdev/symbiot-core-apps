@@ -237,33 +237,36 @@
       "week_starts_on": {
         "label": "Перший день тижня"
       },
+      "hidden_days": {
+        "label": "Приховані дні"
+      },
       "number_of_days": {
-        "label": "Кількість днів",
-        "landscape_label": "Кількість днів (горизонтально)",
-        "portrait_label": "Кількість днів (вертикально)",
+        "label": "Вид",
+        "landscape_label": "Вид (горизонтально)",
+        "portrait_label": "Вид (вертикально)",
         "options": [
           {
             "label": "За замовчуванням",
             "value": null
           },
           {
-            "label": "1",
+            "label": "1 день",
             "value": 1
           },
           {
-            "label": "2",
+            "label": "2 дні",
             "value": 2
           },
           {
-            "label": "3",
+            "label": "3 дні",
             "value": 3
           },
           {
-            "label": "5",
+            "label": "5 днів",
             "value": 5
           },
           {
-            "label": "7",
+            "label": "7 днів",
             "value": 7
           }
         ]

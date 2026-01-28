@@ -130,7 +130,7 @@ export const Calendar = ({
           hapticable
           ref={timeGridRef}
           snappable={
-            !!timeGridProps.numberOfDays && timeGridProps.numberOfDays <= 5
+            !!timeGridProps.numberOfDays && timeGridProps.numberOfDays < 5
           }
           width={adjustedWidth}
           locale={locale}

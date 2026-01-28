@@ -15,7 +15,7 @@ import { useAppSchemeState } from './use-app-theme.state';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 import { Appearance, Platform } from 'react-native';
-import { merge } from 'merge-anything';
+import merge from 'deepmerge';
 
 type AccountStats = {
   newNotifications?: number;

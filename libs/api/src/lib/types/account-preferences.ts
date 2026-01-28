@@ -18,6 +18,7 @@ export type AccountAppearance = {
   };
   calendar?: {
     weekStartsOn?: Weekday;
+    hiddenDays?: Weekday[];
     countDays?: {
       landscape?: number;
       portrait?: number;

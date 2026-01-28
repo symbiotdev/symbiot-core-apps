@@ -237,33 +237,36 @@
       "week_starts_on": {
         "label": "Week starts on"
       },
+      "hidden_days": {
+        "label": "Hidden days"
+      },
       "number_of_days": {
-        "label": "Number of days",
-        "landscape_label": "Number of days (landscape)",
-        "portrait_label": "Number of days (portrait)",
+        "label": "View",
+        "landscape_label": "View (landscape)",
+        "portrait_label": "View (portrait)",
         "options": [
           {
             "label": "Default",
             "value": null
           },
           {
-            "label": "1",
+            "label": "1 day",
             "value": 1
           },
           {
-            "label": "2",
+            "label": "2 days",
             "value": 2
           },
           {
-            "label": "3",
+            "label": "3 days",
             "value": 3
           },
           {
-            "label": "5",
+            "label": "5 days",
             "value": 5
           },
           {
-            "label": "7",
+            "label": "7 days",
             "value": 7
           }
         ]

@@ -16,7 +16,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '@symbiot-core-apps/storage';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { merge } from 'merge-anything';
+import merge from 'deepmerge';
 
 type AppState = {
   overrides: Partial<AppSettings>;

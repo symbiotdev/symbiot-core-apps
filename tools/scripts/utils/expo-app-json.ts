@@ -5,7 +5,8 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import * as dotenv from 'dotenv';
 // eslint-disable-next-line
 // @ts-ignore
-import { merge } from 'merge-anything';
+import merge from 'deepmerge';
+
 
 type AppJson = {
   expo: {
@@ -66,7 +67,7 @@ export const syncAppJson = async ({
       writeFileSync(srcJsonPath, JSON.stringify(srcJson, null, 2), 'utf8');
     }
 
-    const mergedJson = merge(destJson, srcJson);
+    const mergedJson = merge<AppJson>(destJson, srcJson);
 
     mergedJson.expo.name = envJson['EXPO_PUBLIC_APP_NAME'];
     mergedJson.expo.ios.bundleIdentifier = envJson['EXPO_PUBLIC_APP_ID'];

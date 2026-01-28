@@ -438,14 +438,14 @@ const PopoverDateField = ({
             maxDate={maxDate}
             startDate={startDate}
             weekStartsOn={weekStartsOn}
-            onChange={onChange}
+            onChange={onChangeCalendarDate}
           />
         ) : (
           <DateAsPicker
             value={value}
             minDate={minDate}
             maxDate={maxDate}
-            onChange={onChangeCalendarDate}
+            onChange={onChange}
           />
         )}
       </ContainerView>

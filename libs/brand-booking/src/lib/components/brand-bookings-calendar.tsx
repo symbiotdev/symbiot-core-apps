@@ -73,10 +73,19 @@ export const BrandBookingsCalendar = ({
       (orientation === Orientation.PORTRAIT_UP ||
         orientation === Orientation.PORTRAIT_DOWN);
 
-    return supportPortrait
-      ? countDays?.portrait || 3
-      : countDays?.landscape ||
-          (['sm', 'md', 'lg', 'xl'].includes(media) ? 7 : 3);
+    if (supportPortrait) {
+      return countDays?.portrait || 3;
+    } else {
+      if (countDays?.landscape) {
+        return countDays.landscape;
+      } else if (['sm', 'md', 'lg', 'xl'].includes(media)) {
+        return 7;
+      } else if (media === 'xs') {
+        return 3;
+      } else {
+        return 1;
+      }
+    }
   }, [me?.preferences?.appearance?.calendar?.countDays, media, orientation]);
 
   const events: TimeGridEvent[] = useMemo(
@@ -216,8 +225,9 @@ export const BrandBookingsCalendar = ({
         numberOfDays={numberOfDays}
         events={events}
         draggable={hasPermission('bookings')}
-        weekStartsOn={me?.preferences?.appearance?.calendar?.weekStartsOn}
         timelineTextFormat={me?.preferences?.timeFormat}
+        weekStartsOn={me?.preferences?.appearance?.calendar?.weekStartsOn}
+        hiddenDays={me?.preferences?.appearance?.calendar?.hiddenDays}
         unavailableTime={unavailableTime}
         timezone={timezone}
         eventBorderRadius={10}

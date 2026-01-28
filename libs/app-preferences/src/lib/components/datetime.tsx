@@ -1,12 +1,10 @@
-import {
-  CompactView,
-  LoadingView,
-  PageView,
-  Spinner,
-} from '@symbiot-core-apps/ui';
+import { CompactView, PageView, Spinner } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccountPreferences,
+  useCurrentAccountUpdater,
+} from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { DateElementType } from '@symbiot-core-apps/api';
 import {
@@ -18,7 +16,8 @@ import {
 export const Datetime = () => {
   const navigation = useNavigation();
   const { t } = useI18n();
-  const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
+  const { updatePreferences$, updating } = useCurrentAccountUpdater();
+  const preferences = useCurrentAccountPreferences();
 
   const onChangeDateFormat = useCallback(
     (dateFormat: string) => updatePreferences$({ dateFormat }),
@@ -50,47 +49,43 @@ export const Datetime = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      {!me?.preferences ? (
-        <LoadingView />
-      ) : (
-        <CompactView>
-          <SelectPicker
-            label={t('shared.preferences.datetime.date_format.label')}
-            sheetLabel={t('shared.preferences.datetime.date_format.label')}
-            value={me.preferences?.dateFormat}
-            options={
-              t('shared.preferences.datetime.date_format.formats', {
-                returnObjects: true,
-              }) as PickerItem[]
-            }
-            onChange={onChangeDateFormat as PickerOnChange}
-          />
+      <CompactView>
+        <SelectPicker
+          label={t('shared.preferences.datetime.date_format.label')}
+          sheetLabel={t('shared.preferences.datetime.date_format.label')}
+          value={preferences.dateFormat}
+          options={
+            t('shared.preferences.datetime.date_format.formats', {
+              returnObjects: true,
+            }) as PickerItem[]
+          }
+          onChange={onChangeDateFormat as PickerOnChange}
+        />
 
-          <SelectPicker
-            label={t('shared.preferences.datetime.time_format.label')}
-            sheetLabel={t('shared.preferences.datetime.time_format.label')}
-            value={me.preferences?.timeFormat}
-            options={
-              t('shared.preferences.datetime.time_format.formats', {
-                returnObjects: true,
-              }) as PickerItem[]
-            }
-            onChange={onChangeTimeFormat as PickerOnChange}
-          />
+        <SelectPicker
+          label={t('shared.preferences.datetime.time_format.label')}
+          sheetLabel={t('shared.preferences.datetime.time_format.label')}
+          value={preferences.timeFormat}
+          options={
+            t('shared.preferences.datetime.time_format.formats', {
+              returnObjects: true,
+            }) as PickerItem[]
+          }
+          onChange={onChangeTimeFormat as PickerOnChange}
+        />
 
-          <SelectPicker
-            label={t('shared.preferences.datetime.date_element.label')}
-            sheetLabel={t('shared.preferences.datetime.date_element.label')}
-            value={me.preferences?.appearance?.date?.element || null}
-            options={
-              t('shared.preferences.datetime.date_element.types', {
-                returnObjects: true,
-              }) as PickerItem[]
-            }
-            onChange={onChangeDateElement as PickerOnChange}
-          />
-        </CompactView>
-      )}
+        <SelectPicker
+          label={t('shared.preferences.datetime.date_element.label')}
+          sheetLabel={t('shared.preferences.datetime.date_element.label')}
+          value={preferences.appearance?.date?.element || null}
+          options={
+            t('shared.preferences.datetime.date_element.types', {
+              returnObjects: true,
+            }) as PickerItem[]
+          }
+          onChange={onChangeDateElement as PickerOnChange}
+        />
+      </CompactView>
     </PageView>
   );
 };

@@ -9,7 +9,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { systemSchemes } from '@symbiot-core-apps/shared';
 import { useAppSchemeState } from './use-app-theme.state';
 import { ImagePickerAsset } from 'expo-image-picker';
@@ -81,6 +81,26 @@ export const useCurrentAccountState = create<CurrentAccountState>()(
     },
   ),
 );
+
+export const useCurrentAccountPreferences = (): AccountPreferences => {
+  const { me } = useCurrentAccountState();
+
+  return useMemo(
+    () =>
+      merge(
+        {
+          timeFormat: 'p',
+          appearance: {
+            date: {
+              element: null,
+            },
+          },
+        } as AccountPreferences,
+        me?.preferences || {},
+      ),
+    [me?.preferences],
+  );
+};
 
 export const useCurrentAccount = () => {
   const { me, stats, setMe, setMyStats, setMySubscriptions } =

@@ -254,20 +254,18 @@ export default () => {
               />
             )}
 
-            {!!currentEmployee && (
-              <>
-                <ListItem
-                  label={t('shared.preferences.datetime.title')}
-                  icon={<Icon name="ClockCircle" />}
-                  onPress={onDateTimePress}
-                />
+            <ListItem
+              label={t('shared.preferences.datetime.title')}
+              icon={<Icon name="ClockCircle" />}
+              onPress={onDateTimePress}
+            />
 
-                <ListItem
-                  label={t('shared.preferences.calendar.title')}
-                  icon={<Icon name="Calendar" />}
-                  onPress={onCalendarPress}
-                />
-              </>
+            {!!currentEmployee && (
+              <ListItem
+                label={t('shared.preferences.calendar.title')}
+                icon={<Icon name="Calendar" />}
+                onPress={onCalendarPress}
+              />
             )}
           </ListItemGroup>
 

@@ -11,6 +11,7 @@ import {
 } from '@symbiot-core-apps/shared';
 import { useCallback } from 'react';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 
 export const BrandTransactionItem = ({
   transaction,
@@ -20,6 +21,8 @@ export const BrandTransactionItem = ({
   transaction: BrandTransaction;
 }) => {
   const { t } = useI18n();
+  const preferences = useCurrentAccountPreferences();
+
   const copyId = useCallback(() => {
     emitHaptic();
 
@@ -104,7 +107,12 @@ export const BrandTransactionItem = ({
 
       <XStack justifyContent="space-between" gap="$5" flexWrap="wrap">
         <RegularText>{t('brand_transaction.date')}</RegularText>
-        <RegularText>{DateHelper.format(transaction.cAt, 'Pp')}</RegularText>
+        <RegularText>
+          {DateHelper.format(
+            transaction.cAt,
+            `${preferences.dateFormat || 'P'} ${preferences.timeFormat}`,
+          )}
+        </RegularText>
       </XStack>
 
       <View

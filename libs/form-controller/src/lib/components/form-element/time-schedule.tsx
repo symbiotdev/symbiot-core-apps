@@ -13,6 +13,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { FormField } from '../wrapper/form-field';
 import { InputFieldView } from '../wrapper/input-field-view';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 
 const timeInterval = 5;
 
@@ -36,13 +37,19 @@ export const TimeSchedule = ({
   onBlur?: () => void;
 }) => {
   const { t } = useI18n();
+  const preferences = useCurrentAccountPreferences();
   const startOfDay = DateHelper.startOfDay(value.start);
+  const timeFormat = preferences.timeFormat;
 
   const [activeSegment, setActiveSegment] = useState<string>('start');
 
   const minutes = useMemo(
-    () => DateHelper.get24HoursInFormattedTime(timeInterval),
-    [],
+    () =>
+      DateHelper.get24HoursInFormattedTime(
+        timeInterval,
+        preferences.timeFormat,
+      ),
+    [preferences.timeFormat],
   );
 
   const endMinutes = useMemo(
@@ -60,16 +67,20 @@ export const TimeSchedule = ({
     () => [
       {
         placeholder: t('shared.schedule.start'),
-        label: disabled ? '-' : DateHelper.format(value.start, 'p'),
+        label: disabled
+          ? '-'
+          : DateHelper.format(value.start, preferences.timeFormat),
         value: 'start',
       },
       {
         placeholder: t('shared.schedule.end'),
-        label: disabled ? '-' : DateHelper.format(value.end, 'p'),
+        label: disabled
+          ? '-'
+          : DateHelper.format(value.end, preferences.timeFormat),
         value: 'end',
       },
     ],
-    [value.end, disabled, value.start, t],
+    [value.end, disabled, value.start, t, preferences.timeFormat],
   );
 
   const onChangeStartValue = useCallback(
@@ -116,7 +127,7 @@ export const TimeSchedule = ({
           <FormField label={label} error={error} required={required}>
             <InputFieldView>
               <LightText>
-                {`${DateHelper.format(value.start, 'p')} - ${DateHelper.format(value.end, 'p')}`}
+                {`${DateHelper.format(value.start, timeFormat)} - ${DateHelper.format(value.end, timeFormat)}`}
               </LightText>
             </InputFieldView>
           </FormField>

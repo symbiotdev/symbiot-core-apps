@@ -5,15 +5,15 @@ import {
   useUpdateBrandClientReq,
 } from '@symbiot-core-apps/api';
 import {
-  defaultPageVerticalPadding,
   CompactView,
+  defaultPageVerticalPadding,
   Icon,
   ListItem,
   ListItemGroup,
   PageView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
   AvatarPicker,
@@ -72,7 +72,7 @@ export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
 };
 
 const Personality = ({ client }: { client: BrandClient }) => {
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
   const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
@@ -104,7 +104,7 @@ const Personality = ({ client }: { client: BrandClient }) => {
         text={[
           `${value.firstname} ${value.lastname}`,
           value.birthday &&
-            DateHelper.format(value.birthday, me?.preferences?.dateFormat),
+            DateHelper.format(value.birthday, preferences.dateFormat),
           client.gender?.label,
         ]
           .filter(Boolean)

@@ -8,7 +8,7 @@ import {
 import { Icon, MediumText, RegularText } from '@symbiot-core-apps/ui';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { useMemo } from 'react';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 
 export const configByType: Record<
   BrandBookingType,
@@ -115,7 +115,7 @@ export const useBookingScheduleFormattedTime = ({
   timezone?: string;
 }) => {
   const { t } = useI18n();
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
 
   return useMemo(() => {
     if (isBrandBookingAllDay(booking)) {
@@ -127,8 +127,8 @@ export const useBookingScheduleFormattedTime = ({
       const adjustedTimezone = timezone || booking.timezone;
       const start = DateHelper.toZonedTime(booking.start, adjustedTimezone);
       const end = DateHelper.toZonedTime(booking.end, adjustedTimezone);
-      const dateFormat = me?.preferences?.dateFormat;
-      const timeFormat = me?.preferences?.timeFormat || 'p';
+      const dateFormat = preferences.dateFormat;
+      const timeFormat = preferences.timeFormat;
       let zonedTime: string;
       let localTime = '';
 
@@ -145,7 +145,7 @@ export const useBookingScheduleFormattedTime = ({
         );
 
         if (!DateHelper.isSameDay(start, booking.start) || moreThanOneDay) {
-          localTime = `${DateHelper.format(booking.start, dateFormat)} ${DateHelper.format(booking.start, timeFormat)} -${moreThanOneDay ? ` ${DateHelper.format(booking.end, dateFormat)}` : ''} ${DateHelper.format(booking.end, 'p')}`;
+          localTime = `${DateHelper.format(booking.start, dateFormat)} ${DateHelper.format(booking.start, timeFormat)} -${moreThanOneDay ? ` ${DateHelper.format(booking.end, dateFormat)}` : ''} ${DateHelper.format(booking.end, timeFormat)}`;
         } else {
           localTime = `${DateHelper.format(booking.start, timeFormat)} - ${DateHelper.format(booking.end, timeFormat)}`;
         }
@@ -156,13 +156,7 @@ export const useBookingScheduleFormattedTime = ({
         localTime,
       };
     }
-  }, [
-    t,
-    booking,
-    timezone,
-    me?.preferences?.dateFormat,
-    me?.preferences?.timeFormat,
-  ]);
+  }, [t, booking, timezone, preferences?.dateFormat, preferences?.timeFormat]);
 };
 
 const Schedule = ({

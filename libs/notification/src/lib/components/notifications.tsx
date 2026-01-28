@@ -9,7 +9,10 @@ import {
   SemiBoldText,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccountPreferences,
+  useCurrentAccountState,
+} from '@symbiot-core-apps/state';
 import { useCallback, useEffect } from 'react';
 import {
   Notification,
@@ -24,7 +27,8 @@ export const Notifications = ({
 }: {
   onPressNotification: (notification: Notification) => void;
 }) => {
-  const { me, setMyStats } = useCurrentAccountState();
+  const { setMyStats } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
   const headerHeight = useScreenHeaderHeight();
   const { mutateAsync: readAll } = useNotificationsReadReq();
   const {
@@ -78,7 +82,7 @@ export const Notifications = ({
                 dotProps={{ right: -5, top: -5 }}
               >
                 <RegularText color="$placeholderColor" numberOfLines={1}>
-                  {DateHelper.format(item.cAt, me?.preferences?.dateFormat)}
+                  {DateHelper.format(item.cAt, preferences.dateFormat)}
                 </RegularText>
               </AttentionView>
             </XStack>
@@ -92,7 +96,7 @@ export const Notifications = ({
         </CompactView>
       );
     },
-    [me?.preferences?.dateFormat, onPressNotification],
+    [preferences.dateFormat, onPressNotification],
   );
 
   useEffect(() => {

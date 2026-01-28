@@ -4,8 +4,8 @@ import { useCallback, useMemo, useState } from 'react';
 import { Picker } from './picker';
 import {
   AdaptivePopover,
-  EmptyView,
   CompactView,
+  EmptyView,
   H4,
   LightText,
   MediumText,
@@ -15,6 +15,7 @@ import { FormField } from '../wrapper/form-field';
 import { InputFieldView } from '../wrapper/input-field-view';
 import { ToggleOnChange } from './toggle-group';
 import { Switch } from './switch';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 
 export type WeekdaySchedule = {
   day: number;
@@ -45,9 +46,14 @@ export const WeekdaysSchedule = ({
   onChange: (value: WeekdaySchedule[]) => void;
   onBlur?: () => void;
 }) => {
+  const preferences = useCurrentAccountPreferences();
   const minutes: MinutesOptions = useMemo(
-    () => DateHelper.get24HoursInFormattedTime(minutesInterval),
-    [],
+    () =>
+      DateHelper.get24HoursInFormattedTime(
+        minutesInterval,
+        preferences.timeFormat,
+      ),
+    [preferences.timeFormat],
   );
   const weekdays = useMemo(
     () => DateHelper.getWeekdays({ weekStartsOn }),
@@ -101,6 +107,7 @@ const WeekdayScheduleElement = ({
   onBlur?: () => void;
 }) => {
   const { t } = useI18n();
+  const preferences = useCurrentAccountPreferences();
 
   const [activeSegment, setActiveSegment] = useState<string>('start');
 
@@ -118,15 +125,15 @@ const WeekdayScheduleElement = ({
     return {
       start: DateHelper.format(
         DateHelper.addMinutes(startOfDay, value?.start || 0),
-        'p',
+        preferences.timeFormat,
       ),
       end: DateHelper.format(
         DateHelper.addMinutes(startOfDay, value?.end || 0),
-        'p',
+        preferences.timeFormat,
       ),
       isDayOff: value && DateHelper.isDayOff(value.start, value.end),
     };
-  }, [value]);
+  }, [value, preferences.timeFormat]);
 
   const segmentItems = useMemo(
     () => [

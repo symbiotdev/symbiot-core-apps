@@ -12,6 +12,7 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   useCurrentAccount,
+  useCurrentAccountPreferences,
   useCurrentBrandBookingsState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
@@ -32,7 +33,8 @@ export const SocketProvider = ({
     require('../../assets/audio/new_notification_sound.wav'),
   );
 
-  const { me, setMyStats, setMySubscriptions, updateMe, updateMePreferences } =
+  const preferences = useCurrentAccountPreferences();
+  const { setMyStats, setMySubscriptions, updateMe, updateMePreferences } =
     useCurrentAccount();
   const {
     brand: currentBrand,
@@ -66,7 +68,7 @@ export const SocketProvider = ({
 
   const onNotificationAdded = useCallback(
     (notification: Notification) => {
-      if (Platform.OS === 'web' && !!me?.preferences?.notificationsSound) {
+      if (Platform.OS === 'web' && preferences.notificationsSound) {
         soundPlayer.play();
 
         ShowNativeSuccessAlert({
@@ -87,7 +89,7 @@ export const SocketProvider = ({
     },
     [
       currentBrand?.id,
-      me?.preferences?.notificationsSound,
+      preferences.notificationsSound,
       addNotificationToListQueryState,
       setMyStats,
       soundPlayer,

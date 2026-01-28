@@ -6,7 +6,10 @@ import {
   RegularText,
   Spinner,
 } from '@symbiot-core-apps/ui';
-import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccountPreferences,
+  useCurrentAccountUpdater,
+} from '@symbiot-core-apps/state';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -19,8 +22,9 @@ import { Switch } from '@symbiot-core-apps/form-controller';
 
 export const Notifications = () => {
   const { t } = useI18n();
-  const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
+  const { updatePreferences$, updating } = useCurrentAccountUpdater();
   const navigation = useNavigation();
+  const preferences = useCurrentAccountPreferences();
 
   const [permissionsStatus, setPermissionsStatus] =
     useState<NotificationPermissionsStatus>();
@@ -68,7 +72,7 @@ export const Notifications = () => {
               checked={
                 pushNotificationsDenied
                   ? false
-                  : me?.preferences?.pushNotifications
+                  : Boolean(preferences.pushNotifications)
               }
               disabled={pushNotificationsDenied}
               onChange={togglePushNotifications}
@@ -76,7 +80,7 @@ export const Notifications = () => {
           )}
           <Switch
             label={t('shared.preferences.notifications.sound.label')}
-            checked={me?.preferences?.notificationsSound}
+            checked={Boolean(preferences.notificationsSound)}
             onChange={toggleNotificationSound}
           />
         </Card>

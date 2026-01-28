@@ -1,7 +1,7 @@
 import {
   Card,
-  defaultPageVerticalPadding,
   CompactView,
+  defaultPageVerticalPadding,
   Icon,
   ListItem,
   ListItemGroup,
@@ -22,7 +22,7 @@ import React, { useCallback, useState } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
@@ -109,7 +109,7 @@ export const UpdateBrandEmployee = ({
 };
 
 const Personality = ({ employee }: { employee: BrandEmployee }) => {
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
   const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
@@ -141,7 +141,7 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
         text={[
           `${value.firstname} ${value.lastname}`,
           value.birthday &&
-            DateHelper.format(value.birthday, me?.preferences?.dateFormat),
+            DateHelper.format(value.birthday, preferences.dateFormat),
           employee.gender?.label,
         ]
           .filter(Boolean)

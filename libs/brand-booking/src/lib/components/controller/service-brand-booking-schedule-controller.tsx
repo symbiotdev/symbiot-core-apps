@@ -24,6 +24,7 @@ import {
   PickerOnChange,
   SelectPicker,
 } from '@symbiot-core-apps/form-controller';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 
 type ScheduleControl = Control<{
   schedule: {
@@ -292,8 +293,9 @@ const TimeSlots = ({
   data: BrandBookingSlot[];
   onSelect: (minutes: number | undefined) => void;
 }) => {
-  const { icons } = useAppSettings();
   const { t } = useI18n();
+  const { icons } = useAppSettings();
+  const preferences = useCurrentAccountPreferences();
 
   const slots = useMemo(() => {
     const minutes = Array.from(
@@ -320,10 +322,10 @@ const TimeSlots = ({
         value,
         label: DateHelper.format(
           DateHelper.addMinutes(startOfDate, value),
-          'p',
+          preferences.timeFormat,
         ),
       }));
-  }, [data, employeeId, locationId]);
+  }, [data, employeeId, locationId, preferences.timeFormat]);
 
   useEffect(() => {
     if (value && !slots.some((slot) => slot.value === value)) {

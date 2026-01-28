@@ -1,8 +1,8 @@
 import {
+  CompactView,
   ContextMenuItem,
   ContextMenuPopover,
   defaultPageVerticalPadding,
-  CompactView,
   H1,
   H2,
   Icon,
@@ -28,7 +28,7 @@ import {
 } from '@symbiot-core-apps/brand';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandEmployee,
 } from '@symbiot-core-apps/state';
 import React, {
@@ -60,8 +60,8 @@ export const ServiceBrandBookingProfile = ({
 }) => {
   const { icons } = useAppSettings();
   const { t } = useI18n();
-  const { me } = useCurrentAccountState();
   const { hasPermission } = useCurrentBrandEmployee();
+  const preferences = useCurrentAccountPreferences();
   const navigation = useNavigation();
   const { timezone } = useBookingDatetime({ fallbackZone: booking.timezone });
   const { mutateAsync: cancel, isPending: cancelProcessing } =
@@ -202,7 +202,7 @@ export const ServiceBrandBookingProfile = ({
               <Icon name={icons.ServiceBooking} size={18} />
 
               <RegularText textDecorationLine={textDecorationLine}>
-                {`${DateHelper.format(booking.start, me?.preferences?.dateFormat)} (${DateHelper.format(booking.start, 'EEEE')})`}
+                {`${DateHelper.format(booking.start, preferences.dateFormat)} (${DateHelper.format(booking.start, 'EEEE')})`}
               </RegularText>
 
               {!!booking.cancelAt && (

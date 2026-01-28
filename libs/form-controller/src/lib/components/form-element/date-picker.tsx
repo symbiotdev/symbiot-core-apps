@@ -8,7 +8,10 @@ import {
   Weekday,
 } from '@symbiot-core-apps/shared';
 import { Platform } from 'react-native';
-import { useCurrentAccountState, useScheme } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccountPreferences,
+  useScheme,
+} from '@symbiot-core-apps/state';
 import {
   AdaptivePopover,
   AdaptivePopoverRef,
@@ -52,10 +55,11 @@ export const DatePicker = ({
   onChange?: (date: Date | null) => void;
   onBlur?: () => void;
 }) => {
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
 
-  const dateFormat = me?.preferences?.dateFormat;
-  const element = me?.preferences?.appearance?.date?.element;
+  const dateFormat = preferences.dateFormat;
+  const element = preferences.appearance?.date?.element;
+  const weekStartsOn = preferences.appearance?.calendar?.weekStartsOn;
 
   const onChangeDate = useCallback(
     (date: Date | null) =>
@@ -89,7 +93,7 @@ export const DatePicker = ({
           label={label}
           forceCalendar={element === 'calendar'}
           disabled={disabled}
-          weekStartsOn={me?.preferences?.appearance?.calendar?.weekStartsOn}
+          weekStartsOn={weekStartsOn}
           disableDrag={disableDrag}
           dateFormat={dateFormat}
           placeholder={placeholder}

@@ -226,7 +226,7 @@ export const DateHelper = {
       weekStartsOn,
     }),
   format: (date: Date | string, formatStr?: string, lang?: string) => {
-    if (formatStr === 'p' && getAppDateLocale().code !== 'en') {
+    if (formatStr === 'p' && !getAppDateLocale().code.includes('en')) {
       formatStr = 'HH:mm';
     } else if (!formatStr) {
       formatStr = 'dd.MM.yyyy';
@@ -272,11 +272,14 @@ export const DateHelper = {
         value: minutes,
       };
     }),
-  get24HoursInFormattedTime: (interval = 15) => {
+  get24HoursInFormattedTime: (interval = 15, timeFormat: string) => {
     const start = DateHelper.startOfDay(new Date());
 
     return Array.from({ length: minutesInDay / interval + 1 }).map((_, i) => ({
-      label: DateHelper.format(DateHelper.addMinutes(start, i * interval), 'p'),
+      label: DateHelper.format(
+        DateHelper.addMinutes(start, i * interval),
+        timeFormat,
+      ),
       value: i * interval,
     }));
   },

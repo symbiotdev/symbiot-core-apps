@@ -1,8 +1,8 @@
 import {
+  CompactView,
   ContextMenuItem,
   ContextMenuPopover,
   defaultPageVerticalPadding,
-  CompactView,
   H1,
   H2,
   H4,
@@ -31,7 +31,7 @@ import {
   useModal,
 } from '@symbiot-core-apps/shared';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandEmployee,
 } from '@symbiot-core-apps/state';
 import { useForm } from 'react-hook-form';
@@ -48,7 +48,7 @@ export const UnavailableBrandBookingProfile = ({
 }) => {
   const { icons } = useAppSettings();
   const { t } = useI18n();
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
   const { timezone } = useBookingDatetime({ fallbackZone: booking.timezone });
@@ -187,7 +187,7 @@ export const UnavailableBrandBookingProfile = ({
               <Icon name={icons.UnavailableBooking} size={18} />
 
               <H4 textDecorationLine={textDecorationLine}>
-                {DateHelper.format(booking.start, me?.preferences?.dateFormat)}
+                {DateHelper.format(booking.start, preferences.dateFormat)}
               </H4>
 
               {!!booking.cancelAt && (

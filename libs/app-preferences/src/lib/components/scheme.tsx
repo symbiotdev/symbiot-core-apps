@@ -6,7 +6,10 @@ import {
   Spinner,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
-import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccountPreferences,
+  useCurrentAccountUpdater,
+} from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import {
   defaultSystemScheme,
@@ -22,8 +25,9 @@ import {
 export const Scheme = () => {
   const navigation = useNavigation();
   const { t } = useI18n();
-  const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
-  const scheme = me?.preferences?.appearance?.scheme;
+  const { updatePreferences$, updating } = useCurrentAccountUpdater();
+  const preferences = useCurrentAccountPreferences();
+  const scheme = preferences?.appearance?.scheme;
 
   const items = useMemo(
     () => [

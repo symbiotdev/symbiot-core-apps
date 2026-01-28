@@ -1,9 +1,4 @@
-import {
-  CompactView,
-  LoadingView,
-  PageView,
-  Spinner,
-} from '@symbiot-core-apps/ui';
+import { CompactView, PageView, Spinner } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
 import {
   DateHelper,
@@ -11,7 +6,10 @@ import {
   useI18n,
   Weekday,
 } from '@symbiot-core-apps/shared';
-import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccountPreferences,
+  useCurrentAccountUpdater,
+} from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { DeviceType } from 'expo-device';
 import {
@@ -30,16 +28,17 @@ const numberOfDaysLandscapeLabel = supportPortraitNumberOfDays
 export const Calendar = () => {
   const { t } = useI18n();
   const navigation = useNavigation();
-  const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
+  const { updatePreferences$, updating } = useCurrentAccountUpdater();
+  const preferences = useCurrentAccountPreferences();
 
   const weekdaysOptions = useMemo(() => DateHelper.getWeekdays(), []);
   const hiddenDays = useMemo(
     () =>
       DateHelper.getWeekdays({
         formatStr: 'EEEEEE',
-        weekStartsOn: me?.preferences?.appearance?.calendar?.weekStartsOn,
+        weekStartsOn: preferences.appearance?.calendar?.weekStartsOn,
       }),
-    [me?.preferences?.appearance?.calendar?.weekStartsOn],
+    [preferences.appearance?.calendar?.weekStartsOn],
   );
 
   const onChangeWeekdayStartsOn = useCallback(
@@ -88,45 +87,25 @@ export const Calendar = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      {!me?.preferences ? (
-        <LoadingView />
-      ) : (
-        <CompactView>
-          <SelectPicker
-            label={t('shared.preferences.calendar.week_starts_on.label')}
-            sheetLabel={t('shared.preferences.calendar.week_starts_on.label')}
-            value={me.preferences.appearance?.calendar?.weekStartsOn || 0}
-            options={weekdaysOptions}
-            onChange={onChangeWeekdayStartsOn as PickerOnChange}
-          />
+      <CompactView>
+        <SelectPicker
+          label={t('shared.preferences.calendar.week_starts_on.label')}
+          sheetLabel={t('shared.preferences.calendar.week_starts_on.label')}
+          value={preferences.appearance?.calendar?.weekStartsOn || 0}
+          options={weekdaysOptions}
+          onChange={onChangeWeekdayStartsOn as PickerOnChange}
+        />
 
-          {supportPortraitNumberOfDays && (
-            <SelectPicker
-              label={t(
-                'shared.preferences.calendar.number_of_days.portrait_label',
-              )}
-              sheetLabel={t(
-                'shared.preferences.calendar.number_of_days.portrait_label',
-              )}
-              value={
-                me.preferences.appearance?.calendar?.countDays?.portrait || null
-              }
-              options={
-                t('shared.preferences.calendar.number_of_days.options', {
-                  returnObjects: true,
-                }) as PickerItem[]
-              }
-              onChange={(value) =>
-                onChangeNumberOfDays(value as number, 'portrait')
-              }
-            />
-          )}
-
+        {supportPortraitNumberOfDays && (
           <SelectPicker
-            label={t(numberOfDaysLandscapeLabel)}
-            sheetLabel={t(numberOfDaysLandscapeLabel)}
+            label={t(
+              'shared.preferences.calendar.number_of_days.portrait_label',
+            )}
+            sheetLabel={t(
+              'shared.preferences.calendar.number_of_days.portrait_label',
+            )}
             value={
-              me.preferences.appearance?.calendar?.countDays?.landscape || null
+              preferences.appearance?.calendar?.countDays?.portrait || null
             }
             options={
               t('shared.preferences.calendar.number_of_days.options', {
@@ -134,19 +113,33 @@ export const Calendar = () => {
               }) as PickerItem[]
             }
             onChange={(value) =>
-              onChangeNumberOfDays(value as number, 'landscape')
+              onChangeNumberOfDays(value as number, 'portrait')
             }
           />
+        )}
 
-          <MultiToggle
-            max={6}
-            label={t('shared.preferences.calendar.hidden_days.label')}
-            value={me.preferences.appearance?.calendar?.hiddenDays}
-            items={hiddenDays}
-            onChange={onChangeHiddenDays as OnChangeMultiToggle}
-          />
-        </CompactView>
-      )}
+        <SelectPicker
+          label={t(numberOfDaysLandscapeLabel)}
+          sheetLabel={t(numberOfDaysLandscapeLabel)}
+          value={preferences.appearance?.calendar?.countDays?.landscape || null}
+          options={
+            t('shared.preferences.calendar.number_of_days.options', {
+              returnObjects: true,
+            }) as PickerItem[]
+          }
+          onChange={(value) =>
+            onChangeNumberOfDays(value as number, 'landscape')
+          }
+        />
+
+        <MultiToggle
+          max={6}
+          label={t('shared.preferences.calendar.hidden_days.label')}
+          value={preferences.appearance?.calendar?.hiddenDays}
+          items={hiddenDays}
+          onChange={onChangeHiddenDays as OnChangeMultiToggle}
+        />
+      </CompactView>
     </PageView>
   );
 };

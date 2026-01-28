@@ -5,7 +5,7 @@ import {
   FieldValues,
   Path,
 } from 'react-hook-form';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 import {
   WeekdaySchedule,
   WeekdaysSchedule,
@@ -26,7 +26,7 @@ export function WeekdaysScheduleController<T extends FieldValues>({
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
 }) {
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
 
   return (
     <Controller
@@ -38,7 +38,7 @@ export function WeekdaysScheduleController<T extends FieldValues>({
           disabled={disabled}
           disableDrag={disableDrag}
           value={value as WeekdaySchedule[]}
-          weekStartsOn={me?.preferences?.appearance?.calendar?.weekStartsOn}
+          weekStartsOn={preferences.appearance?.calendar?.weekStartsOn}
           onChange={onChange}
           onBlur={onBlur}
         />

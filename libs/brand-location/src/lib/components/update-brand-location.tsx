@@ -6,9 +6,9 @@ import {
   useUpdateBrandLocationReq,
 } from '@symbiot-core-apps/api';
 import {
+  CompactView,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
-  CompactView,
   Icon,
   ListItem,
   ListItemGroup,
@@ -19,7 +19,7 @@ import { BrandLocationMediaForm } from './form/brand-location-media-form';
 import { useCallback, useMemo } from 'react';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { PhoneNumber } from 'react-native-phone-input/dist';
@@ -166,7 +166,7 @@ const Address = ({ location }: { location: BrandLocation }) => {
 };
 
 const Schedule = ({ location }: { location: BrandLocation }) => {
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
   const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
@@ -180,11 +180,12 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
         schedules: location.schedules,
       },
     });
+  const timeFormat = preferences.timeFormat;
 
   const text = useMemo(() => {
     const date = DateHelper.startOfDay(new Date());
     const weekdays = DateHelper.getWeekdays({
-      weekStartsOn: me?.preferences?.appearance?.calendar?.weekStartsOn,
+      weekStartsOn: preferences.appearance?.calendar?.weekStartsOn,
       formatStr: 'eee',
     });
 
@@ -203,18 +204,18 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
                 DateHelper.set(date, {
                   minutes: schedule.start,
                 }),
-                'p',
+                timeFormat,
               )} - ${DateHelper.format(
                 DateHelper.set(date, {
                   minutes: schedule.end,
                 }),
-                'p',
+                timeFormat,
               )}`;
 
         return `${weekday.label} ${dayValue}`;
       })
       .join(' · ');
-  }, [me?.preferences?.appearance?.calendar?.weekStartsOn, t, value]);
+  }, [preferences.appearance?.calendar?.weekStartsOn, t, value, timeFormat]);
 
   return (
     <>

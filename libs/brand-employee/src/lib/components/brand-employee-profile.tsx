@@ -16,7 +16,7 @@ import React, { useMemo } from 'react';
 import { View, XStack } from 'tamagui';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
@@ -32,9 +32,9 @@ export const BrandEmployeeProfile = ({
 }: {
   employee: BrandEmployee;
 }) => {
-  const { me } = useCurrentAccountState();
   const { brand } = useCurrentBrandState();
   const { t } = useI18n();
+  const preferences = useCurrentAccountPreferences();
   const { hasPermission } = useCurrentBrandEmployee();
 
   const { instagram, email, phone, address } = useMemo(
@@ -51,13 +51,13 @@ export const BrandEmployeeProfile = ({
     () =>
       [
         employee.birthday
-          ? DateHelper.format(employee.birthday, me?.preferences?.dateFormat)
+          ? DateHelper.format(employee.birthday, preferences.dateFormat)
           : '',
         employee.gender?.label,
       ]
         .filter(Boolean)
         .join(' · '),
-    [employee.birthday, employee.gender?.label, me?.preferences?.dateFormat],
+    [employee.birthday, employee.gender?.label, preferences.dateFormat],
   );
 
   const schedules = useMemo(

@@ -9,7 +9,7 @@ import {
 import { Calendar, RegularText } from '@symbiot-core-apps/ui';
 import { Platform } from 'react-native';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandBookingsState,
   useCurrentBrandEmployee,
 } from '@symbiot-core-apps/state';
@@ -51,9 +51,9 @@ export const BrandBookingsCalendar = ({
   onChangeSelectedDate: (date: Date) => void;
 }) => {
   const { media } = useScreenSize();
-  const { me } = useCurrentAccountState();
   const { timezone } = useBookingDatetime();
   const { orientation } = useScreenOrientation();
+  const preferences = useCurrentAccountPreferences();
   const { hasPermission } = useCurrentBrandEmployee();
   const { currentEmployee } = useCurrentBrandEmployee();
   const { location, bookings } = useCurrentBrandBookingsState();
@@ -67,7 +67,7 @@ export const BrandBookingsCalendar = ({
   } = useUpdateServiceBrandBookingReq();
 
   const numberOfDays = useMemo(() => {
-    const countDays = me?.preferences?.appearance?.calendar?.countDays;
+    const countDays = preferences.appearance?.calendar?.countDays;
     const supportPortrait =
       DeviceInfo.deviceType === DeviceType.PHONE &&
       (orientation === Orientation.PORTRAIT_UP ||
@@ -86,7 +86,7 @@ export const BrandBookingsCalendar = ({
         return 1;
       }
     }
-  }, [me?.preferences?.appearance?.calendar?.countDays, media, orientation]);
+  }, [preferences.appearance?.calendar?.countDays, media, orientation]);
 
   const events: TimeGridEvent[] = useMemo(
     () =>
@@ -225,9 +225,9 @@ export const BrandBookingsCalendar = ({
         numberOfDays={numberOfDays}
         events={events}
         draggable={hasPermission('bookings')}
-        timelineTextFormat={me?.preferences?.timeFormat}
-        weekStartsOn={me?.preferences?.appearance?.calendar?.weekStartsOn}
-        hiddenDays={me?.preferences?.appearance?.calendar?.hiddenDays}
+        timelineTextFormat={preferences.timeFormat}
+        weekStartsOn={preferences.appearance?.calendar?.weekStartsOn}
+        hiddenDays={preferences.appearance?.calendar?.hiddenDays}
         unavailableTime={unavailableTime}
         timezone={timezone}
         eventBorderRadius={10}

@@ -1,6 +1,6 @@
 import {
-  defaultPageVerticalPadding,
   CompactView,
+  defaultPageVerticalPadding,
   Icon,
   ListItem,
   ListItemGroup,
@@ -8,7 +8,7 @@ import {
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import {
@@ -102,8 +102,8 @@ const Name = ({ brand, onUpdated }: GroupProps) => {
 };
 
 const Information = ({ brand, onUpdated }: GroupProps) => {
-  const { me } = useCurrentAccountState();
   const { t } = useI18n();
+  const preferences = useCurrentAccountPreferences();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateForm<
       Brand,
@@ -127,7 +127,7 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
         text={
           [
             value.birthday
-              ? DateHelper.format(value.birthday, me?.preferences?.dateFormat)
+              ? DateHelper.format(value.birthday, preferences.dateFormat)
               : '',
             value.about,
           ]

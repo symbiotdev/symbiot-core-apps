@@ -7,7 +7,7 @@ import {
 import { DateHelper, useI18n, useNativeNow } from '@symbiot-core-apps/shared';
 import { View, XStack } from 'tamagui';
 import React from 'react';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 import { WeekdaySchedule } from '@symbiot-core-apps/form-controller';
 
 const startOfDay = DateHelper.startOfDay(new Date());
@@ -20,8 +20,8 @@ export const BrandSchedule = ({
   schedules: Schedule[];
 }) => {
   const { t } = useI18n();
-  const { me } = useCurrentAccountState();
   const { now } = useNativeNow();
+  const preferences = useCurrentAccountPreferences();
 
   return schedules.length ? (
     <ListItemGroup
@@ -30,7 +30,7 @@ export const BrandSchedule = ({
       gap="$2"
     >
       {DateHelper.getWeekdays({
-        weekStartsOn: me?.preferences?.appearance?.calendar?.weekStartsOn,
+        weekStartsOn: preferences?.appearance?.calendar?.weekStartsOn,
       })
         .map((weekday) => ({
           ...weekday,
@@ -66,10 +66,10 @@ export const BrandSchedule = ({
                     ? t('shared.schedule.all_day')
                     : `${DateHelper.format(
                         DateHelper.addMinutes(startOfDay, start),
-                        'p',
+                        preferences.timeFormat,
                       )} - ${DateHelper.format(
                         DateHelper.addMinutes(startOfDay, end),
-                        'p',
+                        preferences.timeFormat,
                       )}`}
               </Text>
             </XStack>

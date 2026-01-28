@@ -57,6 +57,8 @@ export const ContextMenuPopover = ({
   });
 
   const openMenu = useCallback((event: GestureResponderEvent) => {
+    if (!event?.target?.measure) return;
+
     event.target.measure((x, y, width, height, pageX, pageY) => {
       setState((prev) => ({
         ...prev,

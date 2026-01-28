@@ -5,10 +5,10 @@ import {
   setNotificationHandler,
 } from 'expo-notifications';
 import { notificationAsync, NotificationFeedbackType } from 'expo-haptics';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 
 export const usePushNotificationsPreferences = () => {
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
 
   const notificationListener = useRef<EventSubscription>(null);
 
@@ -18,12 +18,12 @@ export const usePushNotificationsPreferences = () => {
         shouldShowBanner: true,
         shouldShowList: true,
         shouldSetBadge: false,
-        shouldPlaySound: !!me?.preferences?.notificationsSound,
+        shouldPlaySound: Boolean(preferences.notificationsSound),
       }),
     });
 
     notificationListener.current = addNotificationReceivedListener(() => {
-      if (me?.preferences?.notificationsVibration) {
+      if (preferences.notificationsVibration) {
         void notificationAsync(NotificationFeedbackType.Success);
       }
     });
@@ -31,8 +31,5 @@ export const usePushNotificationsPreferences = () => {
     return () => {
       notificationListener.current?.remove();
     };
-  }, [
-    me?.preferences?.notificationsSound,
-    me?.preferences?.notificationsVibration,
-  ]);
+  }, [preferences.notificationsSound, preferences.notificationsVibration]);
 };

@@ -54,6 +54,11 @@ export function BrandBookingFrequencyController<
       name={'frequency' as Path<T>}
       control={props.control}
       render={({ field: { value, onChange } }) => {
+        const maxDate = getEndDateByBrandBookingFrequency(
+          props.minDate,
+          value.type,
+        );
+
         return (
           <View gap="$2">
             <SelectPicker
@@ -83,12 +88,14 @@ export function BrandBookingFrequencyController<
                 {...props}
                 value={value.endDate}
                 label={t('shared.schedule.frequency_until')}
-                formatStr={me?.preferences?.dateFormat}
+                description={
+                  maxDate &&
+                  t('shared.schedule.frequency_max_date', {
+                    date: DateHelper.format(maxDate, 'PP'),
+                  })
+                }
                 minDate={new Date()}
-                maxDate={getEndDateByBrandBookingFrequency(
-                  props.minDate,
-                  value.type,
-                )}
+                maxDate={maxDate}
                 onChange={(endDate) => {
                   endDate &&
                     onChange({

@@ -128,13 +128,14 @@ export const useBookingScheduleFormattedTime = ({
       const start = DateHelper.toZonedTime(booking.start, adjustedTimezone);
       const end = DateHelper.toZonedTime(booking.end, adjustedTimezone);
       const dateFormat = me?.preferences?.dateFormat;
+      const timeFormat = me?.preferences?.timeFormat || 'p';
       let zonedTime: string;
       let localTime = '';
 
       if (!DateHelper.isSameDay(start, end)) {
-        zonedTime = `${DateHelper.format(start, dateFormat)} ${DateHelper.format(start, 'p')} - ${DateHelper.format(end, dateFormat)} ${DateHelper.format(end, 'p')}`;
+        zonedTime = `${DateHelper.format(start, dateFormat)} ${DateHelper.format(start, timeFormat)} - ${DateHelper.format(end, dateFormat)} ${DateHelper.format(end, timeFormat)}`;
       } else {
-        zonedTime = `${DateHelper.format(start, 'p')} - ${DateHelper.format(end, 'p')}`;
+        zonedTime = `${DateHelper.format(start, timeFormat)} - ${DateHelper.format(end, timeFormat)}`;
       }
 
       if (!DateHelper.isSame(start, booking.start)) {
@@ -144,9 +145,9 @@ export const useBookingScheduleFormattedTime = ({
         );
 
         if (!DateHelper.isSameDay(start, booking.start) || moreThanOneDay) {
-          localTime = `${DateHelper.format(booking.start, dateFormat)} ${DateHelper.format(booking.start, 'p')} -${moreThanOneDay ? ` ${DateHelper.format(booking.end, dateFormat)}` : ''} ${DateHelper.format(booking.end, 'p')}`;
+          localTime = `${DateHelper.format(booking.start, dateFormat)} ${DateHelper.format(booking.start, timeFormat)} -${moreThanOneDay ? ` ${DateHelper.format(booking.end, dateFormat)}` : ''} ${DateHelper.format(booking.end, 'p')}`;
         } else {
-          localTime = `${DateHelper.format(booking.start, 'p')} - ${DateHelper.format(booking.end, 'p')}`;
+          localTime = `${DateHelper.format(booking.start, timeFormat)} - ${DateHelper.format(booking.end, timeFormat)}`;
         }
       }
 
@@ -155,7 +156,13 @@ export const useBookingScheduleFormattedTime = ({
         localTime,
       };
     }
-  }, [booking, me?.preferences?.dateFormat, t, timezone]);
+  }, [
+    t,
+    booking,
+    timezone,
+    me?.preferences?.dateFormat,
+    me?.preferences?.timeFormat,
+  ]);
 };
 
 const Schedule = ({

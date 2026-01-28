@@ -29,6 +29,7 @@ export const DatePicker = ({
   disabled,
   disableDrag,
   label,
+  description,
   error,
   placeholder,
   startDate,
@@ -40,6 +41,7 @@ export const DatePicker = ({
 }: Omit<ViewProps, 'onPress'> & {
   value: Value;
   label?: string;
+  description?: string;
   error?: string;
   placeholder?: string;
   required?: boolean;
@@ -62,7 +64,12 @@ export const DatePicker = ({
   );
 
   return (
-    <FormField label={label} error={error} required={required}>
+    <FormField
+      label={label}
+      description={description}
+      error={error}
+      required={required}
+    >
       {element === 'input' ? (
         <DateAsTextField
           {...viewProps}

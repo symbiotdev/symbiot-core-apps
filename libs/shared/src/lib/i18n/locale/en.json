@@ -290,6 +290,7 @@
     "start": "Start",
     "end": "End",
     "frequency_until": "Repeat until",
+    "frequency_max_date": "Maximum possible date for this type of recurrence - {{date}}",
     "duration": {
       "all_day": "All day",
       "custom": "Custom time"

@@ -1,5 +1,5 @@
 import {
-  FrameView,
+  CompactView,
   Icon,
   ListItem,
   ListItemGroup,
@@ -36,7 +36,7 @@ export const FollowUs = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FrameView>
+      <CompactView>
         <ListItemGroup>
           {/*<ListItem*/}
           {/*  label="@symbiothub"*/}
@@ -54,7 +54,7 @@ export const FollowUs = () => {
             onPress={openLinkedin}
           />
         </ListItemGroup>
-      </FrameView>
+      </CompactView>
     </PageView>
   );
 };

@@ -1,6 +1,6 @@
 import {
   Card,
-  FrameView,
+  CompactView,
   PageView,
   RegularText,
   Spinner,
@@ -37,7 +37,7 @@ export const Language = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FrameView>
+      <CompactView>
         <Card paddingVertical={0}>
           <ToggleGroup
             items={items}
@@ -49,7 +49,7 @@ export const Language = () => {
             }}
           />
         </Card>
-      </FrameView>
+      </CompactView>
     </PageView>
   );
 };

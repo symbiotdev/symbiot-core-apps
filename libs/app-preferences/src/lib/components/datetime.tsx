@@ -1,5 +1,5 @@
 import {
-  FrameView,
+  CompactView,
   LoadingView,
   PageView,
   Spinner,
@@ -53,7 +53,7 @@ export const Datetime = () => {
       {!me?.preferences ? (
         <LoadingView />
       ) : (
-        <FrameView>
+        <CompactView>
           <SelectPicker
             label={t('shared.preferences.datetime.date_format.label')}
             sheetLabel={t('shared.preferences.datetime.date_format.label')}
@@ -89,7 +89,7 @@ export const Datetime = () => {
             }
             onChange={onChangeDateElement as PickerOnChange}
           />
-        </FrameView>
+        </CompactView>
       )}
     </PageView>
   );

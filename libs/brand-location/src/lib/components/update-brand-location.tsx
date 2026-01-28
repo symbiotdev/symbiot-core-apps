@@ -8,7 +8,7 @@ import {
 import {
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
-  FrameView,
+  CompactView,
   Icon,
   ListItem,
   ListItemGroup,
@@ -59,7 +59,7 @@ export const UpdateBrandLocation = ({
     >
       <BrandLocationMediaForm marginTop="$5" location={location} />
 
-      <FrameView paddingHorizontal={defaultPageHorizontalPadding}>
+      <CompactView paddingHorizontal={defaultPageHorizontalPadding}>
         <Name location={location} />
 
         <ListItemGroup>
@@ -69,7 +69,7 @@ export const UpdateBrandLocation = ({
           <Advantages location={location} />
           <Contact location={location} />
         </ListItemGroup>
-      </FrameView>
+      </CompactView>
     </PageView>
   );
 };
@@ -134,7 +134,7 @@ const Address = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="address"
             value={value.address}
@@ -159,7 +159,7 @@ const Address = ({ location }: { location: BrandLocation }) => {
             onUpdate={updateValue}
             Controller={BrandLocationRemarkController}
           />
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -232,7 +232,7 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FrameView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={defaultPageVerticalPadding}>
           <ArrayForm
             name="schedules"
             value={value.schedules}
@@ -242,7 +242,7 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
             }}
             Controller={BrandLocationScheduleController}
           />
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -300,7 +300,7 @@ const Locale = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           {canChangeCountry && (
             <>
               <NoDragForm
@@ -337,7 +337,7 @@ const Locale = ({ location }: { location: BrandLocation }) => {
             }}
             Controller={BrandLocationTimezoneController}
           />
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -379,14 +379,14 @@ const Advantages = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <ArrayForm
             name="advantages"
             value={value.advantages}
             onUpdate={updateValue}
             Controller={BrandLocationAdvantagesController}
           />
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -445,7 +445,7 @@ const Contact = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="phones"
             value={value.phones}
@@ -464,7 +464,7 @@ const Contact = ({ location }: { location: BrandLocation }) => {
             onUpdate={updateValue}
             Controller={BrandLocationInstagramController}
           />
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

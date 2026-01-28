@@ -8,7 +8,7 @@ import {
   ButtonIcon,
   Chip,
   defaultPageHorizontalPadding,
-  FrameView,
+  CompactView,
   H3,
   InitView,
   ListItemGroup,
@@ -85,7 +85,7 @@ export const BrandLocationProfile = ({
         </View>
       )}
 
-      <FrameView
+      <CompactView
         alignItems="center"
         gap="$5"
         flex={1}
@@ -217,7 +217,7 @@ export const BrandLocationProfile = ({
             ))}
           </ListItemGroup>
         )}
-      </FrameView>
+      </CompactView>
     </PageView>
   );
 };

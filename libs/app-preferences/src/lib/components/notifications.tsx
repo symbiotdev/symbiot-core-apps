@@ -1,6 +1,6 @@
 import {
   Card,
-  FrameView,
+  CompactView,
   Link,
   PageView,
   RegularText,
@@ -47,7 +47,7 @@ export const Notifications = () => {
 
   return (
     <PageView scrollable withHeaderHeight gap="$2">
-      <FrameView>
+      <CompactView>
         {pushNotificationsDenied && (
           <Card>
             <RegularText>
@@ -80,7 +80,7 @@ export const Notifications = () => {
             onChange={toggleNotificationSound}
           />
         </Card>
-      </FrameView>
+      </CompactView>
     </PageView>
   );
 };

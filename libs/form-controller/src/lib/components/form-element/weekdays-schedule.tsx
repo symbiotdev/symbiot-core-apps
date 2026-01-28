@@ -5,7 +5,7 @@ import { Picker } from './picker';
 import {
   AdaptivePopover,
   EmptyView,
-  FrameView,
+  CompactView,
   H4,
   LightText,
   MediumText,
@@ -230,7 +230,7 @@ const WeekdayScheduleElement = ({
         </InputFieldView>
       }
       topFixedContent={
-        <FrameView gap="$3">
+        <CompactView gap="$3">
           <XStack
             flex={1}
             alignItems="center"
@@ -247,13 +247,13 @@ const WeekdayScheduleElement = ({
             items={segmentItems}
             onChange={setActiveSegment}
           />
-        </FrameView>
+        </CompactView>
       }
       onOpen={resetSegment}
       onClose={onClose}
     >
       {!isDayOff ? (
-        <FrameView>
+        <CompactView>
           {activeSegment === 'start' && (
             <Picker
               lazy
@@ -271,7 +271,7 @@ const WeekdayScheduleElement = ({
               onChange={onChangeEndValue as ToggleOnChange}
             />
           )}
-        </FrameView>
+        </CompactView>
       ) : (
         <EmptyView
           padding={75.5}

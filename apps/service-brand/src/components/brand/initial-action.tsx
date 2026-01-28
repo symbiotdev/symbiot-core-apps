@@ -8,7 +8,7 @@ import { router } from 'expo-router';
 import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 import {
   ActionCard,
-  FrameView,
+  CompactView,
   H2,
   H4,
   Icon,
@@ -44,7 +44,7 @@ export const InitialAction = () => {
         {currentBrands?.length ? (
           <MyBrandsSelectionList />
         ) : (
-          <FrameView gap="$6" marginVertical="auto">
+          <CompactView gap="$6" marginVertical="auto">
             <View gap="$2">
               <H2 textAlign="center">{t('initial_actions.title')}</H2>
               <RegularText textAlign="center">
@@ -69,7 +69,7 @@ export const InitialAction = () => {
               buttonIcon={<Icon name="QrCode" />}
               onPress={onOpenQrCodeModal}
             />
-          </FrameView>
+          </CompactView>
         )}
       </TabsPageView>
 

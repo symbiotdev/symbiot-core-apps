@@ -6,7 +6,7 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   defaultPageVerticalPadding,
-  FrameView,
+  CompactView,
   Icon,
   ListItem,
   ListItemGroup,
@@ -50,7 +50,7 @@ export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
 
   return (
     <PageView scrollable withHeaderHeight withKeyboard gap="$5">
-      <FrameView gap="$10" paddingVertical="$5">
+      <CompactView gap="$10" paddingVertical="$5">
         <AvatarPicker
           marginHorizontal="auto"
           loading={avatarUpdating}
@@ -66,7 +66,7 @@ export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
           <Contact client={client} />
           <Note client={client} />
         </ListItemGroup>
-      </FrameView>
+      </CompactView>
     </PageView>
   );
 };
@@ -118,7 +118,7 @@ const Personality = ({ client }: { client: BrandClient }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="firstname"
             value={value.firstname}
@@ -149,7 +149,7 @@ const Personality = ({ client }: { client: BrandClient }) => {
             onUpdate={updateValue}
             Controller={BrandClientBirthdayController}
           />
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -208,7 +208,7 @@ const Contact = ({ client }: { client: BrandClient }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="phones"
             value={value.phones}
@@ -227,7 +227,7 @@ const Contact = ({ client }: { client: BrandClient }) => {
             onUpdate={updateValue}
             Controller={BrandClientAddressController}
           />
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -268,14 +268,14 @@ const Note = ({ client }: { client: BrandClient }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="note"
             value={value.note}
             onUpdate={updateValue}
             Controller={BrandClientNoteController}
           />
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

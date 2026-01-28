@@ -1,5 +1,5 @@
 import {
-  FrameView,
+  CompactView,
   LoadingView,
   PageView,
   Spinner,
@@ -91,7 +91,7 @@ export const Calendar = () => {
       {!me?.preferences ? (
         <LoadingView />
       ) : (
-        <FrameView>
+        <CompactView>
           <SelectPicker
             label={t('shared.preferences.calendar.week_starts_on.label')}
             sheetLabel={t('shared.preferences.calendar.week_starts_on.label')}
@@ -145,7 +145,7 @@ export const Calendar = () => {
             items={hiddenDays}
             onChange={onChangeHiddenDays as OnChangeMultiToggle}
           />
-        </FrameView>
+        </CompactView>
       )}
     </PageView>
   );

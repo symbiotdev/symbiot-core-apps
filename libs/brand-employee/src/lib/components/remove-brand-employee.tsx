@@ -1,4 +1,4 @@
-import { ActionCard, FrameView, Icon, PageView } from '@symbiot-core-apps/ui';
+import { ActionCard, CompactView, Icon, PageView } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import {
@@ -32,7 +32,7 @@ export const RemoveBrandEmployee = ({
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FrameView>
+      <CompactView>
         <ActionCard
           title={t('brand_employee.remove.title')}
           subtitle={t('brand_employee.remove.subtitle', {
@@ -44,7 +44,7 @@ export const RemoveBrandEmployee = ({
           buttonType="danger"
           onPress={onPress}
         />
-      </FrameView>
+      </CompactView>
     </PageView>
   );
 };

@@ -1,4 +1,4 @@
-import { ActionCard, FrameView, Icon, PageView } from '@symbiot-core-apps/ui';
+import { ActionCard, CompactView, Icon, PageView } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import { BrandService, useRemoveBrandServiceReq } from '@symbiot-core-apps/api';
@@ -25,7 +25,7 @@ export const RemoveBrandService = ({ service }: { service: BrandService }) => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FrameView>
+      <CompactView>
         <ActionCard
           title={t('brand_service.remove.title')}
           subtitle={t('brand_service.remove.subtitle', {
@@ -37,7 +37,7 @@ export const RemoveBrandService = ({ service }: { service: BrandService }) => {
           buttonType="danger"
           onPress={onPress}
         />
-      </FrameView>
+      </CompactView>
     </PageView>
   );
 };

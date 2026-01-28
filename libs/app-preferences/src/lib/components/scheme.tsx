@@ -1,5 +1,5 @@
 import {
-  FrameView,
+  CompactView,
   Icon,
   ListItemGroup,
   PageView,
@@ -59,7 +59,7 @@ export const Scheme = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FrameView>
+      <CompactView>
         <ListItemGroup
           // title={t('shared.preferences.scheme.theme.title')}
           gap="$4"
@@ -83,7 +83,7 @@ export const Scheme = () => {
             />
           )}
         </ListItemGroup>
-      </FrameView>
+      </CompactView>
     </PageView>
   );
 };

@@ -2,7 +2,7 @@ import {
   ContextMenuItem,
   ContextMenuPopover,
   defaultPageVerticalPadding,
-  FrameView,
+  CompactView,
   H1,
   H2,
   Icon,
@@ -183,7 +183,7 @@ export const ServiceBrandBookingProfile = ({
   return (
     <>
       <PageView scrollable withHeaderHeight>
-        <FrameView gap="$5">
+        <CompactView gap="$5">
           <View gap="$2" marginVertical="$3">
             <H2 textDecorationLine={textDecorationLine}>{booking.name}</H2>
             <H1 textDecorationLine={textDecorationLine}>{zonedTime}</H1>
@@ -264,7 +264,7 @@ export const ServiceBrandBookingProfile = ({
           </ListItemGroup>
 
           <ServiceBrandBookingProfileClients booking={booking} />
-        </FrameView>
+        </CompactView>
       </PageView>
 
       <SlideSheetModal
@@ -273,9 +273,9 @@ export const ServiceBrandBookingProfile = ({
         visible={rescheduleModalVisible}
         onClose={closeRescheduleModal}
       >
-        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <RescheduleForm booking={booking} onUpdate={onUpdate} />
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
 
       <SlideSheetModal
@@ -284,9 +284,9 @@ export const ServiceBrandBookingProfile = ({
         visible={serviceNoteModalVisible}
         onClose={closeServiceNoteModal}
       >
-        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <NoteForm booking={booking} onUpdate={onUpdate} />
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

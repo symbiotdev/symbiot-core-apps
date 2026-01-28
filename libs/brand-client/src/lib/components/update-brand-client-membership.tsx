@@ -9,7 +9,7 @@ import {
 import {
   ButtonIcon,
   defaultPageVerticalPadding,
-  FrameView,
+  CompactView,
   Icon,
   ListItem,
   ListItemGroup,
@@ -34,7 +34,7 @@ export const UpdateBrandClientMembership = ({
 }) => {
   return (
     <PageView scrollable withHeaderHeight>
-      <FrameView>
+      <CompactView>
         <BrandClientMembershipItem alignSelf="center" membership={membership} />
 
         {membership.type === BrandMembershipType.visits && (
@@ -44,7 +44,7 @@ export const UpdateBrandClientMembership = ({
         <ListItemGroup>
           <EndAt clientId={clientId} membership={membership} />
         </ListItemGroup>
-      </FrameView>
+      </CompactView>
     </PageView>
   );
 };
@@ -140,7 +140,7 @@ const EndAt = ({
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <XStack gap="$3" alignItems="center" width="100%">
             <View flex={1}>
               <SingeElementForm
@@ -162,7 +162,7 @@ const EndAt = ({
               />
             )}
           </XStack>
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

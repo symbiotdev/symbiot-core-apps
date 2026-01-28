@@ -2,7 +2,7 @@ import { BrandEmployee } from '@symbiot-core-apps/api';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import {
   Avatar,
-  FrameView,
+  CompactView,
   Icon,
   MediumText,
   RegularText,
@@ -19,7 +19,7 @@ export const BrandEmployeeItem = ({
   hideArrow?: boolean;
 }) => {
   return (
-    <FrameView
+    <CompactView
       alignItems="center"
       gap="$4"
       flexDirection="row"
@@ -54,6 +54,6 @@ export const BrandEmployeeItem = ({
       </View>
 
       {!!onPress && !hideArrow && <Icon name="ArrowRight" />}
-    </FrameView>
+    </CompactView>
   );
 };

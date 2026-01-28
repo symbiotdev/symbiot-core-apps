@@ -7,7 +7,7 @@ import {
 import {
   Button,
   EmptyView,
-  FrameView,
+  CompactView,
   Icon,
   MediumText,
   SlideSheetModal,
@@ -128,7 +128,7 @@ export const AddressPicker = ({
         visible={permissionDeniedModalVisible}
         onClose={closeDeniedPermissionModal}
       >
-        <FrameView flex={1}>
+        <CompactView flex={1}>
           <EmptyView
             iconName="MapPointWave"
             title={t('shared.location.denied_permission.title')}
@@ -139,7 +139,7 @@ export const AddressPicker = ({
               onPress={Linking.openSettings}
             />
           </EmptyView>
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

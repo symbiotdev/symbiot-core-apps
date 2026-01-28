@@ -33,7 +33,7 @@ import Animated, {
 import { Card } from '../card/card';
 import { Icon } from '../icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { frameViewStyles } from '../view/frame-view';
+import { compactViewStyles } from '../view/compact-view';
 import { Button } from '../button/button';
 import {
   emitHaptic,
@@ -175,7 +175,7 @@ export const Survey = ({
               overflow="hidden"
               zIndex={1}
               pressStyle={{ opacity: 0.8 }}
-              style={frameViewStyles}
+              style={compactViewStyles}
               onPress={onBackPress}
             >
               <Animated.View
@@ -203,7 +203,7 @@ export const Survey = ({
             <Animated.View
               style={[
                 animatedStyle,
-                frameViewStyles,
+                compactViewStyles,
                 { gap: defaultPageVerticalPadding },
               ]}
             >
@@ -222,7 +222,7 @@ export const Survey = ({
             <KeyboardStickyView
               offset={{ opened: bottom }}
               style={[
-                frameViewStyles,
+                compactViewStyles,
                 {
                   gap: 0,
                   paddingHorizontal: defaultPageHorizontalPadding,

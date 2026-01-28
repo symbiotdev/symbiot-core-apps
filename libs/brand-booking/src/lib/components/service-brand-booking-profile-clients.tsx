@@ -14,8 +14,8 @@ import {
   Button,
   defaultPageVerticalPadding,
   EmptyView,
-  FrameView,
-  frameViewStyles,
+  CompactView,
+  compactViewStyles,
   Icon,
   InitView,
   ListItem,
@@ -54,7 +54,7 @@ const ClientItem = ({
     <BrandClientItem
       loading={loading}
       hideArrow={hideArrow}
-      style={frameViewStyles}
+      style={compactViewStyles}
       client={client}
       subtitleColor={!client.membership && !client.free ? '$error' : undefined}
       subtitle={
@@ -276,9 +276,9 @@ export const ServiceBrandBookingProfileClients = ({
           <ClientItem hideArrow paddingVertical="$2" client={actionClient} />
         )}
 
-        <Br style={frameViewStyles} />
+        <Br style={compactViewStyles} />
 
-        <View paddingLeft="$2" style={frameViewStyles}>
+        <View paddingLeft="$2" style={compactViewStyles}>
           <ListItem
             label={t(
               `service_brand_booking.profile.clients.actions.use_balance.label`,
@@ -342,7 +342,7 @@ const Balance = ({
   }
 
   return (
-    <FrameView paddingVertical={defaultPageVerticalPadding}>
+    <CompactView paddingVertical={defaultPageVerticalPadding}>
       <RegularText flex={1}>
         {t(`service_brand_booking.profile.clients.actions.use_balance.info`)}
       </RegularText>
@@ -354,6 +354,6 @@ const Balance = ({
         disabledIds={membershipId ? [membershipId] : []}
         onPressMembership={onPressMembership}
       />
-    </FrameView>
+    </CompactView>
   );
 };

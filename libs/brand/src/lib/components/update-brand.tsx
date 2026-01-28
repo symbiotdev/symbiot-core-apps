@@ -1,6 +1,6 @@
 import {
   defaultPageVerticalPadding,
-  FrameView,
+  CompactView,
   Icon,
   ListItem,
   ListItemGroup,
@@ -69,7 +69,7 @@ export const UpdateBrand = () => {
           />
         </View>
 
-        <FrameView>
+        <CompactView>
           <Name brand={brand} onUpdated={setBrand} />
 
           <ListItemGroup>
@@ -77,7 +77,7 @@ export const UpdateBrand = () => {
             <Localization brand={brand} onUpdated={setBrand} />
             <ExternalLinks brand={brand} onUpdated={setBrand} />
           </ListItemGroup>
-        </FrameView>
+        </CompactView>
       </PageView>
     )
   );
@@ -143,7 +143,7 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <DateFrom
             name="birthday"
             value={brand.birthday}
@@ -159,7 +159,7 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
             onUpdate={updateValue}
             Controller={BrandAboutController}
           />
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -208,7 +208,7 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <NoDragForm
             name="countries"
             value={value.countries}
@@ -229,7 +229,7 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
             onUpdate={updateValue}
             Controller={BrandCurrencyController}
           />
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -272,7 +272,7 @@ const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FrameView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="websites"
             value={value.websites}
@@ -285,7 +285,7 @@ const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
             onUpdate={updateValue}
             Controller={BrandInstagramController}
           />
-        </FrameView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

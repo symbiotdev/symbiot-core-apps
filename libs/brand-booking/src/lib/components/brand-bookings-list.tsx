@@ -2,7 +2,7 @@ import {
   Button,
   defaultPageHorizontalPadding,
   EmptyView,
-  frameViewStyles,
+  compactViewStyles,
   InitView,
   RegularText,
   SectionList,
@@ -86,7 +86,7 @@ export const BrandBookingsList = () => {
       renderSectionHeader={({ section }) => (
         <RegularText
           backgroundColor="$background"
-          style={frameViewStyles}
+          style={compactViewStyles}
           textAlign="center"
           paddingVertical="$2"
         >
@@ -101,7 +101,7 @@ export const BrandBookingsList = () => {
           cursor="pointer"
           booking={item}
           timezone={timezone}
-          style={frameViewStyles}
+          style={compactViewStyles}
           pressStyle={{ opacity: 0.8 }}
           onPress={() =>
             router.push(`/bookings/${item.type}/${item.id}/profile`)

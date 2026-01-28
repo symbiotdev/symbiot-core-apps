@@ -4,7 +4,7 @@ import {
   useAnniversaryState,
   useBirthdayState,
 } from '@symbiot-core-apps/state';
-import { ClosableCard, frameViewStyles } from '@symbiot-core-apps/ui';
+import { ClosableCard, compactViewStyles } from '@symbiot-core-apps/ui';
 import { useMemo } from 'react';
 import {
   DateHelper,
@@ -44,10 +44,10 @@ export const BrandEmployeeCongrats = ({
 
   return (
     (isAnniversaryToday || isBirthdayToday) && (
-      <View gap="$1" style={frameViewStyles}>
+      <View gap="$1" style={compactViewStyles}>
         {isBirthdayToday && (
           <Animated.View
-            style={frameViewStyles}
+            style={compactViewStyles}
             entering={FadeInUp}
             exiting={FadeOutUp}
           >
@@ -62,7 +62,7 @@ export const BrandEmployeeCongrats = ({
 
         {isAnniversaryToday && (
           <Animated.View
-            style={frameViewStyles}
+            style={compactViewStyles}
             entering={FadeInUp}
             exiting={FadeOutUp}
           >

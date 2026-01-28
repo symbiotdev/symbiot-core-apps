@@ -3,7 +3,7 @@ import {
   AdaptivePopoverRef,
   Avatar,
   ButtonIcon,
-  FrameView,
+  CompactView,
   H3,
   MapsTrigger,
   PageView,
@@ -46,7 +46,7 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FrameView gap="$5">
+      <CompactView gap="$5">
         <View alignItems="center" gap="$2">
           <Avatar
             color="$background1"
@@ -115,7 +115,7 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
         />
         <BrandClientNote client={client} />
         <BrandClientHistory client={client} />
-      </FrameView>
+      </CompactView>
     </PageView>
   );
 };

@@ -1,5 +1,5 @@
 import { Brand } from '@symbiot-core-apps/api';
-import { Button, frameViewStyles, ProgressCard } from '@symbiot-core-apps/ui';
+import { Button, compactViewStyles, ProgressCard } from '@symbiot-core-apps/ui';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 import { useIgnoredProfileCompletionState } from '@symbiot-core-apps/state';
 import { useMemo } from 'react';
@@ -62,7 +62,7 @@ export const BrandProfileCompletion = ({
   return (
     isVisible && (
       <Animated.View
-        style={frameViewStyles}
+        style={compactViewStyles}
         entering={FadeInUp}
         exiting={FadeOutUp}
       >

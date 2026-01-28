@@ -1,4 +1,4 @@
-import { FrameView, PageView } from '@symbiot-core-apps/ui';
+import { CompactView, PageView } from '@symbiot-core-apps/ui';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import {
   UpdateAccountData,
@@ -64,7 +64,7 @@ export const UpdateAccount = () => {
           />
         </View>
 
-        <FrameView>
+        <CompactView>
           <Input
             disabled
             value={me.email}
@@ -107,7 +107,7 @@ export const UpdateAccount = () => {
             onUpdate={update}
             Controller={AccountInstagramController}
           />
-        </FrameView>
+        </CompactView>
       </PageView>
     )
   );

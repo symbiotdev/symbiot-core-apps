@@ -5,8 +5,8 @@ import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { YStack } from 'tamagui';
 import {
   AdaptivePopover,
-  FrameView,
-  frameViewStyles,
+  CompactView,
+  compactViewStyles,
   LightText,
   RegularText,
   Segment,
@@ -129,7 +129,7 @@ export const TimeSchedule = ({
       }
       topFixedContent={
         <Segment
-          style={frameViewStyles}
+          style={compactViewStyles}
           disabled={disabled}
           value={activeSegment}
           items={segmentItems}
@@ -138,7 +138,7 @@ export const TimeSchedule = ({
       }
       onClose={onBlur}
     >
-      <FrameView>
+      <CompactView>
         {activeSegment === 'start' && (
           <Picker
             lazy
@@ -156,7 +156,7 @@ export const TimeSchedule = ({
             onChange={onChangeEndValue as ToggleOnChange}
           />
         )}
-      </FrameView>
+      </CompactView>
     </AdaptivePopover>
   );
 };

@@ -2,7 +2,7 @@ import {
   Accordion,
   Button,
   Card,
-  FrameView,
+  CompactView,
   H3,
   Icon,
   MediumText,
@@ -153,7 +153,7 @@ export const ImportBrandClient = () => {
   return (
     <PageView scrollable withHeaderHeight>
       {uploaded ? (
-        <FrameView flex={1} justifyContent="center" gap="$5">
+        <CompactView flex={1} justifyContent="center" gap="$5">
           <Icon name="SmileCircle" size={60} style={{ alignSelf: 'center' }} />
 
           <H3 textAlign="center">{t('brand_client.import.uploaded.title')}</H3>
@@ -185,9 +185,9 @@ export const ImportBrandClient = () => {
             label={t('brand_client.import.uploaded.button.label')}
             onPress={goToClients}
           />
-        </FrameView>
+        </CompactView>
       ) : (
-        <FrameView gap="$1" flex={1} justifyContent="center">
+        <CompactView gap="$1" flex={1} justifyContent="center">
           <View gap="$2">
             <View marginVertical="$5">
               <Icon name="Import" size={60} style={{ alignSelf: 'center' }} />
@@ -261,7 +261,7 @@ export const ImportBrandClient = () => {
             loading={templateLoading || sharing}
             onPress={downloadTemplate}
           />
-        </FrameView>
+        </CompactView>
       )}
     </PageView>
   );

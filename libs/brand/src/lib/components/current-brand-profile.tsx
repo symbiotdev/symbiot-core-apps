@@ -2,7 +2,7 @@ import { useCurrentBrandReq } from '@symbiot-core-apps/api';
 import {
   Avatar,
   ButtonIcon,
-  FrameView,
+  CompactView,
   H3,
   InitView,
   ListItemGroup,
@@ -52,7 +52,7 @@ export const CurrentBrandProfile = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FrameView gap="$5">
+      <CompactView gap="$5">
         <BrandCongrats brand={currentBrand} />
 
         <View alignItems="center" gap="$2">
@@ -134,7 +134,7 @@ export const CurrentBrandProfile = () => {
               : t('shared.not_specified')}
           </RegularText>
         </ListItemGroup>
-      </FrameView>
+      </CompactView>
     </PageView>
   );
 };

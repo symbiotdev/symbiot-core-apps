@@ -2,7 +2,7 @@ import { View, ViewProps } from 'tamagui';
 import { H3 } from '../text/heading';
 import { RegularText } from '../text/text';
 import { Icon, IconName } from '../icons';
-import { FrameView } from './frame-view';
+import { CompactView } from './compact-view';
 import { useI18n } from '@symbiot-core-apps/shared';
 
 export const EmptyView = ({
@@ -19,7 +19,7 @@ export const EmptyView = ({
   const { t } = useI18n();
 
   return (
-    <FrameView
+    <CompactView
       flex={1}
       justifyContent="center"
       alignItems="center"
@@ -38,6 +38,6 @@ export const EmptyView = ({
       </View>
 
       {children}
-    </FrameView>
+    </CompactView>
   );
 };

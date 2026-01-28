@@ -2,7 +2,7 @@ import {
   AnimatedList,
   AttentionView,
   Avatar,
-  FrameView,
+  CompactView,
   InitView,
   PageView,
   RegularText,
@@ -48,7 +48,7 @@ export const Notifications = ({
   const renderItem = useCallback(
     ({ item }: { item: Notification }) => {
       return (
-        <FrameView
+        <CompactView
           backgroundColor="$background1"
           borderRadius="$10"
           padding="$4"
@@ -89,7 +89,7 @@ export const Notifications = ({
               {item.subtitle}
             </RegularText>
           </View>
-        </FrameView>
+        </CompactView>
       );
     },
     [me?.preferences?.dateFormat, onPressNotification],

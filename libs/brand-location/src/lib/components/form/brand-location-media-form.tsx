@@ -1,4 +1,4 @@
-import { FrameView } from '@symbiot-core-apps/ui';
+import { CompactView } from '@symbiot-core-apps/ui';
 import {
   BrandLocation,
   useRemoveBrandLocationGalleryImagesReq,
@@ -59,7 +59,7 @@ export const BrandLocationMediaForm = ({
   );
 
   return (
-    <FrameView gap="$5" {...viewProps}>
+    <CompactView gap="$5" {...viewProps}>
       <View>
         <AvatarPicker
           marginHorizontal="auto"
@@ -79,6 +79,6 @@ export const BrandLocationMediaForm = ({
         onAdd={extendGallery}
         onRemove={cutGallery}
       />
-    </FrameView>
+    </CompactView>
   );
 };

@@ -2,7 +2,7 @@ import {
   BoldText,
   Button,
   ExtraBoldText,
-  FrameView,
+  CompactView,
   H2,
   Icon,
   MediumText,
@@ -185,7 +185,7 @@ export const SubscriptionsPaywall = ({
   }, [packages, selectedPackage?.identifier]);
 
   return (
-    <FrameView flex={1}>
+    <CompactView flex={1}>
       <View gap="$3" marginTop="$5" alignItems="center">
         <Animated.View entering={LightSpeedInLeft.delay(100).duration(1000)}>
           <Icon name="Rocket2" type="SolarBoldDuotone" size={60} />
@@ -283,6 +283,6 @@ export const SubscriptionsPaywall = ({
           </RegularText>
         )}
       </View>
-    </FrameView>
+    </CompactView>
   );
 };

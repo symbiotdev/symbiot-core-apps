@@ -1,7 +1,7 @@
 import {
   Avatar,
   CardsGrid,
-  FormView,
+  CompactView,
   H3,
   HeaderButton,
   headerButtonSize,
@@ -24,10 +24,7 @@ import {
   getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
 import { TodayBrandBookings } from '@symbiot-core-apps/brand-booking';
-import {
-  BrandCongrats,
-  BrandProfileCompletion,
-} from '@symbiot-core-apps/brand';
+import { BrandCongrats } from '@symbiot-core-apps/brand';
 
 export default () => {
   const { me, stats } = useCurrentAccountState();
@@ -121,16 +118,8 @@ const BrandHome = () => {
 
   return (
     <TabsPageView scrollable withHeaderHeight>
-      <FormView gap="$3">
-        {!!currentBrand && (
-          <>
-            <BrandCongrats brand={currentBrand} />
-
-            {hasPermission('brand') && (
-              <BrandProfileCompletion showAction brand={currentBrand} />
-            )}
-          </>
-        )}
+      <CompactView gap="$3">
+        {!!currentBrand && <BrandCongrats brand={currentBrand} />}
 
         <TodayBrandBookings />
 
@@ -143,6 +132,20 @@ const BrandHome = () => {
           <CardsGrid
             title={t('brand.profile.assets')}
             items={[
+              {
+                hidden: !hasPermission('locations'),
+                iconName: 'MapPointWave',
+                label: t('brand_location.title'),
+                // text: used?.locations,
+                onPress: onLocationsPress,
+              },
+              {
+                hidden: !hasPermission('employees'),
+                iconName: 'UsersGroupRounded',
+                label: t('brand_employee.title'),
+                // text: used?.employees,
+                onPress: onEmployeesPress,
+              },
               {
                 hidden: !hasPermission('clients'),
                 iconName: 'SmileCircle',
@@ -157,20 +160,6 @@ const BrandHome = () => {
                 // text: used?.services,
                 onPress: onServicesPress,
               },
-              {
-                hidden: !hasPermission('employees'),
-                iconName: 'UsersGroupRounded',
-                label: t('brand_employee.title'),
-                // text: used?.employees,
-                onPress: onEmployeesPress,
-              },
-              {
-                hidden: !hasPermission('locations'),
-                iconName: 'MapPointWave',
-                label: t('brand_location.title'),
-                // text: used?.locations,
-                onPress: onLocationsPress,
-              },
             ]}
           />
         )}
@@ -184,7 +173,7 @@ const BrandHome = () => {
                 label: t(
                   `${getTranslateKeyByBrandMembershipType(BrandMembershipType.visits)}.title`,
                 ),
-                // text: used?.visitMemberships,
+                text: t('brand_visit_based_membership.subtitle'),
                 onPress: onVisitBasedMembershipsPress,
               },
               {
@@ -192,7 +181,7 @@ const BrandHome = () => {
                 label: t(
                   `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.title`,
                 ),
-                // text: used?.periodMemberships,
+                text: t('brand_period_based_membership.subtitle'),
                 onPress: onPeriodBasedMembershipsPress,
               },
               // {
@@ -217,7 +206,7 @@ const BrandHome = () => {
             ]}
           />
         )}
-      </FormView>
+      </CompactView>
     </TabsPageView>
   );
 };

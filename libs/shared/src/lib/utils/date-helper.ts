@@ -1,4 +1,4 @@
-import { Day, Duration } from 'date-fns/types';
+import i18n from 'i18next';
 import { startOfWeek } from 'date-fns/startOfWeek';
 import { format } from 'date-fns/format';
 import { addDays } from 'date-fns/addDays';
@@ -21,7 +21,6 @@ import { addYears } from 'date-fns/addYears';
 import { isSameMonth } from 'date-fns/isSameMonth';
 import { set } from 'date-fns/set';
 import { isValid } from 'date-fns/isValid';
-import i18n from 'i18next';
 import { endOfDay } from 'date-fns/endOfDay';
 import { toDate } from 'date-fns/toDate';
 import { setHours } from 'date-fns/setHours';
@@ -40,8 +39,20 @@ import { getMonth } from 'date-fns/getMonth';
 import { formatDistance } from 'date-fns/formatDistance';
 import { enUS, Locale, uk } from 'date-fns/locale';
 import { getAppLanguage } from '../i18n/i18n-provider';
+import { parse } from 'date-fns';
 
-export const defaultWeekdayStartsOn: Day = 0;
+export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export type Duration = {
+  years?: number;
+  months?: number;
+  weeks?: number;
+  days?: number;
+  hours?: number;
+  minutes?: number;
+  seconds?: number;
+};
+
+export const defaultWeekdayStartsOn: Weekday = 0;
 export const minutesInHour = 60;
 export const hoursInDay = 24;
 export const minutesInDay = hoursInDay * minutesInHour;
@@ -52,8 +63,6 @@ export const minutesInMonth = averageDaysInMonth * minutesInDay;
 export const secondsInHour = minutesInHour * 60;
 export const secondsInDay = secondsInHour * 24;
 export const secondsInMonth = minutesInMonth * 60;
-
-export type Weekday = Day;
 
 export const DATE_FNS_SUPPORTED_LANGUAGES: Record<string, Locale> = {
   en: enUS,
@@ -95,6 +104,13 @@ export const DateHelper = {
   intervalToDuration,
   eachDayOfInterval,
   currentTimezone: () => Intl.DateTimeFormat().resolvedOptions().timeZone,
+  getDateFromFormattedString: (value: string, dateFormat: string) =>
+    parse(value, dateFormat, new Date()),
+  isValidByFormat: (value: string, dateFormat: string) => {
+    const parsed = DateHelper.getDateFromFormattedString(value, dateFormat);
+
+    return isValid(parsed) && format(parsed, dateFormat) === value;
+  },
   isSameDateIgnoringYear: (d1: Date | string, d2: Date | string) =>
     getDate(d1) === getDate(d2) && getMonth(d1) === getMonth(d2),
   formatDistance: (laterDate: Date | string, earlierDate: Date | string) => {
@@ -205,12 +221,12 @@ export const DateHelper = {
       locale: getAppDateLocale(),
     });
   },
-  startOfWeek: (date: Date, weekStartsOn: Day = defaultWeekdayStartsOn) =>
+  startOfWeek: (date: Date, weekStartsOn: Weekday = defaultWeekdayStartsOn) =>
     startOfWeek(date, {
       weekStartsOn,
     }),
   format: (date: Date | string, formatStr?: string, lang?: string) => {
-    if (formatStr === 'p' && getAppDateLocale().code === 'uk') {
+    if (formatStr === 'p' && !getAppDateLocale().code.includes('en')) {
       formatStr = 'HH:mm';
     } else if (!formatStr) {
       formatStr = 'dd.MM.yyyy';
@@ -222,7 +238,7 @@ export const DateHelper = {
       }),
     );
   },
-  getWeekdays: (props?: { formatStr?: string; weekStartsOn?: Day }) => {
+  getWeekdays: (props?: { formatStr?: string; weekStartsOn?: Weekday }) => {
     const formatStr = props?.formatStr ?? 'EEEE';
     const start = DateHelper.startOfWeek(
       new Date(),
@@ -256,11 +272,14 @@ export const DateHelper = {
         value: minutes,
       };
     }),
-  get24HoursInFormattedTime: (interval = 15) => {
+  get24HoursInFormattedTime: (interval = 15, timeFormat: string) => {
     const start = DateHelper.startOfDay(new Date());
 
     return Array.from({ length: minutesInDay / interval + 1 }).map((_, i) => ({
-      label: DateHelper.format(DateHelper.addMinutes(start, i * interval), 'p'),
+      label: DateHelper.format(
+        DateHelper.addMinutes(start, i * interval),
+        timeFormat,
+      ),
       value: i * interval,
     }));
   },

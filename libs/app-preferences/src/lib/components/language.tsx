@@ -1,16 +1,16 @@
 import {
   Card,
-  FormView,
+  CompactView,
   PageView,
   RegularText,
   Spinner,
-  ToggleGroup,
 } from '@symbiot-core-apps/ui';
 import { useEffect, useMemo } from 'react';
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { queryClient } from '@symbiot-core-apps/api';
 import { allLanguages, useI18n } from '@symbiot-core-apps/shared';
+import { ToggleGroup } from '@symbiot-core-apps/form-controller';
 
 export const Language = () => {
   const { lang, supportedLanguages, changeLanguage } = useI18n();
@@ -37,7 +37,7 @@ export const Language = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FormView>
+      <CompactView>
         <Card paddingVertical={0}>
           <ToggleGroup
             items={items}
@@ -49,7 +49,7 @@ export const Language = () => {
             }}
           />
         </Card>
-      </FormView>
+      </CompactView>
     </PageView>
   );
 };

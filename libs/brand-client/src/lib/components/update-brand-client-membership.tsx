@@ -8,8 +8,8 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   ButtonIcon,
+  CompactView,
   defaultPageVerticalPadding,
-  FormView,
   Icon,
   ListItem,
   ListItemGroup,
@@ -19,7 +19,7 @@ import {
 import { BrandClientMembershipItem } from '@symbiot-core-apps/brand';
 import React, { useCallback } from 'react';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 import { SingeElementForm } from '@symbiot-core-apps/form-controller';
 import { BrandClientBirthdayController } from './controller/brand-client-membership-end-at-controller';
 import { View, XStack } from 'tamagui';
@@ -34,7 +34,7 @@ export const UpdateBrandClientMembership = ({
 }) => {
   return (
     <PageView scrollable withHeaderHeight>
-      <FormView>
+      <CompactView>
         <BrandClientMembershipItem alignSelf="center" membership={membership} />
 
         {membership.type === BrandMembershipType.visits && (
@@ -44,7 +44,7 @@ export const UpdateBrandClientMembership = ({
         <ListItemGroup>
           <EndAt clientId={clientId} membership={membership} />
         </ListItemGroup>
-      </FormView>
+      </CompactView>
     </PageView>
   );
 };
@@ -90,7 +90,7 @@ const EndAt = ({
   clientId: string;
   membership: AnyBrandClientMembership;
 }) => {
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
   const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByQueryParamsForm<
@@ -128,7 +128,7 @@ const EndAt = ({
         label={t('brand_client_membership.profile.groups.end_date.title')}
         text={
           value.endAt
-            ? DateHelper.format(value.endAt, me?.preferences?.dateFormat)
+            ? DateHelper.format(value.endAt, preferences.dateFormat)
             : t('shared.not_specified')
         }
         onPress={openModal}
@@ -140,7 +140,7 @@ const EndAt = ({
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <XStack gap="$3" alignItems="center" width="100%">
             <View flex={1}>
               <SingeElementForm
@@ -162,7 +162,7 @@ const EndAt = ({
               />
             )}
           </XStack>
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

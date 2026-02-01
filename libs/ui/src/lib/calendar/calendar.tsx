@@ -3,23 +3,19 @@ import {
   TimeGridProps,
   TimeGridRef,
 } from '@symbiot.dev/react-native-timegrid-pro';
-import { LayoutChangeEvent, Platform } from 'react-native';
+import { LayoutChangeEvent } from 'react-native';
 import { Ref, useCallback, useMemo, useState } from 'react';
 import { useTheme, View, XStack } from 'tamagui';
 import {
   DateHelper,
-  DeviceInfo,
   getDateLocale,
-  isTablet,
   useI18n,
   useNativeNow,
   useScreenOrientation,
-  useScreenSize,
 } from '@symbiot-core-apps/shared';
 import { BoldText, RegularText } from '../text/text';
 import { Orientation } from 'expo-screen-orientation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { DeviceType } from 'expo-device';
 import { DeterminedProgressBar } from '../loading/determined-progress';
 
 export const Calendar = ({
@@ -33,7 +29,6 @@ export const Calendar = ({
 }) => {
   const { lang } = useI18n();
   const theme = useTheme();
-  const { media } = useScreenSize();
   const { orientation } = useScreenOrientation();
   const { left, right } = useSafeAreaInsets();
   const { now } = useNativeNow();
@@ -41,23 +36,6 @@ export const Calendar = ({
   const [width, setWidth] = useState(0);
 
   const locale = useMemo(() => getDateLocale(lang), [lang]);
-
-  const numberOfDays = useMemo(
-    () =>
-      ['sm', 'md', 'lg', 'xl'].includes(media) &&
-      (isTablet ||
-        DeviceInfo.deviceType === DeviceType.DESKTOP ||
-        orientation === Orientation.LANDSCAPE_LEFT ||
-        orientation === Orientation.LANDSCAPE_RIGHT)
-        ? 7
-        : 3,
-    [media, orientation],
-  );
-
-  const snappable = useMemo(
-    () => Platform.OS !== 'web' && orientation === Orientation.PORTRAIT_UP,
-    [orientation],
-  );
 
   const paddings = useMemo(
     () => ({
@@ -151,9 +129,10 @@ export const Calendar = ({
           draggable
           hapticable
           ref={timeGridRef}
-          snappable={snappable}
+          snappable={
+            !!timeGridProps.numberOfDays && timeGridProps.numberOfDays < 5
+          }
           width={adjustedWidth}
-          numberOfDays={timeGridProps.numberOfDays || numberOfDays}
           locale={locale}
           horizontalLineSize={1}
           minScale={1}

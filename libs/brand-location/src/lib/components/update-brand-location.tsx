@@ -6,10 +6,9 @@ import {
   useUpdateBrandLocationReq,
 } from '@symbiot-core-apps/api';
 import {
+  CompactView,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
-  FormView,
-  getNicknameFromUrl,
   Icon,
   ListItem,
   ListItemGroup,
@@ -20,12 +19,13 @@ import { BrandLocationMediaForm } from './form/brand-location-media-form';
 import { useCallback, useMemo } from 'react';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { PhoneNumber } from 'react-native-phone-input/dist';
 import {
   ArrayForm,
+  getNicknameFromUrl,
   SingeElementForm,
   SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
@@ -59,7 +59,7 @@ export const UpdateBrandLocation = ({
     >
       <BrandLocationMediaForm marginTop="$5" location={location} />
 
-      <FormView paddingHorizontal={defaultPageHorizontalPadding}>
+      <CompactView paddingHorizontal={defaultPageHorizontalPadding}>
         <Name location={location} />
 
         <ListItemGroup>
@@ -69,7 +69,7 @@ export const UpdateBrandLocation = ({
           <Advantages location={location} />
           <Contact location={location} />
         </ListItemGroup>
-      </FormView>
+      </CompactView>
     </PageView>
   );
 };
@@ -134,7 +134,7 @@ const Address = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="address"
             value={value.address}
@@ -159,14 +159,14 @@ const Address = ({ location }: { location: BrandLocation }) => {
             onUpdate={updateValue}
             Controller={BrandLocationRemarkController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
 };
 
 const Schedule = ({ location }: { location: BrandLocation }) => {
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
   const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
@@ -180,11 +180,12 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
         schedules: location.schedules,
       },
     });
+  const timeFormat = preferences.timeFormat;
 
   const text = useMemo(() => {
     const date = DateHelper.startOfDay(new Date());
     const weekdays = DateHelper.getWeekdays({
-      weekStartsOn: me?.preferences?.weekStartsOn,
+      weekStartsOn: preferences.appearance?.calendar?.weekStartsOn,
       formatStr: 'eee',
     });
 
@@ -203,18 +204,18 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
                 DateHelper.set(date, {
                   minutes: schedule.start,
                 }),
-                'p',
+                timeFormat,
               )} - ${DateHelper.format(
                 DateHelper.set(date, {
                   minutes: schedule.end,
                 }),
-                'p',
+                timeFormat,
               )}`;
 
         return `${weekday.label} ${dayValue}`;
       })
       .join(' · ');
-  }, [me?.preferences?.weekStartsOn, t, value]);
+  }, [preferences.appearance?.calendar?.weekStartsOn, t, value, timeFormat]);
 
   return (
     <>
@@ -232,7 +233,7 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={defaultPageVerticalPadding}>
           <ArrayForm
             name="schedules"
             value={value.schedules}
@@ -242,7 +243,7 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
             }}
             Controller={BrandLocationScheduleController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -300,7 +301,7 @@ const Locale = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           {canChangeCountry && (
             <>
               <NoDragForm
@@ -337,7 +338,7 @@ const Locale = ({ location }: { location: BrandLocation }) => {
             }}
             Controller={BrandLocationTimezoneController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -379,14 +380,14 @@ const Advantages = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <ArrayForm
             name="advantages"
             value={value.advantages}
             onUpdate={updateValue}
             Controller={BrandLocationAdvantagesController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -445,7 +446,7 @@ const Contact = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="phones"
             value={value.phones}
@@ -464,7 +465,7 @@ const Contact = ({ location }: { location: BrandLocation }) => {
             onUpdate={updateValue}
             Controller={BrandLocationInstagramController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

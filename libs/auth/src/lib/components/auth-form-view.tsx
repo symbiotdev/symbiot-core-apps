@@ -1,7 +1,7 @@
 import {
   Button,
   Error,
-  FormView,
+  CompactView,
   H2,
   PageView,
   RegularText,
@@ -33,7 +33,7 @@ export const AuthFormView = ({
 }>) => {
   return (
     <PageView scrollable withKeyboard withHeaderHeight lazy={false}>
-      <FormView flex={1} justifyContent="center">
+      <CompactView flex={1} justifyContent="center">
         <View gap="$5" marginVertical="$5" alignItems="center">
           {logo}
 
@@ -57,7 +57,7 @@ export const AuthFormView = ({
         />
 
         {externalLink}
-      </FormView>
+      </CompactView>
     </PageView>
   );
 };

@@ -6,7 +6,12 @@ import {
 import { router, useNavigation } from 'expo-router';
 import { useCallback, useEffect, useRef } from 'react';
 import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, DateHelper, useI18n } from '@symbiot-core-apps/shared';
+import {
+  ConfirmAlert,
+  DateHelper,
+  useI18n,
+  useRateApp,
+} from '@symbiot-core-apps/shared';
 import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useForm } from 'react-hook-form';
 import { UnavailableBrandBookingDatetimeController } from './controller/unavailable-brand-booking-datetime-controller';
@@ -24,6 +29,7 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
   const navigation = useNavigation();
   const { addBookings } = useCurrentBrandBookingsState();
   const { currentEmployee } = useCurrentBrandEmployee();
+  const { rate: rateApp } = useRateApp();
 
   const createdRef = useRef(false);
 
@@ -107,7 +113,10 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
     router.replace(
       `/bookings/${BrandBookingType.unavailable}/${bookings[0].id}/profile`,
     );
+
+    void rateApp();
   }, [
+    rateApp,
     datetimeGetValues,
     recurrenceGetValues,
     employeesGetValues,

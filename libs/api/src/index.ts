@@ -21,6 +21,7 @@ export * from './lib/queries/use-brand-membership.api';
 export * from './lib/queries/use-brand-service.api';
 export * from './lib/queries/use-brand-transaction.api';
 
+export * from './lib/queries/use-issue.api';
 export * from './lib/queries/use-location.api';
 
 export * from './lib/types/account';

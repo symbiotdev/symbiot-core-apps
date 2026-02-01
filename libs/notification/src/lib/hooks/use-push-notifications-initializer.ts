@@ -10,7 +10,7 @@ import {
 import Constants from 'expo-constants';
 import { ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
 import { useAccountUpdateDeviceReq } from '@symbiot-core-apps/api';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 import { isDevice } from 'expo-device';
 
 export const usePushNotificationsInitializer = ({
@@ -18,7 +18,7 @@ export const usePushNotificationsInitializer = ({
 }: {
   onPermissionsDenied: () => void;
 }) => {
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
   const { mutateAsync } = useAccountUpdateDeviceReq();
 
   const init = useCallback(async () => {
@@ -31,7 +31,7 @@ export const usePushNotificationsInitializer = ({
         name: 'default',
         sound: 'new_notification_sound.wav',
         importance: AndroidImportance.MAX,
-        vibrationPattern: me?.preferences?.enableNotificationVibration
+        vibrationPattern: preferences.notificationsVibration
           ? [0, 250, 0, 250]
           : [],
       });
@@ -66,11 +66,7 @@ export const usePushNotificationsInitializer = ({
         });
       }
     }
-  }, [
-    me?.preferences?.enableNotificationVibration,
-    mutateAsync,
-    onPermissionsDenied,
-  ]);
+  }, [preferences?.notificationsVibration, mutateAsync, onPermissionsDenied]);
 
   return useEffect(() => {
     void init();

@@ -2,7 +2,7 @@ import { useCurrentBrandReq } from '@symbiot-core-apps/api';
 import {
   Avatar,
   ButtonIcon,
-  FormView,
+  CompactView,
   H3,
   InitView,
   ListItemGroup,
@@ -16,7 +16,7 @@ import { openBrowserAsync } from 'expo-web-browser';
 import { BrandLocationItem } from './items/brand-location-item';
 import { router } from 'expo-router';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
@@ -24,8 +24,8 @@ import { BrandCongrats } from './brand-congrats';
 import { BrandProfileCompletion } from './brand-profile-completion';
 
 export const CurrentBrandProfile = () => {
-  const { me } = useCurrentAccountState();
   const { brand: currentBrand, setBrand } = useCurrentBrandState();
+  const preferences = useCurrentAccountPreferences();
   const { hasPermission } = useCurrentBrandEmployee();
   const { t } = useI18n();
   const {
@@ -52,7 +52,7 @@ export const CurrentBrandProfile = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FormView gap="$5">
+      <CompactView gap="$5">
         <BrandCongrats brand={currentBrand} />
 
         <View alignItems="center" gap="$2">
@@ -127,14 +127,11 @@ export const CurrentBrandProfile = () => {
         >
           <RegularText>
             {currentBrand.birthday
-              ? DateHelper.format(
-                  currentBrand.birthday,
-                  me?.preferences?.dateFormat,
-                )
+              ? DateHelper.format(currentBrand.birthday, preferences.dateFormat)
               : t('shared.not_specified')}
           </RegularText>
         </ListItemGroup>
-      </FormView>
+      </CompactView>
     </PageView>
   );
 };

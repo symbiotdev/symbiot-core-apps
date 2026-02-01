@@ -1,4 +1,4 @@
-import { Survey, SurveyStep, WeekdaySchedule } from '@symbiot-core-apps/ui';
+import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useCreateBrandLocationReq } from '@symbiot-core-apps/api';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
@@ -17,13 +17,15 @@ import { BrandLocationEmailController } from './controller/brand-location-email-
 import { BrandLocationPhoneController } from './controller/brand-location-phone-controller';
 import { router, useNavigation } from 'expo-router';
 import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, useI18n, useRateApp } from '@symbiot-core-apps/shared';
+import { WeekdaySchedule } from '@symbiot-core-apps/form-controller';
 
 export const CreateBrandLocation = () => {
   const { brand } = useCurrentBrandState();
   const { t } = useI18n();
   const { mutateAsync, isPending } = useCreateBrandLocationReq();
   const navigation = useNavigation();
+  const { rate: rateApp } = useRateApp();
 
   const createdRef = useRef(false);
 
@@ -138,7 +140,10 @@ export const CreateBrandLocation = () => {
     createdRef.current = true;
 
     router.dismissTo('/locations');
+
+    void rateApp();
   }, [
+    rateApp,
     addressGetValues,
     advantagesGetValues,
     contactGetValues,

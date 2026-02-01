@@ -1,8 +1,8 @@
 import {
   Button,
+  compactViewStyles,
   defaultPageHorizontalPadding,
   EmptyView,
-  formViewStyles,
   InitView,
   RegularText,
   SectionList,
@@ -15,7 +15,7 @@ import {
 import React, { useCallback, useMemo } from 'react';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandEmployee,
 } from '@symbiot-core-apps/state';
 import { BrandBookingItem } from '@symbiot-core-apps/brand';
@@ -37,7 +37,7 @@ export const BrandBookingsList = () => {
   } = useBrandBookingCurrentListReq({
     start: DateHelper.startOfDay(new Date()),
   });
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
 
   const sections = useMemo(() => {
     if (!bookings) {
@@ -52,7 +52,7 @@ export const BrandBookingsList = () => {
           const start = new Date(time);
 
           return {
-            title: DateHelper.format(start, me?.preferences?.dateFormat),
+            title: DateHelper.format(start, preferences.dateFormat),
             data: bookings?.filter((booking) =>
               DateHelper.isSameDay(start, booking.start),
             ),
@@ -60,7 +60,7 @@ export const BrandBookingsList = () => {
         }) || []
       );
     }
-  }, [bookings, me?.preferences?.dateFormat]);
+  }, [bookings, preferences.dateFormat]);
 
   const ListEmptyComponent = useCallback(
     () => <Intro loading={isLoading} error={error} />,
@@ -86,7 +86,7 @@ export const BrandBookingsList = () => {
       renderSectionHeader={({ section }) => (
         <RegularText
           backgroundColor="$background"
-          style={formViewStyles}
+          style={compactViewStyles}
           textAlign="center"
           paddingVertical="$2"
         >
@@ -101,7 +101,7 @@ export const BrandBookingsList = () => {
           cursor="pointer"
           booking={item}
           timezone={timezone}
-          style={formViewStyles}
+          style={compactViewStyles}
           pressStyle={{ opacity: 0.8 }}
           onPress={() =>
             router.push(`/bookings/${item.type}/${item.id}/profile`)

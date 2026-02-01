@@ -4,7 +4,7 @@ import {
   AdaptivePopoverRef,
   Button,
   EmptyView,
-  formViewStyles,
+  compactViewStyles,
   Icon,
 } from '@symbiot-core-apps/ui';
 import React, { useRef } from 'react';
@@ -37,7 +37,7 @@ export const BrandClientBalance = ({
     <View gap="$2" alignItems="center">
       {hasPermission('catalog') && showTopUpBalance && (
         <ActionCardWithCustomButton
-          style={formViewStyles}
+          style={compactViewStyles}
           title={t('brand_client.balance.extend.title')}
           subtitle={t('brand_client.balance.extend.subtitle')}
           button={

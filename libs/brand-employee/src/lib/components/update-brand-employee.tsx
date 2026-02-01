@@ -1,14 +1,12 @@
 import {
-  AvatarPicker,
   Card,
+  CompactView,
   defaultPageVerticalPadding,
-  FormView,
   Icon,
   ListItem,
   ListItemGroup,
   PageView,
   SlideSheetModal,
-  Switch,
 } from '@symbiot-core-apps/ui';
 import {
   BrandEmployee,
@@ -24,15 +22,17 @@ import React, { useCallback, useState } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import {
+  AvatarPicker,
   DateFrom,
   MultiElementsForm,
   SingeElementForm,
   SingleElementToArrayForm,
+  Switch,
 } from '@symbiot-core-apps/form-controller';
 import { BrandEmployeeFirstnameController } from './controller/brand-employee-firstname-controller';
 import { BrandEmployeeLastnameController } from './controller/brand-employee-lastname-controller';
@@ -90,7 +90,7 @@ export const UpdateBrandEmployee = ({
         />
       </View>
 
-      <FormView gap="$10" paddingVertical="$5">
+      <CompactView gap="$10" paddingVertical="$5">
         <ListItemGroup>
           <Personality employee={employee} />
           <Professionality employee={employee} />
@@ -103,13 +103,13 @@ export const UpdateBrandEmployee = ({
             employee.id !== currentEmployee?.id &&
             hasAnyPermission && <Permissions employee={employee} />}
         </ListItemGroup>
-      </FormView>
+      </CompactView>
     </PageView>
   );
 };
 
 const Personality = ({ employee }: { employee: BrandEmployee }) => {
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
   const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
@@ -141,7 +141,7 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
         text={[
           `${value.firstname} ${value.lastname}`,
           value.birthday &&
-            DateHelper.format(value.birthday, me?.preferences?.dateFormat),
+            DateHelper.format(value.birthday, preferences.dateFormat),
           employee.gender?.label,
         ]
           .filter(Boolean)
@@ -155,7 +155,7 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="firstname"
             value={value.firstname}
@@ -186,7 +186,7 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
             onUpdate={updateValue}
             Controller={BrandEmployeeGenderController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -227,7 +227,7 @@ const Professionality = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="role"
             value={value.role}
@@ -240,7 +240,7 @@ const Professionality = ({ employee }: { employee: BrandEmployee }) => {
             onUpdate={updateValue}
             Controller={BrandEmployeeProviderController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -282,14 +282,14 @@ const About = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="about"
             value={value.about}
             onUpdate={updateValue}
             Controller={BrandEmployeeAboutController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -384,7 +384,7 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="locations"
             value={
@@ -429,7 +429,7 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
               Controller={BrandEmployeeLocationScheduleController}
             />
           )}
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -488,7 +488,7 @@ const Contact = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="phones"
             value={value.phones}
@@ -507,7 +507,7 @@ const Contact = ({ employee }: { employee: BrandEmployee }) => {
             onUpdate={updateValue}
             Controller={BrandEmployeeAddressController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -551,7 +551,7 @@ const Identification = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="passport"
             value={value.passport}
@@ -564,7 +564,7 @@ const Identification = ({ employee }: { employee: BrandEmployee }) => {
             onUpdate={updateValue}
             Controller={BrandEmployeeTaxIdController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -637,13 +637,13 @@ const Permissions = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={defaultPageVerticalPadding}>
           <BrandEmployeePermissionsController
             loadingKey={updatingKey}
             control={control}
             onChange={onChange}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

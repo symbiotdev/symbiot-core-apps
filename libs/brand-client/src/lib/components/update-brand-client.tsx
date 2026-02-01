@@ -5,18 +5,18 @@ import {
   useUpdateBrandClientReq,
 } from '@symbiot-core-apps/api';
 import {
-  AvatarPicker,
+  CompactView,
   defaultPageVerticalPadding,
-  FormView,
   Icon,
   ListItem,
   ListItemGroup,
   PageView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
+  AvatarPicker,
   DateFrom,
   SingeElementForm,
   SingleElementToArrayForm,
@@ -50,7 +50,7 @@ export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
 
   return (
     <PageView scrollable withHeaderHeight withKeyboard gap="$5">
-      <FormView gap="$10" paddingVertical="$5">
+      <CompactView gap="$10" paddingVertical="$5">
         <AvatarPicker
           marginHorizontal="auto"
           loading={avatarUpdating}
@@ -66,13 +66,13 @@ export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
           <Contact client={client} />
           <Note client={client} />
         </ListItemGroup>
-      </FormView>
+      </CompactView>
     </PageView>
   );
 };
 
 const Personality = ({ client }: { client: BrandClient }) => {
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
   const { t } = useI18n();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateByIdForm<
@@ -104,7 +104,7 @@ const Personality = ({ client }: { client: BrandClient }) => {
         text={[
           `${value.firstname} ${value.lastname}`,
           value.birthday &&
-            DateHelper.format(value.birthday, me?.preferences?.dateFormat),
+            DateHelper.format(value.birthday, preferences.dateFormat),
           client.gender?.label,
         ]
           .filter(Boolean)
@@ -118,7 +118,7 @@ const Personality = ({ client }: { client: BrandClient }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="firstname"
             value={value.firstname}
@@ -149,7 +149,7 @@ const Personality = ({ client }: { client: BrandClient }) => {
             onUpdate={updateValue}
             Controller={BrandClientBirthdayController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -208,7 +208,7 @@ const Contact = ({ client }: { client: BrandClient }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="phones"
             value={value.phones}
@@ -227,7 +227,7 @@ const Contact = ({ client }: { client: BrandClient }) => {
             onUpdate={updateValue}
             Controller={BrandClientAddressController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -268,14 +268,14 @@ const Note = ({ client }: { client: BrandClient }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="note"
             value={value.note}
             onUpdate={updateValue}
             Controller={BrandClientNoteController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

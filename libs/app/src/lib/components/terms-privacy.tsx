@@ -1,5 +1,5 @@
 import {
-  FormView,
+  CompactView,
   Icon,
   ListItem,
   ListItemGroup,
@@ -39,7 +39,7 @@ export const TermsPrivacy = () => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FormView>
+      <CompactView>
         <ListItemGroup>
           <ListItem
             label={t('shared.docs.terms_conditions')}
@@ -57,7 +57,7 @@ export const TermsPrivacy = () => {
             onPress={openOOS}
           />
         </ListItemGroup>
-      </FormView>
+      </CompactView>
     </PageView>
   );
 };

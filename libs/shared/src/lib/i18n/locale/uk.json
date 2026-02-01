@@ -1,6 +1,7 @@
 {
   "next": "Далі",
   "skip": "Пропустити",
+  "send": "Надіслати",
   "continue": "Продовжити",
   "cancel": "Відміна",
   "canceled": "Відмінено",
@@ -50,6 +51,29 @@
   "id_card": "ID картка",
   "limited": "Обмежено",
   "used_value": "Використано: {{value}}",
+  "rate_app": {
+    "write_review": "Залишити відгук",
+    "suggestion": {
+      "title": "Бажаєте оцінити застосунок?",
+      "subtitle": "Ваш відгук допоможе нам покращити якість нашого застосунку."
+    }
+  },
+  "report_issue": {
+    "title": "Повідомити про проблему",
+    "sent": {
+      "title": "Повідомлення успішно надіслано",
+      "subtitle": "Дякуємо, що повідомили нас про цю проблему."
+    },
+    "form": {
+      "message": {
+        "label": "Знайшли проблему?",
+        "placeholder": "Будь ласка, надайте деталі, щоб ми могли якомога швидше це виправити",
+        "error": {
+          "required": "Повідомлення обовʼязкове до заповнення"
+        }
+      }
+    }
+  },
   "maps": {
     "open": {
       "title": "Відкрити в застосунку",
@@ -171,7 +195,7 @@
         "label": "Звук"
       }
     },
-    "appearance": {
+    "scheme": {
       "title": "Тема",
       "theme": {
         "title": "Тема",
@@ -182,10 +206,94 @@
         }
       }
     },
+    "datetime": {
+      "title": "Дата і час",
+      "date_format": {
+        "label": "Формат дати",
+        "formats": [
+          {
+            "label": "ММ/ДД/РРРР",
+            "value": "MM/dd/yyyy"
+          },
+          {
+            "label": "ДД.ММ.РРРР",
+            "value": "dd.MM.yyyy"
+          }
+        ]
+      },
+      "time_format": {
+        "label": "Формат часу",
+        "formats": [
+          {
+            "label": "За замовчуванням",
+            "value": "p"
+          },
+          {
+            "label": "12-годинний",
+            "value": "h:mm a"
+          },
+          {
+            "label": "24-годинний",
+            "value": "HH:mm"
+          }
+        ]
+      },
+      "date_element": {
+        "label": "Спосіб вибору дати",
+        "types": [
+          {
+            "label": "За замовчуванням",
+            "value": null
+          },
+          {
+            "label": "Календар",
+            "value": "calendar"
+          },
+          {
+            "label": "Ручне введення",
+            "value": "input"
+          }
+        ]
+      }
+    },
     "calendar": {
       "title": "Календар",
       "week_starts_on": {
         "label": "Перший день тижня"
+      },
+      "hidden_days": {
+        "label": "Приховані дні"
+      },
+      "number_of_days": {
+        "label": "Вид",
+        "landscape_label": "Горизонтальний вигляд",
+        "portrait_label": "Вертикальний вигляд",
+        "options": [
+          {
+            "label": "За замовчуванням",
+            "value": null
+          },
+          {
+            "label": "1 день",
+            "value": 1
+          },
+          {
+            "label": "2 дні",
+            "value": 2
+          },
+          {
+            "label": "3 дні",
+            "value": 3
+          },
+          {
+            "label": "5 днів",
+            "value": 5
+          },
+          {
+            "label": "7 днів",
+            "value": 7
+          }
+        ]
       }
     },
     "system": {
@@ -206,6 +314,7 @@
     "start": "Від",
     "end": "До",
     "frequency_until": "Повторювати до",
+    "frequency_max_date": "Максимально можлива дата для даного типу повторювання - {{date}}",
     "duration": {
       "all_day": "Весь день",
       "custom": "Встановити час"

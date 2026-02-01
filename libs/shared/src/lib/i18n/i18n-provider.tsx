@@ -14,8 +14,8 @@ import {
 } from 'react';
 import i18n, { TFunction } from 'i18next';
 import { getLocales } from 'expo-localization';
-import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
-import { merge } from 'merge-anything';
+import merge from 'deepmerge';
+import { mmkvGlobalStorage } from '../storage/global';
 
 const LANGUAGE_STORE_KEY = 'x-lang';
 

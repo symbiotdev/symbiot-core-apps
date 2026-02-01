@@ -10,7 +10,12 @@ import { useCurrentBrandBookingsState } from '@symbiot-core-apps/state';
 import { useForm } from 'react-hook-form';
 import { useCallback, useEffect, useRef } from 'react';
 import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, DateHelper, useI18n } from '@symbiot-core-apps/shared';
+import {
+  ConfirmAlert,
+  DateHelper,
+  useI18n,
+  useRateApp,
+} from '@symbiot-core-apps/shared';
 import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { BrandBookingServicesController } from './controller/brand-booking-services-controller';
 import { ServiceBrandBookingScheduleController } from './controller/service-brand-booking-schedule-controller';
@@ -24,6 +29,7 @@ export const CreateServiceBrandBooking = ({ start }: { start: Date }) => {
     useCreateServiceBrandBookingReq();
   const navigation = useNavigation();
   const { addBookings } = useCurrentBrandBookingsState();
+  const { rate: rateApp } = useRateApp();
 
   const createdRef = useRef(false);
 
@@ -134,7 +140,10 @@ export const CreateServiceBrandBooking = ({ start }: { start: Date }) => {
     router.replace(
       `/bookings/${BrandBookingType.service}/${bookings[0].id}/profile`,
     );
+
+    void rateApp();
   }, [
+    rateApp,
     createBooking,
     recurrenceGetValues,
     scheduleGetValues,

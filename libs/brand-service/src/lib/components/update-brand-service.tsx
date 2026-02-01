@@ -7,10 +7,9 @@ import {
   useUpdateBrandServiceReq,
 } from '@symbiot-core-apps/api';
 import {
-  AvatarPicker,
   defaultPageVerticalPadding,
-  FormView,
-  formViewStyles,
+  CompactView,
+  compactViewStyles,
   Icon,
   ListItem,
   ListItemGroup,
@@ -22,6 +21,7 @@ import { useWindowDimensions } from 'react-native';
 import React, { useCallback, useMemo } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import {
+  AvatarPicker,
   SingeElementForm,
   SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
@@ -88,7 +88,7 @@ export const UpdateBrandService = ({ service }: { service: BrandService }) => {
 
       <Availability service={service} />
 
-      <ListItemGroup style={formViewStyles}>
+      <ListItemGroup style={compactViewStyles}>
         {functionality.availability.servicePrice && (
           <Pricing service={service} />
         )}
@@ -135,7 +135,7 @@ const Availability = ({ service }: { service: BrandService }) => {
   );
 
   return (
-    <FormView>
+    <CompactView>
       <LoadingForm
         name="hidden"
         value={!service.hidden}
@@ -146,7 +146,7 @@ const Availability = ({ service }: { service: BrandService }) => {
         onUpdate={onUpdate}
         Controller={BrandServiceAvailabilityController}
       />
-    </FormView>
+    </CompactView>
   );
 };
 
@@ -207,7 +207,7 @@ const Pricing = ({ service }: { service: BrandService }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           {brand?.currencies && brand.currencies.length > 1 && (
             <SingeElementForm
               name="currency"
@@ -240,7 +240,7 @@ const Pricing = ({ service }: { service: BrandService }) => {
             onUpdate={updateValue}
             Controller={BrandServiceDiscountController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -291,7 +291,7 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="locations"
             value={
@@ -322,7 +322,7 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
           ) : (
             <LoadingView />
           )}
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -365,7 +365,7 @@ const About = ({ service }: { service: BrandService }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="name"
             value={value.name}
@@ -378,7 +378,7 @@ const About = ({ service }: { service: BrandService }) => {
             onUpdate={updateValue}
             Controller={BrandServiceDescriptionController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -435,7 +435,7 @@ const Structure = ({ service }: { service: BrandService }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="type"
             value={value.type}
@@ -481,7 +481,7 @@ const Structure = ({ service }: { service: BrandService }) => {
             onUpdate={updateValue}
             Controller={BrandServiceGenderController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -522,14 +522,14 @@ const Note = ({ service }: { service: BrandService }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingeElementForm
             name="note"
             value={value.note}
             onUpdate={updateValue}
             Controller={BrandServiceNoteController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

@@ -4,7 +4,7 @@ import FirebaseAuth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { GoogleAuthButton } from './google-auth-button';
 import { isAvailableAsync } from 'expo-apple-authentication';
 import { Platform } from 'react-native';
-import { Button, Error, FormView, Icon } from '@symbiot-core-apps/ui';
+import { Button, Error, CompactView, Icon } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useAccountAuthSignInWithFirebaseReq } from '@symbiot-core-apps/api';
 import { useI18n } from '@symbiot-core-apps/shared';
@@ -90,7 +90,7 @@ export const SignInButtons = () => {
   );
 
   return (
-    <FormView>
+    <CompactView>
       {isAppleAuthAvailable && (
         <AppleAuthButton
           pending={isAppleAuthPending}
@@ -123,6 +123,6 @@ export const SignInButtons = () => {
       />
 
       {anyError && <Error textAlign="center">{anyError}</Error>}
-    </FormView>
+    </CompactView>
   );
 };

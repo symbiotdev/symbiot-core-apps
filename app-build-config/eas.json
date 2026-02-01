@@ -38,7 +38,8 @@
       "distribution": "internal"
     },
     "development_device_local": {
-      "environment": "development_local",
+      "extends": "development_local",
+      "developmentClient": false,
       "android": {
         "buildType": "apk"
       }

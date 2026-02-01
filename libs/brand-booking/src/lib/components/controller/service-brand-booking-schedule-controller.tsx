@@ -5,15 +5,9 @@ import {
   AnimatedList,
   Avatar,
   Button,
-  DatePicker,
   EmptyView,
-  HorizontalPicker,
-  HorizontalPickerOnChange,
   Icon,
   InitView,
-  PickerItem,
-  PickerOnChange,
-  SelectPicker,
 } from '@symbiot-core-apps/ui';
 import {
   arraysOfObjectsEqual,
@@ -21,8 +15,16 @@ import {
   shortName,
   useI18n,
 } from '@symbiot-core-apps/shared';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { useAppSettings } from '@symbiot-core-apps/app';
+import {
+  DatePicker,
+  HorizontalPicker,
+  HorizontalPickerOnChange,
+  PickerItem,
+  PickerOnChange,
+  SelectPicker,
+} from '@symbiot-core-apps/form-controller';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 
 type ScheduleControl = Control<{
   schedule: {
@@ -50,7 +52,6 @@ export function ServiceBrandBookingScheduleController({
   disableDrag?: boolean;
 }) {
   const { t } = useI18n();
-  const { me } = useCurrentAccountState();
 
   return (
     <Controller
@@ -67,13 +68,12 @@ export function ServiceBrandBookingScheduleController({
               disabled={disabled}
               disableDrag={disableDrag}
               value={value.date}
-              formatStr={me?.preferences?.dateFormat}
-              weekStartsOn={me?.preferences?.weekStartsOn}
               minDate={new Date()}
               maxDate={DateHelper.addYears(new Date(), 100)}
               label={t('service_brand_booking.form.date.label')}
               placeholder={t('service_brand_booking.form.date.placeholder')}
               onChange={(date) =>
+                date &&
                 onChange({
                   ...value,
                   date,
@@ -293,8 +293,9 @@ const TimeSlots = ({
   data: BrandBookingSlot[];
   onSelect: (minutes: number | undefined) => void;
 }) => {
-  const { icons } = useAppSettings();
   const { t } = useI18n();
+  const { icons } = useAppSettings();
+  const preferences = useCurrentAccountPreferences();
 
   const slots = useMemo(() => {
     const minutes = Array.from(
@@ -321,10 +322,10 @@ const TimeSlots = ({
         value,
         label: DateHelper.format(
           DateHelper.addMinutes(startOfDate, value),
-          'p',
+          preferences.timeFormat,
         ),
       }));
-  }, [data, employeeId, locationId]);
+  }, [data, employeeId, locationId, preferences.timeFormat]);
 
   useEffect(() => {
     if (value && !slots.some((slot) => slot.value === value)) {

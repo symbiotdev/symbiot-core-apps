@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import { EmptyView } from '../view/empty-view';
 import { Button } from '../button/button';
-import { FormView } from '../view/form-view';
+import { CompactView } from '../view/compact-view';
 import { useI18n, useRendered } from '@symbiot-core-apps/shared';
 import { LoadingView } from '../view/loading-view';
 import { headerHeight } from '../navigation/header';
@@ -104,7 +104,7 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
 
   if (permission?.status === PermissionStatus.DENIED) {
     return (
-      <FormView flex={1}>
+      <CompactView flex={1}>
         <EmptyView
           iconName="Camera"
           title={t('shared.camera.denied_permission.title')}
@@ -115,7 +115,7 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
             onPress={Linking.openSettings}
           />
         </EmptyView>
-      </FormView>
+      </CompactView>
     );
   } else {
     return (

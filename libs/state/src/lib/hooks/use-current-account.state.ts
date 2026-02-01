@@ -9,12 +9,12 @@ import {
 } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { useCallback } from 'react';
-import { Scheme, schemes } from '@symbiot-core-apps/shared';
+import { useCallback, useMemo } from 'react';
+import { createZustandStorage, systemSchemes } from '@symbiot-core-apps/shared';
 import { useAppSchemeState } from './use-app-theme.state';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { createZustandStorage } from '@symbiot-core-apps/storage';
 import { Appearance, Platform } from 'react-native';
+import merge from 'deepmerge';
 
 type AccountStats = {
   newNotifications?: number;
@@ -81,6 +81,26 @@ export const useCurrentAccountState = create<CurrentAccountState>()(
   ),
 );
 
+export const useCurrentAccountPreferences = (): AccountPreferences => {
+  const { me } = useCurrentAccountState();
+
+  return useMemo(
+    () =>
+      merge(
+        {
+          timeFormat: 'p',
+          appearance: {
+            date: {
+              element: null,
+            },
+          },
+        } as AccountPreferences,
+        me?.preferences || {},
+      ),
+    [me?.preferences],
+  );
+};
+
 export const useCurrentAccount = () => {
   const { me, stats, setMe, setMyStats, setMySubscriptions } =
     useCurrentAccountState();
@@ -90,21 +110,21 @@ export const useCurrentAccount = () => {
   const updateMePreferences = useCallback(
     async (preferences: AccountPreferences) => {
       setMyPreferences(preferences);
+      const preferScheme = preferences?.appearance?.scheme;
 
-      if (preferences.scheme) {
-        const scheme = schemes.includes(preferences.scheme as Scheme)
-          ? (preferences.scheme as Scheme)
+      const scheme =
+        preferScheme && systemSchemes.includes(preferScheme)
+          ? preferScheme
           : undefined;
 
-        if (Platform.OS === 'web') {
-          if (scheme) {
-            setScheme(scheme);
-          } else {
-            removeScheme();
-          }
+      if (Platform.OS === 'web') {
+        if (scheme) {
+          setScheme(scheme);
         } else {
-          Appearance.setColorScheme(scheme);
+          removeScheme();
         }
+      } else {
+        Appearance.setColorScheme(scheme);
       }
     },
     [removeScheme, setMyPreferences, setScheme],
@@ -165,10 +185,7 @@ export const useCurrentAccountUpdater = () => {
 
       try {
         if (initialPreferences) {
-          void updateMePreferences({
-            ...initialPreferences,
-            ...data,
-          });
+          void updateMePreferences(merge(initialPreferences, data));
         }
 
         const preferences = await updatePreferences(data);

@@ -1,6 +1,6 @@
-import { Input } from '@symbiot-core-apps/ui';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { EmailPattern } from '@symbiot-core-apps/shared';
+import { Input } from '../form-element/input';
 
 export function EmailController<T extends FieldValues>({
   name,

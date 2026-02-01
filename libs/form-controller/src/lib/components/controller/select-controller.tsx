@@ -1,6 +1,12 @@
-import { PickerItem, SelectPicker } from '@symbiot-core-apps/ui';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import type { ControllerProps } from 'react-hook-form/dist/types';
+import {
+  Control,
+  Controller,
+  ControllerProps,
+  FieldValues,
+  Path,
+} from 'react-hook-form';
+import { PickerItem } from '../form-element/picker';
+import { SelectPicker } from '../form-element/select-picker';
 
 export function SelectController<T extends FieldValues>({
   name,

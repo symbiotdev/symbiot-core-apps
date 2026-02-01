@@ -1,5 +1,5 @@
 import { ViewProps, XStack } from 'tamagui';
-import { formViewStyles } from '../view/form-view';
+import { compactViewStyles } from '../view/compact-view';
 import { Card } from './card';
 import { CircularProgress } from '../chart/circular-progress';
 import { defaultIconSize } from '../icons';
@@ -17,7 +17,7 @@ export const ProgressCard = ({
   onClose: () => void;
 }) => {
   return (
-    <Card style={formViewStyles} gap="$3">
+    <Card style={compactViewStyles} gap="$3">
       <XStack gap="$3">
         <CircularProgress
           progress={progress}

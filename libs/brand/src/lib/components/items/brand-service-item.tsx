@@ -9,7 +9,7 @@ import {
   Chip,
   ChipSize,
   ChipType,
-  FormView,
+  CompactView,
   MediumText,
   RegularText,
 } from '@symbiot-core-apps/ui';
@@ -29,7 +29,7 @@ export const BrandServiceItem = ({
   const { t } = useI18n();
 
   return (
-    <FormView
+    <CompactView
       opacity={service.hidden ? 0.5 : 1}
       {...viewProps}
       {...(onPress && {
@@ -84,7 +84,7 @@ export const BrandServiceItem = ({
       </XStack>
 
       <BrandServiceItemChips service={service} />
-    </FormView>
+    </CompactView>
   );
 };
 

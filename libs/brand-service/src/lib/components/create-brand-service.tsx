@@ -1,4 +1,4 @@
-import { AvatarPicker, Survey, SurveyStep } from '@symbiot-core-apps/ui';
+import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import {
   useBrandServiceFormatsReq,
   useCreateBrandServiceReq,
@@ -26,6 +26,7 @@ import { EventArg, NavigationAction } from '@react-navigation/native';
 import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import { BrandServiceDurationController } from './controller/brand-service-duration-controller';
 import { useAppSettings } from '@symbiot-core-apps/app';
+import { AvatarPicker } from '@symbiot-core-apps/form-controller';
 
 export const CreateBrandService = () => {
   const { brand } = useCurrentBrandState();

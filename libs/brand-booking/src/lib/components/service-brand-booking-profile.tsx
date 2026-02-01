@@ -1,8 +1,8 @@
 import {
+  CompactView,
   ContextMenuItem,
   ContextMenuPopover,
   defaultPageVerticalPadding,
-  FormView,
   H1,
   H2,
   Icon,
@@ -28,7 +28,7 @@ import {
 } from '@symbiot-core-apps/brand';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandEmployee,
 } from '@symbiot-core-apps/state';
 import React, {
@@ -60,8 +60,8 @@ export const ServiceBrandBookingProfile = ({
 }) => {
   const { icons } = useAppSettings();
   const { t } = useI18n();
-  const { me } = useCurrentAccountState();
   const { hasPermission } = useCurrentBrandEmployee();
+  const preferences = useCurrentAccountPreferences();
   const navigation = useNavigation();
   const { timezone } = useBookingDatetime({ fallbackZone: booking.timezone });
   const { mutateAsync: cancel, isPending: cancelProcessing } =
@@ -183,7 +183,7 @@ export const ServiceBrandBookingProfile = ({
   return (
     <>
       <PageView scrollable withHeaderHeight>
-        <FormView gap="$5">
+        <CompactView gap="$5">
           <View gap="$2" marginVertical="$3">
             <H2 textDecorationLine={textDecorationLine}>{booking.name}</H2>
             <H1 textDecorationLine={textDecorationLine}>{zonedTime}</H1>
@@ -202,7 +202,7 @@ export const ServiceBrandBookingProfile = ({
               <Icon name={icons.ServiceBooking} size={18} />
 
               <RegularText textDecorationLine={textDecorationLine}>
-                {`${DateHelper.format(booking.start, me?.preferences?.dateFormat)} (${DateHelper.format(booking.start, 'EEEE')})`}
+                {`${DateHelper.format(booking.start, preferences.dateFormat)} (${DateHelper.format(booking.start, 'EEEE')})`}
               </RegularText>
 
               {!!booking.cancelAt && (
@@ -264,7 +264,7 @@ export const ServiceBrandBookingProfile = ({
           </ListItemGroup>
 
           <ServiceBrandBookingProfileClients booking={booking} />
-        </FormView>
+        </CompactView>
       </PageView>
 
       <SlideSheetModal
@@ -273,9 +273,9 @@ export const ServiceBrandBookingProfile = ({
         visible={rescheduleModalVisible}
         onClose={closeRescheduleModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <RescheduleForm booking={booking} onUpdate={onUpdate} />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
 
       <SlideSheetModal
@@ -284,9 +284,9 @@ export const ServiceBrandBookingProfile = ({
         visible={serviceNoteModalVisible}
         onClose={closeServiceNoteModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <NoteForm booking={booking} onUpdate={onUpdate} />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

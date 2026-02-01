@@ -1,6 +1,11 @@
-import { TimezonePicker } from '@symbiot-core-apps/ui';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
-import type { ControllerProps } from 'react-hook-form/dist/types';
+import {
+  Control,
+  Controller,
+  ControllerProps,
+  FieldValues,
+  Path,
+} from 'react-hook-form';
+import { TimezonePicker } from '../form-element/timezone-picker';
 
 export function TimezoneController<T extends FieldValues>({
   name,

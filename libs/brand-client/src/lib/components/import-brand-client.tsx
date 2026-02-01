@@ -2,9 +2,7 @@ import {
   Accordion,
   Button,
   Card,
-  DocumentPicker,
-  FileChip,
-  FormView,
+  CompactView,
   H3,
   Icon,
   MediumText,
@@ -42,6 +40,7 @@ import {
 } from '../utils/parse-imported-clients';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
+import { DocumentPicker, FileChip } from '@symbiot-core-apps/form-controller';
 
 export const ImportBrandClient = () => {
   const { t } = useI18n();
@@ -154,7 +153,7 @@ export const ImportBrandClient = () => {
   return (
     <PageView scrollable withHeaderHeight>
       {uploaded ? (
-        <FormView flex={1} justifyContent="center" gap="$5">
+        <CompactView flex={1} justifyContent="center" gap="$5">
           <Icon name="SmileCircle" size={60} style={{ alignSelf: 'center' }} />
 
           <H3 textAlign="center">{t('brand_client.import.uploaded.title')}</H3>
@@ -186,9 +185,9 @@ export const ImportBrandClient = () => {
             label={t('brand_client.import.uploaded.button.label')}
             onPress={goToClients}
           />
-        </FormView>
+        </CompactView>
       ) : (
-        <FormView gap="$1" flex={1} justifyContent="center">
+        <CompactView gap="$1" flex={1} justifyContent="center">
           <View gap="$2">
             <View marginVertical="$5">
               <Icon name="Import" size={60} style={{ alignSelf: 'center' }} />
@@ -262,7 +261,7 @@ export const ImportBrandClient = () => {
             loading={templateLoading || sharing}
             onPress={downloadTemplate}
           />
-        </FormView>
+        </CompactView>
       )}
     </PageView>
   );

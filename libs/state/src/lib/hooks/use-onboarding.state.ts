@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { createZustandStorage } from '@symbiot-core-apps/storage';
+import { createZustandStorage } from '@symbiot-core-apps/shared';
 
 type OnboardingState = {
   finished: boolean;

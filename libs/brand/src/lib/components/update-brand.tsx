@@ -1,9 +1,6 @@
 import {
-  AvatarPicker,
+  CompactView,
   defaultPageVerticalPadding,
-  FormView,
-  getNicknameFromUrl,
-  getWebsiteDomain,
   Icon,
   ListItem,
   ListItemGroup,
@@ -11,7 +8,7 @@ import {
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import {
@@ -25,7 +22,10 @@ import React, { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import {
+  AvatarPicker,
   DateFrom,
+  getNicknameFromUrl,
+  getWebsiteDomain,
   SingeElementForm,
   SingleElementToArrayForm,
 } from '@symbiot-core-apps/form-controller';
@@ -69,7 +69,7 @@ export const UpdateBrand = () => {
           />
         </View>
 
-        <FormView>
+        <CompactView>
           <Name brand={brand} onUpdated={setBrand} />
 
           <ListItemGroup>
@@ -77,7 +77,7 @@ export const UpdateBrand = () => {
             <Localization brand={brand} onUpdated={setBrand} />
             <ExternalLinks brand={brand} onUpdated={setBrand} />
           </ListItemGroup>
-        </FormView>
+        </CompactView>
       </PageView>
     )
   );
@@ -102,8 +102,8 @@ const Name = ({ brand, onUpdated }: GroupProps) => {
 };
 
 const Information = ({ brand, onUpdated }: GroupProps) => {
-  const { me } = useCurrentAccountState();
   const { t } = useI18n();
+  const preferences = useCurrentAccountPreferences();
   const { value, modalVisible, openModal, closeModal, updateValue } =
     useModalUpdateForm<
       Brand,
@@ -127,7 +127,7 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
         text={
           [
             value.birthday
-              ? DateHelper.format(value.birthday, me?.preferences?.dateFormat)
+              ? DateHelper.format(value.birthday, preferences.dateFormat)
               : '',
             value.about,
           ]
@@ -143,7 +143,7 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <DateFrom
             name="birthday"
             value={brand.birthday}
@@ -159,7 +159,7 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
             onUpdate={updateValue}
             Controller={BrandAboutController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -208,7 +208,7 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <NoDragForm
             name="countries"
             value={value.countries}
@@ -229,7 +229,7 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
             onUpdate={updateValue}
             Controller={BrandCurrencyController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );
@@ -272,7 +272,7 @@ const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <SingleElementToArrayForm
             name="websites"
             value={value.websites}
@@ -285,7 +285,7 @@ const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
             onUpdate={updateValue}
             Controller={BrandInstagramController}
           />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

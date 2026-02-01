@@ -19,7 +19,6 @@ export type Account = {
   firebaseId: string;
   signInProvider: string;
   email: string;
-  lastRateDate: string;
   birthday: string;
   offering: string | null;
   avatar: Attachment;

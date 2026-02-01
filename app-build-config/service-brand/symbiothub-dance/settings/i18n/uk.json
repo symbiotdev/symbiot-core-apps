@@ -1389,6 +1389,7 @@
   },
   "brand_period_based_membership": {
     "title": "VIP Абонементи",
+    "subtitle": "Безлімітні тренування",
     "expired": "Термін дії закінчився",
     "unavailable": "Недоступно для покупки",
     "analytics": {
@@ -1545,6 +1546,7 @@
   },
   "brand_visit_based_membership": {
     "title": "Абонементи",
+    "subtitle": "Обмежені тренування",
     "count_visits": "Кількість тренувань: {{count}}",
     "expired": "Термін дії закінчився",
     "limit_reached": "Вичерпано кількість тренувань",

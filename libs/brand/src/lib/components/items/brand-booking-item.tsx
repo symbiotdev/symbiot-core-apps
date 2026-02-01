@@ -8,7 +8,7 @@ import {
 import { Icon, MediumText, RegularText } from '@symbiot-core-apps/ui';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { useMemo } from 'react';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 
 export const configByType: Record<
   BrandBookingType,
@@ -115,7 +115,7 @@ export const useBookingScheduleFormattedTime = ({
   timezone?: string;
 }) => {
   const { t } = useI18n();
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
 
   return useMemo(() => {
     if (isBrandBookingAllDay(booking)) {
@@ -127,14 +127,15 @@ export const useBookingScheduleFormattedTime = ({
       const adjustedTimezone = timezone || booking.timezone;
       const start = DateHelper.toZonedTime(booking.start, adjustedTimezone);
       const end = DateHelper.toZonedTime(booking.end, adjustedTimezone);
-      const dateFormat = me?.preferences?.dateFormat;
+      const dateFormat = preferences.dateFormat;
+      const timeFormat = preferences.timeFormat;
       let zonedTime: string;
       let localTime = '';
 
       if (!DateHelper.isSameDay(start, end)) {
-        zonedTime = `${DateHelper.format(start, dateFormat)} ${DateHelper.format(start, 'p')} - ${DateHelper.format(end, dateFormat)} ${DateHelper.format(end, 'p')}`;
+        zonedTime = `${DateHelper.format(start, dateFormat)} ${DateHelper.format(start, timeFormat)} - ${DateHelper.format(end, dateFormat)} ${DateHelper.format(end, timeFormat)}`;
       } else {
-        zonedTime = `${DateHelper.format(start, 'p')} - ${DateHelper.format(end, 'p')}`;
+        zonedTime = `${DateHelper.format(start, timeFormat)} - ${DateHelper.format(end, timeFormat)}`;
       }
 
       if (!DateHelper.isSame(start, booking.start)) {
@@ -144,9 +145,9 @@ export const useBookingScheduleFormattedTime = ({
         );
 
         if (!DateHelper.isSameDay(start, booking.start) || moreThanOneDay) {
-          localTime = `${DateHelper.format(booking.start, dateFormat)} ${DateHelper.format(booking.start, 'p')} -${moreThanOneDay ? ` ${DateHelper.format(booking.end, dateFormat)}` : ''} ${DateHelper.format(booking.end, 'p')}`;
+          localTime = `${DateHelper.format(booking.start, dateFormat)} ${DateHelper.format(booking.start, timeFormat)} -${moreThanOneDay ? ` ${DateHelper.format(booking.end, dateFormat)}` : ''} ${DateHelper.format(booking.end, timeFormat)}`;
         } else {
-          localTime = `${DateHelper.format(booking.start, 'p')} - ${DateHelper.format(booking.end, 'p')}`;
+          localTime = `${DateHelper.format(booking.start, timeFormat)} - ${DateHelper.format(booking.end, timeFormat)}`;
         }
       }
 
@@ -155,7 +156,7 @@ export const useBookingScheduleFormattedTime = ({
         localTime,
       };
     }
-  }, [booking, me?.preferences?.dateFormat, t, timezone]);
+  }, [t, booking, timezone, preferences?.dateFormat, preferences?.timeFormat]);
 };
 
 const Schedule = ({

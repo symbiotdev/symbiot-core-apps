@@ -1,8 +1,7 @@
 import { AnyBrandBooking, BrandLocation } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { createZustandStorage } from '@symbiot-core-apps/storage';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { createZustandStorage, DateHelper } from '@symbiot-core-apps/shared';
 
 type CurrentBrandBookingsState = {
   location: BrandLocation | null;

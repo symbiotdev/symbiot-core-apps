@@ -1,8 +1,8 @@
 import {
+  CompactView,
   ContextMenuItem,
   ContextMenuPopover,
   defaultPageVerticalPadding,
-  FormView,
   H1,
   H2,
   H4,
@@ -31,7 +31,7 @@ import {
   useModal,
 } from '@symbiot-core-apps/shared';
 import {
-  useCurrentAccountState,
+  useCurrentAccountPreferences,
   useCurrentBrandEmployee,
 } from '@symbiot-core-apps/state';
 import { useForm } from 'react-hook-form';
@@ -48,7 +48,7 @@ export const UnavailableBrandBookingProfile = ({
 }) => {
   const { icons } = useAppSettings();
   const { t } = useI18n();
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
   const { timezone } = useBookingDatetime({ fallbackZone: booking.timezone });
@@ -165,7 +165,7 @@ export const UnavailableBrandBookingProfile = ({
   return (
     <>
       <PageView scrollable withHeaderHeight>
-        <FormView gap="$4">
+        <CompactView gap="$4">
           <View gap="$2" marginVertical="$3">
             <H2 textDecorationLine={textDecorationLine}>
               {t(`unavailable_brand_booking.profile.title`)}
@@ -187,7 +187,7 @@ export const UnavailableBrandBookingProfile = ({
               <Icon name={icons.UnavailableBooking} size={18} />
 
               <H4 textDecorationLine={textDecorationLine}>
-                {DateHelper.format(booking.start, me?.preferences?.dateFormat)}
+                {DateHelper.format(booking.start, preferences.dateFormat)}
               </H4>
 
               {!!booking.cancelAt && (
@@ -225,7 +225,7 @@ export const UnavailableBrandBookingProfile = ({
               {booking.note?.trim() || t('shared.not_specified')}
             </RegularText>
           </ListItemGroup>
-        </FormView>
+        </CompactView>
       </PageView>
 
       <SlideSheetModal
@@ -234,9 +234,9 @@ export const UnavailableBrandBookingProfile = ({
         visible={rescheduleModalVisible}
         onClose={closeRescheduleModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <RescheduleForm booking={booking} onUpdate={onUpdate} />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
 
       <SlideSheetModal
@@ -245,9 +245,9 @@ export const UnavailableBrandBookingProfile = ({
         visible={noteModalVisible}
         onClose={closeNoteModal}
       >
-        <FormView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           <NoteForm booking={booking} onUpdate={onUpdate} />
-        </FormView>
+        </CompactView>
       </SlideSheetModal>
     </>
   );

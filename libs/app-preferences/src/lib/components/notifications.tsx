@@ -1,13 +1,15 @@
 import {
   Card,
-  FormView,
+  CompactView,
   Link,
   PageView,
   RegularText,
   Spinner,
-  Switch,
 } from '@symbiot-core-apps/ui';
-import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
+import {
+  useCurrentAccountPreferences,
+  useCurrentAccountUpdater,
+} from '@symbiot-core-apps/state';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -16,11 +18,13 @@ import {
 } from 'expo-notifications';
 import { Linking, Platform } from 'react-native';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { Switch } from '@symbiot-core-apps/form-controller';
 
 export const Notifications = () => {
   const { t } = useI18n();
-  const { me, updatePreferences$, updating } = useCurrentAccountUpdater();
+  const { updatePreferences$, updating } = useCurrentAccountUpdater();
   const navigation = useNavigation();
+  const preferences = useCurrentAccountPreferences();
 
   const [permissionsStatus, setPermissionsStatus] =
     useState<NotificationPermissionsStatus>();
@@ -36,20 +40,18 @@ export const Notifications = () => {
   }, [updating, navigation]);
 
   const togglePushNotifications = useCallback(
-    (enablePushNotifications: boolean) =>
-      updatePreferences$({ enablePushNotifications }),
+    (pushNotifications: boolean) => updatePreferences$({ pushNotifications }),
     [updatePreferences$],
   );
 
   const toggleNotificationSound = useCallback(
-    (enableNotificationSound: boolean) =>
-      updatePreferences$({ enableNotificationSound }),
+    (notificationsSound: boolean) => updatePreferences$({ notificationsSound }),
     [updatePreferences$],
   );
 
   return (
     <PageView scrollable withHeaderHeight gap="$2">
-      <FormView>
+      <CompactView>
         {pushNotificationsDenied && (
           <Card>
             <RegularText>
@@ -70,7 +72,7 @@ export const Notifications = () => {
               checked={
                 pushNotificationsDenied
                   ? false
-                  : me?.preferences?.enablePushNotifications
+                  : Boolean(preferences.pushNotifications)
               }
               disabled={pushNotificationsDenied}
               onChange={togglePushNotifications}
@@ -78,11 +80,11 @@ export const Notifications = () => {
           )}
           <Switch
             label={t('shared.preferences.notifications.sound.label')}
-            checked={me?.preferences?.enableNotificationSound}
+            checked={Boolean(preferences.notificationsSound)}
             onChange={toggleNotificationSound}
           />
         </Card>
-      </FormView>
+      </CompactView>
     </PageView>
   );
 };

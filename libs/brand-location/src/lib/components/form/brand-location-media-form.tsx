@@ -1,4 +1,4 @@
-import { AvatarPicker, FormView, GalleryPicker } from '@symbiot-core-apps/ui';
+import { CompactView } from '@symbiot-core-apps/ui';
 import {
   BrandLocation,
   useRemoveBrandLocationGalleryImagesReq,
@@ -10,6 +10,10 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { View, ViewProps } from 'tamagui';
 import { useI18n } from '@symbiot-core-apps/shared';
+import {
+  AvatarPicker,
+  GalleryPicker,
+} from '@symbiot-core-apps/form-controller';
 
 export const BrandLocationMediaForm = ({
   location,
@@ -55,7 +59,7 @@ export const BrandLocationMediaForm = ({
   );
 
   return (
-    <FormView gap="$5" {...viewProps}>
+    <CompactView gap="$5" {...viewProps}>
       <View>
         <AvatarPicker
           marginHorizontal="auto"
@@ -75,6 +79,6 @@ export const BrandLocationMediaForm = ({
         onAdd={extendGallery}
         onRemove={cutGallery}
       />
-    </FormView>
+    </CompactView>
   );
 };

@@ -11,7 +11,7 @@ import { Platform } from 'react-native';
 import { Notification } from '@symbiot-core-apps/api';
 import { persist } from 'zustand/middleware';
 import { create } from 'zustand';
-import { createZustandStorage } from '@symbiot-core-apps/storage';
+import { createZustandStorage } from '@symbiot-core-apps/shared';
 
 type LastPushNotificationIdState = {
   id?: string;

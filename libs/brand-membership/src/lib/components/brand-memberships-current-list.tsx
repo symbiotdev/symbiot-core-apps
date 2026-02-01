@@ -5,7 +5,6 @@ import {
   defaultPageVerticalPadding,
   EmptyView,
   NavigationBackground,
-  Search,
 } from '@symbiot-core-apps/ui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React, {
@@ -23,6 +22,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { Search } from '@symbiot-core-apps/form-controller';
 
 export const BrandMembershipsCurrentList = ({
   offsetTop,

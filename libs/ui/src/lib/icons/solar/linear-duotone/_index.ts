@@ -12,7 +12,6 @@ import { QuestionCircle } from './QuestionCircle';
 import { FileText } from './FileText';
 import { ShareCircle } from './ShareCircle';
 import { Logout2 } from './Logout2';
-import { CodeCircle } from './CodeCircle';
 import { TrashBinMinimalistic } from './TrashBinMinimalistic';
 import { Letter } from './Letter';
 import { Moon } from './Moon';
@@ -42,7 +41,6 @@ import { AltArrowRight } from './AltArrowRight';
 import { IconMap } from '../../config';
 import { Maximize } from './Maximize';
 import { Minimize } from './Minimize';
-import { Code } from './Code';
 import { SettingsMinimalistic } from './SettingsMinimalistic';
 import { Rocket } from './Rocket';
 import { InfoCircle } from './InfoCircle';
@@ -81,6 +79,9 @@ import { Confetti } from './Confetti';
 import { Link } from './Link';
 import { Pallete2 } from './Pallete2';
 import { Rocket2 } from './Rocket2';
+import { ClockCircle } from './ClockCircle';
+import { ChatRoundLike } from './ChatRoundLike';
+import { Bug } from './Bug';
 
 export const Map: IconMap = {
   AddCircle,
@@ -95,6 +96,7 @@ export const Map: IconMap = {
   Balloon,
   Bell,
   Bill,
+  Bug,
   Calendar,
   CalendarCross,
   CalendarMinimalistic,
@@ -102,11 +104,11 @@ export const Map: IconMap = {
   Card2,
   ChartSquare,
   ChatRoundDots,
+  ChatRoundLike,
   ChecklistMinimalistic,
+  ClockCircle,
   Close,
   CloseCircle,
-  Code,
-  CodeCircle,
   Confetti,
   Copy,
   CrownLine,

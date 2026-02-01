@@ -49,14 +49,18 @@ const MenuItem = memo(
     attention?: boolean;
   }) => {
     const pathname = usePathname();
+    const rootPath = '/';
 
     const focused =
       pathname === route ||
-      (pathname === '/'
+      (pathname === rootPath
         ? additionalRoutes?.includes(pathname)
-        : additionalRoutes?.some(
-            (additionalRoute) => additionalRoute.indexOf(pathname) !== -1,
-          ));
+        : additionalRoutes
+            ?.filter((route) => route !== rootPath)
+            ?.some(
+              (additionalRoute) => pathname.indexOf(additionalRoute) !== -1,
+            ));
+
     const onPress = useCallback(() => {
       if (pathname !== route) {
         if (router.canDismiss()) {
@@ -188,6 +192,7 @@ export const DrawerMenu = () => {
 
         <MenuItem
           route="/home"
+          marginTop={!currentBrand ? 10 : 0}
           label={t(
             !currentBrand
               ? 'navigation.drawer.actions.label'
@@ -287,10 +292,9 @@ export const DrawerMenu = () => {
           />
         )}
 
-        <Br marginHorizontal={defaultPageHorizontalPadding} />
+        <Br marginTop="auto" marginHorizontal={defaultPageHorizontalPadding} />
 
         <MenuItem
-          marginTop="auto"
           icon="QuestionCircle"
           label={t('navigation.drawer.faq.label')}
           route="/app/help-feedback"
@@ -302,6 +306,7 @@ export const DrawerMenu = () => {
           icon={icons.More}
           label={t('navigation.drawer.more.label')}
           route="/menu"
+          additionalRoutes={['/preferences']}
         />
       </ScrollView>
     </Animated.View>

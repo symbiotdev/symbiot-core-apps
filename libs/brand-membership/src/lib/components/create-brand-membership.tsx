@@ -8,7 +8,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { router, useNavigation } from 'expo-router';
 import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, useI18n, useRateApp } from '@symbiot-core-apps/shared';
 import {
   Card,
   Icon,
@@ -46,6 +46,7 @@ export const CreateBrandMembership = ({
   } = useCreateBrandVisitBasedMembershipReq();
   const navigation = useNavigation();
   const tPrefix = getTranslateKeyByBrandMembershipType(type);
+  const { rate: rateApp } = useRateApp();
 
   const createdRef = useRef(false);
 
@@ -155,13 +156,18 @@ export const CreateBrandMembership = ({
     createdRef.current = true;
 
     router.replace(`/memberships/${membership.id}/profile`);
+
+    if (type === BrandMembershipType.period) {
+      void rateApp();
+    }
   }, [
     type,
+    rateApp,
+    noteGetValues,
     aboutGetValues,
+    pricingGetValues,
     locationGetValues,
     servicesGetValues,
-    pricingGetValues,
-    noteGetValues,
     createPeriodBasedMembership,
     createVisitBasedMembership,
   ]);

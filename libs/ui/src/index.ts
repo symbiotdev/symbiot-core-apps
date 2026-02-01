@@ -20,30 +20,6 @@ export * from './lib/collapsible/accordion';
 
 export * from './lib/devider/br';
 
-export * from './lib/form/avatar-picker';
-export * from './lib/form/checkbox';
-export * from './lib/form/code-input';
-export * from './lib/form/date-picker';
-export * from './lib/form/time-schedule';
-export * from './lib/form/document-picker';
-export * from './lib/form/duration-picker';
-export * from './lib/form/gallery-picker';
-export * from './lib/form/media-picker';
-export * from './lib/form/horizontal-picker';
-export * from './lib/form/input';
-export * from './lib/form/instagram-input';
-export * from './lib/form/phone-input';
-export * from './lib/form/picker';
-export * from './lib/form/price-input';
-export * from './lib/form/search';
-export * from './lib/form/select-picker';
-export * from './lib/form/switch';
-export * from './lib/form/textarea';
-export * from './lib/form/timezone-picker';
-export * from './lib/form/toggle-group';
-export * from './lib/form/website-input';
-export * from './lib/form/weekdays-schedule';
-
 export * from './lib/icons';
 
 export * from './lib/list/animated-list';
@@ -57,7 +33,6 @@ export * from './lib/loading/spinner';
 export * from './lib/maps/maps-trigger';
 
 export * from './lib/media/avatar';
-export * from './lib/media/file-chip';
 export * from './lib/media/media-background';
 
 export * from './lib/modal/full-screen-transparent-modal';
@@ -75,6 +50,8 @@ export * from './lib/qr/qr-code';
 export * from './lib/qr/qr-code-modal';
 export * from './lib/qr/qr-code-scan-modal';
 
+export * from './lib/segment/segment';
+
 export * from './lib/sheet/sheet';
 
 export * from './lib/survey/survey';
@@ -87,7 +64,7 @@ export * from './lib/view/attention-view';
 export * from './lib/view/container-view';
 export * from './lib/view/empty-view';
 export * from './lib/view/error-view';
-export * from './lib/view/form-view';
+export * from './lib/view/compact-view';
 export * from './lib/view/init-view';
 export * from './lib/view/loading-view';
 export * from './lib/view/page-view';

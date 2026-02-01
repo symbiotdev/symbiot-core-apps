@@ -3,14 +3,14 @@ import {
   AdaptivePopoverRef,
   Avatar,
   ButtonIcon,
-  FormView,
+  CompactView,
   H3,
   MapsTrigger,
   PageView,
   RegularText,
 } from '@symbiot-core-apps/ui';
 import { DateHelper } from '@symbiot-core-apps/shared';
-import { useCurrentAccountState } from '@symbiot-core-apps/state';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 import { View, XStack } from 'tamagui';
 import React, { useCallback, useRef } from 'react';
 import { Linking } from 'react-native';
@@ -21,7 +21,7 @@ import { BrandClientTopUpBalance } from './brand-client-top-up-balance';
 import { router } from 'expo-router';
 
 export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
-  const { me } = useCurrentAccountState();
+  const preferences = useCurrentAccountPreferences();
 
   const topUpBalanceRef = useRef<AdaptivePopoverRef>(null);
 
@@ -46,7 +46,7 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
 
   return (
     <PageView scrollable withHeaderHeight>
-      <FormView gap="$5">
+      <CompactView gap="$5">
         <View alignItems="center" gap="$2">
           <Avatar
             color="$background1"
@@ -61,10 +61,7 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
             <RegularText color="$placeholderColor" textAlign="center">
               {[
                 client.birthday
-                  ? DateHelper.format(
-                      client.birthday,
-                      me?.preferences?.dateFormat,
-                    )
+                  ? DateHelper.format(client.birthday, preferences.dateFormat)
                   : '',
                 client.gender?.label,
               ]
@@ -115,7 +112,7 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
         />
         <BrandClientNote client={client} />
         <BrandClientHistory client={client} />
-      </FormView>
+      </CompactView>
     </PageView>
   );
 };

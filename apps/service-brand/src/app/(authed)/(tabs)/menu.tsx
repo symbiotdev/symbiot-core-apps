@@ -5,6 +5,7 @@ import {
   emitHaptic,
   ShowNativeSuccessAlert,
   useI18n,
+  useRateApp,
   useShareApp,
 } from '@symbiot-core-apps/shared';
 import {
@@ -18,7 +19,7 @@ import { router, useNavigation } from 'expo-router';
 import {
   ActionCard,
   Avatar,
-  FormView,
+  CompactView,
   H3,
   HeaderButton,
   Icon,
@@ -27,7 +28,6 @@ import {
   MediumText,
   QrCodeModalWithTrigger,
   RegularText,
-  SemiBoldText,
   Spinner,
   TabsPageView,
   useDrawer,
@@ -41,15 +41,19 @@ import {
 } from '@symbiot-core-apps/api';
 import { Image } from 'expo-image';
 import { useAccountSubscription } from '@symbiot-core-apps/account-subscription';
+import { SymbiotLogo } from '../../../components/symbiot/logo/symbiot-logo';
+import { useAppSettings } from '@symbiot-core-apps/app';
 
 export default () => {
   const { t, supportedLanguages } = useI18n();
   const { me } = useCurrentAccountState();
   const { brand } = useCurrentBrandState();
   const { currentEmployee } = useCurrentBrandEmployee();
+  const { functionality } = useAppSettings();
   const { scheme } = useScheme();
   const { visible: drawerVisible } = useDrawer();
   const share = useShareApp();
+  const { leaveReview } = useRateApp();
   const {
     processing: subscriptionProcessing,
     canSubscribe,
@@ -70,23 +74,31 @@ export default () => {
     router.push(`/employees/me`);
   }, []);
   const onAppearancePress = useCallback(
-    () => router.push('/appearance/preferences'),
+    () => router.push('/preferences/scheme'),
     [],
   );
   const onCalendarPress = useCallback(
-    () => router.push('/calendar/preferences'),
+    () => router.push('/preferences/calendar'),
+    [],
+  );
+  const onDateTimePress = useCallback(
+    () => router.push('/preferences/datetime'),
     [],
   );
   const onLanguagePress = useCallback(
-    () => router.push('/language/preferences'),
+    () => router.push('/preferences/language'),
     [],
   );
   const onNotificationsPress = useCallback(
-    () => router.push('/notifications/preferences'),
+    () => router.push('/preferences/notifications'),
     [],
   );
   const onTermsPrivacyPress = useCallback(
     () => router.push('/app/terms-privacy'),
+    [],
+  );
+  const onReportIssuePress = useCallback(
+    () => router.push('/app/report-issue'),
     [],
   );
   const onFollowUsPress = useCallback(() => router.push('/app/follow-us'), []);
@@ -146,7 +158,7 @@ export default () => {
   return (
     me && (
       <TabsPageView scrollable withHeaderHeight>
-        <FormView gap="$3" flex={1}>
+        <CompactView gap="$3" flex={1}>
           {canSubscribe && (
             <ActionCard
               title={t('subscription.card.title')}
@@ -234,8 +246,9 @@ export default () => {
               icon={<Icon name="Bell" />}
               onPress={onNotificationsPress}
             />
+
             <ListItem
-              label={t('shared.preferences.appearance.title')}
+              label={t('shared.preferences.scheme.title')}
               icon={<Icon name="Pallete2" />}
               onPress={onAppearancePress}
             />
@@ -249,10 +262,18 @@ export default () => {
             )}
 
             <ListItem
-              label={t('shared.calendar')}
-              icon={<Icon name="Calendar" />}
-              onPress={onCalendarPress}
+              label={t('shared.preferences.datetime.title')}
+              icon={<Icon name="ClockCircle" />}
+              onPress={onDateTimePress}
             />
+
+            {!!currentEmployee && (
+              <ListItem
+                label={t('shared.preferences.calendar.title')}
+                icon={<Icon name="Calendar" />}
+                onPress={onCalendarPress}
+              />
+            )}
           </ListItemGroup>
 
           <ListItemGroup title={t('shared.application')}>
@@ -288,6 +309,13 @@ export default () => {
               icon={<Icon name="Share" />}
               onPress={share}
             />
+            {functionality.canLeaveReview && (
+              <ListItem
+                label={t('shared.rate_app.write_review')}
+                icon={<Icon name="ChatRoundLike" />}
+                onPress={leaveReview}
+              />
+            )}
             {!drawerVisible && (
               <ListItem
                 label={t('shared.faq.title')}
@@ -300,6 +328,13 @@ export default () => {
               icon={<Icon name="FileText" />}
               onPress={onTermsPrivacyPress}
             />
+            {functionality.canReportIssue && (
+              <ListItem
+                label={t('shared.report_issue.title')}
+                icon={<Icon name="Bug" />}
+                onPress={onReportIssuePress}
+              />
+            )}
             <ListItem
               label={t('shared.follow_us')}
               icon={<Icon name="ShareCircle" />}
@@ -307,20 +342,22 @@ export default () => {
             />
           </ListItemGroup>
 
-          <View alignItems="center" gap="$1" marginTop="auto">
-            <Icon name="CodeCircle" color="$placeholderColor" />
+          <View alignItems="center" marginTop="auto">
+            <SymbiotLogo />
+
+            <MediumText textAlign="center">Powered by Symbiot</MediumText>
 
             {Platform.OS !== 'web' && (
-              <SemiBoldText>
+              <RegularText
+                marginTop="$1"
+                color="$placeholderColor"
+                textAlign="center"
+              >
                 {t('shared.version')}: {DeviceVersion}
-              </SemiBoldText>
+              </RegularText>
             )}
-
-            <RegularText color="$placeholderColor" textAlign="center">
-              Powered by Symbiot
-            </RegularText>
           </View>
-        </FormView>
+        </CompactView>
       </TabsPageView>
     )
   );

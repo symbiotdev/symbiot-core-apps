@@ -1,6 +1,7 @@
 {
   "next": "Next",
   "skip": "Skip",
+  "send": "Send",
   "continue": "Continue",
   "cancel": "Cancel",
   "canceled": "Canceled",
@@ -50,6 +51,29 @@
   "id_card": "ID Card",
   "limited": "Limited",
   "used_value": "Used: {{value}}",
+  "rate_app": {
+    "write_review": "Leave a review",
+    "suggestion": {
+      "title": "Would you like to rate the app?",
+      "subtitle": "Your feedback helps us improve the quality of our app."
+    }
+  },
+  "report_issue": {
+    "title": "Report issue",
+    "sent": {
+      "title": "Report submitted successfully",
+      "subtitle": "Thank you for bringing this issue to our attention."
+    },
+    "form": {
+      "message": {
+        "label": "Found a problem?",
+        "placeholder": "Please provide details so we can fix this as quickly as possible",
+        "error": {
+          "required": "Message is required"
+        }
+      }
+    }
+  },
   "maps": {
     "open": {
       "title": "Open in Maps",
@@ -171,7 +195,7 @@
         "label": "Sound"
       }
     },
-    "appearance": {
+    "scheme": {
       "title": "Appearance",
       "theme": {
         "title": "Theme",
@@ -182,10 +206,94 @@
         }
       }
     },
+    "datetime": {
+      "title": "Date & Time",
+      "date_format": {
+        "label": "Date format",
+        "formats": [
+          {
+            "label": "MM/DD/YYYY",
+            "value": "MM/dd/yyyy"
+          },
+          {
+            "label": "DD.MM.YYYY",
+            "value": "dd.MM.yyyy"
+          }
+        ]
+      },
+      "time_format": {
+        "label": "Time format",
+        "formats": [
+          {
+            "label": "Use system settings",
+            "value": "p"
+          },
+          {
+            "label": "12-hour (AM/PM)",
+            "value": "h:mm a"
+          },
+          {
+            "label": "24-hour",
+            "value": "HH:mm"
+          }
+        ]
+      },
+      "date_element": {
+        "label": "Date input method",
+        "types": [
+          {
+            "label": "Use system settings",
+            "value": null
+          },
+          {
+            "label": "Calendar picker",
+            "value": "calendar"
+          },
+          {
+            "label": "Manual input",
+            "value": "input"
+          }
+        ]
+      }
+    },
     "calendar": {
       "title": "Calendar",
       "week_starts_on": {
         "label": "Week starts on"
+      },
+      "hidden_days": {
+        "label": "Hidden weekdays"
+      },
+      "number_of_days": {
+        "label": "View",
+        "landscape_label": "Landscape view",
+        "portrait_label": "Portrait view",
+        "options": [
+          {
+            "label": "Default",
+            "value": null
+          },
+          {
+            "label": "1 day",
+            "value": 1
+          },
+          {
+            "label": "2 days",
+            "value": 2
+          },
+          {
+            "label": "3 days",
+            "value": 3
+          },
+          {
+            "label": "5 days",
+            "value": 5
+          },
+          {
+            "label": "7 days",
+            "value": 7
+          }
+        ]
       }
     },
     "system": {
@@ -206,6 +314,7 @@
     "start": "Start",
     "end": "End",
     "frequency_until": "Repeat until",
+    "frequency_max_date": "Maximum possible date for this type of recurrence - {{date}}",
     "duration": {
       "all_day": "All day",
       "custom": "Custom time"

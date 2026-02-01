@@ -1,12 +1,6 @@
 import { Control, Controller } from 'react-hook-form';
 import { useMemo } from 'react';
-import {
-  Avatar,
-  ButtonIcon,
-  PickerOnChange,
-  SelectPicker,
-  Textarea,
-} from '@symbiot-core-apps/ui';
+import { Avatar, ButtonIcon } from '@symbiot-core-apps/ui';
 import {
   BrandEmployee,
   useBrandEmployeeCurrentListReq,
@@ -14,6 +8,11 @@ import {
 import { XStack } from 'tamagui';
 import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
 import { useI18n } from '@symbiot-core-apps/shared';
+import {
+  PickerOnChange,
+  SelectPicker,
+  Textarea,
+} from '@symbiot-core-apps/form-controller';
 
 export function BrandBookingEmployeesController(props: {
   control: Control<{

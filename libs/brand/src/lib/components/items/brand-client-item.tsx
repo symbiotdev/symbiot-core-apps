@@ -1,7 +1,7 @@
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import {
   Avatar,
-  FormView,
+  CompactView,
   Icon,
   MediumText,
   RegularText,
@@ -28,7 +28,7 @@ export const BrandClientItem = ({
   const disabled = !!viewProps.disabled || loading;
 
   return (
-    <FormView
+    <CompactView
       alignItems="center"
       gap="$4"
       flexDirection="row"
@@ -70,6 +70,6 @@ export const BrandClientItem = ({
       {!!loading && <Spinner />}
 
       {!hideArrow && !loading && <Icon name="ArrowRight" />}
-    </FormView>
+    </CompactView>
   );
 };

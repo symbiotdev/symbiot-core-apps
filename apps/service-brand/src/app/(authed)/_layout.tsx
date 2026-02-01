@@ -166,18 +166,17 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
       />
 
       <Stack.Screen
-        name="app/terms-privacy"
+        name="app/report-issue"
         options={{
-          headerTitle: t('shared.docs.terms_privacy'),
+          ...animationControlProps,
+          headerTitle: t('shared.report_issue.title'),
         }}
       />
 
-      {/*APPEARANCE*/}
-
       <Stack.Screen
-        name="appearance/preferences"
+        name="app/terms-privacy"
         options={{
-          headerTitle: t('shared.preferences.appearance.title'),
+          headerTitle: t('shared.docs.terms_privacy'),
         }}
       />
 
@@ -240,15 +239,6 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
           />
         </Stack.Protected>
       </Stack.Protected>
-
-      {/*CALENDAR*/}
-
-      <Stack.Screen
-        name="calendar/preferences"
-        options={{
-          headerTitle: t('shared.preferences.calendar.title'),
-        }}
-      />
 
       {/*CLIENTS*/}
 
@@ -372,15 +362,6 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
         />
       </Stack.Protected>
 
-      {/*LANGUAGE*/}
-
-      <Stack.Screen
-        name="language/preferences"
-        options={{
-          headerTitle: t('shared.preferences.language.title'),
-        }}
-      />
-
       {/*LOCATIONS*/}
 
       <Stack.Protected guard={hasPermission('locations')}>
@@ -452,10 +433,38 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
           headerTitle: t('shared.notifications.title'),
         }}
       />
+
+      {/*CALENDAR*/}
+
       <Stack.Screen
-        name="notifications/preferences"
+        name="preferences/calendar"
+        options={{
+          headerTitle: t('shared.preferences.calendar.title'),
+        }}
+      />
+
+      <Stack.Screen
+        name="preferences/datetime"
+        options={{
+          headerTitle: t('shared.preferences.datetime.title'),
+        }}
+      />
+      <Stack.Screen
+        name="preferences/language"
+        options={{
+          headerTitle: t('shared.preferences.language.title'),
+        }}
+      />
+      <Stack.Screen
+        name="preferences/notifications"
         options={{
           headerTitle: t('shared.preferences.notifications.title'),
+        }}
+      />
+      <Stack.Screen
+        name="preferences/scheme"
+        options={{
+          headerTitle: t('shared.preferences.scheme.title'),
         }}
       />
 

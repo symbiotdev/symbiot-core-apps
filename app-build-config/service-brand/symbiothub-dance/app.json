@@ -2,12 +2,12 @@
   "expo": {
     "slug": "symbiothub-dance",
     "scheme": "symbiothub-dance",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "ios": {
-      "buildNumber": "70"
+      "buildNumber": "71"
     },
     "android": {
-      "versionCode": 10
+      "versionCode": 11
     },
     "extra": {
       "eas": {

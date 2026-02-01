@@ -50,6 +50,13 @@
   "id_card": "ID Card",
   "limited": "Limited",
   "used_value": "Used: {{value}}",
+  "rate_app": {
+    "write_review": "Leave a review",
+    "suggestion": {
+      "title": "Would you like to rate the app?",
+      "subtitle": "Your feedback helps us improve the quality of our app."
+    }
+  },
   "maps": {
     "open": {
       "title": "Open in Maps",

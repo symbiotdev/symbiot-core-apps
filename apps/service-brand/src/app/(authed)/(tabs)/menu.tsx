@@ -5,6 +5,7 @@ import {
   emitHaptic,
   ShowNativeSuccessAlert,
   useI18n,
+  useRateApp,
   useShareApp,
 } from '@symbiot-core-apps/shared';
 import {
@@ -50,6 +51,7 @@ export default () => {
   const { scheme } = useScheme();
   const { visible: drawerVisible } = useDrawer();
   const share = useShareApp();
+  const { writeReview } = useRateApp();
   const {
     processing: subscriptionProcessing,
     canSubscribe,
@@ -300,6 +302,11 @@ export default () => {
               label={t('shared.share_app')}
               icon={<Icon name="Share" />}
               onPress={share}
+            />
+            <ListItem
+              label={t('shared.rate_app.write_review')}
+              icon={<Icon name="ChatRoundLike" />}
+              onPress={writeReview}
             />
             {!drawerVisible && (
               <ListItem

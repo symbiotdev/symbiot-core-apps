@@ -9,7 +9,7 @@ import {
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, useI18n, useRateApp } from '@symbiot-core-apps/shared';
 import { useForm } from 'react-hook-form';
 import { BrandEmployeeFirstnameController } from './controller/brand-employee-firstname-controller';
 import { BrandEmployeeLastnameController } from './controller/brand-employee-lastname-controller';
@@ -39,6 +39,7 @@ export const CreateBrandEmployee = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { mutateAsync: getAccountById } = useBrandEmployeeNewAccountReq();
   const navigation = useNavigation();
+  const { rate: rateApp } = useRateApp();
 
   const createdRef = useRef(false);
 
@@ -178,12 +179,15 @@ export const CreateBrandEmployee = () => {
     createdRef.current = true;
 
     router.dismissTo('/employees');
+
+    void rateApp();
   }, [
     account?.id,
     avatar,
+    rateApp,
+    createEmployee,
     aboutGetValues,
     contactGetValues,
-    createEmployee,
     locationGetValues,
     permissionsGetValues,
     personalityGetValues,

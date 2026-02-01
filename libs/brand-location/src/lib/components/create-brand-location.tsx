@@ -17,7 +17,7 @@ import { BrandLocationEmailController } from './controller/brand-location-email-
 import { BrandLocationPhoneController } from './controller/brand-location-phone-controller';
 import { router, useNavigation } from 'expo-router';
 import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, useI18n, useRateApp } from '@symbiot-core-apps/shared';
 import { WeekdaySchedule } from '@symbiot-core-apps/form-controller';
 
 export const CreateBrandLocation = () => {
@@ -25,6 +25,7 @@ export const CreateBrandLocation = () => {
   const { t } = useI18n();
   const { mutateAsync, isPending } = useCreateBrandLocationReq();
   const navigation = useNavigation();
+  const { rate: rateApp } = useRateApp();
 
   const createdRef = useRef(false);
 
@@ -139,7 +140,10 @@ export const CreateBrandLocation = () => {
     createdRef.current = true;
 
     router.dismissTo('/locations');
+
+    void rateApp();
   }, [
+    rateApp,
     addressGetValues,
     advantagesGetValues,
     contactGetValues,

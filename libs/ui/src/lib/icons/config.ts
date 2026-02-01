@@ -14,6 +14,7 @@ export type SolarIconName =
   | 'Balloon'
   | 'Bell'
   | 'Bill'
+  | 'Bug'
   | 'Calendar'
   | 'CalendarCross'
   | 'CalendarMinimalistic'

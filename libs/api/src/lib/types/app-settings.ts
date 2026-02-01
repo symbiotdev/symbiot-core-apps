@@ -10,6 +10,7 @@ export type AppSettings = {
   };
   functionality: {
     canLeaveReview: boolean;
+    canReportIssue: boolean;
     limits: Record<string, AppLimit>;
     availability: {
       brandIndustry: boolean;

@@ -166,6 +166,14 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
       />
 
       <Stack.Screen
+        name="app/report-issue"
+        options={{
+          ...animationControlProps,
+          headerTitle: t('shared.report_issue.title'),
+        }}
+      />
+
+      <Stack.Screen
         name="app/terms-privacy"
         options={{
           headerTitle: t('shared.docs.terms_privacy'),

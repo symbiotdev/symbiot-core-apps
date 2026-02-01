@@ -81,6 +81,7 @@ import { Pallete2 } from './Pallete2';
 import { Rocket2 } from './Rocket2';
 import { ClockCircle } from './ClockCircle';
 import { ChatRoundLike } from './ChatRoundLike';
+import { Bug } from './Bug';
 
 export const Map: IconMap = {
   AddCircle,
@@ -95,6 +96,7 @@ export const Map: IconMap = {
   Balloon,
   Bell,
   Bill,
+  Bug,
   Calendar,
   CalendarCross,
   CalendarMinimalistic,

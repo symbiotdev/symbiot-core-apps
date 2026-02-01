@@ -1,6 +1,7 @@
 {
   "next": "Next",
   "skip": "Skip",
+  "send": "Send",
   "continue": "Continue",
   "cancel": "Cancel",
   "canceled": "Canceled",
@@ -55,6 +56,22 @@
     "suggestion": {
       "title": "Would you like to rate the app?",
       "subtitle": "Your feedback helps us improve the quality of our app."
+    }
+  },
+  "report_issue": {
+    "title": "Report issue",
+    "sent": {
+      "title": "Report submitted successfully",
+      "subtitle": "Thank you for bringing this issue to our attention."
+    },
+    "form": {
+      "message": {
+        "label": "Found a problem?",
+        "placeholder": "Please provide details so we can fix this as quickly as possible",
+        "error": {
+          "required": "Message is required"
+        }
+      }
     }
   },
   "maps": {

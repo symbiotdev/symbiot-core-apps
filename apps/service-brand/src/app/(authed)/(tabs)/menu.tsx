@@ -97,6 +97,10 @@ export default () => {
     () => router.push('/app/terms-privacy'),
     [],
   );
+  const onReportIssuePress = useCallback(
+    () => router.push('/app/report-issue'),
+    [],
+  );
   const onFollowUsPress = useCallback(() => router.push('/app/follow-us'), []);
   const onHelpFeedbackPress = useCallback(
     () => router.push('/app/help-feedback'),
@@ -324,6 +328,13 @@ export default () => {
               icon={<Icon name="FileText" />}
               onPress={onTermsPrivacyPress}
             />
+            {functionality.canReportIssue && (
+              <ListItem
+                label={t('shared.report_issue.title')}
+                icon={<Icon name="Bug" />}
+                onPress={onReportIssuePress}
+              />
+            )}
             <ListItem
               label={t('shared.follow_us')}
               icon={<Icon name="ShareCircle" />}

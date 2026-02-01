@@ -27,7 +27,6 @@ import {
   MediumText,
   QrCodeModalWithTrigger,
   RegularText,
-  SemiBoldText,
   Spinner,
   TabsPageView,
   useDrawer,
@@ -324,14 +323,16 @@ export default () => {
           <View alignItems="center" marginTop="auto">
             <SymbiotLogo />
 
-            <RegularText color="$placeholderColor" textAlign="center">
-              Powered by Symbiot
-            </RegularText>
+            <MediumText textAlign="center">Powered by Symbiot</MediumText>
 
             {Platform.OS !== 'web' && (
-              <SemiBoldText marginTop="$1">
+              <RegularText
+                marginTop="$1"
+                color="$placeholderColor"
+                textAlign="center"
+              >
                 {t('shared.version')}: {DeviceVersion}
-              </SemiBoldText>
+              </RegularText>
             )}
           </View>
         </CompactView>

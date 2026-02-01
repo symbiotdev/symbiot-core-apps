@@ -183,7 +183,7 @@
       }
     },
     "datetime": {
-      "title": "Дата & Час",
+      "title": "Дата і час",
       "date_format": {
         "label": "Формат дати",
         "formats": [
@@ -205,17 +205,17 @@
             "value": "p"
           },
           {
-            "label": "12 год",
+            "label": "12-годинний",
             "value": "h:mm a"
           },
           {
-            "label": "24 год",
+            "label": "24-годинний",
             "value": "HH:mm"
           }
         ]
       },
       "date_element": {
-        "label": "Поле для вибору дати",
+        "label": "Спосіб вибору дати",
         "types": [
           {
             "label": "За замовчуванням",
@@ -226,7 +226,7 @@
             "value": "calendar"
           },
           {
-            "label": "Текстове поле (ручне введення)",
+            "label": "Ручне введення",
             "value": "input"
           }
         ]
@@ -242,8 +242,8 @@
       },
       "number_of_days": {
         "label": "Вид",
-        "landscape_label": "Вид (горизонтально)",
-        "portrait_label": "Вид (вертикально)",
+        "landscape_label": "Горизонтальний вигляд",
+        "portrait_label": "Вертикальний вигляд",
         "options": [
           {
             "label": "За замовчуванням",

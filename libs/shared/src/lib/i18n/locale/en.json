@@ -201,32 +201,32 @@
         "label": "Time format",
         "formats": [
           {
-            "label": "Default",
+            "label": "Use system settings",
             "value": "p"
           },
           {
-            "label": "12-hour clock",
+            "label": "12-hour (AM/PM)",
             "value": "h:mm a"
           },
           {
-            "label": "24-hour clock",
+            "label": "24-hour",
             "value": "HH:mm"
           }
         ]
       },
       "date_element": {
-        "label": "Date element",
+        "label": "Date input method",
         "types": [
           {
-            "label": "Default",
+            "label": "Use system settings",
             "value": null
           },
           {
-            "label": "Calendar",
+            "label": "Calendar picker",
             "value": "calendar"
           },
           {
-            "label": "Text field (manual input)",
+            "label": "Manual input",
             "value": "input"
           }
         ]
@@ -238,12 +238,12 @@
         "label": "Week starts on"
       },
       "hidden_days": {
-        "label": "Hidden days"
+        "label": "Hidden weekdays"
       },
       "number_of_days": {
         "label": "View",
-        "landscape_label": "View (landscape)",
-        "portrait_label": "View (portrait)",
+        "landscape_label": "Landscape view",
+        "portrait_label": "Portrait view",
         "options": [
           {
             "label": "Default",

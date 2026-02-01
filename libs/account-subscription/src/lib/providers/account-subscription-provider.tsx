@@ -67,9 +67,11 @@ export const AccountSubscriptionProvider = ({
   const canSubscribe = useMemo(
     () =>
       isSubscriptionsAvailable &&
+      !!me?.offering &&
       (!brand?.subscription?.active || !!brand?.subscription?.canceled) &&
       currentEmployee?.id === brand?.owner?.id,
     [
+      me?.offering,
       currentEmployee?.id,
       brand?.owner?.id,
       brand?.subscription?.active,

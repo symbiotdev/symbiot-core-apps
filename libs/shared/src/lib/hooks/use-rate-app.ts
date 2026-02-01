@@ -60,7 +60,7 @@ export const useRateApp = ({
   const leaveReview = useCallback(
     () =>
       Linking.openURL(
-        Platform.OS !== 'android'
+        Platform.OS === 'android'
           ? `${ANDROID_STORE_URL}&showAllReviews=true`
           : `${IOS_STORE_URL}?action=write-review`,
       ),

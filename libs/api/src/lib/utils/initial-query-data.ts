@@ -1,4 +1,4 @@
-import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
+import { mmkvGlobalStorage } from '@symbiot-core-apps/shared';
 
 const storeKeyPrefix = 'initial-query-data';
 

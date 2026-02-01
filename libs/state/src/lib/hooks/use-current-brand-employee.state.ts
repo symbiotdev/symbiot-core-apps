@@ -4,8 +4,8 @@ import {
 } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { createZustandStorage } from '@symbiot-core-apps/storage';
 import { useCallback, useMemo } from 'react';
+import { createZustandStorage } from '@symbiot-core-apps/shared';
 
 type CurrentBrandEmployeeState = {
   currentEmployee?: BrandEmployee;

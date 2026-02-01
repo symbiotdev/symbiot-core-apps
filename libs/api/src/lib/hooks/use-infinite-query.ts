@@ -8,8 +8,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { PaginationList, PaginationListParams } from '../types/pagination';
 import { queryClient } from '../utils/client';
 import { requestWithStringError } from '../utils/request';
-import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
 import { getInitialQueryDataStoreQueryKey } from '../utils/initial-query-data';
+import { mmkvGlobalStorage } from '@symbiot-core-apps/shared';
 
 function getNextPageParam<T>(page: PaginationList<T>) {
   return page.items.length < page.count

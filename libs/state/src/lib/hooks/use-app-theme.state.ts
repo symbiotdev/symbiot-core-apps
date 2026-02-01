@@ -1,9 +1,12 @@
-import { SystemScheme, useSystemScheme } from '@symbiot-core-apps/shared';
+import {
+  createZustandStorage,
+  SystemScheme,
+  useSystemScheme,
+} from '@symbiot-core-apps/shared';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useCallback, useMemo } from 'react';
 import { Appearance, Platform } from 'react-native';
-import { createZustandStorage } from '@symbiot-core-apps/storage';
 
 type AppSchemeState = {
   scheme?: SystemScheme;

@@ -10,10 +10,9 @@ import {
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useCallback, useMemo } from 'react';
-import { systemSchemes } from '@symbiot-core-apps/shared';
+import { createZustandStorage, systemSchemes } from '@symbiot-core-apps/shared';
 import { useAppSchemeState } from './use-app-theme.state';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { createZustandStorage } from '@symbiot-core-apps/storage';
 import { Appearance, Platform } from 'react-native';
 import merge from 'deepmerge';
 

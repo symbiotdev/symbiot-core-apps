@@ -1,8 +1,7 @@
 import { AccountAuthTokens } from '../types/account-auth';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { createZustandStorage } from '@symbiot-core-apps/storage';
-import { DateHelper } from '@symbiot-core-apps/shared';
+import { createZustandStorage, DateHelper } from '@symbiot-core-apps/shared';
 
 export type OnboardingState = {
   tokens: AccountAuthTokens;

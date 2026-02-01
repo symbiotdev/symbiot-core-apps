@@ -1,8 +1,11 @@
-import { isTablet, useScreenSize } from '@symbiot-core-apps/shared';
+import {
+  createZustandStorage,
+  isTablet,
+  useScreenSize,
+} from '@symbiot-core-apps/shared';
 import { useMemo } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { createZustandStorage } from '@symbiot-core-apps/storage';
 import { Platform } from 'react-native';
 
 type DrawerState = {

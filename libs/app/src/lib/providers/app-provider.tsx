@@ -14,8 +14,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { createZustandStorage } from '@symbiot-core-apps/storage';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { createZustandStorage, useI18n } from '@symbiot-core-apps/shared';
 import merge from 'deepmerge';
 
 type AppState = {

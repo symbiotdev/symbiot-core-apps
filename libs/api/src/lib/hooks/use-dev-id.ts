@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import * as Application from 'expo-application';
 import { randomUUID } from 'expo-crypto';
-import { mmkvGlobalStorage } from '@symbiot-core-apps/storage';
+import { mmkvGlobalStorage } from '@symbiot-core-apps/shared';
 
 const DEV_ID_STORE_KEY = 'wid';
 

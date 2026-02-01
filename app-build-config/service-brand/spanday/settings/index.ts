@@ -11,6 +11,7 @@ export const appSettings: AppSettings = {
     translations: languages,
   },
   functionality: {
+    canLeaveReview: true,
     limits: {
       default: {
         clients: 100,

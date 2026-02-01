@@ -9,6 +9,7 @@ export type AppSettings = {
     translations: Record<string, Record<string, unknown>>;
   };
   functionality: {
+    canLeaveReview: boolean;
     limits: Record<string, AppLimit>;
     availability: {
       brandIndustry: boolean;

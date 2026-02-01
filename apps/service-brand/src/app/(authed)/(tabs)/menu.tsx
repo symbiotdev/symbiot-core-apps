@@ -42,16 +42,18 @@ import {
 import { Image } from 'expo-image';
 import { useAccountSubscription } from '@symbiot-core-apps/account-subscription';
 import { SymbiotLogo } from '../../../components/symbiot/logo/symbiot-logo';
+import { useAppSettings } from '@symbiot-core-apps/app';
 
 export default () => {
   const { t, supportedLanguages } = useI18n();
   const { me } = useCurrentAccountState();
   const { brand } = useCurrentBrandState();
   const { currentEmployee } = useCurrentBrandEmployee();
+  const { functionality } = useAppSettings();
   const { scheme } = useScheme();
   const { visible: drawerVisible } = useDrawer();
   const share = useShareApp();
-  const { writeReview } = useRateApp();
+  const { leaveReview } = useRateApp();
   const {
     processing: subscriptionProcessing,
     canSubscribe,
@@ -303,11 +305,13 @@ export default () => {
               icon={<Icon name="Share" />}
               onPress={share}
             />
-            <ListItem
-              label={t('shared.rate_app.write_review')}
-              icon={<Icon name="ChatRoundLike" />}
-              onPress={writeReview}
-            />
+            {functionality.canLeaveReview && (
+              <ListItem
+                label={t('shared.rate_app.write_review')}
+                icon={<Icon name="ChatRoundLike" />}
+                onPress={leaveReview}
+              />
+            )}
             {!drawerVisible && (
               <ListItem
                 label={t('shared.faq.title')}

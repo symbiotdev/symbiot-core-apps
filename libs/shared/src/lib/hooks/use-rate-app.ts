@@ -49,7 +49,7 @@ export const useRateApp = ({
     [supportWeb],
   );
 
-  const writeReview = useCallback(
+  const leaveReview = useCallback(
     () =>
       Linking.openURL(
         Platform.OS !== 'android'
@@ -88,7 +88,7 @@ export const useRateApp = ({
             ConfirmAlert({
               title: t('shared.rate_app.suggestion.title'),
               message: t('shared.rate_app.suggestion.subtitle'),
-              onAgree: () => writeReview(),
+              onAgree: () => leaveReview(),
             });
         }
 
@@ -97,12 +97,12 @@ export const useRateApp = ({
         console.log('Error useRateApp', error);
       }
     },
-    [canRate, lastRateDate, rateInterval, setLastRateDate, t, writeReview],
+    [canRate, lastRateDate, rateInterval, setLastRateDate, t, leaveReview],
   );
 
   return {
     canRate,
     rate,
-    writeReview,
+    leaveReview,
   };
 };

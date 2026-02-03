@@ -53,7 +53,7 @@
   "used_value": "Використано: {{value}}",
   "referral_program": {
     "title": "Реферальна програма",
-    "promo_includes": "Цей промокод включає - {{benefits}}"
+    "promo_includes": "Цей промокод включає - {{benefits}}."
   },
   "rate_app": {
     "write_review": "Залишити відгук",

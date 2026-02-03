@@ -59,7 +59,7 @@ const PromoCodeInput = ({
     enabled: (value || '').length >= 3,
   });
 
-  const benefits = data?.benefits?.join('\n');
+  const benefits = data?.benefits?.join(', ');
   const codeInvalid =
     !isPending && !!serverError && debouncedValue && debouncedValue === value;
 

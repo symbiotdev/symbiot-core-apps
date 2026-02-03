@@ -1,10 +1,7 @@
 import { useTheme } from 'tamagui';
 import { memo } from 'react';
 import { Map as SolarBold } from './solar/bold/_index';
-import { Map as SolarBoldDuotone } from './solar/bold-duotone/_index';
-import { Map as SolarBroken } from './solar/broken/_index';
 import { Map as SolarLinear } from './solar/linear/_index';
-import { Map as SolarLinearDuotone } from './solar/linear-duotone/_index';
 import { Map as Social, SocialIconName } from './social/_index';
 import { SolarIconName } from './config';
 import { ViewStyle } from 'react-native';
@@ -13,10 +10,7 @@ export type IconName = SolarIconName | SocialIconName;
 
 const Map = {
   SolarBold,
-  SolarBoldDuotone,
-  SolarBroken,
   SolarLinear,
-  SolarLinearDuotone,
 } as const;
 
 export const defaultIconSize = 24;

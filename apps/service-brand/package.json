@@ -61,7 +61,6 @@
     "filesize": "*",
     "i18next": "*",
     "deepmerge": "*",
-    "mime": "*",
     "mitt": "*",
     "papaparse": "*",
     "react": "*",

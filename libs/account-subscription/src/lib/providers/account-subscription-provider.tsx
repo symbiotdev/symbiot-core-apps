@@ -26,7 +26,7 @@ import { DevelopmentPaywall } from '../components/development-paywall';
 type AccountSubscriptionContext = {
   processing: boolean;
   canSubscribe: boolean;
-  hasActiveSubscription: boolean;
+  hasActualSubscription: boolean;
   isSubscriptionsAvailable: boolean;
   showPaywall: () => void;
   manageSubscriptions: () => Promise<void>;
@@ -57,34 +57,25 @@ export const AccountSubscriptionProvider = ({
 
   const isSubscriptionsAvailable = useMemo(
     () =>
-      isDevMode ||
-      (Platform.OS !== 'web' &&
-        !me?.partner &&
-        !!me?.offering &&
-        !!brand?.owner?.id &&
-        currentEmployee?.id === brand.owner.id),
+      (Platform.OS !== 'web' || isDevMode) &&
+      !me?.partner &&
+      !!me?.offering &&
+      !!brand?.owner?.id &&
+      currentEmployee?.id === brand.owner.id,
     [brand?.owner?.id, currentEmployee?.id, me?.offering, me?.partner],
   );
 
-  const hasActiveSubscription = useMemo(
+  const hasActualSubscription = useMemo(
     () =>
-      me?.subscriptions?.some(({ active }) => active) ||
-      Boolean(brand?.subscription?.active),
-    [brand?.subscription?.active, me?.subscriptions],
+      Boolean(
+        me?.subscriptions?.some(({ active, canceled }) => active && !canceled),
+      ),
+    [me?.subscriptions],
   );
 
   const canSubscribe = useMemo(
-    () =>
-      isSubscriptionsAvailable &&
-      (!brand?.subscription?.active || !!brand?.subscription?.canceled) &&
-      currentEmployee?.id === brand?.owner?.id,
-    [
-      brand?.owner?.id,
-      currentEmployee?.id,
-      isSubscriptionsAvailable,
-      brand?.subscription?.active,
-      brand?.subscription?.canceled,
-    ],
+    () => isSubscriptionsAvailable && !hasActualSubscription,
+    [isSubscriptionsAvailable, hasActualSubscription],
   );
 
   const showPaywall = useCallback(() => paywallRef.current?.open(), []);
@@ -142,7 +133,7 @@ export const AccountSubscriptionProvider = ({
     <Context.Provider
       value={{
         canSubscribe,
-        hasActiveSubscription,
+        hasActualSubscription,
         isSubscriptionsAvailable,
         processing: subscribing || restoring,
         showPaywall,

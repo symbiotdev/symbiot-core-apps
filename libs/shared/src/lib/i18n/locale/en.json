@@ -52,7 +52,8 @@
   "limited": "Limited",
   "used_value": "Used: {{value}}",
   "referral_program": {
-    "title": "Referral Program"
+    "title": "Referral Program",
+    "promo_includes": "This promo code includes - {{benefits}}"
   },
   "rate_app": {
     "write_review": "Leave a review",

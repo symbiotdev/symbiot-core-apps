@@ -17,24 +17,27 @@ import { CountryCode, getCountry } from 'countries-and-timezones';
 import { BrandIndustryController } from './contoller/brand-industry-controller';
 import { BrandCountryController } from './contoller/brand-country-controller';
 import { AvatarPicker } from '@symbiot-core-apps/form-controller';
+import { BrandPromoCodeController } from './contoller/brand-promo-code-controller';
+import { useAccountSubscription } from '@symbiot-core-apps/account-subscription';
 
 const defaultCountryCode = Intl?.DateTimeFormat()
   ?.resolvedOptions()
   ?.locale?.split('-')?.[1];
 
 export const CreateBrand = () => {
-  const { me } = useCurrentAccountState();
-  const { processing: authProcessing } = useBrandAuthState();
   const { t } = useI18n();
-  const navigation = useNavigation();
+  const { me } = useCurrentAccountState();
   const { functionality } = useAppSettings();
   const { mutateAsync, isPending } = useBrandCreateReq();
+  const { hasActualSubscription } = useAccountSubscription();
+  const { processing: authProcessing } = useBrandAuthState();
   const switchBrand = useAuthBrand();
-
+  const navigation = useNavigation();
   const createdRef = useRef(false);
   const ignoreNavigation = createdRef.current || authProcessing;
 
   const [avatar, setAvatar] = useState<ImagePickerAsset>();
+  const [isPromoCodeValid, setIsPromoCodeValid] = useState(false);
 
   const {
     control: nameControl,
@@ -91,22 +94,22 @@ export const CreateBrand = () => {
 
   const onFinish = useCallback(async () => {
     const { name } = nameGetValues();
-    const { promoCode } = promoCodeGetValues();
     const { country } = countryGetValues();
-    const { industry } = industryGetValues();
     const { website } = websiteGetValues();
-    const { competitorSource } = competitorSourceGetValues();
+    const { industry } = industryGetValues();
+    const { promoCode } = promoCodeGetValues();
     const { referralSource } = referralSourceGetValues();
+    const { competitorSource } = competitorSourceGetValues();
 
     const brand = await mutateAsync({
       name,
       avatar,
-      promoCode,
       competitorSource,
       referralSource,
+      websites: website ? [website] : [],
       countries: country ? [country] : [],
       industries: industry ? [industry] : [],
-      websites: website ? [website] : [],
+      promoCode: isPromoCodeValid ? promoCode : undefined,
     });
 
     createdRef.current = true;
@@ -116,6 +119,7 @@ export const CreateBrand = () => {
     await switchBrand({ id: brand.id });
   }, [
     avatar,
+    isPromoCodeValid,
     competitorSourceGetValues,
     countryGetValues,
     industryGetValues,
@@ -257,20 +261,23 @@ export const CreateBrand = () => {
         </SurveyStep>
       )}
 
-      {/*{!me?.sourced && (*/}
-      {/*  <SurveyStep*/}
-      {/*    skippable*/}
-      {/*    canGoNext={promoCodeFormState.isValid}*/}
-      {/*    title={t('brand.create.steps.promo_code.title')}*/}
-      {/*    subtitle={t('brand.create.steps.promo_code.subtitle')}*/}
-      {/*  >*/}
-      {/*    <BrandPromoCodeController*/}
-      {/*      noLabel*/}
-      {/*      name="promoCode"*/}
-      {/*      control={promoCodeControl}*/}
-      {/*    />*/}
-      {/*  </SurveyStep>*/}
-      {/*)}*/}
+      {functionality.canUseReferralProgram &&
+        !hasActualSubscription &&
+        !me?.privileged && (
+          <SurveyStep
+            skippable
+            canGoNext={isPromoCodeValid}
+            title={t('brand.create.steps.promo_code.title')}
+            subtitle={t('brand.create.steps.promo_code.subtitle')}
+          >
+            <BrandPromoCodeController
+              noLabel
+              name="promoCode"
+              control={promoCodeControl}
+              onCheckValidity={setIsPromoCodeValid}
+            />
+          </SurveyStep>
+        )}
     </Survey>
   );
 };

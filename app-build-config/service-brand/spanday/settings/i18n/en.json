@@ -273,7 +273,8 @@
         "label": "Promo Code",
         "placeholder": "For example, SYMBIOT50",
         "error": {
-          "required": "Promo code is required"
+          "required": "Promo code is required",
+          "invalid": "This promo code is invalid."
         }
       }
     },

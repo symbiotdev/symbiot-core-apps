@@ -35,6 +35,7 @@ export const Input = forwardRef(
       value,
       label,
       placeholder,
+      description,
       error,
       type,
       keyboardType,
@@ -56,6 +57,7 @@ export const Input = forwardRef(
       value: InputValue;
       label?: string;
       placeholder?: string;
+      description?: string;
       error?: string;
       type?: 'email' | 'password' | 'text' | 'numeric';
       keyboardType?: KeyboardType;
@@ -118,7 +120,12 @@ export const Input = forwardRef(
     );
 
     return (
-      <FormField label={label} error={error} required={required}>
+      <FormField
+        label={label}
+        error={error}
+        required={required}
+        description={description}
+      >
         <InputUi
           ref={ref}
           id={id}

@@ -13,6 +13,7 @@ export const appSettings: AppSettings = {
   functionality: {
     canLeaveReview: true,
     canReportIssue: true,
+    canUseReferralProgram: true,
     limits: {
       default: {
         clients: 100,

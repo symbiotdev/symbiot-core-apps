@@ -51,6 +51,9 @@
   "id_card": "ID картка",
   "limited": "Обмежено",
   "used_value": "Використано: {{value}}",
+  "referral_program": {
+    "title": "Реферальна програма"
+  },
   "rate_app": {
     "write_review": "Залишити відгук",
     "suggestion": {
@@ -297,7 +300,7 @@
       }
     },
     "system": {
-      "title": "Налаштування застосунку"
+      "title": "Системні налаштування"
     },
     "subscriptions": {
       "title": "Активна підписка",

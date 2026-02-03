@@ -49,6 +49,7 @@ export * from './lib/types/currency';
 export * from './lib/types/faq';
 export * from './lib/types/gender';
 export * from './lib/types/pagination';
+export * from './lib/types/partner';
 export * from './lib/types/schedule';
 
 export * from './lib/utils/brand-booking';

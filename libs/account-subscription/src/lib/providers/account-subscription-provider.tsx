@@ -26,6 +26,7 @@ import { DevelopmentPaywall } from '../components/development-paywall';
 type AccountSubscriptionContext = {
   processing: boolean;
   canSubscribe: boolean;
+  hasActiveSubscription: boolean;
   isSubscriptionsAvailable: boolean;
   showPaywall: () => void;
   manageSubscriptions: () => Promise<void>;
@@ -58,25 +59,31 @@ export const AccountSubscriptionProvider = ({
     () =>
       isDevMode ||
       (Platform.OS !== 'web' &&
+        !me?.partner &&
         !!me?.offering &&
         !!brand?.owner?.id &&
         currentEmployee?.id === brand.owner.id),
-    [brand?.owner?.id, currentEmployee?.id, me?.offering],
+    [brand?.owner?.id, currentEmployee?.id, me?.offering, me?.partner],
+  );
+
+  const hasActiveSubscription = useMemo(
+    () =>
+      me?.subscriptions?.some(({ active }) => active) ||
+      Boolean(brand?.subscription?.active),
+    [brand?.subscription?.active, me?.subscriptions],
   );
 
   const canSubscribe = useMemo(
     () =>
       isSubscriptionsAvailable &&
-      !!me?.offering &&
       (!brand?.subscription?.active || !!brand?.subscription?.canceled) &&
       currentEmployee?.id === brand?.owner?.id,
     [
-      me?.offering,
-      currentEmployee?.id,
       brand?.owner?.id,
+      currentEmployee?.id,
+      isSubscriptionsAvailable,
       brand?.subscription?.active,
       brand?.subscription?.canceled,
-      isSubscriptionsAvailable,
     ],
   );
 
@@ -135,6 +142,7 @@ export const AccountSubscriptionProvider = ({
     <Context.Provider
       value={{
         canSubscribe,
+        hasActiveSubscription,
         isSubscriptionsAvailable,
         processing: subscribing || restoring,
         showPaywall,

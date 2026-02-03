@@ -3,6 +3,7 @@ import { Gender } from './gender';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { Attachment } from './attachment';
 import { AccountSubscription } from './account-subscription';
+import { Partner } from './partner';
 
 export type Account = {
   id: string;
@@ -27,6 +28,7 @@ export type Account = {
   instagrams: string[];
   gender: Gender;
   subscriptions: AccountSubscription[];
+  partner: Partner;
 };
 
 export type UpdateAccountData = {

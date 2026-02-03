@@ -51,6 +51,9 @@
   "id_card": "ID Card",
   "limited": "Limited",
   "used_value": "Used: {{value}}",
+  "referral_program": {
+    "title": "Referral Program"
+  },
   "rate_app": {
     "write_review": "Leave a review",
     "suggestion": {
@@ -297,7 +300,7 @@
       }
     },
     "system": {
-      "title": "App settings"
+      "title": "System settings"
     },
     "subscriptions": {
       "title": "Subscriptions",

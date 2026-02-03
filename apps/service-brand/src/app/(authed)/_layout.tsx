@@ -21,6 +21,7 @@ import { SocketProvider } from '../../providers/socket.provider';
 import { NotificationsProvider } from '@symbiot-core-apps/notification';
 import { onPressNotification } from '../../utils/notification';
 import {
+  useCurrentAccountState,
   useCurrentBrandBookingsState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
@@ -96,6 +97,7 @@ export default () => {
 
 const StackNavigation = ({ animated }: { animated: boolean }) => {
   const { t } = useI18n();
+  const { me } = useCurrentAccountState();
   const { canDo, used } = useAccountLimits();
   const { hasPermission } = useCurrentBrandEmployee();
   const screenOptions = useStackScreenHeaderOptions();
@@ -164,6 +166,16 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
           headerTitle: t('shared.faq.title'),
         }}
       />
+
+      <Stack.Protected guard={Boolean(me?.partner)}>
+        <Stack.Screen
+          name="app/referral-program"
+          options={{
+            ...animationControlProps,
+            headerTitle: t('shared.referral_program.title'),
+          }}
+        />
+      </Stack.Protected>
 
       <Stack.Screen
         name="app/report-issue"

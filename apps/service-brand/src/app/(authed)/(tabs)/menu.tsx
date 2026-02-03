@@ -64,49 +64,6 @@ export default () => {
   const { mutate: signOut } = useAccountAuthSignOutReq();
   const navigation = useNavigation();
 
-  const onIdCardPress = useCallback(() => {
-    emitHaptic();
-    router.push('/account/update');
-  }, []);
-
-  const onMyProfilePress = useCallback(() => {
-    emitHaptic();
-    router.push(`/employees/me`);
-  }, []);
-  const onAppearancePress = useCallback(
-    () => router.push('/preferences/scheme'),
-    [],
-  );
-  const onCalendarPress = useCallback(
-    () => router.push('/preferences/calendar'),
-    [],
-  );
-  const onDateTimePress = useCallback(
-    () => router.push('/preferences/datetime'),
-    [],
-  );
-  const onLanguagePress = useCallback(
-    () => router.push('/preferences/language'),
-    [],
-  );
-  const onNotificationsPress = useCallback(
-    () => router.push('/preferences/notifications'),
-    [],
-  );
-  const onTermsPrivacyPress = useCallback(
-    () => router.push('/app/terms-privacy'),
-    [],
-  );
-  const onReportIssuePress = useCallback(
-    () => router.push('/app/report-issue'),
-    [],
-  );
-  const onFollowUsPress = useCallback(() => router.push('/app/follow-us'), []);
-  const onHelpFeedbackPress = useCallback(
-    () => router.push('/app/help-feedback'),
-    [],
-  );
-
   const copyId = useCallback(
     (e: GestureResponderEvent) => {
       e.preventDefault();
@@ -178,7 +135,10 @@ export default () => {
               pressStyle={{ opacity: 0.8 }}
               gap="$4"
               title={t('shared.id_card')}
-              onPress={onIdCardPress}
+              onPress={() => {
+                emitHaptic();
+                router.push('/account/update');
+              }}
             >
               <XStack alignItems="center" gap="$4" flex={1}>
                 <Avatar
@@ -216,7 +176,10 @@ export default () => {
               pressStyle={{ opacity: 0.8 }}
               gap="$4"
               title={t('shared.my_profile')}
-              onPress={onMyProfilePress}
+              onPress={() => {
+                emitHaptic();
+                router.push(`/employees/me`);
+              }}
             >
               <XStack alignItems="center" gap="$4" flex={1}>
                 <Avatar
@@ -244,34 +207,41 @@ export default () => {
             <ListItem
               label={t('shared.preferences.notifications.title')}
               icon={<Icon name="Bell" />}
-              onPress={onNotificationsPress}
+              onPress={() => router.push('/preferences/notifications')}
             />
 
             <ListItem
               label={t('shared.preferences.scheme.title')}
               icon={<Icon name="Pallete2" />}
-              onPress={onAppearancePress}
+              onPress={() => router.push('/preferences/scheme')}
             />
 
             {supportedLanguages?.length > 1 && (
               <ListItem
                 label={t('shared.preferences.language.title')}
                 icon={<Icon name="Global" />}
-                onPress={onLanguagePress}
+                onPress={() => router.push('/preferences/language')}
               />
             )}
 
             <ListItem
               label={t('shared.preferences.datetime.title')}
               icon={<Icon name="ClockCircle" />}
-              onPress={onDateTimePress}
+              onPress={() => router.push('/preferences/datetime')}
             />
 
             {!!currentEmployee && (
               <ListItem
                 label={t('shared.preferences.calendar.title')}
                 icon={<Icon name="Calendar" />}
-                onPress={onCalendarPress}
+                onPress={() => router.push('/preferences/calendar')}
+              />
+            )}
+            {Platform.OS !== 'web' && (
+              <ListItem
+                label={t('shared.preferences.system.title')}
+                icon={<Icon name="TuningSquare" />}
+                onPress={Linking.openSettings}
               />
             )}
           </ListItemGroup>
@@ -297,11 +267,11 @@ export default () => {
                 onPress={manageSubscriptions}
               />
             )}
-            {Platform.OS !== 'web' && (
+            {Boolean(me.partner) && (
               <ListItem
-                label={t('shared.preferences.system.title')}
-                icon={<Icon name="TuningSquare" />}
-                onPress={Linking.openSettings}
+                label={t('shared.referral_program.title')}
+                icon={<Icon name="CrownLine" />}
+                onPress={() => router.push('/app/referral-program')}
               />
             )}
             <ListItem
@@ -320,25 +290,25 @@ export default () => {
               <ListItem
                 label={t('shared.faq.title')}
                 icon={<Icon name="QuestionCircle" />}
-                onPress={onHelpFeedbackPress}
+                onPress={() => router.push('/app/help-feedback')}
               />
             )}
             <ListItem
               label={t('shared.docs.terms_privacy')}
               icon={<Icon name="FileText" />}
-              onPress={onTermsPrivacyPress}
+              onPress={() => router.push('/app/terms-privacy')}
             />
             {functionality.canReportIssue && (
               <ListItem
                 label={t('shared.report_issue.title')}
                 icon={<Icon name="Bug" />}
-                onPress={onReportIssuePress}
+                onPress={() => router.push('/app/report-issue')}
               />
             )}
             <ListItem
               label={t('shared.follow_us')}
               icon={<Icon name="ShareCircle" />}
-              onPress={onFollowUsPress}
+              onPress={() => router.push('/app/follow-us')}
             />
           </ListItemGroup>
 

@@ -11,6 +11,7 @@ export type AppSettings = {
   functionality: {
     canLeaveReview: boolean;
     canReportIssue: boolean;
+    canUseReferralProgram: boolean;
     limits: Record<string, AppLimit>;
     availability: {
       brandIndustry: boolean;

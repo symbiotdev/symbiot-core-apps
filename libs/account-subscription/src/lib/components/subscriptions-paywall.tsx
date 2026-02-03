@@ -188,7 +188,7 @@ export const SubscriptionsPaywall = ({
     <CompactView flex={1}>
       <View gap="$3" marginTop="$5" alignItems="center">
         <Animated.View entering={LightSpeedInLeft.delay(100).duration(1000)}>
-          <Icon name="Rocket2" type="SolarBoldDuotone" size={60} />
+          <Icon name="Rocket2" type="SolarBold" size={60} />
         </Animated.View>
 
         <Animated.View

@@ -46,7 +46,7 @@
     "expo-camera": "^16.1.11",
     "expo-constants": "~17.1.7",
     "expo-crypto": "^14.1.5",
-    "expo-dev-client": "^6.0.20",
+    "expo-dev-client": "^5.2.4",
     "expo-device": "^7.1.4",
     "expo-document-picker": "^14.0.7",
     "expo-file-system": "^18.1.11",

@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   PropsWithChildren,
   useCallback,
@@ -19,9 +19,12 @@ import {
   AdaptivePopover,
   AdaptivePopoverRef,
   LoadingView,
+  SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import { SubscriptionsPaywall } from '../components/subscriptions-paywall';
 import { DevelopmentPaywall } from '../components/development-paywall';
+import { PromoCodeApplyForm } from '../components/promo-code-apply-form';
+import { useI18n } from '@symbiot-core-apps/shared';
 
 type AccountSubscriptionContext = {
   processing: boolean;
@@ -45,15 +48,18 @@ const apiKeyByPlatform: Record<string, string> = {
 export const AccountSubscriptionProvider = ({
   children,
 }: PropsWithChildren) => {
-  const { currentEmployee } = useCurrentBrandEmployee();
+  const { t } = useI18n();
   const { me } = useCurrentAccountState();
   const { brand } = useCurrentBrandState();
+  const { currentEmployee } = useCurrentBrandEmployee();
 
   const paywallRef = useRef<AdaptivePopoverRef>(null);
 
-  const [subscribing, setSubscribing] = useState<boolean>(false);
-  const [restoring, setRestoring] = useState<boolean>(false);
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
+  const [restoring, setRestoring] = useState<boolean>(false);
+  const [subscribing, setSubscribing] = useState<boolean>(false);
+  const [isPromoCodeFormVisible, setIsPromoCodeFormVisible] =
+    useState<boolean>(false);
 
   const isSubscriptionsAvailable = useMemo(
     () =>
@@ -80,17 +86,32 @@ export const AccountSubscriptionProvider = ({
 
   const showPaywall = useCallback(() => paywallRef.current?.open(), []);
 
-  const onSubscribe = useCallback(async (pkg: PurchasesPackage) => {
-    try {
-      setSubscribing(true);
+  const closePaywall = useCallback(() => paywallRef.current?.close(), []);
 
-      await Purchases.purchasePackage(pkg);
+  const showPromoCodeForm = useCallback(() => {
+    closePaywall();
+    setTimeout(() => setIsPromoCodeFormVisible(true), 500);
+  }, [closePaywall]);
 
-      paywallRef.current?.close();
-    } finally {
-      setSubscribing(false);
-    }
-  }, []);
+  const closePromoCodeForm = useCallback(() => {
+    setIsPromoCodeFormVisible(false);
+    setTimeout(showPaywall, 500);
+  }, [showPaywall]);
+
+  const onSubscribe = useCallback(
+    async (pkg: PurchasesPackage) => {
+      try {
+        setSubscribing(true);
+
+        await Purchases.purchasePackage(pkg);
+
+        closePaywall();
+      } finally {
+        setSubscribing(false);
+      }
+    },
+    [closePaywall],
+  );
 
   const onRestore = useCallback(async () => {
     try {
@@ -142,7 +163,7 @@ export const AccountSubscriptionProvider = ({
     >
       {children}
 
-      {!!me?.offering && (
+      {!isPromoCodeFormVisible && !!me?.offering && (
         <AdaptivePopover
           hideHandle
           unmountChildrenWhenHidden
@@ -153,7 +174,7 @@ export const AccountSubscriptionProvider = ({
           ref={paywallRef}
         >
           {isDevMode ? (
-            <DevelopmentPaywall />
+            <DevelopmentPaywall onApplyPromoCode={showPromoCodeForm} />
           ) : (
             <>
               {!packages.length && <LoadingView />}
@@ -164,14 +185,25 @@ export const AccountSubscriptionProvider = ({
                   packages={packages}
                   subscribing={subscribing}
                   restoring={restoring}
-                  onSubscribe={onSubscribe}
                   onRestore={onRestore}
+                  onSubscribe={onSubscribe}
+                  onApplyPromoCode={showPromoCodeForm}
                 />
               )}
             </>
           )}
         </AdaptivePopover>
       )}
+
+      <SlideSheetModal
+        withKeyboard
+        scrollable
+        headerTitle={t('shared.referral_program.promo_code.exists')}
+        visible={isPromoCodeFormVisible}
+        onClose={closePromoCodeForm}
+      >
+        <PromoCodeApplyForm onApplied={closePromoCodeForm} />
+      </SlideSheetModal>
     </Context.Provider>
   );
 };

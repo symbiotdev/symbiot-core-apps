@@ -41,7 +41,7 @@ export const Input = forwardRef(
       keyboardType,
       disabled,
       required,
-      autoFocus,
+      autofocus,
       debounce,
       maxLength,
       cursorAlwaysOn,
@@ -63,7 +63,7 @@ export const Input = forwardRef(
       keyboardType?: KeyboardType;
       disabled?: boolean;
       required?: boolean;
-      autoFocus?: boolean;
+      autofocus?: boolean;
       debounce?: number;
       maxLength?: number;
       cursorAlwaysOn?: InputCursorPosition;
@@ -130,7 +130,7 @@ export const Input = forwardRef(
           ref={ref}
           id={id}
           value={String(value || '')}
-          autoFocus={autoFocus}
+          autoFocus={autofocus}
           backgroundColor="$inputBackgroundColor"
           borderWidth={0}
           height={InputHeight}

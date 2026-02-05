@@ -2,6 +2,7 @@
   "next": "Далі",
   "skip": "Пропустити",
   "send": "Надіслати",
+  "apply": "Застосувати",
   "continue": "Продовжити",
   "cancel": "Відміна",
   "canceled": "Відмінено",
@@ -53,7 +54,20 @@
   "used_value": "Використано: {{value}}",
   "referral_program": {
     "title": "Реферальна програма",
-    "promo_includes": "Цей промокод включає - {{benefits}}."
+    "promo_code": {
+      "includes": "Цей промокод включає - {{benefits}}.",
+      "exists": "Маєте промокод?",
+      "form": {
+        "code": {
+          "label": "Промокод",
+          "placeholder": "Наприклад, SYMBIOT50",
+          "error": {
+            "required": "Промокод обовʼязковий до заповнення",
+            "invalid": "Цей промокод недійсний."
+          }
+        }
+      }
+    }
   },
   "rate_app": {
     "write_review": "Залишити відгук",

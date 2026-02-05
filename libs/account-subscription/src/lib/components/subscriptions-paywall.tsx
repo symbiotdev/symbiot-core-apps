@@ -1,8 +1,8 @@
 import {
   BoldText,
   Button,
-  ExtraBoldText,
   CompactView,
+  ExtraBoldText,
   H2,
   Icon,
   MediumText,
@@ -24,6 +24,7 @@ import Animated, {
   ZoomInEasyDown,
 } from 'react-native-reanimated';
 import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
+import { PromoCodeTrigger } from './promo-code-trigger';
 
 export const SubscriptionsPaywall = ({
   offering,
@@ -32,6 +33,7 @@ export const SubscriptionsPaywall = ({
   restoring,
   onSubscribe,
   onRestore,
+  onApplyPromoCode,
 }: {
   offering: string;
   packages: PurchasesPackage[];
@@ -39,6 +41,7 @@ export const SubscriptionsPaywall = ({
   restoring: boolean;
   onSubscribe: (pkg: PurchasesPackage) => void;
   onRestore: () => void;
+  onApplyPromoCode: () => void;
 }) => {
   const { t } = useI18n();
   const adjustedOffering = offering || 'default';
@@ -231,6 +234,8 @@ export const SubscriptionsPaywall = ({
       <XStack marginTop="$4" gap="$2">
         {adjustedPackages.map(renderPackage)}
       </XStack>
+
+      <PromoCodeTrigger alignSelf="flex-start" onPress={onApplyPromoCode} />
 
       <Button
         label={t(`${translatePrefix}.action.subscribe`)}

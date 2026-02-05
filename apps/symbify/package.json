@@ -14,5 +14,6 @@
     "react-native-svg": "*",
     "react-native-web": "*",
     "react": "*"
-  }
+  },
+  "devDependencies": {}
 }

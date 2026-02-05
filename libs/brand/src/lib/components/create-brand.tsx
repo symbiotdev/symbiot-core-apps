@@ -17,8 +17,10 @@ import { CountryCode, getCountry } from 'countries-and-timezones';
 import { BrandIndustryController } from './contoller/brand-industry-controller';
 import { BrandCountryController } from './contoller/brand-country-controller';
 import { AvatarPicker } from '@symbiot-core-apps/form-controller';
-import { BrandPromoCodeController } from './contoller/brand-promo-code-controller';
-import { useAccountSubscription } from '@symbiot-core-apps/account-subscription';
+import {
+  PromoCodeController,
+  useAccountSubscription,
+} from '@symbiot-core-apps/account-subscription';
 
 const defaultCountryCode = Intl?.DateTimeFormat()
   ?.resolvedOptions()
@@ -270,7 +272,7 @@ export const CreateBrand = () => {
             title={t('brand.create.steps.promo_code.title')}
             subtitle={t('brand.create.steps.promo_code.subtitle')}
           >
-            <BrandPromoCodeController
+            <PromoCodeController
               noLabel
               name="promoCode"
               control={promoCodeControl}

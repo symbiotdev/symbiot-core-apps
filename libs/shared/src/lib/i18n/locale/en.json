@@ -2,6 +2,7 @@
   "next": "Next",
   "skip": "Skip",
   "send": "Send",
+  "apply" : "Apply",
   "continue": "Continue",
   "cancel": "Cancel",
   "canceled": "Canceled",
@@ -53,7 +54,20 @@
   "used_value": "Used: {{value}}",
   "referral_program": {
     "title": "Referral Program",
-    "promo_includes": "This promo code includes - {{benefits}}."
+    "promo_code": {
+      "includes": "This promo code includes - {{benefits}}.",
+      "exists": "Do you have a promo code?",
+      "form": {
+        "code": {
+          "label": "Promo Code",
+          "placeholder": "For example, SYMBIOT50",
+          "error": {
+            "required": "Promo code is required",
+            "invalid": "This promo code is invalid."
+          }
+        }
+      }
+    }
   },
   "rate_app": {
     "write_review": "Leave a review",

@@ -25,6 +25,7 @@ type CurrentAccountState = {
   stats: AccountStats;
   clear: () => void;
   setMe: (me?: Account) => void;
+  mergeMe: (me: Partial<Account>) => void;
   setMyPreferences: (preferences: Partial<AccountPreferences>) => void;
   setMySubscriptions: (subscriptions: AccountSubscription[]) => void;
   setMyStats: (stats: AccountStats) => void;
@@ -40,6 +41,7 @@ export const useCurrentAccountState = create<CurrentAccountState>()(
           stats: {},
         }),
       setMe: (me) => set({ me }),
+      mergeMe: (me) => set({ me: merge(get().me || {}, me) }),
       setMyPreferences: (preferences) => {
         const { setMe, me } = get();
 

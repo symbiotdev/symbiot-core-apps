@@ -4,10 +4,11 @@ import { useDebounceValue, useI18n } from '@symbiot-core-apps/shared';
 import { usePartnerPromoCodeBenefitsQuery } from '@symbiot-core-apps/api';
 import { useEffect } from 'react';
 
-export function BrandPromoCodeController<T extends FieldValues>(props: {
+export function PromoCodeController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   noLabel?: boolean;
+  autofocus?: boolean;
   onCheckValidity: (valid: boolean) => void;
 }) {
   const { t } = useI18n();
@@ -19,7 +20,9 @@ export function BrandPromoCodeController<T extends FieldValues>(props: {
       rules={{
         required: {
           value: true,
-          message: t('brand.form.promo_code.error.required'),
+          message: t(
+            'shared.referral_program.promo_code.form.code.error.required',
+          ),
         },
       }}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
@@ -27,6 +30,7 @@ export function BrandPromoCodeController<T extends FieldValues>(props: {
           value={value}
           error={error?.message}
           noLabel={props.noLabel}
+          autofocus={props.autofocus}
           onChange={onChange}
           onCheckValidity={props.onCheckValidity}
         />
@@ -39,12 +43,14 @@ const PromoCodeInput = ({
   value,
   error,
   noLabel,
+  autofocus,
   onChange,
   onCheckValidity,
 }: {
   value: string;
   error?: string;
   noLabel?: boolean;
+  autofocus?: boolean;
   onChange: onChangeInput;
   onCheckValidity: (valid: boolean) => void;
 }) => {
@@ -73,14 +79,23 @@ const PromoCodeInput = ({
       enterKeyHint="done"
       regex={/^[a-zA-Z0-9_]+$/}
       value={value}
+      autofocus={autofocus}
       description={
         !isPending && benefits
-          ? t('shared.referral_program.promo_includes', { benefits })
+          ? t('shared.referral_program.promo_code.includes', { benefits })
           : ''
       }
-      label={!noLabel ? t('brand.form.promo_code.label') : ''}
-      placeholder={t('brand.form.promo_code.placeholder')}
-      error={codeInvalid ? t('brand.form.promo_code.error.invalid') : error}
+      label={
+        !noLabel ? t('shared.referral_program.promo_code.form.code.label') : ''
+      }
+      placeholder={t(
+        'shared.referral_program.promo_code.form.code.placeholder',
+      )}
+      error={
+        codeInvalid
+          ? t('shared.referral_program.promo_code.form.code.error.invalid')
+          : error
+      }
       onChange={onChange}
     />
   );

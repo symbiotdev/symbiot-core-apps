@@ -31,6 +31,7 @@ export const SubscriptionsPaywall = ({
   packages,
   subscribing,
   restoring,
+  offeredPrivileges,
   onSubscribe,
   onRestore,
   onApplyPromoCode,
@@ -40,6 +41,7 @@ export const SubscriptionsPaywall = ({
   subscribing: boolean;
   restoring: boolean;
   onSubscribe: (pkg: PurchasesPackage) => void;
+  offeredPrivileges?: string[];
   onRestore: () => void;
   onApplyPromoCode: () => void;
 }) => {
@@ -236,6 +238,12 @@ export const SubscriptionsPaywall = ({
       </XStack>
 
       <PromoCodeTrigger alignSelf="flex-start" onPress={onApplyPromoCode} />
+
+      {!!offeredPrivileges?.length && (
+        <SemiBoldText color="$placeholderColor" paddingVertical="$1">
+          {`+ ${offeredPrivileges.join(', ')}.`}
+        </SemiBoldText>
+      )}
 
       <Button
         label={t(`${translatePrefix}.action.subscribe`)}

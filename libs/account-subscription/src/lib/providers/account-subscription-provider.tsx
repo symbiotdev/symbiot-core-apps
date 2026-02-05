@@ -182,6 +182,7 @@ export const AccountSubscriptionProvider = ({
               {!!packages.length && (
                 <SubscriptionsPaywall
                   offering={me.offering}
+                  offeredPrivileges={me.offeredPrivileges}
                   packages={packages}
                   subscribing={subscribing}
                   restoring={restoring}

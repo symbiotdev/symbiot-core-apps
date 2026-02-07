@@ -1,14 +1,12 @@
 {
   "private": true,
   "main": "index.js",
-  "name": "service-brand",
   "scripts": {
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/service-brand",
     "android": "expo run:android",
     "ios": "expo run:ios"
   },
   "dependencies": {
-    "@expo/metro-config": "*",
     "@expo/metro-runtime": "*",
     "@floating-ui/react-native": "*",
     "@react-native-clipboard/clipboard": "*",

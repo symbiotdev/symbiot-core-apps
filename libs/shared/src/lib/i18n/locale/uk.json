@@ -57,7 +57,8 @@
     "title": "Доснупне оновлення!",
     "subtitle": "Завантажте останню версію, щоб усе працювало без перебоїв.",
     "download": "Оновити",
-    "min_supported_version": "Мінімальна доступна версія: {{version}}"
+    "installed_version": "Встановлена версія: {{version}}",
+    "min_supported_version": "Необхідна мінімальна версія: {{version}}"
   },
   "partner_program": {
     "title": "Для партнерів",

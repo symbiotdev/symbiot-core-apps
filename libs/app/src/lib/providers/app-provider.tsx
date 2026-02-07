@@ -20,6 +20,7 @@ import { useAppState } from '../hooks/use-app-state';
 import { MandatoryUpdate } from '../components/mandatory-update';
 import { Platform } from 'react-native';
 import { useAppVersionUpdateType } from '../hooks/use-app-version-update-type';
+import { hideAsync } from 'expo-splash-screen';
 
 const Context = createContext<AppSettings | undefined>(undefined);
 
@@ -70,6 +71,10 @@ export const AppProvider = ({
     if (overriddenSettings?.language?.translations)
       updateTranslates(overriddenSettings.language.translations);
   }, [overriddenSettings, updateTranslates]);
+
+  useLayoutEffect(() => {
+    appUpdateType === 'mandatory' && hideAsync();
+  }, [appUpdateType]);
 
   return (
     <Context.Provider value={adjustedAppSettings}>

@@ -57,6 +57,7 @@
     "title": "You’re Up to Date… Almost!",
     "subtitle": "Download the latest version to keep everything running smoothly.",
     "download": "Get the Update",
+    "installed_version": "Installed version: {{version}}",
     "min_supported_version": "Minimum supported version: {{version}}"
   },
   "partner_program": {

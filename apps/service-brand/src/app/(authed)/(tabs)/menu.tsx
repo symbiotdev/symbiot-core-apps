@@ -49,7 +49,7 @@ export default () => {
   const { currentEmployee } = useCurrentBrandEmployee();
   const { functionality } = useAppSettings();
   const { visible: drawerVisible } = useDrawer();
-  const appUpdateType = useAppVersionUpdateType();
+  const { updateType: appUpdateType } = useAppVersionUpdateType();
   const share = useShareApp();
   const { leaveReview } = useRateApp();
   const {

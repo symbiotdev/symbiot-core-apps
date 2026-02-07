@@ -1,5 +1,5 @@
 import { PropsWithChildren, useMemo } from 'react';
-import { createTamagui, TamaguiProvider, View } from 'tamagui';
+import { createTamagui, TamaguiProvider } from 'tamagui';
 import {
   animations,
   fonts,
@@ -98,11 +98,9 @@ export const ThemeProvider = ({
     <>
       <StatusBar barStyle={barStyle} />
       <TamaguiProvider config={tamaguiConfig} defaultTheme={scheme}>
-        <View flex={1} backgroundColor="$background">
-          <NavigationThemeProvider value={navigationConfig}>
-            {children}
-          </NavigationThemeProvider>
-        </View>
+        <NavigationThemeProvider value={navigationConfig}>
+          {children}
+        </NavigationThemeProvider>
       </TamaguiProvider>
     </>
   );

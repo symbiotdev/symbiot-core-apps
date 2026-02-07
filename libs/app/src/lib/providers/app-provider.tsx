@@ -3,7 +3,6 @@ import {
   PropsWithChildren,
   useContext,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
 } from 'react';
@@ -17,10 +16,7 @@ import {
 import { useI18n } from '@symbiot-core-apps/shared';
 import merge from 'deepmerge';
 import { useAppState } from '../hooks/use-app-state';
-import { MandatoryUpdate } from '../components/mandatory-update';
 import { Platform } from 'react-native';
-import { useAppVersionUpdateType } from '../hooks/use-app-version-update-type';
-import { hideAsync } from 'expo-splash-screen';
 
 const Context = createContext<AppSettings | undefined>(undefined);
 
@@ -32,7 +28,6 @@ export const AppProvider = ({
 }: PropsWithChildren<{ defaultSettings: AppSettings }>) => {
   const { updateTranslates } = useI18n();
   const { data: appDetails } = useAppDetailsReq();
-  const appUpdateType = useAppVersionUpdateType();
   const { data: remoteSettings, error: remoteSettingsError } =
     useAppSettingsOverridesReq();
   const { overriddenSettings, setOverriddenSettings, setVersionDetails } =
@@ -60,28 +55,24 @@ export const AppProvider = ({
     if (versionDetails) setVersionDetails(versionDetails);
   }, [appDetails, setVersionDetails]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!remoteSettings) return;
 
     setOverriddenSettings(remoteSettings);
     loadedRef.current = true;
   }, [remoteSettings, setOverriddenSettings]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (overriddenSettings?.language?.translations)
       updateTranslates(overriddenSettings.language.translations);
   }, [overriddenSettings, updateTranslates]);
-
-  useLayoutEffect(() => {
-    appUpdateType === 'mandatory' && hideAsync();
-  }, [appUpdateType]);
 
   return (
     <Context.Provider value={adjustedAppSettings}>
       <KeyboardProvider>
         {loaded && (
           <ThemeProvider theme={adjustedAppSettings.theme}>
-            {appUpdateType === 'mandatory' ? <MandatoryUpdate /> : children}
+            {children}
           </ThemeProvider>
         )}
       </KeyboardProvider>

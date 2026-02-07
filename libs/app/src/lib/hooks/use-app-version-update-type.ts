@@ -6,9 +6,14 @@ import { DeviceVersion } from '@symbiot-core-apps/shared';
 export const useAppVersionUpdateType = () => {
   const { versionDetails } = useAppState();
 
-  return useMemo(() => {
+  const updateType = useMemo(() => {
     if (!versionDetails || Platform.OS === 'web') return;
     else if (versionDetails.minSupported > DeviceVersion) return 'mandatory';
     else return 'optional';
   }, [versionDetails]);
+
+  return {
+    updateType,
+    versionDetails,
+  };
 };

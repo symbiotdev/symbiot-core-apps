@@ -1,27 +1,32 @@
 import { UpdateAccount } from '@symbiot-core-apps/account';
-import { router, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
 import React, { useCallback, useLayoutEffect, useMemo } from 'react';
 import {
   ContextMenuItem,
   ContextMenuPopover,
   Icon,
 } from '@symbiot-core-apps/ui';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
+import { useAccountAuthSignOutReq } from '@symbiot-core-apps/api';
 
 export default () => {
   const { t } = useI18n();
   const navigation = useNavigation();
+  const { mutate: signOut } = useAccountAuthSignOutReq();
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () => [
       {
-        label: t('shared.account.update.context_menu.remove_account.label'),
-        icon: <Icon name="TrashBinMinimalistic" />,
-        color: '$error',
-        onPress: () => router.push('/account/remove'),
+        label: t('shared.auth.sign_out.button.label'),
+        icon: <Icon name="Logout2" style={{ marginLeft: -3 }} />,
+        onPress: () =>
+          ConfirmAlert({
+            title: t('shared.auth.sign_out.confirm.title'),
+            onAgree: signOut,
+          }),
       },
     ],
-    [t],
+    [signOut, t],
   );
 
   const headerRight = useCallback(

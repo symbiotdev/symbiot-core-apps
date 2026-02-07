@@ -8,12 +8,14 @@ import {
   InitView,
 } from '@symbiot-core-apps/ui';
 import { router, useNavigation } from 'expo-router';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
+import { useAccountAuthSignOutReq } from '@symbiot-core-apps/api';
 
 export default () => {
   const { t } = useI18n();
   const { currentEmployee, hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
+  const { mutate: signOut } = useAccountAuthSignOutReq();
 
   const contextMenuItems: ContextMenuItem[] = useMemo(
     () =>
@@ -31,15 +33,16 @@ export default () => {
                 ]
               : []),
             {
-              label: t(
-                'shared.account.update.context_menu.remove_account.label',
-              ),
-              icon: <Icon name="TrashBinMinimalistic" />,
-              color: '$error',
-              onPress: () => router.push('/account/remove'),
+              label: t('shared.auth.sign_out.button.label'),
+              icon: <Icon name="Logout2" style={{marginLeft: -3}} />,
+              onPress: () =>
+                ConfirmAlert({
+                  title: t('shared.auth.sign_out.confirm.title'),
+                  onAgree: signOut,
+                }),
             },
           ],
-    [currentEmployee?.id, hasPermission, t],
+    [currentEmployee?.id, hasPermission, signOut, t],
   );
 
   const headerRight = useCallback(

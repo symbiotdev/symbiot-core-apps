@@ -21,7 +21,7 @@ import { toggleItemMinHeight } from './toggle-group';
 
 export type PickerItem = {
   label: string;
-  value: string | number | undefined | null;
+  value: string | number | null;
   description?: string; // not applicable on IOS
   icon?: ReactElement; // not applicable on IOS
 };
@@ -84,7 +84,8 @@ export const Picker = ({
       paddingTop={25}
       paddingBottom={50}
       onMoveShouldSetResponder={(e) => {
-        e.stopPropagation();
+        e?.stopPropagation?.();
+        e?.preventDefault?.();
 
         return false;
       }}
@@ -99,7 +100,7 @@ export const Picker = ({
           <RNPicker.Item
             key={index}
             label={option.label}
-            value={option.value}
+            value={option.value as string}
           />
         ))}
       </RNPicker>

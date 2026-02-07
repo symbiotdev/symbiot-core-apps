@@ -13,7 +13,8 @@
     "deploy:symbify": "NODE_APP=symbify npx tsx tools/scripts/deploy.ts",
     "export:symbify": "NODE_APP=symbify npx tsx tools/scripts/export.ts",
     "//GENERAL": "---------GENERAL----------",
-    "generate": "npx tsx tools/scripts/generate.ts"
+    "generate": "npx tsx tools/scripts/generate.ts",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@expo/metro-config": "~0.19.12",
@@ -139,6 +140,7 @@
     "metro-config": "^0.81.5",
     "metro-resolver": "^0.81.5",
     "nx": "21.3.0",
+    "patch-package": "^8.0.1",
     "prettier": "^3.6.2",
     "react-test-renderer": "19.0.0",
     "ts-jest": "^29.4.5",

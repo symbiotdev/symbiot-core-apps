@@ -269,7 +269,7 @@ export default () => {
             )}
             {Boolean(me.partner) && (
               <ListItem
-                label={t('shared.referral_program.title')}
+                label={t('shared.partner_program.title')}
                 icon={<Icon name="CrownLine" />}
                 onPress={() => router.push('/app/referral-program')}
               />

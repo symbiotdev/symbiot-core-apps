@@ -172,7 +172,7 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
           name="app/referral-program"
           options={{
             ...animationControlProps,
-            headerTitle: t('shared.referral_program.title'),
+            headerTitle: t('shared.partner_program.title'),
           }}
         />
       </Stack.Protected>

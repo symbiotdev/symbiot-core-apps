@@ -21,7 +21,7 @@ export function PromoCodeController<T extends FieldValues>(props: {
         required: {
           value: true,
           message: t(
-            'shared.referral_program.promo_code.form.code.error.required',
+            'shared.partner_program.promo_code.form.code.error.required',
           ),
         },
       }}
@@ -82,18 +82,18 @@ const PromoCodeInput = ({
       autofocus={autofocus}
       description={
         !isPending && benefits
-          ? t('shared.referral_program.promo_code.includes', { benefits })
+          ? t('shared.partner_program.promo_code.includes', { benefits })
           : ''
       }
       label={
-        !noLabel ? t('shared.referral_program.promo_code.form.code.label') : ''
+        !noLabel ? t('shared.partner_program.promo_code.form.code.label') : ''
       }
       placeholder={t(
-        'shared.referral_program.promo_code.form.code.placeholder',
+        'shared.partner_program.promo_code.form.code.placeholder',
       )}
       error={
         codeInvalid
-          ? t('shared.referral_program.promo_code.form.code.error.invalid')
+          ? t('shared.partner_program.promo_code.form.code.error.invalid')
           : error
       }
       onChange={onChange}

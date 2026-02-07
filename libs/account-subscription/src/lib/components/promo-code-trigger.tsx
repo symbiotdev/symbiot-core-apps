@@ -18,7 +18,7 @@ export const PromoCodeTrigger = (props: ViewProps) => {
         paddingVertical={0}
         paddingHorizontal={0}
         fontSize={14}
-        label={t('shared.referral_program.promo_code.exists')}
+        label={t('shared.partner_program.promo_code.exists')}
         {...props}
       />
     )

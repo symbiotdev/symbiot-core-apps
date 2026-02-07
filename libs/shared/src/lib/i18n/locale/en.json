@@ -52,8 +52,8 @@
   "id_card": "ID Card",
   "limited": "Limited",
   "used_value": "Used: {{value}}",
-  "referral_program": {
-    "title": "Referral Program",
+  "partner_program": {
+    "title": "For partners",
     "promo_code": {
       "includes": "This promo code includes - {{benefits}}.",
       "exists": "Do you have a promo code?",

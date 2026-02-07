@@ -52,8 +52,8 @@
   "id_card": "ID картка",
   "limited": "Обмежено",
   "used_value": "Використано: {{value}}",
-  "referral_program": {
-    "title": "Реферальна програма",
+  "partner_program": {
+    "title": "Для партнерів",
     "promo_code": {
       "includes": "Цей промокод включає - {{benefits}}.",
       "exists": "Маєте промокод?",

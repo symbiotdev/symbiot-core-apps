@@ -199,7 +199,7 @@ export const AccountSubscriptionProvider = ({
       <SlideSheetModal
         withKeyboard
         scrollable
-        headerTitle={t('shared.referral_program.promo_code.exists')}
+        headerTitle={t('shared.partner_program.promo_code.exists')}
         visible={isPromoCodeFormVisible}
         onClose={closePromoCodeForm}
       >

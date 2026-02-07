@@ -36,13 +36,13 @@ export const PromoCodeApplyForm = ({
         regex={/^[a-zA-Z0-9_]+$/}
         value={promoCode}
         autofocus
-        label={t('shared.referral_program.promo_code.form.code.label')}
+        label={t('shared.partner_program.promo_code.form.code.label')}
         placeholder={t(
-          'shared.referral_program.promo_code.form.code.placeholder',
+          'shared.partner_program.promo_code.form.code.placeholder',
         )}
         error={
           error
-            ? t('shared.referral_program.promo_code.form.code.error.invalid')
+            ? t('shared.partner_program.promo_code.form.code.error.invalid')
             : undefined
         }
         onChange={setPromoCode as onChangeInput}

@@ -18,7 +18,7 @@ export default () => {
     () => [
       {
         label: t('shared.auth.sign_out.button.label'),
-        icon: <Icon name="Logout2" style={{ marginLeft: -3 }} />,
+        icon: <Icon name="Logout" />,
         onPress: () =>
           ConfirmAlert({
             title: t('shared.auth.sign_out.confirm.title'),

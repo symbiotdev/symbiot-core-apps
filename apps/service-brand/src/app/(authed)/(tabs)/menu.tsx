@@ -1,8 +1,8 @@
 import {
-  ConfirmAlert,
   DateHelper,
   DeviceVersion,
   emitHaptic,
+  isTablet,
   ShowNativeSuccessAlert,
   useI18n,
   useRateApp,
@@ -12,16 +12,14 @@ import {
   useCurrentAccountState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
-  useScheme,
 } from '@symbiot-core-apps/state';
-import React, { useCallback, useLayoutEffect } from 'react';
-import { router, useNavigation } from 'expo-router';
+import React, { useCallback } from 'react';
+import { router } from 'expo-router';
 import {
   ActionCard,
   Avatar,
   CompactView,
   H3,
-  HeaderButton,
   Icon,
   ListItem,
   ListItemGroup,
@@ -35,11 +33,7 @@ import {
 import { View, XStack } from 'tamagui';
 import { GestureResponderEvent, Linking, Platform } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
-import {
-  AccountSubscriptionEnvironment,
-  useAccountAuthSignOutReq,
-} from '@symbiot-core-apps/api';
-import { Image } from 'expo-image';
+import { AccountSubscriptionEnvironment } from '@symbiot-core-apps/api';
 import { useAccountSubscription } from '@symbiot-core-apps/account-subscription';
 import { SymbiotLogo } from '../../../components/symbiot/logo/symbiot-logo';
 import { useAppSettings } from '@symbiot-core-apps/app';
@@ -50,7 +44,6 @@ export default () => {
   const { brand } = useCurrentBrandState();
   const { currentEmployee } = useCurrentBrandEmployee();
   const { functionality } = useAppSettings();
-  const { scheme } = useScheme();
   const { visible: drawerVisible } = useDrawer();
   const share = useShareApp();
   const { leaveReview } = useRateApp();
@@ -61,8 +54,6 @@ export default () => {
     showPaywall,
     manageSubscriptions,
   } = useAccountSubscription();
-  const { mutate: signOut } = useAccountAuthSignOutReq();
-  const navigation = useNavigation();
 
   const copyId = useCallback(
     (e: GestureResponderEvent) => {
@@ -82,39 +73,12 @@ export default () => {
     [t, me?.id],
   );
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <Image
-          source={
-            scheme === 'light'
-              ? require('../../../../assets/images/icon/logo-light.png')
-              : require('../../../../assets/images/icon/logo-dark.png')
-          }
-          style={{
-            resizeMode: 'contain',
-            height: 24,
-            width: 100,
-          }}
-        />
-      ),
-      headerRight: () => (
-        <HeaderButton
-          iconName="Logout2"
-          onPress={() =>
-            ConfirmAlert({
-              title: t('shared.auth.sign_out.confirm.title'),
-              onAgree: signOut,
-            })
-          }
-        />
-      ),
-    });
-  }, [navigation, signOut, t, scheme]);
-
   return (
     me && (
-      <TabsPageView scrollable withHeaderHeight>
+      <TabsPageView
+        scrollable
+        withHeaderHeight={Platform.OS === 'web' || isTablet}
+      >
         <CompactView gap="$3" flex={1}>
           {canSubscribe && (
             <ActionCard
@@ -267,14 +231,13 @@ export default () => {
                 onPress={manageSubscriptions}
               />
             )}
-            {functionality.available.partnerProgram &&
-              Boolean(me.partner) && (
-                <ListItem
-                  label={t('shared.partner_program.title')}
-                  icon={<Icon name="CrownLine" />}
-                  onPress={() => router.push('/app/partner-panel')}
-                />
-              )}
+            {functionality.available.partnerProgram && Boolean(me.partner) && (
+              <ListItem
+                label={t('shared.partner_program.title')}
+                icon={<Icon name="CrownLine" />}
+                onPress={() => router.push('/app/partner-panel')}
+              />
+            )}
             <ListItem
               label={t('shared.share_app')}
               icon={<Icon name="Share" />}

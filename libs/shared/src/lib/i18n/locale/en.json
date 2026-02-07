@@ -52,6 +52,13 @@
   "id_card": "ID Card",
   "limited": "Limited",
   "used_value": "Used: {{value}}",
+  "update_available": "Update available",
+  "app_mandatory_update": {
+    "title": "You’re Up to Date… Almost!",
+    "subtitle": "Download the latest version to keep everything running smoothly.",
+    "download": "Get the Update",
+    "min_supported_version": "Minimum supported version: {{version}}"
+  },
   "partner_program": {
     "title": "For partners",
     "promo_code": {

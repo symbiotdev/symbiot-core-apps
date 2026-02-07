@@ -13,6 +13,7 @@ export type SolarIconName =
   | 'ArrowToTopLeft'
   | 'Balloon'
   | 'Bell'
+  | 'Bolt'
   | 'Bill'
   | 'Bug'
   | 'Calendar'

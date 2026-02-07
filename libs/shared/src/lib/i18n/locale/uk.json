@@ -52,6 +52,13 @@
   "id_card": "ID картка",
   "limited": "Обмежено",
   "used_value": "Використано: {{value}}",
+  "update_available": "Доступне оновлення",
+  "app_mandatory_update": {
+    "title": "Доснупне оновлення!",
+    "subtitle": "Завантажте останню версію, щоб усе працювало без перебоїв.",
+    "download": "Оновити",
+    "min_supported_version": "Мінімальна доступна версія: {{version}}"
+  },
   "partner_program": {
     "title": "Для партнерів",
     "promo_code": {

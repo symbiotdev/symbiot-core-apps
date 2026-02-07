@@ -1,12 +1,22 @@
 import { BrandSourceOption } from '../types/brand';
 import { useQuery } from '../hooks/use-query';
 import { AppSettings } from '../types/app-settings';
+import { AppDetails } from '../types/app-details';
+import { Platform } from 'react-native';
 
 export enum AppQueryKey {
+  details = 'app-details',
   settings = 'app-settings',
   competitors = 'app-competitors',
   referrals = 'app-referrals',
 }
+
+export const useAppDetailsReq = () =>
+  useQuery<AppDetails, string>({
+    enabled: Platform.OS !== 'web',
+    queryKey: [AppQueryKey.details],
+    url: '/api/app/platform/details',
+  });
 
 export const useAppSettingsOverridesReq = () =>
   useQuery<AppSettings, string>({

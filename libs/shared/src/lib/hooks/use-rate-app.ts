@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { isAvailableAsync, requestReview } from 'expo-store-review';
 import { Linking, Platform } from 'react-native';
-import { ANDROID_STORE_URL, IOS_STORE_URL } from './use-share-app';
+import { STORE_URL } from './use-share-app';
 import { useI18n } from '../i18n/i18n-provider';
 import { ConfirmAlert } from '../utils/confirm';
 import { create } from 'zustand';
@@ -40,6 +40,11 @@ const useRateState = create<State>()(
   ),
 );
 
+export const leaveReview = () =>
+  Linking.openURL(
+    `${STORE_URL}${Platform.OS === 'android' ? '&showAllReviews=true' : '?action=write-review'}`,
+  );
+
 export const useRateApp = ({
   supportWeb = false,
   rateInterval = 30,
@@ -55,16 +60,6 @@ export const useRateApp = ({
   const canRate = useMemo(
     () => Platform.OS !== 'web' || supportWeb,
     [supportWeb],
-  );
-
-  const leaveReview = useCallback(
-    () =>
-      Linking.openURL(
-        Platform.OS === 'android'
-          ? `${ANDROID_STORE_URL}&showAllReviews=true`
-          : `${IOS_STORE_URL}?action=write-review`,
-      ),
-    [],
   );
 
   const rate = useCallback(
@@ -116,7 +111,6 @@ export const useRateApp = ({
       setLastRateDate,
       canRate,
       t,
-      leaveReview,
     ],
   );
 

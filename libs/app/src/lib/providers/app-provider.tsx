@@ -2,6 +2,7 @@ import {
   createContext,
   PropsWithChildren,
   useContext,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -10,78 +11,75 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { ThemeProvider } from '@symbiot-core-apps/theme';
 import {
   AppSettings,
+  useAppDetailsReq,
   useAppSettingsOverridesReq,
 } from '@symbiot-core-apps/api';
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { createZustandStorage, useI18n } from '@symbiot-core-apps/shared';
+import { useI18n } from '@symbiot-core-apps/shared';
 import merge from 'deepmerge';
-
-type AppState = {
-  overrides: Partial<AppSettings>;
-  setOverrides: (overrides: Partial<AppSettings>) => void;
-};
+import { useAppState } from '../hooks/use-app-state';
+import { MandatoryUpdate } from '../components/mandatory-update';
+import { Platform } from 'react-native';
+import { useAppVersionUpdateType } from '../hooks/use-app-version-update-type';
 
 const Context = createContext<AppSettings | undefined>(undefined);
-const useAppOverridesState = create<AppState>()(
-  persist<AppState>(
-    (set) => ({
-      overrides: {},
-      setOverrides: (overrides) => set({ overrides }),
-    }),
-    {
-      name: 'symbiot-app-settings-overrides',
-      storage: createZustandStorage(),
-    },
-  ),
-);
+
+export const useAppSettings = () => useContext(Context) as AppSettings;
 
 export const AppProvider = ({
   children,
   defaultSettings,
 }: PropsWithChildren<{ defaultSettings: AppSettings }>) => {
   const { updateTranslates } = useI18n();
-  const { overrides, setOverrides } = useAppOverridesState();
-  const { data: remoteOverrides, error: remoteOverridesError } =
+  const { data: appDetails } = useAppDetailsReq();
+  const appUpdateType = useAppVersionUpdateType();
+  const { data: remoteSettings, error: remoteSettingsError } =
     useAppSettingsOverridesReq();
+  const { overriddenSettings, setOverriddenSettings, setVersionDetails } =
+    useAppState();
 
   const loadedRef = useRef(false);
 
-  const appSettings = useMemo(
-    () => merge(defaultSettings, overrides),
-    [defaultSettings, overrides],
+  const adjustedAppSettings = useMemo(
+    () => merge(defaultSettings, overriddenSettings),
+    [defaultSettings, overriddenSettings],
   );
 
   const loaded = useMemo(
     () =>
       loadedRef.current ||
-      !!remoteOverrides ||
-      !!remoteOverridesError ||
-      !!Object.keys(overrides).length,
-    [remoteOverrides, remoteOverridesError, overrides],
+      !!remoteSettings ||
+      !!remoteSettingsError ||
+      !!Object.keys(overriddenSettings).length,
+    [remoteSettings, remoteSettingsError, overriddenSettings],
   );
 
-  useLayoutEffect(() => {
-    if (!remoteOverrides) return;
+  useEffect(() => {
+    const versionDetails = appDetails?.version?.[Platform.OS];
 
-    setOverrides(remoteOverrides);
+    if (versionDetails) setVersionDetails(versionDetails);
+  }, [appDetails, setVersionDetails]);
+
+  useLayoutEffect(() => {
+    if (!remoteSettings) return;
+
+    setOverriddenSettings(remoteSettings);
     loadedRef.current = true;
-  }, [remoteOverrides, setOverrides]);
+  }, [remoteSettings, setOverriddenSettings]);
 
   useLayoutEffect(() => {
-    if (overrides?.language?.translations)
-      updateTranslates(overrides.language.translations);
-  }, [overrides, updateTranslates]);
+    if (overriddenSettings?.language?.translations)
+      updateTranslates(overriddenSettings.language.translations);
+  }, [overriddenSettings, updateTranslates]);
 
   return (
-    <Context.Provider value={appSettings}>
+    <Context.Provider value={adjustedAppSettings}>
       <KeyboardProvider>
         {loaded && (
-          <ThemeProvider theme={appSettings.theme}>{children}</ThemeProvider>
+          <ThemeProvider theme={adjustedAppSettings.theme}>
+            {appUpdateType === 'mandatory' ? <MandatoryUpdate /> : children}
+          </ThemeProvider>
         )}
       </KeyboardProvider>
     </Context.Provider>
   );
 };
-
-export const useAppSettings = () => useContext(Context) as AppSettings;

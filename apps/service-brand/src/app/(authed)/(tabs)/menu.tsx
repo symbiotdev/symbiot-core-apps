@@ -3,6 +3,7 @@ import {
   DeviceVersion,
   emitHaptic,
   isTablet,
+  openPlatformStore,
   ShowNativeSuccessAlert,
   useI18n,
   useRateApp,
@@ -36,7 +37,10 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { AccountSubscriptionEnvironment } from '@symbiot-core-apps/api';
 import { useAccountSubscription } from '@symbiot-core-apps/account-subscription';
 import { SymbiotLogo } from '../../../components/symbiot/logo/symbiot-logo';
-import { useAppSettings } from '@symbiot-core-apps/app';
+import {
+  useAppSettings,
+  useAppVersionUpdateType,
+} from '@symbiot-core-apps/app';
 
 export default () => {
   const { t, supportedLanguages } = useI18n();
@@ -45,6 +49,7 @@ export default () => {
   const { currentEmployee } = useCurrentBrandEmployee();
   const { functionality } = useAppSettings();
   const { visible: drawerVisible } = useDrawer();
+  const appUpdateType = useAppVersionUpdateType();
   const share = useShareApp();
   const { leaveReview } = useRateApp();
   const {
@@ -211,6 +216,13 @@ export default () => {
           </ListItemGroup>
 
           <ListItemGroup title={t('shared.application')}>
+            {appUpdateType && (
+              <ListItem
+                label={t('shared.update_available')}
+                icon={<Icon name="Bolt" />}
+                onPress={openPlatformStore}
+              />
+            )}
             {isSubscriptionsAvailable && brand?.subscription?.active && (
               <ListItem
                 disabled={subscriptionProcessing}

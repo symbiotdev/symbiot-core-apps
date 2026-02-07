@@ -3,6 +3,7 @@ import { router, useNavigation } from 'expo-router';
 import { HeaderButton, useScreenHeaderHeight } from '@symbiot-core-apps/ui';
 import React, { useLayoutEffect } from 'react';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
+import { XStack } from 'tamagui';
 
 export default () => {
   const navigation = useNavigation();
@@ -12,10 +13,20 @@ export default () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <HeaderButton
-          iconName="AddCircle"
-          onPress={tryAction('addClient', () => router.push('/clients/create'))}
-        />
+        <XStack gap="$2">
+          <HeaderButton
+            iconName="Import"
+            onPress={tryAction('importClients', () =>
+              router.push('/clients/import'),
+            )}
+          />
+          <HeaderButton
+            iconName="AddCircle"
+            onPress={tryAction('addClient', () =>
+              router.push('/clients/create'),
+            )}
+          />
+        </XStack>
       ),
     });
   }, [tryAction, navigation]);

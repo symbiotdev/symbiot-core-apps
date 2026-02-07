@@ -36,7 +36,7 @@ export const PlusActionAdaptiveModal = ({
 
   const importClients = useCallback(() => {
     popoverRef.current?.close();
-    tryAction('addClient', () => router.push('/clients/import'))();
+    tryAction('importClients', () => router.push('/clients/import'))();
   }, [tryAction]);
 
   const addEmployee = useCallback(() => {

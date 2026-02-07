@@ -1,4 +1,5 @@
 import {
+  ActionCard,
   CompactView,
   H2,
   Icon,
@@ -12,13 +13,18 @@ import {
   useI18n,
 } from '@symbiot-core-apps/shared';
 import { XStack } from 'tamagui';
-import { Pressable } from 'react-native';
+import { Linking, Pressable } from 'react-native';
 import { useCallback } from 'react';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 export default () => {
   const { t } = useI18n();
   const { me } = useCurrentAccountState();
+
+  const openMail = useCallback(
+    () => Linking.openURL(`mailto:${process.env.EXPO_PUBLIC_SUPPORT_EMAIL}`),
+    [],
+  );
 
   return (
     !!me?.partner && (
@@ -40,6 +46,14 @@ export default () => {
               <CopyButton text={me.partner.promoCode} />
             </XStack>
           </ListItemGroup>
+
+          <ActionCard
+            title={t('shared.faq.contact_us.title')}
+            subtitle={t('shared.faq.contact_us.subtitle')}
+            buttonLabel={t('shared.faq.contact_us.button.label')}
+            buttonIcon={<Icon name="Letter" />}
+            onPress={openMail}
+          />
         </CompactView>
       </PageView>
     )

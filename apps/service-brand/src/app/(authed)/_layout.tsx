@@ -301,6 +301,9 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
               headerTitle: t('brand_client.create.new_client'),
             }}
           />
+        </Stack.Protected>
+
+        <Stack.Protected guard={canDo.importClients}>
           <Stack.Screen
             name="clients/import"
             options={{

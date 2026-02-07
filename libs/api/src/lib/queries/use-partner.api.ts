@@ -27,6 +27,5 @@ export const useApplyPartnerPromoCodeReq = () =>
     string,
     { promoCode: string }
   >({
-    showAlert: true,
     mutationFn: (data) => axios.post(`/api/partner/promo-code/apply`, data),
   });

@@ -17,10 +17,8 @@ import { CountryCode, getCountry } from 'countries-and-timezones';
 import { BrandIndustryController } from './contoller/brand-industry-controller';
 import { BrandCountryController } from './contoller/brand-country-controller';
 import { AvatarPicker } from '@symbiot-core-apps/form-controller';
-import {
-  PromoCodeController,
-  useAccountSubscription,
-} from '@symbiot-core-apps/account-subscription';
+import { useAccountSubscription } from '@symbiot-core-apps/account-subscription';
+import { PromoCodeController } from './contoller/promo-code-controller';
 
 const defaultCountryCode = Intl?.DateTimeFormat()
   ?.resolvedOptions()

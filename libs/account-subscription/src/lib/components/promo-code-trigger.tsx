@@ -9,7 +9,8 @@ export const PromoCodeTrigger = (props: ViewProps) => {
   const { me } = useCurrentAccountState();
 
   return (
-    me?.privileged === false && (
+    !!me &&
+    !me.privileged && (
       <Button
         type="clear"
         minHeight="auto"

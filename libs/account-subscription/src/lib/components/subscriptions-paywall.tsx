@@ -50,10 +50,6 @@ export const SubscriptionsPaywall = ({
   const translatePrefix = `subscription.paywall.${adjustedOffering}`;
   const description = t(`${translatePrefix}.description.${Platform.OS}`);
 
-  const [selectedPackage, setSelectedPackage] = useState<PurchasesPackage>(
-    packages[0],
-  );
-
   const { adjustedPackages, cheepestPackage, profit } = useMemo(() => {
     let adjustedPackages = packages
       .filter(
@@ -82,6 +78,10 @@ export const SubscriptionsPaywall = ({
       ),
     };
   }, [offering, packages]);
+
+  const [selectedPackage, setSelectedPackage] = useState<PurchasesPackage>(
+    adjustedPackages[0],
+  );
 
   const openTermsConditions = useCallback(
     () =>
@@ -181,13 +181,13 @@ export const SubscriptionsPaywall = ({
 
   useLayoutEffect(() => {
     if (
-      !packages.some(
+      !adjustedPackages.some(
         ({ identifier }) => identifier === selectedPackage?.identifier,
       )
     ) {
-      setSelectedPackage(packages[0]);
+      setSelectedPackage(adjustedPackages[0]);
     }
-  }, [packages, selectedPackage?.identifier]);
+  }, [adjustedPackages, selectedPackage?.identifier]);
 
   return (
     <CompactView flex={1}>
@@ -215,7 +215,7 @@ export const SubscriptionsPaywall = ({
             title: string;
             subtitle: string;
           }[]
-        ).map(({ title, subtitle }, index) => (
+        )?.map(({ title, subtitle }, index) => (
           <Animated.View
             key={index}
             style={{ flexDirection: 'row', gap: 6 }}
@@ -240,8 +240,12 @@ export const SubscriptionsPaywall = ({
       <PromoCodeTrigger alignSelf="flex-start" onPress={onApplyPromoCode} />
 
       {!!offeredPrivileges?.length && (
-        <SemiBoldText color="$placeholderColor" paddingVertical="$1">
-          {`+ ${offeredPrivileges.join(', ')}.`}
+        <SemiBoldText
+          color="$placeholderColor"
+          paddingVertical="$1"
+          textAlign="center"
+        >
+          {offeredPrivileges.join(' · ')}
         </SemiBoldText>
       )}
 

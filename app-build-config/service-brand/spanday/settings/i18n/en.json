@@ -177,6 +177,38 @@
           "restore": "Restore Purchases",
           "terms_privacy": "Terms & Privacy"
         }
+      },
+      "starter_free_month": {
+        "title": "Unlock PRO",
+        "subtitle": "Your next level begins here. Step into PRO mode.",
+        "description": {
+          "ios": "Payment will be charged to your Apple ID account. Your subscription will automatically renew at your selected interval unless you cancel at least 24 hours before the end of the current period. After the introductory offer, the subscription renews at the standard price. The amount charged may change with notice. You can manage or cancel your subscription in your App Store account settings. Cancel anytime.",
+          "android": "Payment will be charged to your Google Play account. Your subscription will automatically renew unless you cancel at least 24 hours before the end of the current billing period. After any introductory offer, the subscription renews at the full price. The subscription price may change with notice. You can manage or cancel your subscription in your Google Play account settings. Cancel anytime.",
+          "web": ""
+        },
+        "benefits": [
+          {
+            "title": "Unlimited clients",
+            "subtitle": "Add as many clients as your brand grows."
+          },
+          {
+            "title": "Unlimited services",
+            "subtitle": "Create an endless flow of services."
+          },
+          {
+            "title": "Unlimited staff members",
+            "subtitle": "Expand your professional crew freely."
+          },
+          {
+            "title": "Unlimited locations",
+            "subtitle": "Open new spaces for your brand."
+          }
+        ],
+        "action": {
+          "subscribe": "Go PRO",
+          "restore": "Restore Purchases",
+          "terms_privacy": "Terms & Privacy"
+        }
       }
     }
   },

@@ -14,6 +14,7 @@ import {
   Popover,
   PopoverProps,
   ScrollView,
+  Sheet,
   useTheme,
   View,
 } from 'tamagui';
@@ -237,16 +238,16 @@ export const AdaptivePopover = forwardRef(
 
         {!ignoreAdaptive && rendered && (
           <Adapt when={adaptiveMediaSize}>
-            <Popover.Sheet
+            <Sheet
               modal
               dismissOnSnapToBottom
               unmountChildrenWhenHidden={unmountChildrenWhenHidden}
               dismissOnOverlayPress={!disabled}
               disableDrag={disableDrag}
-              animation="quickest"
+              animation="quick"
               snapPointsMode="fit"
             >
-              <Popover.Sheet.Overlay
+              <Sheet.Overlay
                 backgroundColor="$overlay"
                 animation="quickest"
                 enterStyle={{ opacity: 0 }}
@@ -257,7 +258,7 @@ export const AdaptivePopover = forwardRef(
                   opacity={0}
                   backgroundColor="transparent"
                 />
-              </Popover.Sheet.Overlay>
+              </Sheet.Overlay>
 
               <NavigationBackground
                 backgroundColor="$background1"
@@ -271,7 +272,7 @@ export const AdaptivePopover = forwardRef(
                 }}
               />
 
-              <Popover.Sheet.Frame
+              <Sheet.Frame
                 backgroundColor="transparent"
                 borderBottomWidth={0}
                 paddingLeft={left}
@@ -316,7 +317,7 @@ export const AdaptivePopover = forwardRef(
                 )}
 
                 {!ignoreScroll ? (
-                  <Popover.Sheet.ScrollView
+                  <Sheet.ScrollView
                     ref={sheetListRef}
                     bounces={false} // temp fix
                     keyboardShouldPersistTaps="handled"
@@ -329,12 +330,12 @@ export const AdaptivePopover = forwardRef(
                     }}
                   >
                     <Adapt.Contents />
-                  </Popover.Sheet.ScrollView>
+                  </Sheet.ScrollView>
                 ) : (
                   <Adapt.Contents />
                 )}
-              </Popover.Sheet.Frame>
-            </Popover.Sheet>
+              </Sheet.Frame>
+            </Sheet>
           </Adapt>
         )}
       </Popover>

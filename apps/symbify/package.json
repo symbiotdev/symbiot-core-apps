@@ -1,6 +1,6 @@
 {
-  "name": "symbify",
   "private": true,
+  "name": "symbify",
   "main": "index.js",
   "scripts": {
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/symbify",

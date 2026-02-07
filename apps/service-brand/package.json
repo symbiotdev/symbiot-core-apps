@@ -1,5 +1,6 @@
 {
   "private": true,
+  "name": "service-brand",
   "main": "index.js",
   "scripts": {
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/service-brand",

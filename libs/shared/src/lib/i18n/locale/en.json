@@ -67,6 +67,10 @@
           }
         }
       }
+    },
+    "panel": {
+      "title": "For Partners",
+      "your_promo_code": "Your promo code"
     }
   },
   "rate_app": {

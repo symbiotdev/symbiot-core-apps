@@ -9,11 +9,11 @@ export type AppSettings = {
     translations: Record<string, Record<string, unknown>>;
   };
   functionality: {
-    canLeaveReview: boolean;
-    canReportIssue: boolean;
-    canUseReferralProgram: boolean;
     limits: Record<string, AppLimit>;
-    availability: {
+    available: {
+      leaveReview: boolean;
+      reportIssue: boolean;
+      partnerProgram: true;
       brandIndustry: boolean;
       brandCompetitor: boolean;
       servicePrice: boolean;

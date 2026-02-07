@@ -203,7 +203,7 @@ export const CreateBrand = () => {
         />
       </SurveyStep>
 
-      {functionality.availability.brandIndustry && (
+      {functionality.available.brandIndustry && (
         <SurveyStep
           canGoNext={industryFormState.isValid}
           title={t('brand.create.steps.industry.title')}
@@ -246,7 +246,7 @@ export const CreateBrand = () => {
         </SurveyStep>
       )}
 
-      {functionality.availability.brandCompetitor && !me?.sourced && (
+      {functionality.available.brandCompetitor && !me?.sourced && (
         <SurveyStep
           skippable
           canGoNext={competitorSourceFormState.isValid}
@@ -261,7 +261,7 @@ export const CreateBrand = () => {
         </SurveyStep>
       )}
 
-      {functionality.canUseReferralProgram &&
+      {functionality.available.partnerProgram &&
         !hasActualSubscription &&
         !me?.privileged && (
           <SurveyStep

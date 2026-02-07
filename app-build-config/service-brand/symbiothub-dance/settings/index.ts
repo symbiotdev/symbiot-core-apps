@@ -11,9 +11,6 @@ export const appSettings: AppSettings = {
     translations: languages,
   },
   functionality: {
-    canLeaveReview: true,
-    canReportIssue: true,
-    canUseReferralProgram: true,
     limits: {
       default: {
         clients: 100,
@@ -24,7 +21,10 @@ export const appSettings: AppSettings = {
         visitMemberships: 10,
       },
     },
-    availability: {
+    available: {
+      leaveReview: true,
+      reportIssue: true,
+      partnerProgram: true,
       brandCompetitor: false,
       brandIndustry: false,
       servicePrice: false,

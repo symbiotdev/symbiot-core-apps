@@ -33,6 +33,7 @@ import {
   useAccountLimits,
 } from '@symbiot-core-apps/account-subscription';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
+import { useAppSettings } from '@symbiot-core-apps/app';
 
 const PlusButton = () => {
   const pathname = usePathname();
@@ -99,6 +100,7 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
   const { t } = useI18n();
   const { me } = useCurrentAccountState();
   const { canDo, used } = useAccountLimits();
+  const { functionality } = useAppSettings();
   const { hasPermission } = useCurrentBrandEmployee();
   const screenOptions = useStackScreenHeaderOptions();
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
@@ -167,9 +169,13 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
         }}
       />
 
-      <Stack.Protected guard={Boolean(me?.partner)}>
+      <Stack.Protected
+        guard={
+          functionality.available.partnerProgram && Boolean(me?.partner)
+        }
+      >
         <Stack.Screen
-          name="app/referral-program"
+          name="app/partner-panel"
           options={{
             ...animationControlProps,
             headerTitle: t('shared.partner_program.title'),
@@ -177,13 +183,15 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
         />
       </Stack.Protected>
 
-      <Stack.Screen
-        name="app/report-issue"
-        options={{
-          ...animationControlProps,
-          headerTitle: t('shared.report_issue.title'),
-        }}
-      />
+      <Stack.Protected guard={functionality.available.reportIssue}>
+        <Stack.Screen
+          name="app/report-issue"
+          options={{
+            ...animationControlProps,
+            headerTitle: t('shared.report_issue.title'),
+          }}
+        />
+      </Stack.Protected>
 
       <Stack.Screen
         name="app/terms-privacy"

@@ -89,7 +89,7 @@ export const UpdateBrandService = ({ service }: { service: BrandService }) => {
       <Availability service={service} />
 
       <ListItemGroup style={compactViewStyles}>
-        {functionality.availability.servicePrice && (
+        {functionality.available.servicePrice && (
           <Pricing service={service} />
         )}
 

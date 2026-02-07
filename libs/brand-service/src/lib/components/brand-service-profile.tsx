@@ -68,7 +68,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
             </RegularText>
           )}
 
-          {functionality.availability.servicePrice && (
+          {functionality.available.servicePrice && (
             <View gap="$1">
               {service.price ? (
                 <>

@@ -267,19 +267,20 @@ export default () => {
                 onPress={manageSubscriptions}
               />
             )}
-            {Boolean(me.partner) && (
-              <ListItem
-                label={t('shared.partner_program.title')}
-                icon={<Icon name="CrownLine" />}
-                onPress={() => router.push('/app/referral-program')}
-              />
-            )}
+            {functionality.available.partnerProgram &&
+              Boolean(me.partner) && (
+                <ListItem
+                  label={t('shared.partner_program.title')}
+                  icon={<Icon name="CrownLine" />}
+                  onPress={() => router.push('/app/partner-panel')}
+                />
+              )}
             <ListItem
               label={t('shared.share_app')}
               icon={<Icon name="Share" />}
               onPress={share}
             />
-            {functionality.canLeaveReview && (
+            {functionality.available.leaveReview && (
               <ListItem
                 label={t('shared.rate_app.write_review')}
                 icon={<Icon name="ChatRoundLike" />}
@@ -298,7 +299,7 @@ export default () => {
               icon={<Icon name="FileText" />}
               onPress={() => router.push('/app/terms-privacy')}
             />
-            {functionality.canReportIssue && (
+            {functionality.available.reportIssue && (
               <ListItem
                 label={t('shared.report_issue.title')}
                 icon={<Icon name="Bug" />}

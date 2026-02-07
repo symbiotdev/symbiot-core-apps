@@ -2,6 +2,7 @@
   "next": "Далі",
   "skip": "Пропустити",
   "send": "Надіслати",
+  "apply": "Застосувати",
   "continue": "Продовжити",
   "cancel": "Відміна",
   "canceled": "Відмінено",
@@ -51,6 +52,27 @@
   "id_card": "ID картка",
   "limited": "Обмежено",
   "used_value": "Використано: {{value}}",
+  "partner_program": {
+    "title": "Для партнерів",
+    "promo_code": {
+      "includes": "Цей промокод включає - {{benefits}}.",
+      "exists": "Маєте промокод?",
+      "form": {
+        "code": {
+          "label": "Промокод",
+          "placeholder": "Наприклад, SYMBIOT50",
+          "error": {
+            "required": "Промокод обовʼязковий до заповнення",
+            "invalid": "Цей промокод недійсний."
+          }
+        }
+      }
+    },
+    "panel": {
+      "title": "Для партнерів",
+      "your_promo_code": "Твій промокод"
+    }
+  },
   "rate_app": {
     "write_review": "Залишити відгук",
     "suggestion": {
@@ -297,7 +319,7 @@
       }
     },
     "system": {
-      "title": "Налаштування застосунку"
+      "title": "Системні налаштування"
     },
     "subscriptions": {
       "title": "Активна підписка",

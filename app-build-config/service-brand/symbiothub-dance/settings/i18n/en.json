@@ -185,6 +185,46 @@
           "restore": "Restore Purchases",
           "terms_privacy": "Terms & Privacy"
         }
+      },
+      "starter_free_month": {
+        "title": "Unlock PRO.\nDance Without Limits.",
+        "subtitle": "Your next level begins here",
+        "description": {
+          "ios": "Payment will be charged to your Apple ID account. Your subscription will automatically renew at your selected interval unless you cancel at least 24 hours before the end of the current period. After the introductory offer, the subscription renews at the standard price. The amount charged may change with notice. You can manage or cancel your subscription in your App Store account settings. Cancel anytime.",
+          "android": "Payment will be charged to your Google Play account. Your subscription will automatically renew unless you cancel at least 24 hours before the end of the current billing period. After any introductory offer, the subscription renews at the full price. The subscription price may change with notice. You can manage or cancel your subscription in your Google Play account settings. Cancel anytime.",
+          "web": ""
+        },
+        "benefits": [
+          {
+            "title": "Unlimited Classes",
+            "subtitle": "Create an endless flow of classes."
+          },
+          {
+            "title": "Unlimited Passes",
+            "subtitle": ""
+          },
+          {
+            "title": "Unlimited VIP Passes",
+            "subtitle": ""
+          },
+          {
+            "title": "Unlimited Students",
+            "subtitle": "Add as many dancers as your brand grows."
+          },
+          {
+            "title": "Unlimited Team Members",
+            "subtitle": "Expand your professional crew freely."
+          },
+          {
+            "title": "Unlimited Locations",
+            "subtitle": "Open new spaces for your dance community."
+          }
+        ],
+        "action": {
+          "subscribe": "Go PRO",
+          "restore": "Restore Purchases",
+          "terms_privacy": "Terms & Privacy"
+        }
       }
     }
   },
@@ -275,13 +315,6 @@
         "custom_placeholder": "Type here",
         "error": {
           "required": "Source is required"
-        }
-      },
-      "promo_code": {
-        "label": "Promo Code",
-        "placeholder": "For example, SYMBIOT50",
-        "error": {
-          "required": "Promo code is required"
         }
       }
     },

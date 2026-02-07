@@ -11,7 +11,6 @@ import { Share } from './Share';
 import { QuestionCircle } from './QuestionCircle';
 import { FileText } from './FileText';
 import { ShareCircle } from './ShareCircle';
-import { Logout2 } from './Logout2';
 import { TrashBinMinimalistic } from './TrashBinMinimalistic';
 import { Letter } from './Letter';
 import { Moon } from './Moon';
@@ -82,6 +81,7 @@ import { Rocket2 } from './Rocket2';
 import { ClockCircle } from './ClockCircle';
 import { ChatRoundLike } from './ChatRoundLike';
 import { Bug } from './Bug';
+import { Logout } from './Logout';
 
 export const Map: IconMap = {
   AddCircle,
@@ -128,7 +128,7 @@ export const Map: IconMap = {
   Link,
   Lock,
   Login,
-  Logout2,
+  Logout,
   MagicStick,
   Magnifer,
   MapPoint,

@@ -2,6 +2,7 @@
   "next": "Next",
   "skip": "Skip",
   "send": "Send",
+  "apply" : "Apply",
   "continue": "Continue",
   "cancel": "Cancel",
   "canceled": "Canceled",
@@ -51,6 +52,27 @@
   "id_card": "ID Card",
   "limited": "Limited",
   "used_value": "Used: {{value}}",
+  "partner_program": {
+    "title": "For partners",
+    "promo_code": {
+      "includes": "This promo code includes - {{benefits}}.",
+      "exists": "Do you have a promo code?",
+      "form": {
+        "code": {
+          "label": "Promo Code",
+          "placeholder": "For example, SYMBIOT50",
+          "error": {
+            "required": "Promo code is required",
+            "invalid": "This promo code is invalid."
+          }
+        }
+      }
+    },
+    "panel": {
+      "title": "For Partners",
+      "your_promo_code": "Your promo code"
+    }
+  },
   "rate_app": {
     "write_review": "Leave a review",
     "suggestion": {
@@ -297,7 +319,7 @@
       }
     },
     "system": {
-      "title": "App settings"
+      "title": "System settings"
     },
     "subscriptions": {
       "title": "Subscriptions",

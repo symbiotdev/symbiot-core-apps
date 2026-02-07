@@ -21,6 +21,7 @@ import { SocketProvider } from '../../providers/socket.provider';
 import { NotificationsProvider } from '@symbiot-core-apps/notification';
 import { onPressNotification } from '../../utils/notification';
 import {
+  useCurrentAccountState,
   useCurrentBrandBookingsState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
@@ -32,6 +33,7 @@ import {
   useAccountLimits,
 } from '@symbiot-core-apps/account-subscription';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
+import { useAppSettings } from '@symbiot-core-apps/app';
 
 const PlusButton = () => {
   const pathname = usePathname();
@@ -96,7 +98,9 @@ export default () => {
 
 const StackNavigation = ({ animated }: { animated: boolean }) => {
   const { t } = useI18n();
+  const { me } = useCurrentAccountState();
   const { canDo, used } = useAccountLimits();
+  const { functionality } = useAppSettings();
   const { hasPermission } = useCurrentBrandEmployee();
   const screenOptions = useStackScreenHeaderOptions();
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
@@ -165,13 +169,27 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
         }}
       />
 
-      <Stack.Screen
-        name="app/report-issue"
-        options={{
-          ...animationControlProps,
-          headerTitle: t('shared.report_issue.title'),
-        }}
-      />
+      <Stack.Protected
+        guard={functionality.available.partnerProgram && Boolean(me?.partner)}
+      >
+        <Stack.Screen
+          name="app/partner-panel"
+          options={{
+            ...animationControlProps,
+            headerTitle: t('shared.partner_program.panel.title'),
+          }}
+        />
+      </Stack.Protected>
+
+      <Stack.Protected guard={functionality.available.reportIssue}>
+        <Stack.Screen
+          name="app/report-issue"
+          options={{
+            ...animationControlProps,
+            headerTitle: t('shared.report_issue.title'),
+          }}
+        />
+      </Stack.Protected>
 
       <Stack.Screen
         name="app/terms-privacy"
@@ -283,6 +301,9 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
               headerTitle: t('brand_client.create.new_client'),
             }}
           />
+        </Stack.Protected>
+
+        <Stack.Protected guard={canDo.importClients}>
           <Stack.Screen
             name="clients/import"
             options={{

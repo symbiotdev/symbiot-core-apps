@@ -35,12 +35,13 @@ export const Input = forwardRef(
       value,
       label,
       placeholder,
+      description,
       error,
       type,
       keyboardType,
       disabled,
       required,
-      autoFocus,
+      autofocus,
       debounce,
       maxLength,
       cursorAlwaysOn,
@@ -56,12 +57,13 @@ export const Input = forwardRef(
       value: InputValue;
       label?: string;
       placeholder?: string;
+      description?: string;
       error?: string;
       type?: 'email' | 'password' | 'text' | 'numeric';
       keyboardType?: KeyboardType;
       disabled?: boolean;
       required?: boolean;
-      autoFocus?: boolean;
+      autofocus?: boolean;
       debounce?: number;
       maxLength?: number;
       cursorAlwaysOn?: InputCursorPosition;
@@ -118,12 +120,17 @@ export const Input = forwardRef(
     );
 
     return (
-      <FormField label={label} error={error} required={required}>
+      <FormField
+        label={label}
+        error={error}
+        required={required}
+        description={description}
+      >
         <InputUi
           ref={ref}
           id={id}
           value={String(value || '')}
-          autoFocus={autoFocus}
+          autoFocus={autofocus}
           backgroundColor="$inputBackgroundColor"
           borderWidth={0}
           height={InputHeight}

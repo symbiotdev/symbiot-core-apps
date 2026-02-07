@@ -16,6 +16,7 @@ export function useQuery<
   url: string;
   enabled?: boolean;
   showAlert?: boolean;
+  retry?: boolean;
   staleTime?: number;
   refetchOnWindowFocus?: boolean;
   refetchOnMount?: boolean;

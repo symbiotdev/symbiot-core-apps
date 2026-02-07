@@ -315,7 +315,7 @@ export const CreateBrandService = () => {
         />
       </SurveyStep>
 
-      {functionality.availability.servicePrice && (
+      {functionality.available.servicePrice && (
         <SurveyStep
           canGoNext={pricingFormState.isValid && discount <= price}
           title={t('brand_service.create.steps.pricing.title')}

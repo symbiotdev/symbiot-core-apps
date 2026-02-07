@@ -1,11 +1,11 @@
-import { CompactView, PageView } from '@symbiot-core-apps/ui';
+import { Button, CompactView, PageView } from '@symbiot-core-apps/ui';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import {
   UpdateAccountData,
   useAccountMeRemoveAvatarReq,
   useAccountMeUpdateReq,
 } from '@symbiot-core-apps/api';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import {
   AvatarPicker,
@@ -22,6 +22,8 @@ import { AccountInstagramController } from './controller/account-instagram-contr
 import { AccountPhoneController } from './controller/account-phone-controller';
 import { View } from 'tamagui';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { router } from 'expo-router';
+import { Platform } from 'react-native';
 
 export const UpdateAccount = () => {
   const { me, setMe } = useCurrentAccountState();
@@ -108,6 +110,17 @@ export const UpdateAccount = () => {
             Controller={AccountInstagramController}
           />
         </CompactView>
+
+        {Platform.OS === 'ios' && (
+          <Button
+            type="clear"
+            color="$error"
+            opacity={0.7}
+            fontSize={14}
+            label={t('shared.account.update.context_menu.remove_account.label')}
+            onPress={() => router.push('/account/remove')}
+          />
+        )}
       </PageView>
     )
   );

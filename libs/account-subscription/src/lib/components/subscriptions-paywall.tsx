@@ -1,8 +1,8 @@
 import {
   BoldText,
   Button,
-  ExtraBoldText,
   CompactView,
+  ExtraBoldText,
   H2,
   Icon,
   MediumText,
@@ -24,30 +24,31 @@ import Animated, {
   ZoomInEasyDown,
 } from 'react-native-reanimated';
 import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
+import { PromoCodeTrigger } from './promo-code-trigger';
 
 export const SubscriptionsPaywall = ({
   offering,
   packages,
   subscribing,
   restoring,
+  offeredPrivileges,
   onSubscribe,
   onRestore,
+  onApplyPromoCode,
 }: {
   offering: string;
   packages: PurchasesPackage[];
   subscribing: boolean;
   restoring: boolean;
   onSubscribe: (pkg: PurchasesPackage) => void;
+  offeredPrivileges?: string[];
   onRestore: () => void;
+  onApplyPromoCode: () => void;
 }) => {
   const { t } = useI18n();
   const adjustedOffering = offering || 'default';
   const translatePrefix = `subscription.paywall.${adjustedOffering}`;
   const description = t(`${translatePrefix}.description.${Platform.OS}`);
-
-  const [selectedPackage, setSelectedPackage] = useState<PurchasesPackage>(
-    packages[0],
-  );
 
   const { adjustedPackages, cheepestPackage, profit } = useMemo(() => {
     let adjustedPackages = packages
@@ -77,6 +78,10 @@ export const SubscriptionsPaywall = ({
       ),
     };
   }, [offering, packages]);
+
+  const [selectedPackage, setSelectedPackage] = useState<PurchasesPackage>(
+    adjustedPackages[0],
+  );
 
   const openTermsConditions = useCallback(
     () =>
@@ -176,19 +181,19 @@ export const SubscriptionsPaywall = ({
 
   useLayoutEffect(() => {
     if (
-      !packages.some(
+      !adjustedPackages.some(
         ({ identifier }) => identifier === selectedPackage?.identifier,
       )
     ) {
-      setSelectedPackage(packages[0]);
+      setSelectedPackage(adjustedPackages[0]);
     }
-  }, [packages, selectedPackage?.identifier]);
+  }, [adjustedPackages, selectedPackage?.identifier]);
 
   return (
     <CompactView flex={1}>
       <View gap="$3" marginTop="$5" alignItems="center">
         <Animated.View entering={LightSpeedInLeft.delay(100).duration(1000)}>
-          <Icon name="Rocket2" type="SolarBoldDuotone" size={60} />
+          <Icon name="Rocket2" type="SolarBold" size={60} />
         </Animated.View>
 
         <Animated.View
@@ -210,7 +215,7 @@ export const SubscriptionsPaywall = ({
             title: string;
             subtitle: string;
           }[]
-        ).map(({ title, subtitle }, index) => (
+        )?.map(({ title, subtitle }, index) => (
           <Animated.View
             key={index}
             style={{ flexDirection: 'row', gap: 6 }}
@@ -231,6 +236,18 @@ export const SubscriptionsPaywall = ({
       <XStack marginTop="$4" gap="$2">
         {adjustedPackages.map(renderPackage)}
       </XStack>
+
+      <PromoCodeTrigger alignSelf="flex-start" onPress={onApplyPromoCode} />
+
+      {!!offeredPrivileges?.length && (
+        <SemiBoldText
+          color="$placeholderColor"
+          paddingVertical="$1"
+          textAlign="center"
+        >
+          {offeredPrivileges.join(' · ')}
+        </SemiBoldText>
+      )}
 
       <Button
         label={t(`${translatePrefix}.action.subscribe`)}

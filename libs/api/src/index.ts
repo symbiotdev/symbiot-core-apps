@@ -7,7 +7,6 @@ export * from './lib/hooks/use-modal-update-form';
 export * from './lib/queries/use-account.api';
 export * from './lib/queries/use-account-auth.api';
 export * from './lib/queries/use-account-device.api';
-export * from './lib/queries/use-notification.api';
 
 export * from './lib/queries/use-app.api';
 export * from './lib/queries/use-app-faq.api';
@@ -23,6 +22,8 @@ export * from './lib/queries/use-brand-transaction.api';
 
 export * from './lib/queries/use-issue.api';
 export * from './lib/queries/use-location.api';
+export * from './lib/queries/use-notification.api';
+export * from './lib/queries/use-partner.api';
 
 export * from './lib/types/account';
 export * from './lib/types/account-auth';
@@ -49,6 +50,7 @@ export * from './lib/types/currency';
 export * from './lib/types/faq';
 export * from './lib/types/gender';
 export * from './lib/types/pagination';
+export * from './lib/types/partner';
 export * from './lib/types/schedule';
 
 export * from './lib/utils/brand-booking';

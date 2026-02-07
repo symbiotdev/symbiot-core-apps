@@ -9,6 +9,7 @@ import { useI18n } from '@symbiot-core-apps/shared';
 import { useAccountSubscription } from '../providers/account-subscription-provider';
 
 export type AccountLimitActions = {
+  importClients: boolean;
   addClient: boolean;
   addEmployee: boolean;
   addLocation: boolean;
@@ -20,7 +21,7 @@ export type AccountLimitActions = {
 export const useAccountLimits = () => {
   const { t } = useI18n();
   const { functionality } = useAppSettings();
-  const { showPaywall } = useAccountSubscription();
+  const { hasActualSubscription, showPaywall } = useAccountSubscription();
   const { me } = useCurrentAccountState();
   const { brand } = useCurrentBrandState();
 
@@ -44,6 +45,7 @@ export const useAccountLimits = () => {
       brand.stats[key] >= limits[key];
 
     return {
+      importClients: hasActualSubscription,
       addClient: !limitByBrandStats('clients'),
       addEmployee: !limitByBrandStats('employees'),
       addLocation: !limitByBrandStats('locations'),
@@ -51,7 +53,7 @@ export const useAccountLimits = () => {
       addPeriodMembership: !limitByBrandStats('periodMemberships'),
       addVisitMembership: !limitByBrandStats('visitMemberships'),
     };
-  }, [brand?.stats, limits]);
+  }, [brand?.stats, hasActualSubscription, limits]);
 
   const used = useMemo(() => {
     const byBrandStats = (key: keyof BrandStats) =>

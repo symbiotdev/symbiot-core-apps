@@ -46,7 +46,7 @@ export type SolarIconName =
   | 'Library'
   | 'Link'
   | 'Lock'
-  | 'Logout2'
+  | 'Logout'
   | 'MagicStick'
   | 'Magnifer'
   | 'MapPoint'

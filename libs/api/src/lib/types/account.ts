@@ -3,6 +3,7 @@ import { Gender } from './gender';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { Attachment } from './attachment';
 import { AccountSubscription } from './account-subscription';
+import { Partner } from './partner';
 
 export type Account = {
   id: string;
@@ -16,17 +17,20 @@ export type Account = {
   hidden: boolean;
   blocked: boolean;
   sourced: boolean;
+  privileged: boolean;
   firebaseId: string;
   signInProvider: string;
   email: string;
   birthday: string;
   offering: string | null;
-  avatar: Attachment;
-  preferences: AccountPreferences;
+  offeredPrivileges: string[];
   phones: string[];
   instagrams: string[];
+  avatar: Attachment;
+  preferences: AccountPreferences;
   gender: Gender;
   subscriptions: AccountSubscription[];
+  partner: Partner;
 };
 
 export type UpdateAccountData = {

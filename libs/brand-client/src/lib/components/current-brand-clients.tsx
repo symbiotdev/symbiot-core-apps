@@ -166,7 +166,7 @@ const Intro = ({
                 type="clear"
                 icon={<Icon name="Import" />}
                 label={t('navigation.tabs.plus.actions.import_client.label')}
-                onPress={tryAction('addClient', () =>
+                onPress={tryAction('importClients', () =>
                   router.push('/clients/import'),
                 )}
               />

@@ -1,14 +1,13 @@
 {
   "private": true,
-  "main": "index.js",
   "name": "service-brand",
+  "main": "index.js",
   "scripts": {
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/service-brand",
     "android": "expo run:android",
     "ios": "expo run:ios"
   },
   "dependencies": {
-    "@expo/metro-config": "*",
     "@expo/metro-runtime": "*",
     "@floating-ui/react-native": "*",
     "@react-native-clipboard/clipboard": "*",
@@ -28,6 +27,7 @@
     "countries-and-timezones": "*",
     "date-fns": "*",
     "date-fns-tz": "*",
+    "deepmerge": "*",
     "expo": "*",
     "expo-apple-authentication": "*",
     "expo-application": "*",
@@ -56,12 +56,11 @@
     "expo-sharing": "*",
     "expo-splash-screen": "*",
     "expo-status-bar": "*",
+    "expo-store-review": "*",
     "expo-video": "*",
     "expo-web-browser": "*",
     "filesize": "*",
     "i18next": "*",
-    "deepmerge": "*",
-    "mime": "*",
     "mitt": "*",
     "papaparse": "*",
     "react": "*",

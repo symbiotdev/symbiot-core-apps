@@ -9,7 +9,6 @@ export * from './lib/components/controller/number-controller';
 export * from './lib/components/controller/password-controller';
 export * from './lib/components/controller/phone-controller';
 export * from './lib/components/controller/price-controller';
-export * from './lib/components/controller/promo-code-controller';
 export * from './lib/components/controller/select-controller';
 export * from './lib/components/controller/string-controller';
 export * from './lib/components/controller/switch-controller';

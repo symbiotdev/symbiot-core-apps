@@ -52,7 +52,7 @@ export const BrandServiceItem = ({
           {service.name}
         </MediumText>
 
-        {!hidePricing && functionality.availability.servicePrice && (
+        {!hidePricing && functionality.available.servicePrice && (
           <XStack gap="$2" alignItems="center">
             {service.price ? (
               <>

@@ -11,9 +11,10 @@ export type AppSettings = {
   functionality: {
     limits: Record<string, AppLimit>;
     available: {
+      mandatoryUpdate: boolean;
       leaveReview: boolean;
       reportIssue: boolean;
-      partnerProgram: true;
+      partnerProgram: boolean;
       brandIndustry: boolean;
       brandCompetitor: boolean;
       servicePrice: boolean;

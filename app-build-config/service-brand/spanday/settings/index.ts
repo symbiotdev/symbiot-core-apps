@@ -22,6 +22,7 @@ export const appSettings: AppSettings = {
       },
     },
     available: {
+      mandatoryUpdate: false,
       leaveReview: true,
       reportIssue: true,
       partnerProgram: true,

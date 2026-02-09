@@ -6,9 +6,14 @@ import { unlockAsync } from 'expo-screen-orientation';
 import { Platform } from 'react-native';
 import { useFixelFont } from '@symbiot-core-apps/theme';
 import { preventAutoHideAsync, setOptions } from 'expo-splash-screen';
-import { AppProvider, useAppVersionUpdateType } from '@symbiot-core-apps/app';
+import {
+  AppProvider,
+  useAppSettings,
+  useAppVersionUpdateType,
+} from '@symbiot-core-apps/app';
 import { I18nProvider } from '@symbiot-core-apps/shared';
 import { appSettings } from '../../settings';
+import MandatoryUpdate from '../components/update/mandatory-update';
 
 void preventAutoHideAsync();
 setOptions({ fade: true, duration: 200 });
@@ -20,7 +25,6 @@ if (Platform.OS !== 'web') {
 export default () => {
   const [fontsLoaded] = useFixelFont();
   const { removeTokens, tokens } = useAuthTokens();
-  const { updateType: appUpdateType } = useAppVersionUpdateType();
   const onNoRespond = useCallback(() => {
     alert('noRespond');
   }, []);
@@ -34,24 +38,33 @@ export default () => {
     >
       <ApiProvider onNoRespond={onNoRespond} onUnauthorized={removeTokens}>
         <AppProvider defaultSettings={appSettings}>
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Protected guard={appUpdateType === 'mandatory'}>
-              <Stack.Screen name="update" />
-            </Stack.Protected>
-
-            <Stack.Protected guard={appUpdateType !== 'mandatory'}>
-              <Stack.Protected guard={!tokens.access}>
-                <Stack.Screen name="(auth)" />
-              </Stack.Protected>
-              <Stack.Protected guard={!!tokens.access}>
-                <Stack.Screen name="(authed)" />
-              </Stack.Protected>
-            </Stack.Protected>
-          </Stack>
-
+          <App authed={!!tokens.access} />
           <Toaster position="top-right" />
         </AppProvider>
       </ApiProvider>
     </I18nProvider>
+  );
+};
+
+const App = ({ authed }: { authed: boolean }) => {
+  const { functionality } = useAppSettings();
+  const { updateType: appUpdateType } = useAppVersionUpdateType();
+
+  if (
+    functionality.available.mandatoryUpdate &&
+    appUpdateType === 'mandatory'
+  ) {
+    return <MandatoryUpdate />;
+  }
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Protected guard={!authed}>
+        <Stack.Screen name="(auth)" />
+      </Stack.Protected>
+      <Stack.Protected guard={authed}>
+        <Stack.Screen name="(authed)" />
+      </Stack.Protected>
+    </Stack>
   );
 };

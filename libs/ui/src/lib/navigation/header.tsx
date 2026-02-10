@@ -1,9 +1,5 @@
 import { Platform, Pressable } from 'react-native';
 import { View, ViewProps, XStack } from 'tamagui';
-import {
-  NativeStackHeaderProps,
-  NativeStackNavigationOptions,
-} from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   BaseSyntheticEvent,
@@ -18,6 +14,10 @@ import { emitHaptic, isTablet } from '@symbiot-core-apps/shared';
 import { AttentionView } from '../view/attention-view';
 import { NavigationBackground } from './background';
 import { MediumText, RegularText } from '../text/text';
+import {
+  NativeStackHeaderProps,
+  NativeStackNavigationOptions,
+} from '@react-navigation/native-stack';
 
 export const headerHeight = 50;
 export const headerButtonSize = 24;
@@ -43,7 +43,7 @@ export const useScreenHeaderOptions = () => {
   return {
     header,
     headerTransparent: true,
-  };
+  } as NativeStackNavigationOptions;
 };
 
 export const useStackScreenHeaderOptions = () => {

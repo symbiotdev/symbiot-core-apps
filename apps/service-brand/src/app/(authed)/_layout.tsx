@@ -32,8 +32,8 @@ import {
   AccountSubscriptionProvider,
   useAccountLimits,
 } from '@symbiot-core-apps/account-subscription';
-import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useAppSettings } from '@symbiot-core-apps/app';
+import type { ScreenProps } from 'react-native-screens';
 
 const PlusButton = () => {
   const pathname = usePathname();
@@ -109,13 +109,12 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
     enabled: hasPermission('locations'),
   });
 
-  const animationControlProps: NativeStackNavigationOptions = useMemo(
-    () =>
-      animated
-        ? {}
-        : {
-            animation: 'none',
-          },
+  const animationControlProps = useMemo(
+    () => ({
+      animation: (animated
+        ? 'default'
+        : 'none') as ScreenProps['stackAnimation'],
+    }),
     [animated],
   );
 

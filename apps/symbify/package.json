@@ -16,6 +16,7 @@
     "@react-navigation/bottom-tabs": "*",
     "@react-navigation/elements": "*",
     "@react-navigation/native": "*",
+    "@react-navigation/native-stack": "*",
     "@symbiot.dev/react-native-heatmap": "*",
     "@symbiot.dev/react-native-timegrid-pro": "*",
     "@tamagui/portal": "*",

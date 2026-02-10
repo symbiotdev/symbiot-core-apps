@@ -4,10 +4,8 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { Platform } from 'react-native';
 import { ReactElement, useMemo } from 'react';
-import { HeaderOptions } from '@react-navigation/elements';
 import { useTheme, View, XStack } from 'tamagui';
 import { useScreenHeaderOptions } from './header';
-import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { emitHaptic, eventEmitter } from '@symbiot-core-apps/shared';
 import { NavigationBackground } from './background';
 import Animated, {
@@ -19,6 +17,19 @@ import Animated, {
 import { defaultPageVerticalPadding } from '../view/page-view';
 
 export const tabBarHeight = 100;
+
+export const useTabsScreenOptions = () => {
+  const headerOptions = useScreenHeaderOptions();
+
+  return useMemo(
+    () =>
+      ({
+        ...headerOptions,
+        animation: Platform.OS === 'web' ? 'fade' : 'none',
+      }) as Omit<BottomTabNavigationOptions, 'animation'>,
+    [headerOptions],
+  );
+};
 
 export const CustomTabBar = ({
   hidden,
@@ -111,20 +122,5 @@ export const CustomTabBar = ({
 
       {DynamicButton}
     </Animated.View>
-  );
-};
-
-export const useTabsScreenOptions = () => {
-  const headerOptions = useScreenHeaderOptions();
-
-  return useMemo(
-    () =>
-      ({
-        ...headerOptions,
-        animation: Platform.OS === 'web' ? 'fade' : 'none',
-      }) as HeaderOptions &
-        BottomTabNavigationOptions &
-        Omit<NativeStackNavigationOptions, 'animation'>,
-    [headerOptions],
   );
 };

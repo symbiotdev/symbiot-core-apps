@@ -63,8 +63,9 @@
   "partner_program": {
     "title": "For partners",
     "promo_code": {
+      "your_promo_code": "Your promo code",
       "includes": "This promo code includes - {{benefits}}.",
-      "exists": "Do you have a promo code?",
+      "exists": "I have a promo code",
       "form": {
         "code": {
           "label": "Promo Code",
@@ -76,9 +77,24 @@
         }
       }
     },
-    "panel": {
-      "title": "For Partners",
-      "your_promo_code": "Your promo code"
+    "useful_links": {
+      "title": "Useful links",
+      "download_app": "Download the app",
+      "website": "Official DanceHub website"
+    },
+    "promo_materials": {
+      "title": "Promo materials",
+      "app_icon": "App icon",
+      "logo_light": "Logo (light)",
+      "logo_dark": "Logo (dark)",
+      "presentation": "Presentation"
+    },
+    "contact_us": {
+      "title": "Have any questions?",
+      "subtitle": "If you have any questions about the partner program or materials, feel free to contact our team.",
+      "button": {
+        "label": "Email"
+      }
     }
   },
   "rate_app": {

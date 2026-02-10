@@ -32,6 +32,7 @@
     "expo": "*",
     "expo-apple-authentication": "*",
     "expo-application": "*",
+    "expo-asset": "*",
     "expo-audio": "*",
     "expo-blur": "*",
     "expo-build-properties": "*",

@@ -63,8 +63,9 @@
   "partner_program": {
     "title": "Для партнерів",
     "promo_code": {
+      "your_promo_code": "Твій промокод",
       "includes": "Цей промокод включає - {{benefits}}.",
-      "exists": "Маєте промокод?",
+      "exists": "Я маю промокод",
       "form": {
         "code": {
           "label": "Промокод",
@@ -76,9 +77,24 @@
         }
       }
     },
-    "panel": {
-      "title": "Для партнерів",
-      "your_promo_code": "Твій промокод"
+    "useful_links": {
+      "title": "Корисні посилання",
+      "download_app": "Завантажити застосунок",
+      "website": "Офіційний сайт DanceHub"
+    },
+    "promo_materials": {
+      "title": "Промо-матеріали",
+      "app_icon": "Іконка застосунку",
+      "logo_light": "Логотип (світлий)",
+      "logo_dark": "Логотип (темний)",
+      "presentation": "Перезентація"
+    },
+    "contact_us": {
+      "title": "Маєте запитання?",
+      "subtitle": "Якщо у вас виникли запитання щодо партнерської програми або матеріалів, зв’яжіться з нашою командою.",
+      "button": {
+        "label": "Email"
+      }
     }
   },
   "rate_app": {

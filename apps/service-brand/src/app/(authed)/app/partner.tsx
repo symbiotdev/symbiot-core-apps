@@ -151,27 +151,24 @@ export default () => {
             title={t('shared.partner_program.promo_materials.title')}
           >
             <ListItem
-              label={t('shared.partner_program.promo_materials.app_icon')}
+              label={t('shared.partner_program.promo_materials.app_icon', {
+                appName,
+              })}
               icon={<Icon name="Gallery" />}
               iconAfter={<DownloadButton type="image" name="app-icon.png" />}
             />
             <ListItem
-              label={t('shared.partner_program.promo_materials.logo_light')}
+              label={t('shared.partner_program.promo_materials.app_logo', {
+                appName,
+              })}
               icon={<Icon name="Gallery" />}
-              iconAfter={
-                <DownloadButton type="image" name="app-logo-light.png" />
-              }
+              iconAfter={<DownloadButton type="image" name="app-logo.png" />}
             />
             <ListItem
-              label={t('shared.partner_program.promo_materials.logo_dark')}
-              icon={<Icon name="Gallery" />}
-              iconAfter={
-                <DownloadButton type="image" name="app-logo-dark.png" />
-              }
-            />
-            <ListItem
-              label={t('shared.partner_program.promo_materials.presentation')}
-              icon={<Icon name="Gallery" />}
+              label={t('shared.partner_program.promo_materials.presentation', {
+                appName,
+              })}
+              icon={<Icon name="FileText" />}
               iconAfter={
                 <DownloadButton type="presentation" name="resentation.pdf" />
               }

@@ -21,21 +21,27 @@ export type AccountLimitActions = {
 export const useAccountLimits = () => {
   const { t } = useI18n();
   const { functionality } = useAppSettings();
-  const { hasActualSubscription, showPaywall } = useAccountSubscription();
+  const { hasFullAccess, showPaywall } = useAccountSubscription();
   const { me } = useCurrentAccountState();
   const { brand } = useCurrentBrandState();
 
   const limits = useMemo(() => {
     if (!brand?.id || !me?.offering) return {};
 
-    return (
-      functionality.limits[
-        brand?.subscription && brand.subscription.active
-          ? brand.subscription.product
-          : 'default'
-      ] || {}
-    );
-  }, [brand?.id, brand?.subscription, me?.offering, functionality.limits]);
+    return hasFullAccess
+      ? {}
+      : functionality.limits[
+          brand?.subscription && brand.subscription.active
+            ? brand.subscription.product
+            : 'default'
+        ] || {};
+  }, [
+    hasFullAccess,
+    me?.offering,
+    brand?.id,
+    brand?.subscription,
+    functionality.limits,
+  ]);
 
   const canDo: AccountLimitActions = useMemo(() => {
     const limitByBrandStats = (key: keyof BrandStats) =>
@@ -45,7 +51,7 @@ export const useAccountLimits = () => {
       brand.stats[key] >= limits[key];
 
     return {
-      importClients: hasActualSubscription,
+      importClients: hasFullAccess,
       addClient: !limitByBrandStats('clients'),
       addEmployee: !limitByBrandStats('employees'),
       addLocation: !limitByBrandStats('locations'),
@@ -53,7 +59,7 @@ export const useAccountLimits = () => {
       addPeriodMembership: !limitByBrandStats('periodMemberships'),
       addVisitMembership: !limitByBrandStats('visitMemberships'),
     };
-  }, [brand?.stats, hasActualSubscription, limits]);
+  }, [brand?.stats, hasFullAccess, limits]);
 
   const used = useMemo(() => {
     const byBrandStats = (key: keyof BrandStats) =>

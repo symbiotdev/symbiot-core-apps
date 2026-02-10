@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { isAvailableAsync, requestReview } from 'expo-store-review';
 import { Linking, Platform } from 'react-native';
-import { STORE_URL } from './use-share-app';
+import { PLATFORM_STORE_URL } from './use-share-app';
 import { useI18n } from '../i18n/i18n-provider';
 import { ConfirmAlert } from '../utils/confirm';
 import { create } from 'zustand';
@@ -42,7 +42,7 @@ const useRateState = create<State>()(
 
 export const leaveReview = () =>
   Linking.openURL(
-    `${STORE_URL}${Platform.OS === 'android' ? '&showAllReviews=true' : '?action=write-review'}`,
+    `${PLATFORM_STORE_URL}${Platform.OS === 'android' ? '&showAllReviews=true' : '?action=write-review'}`,
   );
 
 export const useRateApp = ({

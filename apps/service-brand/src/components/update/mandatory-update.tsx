@@ -38,14 +38,14 @@ export default () => {
         </SemiBoldText>
 
         <RegularText textAlign="center" color="$placeholderColor">
-          {t('shared.app_mandatory_update.installed_version', {
-            version: DeviceVersion,
+          {t('shared.app_mandatory_update.min_supported_version', {
+            version: versionDetails?.minSupported,
           })}
         </RegularText>
 
         <RegularText textAlign="center" color="$placeholderColor">
-          {t('shared.app_mandatory_update.min_supported_version', {
-            version: versionDetails?.minSupported,
+          {t('shared.app_mandatory_update.installed_version', {
+            version: DeviceVersion,
           })}
         </RegularText>
 

@@ -210,6 +210,29 @@
           "terms_privacy": "Terms & Privacy"
         }
       }
+    },
+    "partner_instruction": {
+      "starter_free_month": {
+        "benefits": {
+          "title": "What benefits does the promo code provide?",
+          "offering_description": "The partner promo code gives new users {{benefits}} to the DanceHub PRO subscription.",
+          "features_description": "During the trial period, all features of the paid subscription are available, including:"
+        },
+        "promo_code": {
+          "title": "How to apply the promo code?",
+          "description": "To activate the promo code, please sign up in the DanceHub app and follow one of the options below:",
+          "options": [
+            {
+              "label": "During brand creation",
+              "description": "Enter the promo code at the final step of brand creation.\nThen go to the menu and select “Go Unlimited” — {{benefits}} will be applied automatically."
+            },
+            {
+              "label": "After brand creation",
+              "description": "Create a brand, go to the menu, and select “Go Unlimited”.\nChoose “I have a promo code”, enter the code, and confirm the subscription — {{benefits}} will be activated automatically."
+            }
+          ]
+        }
+      }
     }
   },
   "brand": {

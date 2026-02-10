@@ -172,10 +172,10 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
         guard={functionality.available.partnerProgram && Boolean(me?.partner)}
       >
         <Stack.Screen
-          name="app/partner-panel"
+          name="app/partner"
           options={{
             ...animationControlProps,
-            headerTitle: t('shared.partner_program.panel.title'),
+            headerTitle: t('shared.partner_program.title'),
           }}
         />
       </Stack.Protected>

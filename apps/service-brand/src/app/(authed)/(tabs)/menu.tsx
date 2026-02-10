@@ -247,7 +247,7 @@ export default () => {
               <ListItem
                 label={t('shared.partner_program.title')}
                 icon={<Icon name="CrownLine" />}
-                onPress={() => router.push('/app/partner-panel')}
+                onPress={() => router.push('/app/partner')}
               />
             )}
             <ListItem

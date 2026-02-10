@@ -61,7 +61,6 @@ const Item = ({
         onPress={toggle}
       >
         <SemiBoldText
-          fontSize={18}
           lineHeight={20}
           paddingVertical="$4"
           flex={1}

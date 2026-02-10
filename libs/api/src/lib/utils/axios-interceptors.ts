@@ -113,15 +113,7 @@ const onSuccessResponse = (response: AxiosResponse) => {
 };
 
 const onErrorResponse = async (
-  response: {
-    data: {
-      error?: string;
-      message?: string;
-      title?: string;
-    };
-    status: number;
-    statusText?: string;
-  },
+  response: AxiosResponse,
   requestConfig: InternalAxiosRequestConfig & { _retry: boolean },
   params: InterceptorParams,
 ) => {
@@ -133,6 +125,7 @@ const onErrorResponse = async (
     response?.data?.title ||
     response.data?.error ||
     response.data?.message ||
+    response?.statusText ||
     '';
   const error: RequestError = { code: response.status, text };
 

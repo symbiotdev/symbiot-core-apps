@@ -1,4 +1,4 @@
-import { useApplyPartnerPromoCodeReq } from '@symbiot-core-apps/api';
+import { usePartnerApplyPromoCodeReq } from '@symbiot-core-apps/api';
 import { Button, CompactView } from '@symbiot-core-apps/ui';
 import React, { useCallback, useState } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
@@ -12,7 +12,7 @@ export const PromoCodeApplyForm = ({
 }) => {
   const { t } = useI18n();
   const { mergeMe } = useCurrentAccountState();
-  const { mutateAsync, isPending, error } = useApplyPartnerPromoCodeReq();
+  const { mutateAsync, isPending, error } = usePartnerApplyPromoCodeReq();
 
   const [promoCode, setPromoCode] = useState('');
 

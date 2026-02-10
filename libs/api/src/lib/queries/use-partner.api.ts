@@ -21,11 +21,30 @@ export const usePartnerPromoCodeBenefitsQuery = ({
     url: `/api/partner/promo-code/${promoCode}/benefits`,
   });
 
-export const useApplyPartnerPromoCodeReq = () =>
+export const usePartnerApplyPromoCodeReq = () =>
   useMutation<
     Pick<Partner, 'benefits' | 'offering'>,
     string,
     { promoCode: string }
   >({
     mutationFn: (data) => axios.post(`/api/partner/promo-code/apply`, data),
+  });
+
+export const usePartnerPromoImage = () =>
+  useMutation<ArrayBufferLike, string, { name: string }>({
+    showAlert: true,
+    mutationFn: (params) =>
+      axios.get(`/api/partner/promo-materials/image`, {
+        params,
+        responseType: 'arraybuffer',
+      }),
+  });
+
+export const usePartnerPromoPresentation = () =>
+  useMutation<ArrayBufferLike, string>({
+    showAlert: true,
+    mutationFn: () =>
+      axios.get(`/api/partner/promo-materials/presentation`, {
+        responseType: 'arraybuffer',
+      }),
   });

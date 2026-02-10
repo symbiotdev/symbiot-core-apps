@@ -20,12 +20,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
 import { Platform } from 'react-native';
-import { shareAsync } from 'expo-sharing';
-import {
-  cacheDirectory,
-  readAsStringAsync,
-  writeAsStringAsync,
-} from 'expo-file-system';
+import { readAsStringAsync } from 'expo-file-system';
 import {
   downloadArrayBuffer,
   readFileWeb,
@@ -60,26 +55,13 @@ export const ImportBrandClient = () => {
   const [summary, setSummary] = useState<ImportedClientsSummary>();
 
   const downloadTemplate = useCallback(async () => {
-    const buffer = await mutateAsync();
-    const filename = `template_${Date.now()}.csv`;
-
-    if (Platform.OS === 'web') {
-      downloadArrayBuffer(buffer, filename);
-    } else {
-      try {
-        setSharing(true);
-
-        const uri = `${cacheDirectory}/template.csv`;
-        const fileData = new TextDecoder('utf-8').decode(
-          new Uint8Array(buffer),
-        );
-
-        await writeAsStringAsync(uri, fileData);
-
-        await shareAsync(uri);
-      } finally {
-        setSharing(false);
-      }
+    try {
+      await downloadArrayBuffer(
+        await mutateAsync(),
+        `template_${Date.now()}.csv`,
+      );
+    } finally {
+      setSharing(false);
     }
   }, [mutateAsync]);
 

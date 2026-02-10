@@ -4,10 +4,10 @@
     "scheme": "symbiothub-dance",
     "version": "1.2.0",
     "ios": {
-      "buildNumber": "74"
+      "buildNumber": "75"
     },
     "android": {
-      "versionCode": 12
+      "versionCode": 14
     },
     "extra": {
       "eas": {

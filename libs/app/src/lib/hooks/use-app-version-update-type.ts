@@ -7,7 +7,12 @@ export const useAppVersionUpdateType = () => {
   const { versionDetails } = useAppState();
 
   const updateType = useMemo(() => {
-    if (!versionDetails || Platform.OS === 'web') return;
+    if (
+      !versionDetails ||
+      versionDetails.latest <= DeviceVersion ||
+      Platform.OS === 'web'
+    )
+      return;
     else if (versionDetails.minSupported > DeviceVersion) return 'mandatory';
     else return 'optional';
   }, [versionDetails]);

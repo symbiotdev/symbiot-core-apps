@@ -45,6 +45,7 @@ const apiKeyByPlatform: Record<string, string> = {
   ios: String(process.env.EXPO_PUBLIC_REVENUE_CAT_IOS_KEY),
   android: String(process.env.EXPO_PUBLIC_REVENUE_CAT_ANDROID_KEY),
 };
+const apiKey = apiKeyByPlatform[Platform.OS];
 
 export const AccountSubscriptionProvider = ({
   children,
@@ -140,8 +141,6 @@ export const AccountSubscriptionProvider = ({
   }, []);
 
   useEffect(() => {
-    const apiKey = apiKeyByPlatform[Platform.OS];
-
     if (isDevMode || !apiKey || !me?.id || !canSubscribe) return;
 
     Purchases.configure({ apiKey, appUserID: me.id });

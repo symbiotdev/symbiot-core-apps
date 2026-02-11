@@ -56,7 +56,7 @@ export default () => {
                 {me.partner.promoCode}
               </H2>
 
-              <CopyButton text={me.partner.promoCode} />
+              <CopyButton text={me.partner.promoCode.toUpperCase()} />
             </XStack>
           </ListItemGroup>
 

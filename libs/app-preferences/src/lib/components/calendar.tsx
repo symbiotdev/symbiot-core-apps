@@ -2,7 +2,7 @@ import { CompactView, PageView, Spinner } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
 import {
   DateHelper,
-  DeviceInfo,
+  isPhone,
   useI18n,
   Weekday,
 } from '@symbiot-core-apps/shared';
@@ -11,7 +11,6 @@ import {
   useCurrentAccountUpdater,
 } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
-import { DeviceType } from 'expo-device';
 import {
   MultiToggle,
   OnChangeMultiToggle,
@@ -20,8 +19,7 @@ import {
   SelectPicker,
 } from '@symbiot-core-apps/form-controller';
 
-const supportPortraitNumberOfDays = DeviceInfo.deviceType === DeviceType.PHONE;
-const numberOfDaysLandscapeLabel = supportPortraitNumberOfDays
+const numberOfDaysLandscapeLabel = isPhone
   ? 'shared.preferences.calendar.number_of_days.landscape_label'
   : 'shared.preferences.calendar.number_of_days.label';
 
@@ -96,7 +94,7 @@ export const Calendar = () => {
           onChange={onChangeWeekdayStartsOn as PickerOnChange}
         />
 
-        {supportPortraitNumberOfDays && (
+        {isPhone && (
           <SelectPicker
             label={t(
               'shared.preferences.calendar.number_of_days.portrait_label',

@@ -5,11 +5,11 @@ import axios, {
 } from 'axios';
 import {
   DateHelper,
+  DeiceOS,
   DeviceInfo,
   DeviceVersion,
   isWeb,
 } from '@symbiot-core-apps/shared';
-import { Platform } from 'react-native';
 import { RequestError } from './request';
 import { authTokenHeaderKey } from '../hooks/use-auth-tokens';
 
@@ -82,7 +82,7 @@ const onRequest = async (
   config.headers['x-identifier'] = params.devId;
   config.headers['x-lang'] = params.languageCode;
   config.headers['x-version'] = DeviceVersion;
-  config.headers['x-platform'] = Platform.OS;
+  config.headers['x-platform'] = DeiceOS;
   config.headers['x-device-info'] = JSON.stringify(DeviceInfo);
 
   if (config.headers['cancelable']) {

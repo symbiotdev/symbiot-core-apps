@@ -9,7 +9,7 @@ import React, {
   useState,
 } from 'react';
 import Purchases, { PurchasesPackage } from 'react-native-purchases';
-import { Linking, Platform } from 'react-native';
+import { Linking } from 'react-native';
 import {
   useCurrentAccountState,
   useCurrentBrandEmployee,
@@ -24,7 +24,13 @@ import {
 import { SubscriptionsPaywall } from '../components/subscriptions-paywall';
 import { DevelopmentPaywall } from '../components/development-paywall';
 import { PromoCodeApplyForm } from '../components/promo-code-apply-form';
-import { isAndroid, isIos, isWeb, useI18n } from '@symbiot-core-apps/shared';
+import {
+  DeiceOS,
+  isAndroid,
+  isIos,
+  isWeb,
+  useI18n,
+} from '@symbiot-core-apps/shared';
 
 type AccountSubscriptionContext = {
   processing: boolean;
@@ -45,7 +51,7 @@ const apiKeyByPlatform: Record<string, string> = {
   ios: String(process.env.EXPO_PUBLIC_REVENUE_CAT_IOS_KEY),
   android: String(process.env.EXPO_PUBLIC_REVENUE_CAT_ANDROID_KEY),
 };
-const apiKey = apiKeyByPlatform[Platform.OS];
+const apiKey = apiKeyByPlatform[DeiceOS];
 
 export const AccountSubscriptionProvider = ({
   children,

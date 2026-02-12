@@ -11,8 +11,10 @@ import {
   osVersion,
 } from 'expo-device';
 
+export const DeiceOS = Platform.OS;
+
 export const DeviceInfo = {
-  os: Platform.OS,
+  os: DeiceOS,
   osName,
   osVersion,
   brand,
@@ -24,7 +26,8 @@ export const DeviceInfo = {
 
 export const DeviceVersion = Application.nativeApplicationVersion || 'latest';
 
-export const isTablet = DeviceInfo.deviceType === DeviceType.TABLET;
-export const isWeb = DeviceInfo.os === 'web';
-export const isIos = DeviceInfo.os === 'ios';
-export const isAndroid = DeviceInfo.os === 'android';
+export const isPhone = deviceType === DeviceType.PHONE;
+export const isTablet = deviceType === DeviceType.TABLET;
+export const isWeb = DeiceOS === 'web';
+export const isIos = DeiceOS === 'ios';
+export const isAndroid = DeiceOS === 'android';

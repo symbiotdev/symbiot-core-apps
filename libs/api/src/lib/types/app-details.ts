@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { DeiceOS } from '@symbiot-core-apps/shared';
 
 export type PlatformVersionDetails = {
   latest: string;
@@ -6,5 +6,5 @@ export type PlatformVersionDetails = {
 };
 
 export type AppDetails = {
-  version?: Record<typeof Platform.OS, PlatformVersionDetails>;
+  version?: Record<typeof DeiceOS, PlatformVersionDetails>;
 };

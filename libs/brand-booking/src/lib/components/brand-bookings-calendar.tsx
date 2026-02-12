@@ -21,9 +21,9 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   DateHelper,
-  DeviceInfo,
   emitHaptic,
   isAndroid,
+  isPhone,
   minutesInDay,
   useScreenOrientation,
   useScreenSize,
@@ -32,7 +32,6 @@ import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { getTimezone } from 'countries-and-timezones';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
-import { DeviceType } from 'expo-device';
 
 export const BrandBookingsCalendar = ({
   offsetTop,
@@ -67,9 +66,7 @@ export const BrandBookingsCalendar = ({
 
   const numberOfDays = useMemo(() => {
     const countDays = preferences.appearance?.calendar?.countDays;
-    const supportPortrait =
-      DeviceInfo.deviceType === DeviceType.PHONE &&
-      orientationFormat === 'portrait';
+    const supportPortrait = isPhone && orientationFormat === 'portrait';
 
     if (supportPortrait) {
       return countDays?.portrait || 3;

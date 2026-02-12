@@ -17,13 +17,12 @@ import {
   openBrowserAsync,
   WebBrowserPresentationStyle,
 } from 'expo-web-browser';
-import { Platform } from 'react-native';
 import Animated, {
   FadeInDown,
   LightSpeedInLeft,
   ZoomInEasyDown,
 } from 'react-native-reanimated';
-import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
+import { DeiceOS, emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 import { PromoCodeTrigger } from './promo-code-trigger';
 
 export const SubscriptionsPaywall = ({
@@ -48,7 +47,7 @@ export const SubscriptionsPaywall = ({
   const { t } = useI18n();
   const adjustedOffering = offering || 'default';
   const translatePrefix = `subscription.paywall.${adjustedOffering}`;
-  const description = t(`${translatePrefix}.description.${Platform.OS}`);
+  const description = t(`${translatePrefix}.description.${DeiceOS}`);
 
   const { adjustedPackages, cheepestPackage, profit } = useMemo(() => {
     let adjustedPackages = packages

@@ -13,10 +13,9 @@ import {
   useAppDetailsReq,
   useAppSettingsOverridesReq,
 } from '@symbiot-core-apps/api';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { DeiceOS, useI18n } from '@symbiot-core-apps/shared';
 import merge from 'deepmerge';
 import { useAppState } from '../hooks/use-app-state';
-import { Platform } from 'react-native';
 
 const Context = createContext<AppSettings | undefined>(undefined);
 
@@ -50,7 +49,7 @@ export const AppProvider = ({
   );
 
   useEffect(() => {
-    const versionDetails = appDetails?.version?.[Platform.OS];
+    const versionDetails = appDetails?.version?.[DeiceOS];
 
     if (versionDetails) setVersionDetails(versionDetails);
   }, [appDetails, setVersionDetails]);

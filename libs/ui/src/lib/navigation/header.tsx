@@ -194,12 +194,14 @@ export const ModalHeader = memo(
     height,
     headerLeft,
     transparent,
+    ignoreTop,
     headerTitle,
     headerRight,
     onClose,
   }: {
     height?: number;
     transparent?: boolean;
+    ignoreTop?: boolean;
     headerLeft?: () => ReactElement;
     headerTitle?: string | (() => ReactElement);
     headerRight?: () => ReactElement;
@@ -207,7 +209,10 @@ export const ModalHeader = memo(
   }) => {
     const { top, left, right } = useSafeAreaInsets();
 
-    const adjustedTop = useMemo(() => (isTablet ? top : 0), [top]);
+    const adjustedTop = useMemo(
+      () => (!ignoreTop && isTablet ? top : 0),
+      [ignoreTop, top],
+    );
 
     return (
       <XStack

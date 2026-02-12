@@ -8,8 +8,15 @@ export const NavigationBackground = ({
   opacity = 0.8,
   ...props
 }: ViewProps & { blurIntensity?: number; blurStyle?: ViewStyle }) => (
-  <View style={StyleSheet.absoluteFillObject}>
-    {Platform.OS !== 'android' && (
+  <View
+    {...StyleSheet.absoluteFillObject}
+    {...props}
+    {...(Platform.OS !== 'ios' && {
+      opacity,
+      backgroundColor: '$background',
+    })}
+  >
+    {Platform.OS === 'ios' && (
       <Blur
         style={{
           width: '100%',
@@ -20,14 +27,5 @@ export const NavigationBackground = ({
         intensity={blurIntensity}
       />
     )}
-
-    <View
-      position="absolute"
-      width="100%"
-      height="100%"
-      opacity={Platform.OS !== 'android' ? opacity : 1}
-      backgroundColor="$background"
-      {...props}
-    />
   </View>
 );

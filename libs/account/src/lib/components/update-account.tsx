@@ -21,9 +21,8 @@ import { AccountBirthdayController } from './controller/account-birthday-control
 import { AccountInstagramController } from './controller/account-instagram-controller';
 import { AccountPhoneController } from './controller/account-phone-controller';
 import { View } from 'tamagui';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { isIos, useI18n } from '@symbiot-core-apps/shared';
 import { router } from 'expo-router';
-import { Platform } from 'react-native';
 
 export const UpdateAccount = () => {
   const { me, setMe } = useCurrentAccountState();
@@ -111,7 +110,7 @@ export const UpdateAccount = () => {
           />
         </CompactView>
 
-        {Platform.OS === 'ios' && (
+        {isIos && (
           <Button
             type="clear"
             color="$error"

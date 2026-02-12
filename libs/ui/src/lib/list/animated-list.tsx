@@ -1,5 +1,5 @@
 import React, { ForwardedRef } from 'react';
-import { FlatList, Platform } from 'react-native';
+import { FlatList } from 'react-native';
 import Animated, {
   FadingTransition,
   FlatListPropsWithLayout,
@@ -7,6 +7,7 @@ import Animated, {
 import { Refresher } from '../loading/refresher';
 import { ListLoadingFooter } from './list-loading-footer';
 import { ViewProps } from 'tamagui';
+import { isWeb } from '@symbiot-core-apps/shared';
 
 export function AnimatedList<T>({
   listRef,
@@ -31,14 +32,14 @@ export function AnimatedList<T>({
       ref={listRef}
       keyExtractor={(_, index) => String(index)}
       itemLayoutAnimation={
-        Platform.OS === 'web' || ignoreAnimation ? undefined : FadingTransition
+        isWeb || ignoreAnimation ? undefined : FadingTransition
       }
       onEndReachedThreshold={0.3}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       refreshControl={
-        typeof refreshing !== 'undefined' && Platform.OS !== 'web' ? (
+        typeof refreshing !== 'undefined' && !isWeb ? (
           <Refresher
             refreshing={refreshing}
             progressViewOffset={progressViewOffset}

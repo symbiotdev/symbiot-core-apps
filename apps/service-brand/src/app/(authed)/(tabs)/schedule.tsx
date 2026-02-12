@@ -4,6 +4,7 @@ import { useNavigation } from 'expo-router';
 import {
   DateHelper,
   eventEmitter,
+  isIos,
   useI18n,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
@@ -31,7 +32,6 @@ import {
   useCurrentBrandEmployee,
 } from '@symbiot-core-apps/state';
 import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
-import { Platform } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { Picker } from '@symbiot-core-apps/form-controller';
@@ -166,7 +166,7 @@ export default () => {
             optionsLoading={locationsLoading}
             optionsError={locationsError}
             onChange={(selectedId) => {
-              Platform.OS !== 'ios' && popoverRef.current?.close();
+              !isIos && popoverRef.current?.close();
 
               setLocation(
                 locations?.items.find(({ id }) => selectedId === id) ||

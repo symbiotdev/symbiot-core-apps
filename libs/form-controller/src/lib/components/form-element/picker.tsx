@@ -8,8 +8,8 @@ import {
   useState,
 } from 'react';
 import { useTheme, View, ViewProps, XStack } from 'tamagui';
-import { FlatList, Platform, ViewStyle } from 'react-native';
-import { emitHaptic, useRendered } from '@symbiot-core-apps/shared';
+import { FlatList, ViewStyle } from 'react-native';
+import { emitHaptic, isIos, useRendered } from '@symbiot-core-apps/shared';
 import {
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
@@ -57,7 +57,7 @@ export const Picker = ({
 
   const adjustedOptions = useMemo(
     () =>
-      moveSelectedToTop && Platform.OS !== 'ios'
+      moveSelectedToTop && !isIos
         ? options?.sort((a, b) =>
             a.value === value ? -1 : b.value === value ? 1 : 0,
           )
@@ -77,7 +77,7 @@ export const Picker = ({
     return <InitView loading={optionsLoading} error={optionsError} />;
   }
 
-  return Platform.OS === 'ios' ? (
+  return isIos ? (
     <View
       flex={1}
       disabled={disabled}

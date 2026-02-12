@@ -18,11 +18,12 @@ import {
   useTheme,
   View,
 } from 'tamagui';
-import { Platform, useWindowDimensions } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { H4 } from '../text/heading';
 import {
   emitHaptic,
+  isWeb,
   SCREEN_MEDIA_SIZE,
   useKeyboardDismisser,
   useRendered,
@@ -35,9 +36,7 @@ import {
 } from '../view/page-view';
 import { NavigationBackground } from '../navigation/background';
 
-const adaptiveMediaSize = (
-  Platform.OS === 'web' ? 'md' : 'xl'
-) as keyof AdaptWhen;
+const adaptiveMediaSize = (isWeb ? 'md' : 'xl') as keyof AdaptWhen;
 
 export type AdaptivePopoverRef = {
   open: () => void;

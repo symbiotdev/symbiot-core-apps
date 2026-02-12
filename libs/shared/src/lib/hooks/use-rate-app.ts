@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { isAvailableAsync, requestReview } from 'expo-store-review';
-import { Linking, Platform } from 'react-native';
+import { Linking } from 'react-native';
 import { PLATFORM_STORE_URL } from './use-share-app';
 import { useI18n } from '../i18n/i18n-provider';
 import { ConfirmAlert } from '../utils/confirm';
@@ -8,6 +8,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { createZustandStorage } from '../storage/zustand';
 import { DateHelper } from '../utils/date-helper';
+import { isAndroid, isWeb } from '../utils/device';
 
 type FeatureKey = 'common' | string;
 type State = {
@@ -42,7 +43,7 @@ const useRateState = create<State>()(
 
 export const leaveReview = () =>
   Linking.openURL(
-    `${PLATFORM_STORE_URL}${Platform.OS === 'android' ? '&showAllReviews=true' : '?action=write-review'}`,
+    `${PLATFORM_STORE_URL}${isAndroid ? '&showAllReviews=true' : '?action=write-review'}`,
   );
 
 export const useRateApp = ({
@@ -57,10 +58,7 @@ export const useRateApp = ({
   const { t } = useI18n();
   const { lastRateDate, countRates, setLastRateDate } = useRateState();
 
-  const canRate = useMemo(
-    () => Platform.OS !== 'web' || supportWeb,
-    [supportWeb],
-  );
+  const canRate = useMemo(() => !isWeb || supportWeb, [supportWeb]);
 
   const rate = useCallback(
     async (featureKey: FeatureKey = 'common') => {

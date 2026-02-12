@@ -19,10 +19,10 @@ import {
   useImportBrandClientsReq,
 } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
-import { Platform } from 'react-native';
 import { readAsStringAsync } from 'expo-file-system';
 import {
   downloadArrayBuffer,
+  isWeb,
   readFileWeb,
   useI18n,
 } from '@symbiot-core-apps/shared';
@@ -86,7 +86,7 @@ export const ImportBrandClient = () => {
       let fileContent: string;
       const asset = assets[0];
 
-      if (Platform.OS === 'web') {
+      if (isWeb) {
         if (!asset.file) return;
 
         fileContent = await readFileWeb(asset.file);

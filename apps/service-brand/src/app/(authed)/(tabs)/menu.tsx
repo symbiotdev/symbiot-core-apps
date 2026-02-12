@@ -3,6 +3,7 @@ import {
   DeviceVersion,
   emitHaptic,
   isTablet,
+  isWeb,
   openPlatformStore,
   ShowNativeSuccessAlert,
   useI18n,
@@ -32,7 +33,7 @@ import {
   useDrawer,
 } from '@symbiot-core-apps/ui';
 import { View, XStack } from 'tamagui';
-import { GestureResponderEvent, Linking, Platform } from 'react-native';
+import { GestureResponderEvent, Linking } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { AccountSubscriptionEnvironment } from '@symbiot-core-apps/api';
 import { useAccountSubscription } from '@symbiot-core-apps/account-subscription';
@@ -80,10 +81,7 @@ export default () => {
 
   return (
     me && (
-      <TabsPageView
-        scrollable
-        withHeaderHeight={Platform.OS === 'web' || isTablet}
-      >
+      <TabsPageView scrollable withHeaderHeight={isWeb || isTablet}>
         <CompactView gap="$3" flex={1}>
           {canSubscribe && (
             <ActionCard
@@ -206,7 +204,7 @@ export default () => {
                 onPress={() => router.push('/preferences/calendar')}
               />
             )}
-            {Platform.OS !== 'web' && (
+            {!isWeb && (
               <ListItem
                 label={t('shared.preferences.system.title')}
                 icon={<Icon name="TuningSquare" />}
@@ -293,7 +291,7 @@ export default () => {
 
             <MediumText textAlign="center">Powered by Symbiot</MediumText>
 
-            {Platform.OS !== 'web' && (
+            {!isWeb && (
               <RegularText
                 marginTop="$1"
                 color="$placeholderColor"

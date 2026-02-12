@@ -1,4 +1,4 @@
-import { Platform, Pressable } from 'react-native';
+import { Pressable } from 'react-native';
 import { View, ViewProps, XStack } from 'tamagui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
@@ -10,7 +10,7 @@ import {
 } from 'react';
 import { H4 } from '../text/heading';
 import { Icon, IconName } from '../icons';
-import { emitHaptic, isTablet } from '@symbiot-core-apps/shared';
+import { emitHaptic, isAndroid, isTablet } from '@symbiot-core-apps/shared';
 import { AttentionView } from '../view/attention-view';
 import { NavigationBackground } from './background';
 import { MediumText, RegularText } from '../text/text';
@@ -51,7 +51,7 @@ export const useStackScreenHeaderOptions = () => {
 
   return {
     ...headerOptions,
-    ...(Platform.OS === 'android' && {
+    ...(isAndroid && {
       animation: 'ios_from_right',
     }),
   } as NativeStackNavigationOptions;

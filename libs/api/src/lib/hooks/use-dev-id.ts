@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Platform } from 'react-native';
 import * as Application from 'expo-application';
 import { randomUUID } from 'expo-crypto';
-import { mmkvGlobalStorage } from '@symbiot-core-apps/shared';
+import { isAndroid, isIos, mmkvGlobalStorage } from '@symbiot-core-apps/shared';
 
 const DEV_ID_STORE_KEY = 'wid';
 
@@ -18,11 +17,11 @@ export const useDevId = () => {
   const [id, setId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (Platform.OS === 'ios') {
+    if (isIos) {
       Application.getIosIdForVendorAsync().then((id) => {
         setId(id || storeNewId());
       });
-    } else if (Platform.OS === 'android') {
+    } else if (isAndroid) {
       setId(Application.getAndroidId() || storeNewId());
     } else {
       setId(mmkvGlobalStorage.getString(DEV_ID_STORE_KEY) || storeNewId());

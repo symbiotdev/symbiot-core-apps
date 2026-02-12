@@ -2,11 +2,10 @@ import {
   BottomTabBarProps,
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs';
-import { Platform } from 'react-native';
 import { ReactElement, useMemo } from 'react';
 import { useTheme, View, XStack } from 'tamagui';
 import { useScreenHeaderOptions } from './header';
-import { emitHaptic, eventEmitter } from '@symbiot-core-apps/shared';
+import { emitHaptic, eventEmitter, isWeb } from '@symbiot-core-apps/shared';
 import { NavigationBackground } from './background';
 import Animated, {
   Easing,
@@ -25,7 +24,7 @@ export const useTabsScreenOptions = () => {
     () =>
       ({
         ...headerOptions,
-        animation: Platform.OS === 'web' ? 'fade' : 'none',
+        animation: isWeb ? 'fade' : 'none',
       }) as Omit<BottomTabNavigationOptions, 'animation'>,
     [headerOptions],
   );

@@ -4,13 +4,13 @@ import {
   TextNonStyleProps,
   TextStyle,
 } from 'tamagui';
-import { Platform } from 'react-native';
+import { isWeb } from '@symbiot-core-apps/shared';
 
 export const defaultTextStyles: TextNonStyleProps & TextStyle = {
   maxWidth: '100%',
   allowFontScaling: true,
   fontSize: 14,
-  lineHeight: Platform.OS === 'web' ? 18 : undefined,
+  lineHeight: isWeb ? 18 : undefined,
   userSelect: 'none',
 };
 

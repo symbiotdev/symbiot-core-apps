@@ -1,11 +1,11 @@
 import { Label as TamaguiLabel, styled, Text as TamaguiText } from 'tamagui';
 import { defaultTextStyles } from './text';
-import { Platform } from 'react-native';
+import { isWeb } from '@symbiot-core-apps/shared';
 
 export const Error = styled(TamaguiText, {
   ...defaultTextStyles,
   fontSize: 14,
-  lineHeight: Platform.OS === 'web' ? 16 : undefined,
+  lineHeight: isWeb ? 16 : undefined,
   color: '$error',
 }) as typeof TamaguiText;
 

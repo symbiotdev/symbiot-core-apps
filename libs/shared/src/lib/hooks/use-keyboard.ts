@@ -1,14 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import {
-  Keyboard,
-  KeyboardEventName,
-  Platform,
-  useWindowDimensions,
-} from 'react-native';
+import { Keyboard, KeyboardEventName, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { isAndroid, isIos } from '../utils/device';
 
-const hideEvent: KeyboardEventName =
-  Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
+const hideEvent: KeyboardEventName = isIos
+  ? 'keyboardWillHide'
+  : 'keyboardDidHide';
 
 export const useKeyboard = () => {
   const { height } = useWindowDimensions();
@@ -17,7 +14,7 @@ export const useKeyboard = () => {
   const [shown, setShown] = useState(false);
   const [currentHeight, setCurrentHeight] = useState(0);
   const [keyboardHeight, setKeyboardHeight] = useState(
-    bottom + (Platform.OS === 'ios' ? 300 : height * 0.4),
+    bottom + (isIos ? 300 : height * 0.4),
   );
   useEffect(() => {
     const willShowSubscription = Keyboard.addListener(
@@ -41,7 +38,7 @@ export const useKeyboard = () => {
         setKeyboardHeight(height);
       }
 
-      if (Platform.OS === 'android') {
+      if (isAndroid) {
         setShown(true);
       }
     });
@@ -77,7 +74,7 @@ export function useKeyboardDismisser<
 
       setTimeout(
         () => callback(...args),
-        isKeyboardVisible ? (Platform.OS === 'ios' ? 100 : 200) : 0,
+        isKeyboardVisible ? (isIos ? 100 : 200) : 0,
       );
     },
     [callback],

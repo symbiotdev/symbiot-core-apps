@@ -1,5 +1,5 @@
-import { Platform, RefreshControl, RefreshControlProps } from 'react-native';
-import { emitHaptic } from '@symbiot-core-apps/shared';
+import { RefreshControl, RefreshControlProps } from 'react-native';
+import { emitHaptic, isIos } from '@symbiot-core-apps/shared';
 import { useCallback } from 'react';
 
 export const Refresher = (props: RefreshControlProps) => {
@@ -12,7 +12,7 @@ export const Refresher = (props: RefreshControlProps) => {
 
   return (
     <RefreshControl
-      size={Platform.OS === 'ios' ? 20 : undefined}
+      size={isIos ? 20 : undefined}
       onRefresh={refresh}
       {...props}
     />

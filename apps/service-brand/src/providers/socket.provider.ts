@@ -18,8 +18,7 @@ import {
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useAuthBrand } from '@symbiot-core-apps/brand';
-import { Platform } from 'react-native';
-import { ShowNativeSuccessAlert } from '@symbiot-core-apps/shared';
+import { isWeb, ShowNativeSuccessAlert } from '@symbiot-core-apps/shared';
 import { useAudioPlayer } from 'expo-audio';
 
 export const SocketProvider = ({
@@ -68,7 +67,7 @@ export const SocketProvider = ({
 
   const onNotificationAdded = useCallback(
     (notification: Notification) => {
-      if (Platform.OS === 'web' && preferences.notificationsSound) {
+      if (isWeb && preferences.notificationsSound) {
         soundPlayer.play();
 
         ShowNativeSuccessAlert({

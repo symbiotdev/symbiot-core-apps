@@ -3,7 +3,6 @@ import { useCallback } from 'react';
 import { ApiProvider, useAuthTokens } from '@symbiot-core-apps/api';
 import { Toaster } from 'burnt/web';
 import { unlockAsync } from 'expo-screen-orientation';
-import { Platform } from 'react-native';
 import { useFixelFont } from '@symbiot-core-apps/theme';
 import { preventAutoHideAsync, setOptions } from 'expo-splash-screen';
 import {
@@ -11,14 +10,14 @@ import {
   useAppSettings,
   useAppVersionUpdateType,
 } from '@symbiot-core-apps/app';
-import { I18nProvider } from '@symbiot-core-apps/shared';
+import { I18nProvider, isWeb } from '@symbiot-core-apps/shared';
 import { appSettings } from '../../settings';
 import MandatoryUpdate from '../components/update/mandatory-update';
 
 void preventAutoHideAsync();
 setOptions({ fade: true, duration: 200 });
 
-if (Platform.OS !== 'web') {
+if (!isWeb) {
   void unlockAsync();
 }
 

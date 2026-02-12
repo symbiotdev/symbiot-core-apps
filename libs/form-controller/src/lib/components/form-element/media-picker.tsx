@@ -11,11 +11,12 @@ import { useCameraPermissions } from 'expo-camera';
 import { ReactElement, useCallback, useRef, useState } from 'react';
 import {
   ConfirmAlert,
+  isWeb,
   ShowNativeFailedAlert,
   useI18n,
 } from '@symbiot-core-apps/shared';
 import { filesize } from 'filesize';
-import { Linking, Platform } from 'react-native';
+import { Linking } from 'react-native';
 import { View } from 'tamagui';
 import {
   AdaptivePopover,
@@ -176,7 +177,7 @@ export const MediaPicker = ({
           onPress={() => pick('gallery')}
         />
 
-        {Platform.OS !== 'web' && (
+        {isWeb && (
           <ListItem
             icon={<Icon name="Camera" />}
             label={t('shared.preferences.media.action.take_phone.label')}

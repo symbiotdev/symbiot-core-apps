@@ -1,12 +1,9 @@
 import React, { ForwardedRef } from 'react';
-import {
-  Platform,
-  SectionList as RNSectionList,
-  SectionListProps,
-} from 'react-native';
+import { SectionList as RNSectionList, SectionListProps } from 'react-native';
 import { Refresher } from '../loading/refresher';
 import { ListLoadingFooter } from './list-loading-footer';
 import { ViewProps } from 'tamagui';
+import { isWeb } from '@symbiot-core-apps/shared';
 
 export function SectionList<T>({
   listRef,
@@ -38,7 +35,7 @@ export function SectionList<T>({
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       refreshControl={
-        typeof refreshing !== 'undefined' && Platform.OS !== 'web' ? (
+        typeof refreshing !== 'undefined' && !isWeb ? (
           <Refresher
             refreshing={refreshing}
             progressViewOffset={progressViewOffset}

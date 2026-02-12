@@ -3,7 +3,7 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { View, XStack } from 'tamagui';
 import { useCallback, useState } from 'react';
 import { MediaPicker } from './media-picker';
-import { FlatList, Platform } from 'react-native';
+import { FlatList } from 'react-native';
 import {
   avatarBlurhash,
   ButtonIcon,
@@ -12,6 +12,7 @@ import {
   Spinner,
 } from '@symbiot-core-apps/ui';
 import { FormField } from '../wrapper/form-field';
+import { isWeb } from '@symbiot-core-apps/shared';
 
 const MediaList = FlatList<ImageSource | string>;
 
@@ -140,7 +141,7 @@ export const GalleryPicker = ({
         horizontal
         data={value}
         renderItem={renderItem}
-        showsHorizontalScrollIndicator={Platform.OS === 'web'}
+        showsHorizontalScrollIndicator={isWeb}
         contentContainerStyle={{
           gap: 6,
           paddingVertical: 5,

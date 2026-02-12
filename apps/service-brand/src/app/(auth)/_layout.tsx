@@ -9,10 +9,9 @@ import {
   useOnboardingState,
 } from '@symbiot-core-apps/state';
 import { useStackScreenHeaderOptions } from '@symbiot-core-apps/ui';
-import { Platform } from 'react-native';
 import { useEffect } from 'react';
 import { hideAsync } from 'expo-splash-screen';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { isWeb, useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
   const { tokens } = useAuthTokens();
@@ -56,7 +55,7 @@ export default () => {
     <Stack
       screenOptions={{
         ...headerScreenOptions,
-        headerShown: Platform.OS !== 'web',
+        headerShown: !isWeb,
       }}
     >
       <Stack.Protected guard={!onboardingFinished}>

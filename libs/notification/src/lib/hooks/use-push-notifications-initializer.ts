@@ -1,5 +1,4 @@
 import { useCallback, useEffect } from 'react';
-import { Platform } from 'react-native';
 import {
   AndroidImportance,
   getExpoPushTokenAsync,
@@ -8,7 +7,11 @@ import {
   setNotificationChannelAsync,
 } from 'expo-notifications';
 import Constants from 'expo-constants';
-import { ShowNativeFailedAlert } from '@symbiot-core-apps/shared';
+import {
+  isAndroid,
+  isWeb,
+  ShowNativeFailedAlert,
+} from '@symbiot-core-apps/shared';
 import { useAccountUpdateDeviceReq } from '@symbiot-core-apps/api';
 import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 import { isDevice } from 'expo-device';
@@ -22,11 +25,11 @@ export const usePushNotificationsInitializer = ({
   const { mutateAsync } = useAccountUpdateDeviceReq();
 
   const init = useCallback(async () => {
-    if (!isDevice || Platform.OS === 'web') {
+    if (!isDevice || isWeb) {
       return;
     }
 
-    if (Platform.OS === 'android') {
+    if (isAndroid) {
       await setNotificationChannelAsync('default', {
         name: 'default',
         sound: 'new_notification_sound.wav',

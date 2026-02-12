@@ -1,12 +1,13 @@
 import {
   createZustandStorage,
+  isWeb,
   SystemScheme,
   useSystemScheme,
 } from '@symbiot-core-apps/shared';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useCallback, useMemo } from 'react';
-import { Appearance, Platform } from 'react-native';
+import { Appearance } from 'react-native';
 
 type AppSchemeState = {
   scheme?: SystemScheme;
@@ -42,7 +43,7 @@ export const useScheme = () => {
 
   const setScheme = useCallback(
     (scheme: SystemScheme | undefined) => {
-      if (Platform.OS === 'web') {
+      if (isWeb) {
         if (scheme) {
           setAppScheme(scheme);
         } else {

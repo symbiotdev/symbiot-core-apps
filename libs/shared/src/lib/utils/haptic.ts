@@ -1,12 +1,12 @@
-import { Platform } from 'react-native';
 import {
   AndroidHaptics,
   performAndroidHapticsAsync,
   selectionAsync,
 } from 'expo-haptics';
+import { isAndroid } from './device';
 
 export const emitHaptic = () => {
-  if (Platform.OS === 'android') {
+  if (isAndroid) {
     void performAndroidHapticsAsync(AndroidHaptics.Virtual_Key);
   } else {
     void selectionAsync();

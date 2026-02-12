@@ -10,10 +10,14 @@ import {
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useCallback, useMemo } from 'react';
-import { createZustandStorage, systemSchemes } from '@symbiot-core-apps/shared';
+import {
+  createZustandStorage,
+  isWeb,
+  systemSchemes,
+} from '@symbiot-core-apps/shared';
 import { useAppSchemeState } from './use-app-theme.state';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { Appearance, Platform } from 'react-native';
+import { Appearance } from 'react-native';
 import merge from 'deepmerge';
 
 type AccountStats = {
@@ -119,7 +123,7 @@ export const useCurrentAccount = () => {
           ? preferScheme
           : undefined;
 
-      if (Platform.OS === 'web') {
+      if (isWeb) {
         if (scheme) {
           setScheme(scheme);
         } else {

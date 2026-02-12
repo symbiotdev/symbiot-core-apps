@@ -13,7 +13,6 @@ import {
   KeyboardAwareScrollViewRef,
   KeyboardStickyView,
 } from 'react-native-keyboard-controller';
-import { Platform } from 'react-native';
 import { useScreenHeaderHeight } from '../navigation/header';
 import {
   defaultPageHorizontalPadding,
@@ -37,6 +36,7 @@ import { compactViewStyles } from '../view/compact-view';
 import { Button } from '../button/button';
 import {
   emitHaptic,
+  isWeb,
   useI18n,
   useKeyboardDismisser,
   useRendered,
@@ -50,10 +50,9 @@ type SurveyStepProps = PropsWithChildren<{
   skippable?: boolean;
 }>;
 
-const headerTextPadding =
-  Platform.OS === 'web'
-    ? defaultPageVerticalPadding
-    : defaultPageVerticalPadding / 2;
+const headerTextPadding = isWeb
+  ? defaultPageVerticalPadding
+  : defaultPageVerticalPadding / 2;
 
 export const SurveyStep = (props: SurveyStepProps) => {
   const { rendered } = useRendered();
@@ -159,7 +158,7 @@ export const Survey = ({
           ref={scrollViewRef}
           scrollEnabled={scrollEnabled}
           bottomOffset={100}
-          showsVerticalScrollIndicator={Platform.OS === 'web'}
+          showsVerticalScrollIndicator={isWeb}
           style={{ flex: 1 }}
           contentContainerStyle={{
             flexGrow: 1,

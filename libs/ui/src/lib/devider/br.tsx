@@ -1,7 +1,7 @@
 import { View, ViewProps } from 'tamagui';
-import { Platform } from 'react-native';
+import { isWeb } from '@symbiot-core-apps/shared';
 
-const height = Platform.OS === 'web' ? 2 : 1;
+const height = isWeb ? 2 : 1;
 
 export const Br = (props: ViewProps) => (
   <View height={height} backgroundColor="$disabled" opacity={0.2} {...props} />

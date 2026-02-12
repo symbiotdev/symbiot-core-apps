@@ -25,3 +25,6 @@ export const DeviceInfo = {
 export const DeviceVersion = Application.nativeApplicationVersion || 'latest';
 
 export const isTablet = DeviceInfo.deviceType === DeviceType.TABLET;
+export const isWeb = DeviceInfo.os === 'web';
+export const isIos = DeviceInfo.os === 'ios';
+export const isAndroid = DeviceInfo.os === 'android';

@@ -16,8 +16,8 @@ import {
   getPermissionsAsync,
   NotificationPermissionsStatus,
 } from 'expo-notifications';
-import { Linking, Platform } from 'react-native';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { Linking } from 'react-native';
+import { isWeb, useI18n } from '@symbiot-core-apps/shared';
 import { Switch } from '@symbiot-core-apps/form-controller';
 
 export const Notifications = () => {
@@ -29,7 +29,7 @@ export const Notifications = () => {
   const [permissionsStatus, setPermissionsStatus] =
     useState<NotificationPermissionsStatus>();
   const pushNotificationsDenied =
-    Platform.OS !== 'web' && permissionsStatus && !permissionsStatus.granted;
+    !isWeb && permissionsStatus && !permissionsStatus.granted;
 
   useEffect(() => {
     getPermissionsAsync().then(setPermissionsStatus);
@@ -64,7 +64,7 @@ export const Notifications = () => {
         )}
 
         <Card gap="$5">
-          {Platform.OS !== 'web' && (
+          {!isWeb && (
             <Switch
               label={t(
                 'shared.preferences.notifications.posh_notifications.label',

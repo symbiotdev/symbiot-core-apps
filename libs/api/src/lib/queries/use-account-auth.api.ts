@@ -7,9 +7,9 @@ import {
 } from '../types/account-auth';
 import axios from 'axios';
 import { authTokenHeaderKey, useAuthTokens } from '../hooks/use-auth-tokens';
-import { Platform } from 'react-native';
 import { useCallback } from 'react';
 import { useMutation } from '../hooks/use-mutation';
+import { isWeb } from '@symbiot-core-apps/shared';
 
 export const useAccountAuthSignUpReq = () =>
   useMutation<AccountAuthSecretResponse, string, AccountSignUpData>({
@@ -123,7 +123,7 @@ export const useAccountAuthRefreshTokenReq = () => {
       const newTokens = (await axios.post(
         `${process.env.EXPO_PUBLIC_API_URL}/api/account-auth/refresh`,
         {},
-        Platform.OS !== 'web'
+        !isWeb
           ? {
               headers: {
                 [authTokenHeaderKey.refresh]: tokens.refresh,

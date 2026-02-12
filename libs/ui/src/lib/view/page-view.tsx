@@ -1,16 +1,15 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
   KeyboardAvoidingView,
   KeyboardAwareScrollView,
 } from 'react-native-keyboard-controller';
 import { ScrollView } from 'tamagui';
-import { useKeyboard } from '@symbiot-core-apps/shared';
+import { isWeb, useKeyboard } from '@symbiot-core-apps/shared';
 import { Refresher } from '../loading/refresher';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useScreenHeaderHeight } from '../navigation/header';
 import { ContainerView, ContainerViewProps } from './container-view';
 
-const isWeb = Platform.OS === 'web';
 export const defaultPageHorizontalPadding = 14;
 export const defaultPageVerticalPadding = 14;
 
@@ -47,7 +46,7 @@ export const PageView = ({
         showsVerticalScrollIndicator={isWeb}
         bottomOffset={30}
         refreshControl={
-          refreshing !== undefined && Platform.OS !== 'web' ? (
+          refreshing !== undefined && !isWeb ? (
             <Refresher refreshing={refreshing} onRefresh={onRefresh} />
           ) : undefined
         }
@@ -78,7 +77,7 @@ export const PageView = ({
         showsVerticalScrollIndicator={isWeb}
         contentContainerStyle={styles.FullScreen}
         refreshControl={
-          refreshing !== undefined && Platform.OS !== 'web' ? (
+          refreshing !== undefined && !isWeb ? (
             <Refresher refreshing={refreshing} onRefresh={onRefresh} />
           ) : undefined
         }

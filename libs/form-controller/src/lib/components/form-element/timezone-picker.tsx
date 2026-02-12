@@ -5,7 +5,7 @@ import {
   getTimezonesForCountry,
 } from 'countries-and-timezones';
 import { useEffect, useMemo } from 'react';
-import { Platform } from 'react-native';
+import { isIos } from '@symbiot-core-apps/shared';
 
 export const TimezonePicker = ({
   value,
@@ -56,7 +56,7 @@ export const TimezonePicker = ({
       .map(({ name, utcOffsetStr }) => {
         return {
           value: name,
-          label: `${utcOffsetStr}${Platform.OS === 'ios' ? ` · ${name}` : ''}`,
+          label: `${utcOffsetStr}${isIos ? ` · ${name}` : ''}`,
           description: name,
         };
       })

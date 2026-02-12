@@ -7,7 +7,6 @@ import {
   TimeGridUnavailableTime,
 } from '@symbiot.dev/react-native-timegrid-pro';
 import { Calendar, RegularText } from '@symbiot-core-apps/ui';
-import { Platform } from 'react-native';
 import {
   useCurrentAccountPreferences,
   useCurrentBrandBookingsState,
@@ -24,6 +23,7 @@ import {
   DateHelper,
   DeviceInfo,
   emitHaptic,
+  isAndroid,
   minutesInDay,
   useScreenOrientation,
   useScreenSize,
@@ -33,7 +33,6 @@ import { router } from 'expo-router';
 import { getTimezone } from 'countries-and-timezones';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
 import { DeviceType } from 'expo-device';
-import { Orientation } from 'expo-screen-orientation';
 
 export const BrandBookingsCalendar = ({
   offsetTop,
@@ -52,7 +51,7 @@ export const BrandBookingsCalendar = ({
 }) => {
   const { media } = useScreenSize();
   const { timezone } = useBookingDatetime();
-  const { orientation } = useScreenOrientation();
+  const { orientationFormat } = useScreenOrientation();
   const preferences = useCurrentAccountPreferences();
   const { hasPermission } = useCurrentBrandEmployee();
   const { currentEmployee } = useCurrentBrandEmployee();
@@ -70,8 +69,7 @@ export const BrandBookingsCalendar = ({
     const countDays = preferences.appearance?.calendar?.countDays;
     const supportPortrait =
       DeviceInfo.deviceType === DeviceType.PHONE &&
-      (orientation === Orientation.PORTRAIT_UP ||
-        orientation === Orientation.PORTRAIT_DOWN);
+      orientationFormat === 'portrait';
 
     if (supportPortrait) {
       return countDays?.portrait || 3;
@@ -86,7 +84,7 @@ export const BrandBookingsCalendar = ({
         return 1;
       }
     }
-  }, [preferences.appearance?.calendar?.countDays, media, orientation]);
+  }, [preferences.appearance?.calendar?.countDays, media, orientationFormat]);
 
   const events: TimeGridEvent[] = useMemo(
     () =>
@@ -232,7 +230,7 @@ export const BrandBookingsCalendar = ({
         timezone={timezone}
         eventBorderRadius={10}
         allDayEventHeight={40}
-        gridBottomOffset={Platform.OS === 'android' ? 5 : offsetBottom}
+        gridBottomOffset={isAndroid ? 5 : offsetBottom}
         renderEvent={renderEvent as TimeGridRenderProps['renderEvent']}
         renderAllDayEvent={
           renderAllDayEvent as TimeGridRenderProps['renderAllDayEvent']

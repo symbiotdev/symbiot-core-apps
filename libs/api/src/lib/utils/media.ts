@@ -1,5 +1,5 @@
 import { ImagePickerAsset } from 'expo-image-picker';
-import { Platform } from 'react-native';
+import { isWeb } from '@symbiot-core-apps/shared';
 
 export type UploadingFile = {
   uri: string;
@@ -66,7 +66,7 @@ const appendFindToFormData = async (
   key: string,
   file: UploadingFile,
 ) => {
-  if (Platform.OS === 'web') {
+  if (isWeb) {
     const blob = await fetch(file.uri);
 
     formData.append(key, await blob.blob());

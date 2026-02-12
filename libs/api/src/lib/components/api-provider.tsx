@@ -12,9 +12,13 @@ import { authTokenHeaderKey, useAuthTokens } from '../hooks/use-auth-tokens';
 import { useDevId } from '../hooks/use-dev-id';
 import { onlineManager, QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '../utils/client';
-import { Platform } from 'react-native';
 import { clearInitialQueryData } from '../utils/initial-query-data';
-import { DateHelper, useAppState, useI18n } from '@symbiot-core-apps/shared';
+import {
+  DateHelper,
+  isWeb,
+  useAppState,
+  useI18n,
+} from '@symbiot-core-apps/shared';
 import { useAccountAuthRefreshTokenReq } from '../queries/use-account-auth.api';
 
 type SocketState = {
@@ -113,9 +117,7 @@ export const ApiProvider = ({
       }));
 
       socket.io.opts.query = {
-        ...(Platform.OS !== 'web'
-          ? { [authTokenHeaderKey.refresh]: tokens.refresh }
-          : {}),
+        ...(!isWeb ? { [authTokenHeaderKey.refresh]: tokens.refresh } : {}),
         lang,
       };
 

@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { Platform } from 'react-native';
 import {
   CodeField,
   Cursor,
@@ -9,6 +8,7 @@ import {
 } from 'react-native-confirmation-code-field';
 import { View } from 'tamagui';
 import { Error, RegularText } from '@symbiot-core-apps/ui';
+import { isAndroid } from '@symbiot-core-apps/shared';
 
 export const CodeInput = ({
   cellCount,
@@ -65,7 +65,7 @@ export const CodeInput = ({
         cellCount={cellCount}
         keyboardType="number-pad"
         textContentType="oneTimeCode"
-        autoComplete={Platform.OS === 'android' ? 'sms-otp' : 'one-time-code'}
+        autoComplete={isAndroid ? 'sms-otp' : 'one-time-code'}
         renderCell={renderCell}
         onChangeText={setValue}
         onBlur={onBlur}

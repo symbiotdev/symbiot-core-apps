@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { AppState, AppStateStatus, Platform } from 'react-native';
+import { AppState, AppStateStatus } from 'react-native';
+import { isWeb } from '../utils/device';
 
 export const useAppState = () => {
   const [appState, setAppState] = useState<AppStateStatus>(
@@ -34,7 +35,7 @@ export const useRestoreApp = (callback: () => void) => {
 
 export const useRestoreNativeApp = (callback: () => void) =>
   useRestoreApp(
-    Platform.OS !== 'web'
+    !isWeb
       ? callback
       : () => {
           /* empty */

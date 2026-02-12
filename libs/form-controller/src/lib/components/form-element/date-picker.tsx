@@ -4,10 +4,11 @@ import { useTheme, ViewProps } from 'tamagui';
 import {
   DateHelper,
   emitHaptic,
+  isIos,
+  isWeb,
   useI18n,
   Weekday,
 } from '@symbiot-core-apps/shared';
-import { Platform } from 'react-native';
 import {
   useCurrentAccountPreferences,
   useScheme,
@@ -438,11 +439,8 @@ const PopoverDateField = ({
       }
       onClose={onBlur}
     >
-      <ContainerView
-        alignItems="center"
-        maxWidth={Platform.OS === 'web' ? 350 : undefined}
-      >
-        {forceCalendar || Platform.OS !== 'ios' ? (
+      <ContainerView alignItems="center" maxWidth={isWeb ? 350 : undefined}>
+        {forceCalendar || !isIos ? (
           <DateAsCalendar
             value={value}
             minDate={minDate}

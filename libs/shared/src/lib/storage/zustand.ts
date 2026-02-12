@@ -1,11 +1,9 @@
 import { createJSONStorage } from 'zustand/middleware';
-import { Platform } from 'react-native';
 import { JsonMMKVStorage, JsonSecureStore } from './json';
+import { isWeb } from '../utils/device';
 
 export function createZustandStorage<T>(params?: { secure?: boolean }) {
   return createJSONStorage<T>(() =>
-    !params?.secure || Platform.OS === 'web'
-      ? JsonMMKVStorage
-      : JsonSecureStore,
+    !params?.secure || isWeb ? JsonMMKVStorage : JsonSecureStore,
   );
 }

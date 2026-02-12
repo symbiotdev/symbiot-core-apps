@@ -4,8 +4,30 @@ import {
   getOrientationAsync,
   Orientation,
   removeOrientationChangeListener,
+  WebOrientationLock,
 } from 'expo-screen-orientation';
 import { InteractionManager } from 'react-native';
+
+type OrientationFormat = 'landscape' | 'portrait';
+
+const defaultOrientation: OrientationFormat = 'portrait'; // could be changed to default
+
+const format: Record<Orientation | WebOrientationLock, OrientationFormat> = {
+  [Orientation.UNKNOWN]: defaultOrientation,
+  [Orientation.PORTRAIT_DOWN]: 'portrait',
+  [Orientation.PORTRAIT_UP]: 'portrait',
+  [Orientation.LANDSCAPE_LEFT]: 'landscape',
+  [Orientation.LANDSCAPE_RIGHT]: 'landscape',
+  [WebOrientationLock.ANY]: 'portrait',
+  [WebOrientationLock.NATURAL]: 'portrait',
+  [WebOrientationLock.UNKNOWN]: 'portrait',
+  [WebOrientationLock.PORTRAIT]: 'portrait',
+  [WebOrientationLock.PORTRAIT_PRIMARY]: 'portrait',
+  [WebOrientationLock.PORTRAIT_SECONDARY]: 'portrait',
+  [WebOrientationLock.LANDSCAPE]: 'landscape',
+  [WebOrientationLock.LANDSCAPE_SECONDARY]: 'landscape',
+  [WebOrientationLock.LANDSCAPE_PRIMARY]: 'landscape',
+};
 
 export const useScreenOrientation = ({
   onBeforeChange,
@@ -14,10 +36,6 @@ export const useScreenOrientation = ({
   const [orientation, setOrientation] = useState<Orientation>();
 
   useEffect(() => {
-    const getOrientation = async () => {
-      setOrientation(await getOrientationAsync());
-    };
-
     const subscription = addOrientationChangeListener((event) => {
       setOrientation(event.orientationInfo.orientation);
 
@@ -28,12 +46,17 @@ export const useScreenOrientation = ({
       });
     });
 
-    void getOrientation();
+    getOrientationAsync().then(
+      (orientation) => orientation && setOrientation(orientation),
+    );
 
     return () => {
       removeOrientationChangeListener(subscription);
     };
   }, [onBeforeChange, onChanged]);
 
-  return { orientation };
+  return {
+    orientation,
+    orientationFormat: orientation ? format[orientation] : defaultOrientation,
+  };
 };

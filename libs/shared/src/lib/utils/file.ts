@@ -1,14 +1,14 @@
-import { Platform } from 'react-native';
 import { cacheDirectory, writeAsStringAsync } from 'expo-file-system';
 import { Asset } from 'expo-asset';
 import { shareAsync } from 'expo-sharing';
 import { ShowNativeFailedAlert } from './burnt';
+import { isWeb } from './device';
 
 export async function downloadArrayBuffer(
   arrayBuffer: ArrayBufferLike,
   fileName: string,
 ) {
-  if (Platform.OS === 'web') {
+  if (isWeb) {
     const blob = new Blob([arrayBuffer]);
     const url = URL.createObjectURL(blob);
 
@@ -50,7 +50,7 @@ export async function downloadArrayBuffer(
           text: 'Download failed',
         });
       }
-    } catch(error) {
+    } catch (error) {
       ShowNativeFailedAlert({
         // fixme localize
         text: JSON.stringify(error),

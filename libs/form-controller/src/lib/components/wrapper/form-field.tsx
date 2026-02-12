@@ -1,6 +1,6 @@
 import { LabelProps, TextProps, View, ViewProps } from 'tamagui';
-import { Platform } from 'react-native';
 import { Error, Label, RegularText } from '@symbiot-core-apps/ui';
+import { isWeb } from '@symbiot-core-apps/shared';
 
 export const FormField = ({
   label,
@@ -28,7 +28,7 @@ export const FormField = ({
           paddingHorizontal="$3"
           htmlFor={htmlFor}
           {...labelProps}
-          pointerEvents={Platform.OS === 'web' ? 'auto' : 'none'}
+          pointerEvents={isWeb ? 'auto' : 'none'}
         >
           {label}
           {required ? '*' : ''}
@@ -38,7 +38,9 @@ export const FormField = ({
       {children}
 
       {!!description && !error && (
-        <RegularText paddingHorizontal="$4" color="$placeholderColor">{description}</RegularText>
+        <RegularText paddingHorizontal="$4" color="$placeholderColor">
+          {description}
+        </RegularText>
       )}
 
       {!!error && (

@@ -1,9 +1,9 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useVideoPlayer, VideoSource, VideoView } from 'expo-video';
 import { useCallback, useEffect } from 'react';
-import { useRestoreApp } from '@symbiot-core-apps/shared';
+import { isIos, useRestoreApp } from '@symbiot-core-apps/shared';
 import { useFocusEffect } from 'expo-router';
 import { View, ViewProps } from 'tamagui';
 
@@ -48,7 +48,7 @@ export const MediaBackground = ({
       />
 
       <AnimatedVideo
-        entering={Platform.OS === 'ios' ? FadeIn.duration(1000) : undefined}
+        entering={isIos ? FadeIn.duration(1000) : undefined}
         player={player}
         nativeControls={false}
         contentFit="cover"

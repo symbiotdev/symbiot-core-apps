@@ -1,5 +1,6 @@
-import { Alert, Platform } from 'react-native';
+import { Alert } from 'react-native';
 import { translate } from '../i18n/i18n-provider';
+import { isWeb } from './device';
 
 export const ConfirmAlert = (props: {
   title: string;
@@ -9,7 +10,7 @@ export const ConfirmAlert = (props: {
   cancelText?: string;
   confirmText?: string;
 }) => {
-  if (Platform.OS === 'web') {
+  if (isWeb) {
     if (window.confirm(`${props.title}\n\n${props.message || ''}`.trim())) {
       props.onAgree();
     } else {

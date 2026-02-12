@@ -1,6 +1,7 @@
 import { alert, dismissAllAlerts } from 'burnt';
-import { Keyboard, Platform } from 'react-native';
+import { Keyboard } from 'react-native';
 import { translate } from '../i18n/i18n-provider';
+import { isIos } from './device';
 
 export const ShowNativeSuccessAlert = (options: {
   title: unknown;
@@ -29,8 +30,8 @@ export const ShowNativeFailedAlert = (options: {
   }
 
   alert({
-    title: Platform.OS !== 'ios' ? options.text : '',
-    message: Platform.OS === 'ios' ? options.text : '',
+    title: !isIos ? options.text : '',
+    message: isIos ? options.text : '',
     preset: 'error',
     shouldDismissByTap: true,
     duration: options.duration || 2,

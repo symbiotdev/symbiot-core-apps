@@ -7,6 +7,7 @@ import {
   DateHelper,
   DeviceInfo,
   DeviceVersion,
+  isWeb,
 } from '@symbiot-core-apps/shared';
 import { Platform } from 'react-native';
 import { RequestError } from './request';
@@ -52,7 +53,7 @@ const onRequest = async (
     config.url = `${process.env.EXPO_PUBLIC_API_URL}/api/${requestUrl}`;
   }
 
-  if (Platform.OS === 'web') {
+  if (isWeb) {
     config.withCredentials = true;
   }
 
@@ -66,7 +67,7 @@ const onRequest = async (
   }
 
   if (
-    Platform.OS !== 'web' &&
+    !isWeb &&
     params.accessToken &&
     !config.headers[authTokenHeaderKey.access]
   ) {

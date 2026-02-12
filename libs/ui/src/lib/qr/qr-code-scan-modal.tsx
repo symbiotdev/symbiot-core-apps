@@ -7,16 +7,11 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { View } from 'tamagui';
 import { PermissionStatus } from 'expo-image-picker';
 import { SlideSheetModal } from '../modal/slide-sheet-modal';
-import {
-  Linking,
-  Platform,
-  StyleSheet,
-  useWindowDimensions,
-} from 'react-native';
+import { Linking, StyleSheet, useWindowDimensions } from 'react-native';
 import { EmptyView } from '../view/empty-view';
 import { Button } from '../button/button';
 import { CompactView } from '../view/compact-view';
-import { useI18n, useRendered } from '@symbiot-core-apps/shared';
+import { isIos, useI18n, useRendered } from '@symbiot-core-apps/shared';
 import { LoadingView } from '../view/loading-view';
 import { headerHeight } from '../navigation/header';
 import { Spinner } from '../loading/spinner';
@@ -65,7 +60,7 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
     return {
       frameSize: size,
       frameX: (width - size) / 2,
-      frameY: (height - size) / 2 - (Platform.OS === 'ios' ? headerHeight : 0),
+      frameY: (height - size) / 2 - (isIos ? headerHeight : 0),
       frameRadius: 50,
     };
   }, [width, height]);

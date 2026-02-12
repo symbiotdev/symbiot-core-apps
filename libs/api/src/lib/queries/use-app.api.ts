@@ -2,7 +2,7 @@ import { BrandSourceOption } from '../types/brand';
 import { useQuery } from '../hooks/use-query';
 import { AppSettings } from '../types/app-settings';
 import { AppDetails } from '../types/app-details';
-import { Platform } from 'react-native';
+import { isWeb } from '@symbiot-core-apps/shared';
 
 export enum AppQueryKey {
   details = 'app-details',
@@ -13,7 +13,7 @@ export enum AppQueryKey {
 
 export const useAppDetailsReq = () =>
   useQuery<AppDetails, string>({
-    enabled: Platform.OS !== 'web',
+    enabled: !isWeb,
     queryKey: [AppQueryKey.details],
     url: '/api/app/platform/details',
   });

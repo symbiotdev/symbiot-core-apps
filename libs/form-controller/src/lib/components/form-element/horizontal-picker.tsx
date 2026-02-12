@@ -1,8 +1,8 @@
 import { ReactElement, useCallback } from 'react';
 import { View } from 'tamagui';
-import { Platform } from 'react-native';
 import { AnimatedList, RegularText } from '@symbiot-core-apps/ui';
 import { FormField } from '../wrapper/form-field';
+import { isWeb } from '@symbiot-core-apps/shared';
 
 export type HorizontalPickerItem = {
   value: unknown;
@@ -62,7 +62,7 @@ export const HorizontalPicker = ({
       label={label}
       required={required}
       error={error}
-      flex={Platform.OS !== 'web' ? 1 : undefined}
+      flex={!isWeb ? 1 : undefined}
     >
       <AnimatedList
         horizontal

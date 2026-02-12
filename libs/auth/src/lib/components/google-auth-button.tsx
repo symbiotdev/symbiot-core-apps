@@ -5,8 +5,7 @@ import {
   isErrorWithCode,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import { Platform } from 'react-native';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { isWeb, useI18n } from '@symbiot-core-apps/shared';
 
 GoogleSignin.configure({
   webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
@@ -67,7 +66,7 @@ export const GoogleAuthButton = ({
   }, [onAuth, onError]);
 
   useEffect(() => {
-    Platform.OS === 'web' && initWebScript();
+    isWeb && initWebScript();
   }, []);
 
   return (

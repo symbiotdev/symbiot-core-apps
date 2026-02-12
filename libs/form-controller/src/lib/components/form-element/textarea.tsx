@@ -2,12 +2,11 @@ import { forwardRef, Ref, useCallback, useMemo, useState } from 'react';
 import { Input, InputProps } from 'tamagui';
 import {
   NativeSyntheticEvent,
-  Platform,
   TextInputKeyPressEventData,
   TextInputProps,
 } from 'react-native';
 import { useScheme } from '@symbiot-core-apps/state';
-import { useDebounceCallback } from '@symbiot-core-apps/shared';
+import { isIos, isWeb, useDebounceCallback } from '@symbiot-core-apps/shared';
 import { FormField } from '../wrapper/form-field';
 import { InputCursorPosition, useInputSelection } from './input';
 import { MediumText } from '@symbiot-core-apps/ui';
@@ -27,7 +26,7 @@ export const Textarea = forwardRef(
       debounce,
       maxLength,
       maxHeight = 220,
-      height = Platform.OS === 'web' ? 46 * 2 : undefined,
+      height = isWeb ? 46 * 2 : undefined,
       cursorAlwaysOn,
       enterKeyHint,
       autoCapitalize,
@@ -115,7 +114,7 @@ export const Textarea = forwardRef(
         return;
       }
 
-      if (Platform.OS === 'ios') {
+      if (isIos) {
         setIsScrolling(true);
       }
     }, [focused]);

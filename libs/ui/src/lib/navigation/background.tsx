@@ -1,6 +1,7 @@
 import { View, ViewProps } from 'tamagui';
-import { Platform, StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 import { Blur } from '../blur/blur';
+import { isIos } from '@symbiot-core-apps/shared';
 
 export const NavigationBackground = ({
   blurIntensity,
@@ -11,12 +12,12 @@ export const NavigationBackground = ({
   <View
     {...StyleSheet.absoluteFillObject}
     {...props}
-    {...(Platform.OS !== 'ios' && {
+    {...(!isIos && {
       opacity,
       backgroundColor: '$background',
     })}
   >
-    {Platform.OS === 'ios' && (
+    {isIos && (
       <Blur
         style={{
           width: '100%',

@@ -24,7 +24,7 @@ import {
 import { SubscriptionsPaywall } from '../components/subscriptions-paywall';
 import { DevelopmentPaywall } from '../components/development-paywall';
 import { PromoCodeApplyForm } from '../components/promo-code-apply-form';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { isAndroid, isIos, isWeb, useI18n } from '@symbiot-core-apps/shared';
 
 type AccountSubscriptionContext = {
   processing: boolean;
@@ -67,7 +67,7 @@ export const AccountSubscriptionProvider = ({
 
   const isSubscriptionsAvailable = useMemo(
     () =>
-      (Platform.OS !== 'web' || isDevMode) &&
+      (!isWeb || isDevMode) &&
       !hasFullAccess &&
       !!me?.offering &&
       !!brand?.owner?.id &&
@@ -129,9 +129,9 @@ export const AccountSubscriptionProvider = ({
   }, []);
 
   const manageSubscriptions = useCallback(async () => {
-    if (Platform.OS === 'ios') {
+    if (isIos) {
       return Purchases.showManageSubscriptions();
-    } else if (Platform.OS === 'android') {
+    } else if (isAndroid) {
       return Linking.openURL(
         `https://play.google.com/store/account/subscriptions`,
       );

@@ -2,7 +2,6 @@ import { forwardRef, ReactElement, Ref, useCallback, useState } from 'react';
 import {
   GestureResponderEvent,
   LayoutRectangle,
-  Platform,
   StatusBar,
   StyleSheet,
 } from 'react-native';
@@ -23,7 +22,11 @@ import {
 import { Card } from '../card/card';
 import { Spinner } from '../loading/spinner';
 import { ListItem } from '../list/list-item';
-import { emitHaptic, useScreenOrientation } from '@symbiot-core-apps/shared';
+import {
+  emitHaptic,
+  isWeb,
+  useScreenOrientation,
+} from '@symbiot-core-apps/shared';
 import { Icon } from '../icons';
 import { FullScreenTransparentModal } from '../modal/full-screen-transparent-modal';
 import { NavigationBackground } from '../navigation/background';
@@ -132,15 +135,14 @@ const Menu = ({
 
   useScreenOrientation({ onBeforeChange: onClose });
 
-  const animationProps: ViewProps =
-    Platform.OS === 'web'
-      ? {}
-      : {
-          animation: 'quick',
-          opacity: 1,
-          enterStyle: { opacity: 0 },
-          exitStyle: { opacity: 0 },
-        };
+  const animationProps: ViewProps = isWeb
+    ? {}
+    : {
+        animation: 'quick',
+        opacity: 1,
+        enterStyle: { opacity: 0 },
+        exitStyle: { opacity: 0 },
+      };
 
   return (
     <View

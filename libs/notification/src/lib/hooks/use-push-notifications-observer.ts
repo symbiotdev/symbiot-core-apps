@@ -7,11 +7,10 @@ import {
   NotificationResponse,
 } from 'expo-notifications';
 import { isDevice } from 'expo-device';
-import { Platform } from 'react-native';
 import { Notification } from '@symbiot-core-apps/api';
 import { persist } from 'zustand/middleware';
 import { create } from 'zustand';
-import { createZustandStorage } from '@symbiot-core-apps/shared';
+import { createZustandStorage, isWeb } from '@symbiot-core-apps/shared';
 
 type LastPushNotificationIdState = {
   id?: string;
@@ -90,7 +89,7 @@ export const usePushNotificationsObserver = ({
   );
 
   useLayoutEffect(() => {
-    if (!isDevice || Platform.OS === 'web') {
+    if (!isDevice || isWeb) {
       return;
     }
 

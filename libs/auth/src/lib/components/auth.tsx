@@ -1,10 +1,11 @@
 import { View } from 'tamagui';
 import { VideoSource } from 'expo-video';
-import { Platform, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { ReactElement } from 'react';
 import { H2, H4, MediaBackground } from '@symbiot-core-apps/ui';
 import { SignInButtons } from './sign-in-buttons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { isWeb } from '@symbiot-core-apps/shared';
 
 export const Auth = ({
   title,
@@ -33,7 +34,7 @@ export const Auth = ({
           <View
             flex={1}
             alignItems="center"
-            justifyContent={Platform.OS === 'web' ? 'center' : 'space-between'}
+            justifyContent={isWeb ? 'center' : 'space-between'}
             padding="$4"
             gap="$10"
             marginBottom={bottom}

@@ -1,12 +1,12 @@
 import {
   createZustandStorage,
   isTablet,
+  isWeb,
   useScreenSize,
 } from '@symbiot-core-apps/shared';
 import { useMemo } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Platform } from 'react-native';
 
 type DrawerState = {
   compressed: boolean;
@@ -32,7 +32,7 @@ export const useDrawer = () => {
   return useMemo(
     () => ({
       permanent: ['xxs', 'xs', 'sm', 'md'].includes(media),
-      visible: isTablet || Platform.OS === 'web',
+      visible: isTablet || isWeb,
     }),
     [media],
   );

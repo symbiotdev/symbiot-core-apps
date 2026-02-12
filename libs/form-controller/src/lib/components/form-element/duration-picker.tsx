@@ -1,12 +1,12 @@
 import { useCallback, useMemo, useRef } from 'react';
 import {
   DateHelper,
+  isIos,
   minutesInMonth,
   minutesInYear,
   useI18n,
 } from '@symbiot-core-apps/shared';
 import { minutesInDay, minutesInHour } from 'date-fns/constants';
-import { Platform } from 'react-native';
 import { ViewProps, XStack } from 'tamagui';
 import {
   AdaptivePopover,
@@ -157,7 +157,7 @@ export const DurationPicker = ({
         }
         onClose={onBlur}
       >
-        <XStack justifyContent="center" gap={Platform.OS === 'ios' ? 0 : 5}>
+        <XStack justifyContent="center" gap={isIos ? 0 : 5}>
           {units.includes('years') && (
             <Picker
               lazy

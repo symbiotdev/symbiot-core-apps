@@ -1,4 +1,4 @@
-import { DimensionValue, Platform } from 'react-native';
+import { DimensionValue } from 'react-native';
 import { ReactElement, useCallback, useMemo, useRef } from 'react';
 import { Picker, PickerItem, PickerOnChange } from './picker';
 import { View } from 'tamagui';
@@ -11,6 +11,7 @@ import {
 } from '@symbiot-core-apps/ui';
 import { FormField } from '../wrapper/form-field';
 import { InputFieldView } from '../wrapper/input-field-view';
+import { isIos } from '@symbiot-core-apps/shared';
 
 export function SelectPicker({
   value,
@@ -90,7 +91,7 @@ export function SelectPicker({
     (value: unknown) => {
       onChange?.(value);
 
-      if (Platform.OS !== 'ios') {
+      if (!isIos) {
         popoverRef.current?.close();
         onBlur?.();
       }

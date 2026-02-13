@@ -194,14 +194,18 @@ export const ModalHeader = memo(
     height,
     headerLeft,
     transparent,
+    relative,
     ignoreTop,
     headerTitle,
     headerRight,
+    opacity,
     onClose,
   }: {
     height?: number;
     transparent?: boolean;
     ignoreTop?: boolean;
+    relative?: boolean;
+    opacity?: number;
     headerLeft?: () => ReactElement;
     headerTitle?: string | (() => ReactElement);
     headerRight?: () => ReactElement;
@@ -214,24 +218,29 @@ export const ModalHeader = memo(
       [ignoreTop, top],
     );
 
+    const adjustedHeight = adjustedTop + (height || headerHeight);
+
     return (
       <XStack
         zIndex={1}
-        position="absolute"
-        top={0}
+        {...(!relative && {
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+        })}
         flex={1}
-        left={0}
-        right={0}
         width="100%"
         alignItems="center"
         justifyContent="space-between"
         gap="$2"
         paddingTop={adjustedTop}
-        height={adjustedTop + (height || headerHeight)}
+        height={adjustedHeight}
+        maxHeight={adjustedHeight}
         paddingLeft={left + headerHorizontalPadding}
         paddingRight={right + headerHorizontalPadding}
       >
-        {!transparent && <NavigationBackground />}
+        {!transparent && <NavigationBackground opacity={opacity} />}
 
         <SideElement
           flex={!headerTitle ? 1 : undefined}

@@ -6,16 +6,17 @@ import {
   Path,
 } from 'react-hook-form';
 import { PickerItem } from '../form-element/picker';
-import { SelectPicker } from '../form-element/select-picker';
+import { SmartSelect } from '../form-element/smart-select';
 
 export function SelectController<T extends FieldValues>({
   name,
   control,
   label,
   placeholder,
+  searchable,
+  moveSelectedToTop,
   disabled,
   loading,
-  disableDrag,
   required,
   rules,
   options,
@@ -28,11 +29,12 @@ export function SelectController<T extends FieldValues>({
   label: string;
   placeholder: string;
   loading?: boolean;
+  searchable?: boolean;
+  moveSelectedToTop?: boolean;
   options?: PickerItem[];
   optionsLoading?: boolean;
   optionsError?: string | null;
   disabled?: boolean;
-  disableDrag?: boolean;
   required?: boolean;
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
@@ -43,18 +45,18 @@ export function SelectController<T extends FieldValues>({
       name={name}
       rules={rules}
       render={({ field: { value, onChange }, fieldState: { error } }) => (
-        <SelectPicker
+        <SmartSelect
+          moveSelectedToTop={moveSelectedToTop}
+          searchable={searchable}
           required={required}
           disabled={disabled}
           loading={loading}
-          disableDrag={disableDrag}
           value={value}
           error={error?.message}
           options={options}
           optionsLoading={optionsLoading}
           optionsError={optionsError}
           label={label}
-          sheetLabel={label}
           placeholder={placeholder}
           onChange={onChange}
           onBlur={onBlur}

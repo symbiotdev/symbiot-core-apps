@@ -7,14 +7,13 @@ import { useEffect } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
 import {
   PickerOnChange,
-  SelectPicker,
+  SmartSelect,
 } from '@symbiot-core-apps/form-controller';
 
 export function BrandServiceFormatController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   disabled?: boolean;
-  disableDrag?: boolean;
   required?: boolean;
   onBlur?: () => void;
 }) {
@@ -35,7 +34,6 @@ export function BrandServiceFormatController<T extends FieldValues>(props: {
         <SelectFormat
           value={value}
           disabled={props.disabled}
-          disableDrag={props.disableDrag}
           options={data}
           optionsLoading={isPending}
           optionsError={error}
@@ -53,7 +51,6 @@ const SelectFormat = ({
   optionsLoading,
   optionsError,
   disabled,
-  disableDrag,
   onChange,
   onBlur,
 }: {
@@ -62,7 +59,6 @@ const SelectFormat = ({
   optionsLoading?: boolean;
   optionsError?: string | null;
   disabled?: boolean;
-  disableDrag?: boolean;
   onChange: PickerOnChange;
   onBlur?: () => void;
 }) => {
@@ -78,13 +74,13 @@ const SelectFormat = ({
   }, [options, value, onChange]);
 
   return (
-    <SelectPicker
+    <SmartSelect
       required
+      searchable={false}
       label={t('brand_service.form.format.label')}
       placeholder={t('brand_service.form.format.placeholder')}
       value={value}
       disabled={disabled}
-      disableDrag={disableDrag}
       options={options}
       optionsLoading={optionsLoading}
       optionsError={optionsError}

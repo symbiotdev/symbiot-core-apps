@@ -1,7 +1,7 @@
 import { Control, Controller } from 'react-hook-form';
 import {
   DatePicker,
-  SelectPicker,
+  SmartSelect,
   TimeScheduleController,
 } from '@symbiot-core-apps/form-controller';
 import { View } from 'tamagui';
@@ -16,7 +16,6 @@ enum Duration {
 export function UnavailableBrandBookingDatetimeController(props: {
   control: Control<{ datetime: { start: Date; end: Date } }>;
   disabled?: boolean;
-  disableDrag?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useI18n();
@@ -46,8 +45,8 @@ export function UnavailableBrandBookingDatetimeController(props: {
               onBlur={props.onBlur}
             />
 
-            <SelectPicker
-              disableDrag={props.disableDrag}
+            <SmartSelect
+              searchable={false}
               label={t('unavailable_brand_booking.form.duration.label')}
               value={isAllDay ? Duration.allDay : Duration.custom}
               options={[

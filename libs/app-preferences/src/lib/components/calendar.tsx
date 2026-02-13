@@ -16,7 +16,7 @@ import {
   OnChangeMultiToggle,
   PickerItem,
   PickerOnChange,
-  SelectPicker,
+  SmartSelect,
 } from '@symbiot-core-apps/form-controller';
 
 const numberOfDaysLandscapeLabel = isPhone
@@ -86,20 +86,20 @@ export const Calendar = () => {
   return (
     <PageView scrollable withHeaderHeight>
       <CompactView>
-        <SelectPicker
+        <SmartSelect
+          searchable={false}
+          moveSelectedToTop={false}
           label={t('shared.preferences.calendar.week_starts_on.label')}
-          sheetLabel={t('shared.preferences.calendar.week_starts_on.label')}
           value={preferences.appearance?.calendar?.weekStartsOn || 0}
           options={weekdaysOptions}
           onChange={onChangeWeekdayStartsOn as PickerOnChange}
         />
 
         {isPhone && (
-          <SelectPicker
+          <SmartSelect
+            searchable={false}
+            moveSelectedToTop={false}
             label={t(
-              'shared.preferences.calendar.number_of_days.portrait_label',
-            )}
-            sheetLabel={t(
               'shared.preferences.calendar.number_of_days.portrait_label',
             )}
             value={
@@ -116,9 +116,10 @@ export const Calendar = () => {
           />
         )}
 
-        <SelectPicker
+        <SmartSelect
+          searchable={false}
+          moveSelectedToTop={false}
           label={t(numberOfDaysLandscapeLabel)}
-          sheetLabel={t(numberOfDaysLandscapeLabel)}
           value={preferences.appearance?.calendar?.countDays?.landscape || null}
           options={
             t('shared.preferences.calendar.number_of_days.options', {

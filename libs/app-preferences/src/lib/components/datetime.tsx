@@ -10,7 +10,7 @@ import { DateElementType } from '@symbiot-core-apps/api';
 import {
   PickerItem,
   PickerOnChange,
-  SelectPicker,
+  SmartSelect,
 } from '@symbiot-core-apps/form-controller';
 
 export const Datetime = () => {
@@ -50,9 +50,10 @@ export const Datetime = () => {
   return (
     <PageView scrollable withHeaderHeight>
       <CompactView>
-        <SelectPicker
+        <SmartSelect
+          searchable={false}
+          moveSelectedToTop={false}
           label={t('shared.preferences.datetime.date_format.label')}
-          sheetLabel={t('shared.preferences.datetime.date_format.label')}
           value={preferences.dateFormat}
           options={
             t('shared.preferences.datetime.date_format.formats', {
@@ -62,9 +63,10 @@ export const Datetime = () => {
           onChange={onChangeDateFormat as PickerOnChange}
         />
 
-        <SelectPicker
+        <SmartSelect
+          searchable={false}
+          moveSelectedToTop={false}
           label={t('shared.preferences.datetime.time_format.label')}
-          sheetLabel={t('shared.preferences.datetime.time_format.label')}
           value={preferences.timeFormat}
           options={
             t('shared.preferences.datetime.time_format.formats', {
@@ -74,9 +76,10 @@ export const Datetime = () => {
           onChange={onChangeTimeFormat as PickerOnChange}
         />
 
-        <SelectPicker
+        <SmartSelect
+          searchable={false}
+          moveSelectedToTop={false}
           label={t('shared.preferences.datetime.date_element.label')}
-          sheetLabel={t('shared.preferences.datetime.date_element.label')}
           value={preferences.appearance?.date?.element || null}
           options={
             t('shared.preferences.datetime.date_element.types', {

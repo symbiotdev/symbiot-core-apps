@@ -7,9 +7,9 @@ import {
   useUpdateBrandServiceReq,
 } from '@symbiot-core-apps/api';
 import {
-  defaultPageVerticalPadding,
   CompactView,
   compactViewStyles,
+  defaultPageVerticalPadding,
   Icon,
   ListItem,
   ListItemGroup,
@@ -89,9 +89,7 @@ export const UpdateBrandService = ({ service }: { service: BrandService }) => {
       <Availability service={service} />
 
       <ListItemGroup style={compactViewStyles}>
-        {functionality.available.servicePrice && (
-          <Pricing service={service} />
-        )}
+        {functionality.available.servicePrice && <Pricing service={service} />}
 
         <About service={service} />
         <Structure service={service} />
@@ -439,18 +437,12 @@ const Structure = ({ service }: { service: BrandService }) => {
           <SingeElementForm
             name="type"
             value={value.type}
-            controllerProps={{
-              disableDrag: true,
-            }}
             onUpdate={updateValue}
             Controller={BrandServiceTypeController}
           />
           <SingeElementForm
             name="format"
             value={value.format}
-            controllerProps={{
-              disableDrag: true,
-            }}
             onUpdate={updateValue}
             Controller={BrandServiceFormatController}
           />

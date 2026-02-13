@@ -22,7 +22,7 @@ import {
   HorizontalPickerOnChange,
   PickerItem,
   PickerOnChange,
-  SelectPicker,
+  SmartSelect,
 } from '@symbiot-core-apps/form-controller';
 import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 
@@ -151,11 +151,9 @@ export function ServiceBrandBookingScheduleController({
 const Locations = ({
   data,
   value,
-  disableDrag,
   onChange,
 }: {
   value?: string;
-  disableDrag?: boolean;
   data: BrandBookingSlot[];
   onChange: PickerOnChange;
 }) => {
@@ -192,9 +190,8 @@ const Locations = ({
 
   return (
     canSelectLocation && (
-      <SelectPicker
+      <SmartSelect
         required
-        disableDrag={disableDrag}
         label={t('service_brand_booking.form.location.label')}
         placeholder={t('service_brand_booking.form.location.placeholder')}
         value={value}

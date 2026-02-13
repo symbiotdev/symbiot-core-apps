@@ -7,18 +7,15 @@ import { useEffect } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
 import {
   PickerOnChange,
-  SelectPicker,
+  SmartSelect,
 } from '@symbiot-core-apps/form-controller';
 
 export function BrandServiceTypeController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   disabled?: boolean;
-  disableDrag?: boolean;
-  required?: boolean;
   onBlur?: () => void;
 }) {
-  const { t } = useI18n();
   const { data, isPending, error } = useBrandServiceTypesReq();
 
   return (
@@ -26,16 +23,12 @@ export function BrandServiceTypeController<T extends FieldValues>(props: {
       name={props.name}
       control={props.control}
       rules={{
-        required: {
-          value: true,
-          message: t('brand_service.form.type.error.required'),
-        },
+        required: false
       }}
       render={({ field: { value, onChange } }) => (
         <SelectType
           value={value}
           disabled={props.disabled}
-          disableDrag={props.disableDrag}
           options={data}
           optionsLoading={isPending}
           optionsError={error}
@@ -53,7 +46,6 @@ const SelectType = ({
   optionsLoading,
   optionsError,
   disabled,
-  disableDrag,
   onChange,
   onBlur,
 }: {
@@ -62,7 +54,6 @@ const SelectType = ({
   optionsLoading?: boolean;
   optionsError?: string | null;
   disabled?: boolean;
-  disableDrag?: boolean;
   onChange: PickerOnChange;
   onBlur?: () => void;
 }) => {
@@ -78,16 +69,16 @@ const SelectType = ({
   }, [options, value, onChange]);
 
   return (
-    <SelectPicker
+    <SmartSelect
       required
       label={t('brand_service.form.type.label')}
       placeholder={t('brand_service.form.type.placeholder')}
       value={value}
       disabled={disabled}
-      disableDrag={disableDrag}
       options={options}
       optionsLoading={optionsLoading}
       optionsError={optionsError}
+      fallbackOptions={options?.filter(({ value }) => !value)}
       onChange={onChange}
       onBlur={onBlur}
     />

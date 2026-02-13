@@ -8,7 +8,6 @@ export function BrandLocationTimezoneController<T extends FieldValues>(props: {
   country?: string;
   noLabel?: boolean;
   disabled?: boolean;
-  disableDrag?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useI18n();

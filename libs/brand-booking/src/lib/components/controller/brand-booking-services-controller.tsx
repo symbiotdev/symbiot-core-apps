@@ -7,7 +7,7 @@ import { XStack } from 'tamagui';
 import { useI18n } from '@symbiot-core-apps/shared';
 import {
   PickerOnChange,
-  SelectPicker,
+  SmartSelect,
   Textarea,
 } from '@symbiot-core-apps/form-controller';
 
@@ -15,7 +15,6 @@ export function BrandBookingServicesController(props: {
   control: Control<{ details: { service: string; note: string } }>;
   required?: boolean;
   disabled?: boolean;
-  disableDrag?: boolean;
 }) {
   const { t } = useI18n();
   const { items, isPending, error } = useServicesReq({
@@ -39,7 +38,6 @@ export function BrandBookingServicesController(props: {
           <SelectService
             value={value.service}
             disabled={props.disabled}
-            disableDrag={props.disableDrag}
             services={items}
             servicesLoading={isPending}
             servicesError={error}
@@ -77,7 +75,6 @@ const SelectService = ({
   servicesLoading,
   servicesError,
   disabled,
-  disableDrag,
   noLabel,
   onChange,
 }: {
@@ -87,7 +84,6 @@ const SelectService = ({
   servicesError?: string | null;
   disabled?: boolean;
   noLabel?: boolean;
-  disableDrag?: boolean;
   onChange: PickerOnChange;
 }) => {
   const { t } = useI18n();
@@ -116,13 +112,12 @@ const SelectService = ({
   }, [items, onChange, value]);
 
   return (
-    <SelectPicker
+    <SmartSelect
       required
       value={value}
       label={!noLabel ? t('service_brand_booking.form.service.label') : ''}
       placeholder={t('service_brand_booking.form.service.placeholder')}
       disabled={disabled}
-      disableDrag={disableDrag}
       options={items}
       optionsLoading={servicesLoading}
       optionsError={servicesError}

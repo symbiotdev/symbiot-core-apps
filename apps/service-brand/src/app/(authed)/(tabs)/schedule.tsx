@@ -9,7 +9,6 @@ import {
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import {
-  AdaptivePopover,
   AdaptivePopoverRef,
   Avatar,
   ButtonIcon,
@@ -30,11 +29,12 @@ import {
 import {
   useCurrentBrandBookingsState,
   useCurrentBrandEmployee,
+  useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
 import { useRoute } from '@react-navigation/native';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
-import { Picker } from '@symbiot-core-apps/form-controller';
+import { SmartSelect } from '@symbiot-core-apps/form-controller';
 
 const today = new Date();
 
@@ -44,6 +44,7 @@ export default () => {
   const route = useRoute();
   const headerHeight = useScreenHeaderHeight();
   const navigation = useNavigation();
+  const { brand } = useCurrentBrandState();
   const { location, setLocation } = useCurrentBrandBookingsState();
   const { hasPermission } = useCurrentBrandEmployee();
   const allLocations = useAllBrandLocation();
@@ -78,13 +79,29 @@ export default () => {
   const locationsOptions = useMemo(
     () =>
       locations && [
-        allLocations,
-        ...locations.items.map(({ id, name }) => ({
+        {
+          ...allLocations,
+          icon: (
+            <Avatar
+              name={brand?.name || '*'}
+              size={40}
+              url={brand?.avatar?.xsUrl}
+            />
+          ),
+        },
+        ...locations.items.map(({ id, name, avatar }) => ({
           label: name,
           value: id,
+          icon: (
+            <Avatar
+              name={name}
+              size={40}
+              url={avatar?.xsUrl || brand?.avatar?.xsUrl}
+            />
+          ),
         })),
       ],
-    [allLocations, locations],
+    [allLocations, locations, brand?.name, brand?.avatar?.xsUrl],
   );
 
   const headerLeft = useCallback(() => {
@@ -137,15 +154,15 @@ export default () => {
       locations?.items &&
       locations.items.length > 1 &&
       hasPermission('locations') && (
-        <AdaptivePopover
-          ignoreScroll
-          ref={popoverRef}
-          minWidth={200}
+        <SmartSelect
+          value={location?.id || allLocations.value}
+          options={locationsOptions}
+          optionsLoading={locationsLoading}
+          optionsError={locationsError}
           trigger={
             location ? (
               <Avatar
                 cursor="pointer"
-                pressStyle={{ opacity: 0.8 }}
                 name={location?.name || allLocations.label}
                 size={headerButtonSize}
                 url={location?.avatar?.xsUrl}
@@ -158,23 +175,15 @@ export default () => {
               />
             )
           }
-        >
-          <Picker
-            moveSelectedToTop
-            value={location?.id || allLocations.value}
-            options={locationsOptions}
-            optionsLoading={locationsLoading}
-            optionsError={locationsError}
-            onChange={(selectedId) => {
-              !isIos && popoverRef.current?.close();
+          onChange={(selectedId) => {
+            !isIos && popoverRef.current?.close();
 
-              setLocation(
-                locations?.items.find(({ id }) => selectedId === id) ||
-                  allLocations.value,
-              );
-            }}
-          />
-        </AdaptivePopover>
+            setLocation(
+              locations?.items.find(({ id }) => selectedId === id) ||
+                allLocations.value,
+            );
+          }}
+        />
       ),
     [
       locations,

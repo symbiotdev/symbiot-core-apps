@@ -16,6 +16,7 @@ export function BrandServiceGenderController<T extends FieldValues>(props: {
   return (
     <SelectController
       {...props}
+      searchable={false}
       label={t('brand_service.form.gender.label')}
       placeholder={t('brand_service.form.gender.placeholder')}
       options={data}

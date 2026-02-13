@@ -251,10 +251,6 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
 
 const TimezoneForm = SingeElementForm<{
   country?: string;
-  disableDrag: true;
-}>;
-const NoDragForm = SingeElementForm<{
-  disableDrag: true;
 }>;
 
 const Locale = ({ location }: { location: BrandLocation }) => {
@@ -304,23 +300,17 @@ const Locale = ({ location }: { location: BrandLocation }) => {
         <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
           {canChangeCountry && (
             <>
-              <NoDragForm
+              <SingeElementForm
                 name="country"
                 value={value.country}
-                controllerProps={{
-                  disableDrag: true,
-                }}
                 onUpdate={updateValue}
                 Controller={BrandLocationCountryController}
               />
 
               {value.country?.toLowerCase() === 'us' && (
-                <NoDragForm
+                <SingeElementForm
                   name="usState"
                   value={location.usState?.abbreviation}
-                  controllerProps={{
-                    disableDrag: true,
-                  }}
                   onUpdate={updateValue}
                   Controller={BrandLocationUsStateController}
                 />
@@ -334,7 +324,6 @@ const Locale = ({ location }: { location: BrandLocation }) => {
             onUpdate={updateValue}
             controllerProps={{
               country: value.country,
-              disableDrag: true,
             }}
             Controller={BrandLocationTimezoneController}
           />

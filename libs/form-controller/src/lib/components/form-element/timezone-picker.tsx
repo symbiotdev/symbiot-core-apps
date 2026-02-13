@@ -1,4 +1,3 @@
-import { SelectPicker } from './select-picker';
 import { PickerOnChange } from './picker';
 import {
   getAllTimezones,
@@ -6,17 +5,16 @@ import {
 } from 'countries-and-timezones';
 import { useEffect, useMemo } from 'react';
 import { isIos } from '@symbiot-core-apps/shared';
+import { SmartSelect } from './smart-select';
 
 export const TimezonePicker = ({
   value,
   country,
   label,
-  sheetLabel,
   error,
   placeholder,
   disabled,
   required,
-  disableDrag,
   onlyCountryTimezones,
   onChange,
   onBlur,
@@ -24,12 +22,10 @@ export const TimezonePicker = ({
   value?: string;
   country?: string;
   label?: string;
-  sheetLabel?: string;
   error?: string;
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;
-  disableDrag?: boolean;
   onlyCountryTimezones?: boolean;
   onChange: (value: string) => void;
   onBlur?: () => void;
@@ -75,17 +71,13 @@ export const TimezonePicker = ({
   }, [onChange, onlyCountryTimezones, options, value]);
 
   return (
-    <SelectPicker
-      lazy
-      moveSelectedToTop
-      sheetLabel={sheetLabel}
+    <SmartSelect
       label={label}
       value={value}
       error={error}
       placeholder={placeholder}
       disabled={disabled}
       required={required}
-      disableDrag={disableDrag}
       options={options}
       onChange={onChange as PickerOnChange}
       onBlur={onBlur}

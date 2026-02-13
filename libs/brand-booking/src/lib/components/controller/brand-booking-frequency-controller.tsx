@@ -6,7 +6,7 @@ import {
   BrandBookingFrequency,
   getEndDateByBrandBookingFrequency,
 } from '@symbiot-core-apps/api';
-import { DatePicker, SelectPicker } from '@symbiot-core-apps/form-controller';
+import { DatePicker, SmartSelect } from '@symbiot-core-apps/form-controller';
 
 export function BrandBookingFrequencyController<
   T extends FieldValues & {
@@ -18,7 +18,6 @@ export function BrandBookingFrequencyController<
   minDate: Date;
   label?: string;
   disabled?: boolean;
-  disableDrag?: boolean;
 }) {
   const { t } = useI18n();
 
@@ -60,8 +59,11 @@ export function BrandBookingFrequencyController<
 
         return (
           <View gap="$2">
-            <SelectPicker
+            <SmartSelect
               {...props}
+              searchable={false}
+              moveSelectedToTop={false}
+              optionsTitle={t('shared.schedule.recurrence')}
               value={value.type}
               options={options}
               onChange={(type) => {

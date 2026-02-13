@@ -229,7 +229,6 @@ export const ModalHeader = memo(
           left: 0,
           right: 0,
         })}
-        flex={1}
         width="100%"
         alignItems="center"
         justifyContent="space-between"

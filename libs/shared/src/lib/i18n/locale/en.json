@@ -367,6 +367,7 @@
     "day_off": "Day off",
     "start": "Start",
     "end": "End",
+    "recurrence": "Repeat",
     "frequency_until": "Repeat until",
     "frequency_max_date": "Maximum possible date for this type of recurrence - {{date}}",
     "duration": {

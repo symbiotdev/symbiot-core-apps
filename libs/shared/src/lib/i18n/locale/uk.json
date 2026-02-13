@@ -367,6 +367,7 @@
     "day_off": "Вихідний",
     "start": "Від",
     "end": "До",
+    "recurrence": "Повторення",
     "frequency_until": "Повторювати до",
     "frequency_max_date": "Максимально можлива дата для даного типу повторювання - {{date}}",
     "duration": {

@@ -235,7 +235,6 @@ export const CreateBrandService = () => {
         subtitle={t('brand_service.create.steps.structure.subtitle')}
       >
         <BrandServiceTypeController
-          required
           name="type"
           control={structureControl}
         />

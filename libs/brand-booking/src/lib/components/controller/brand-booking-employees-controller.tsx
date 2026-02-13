@@ -10,7 +10,7 @@ import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
 import { useI18n } from '@symbiot-core-apps/shared';
 import {
   PickerOnChange,
-  SelectPicker,
+  SmartSelect,
   Textarea,
 } from '@symbiot-core-apps/form-controller';
 
@@ -89,6 +89,7 @@ const Employee = ({
       employees?.map((employee) => ({
         label: employee.name,
         value: employee.id,
+        description: employee.role,
         icon: (
           <Avatar
             name={employee.name}
@@ -107,10 +108,10 @@ const Employee = ({
   );
 
   return (
-    <SelectPicker
+    <SmartSelect
       required
-      optionsCentered={false}
       value={value}
+      optionsTitle={t('unavailable_brand_booking.form.employee.label')}
       placeholder={t('unavailable_brand_booking.form.employee.placeholder')}
       options={options}
       optionsLoading={loading}

@@ -254,7 +254,6 @@ const OptionsList = ({
   const scrollingRef = useRef<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
   const sortedOptions = useRef(
-    // fixme
     moveSelectedToTop
       ? options?.sort((a, b) => {
           if (Array.isArray(value)) {
@@ -380,7 +379,13 @@ const OptionsList = ({
       overflow="hidden"
     >
       <View backgroundColor="$background1">
-        <ModalHeader ignoreTop transparent relative headerTitle={title} onClose={onClose} />
+        <ModalHeader
+          ignoreTop
+          transparent
+          relative
+          headerTitle={title}
+          onClose={onClose}
+        />
 
         {!!options?.length && searchable && (
           <View

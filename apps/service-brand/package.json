@@ -90,6 +90,7 @@
     "react-native-svg-transformer": "*",
     "react-native-ui-datepicker": "*",
     "react-native-web": "*",
+    "react-native-worklets": "*",
     "socket.io-client": "*",
     "states-us": "*",
     "tamagui": "*",

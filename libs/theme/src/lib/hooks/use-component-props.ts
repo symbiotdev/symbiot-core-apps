@@ -1,11 +1,10 @@
-import { DimensionValue, ViewProps, ViewStyle } from 'react-native';
+import { DimensionValue, StyleProp, ViewProps, ViewStyle } from 'react-native';
 import { useMemo, useState } from 'react';
 import {
   allStyleProps,
   colorStyleProps,
   dimensionStyleProps,
 } from '../utils/style-props';
-import { AnimatedProps } from 'react-native-reanimated';
 import { useTheme } from './use-theme';
 
 type OverrideStyle<T> = {
@@ -14,22 +13,27 @@ type OverrideStyle<T> = {
     : T[K];
 };
 
-export type Props<P extends ViewProps | AnimatedProps<ViewProps>> = P &
-  OverrideStyle<P['style']> & {
+export type ComponentProps<C> = {
+  key?: string;
+  style?: StyleProp<C>;
+};
+
+export type Props<C extends ComponentProps<C>> = C &
+  OverrideStyle<C['style']> & {
     disabled?: boolean;
     disabledStyle?: OverrideStyle<ViewStyle>;
     hoverStyle?: OverrideStyle<ViewStyle>;
     pressStyle?: OverrideStyle<ViewStyle>;
   };
 
-export function useComponentProps<P extends ViewProps>({
+export function useComponentProps<C extends ComponentProps<C>>({
   style,
   disabled,
   disabledStyle,
   hoverStyle,
   pressStyle,
   ...otherProps
-}: Partial<Props<P>>): ViewProps {
+}: Partial<Props<C>>) {
   const { colors, dimensions } = useTheme();
 
   const [state, setState] = useState({
@@ -43,7 +47,7 @@ export function useComponentProps<P extends ViewProps>({
       .reduce(
         (obj, key) => ({
           ...obj,
-          [key]: otherProps[key as 'id'],
+          [key]: otherProps[key as 'key'],
         }),
         {},
       );
@@ -54,99 +58,97 @@ export function useComponentProps<P extends ViewProps>({
         onPointerEnter: (e) => {
           setState((prev) => ({ ...prev, hovered: true }));
 
-          otherProps.onPointerEnter?.(e);
+          (otherProps as ViewProps).onPointerEnter?.(e);
         },
         onPointerLeave: (e) => {
           setState((prev) => ({ ...prev, hovered: false }));
 
-          otherProps.onPointerLeave?.(e);
+          (otherProps as ViewProps).onPointerLeave?.(e);
         },
       }),
       ...(pressStyle && {
         onPointerDown: (e) => {
           setState((prev) => ({ ...prev, pressed: true }));
 
-          otherProps.onPointerDown?.(e);
+          (otherProps as ViewProps).onPointerDown?.(e);
         },
         onPointerUp: (e) => {
           setState((prev) => ({ ...prev, pressed: false }));
 
-          otherProps.onPointerUp?.(e);
+          (otherProps as ViewProps).onPointerUp?.(e);
         },
         onTouchStart: (e) => {
           setState((prev) => ({ ...prev, pressed: true }));
 
-          otherProps.onTouchStart?.(e);
+          (otherProps as ViewProps).onTouchStart?.(e);
         },
         onTouchEnd: (e) => {
           setState((prev) => ({ ...prev, pressed: false }));
 
-          otherProps.onTouchEnd?.(e);
+          (otherProps as ViewProps).onTouchEnd?.(e);
         },
       }),
     };
   }, [otherProps, hoverStyle, pressStyle]);
 
-  const _style = useMemo(
-    () =>
-      [
-        otherProps,
-        ...(Array.isArray(style)
-          ? style
-          : style !== null && typeof style === 'object'
-            ? [style]
-            : []),
-        {
-          ...(state.hovered && hoverStyle),
-          ...(state.pressed && {
-            opacity: 0.8,
-            ...pressStyle,
-          }),
-          ...(disabled && {
-            opacity: 0.5,
-            ...disabledStyle,
-          }),
-        },
-      ].map((obj) =>
-        Object.keys(obj)
-          .filter((key) => allStyleProps[key])
-          .reduce((newObj, key) => {
-            const value = obj[key];
-
-            if (colorStyleProps[key]) {
-              return {
-                ...newObj,
-                [key]: colors[value] || value,
-              };
-            } else if (dimensionStyleProps[key]) {
-              return {
-                ...newObj,
-                [key]: dimensions[value] || value,
-              };
-            } else {
-              return {
-                ...newObj,
-                [key]: value,
-              };
-            }
-          }, {}),
-      ),
-    [
-      colors,
-      dimensions,
-      state.hovered,
-      state.pressed,
-      style,
-      disabled,
-      otherProps,
-      hoverStyle,
-      pressStyle,
-      disabledStyle,
-    ],
-  );
-
   return {
     ...props,
-    style: _style,
+    style: useMemo(
+      () =>
+        [
+          otherProps,
+          ...(Array.isArray(style)
+            ? style
+            : style !== null && typeof style === 'object'
+              ? [style]
+              : []),
+          {
+            ...(state.hovered && hoverStyle),
+            ...(state.pressed && {
+              opacity: 0.8,
+              ...pressStyle,
+            }),
+            ...(disabled && {
+              opacity: 0.5,
+              ...disabledStyle,
+            }),
+          },
+        ].map((obj) =>
+          Object.keys(obj)
+            .filter((key) => allStyleProps[key])
+            .reduce((newObj, key) => {
+              const value = obj[key];
+
+              if (colorStyleProps[key]) {
+                return {
+                  ...newObj,
+                  [key]: colors[value] || value,
+                };
+              } else if (dimensionStyleProps[key]) {
+                return {
+                  ...newObj,
+                  [key]: dimensions[value] || value,
+                };
+              } else {
+                return {
+                  ...newObj,
+                  [key]: value,
+                };
+              }
+            }, {}),
+        ),
+      [
+        colors,
+        dimensions,
+        state.hovered,
+        state.pressed,
+        style,
+        disabled,
+        otherProps,
+        hoverStyle,
+        pressStyle,
+        disabledStyle,
+      ],
+    ),
   };
 }

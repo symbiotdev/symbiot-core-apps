@@ -3,7 +3,7 @@ import { themed } from './themed';
 import Animated, { AnimatedProps } from 'react-native-reanimated';
 import { isWeb } from '@symbiot-core-apps/shared';
 
-const props = {
+const defaultProps = {
   fontFamily: 'BodyRegular',
   fontSize: 14,
   lineHeight: isWeb ? 18 : undefined,
@@ -11,5 +11,8 @@ const props = {
   allowFontScaling: true,
 };
 
-export const Txt = themed<TextProps>(Text, props);
-export const ATxt = themed<AnimatedProps<TextProps>>(Animated.Text, props);
+export const Txt = themed<TextProps>(Text, defaultProps);
+export const ATxt = themed<TextProps & AnimatedProps<TextProps>>(
+  Animated.Text,
+  defaultProps,
+);

@@ -75,7 +75,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
                   {!!service.discount && (
                     <MediumText
                       textDecorationLine="line-through"
-                      color="$placeholderColor"
+                      color="$placeholder"
                     >
                       {formatPrice({
                         price: service.price,

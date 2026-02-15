@@ -58,7 +58,7 @@ export const BrandClientItem = ({
 
         {!!subtitle && (
           <RegularText
-            color={subtitleColor || '$placeholderColor'}
+            color={subtitleColor || '$placeholder'}
             numberOfLines={1}
             lineHeight={20}
           >

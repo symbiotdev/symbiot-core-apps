@@ -122,7 +122,7 @@ export const Textarea = forwardRef(
           verticalAlign="top"
           padding="$4"
           placeholder={placeholder}
-          placeholderTextColor="$placeholderColor"
+          placeholderTextColor="$placeholder"
           disabled={disabled && isScrolling}
           // minHeight={46}
           minHeight={maxHeight} // temp to prevent jumps
@@ -148,7 +148,7 @@ export const Textarea = forwardRef(
 
         {!!countCharacters && (
           <MediumText
-            color="$placeholderColor"
+            color="$placeholder"
             fontSize={12}
             textAlign="right"
             paddingHorizontal="$4"

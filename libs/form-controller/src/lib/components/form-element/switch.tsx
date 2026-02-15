@@ -42,7 +42,7 @@ export const Switch = ({
           )}
 
           {!!description && (
-            <RegularText fontSize={12} color="$placeholderColor" flex={1}>
+            <RegularText fontSize={12} color="$placeholder" flex={1}>
               {description}
             </RegularText>
           )}

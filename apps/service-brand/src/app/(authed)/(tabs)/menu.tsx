@@ -119,7 +119,7 @@ export default () => {
 
                   <MediumText
                     alignSelf="flex-start"
-                    color="$placeholderColor"
+                    color="$placeholder"
                     numberOfLines={1}
                     onPress={copyId}
                   >
@@ -160,7 +160,7 @@ export default () => {
 
                   <MediumText
                     alignSelf="flex-start"
-                    color="$placeholderColor"
+                    color="$placeholder"
                     numberOfLines={1}
                   >
                     {currentEmployee.role}
@@ -294,7 +294,7 @@ export default () => {
             {!isWeb && (
               <RegularText
                 marginTop="$1"
-                color="$placeholderColor"
+                color="$placeholder"
                 textAlign="center"
               >
                 {t('shared.version')}: {DeviceVersion}

@@ -292,7 +292,7 @@ export const CreateBrandEmployee = () => {
           marginTop="$5"
           url={avatar}
           name={`${firstname} ${lastname}`}
-          color="$placeholderColor"
+          color="$placeholder"
           size={140}
           onAttach={setAvatar}
           onRemove={() => setAvatar(undefined)}

@@ -45,7 +45,7 @@ export const BrandEmployeeItem = ({
       <View gap="$1" flex={1}>
         <MediumText numberOfLines={1}>{employee.name}</MediumText>
         <RegularText
-          color="$placeholderColor"
+          color="$placeholder"
           numberOfLines={1}
           lineHeight={20}
         >

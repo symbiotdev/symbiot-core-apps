@@ -60,7 +60,7 @@ export const Segment = memo(
         >
           {!!item.placeholder && (
             <MediumText
-              color="$placeholderColor"
+              color="$placeholder"
               textAlign="center"
               flex={1}
               numberOfLines={1}

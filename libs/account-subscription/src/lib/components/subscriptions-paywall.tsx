@@ -159,7 +159,7 @@ export const SubscriptionsPaywall = ({
 
             <MediumText
               textAlign="center"
-              color="$placeholderColor"
+              color="$placeholder"
               fontSize={12}
             >
               {pkg.product.pricePerWeekString}/{t('shared.datetime.unit.week')}
@@ -240,7 +240,7 @@ export const SubscriptionsPaywall = ({
 
       {!!offeredPrivileges?.length && (
         <SemiBoldText
-          color="$placeholderColor"
+          color="$placeholder"
           paddingVertical="$1"
           textAlign="center"
         >

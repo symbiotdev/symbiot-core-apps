@@ -83,7 +83,7 @@ export const PhoneInput = ({
             outlineWidth: 0,
             fontSize: 14,
             marginLeft: -10,
-            color: disabled ? theme.$placeholderColor?.val : theme.$color?.val,
+            color: disabled ? theme.$placeholder?.val : theme.$color?.val,
           }}
           style={{
             backgroundColor: 'transparent',
@@ -94,7 +94,7 @@ export const PhoneInput = ({
             keyboardAppearance: scheme,
             maxLength: 30,
             placeholder,
-            placeholderTextColor: theme.placeholderColor?.val,
+            placeholderTextColor: theme.placeholder?.val,
             enterKeyHint,
             textContentType: 'oneTimeCode', // https://github.com/facebook/react-native/issues/39411
             onBlur: blur,

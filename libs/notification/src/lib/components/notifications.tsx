@@ -74,14 +74,14 @@ export const Notifications = ({
 
           <View gap="$1" flex={1}>
             <XStack justifyContent="space-between" gap="$4">
-              <RegularText color="$placeholderColor" numberOfLines={1}>
+              <RegularText color="$placeholder" numberOfLines={1}>
                 {item.from.name}
               </RegularText>
               <AttentionView
                 attention={!item.read}
                 dotProps={{ right: -5, top: -5 }}
               >
-                <RegularText color="$placeholderColor" numberOfLines={1}>
+                <RegularText color="$placeholder" numberOfLines={1}>
                   {DateHelper.format(item.cAt, preferences.dateFormat)}
                 </RegularText>
               </AttentionView>
@@ -89,7 +89,7 @@ export const Notifications = ({
 
             <SemiBoldText numberOfLines={1}>{item.title}</SemiBoldText>
 
-            <RegularText color="$placeholderColor" numberOfLines={3}>
+            <RegularText color="$placeholder" numberOfLines={3}>
               {item.subtitle}
             </RegularText>
           </View>

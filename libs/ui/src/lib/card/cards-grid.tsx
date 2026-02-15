@@ -35,12 +35,12 @@ export const CardsGrid = ({
       onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
     >
       {!!title && (
-        <MediumText color="$placeholderColor" marginHorizontal="$3">
+        <MediumText color="$placeholder" marginHorizontal="$3">
           {title}
         </MediumText>
       )}
 
-      <View flexDirection="row" flexWrap="wrap" flex={1} gap={8} width={width}>
+      <View flexDirection="row" flexWrap="wrap" gap={8} width={width}>
         {items.map(
           (item, index) =>
             !item.hidden && (
@@ -106,7 +106,7 @@ const GridItem = ({
         <RegularText
           fontSize={12}
           numberOfLines={textNumberOfLines}
-          color="$placeholderColor"
+          color="$placeholder"
         >
           {text}
         </RegularText>

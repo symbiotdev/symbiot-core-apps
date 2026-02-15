@@ -67,7 +67,7 @@ export const BrandServiceItem = ({
                 {!!service.discount && (
                   <RegularText
                     textDecorationLine="line-through"
-                    color="$placeholderColor"
+                    color="$placeholder"
                   >
                     {formatPrice({
                       price: service.price,

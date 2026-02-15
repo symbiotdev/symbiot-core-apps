@@ -216,7 +216,7 @@ export const ImportBrandClient = () => {
 
           {/*<MediumText*/}
           {/*  fontSize={12}*/}
-          {/*  color="$placeholderColor"*/}
+          {/*  color="$placeholder"*/}
           {/*  marginHorizontal="$3"*/}
           {/*>*/}
           {/*  *{t('brand_client.import.guide.warning')}*/}

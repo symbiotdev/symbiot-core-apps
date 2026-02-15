@@ -19,7 +19,7 @@ export const ListItemGroup = memo(
       <View gap="$1" width="100%">
         {!!props.title && (
           <MediumText
-            color="$placeholderColor"
+            color="$placeholder"
             marginHorizontal="$3"
             {...props.titleProps}
           >
@@ -104,7 +104,7 @@ export const ListItem = memo(
             <RegularText
               fontSize={12}
               numberOfLines={textNumberOfLines}
-              color="$placeholderColor"
+              color="$placeholder"
             >
               {text}
             </RegularText>

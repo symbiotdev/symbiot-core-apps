@@ -18,5 +18,5 @@ export const Link = styled(TamaguiText, {
 export const Label = styled(TamaguiText, {
   ...defaultTextStyles,
   fontFamily: 'BodyMedium',
-  color: '$placeholderColor',
+  color: '$placeholder',
 }) as typeof TamaguiLabel;

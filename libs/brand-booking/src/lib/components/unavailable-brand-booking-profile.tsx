@@ -176,7 +176,7 @@ export const UnavailableBrandBookingProfile = ({
             {!!localTime && (
               <RegularText
                 fontSize={12}
-                color="$placeholderColor"
+                color="$placeholder"
                 textDecorationLine={textDecorationLine}
               >
                 {t('shared.local_time')} {localTime}

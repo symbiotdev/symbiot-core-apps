@@ -58,7 +58,7 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
           <H3 textAlign="center">{name}</H3>
 
           {(client.gender || client.birthday) && (
-            <RegularText color="$placeholderColor" textAlign="center">
+            <RegularText color="$placeholder" textAlign="center">
               {[
                 client.birthday
                   ? DateHelper.format(client.birthday, preferences.dateFormat)

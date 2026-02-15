@@ -38,7 +38,7 @@ export const FileChip = ({
           <SemiBoldText flex={1} numberOfLines={1}>
             {file.name}
           </SemiBoldText>
-          <RegularText color="$placeholderColor">{fileSize}</RegularText>
+          <RegularText color="$placeholder">{fileSize}</RegularText>
         </View>
 
         {removable && (

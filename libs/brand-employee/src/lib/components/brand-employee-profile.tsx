@@ -93,12 +93,12 @@ export const BrandEmployeeProfile = ({
           <H3 textAlign="center">{employee.name}</H3>
 
           {!!subtitle && (
-            <RegularText color="$placeholderColor" textAlign="center">
+            <RegularText color="$placeholder" textAlign="center">
               {subtitle}
             </RegularText>
           )}
 
-          <MediumText color="$placeholderColor" textAlign="center">
+          <MediumText color="$placeholder" textAlign="center">
             {employee.role}
           </MediumText>
 

@@ -38,7 +38,7 @@ export const FormField = ({
       {children}
 
       {!!description && !error && (
-        <RegularText paddingHorizontal="$4" color="$placeholderColor">
+        <RegularText paddingHorizontal="$4" color="$placeholder">
           {description}
         </RegularText>
       )}

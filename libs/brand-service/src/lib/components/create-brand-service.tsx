@@ -304,7 +304,7 @@ export const CreateBrandService = () => {
           borderRadius="$10"
           url={avatar}
           name={name}
-          color="$placeholderColor"
+          color="$placeholder"
           size={{
             width: '100%',
             height: Math.max(height / 3, 250),

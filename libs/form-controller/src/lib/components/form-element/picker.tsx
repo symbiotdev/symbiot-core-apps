@@ -196,7 +196,7 @@ const CustomPicker = ({
           {item.description && (
             <RegularText
               fontSize={12}
-              color="$placeholderColor"
+              color="$placeholder"
               textAlign={optionsCentered ? 'center' : 'left'}
             >
               {item.description}

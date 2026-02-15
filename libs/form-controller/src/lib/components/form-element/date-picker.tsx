@@ -220,7 +220,7 @@ const DateAsTextField = ({
         textContentType="oneTimeCode" // https://github.com/facebook/react-native/issues/39411
         value={fieldState.label}
         placeholder={placeholder}
-        placeholderTextColor={theme?.placeholderColor?.val}
+        placeholderTextColor={theme?.placeholder?.val}
         mask={dateFormat}
         options={{ dateFormat }}
         keyboardAppearance={scheme}
@@ -430,7 +430,7 @@ const PopoverDateField = ({
         <InputFieldView pressStyle={{ opacity: 0.8 }} {...viewProps}>
           <LightText
             color={
-              !value ? '$placeholderColor' : disabled ? '$disabled' : '$color'
+              !value ? '$placeholder' : disabled ? '$disabled' : '$color'
             }
           >
             {value ? DateHelper.format(value, dateFormat) : placeholder}

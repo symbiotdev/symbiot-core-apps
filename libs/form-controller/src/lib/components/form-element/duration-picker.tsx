@@ -148,7 +148,7 @@ export const DurationPicker = ({
           >
             <LightText
               color={
-                !value ? '$placeholderColor' : disabled ? '$disabled' : '$color'
+                !value ? '$placeholder' : disabled ? '$disabled' : '$color'
               }
             >
               {value ? DateHelper.formatDuration(value) : placeholder}

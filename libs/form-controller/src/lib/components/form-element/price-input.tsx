@@ -52,7 +52,7 @@ export const PriceInput = ({
     <FormField label={label} error={error} required={required}>
       <InputFieldView gap="$3">
         {!!symbol && (
-          <MediumText color="$placeholderColor">{symbol}</MediumText>
+          <MediumText color="$placeholder">{symbol}</MediumText>
         )}
 
         <MaskedTextInput

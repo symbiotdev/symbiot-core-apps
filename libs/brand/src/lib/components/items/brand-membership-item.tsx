@@ -218,7 +218,7 @@ const BrandPeriodBasedMembershipItemView = ({
           {!!discount && (
             <MediumText
               textDecorationLine="line-through"
-              color="$placeholderColor"
+              color="$placeholder"
             >
               {formatPrice({
                 price,

@@ -160,7 +160,7 @@ export const SmartSelect = ({
           {trigger || (
             <InputFieldView gap="$3">
               {areOptionsLoading || !formattedValue ? (
-                <LightText color="$placeholderColor" flex={1} numberOfLines={1}>
+                <LightText color="$placeholder" flex={1} numberOfLines={1}>
                   {placeholder}
                 </LightText>
               ) : (
@@ -330,7 +330,7 @@ const OptionsList = ({
           </RegularText>
 
           {item.description && (
-            <RegularText fontSize={12} color="$placeholderColor">
+            <RegularText fontSize={12} color="$placeholder">
               {item.description}
             </RegularText>
           )}

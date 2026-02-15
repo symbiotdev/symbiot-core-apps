@@ -69,7 +69,7 @@ export const TodayBrandBookings = () => {
     return (
       <View gap="$1">
         <XStack alignItems="center" gap="$5" paddingHorizontal="$3">
-          <MediumText color="$placeholderColor">
+          <MediumText color="$placeholder">
             {t('brand_booking.today_schedule')}
           </MediumText>
 

@@ -20,6 +20,8 @@ export function BrandClientGenderController<T extends FieldValues>(props: {
       options={data}
       optionsLoading={isPending}
       optionsError={error}
+      searchable={false}
+      moveSelectedToTop={false}
       rules={{
         required: {
           value: true,

@@ -73,7 +73,7 @@ export const Search = forwardRef(
     return (
       <FormField label={label} error={error} required={required}>
         <InputFieldView {...inputFieldProps} gap="$1">
-          <Icon name="Magnifer" color="$placeholderColor" size={18} />
+          <Icon name="Magnifer" color="$placeholder" size={18} />
           <InputUi
             ref={ref}
             id={id}
@@ -84,7 +84,7 @@ export const Search = forwardRef(
             height={InputHeight}
             placeholder={placeholder || t('shared.search')}
             backgroundColor="transparent"
-            placeholderTextColor="$placeholderColor"
+            placeholderTextColor="$placeholder"
             inputMode="search"
             disabled={disabled}
             opacity={disabled ? 0.8 : 1}

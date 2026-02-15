@@ -186,7 +186,7 @@ export const Survey = ({
                   </SemiBoldText>
                   <RegularText
                     numberOfLines={1}
-                    color="$placeholderColor"
+                    color="$placeholder"
                     fontSize={12}
                   >
                     {previousStep.props.subtitle}

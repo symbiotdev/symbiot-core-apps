@@ -44,7 +44,7 @@ export const BrandLocationItem = ({
 
       <View gap="$1" flex={1}>
         <SemiBoldText numberOfLines={1}>{location.name}</SemiBoldText>
-        <RegularText color="$placeholderColor" numberOfLines={1}>
+        <RegularText color="$placeholder" numberOfLines={1}>
           {location.address}
         </RegularText>
       </View>

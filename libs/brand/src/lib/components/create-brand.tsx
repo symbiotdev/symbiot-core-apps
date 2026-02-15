@@ -196,7 +196,7 @@ export const CreateBrand = () => {
           marginTop="$5"
           url={avatar}
           name={nameWatch().name}
-          color="$placeholderColor"
+          color="$placeholder"
           size={140}
           onAttach={setAvatar}
           onRemove={() => setAvatar(undefined)}

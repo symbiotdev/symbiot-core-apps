@@ -21,7 +21,7 @@ export const QrCode = ({
       ]}
       content={content && <View margin="auto">{content}</View>}
       contentCells={5}
-      value={value}
+      value={String(value)}
       frameSize={size}
       dotColor={theme.qrCode?.val}
       backgroundColor="transparent"

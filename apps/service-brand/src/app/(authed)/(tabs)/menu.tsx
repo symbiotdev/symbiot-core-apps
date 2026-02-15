@@ -70,7 +70,7 @@ export default () => {
 
       emitHaptic();
 
-      Clipboard.setString(me?.id);
+      Clipboard.setString(String(me.id));
 
       ShowNativeSuccessAlert({
         title: t('shared.copied'),

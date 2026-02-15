@@ -26,7 +26,7 @@ export const BrandTransactionItem = ({
   const copyId = useCallback(() => {
     emitHaptic();
 
-    Clipboard.setString(transaction.id);
+    Clipboard.setString(String(transaction.id));
 
     ShowNativeSuccessAlert({
       title: t('shared.copied'),

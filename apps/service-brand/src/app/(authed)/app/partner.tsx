@@ -193,7 +193,7 @@ const CopyButton = ({ text }: { text: string }) => {
   const onPress = useCallback(() => {
     emitHaptic();
 
-    Clipboard.setString(text);
+    Clipboard.setString(String(text));
 
     ShowNativeSuccessAlert({
       title: t('shared.copied'),

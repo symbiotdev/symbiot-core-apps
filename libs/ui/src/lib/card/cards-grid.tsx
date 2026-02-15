@@ -83,7 +83,7 @@ const GridItem = ({
     }}
   >
     <View
-      style={StyleSheet.absoluteFillObject}
+      style={StyleSheet.absoluteFill}
       borderRadius="$10"
       backgroundColor="rgba(210,210,210,0.1)"
     />

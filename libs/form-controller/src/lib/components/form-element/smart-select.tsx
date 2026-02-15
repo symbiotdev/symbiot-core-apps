@@ -380,7 +380,6 @@ const OptionsList = ({
     >
       <View backgroundColor="$background1">
         <ModalHeader
-          ignoreTop
           transparent
           relative
           headerTitle={title}

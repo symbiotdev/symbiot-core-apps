@@ -18,7 +18,7 @@ export const NewBrandEmployee = () => {
       scrollable
       withKeyboard
       withHeaderHeight
-      animation="medium"
+      transition="medium"
       opacity={1}
       enterStyle={{ opacity: 0 }}
       exitStyle={{ opacity: 0 }}

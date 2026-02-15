@@ -55,7 +55,7 @@ export const Checkbox = ({
                 scale={1}
                 enterStyle={{ scale: 0, opacity: 0 }}
                 exitStyle={{ scale: 0, opacity: 0 }}
-                animation="quick"
+                transition="quick"
               >
                 <Icon
                   name="Unread"

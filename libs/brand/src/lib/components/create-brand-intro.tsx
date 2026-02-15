@@ -10,7 +10,7 @@ export const CreateBrandIntro = () => {
   return (
     <PageView
       scrollable
-      animation="medium"
+      transition="medium"
       opacity={1}
       enterStyle={{ opacity: 0 }}
       exitStyle={{ opacity: 0 }}

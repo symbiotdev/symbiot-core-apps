@@ -22,14 +22,14 @@ export const Sheet = ({
     <SheetUI
       modal
       dismissOnSnapToBottom
-      animation="quick"
+      transition="quick"
       snapPointsMode="fit"
       open={opened}
       onOpenChange={(open: boolean) => (!open ? onClose?.() : onOpen?.())}
     >
       <SheetUI.Overlay
         backgroundColor="$background"
-        animation="quick"
+        transition="quick"
         enterStyle={{ opacity: 0 }}
         exitStyle={{ opacity: 0 }}
         opacity={0.8}

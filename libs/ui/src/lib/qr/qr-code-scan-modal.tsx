@@ -120,7 +120,7 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
         <CameraView
           facing="back"
           style={{
-            ...StyleSheet.absoluteFillObject,
+            ...StyleSheet.absoluteFill,
             justifyContent: 'center',
             alignItems: 'center',
           }}

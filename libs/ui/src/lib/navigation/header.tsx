@@ -10,7 +10,7 @@ import {
 } from 'react';
 import { H4 } from '../text/heading';
 import { Icon, IconName } from '../icons';
-import { emitHaptic, isAndroid, isTablet } from '@symbiot-core-apps/shared';
+import { emitHaptic, isAndroid, isIos } from '@symbiot-core-apps/shared';
 import { AttentionView } from '../view/attention-view';
 import { NavigationBackground } from './background';
 import { MediumText, RegularText } from '../text/text';
@@ -194,7 +194,6 @@ export const ModalHeader = memo(
     headerLeft,
     transparent,
     relative,
-    ignoreTop,
     headerTitle,
     headerRight,
     opacity,
@@ -202,7 +201,6 @@ export const ModalHeader = memo(
   }: {
     height?: number;
     transparent?: boolean;
-    ignoreTop?: boolean;
     relative?: boolean;
     opacity?: number;
     headerLeft?: () => ReactElement;
@@ -212,10 +210,7 @@ export const ModalHeader = memo(
   }) => {
     const { top, left, right } = useSafeAreaInsets();
 
-    const adjustedTop = useMemo(
-      () => (!ignoreTop && isTablet ? top : 0),
-      [ignoreTop, top],
-    );
+    const adjustedTop = useMemo(() => (isIos ? 0 : top), [top]);
 
     const adjustedHeight = adjustedTop + (height || headerHeight);
 

@@ -57,7 +57,7 @@ export const MediaBackground = ({
 
       <View
         backgroundColor="rgba(17,17,17,0.7)"
-        style={StyleSheet.absoluteFillObject}
+        style={StyleSheet.absoluteFill}
         zIndex={2}
       />
 
@@ -68,7 +68,7 @@ export const MediaBackground = ({
 
 const styles = StyleSheet.create({
   Media: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     width: '100%',
     height: '100%',
     zIndex: 1,

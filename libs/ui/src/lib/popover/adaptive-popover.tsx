@@ -196,10 +196,10 @@ export const AdaptivePopover = forwardRef(
           padding={0}
           zIndex={100_000}
         >
+          <NavigationBackground />
+
           {SCREEN_MEDIA_SIZE[media] > SCREEN_MEDIA_SIZE[adaptiveMediaSize] && (
             <>
-              <NavigationBackground />
-
               {!!topFixedContent && (
                 <View
                   width="100%"
@@ -243,12 +243,12 @@ export const AdaptivePopover = forwardRef(
               unmountChildrenWhenHidden={unmountChildrenWhenHidden}
               dismissOnOverlayPress={!disabled}
               disableDrag={disableDrag}
-              animation="quick"
+              transition="quick"
               snapPointsMode="fit"
             >
               <Sheet.Overlay
                 backgroundColor="$overlay"
-                animation="quickest"
+                transition="quickest"
                 enterStyle={{ opacity: 0 }}
                 exitStyle={{ opacity: 0 }}
                 opacity={1}

@@ -138,7 +138,7 @@ const Menu = ({
   const animationProps: ViewProps = isWeb
     ? {}
     : {
-        animation: 'quick',
+        transition: 'quick',
         opacity: 1,
         enterStyle: { opacity: 0 },
         exitStyle: { opacity: 0 },
@@ -147,7 +147,7 @@ const Menu = ({
   return (
     <View
       {...animationProps}
-      style={StyleSheet.absoluteFillObject}
+      style={StyleSheet.absoluteFill}
       onPress={onClose}
     >
       <NavigationBackground opacity={0.4} />
@@ -155,7 +155,7 @@ const Menu = ({
       <Trigger {...rect} ref={refs.setReference} collapsable={false} />
 
       <Card
-        animation="quick"
+        transition="quick"
         ref={refs.setFloating}
         y={0}
         enterStyle={{ opacity: 0, y: 10 }}

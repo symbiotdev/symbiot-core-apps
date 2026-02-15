@@ -10,7 +10,7 @@ export const NavigationBackground = ({
   ...props
 }: ViewProps & { blurIntensity?: number; blurStyle?: ViewStyle }) => (
   <View
-    {...StyleSheet.absoluteFillObject}
+    {...StyleSheet.absoluteFill}
     {...props}
     {...(!isIos && {
       opacity,

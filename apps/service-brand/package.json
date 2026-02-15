@@ -42,6 +42,7 @@
     "expo-dev-client": "*",
     "expo-device": "*",
     "expo-document-picker": "*",
+    "expo-glass-effect": "*",
     "expo-file-system": "*",
     "expo-font": "*",
     "expo-haptics": "*",

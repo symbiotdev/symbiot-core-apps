@@ -1,3 +1,5 @@
-# IMPORTANT
-- don't update metro deps without needs because app can crash in store build
-- env files conflicting with nx build and prebuild command. In use NODE_ENV=production than build won't work (dev deps auto-removed)
+# Workarounds
+
+- check if patches are required. Try to rid off them
+- remove overrides from package.json
+- @react-native-firebase/app v23.8.6 requires inside app.json ["RNFBApp","RNFBAuth"]. Try to remove in newer versions

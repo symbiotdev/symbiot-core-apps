@@ -2,7 +2,7 @@ import { InputModeOptions, KeyboardType, TextInputProps } from 'react-native';
 import { forwardRef, Ref, useCallback, useMemo } from 'react';
 import { Input as InputUi, InputProps } from 'tamagui';
 import { useDebounceCallback } from '@symbiot-core-apps/shared';
-import { useScheme } from '@symbiot-core-apps/state';
+import { useAppScheme } from '@symbiot-core-apps/state';
 import { FormField } from '../wrapper/form-field';
 import { InputHeight } from '../wrapper/input-field-view';
 
@@ -76,9 +76,9 @@ export const Input = forwardRef(
       onPress?: () => void;
       onChange?: onChangeInput;
     },
-    ref: Ref<InputUi>,
+    ref: Ref<null>,
   ) => {
-    const { scheme } = useScheme();
+    const { scheme } = useAppScheme();
 
     const selection = useInputSelection(cursorAlwaysOn, value);
     const onDebounceChange = useDebounceCallback(
@@ -140,7 +140,7 @@ export const Input = forwardRef(
           placeholderTextColor="$placeholderColor"
           inputMode={type as InputModeOptions}
           secureTextEntry={secureTextEntry}
-          editable={!disabled}
+          disabled={disabled}
           opacity={disabled ? 0.8 : 1}
           returnKeyType="none"
           enterKeyHint={enterKeyHint}

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Image, ImageStyle } from 'expo-image';
-import { useScheme } from '@symbiot-core-apps/state';
+import { useAppScheme } from '@symbiot-core-apps/state';
 
 export const AdaptiveLogo = memo(
   ({
@@ -12,7 +12,7 @@ export const AdaptiveLogo = memo(
     style?: ImageStyle;
     forceDark?: boolean;
   }) => {
-    const { scheme } = useScheme();
+    const { scheme } = useAppScheme();
 
     return (
       <Image

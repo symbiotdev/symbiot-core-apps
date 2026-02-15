@@ -10,8 +10,8 @@ import {
   Weekday,
 } from '@symbiot-core-apps/shared';
 import {
+  useAppScheme,
   useCurrentAccountPreferences,
-  useScheme,
 } from '@symbiot-core-apps/state';
 import {
   AdaptivePopover,
@@ -118,7 +118,7 @@ const DateAsTextField = ({
   onChange,
   onBlur,
   ...viewProps
-}: Omit<ViewProps, 'onPress'> & {
+}: Omit<ViewProps, 'onPress' | 'onChange'> & {
   value?: Value;
   minDate?: Date;
   maxDate?: Date;
@@ -128,7 +128,7 @@ const DateAsTextField = ({
   onChange?: (date: Date | null) => void;
 }) => {
   const theme = useTheme();
-  const { scheme } = useScheme();
+  const { scheme } = useAppScheme();
 
   const adjustedValue = useMemo(
     () => ({
@@ -254,7 +254,7 @@ const DateAsCalendar = ({
   onChange?: (date: Date | null) => void;
 }) => {
   const { lang } = useI18n();
-  const { scheme } = useScheme();
+  const { scheme } = useAppScheme();
   const theme = useTheme();
   const defaultStyles = useDefaultStyles(scheme);
 
@@ -365,7 +365,7 @@ const DateAsPicker = ({
   onChange?: (date: Date | null) => void;
 }) => {
   const { lang } = useI18n();
-  const { scheme } = useScheme();
+  const { scheme } = useAppScheme();
 
   return (
     <RNDatepicker
@@ -395,7 +395,7 @@ const PopoverDateField = ({
   onChange,
   onBlur,
   ...viewProps
-}: Omit<ViewProps, 'onPress'> & {
+}: Omit<ViewProps, 'onPress' | 'onChange'> & {
   forceCalendar?: boolean;
   disableDrag?: boolean;
   dateFormat?: string;
@@ -406,7 +406,7 @@ const PopoverDateField = ({
   startDate?: Date;
   minDate?: Date;
   maxDate?: Date;
-  onChange?: (date: Date | null) => void;
+  onChange?: (date: Date | null) => unknown;
   onBlur?: () => void;
 }) => {
   const popoverRef = useRef<AdaptivePopoverRef>(null);

@@ -11,18 +11,15 @@ import {
   useCurrentAccountUpdater,
 } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
-import {
-  defaultSystemScheme,
-  SystemScheme,
-  useI18n,
-} from '@symbiot-core-apps/shared';
+import { activeSystemScheme, useI18n } from '@symbiot-core-apps/shared';
 import {
   Switch,
   ToggleGroup,
   ToggleOnChange,
 } from '@symbiot-core-apps/form-controller';
+import { AccountAppearance } from '@symbiot-core-apps/api';
 
-export const Scheme = () => {
+export const SchemeAppearance = () => {
   const navigation = useNavigation();
   const { t } = useI18n();
   const { updatePreferences$, updating } = useCurrentAccountUpdater();
@@ -46,7 +43,7 @@ export const Scheme = () => {
   );
 
   const onChange = useCallback(
-    (scheme: SystemScheme | null) =>
+    (scheme: AccountAppearance['scheme']) =>
       updatePreferences$({
         appearance: {
           scheme,
@@ -74,7 +71,7 @@ export const Scheme = () => {
             disabled={updating}
             label={t('shared.preferences.scheme.theme.auto.label')}
             onChange={(checked) =>
-              onChange(checked ? null : defaultSystemScheme())
+              onChange(checked ? null : activeSystemScheme())
             }
           />
 

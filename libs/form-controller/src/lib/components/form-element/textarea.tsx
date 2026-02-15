@@ -1,11 +1,7 @@
 import { forwardRef, Ref, useCallback, useMemo, useState } from 'react';
 import { Input, InputProps } from 'tamagui';
-import {
-  NativeSyntheticEvent,
-  TextInputKeyPressEventData,
-  TextInputProps,
-} from 'react-native';
-import { useScheme } from '@symbiot-core-apps/state';
+import { TextInputProps } from 'react-native';
+import { useAppScheme } from '@symbiot-core-apps/state';
 import { isIos, isWeb, useDebounceCallback } from '@symbiot-core-apps/shared';
 import { FormField } from '../wrapper/form-field';
 import { InputCursorPosition, useInputSelection } from './input';
@@ -57,9 +53,9 @@ export const Textarea = forwardRef(
       onPressEnter?: () => void;
       onChange?: (value: string) => void;
     },
-    ref: Ref<Input>,
+    ref: Ref<null>,
   ) => {
-    const { scheme } = useScheme();
+    const { scheme } = useAppScheme();
 
     const selection = useInputSelection(cursorAlwaysOn, value);
     const onDebounceChange = useDebounceCallback(
@@ -72,15 +68,6 @@ export const Textarea = forwardRef(
 
     const id = useMemo(() => `textarea_${Math.random().toString(36)}`, []);
     const adjustedMaxLength = useMemo(() => maxLength || 512, [maxLength]); // 512 symbols enough for the regular fields
-
-    const onKeyPress = useCallback(
-      (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-        if (e.nativeEvent.key === 'Enter') {
-          onPressEnter?.();
-        }
-      },
-      [onPressEnter],
-    );
 
     const onChangeText = useCallback(
       (text: string) => {
@@ -136,11 +123,10 @@ export const Textarea = forwardRef(
           padding="$4"
           placeholder={placeholder}
           placeholderTextColor="$placeholderColor"
-          editable={!disabled && !isScrolling}
+          disabled={disabled && isScrolling}
           // minHeight={46}
           minHeight={maxHeight} // temp to prevent jumps
           maxHeight={maxHeight}
-          lineHeight={16} // don't remove it
           height={height}
           opacity={disabled ? 0.8 : 1}
           enterKeyHint={enterKeyHint}
@@ -150,12 +136,10 @@ export const Textarea = forwardRef(
           keyboardAppearance={scheme}
           autoCapitalize={autoCapitalize || 'sentences'}
           outlineColor="transparent"
-          scrollbarWidth="none"
           selection={selection}
           onFocus={onInputFocus}
           onBlur={onInputBlur}
           onChangeText={onChangeText}
-          onKeyPress={onKeyPress}
           onScroll={onScroll}
           onTouchEnd={onTouchEnd}
           onPress={onPress}

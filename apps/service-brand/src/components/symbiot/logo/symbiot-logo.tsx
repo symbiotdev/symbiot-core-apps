@@ -1,8 +1,8 @@
-import { useSystemScheme } from '@symbiot-core-apps/shared';
 import { Image } from 'expo-image';
+import { useAppScheme } from '@symbiot-core-apps/state';
 
 export const SymbiotLogo = ({ size = 40 }: { size?: number }) => {
-  const scheme = useSystemScheme();
+  const { scheme } = useAppScheme();
 
   return (
     <Image

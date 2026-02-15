@@ -1,7 +1,7 @@
 import { TextInputProps } from 'react-native';
 import { Input as InputUi, InputProps, XStackProps } from 'tamagui';
 import { InputCursorPosition, useInputSelection } from './input';
-import { useScheme } from '@symbiot-core-apps/state';
+import { useAppScheme } from '@symbiot-core-apps/state';
 import { useDebounceCallback, useI18n } from '@symbiot-core-apps/shared';
 import { forwardRef, Ref, useCallback, useMemo, useState } from 'react';
 import { FormField } from '../wrapper/form-field';
@@ -49,10 +49,10 @@ export const Search = forwardRef(
       onPress?: () => void;
       onChange: (text: string) => void;
     },
-    ref: Ref<InputUi>,
+    ref: Ref<null>,
   ) => {
     const { t } = useI18n();
-    const { scheme } = useScheme();
+    const { scheme } = useAppScheme();
 
     const [adjustedValue, setAdjustedValue] = useState(String(value || ''));
 
@@ -86,7 +86,7 @@ export const Search = forwardRef(
             backgroundColor="transparent"
             placeholderTextColor="$placeholderColor"
             inputMode="search"
-            editable={!disabled}
+            disabled={disabled}
             opacity={disabled ? 0.8 : 1}
             enterKeyHint={enterKeyHint}
             color={disabled ? '$disabled' : '$color'}

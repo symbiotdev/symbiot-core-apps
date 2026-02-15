@@ -1,5 +1,5 @@
 import { useTheme } from 'tamagui';
-import { useScheme } from '@symbiot-core-apps/state';
+import { useAppScheme } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
 import { MaskedTextInput } from 'react-native-mask-text';
 import { priceMaskOptions } from '@symbiot-core-apps/shared';
@@ -33,7 +33,7 @@ export const PriceInput = ({
   onChange?: (value: number | null) => void;
 }) => {
   const theme = useTheme();
-  const { scheme } = useScheme();
+  const { scheme } = useAppScheme();
 
   const onChangeText = useCallback(
     (formatted: string, extracted?: string) => {

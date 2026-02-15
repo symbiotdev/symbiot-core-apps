@@ -143,7 +143,6 @@ export const ScreenHeader = memo(
 
     return (
       <XStack
-        flex={1}
         gap="$2"
         position="relative"
         justifyContent="space-between"

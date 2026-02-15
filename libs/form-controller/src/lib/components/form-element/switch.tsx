@@ -23,10 +23,13 @@ export const Switch = ({
   loading?: boolean;
   onChange?: (value: boolean) => void;
 }) => {
-  const onCheckedChange = useCallback((value: boolean) => {
-    emitHaptic();
-    onChange?.(value);
-  }, [onChange]);
+  const onCheckedChange = useCallback(
+    (value: boolean) => {
+      emitHaptic();
+      onChange?.(value);
+    },
+    [onChange],
+  );
 
   return (
     <XStack alignItems="flex-start" justifyContent="space-between" gap="$5">
@@ -65,14 +68,16 @@ export const Switch = ({
           checked={checked}
           borderWidth={0}
           disabled={disabled}
-          backgroundColor={checked ? '$switchSelectedColor' : '$background'}
+          activeStyle={{
+            backgroundColor: '$switchSelectedColor',
+          }}
           opacity={disabled ? 0.8 : 1}
           onCheckedChange={onCheckedChange}
         >
           <UiSwitch.Thumb
             top={2}
+            transition="bouncy"
             backgroundColor={checked ? '$o_color' : '$color'}
-            animation="bouncy"
             width={21}
             height={21}
           />

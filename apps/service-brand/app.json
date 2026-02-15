@@ -85,6 +85,10 @@
         {
           "ios": {
             "useFrameworks": "static",
+            "forceStaticLinking": [
+              "RNFBApp",
+              "RNFBAuth"
+            ],
             "infoPlist": {
               "LSMinimumSystemVersion": "12.0"
             }

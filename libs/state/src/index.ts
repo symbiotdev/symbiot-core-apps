@@ -1,5 +1,5 @@
 export * from './lib/hooks/use-anniversary.state';
-export * from './lib/hooks/use-app-theme.state';
+export * from './lib/hooks/use-app-scheme.state';
 export * from './lib/hooks/use-birthday.state';
 
 export * from './lib/hooks/use-current-account.state';

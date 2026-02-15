@@ -10,14 +10,9 @@ import {
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useCallback, useMemo } from 'react';
-import {
-  createZustandStorage,
-  isWeb,
-  systemSchemes,
-} from '@symbiot-core-apps/shared';
-import { useAppSchemeState } from './use-app-theme.state';
+import { createZustandStorage } from '@symbiot-core-apps/shared';
+import { useAppScheme } from './use-app-scheme.state';
 import { ImagePickerAsset } from 'expo-image-picker';
-import { Appearance } from 'react-native';
 import merge from 'deepmerge';
 
 type AccountStats = {
@@ -110,30 +105,15 @@ export const useCurrentAccountPreferences = (): AccountPreferences => {
 export const useCurrentAccount = () => {
   const { me, stats, setMe, setMyStats, setMySubscriptions } =
     useCurrentAccountState();
-  const { setScheme, removeScheme } = useAppSchemeState();
+  const { setScheme } = useAppScheme();
   const { setMyPreferences } = useCurrentAccountState();
 
   const updateMePreferences = useCallback(
     async (preferences: AccountPreferences) => {
       setMyPreferences(preferences);
-      const preferScheme = preferences?.appearance?.scheme;
-
-      const scheme =
-        preferScheme && systemSchemes.includes(preferScheme)
-          ? preferScheme
-          : undefined;
-
-      if (isWeb) {
-        if (scheme) {
-          setScheme(scheme);
-        } else {
-          removeScheme();
-        }
-      } else {
-        Appearance.setColorScheme(scheme);
-      }
+      setScheme(preferences?.appearance?.scheme || null);
     },
-    [removeScheme, setMyPreferences, setScheme],
+    [setMyPreferences, setScheme],
   );
 
   return {

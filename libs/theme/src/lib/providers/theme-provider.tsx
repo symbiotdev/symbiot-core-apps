@@ -15,14 +15,14 @@ import {
   ThemeProvider as NavigationThemeProvider,
 } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
-import { useScheme } from '@symbiot-core-apps/state';
+import { useAppScheme } from '@symbiot-core-apps/state';
 import { AppConfigLegacy, ThemeConfigLegacy } from '@symbiot-core-apps/api';
 
 export const ThemeProvider = ({
   children,
   theme,
 }: PropsWithChildren<{ theme: AppConfigLegacy['theme'] }>) => {
-  const { scheme } = useScheme();
+  const { scheme } = useAppScheme();
 
   const barStyle = useMemo(
     () => (scheme === 'dark' ? 'light-content' : 'dark-content'),

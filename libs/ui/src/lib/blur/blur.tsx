@@ -1,7 +1,7 @@
 import { memo, PropsWithChildren } from 'react';
 import { BlurView as ExpoBlurView } from 'expo-blur';
 import { ViewStyle } from 'react-native';
-import { useScheme } from '@symbiot-core-apps/state';
+import { useAppScheme } from '@symbiot-core-apps/state';
 
 export const Blur = memo(
   ({
@@ -9,12 +9,11 @@ export const Blur = memo(
     style,
     intensity = 40,
   }: PropsWithChildren<{ style?: ViewStyle; intensity?: number }>) => {
-    const { scheme } = useScheme();
+    const { scheme } = useAppScheme();
 
     return (
       <ExpoBlurView
         intensity={intensity}
-        experimentalBlurMethod="dimezisBlurView"
         tint={scheme}
         style={style}
         children={children}

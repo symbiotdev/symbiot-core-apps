@@ -1,23 +1,47 @@
-import { useEffect, useState } from 'react';
-import { Appearance } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { Appearance, ColorSchemeName } from 'react-native';
 
 export type SystemScheme = 'light' | 'dark';
 
-export const systemSchemes: SystemScheme[] = ['light', 'dark'] as const;
+const schemeByName: Record<ColorSchemeName, SystemScheme> = {
+  light: 'light',
+  dark: 'dark',
+  unspecified: 'dark',
+};
 
-export const defaultSystemScheme = () =>
-  Appearance.getColorScheme() || systemSchemes[0];
+export const activeSystemScheme = () => {
+  const colorScheme = Appearance.getColorScheme();
+
+  return colorScheme
+    ? schemeByName[colorScheme] || schemeByName.unspecified
+    : schemeByName.unspecified;
+};
 
 export const useSystemScheme = () => {
-  const [scheme, setScheme] = useState<SystemScheme>(defaultSystemScheme());
+  // useColorScheme from RN is not working as expected
+  const [scheme, setSystemScheme] =
+    useState<SystemScheme>(activeSystemScheme());
 
   useEffect(() => {
     const listener = Appearance.addChangeListener(({ colorScheme }) =>
-      setScheme(colorScheme || defaultSystemScheme()),
+      setSystemScheme(schemeByName[colorScheme] || schemeByName.unspecified),
     );
 
     return () => listener.remove();
   }, []);
 
-  return scheme;
+  return {
+    scheme,
+    setScheme: useCallback((scheme: ColorSchemeName | null) => {
+      const adjustedScheme = scheme
+        ? schemeByName[scheme] || schemeByName.unspecified
+        : schemeByName.unspecified;
+
+      setSystemScheme(adjustedScheme);
+
+      if (Appearance.getColorScheme() !== adjustedScheme) {
+        Appearance.setColorScheme(adjustedScheme);
+      }
+    }, []),
+  };
 };

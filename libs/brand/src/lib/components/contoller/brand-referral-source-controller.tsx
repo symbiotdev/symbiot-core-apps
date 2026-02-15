@@ -30,6 +30,7 @@ export function BrandReferralSourceController<T extends FieldValues>({
       render={({ field: { value, onChange } }) => (
         <BrandSource
           label={!noLabel ? t('brand.form.referral_source.label') : ''}
+          optionsTitle={t('brand.form.referral_source.label')}
           placeholder={t('brand.form.referral_source.placeholder')}
           customPlaceholder={t('brand.form.referral_source.custom_placeholder')}
           source={value}

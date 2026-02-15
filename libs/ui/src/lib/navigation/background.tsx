@@ -17,7 +17,6 @@ export const NavigationBackground = ({
       backgroundColor: '$background',
     })}
   >
-    {isIos && (
       <Blur
         style={{
           width: '100%',
@@ -27,6 +26,5 @@ export const NavigationBackground = ({
         }}
         intensity={blurIntensity}
       />
-    )}
   </View>
 );

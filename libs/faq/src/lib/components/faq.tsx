@@ -40,7 +40,7 @@ export const Faq = () => {
           <Accordion
             items={sortedFaq.map((item) => ({
               title: item.title,
-              content: <RegularText>{item.text}</RegularText>,
+              content: <RegularText lineHeight={22}>{item.text}</RegularText>,
             }))}
           />
 

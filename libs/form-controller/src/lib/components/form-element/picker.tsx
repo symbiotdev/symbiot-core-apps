@@ -17,7 +17,6 @@ import {
   LoadingView,
   RegularText,
 } from '@symbiot-core-apps/ui';
-import { toggleItemMinHeight } from './toggle-group';
 
 export type PickerItem = {
   label: string;
@@ -165,7 +164,7 @@ const CustomPicker = ({
           justifyContent="center"
           alignItems={optionsCentered ? 'center' : 'flex-start'}
           paddingVertical={10}
-          minHeight={toggleItemMinHeight}
+          minHeight={24}
           paddingHorizontal={defaultPageHorizontalPadding}
           disabled={disabled}
           backgroundColor={value === item.value ? '$background' : undefined}

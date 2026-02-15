@@ -3,7 +3,7 @@ import { BaseSyntheticEvent, PropsWithChildren, ReactElement } from 'react';
 import { View, ViewProps } from 'tamagui';
 import { headerHeight, ModalHeader } from '../navigation/header';
 import { PageView } from '../view/page-view';
-import { isTablet } from '@symbiot-core-apps/shared';
+import { isIos, isTablet } from '@symbiot-core-apps/shared';
 import { PortalProvider } from '@tamagui/portal';
 
 export const SlideSheetModal = ({
@@ -53,7 +53,7 @@ export const SlideSheetModal = ({
         />
 
         <PageView
-          ignoreTopSafeArea
+          ignoreTopSafeArea={isIos}
           ignoreBottomSafeArea={ignoreBottomSafeArea}
           withKeyboard={withKeyboard}
           withHeaderHeight={isTablet}

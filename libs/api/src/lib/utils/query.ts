@@ -17,11 +17,11 @@ export async function refetchQueriesByChanges<T extends { id: string }>({
   }[];
   refetchList: boolean;
 }) {
-  entities.forEach((entity) => {
+  entities.forEach((entity) =>
     queryKeys.byId.forEach((key) =>
       queryClient.setQueryData([key, entity.id], entity.data),
-    );
-  });
+    ),
+  );
 
   if (refetchList || entities.some(({ data }) => !data)) {
     await Promise.all(

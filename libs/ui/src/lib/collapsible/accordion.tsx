@@ -72,7 +72,7 @@ const Item = ({
       </XStack>
 
       <Collapsible collapsed={collapsed}>
-        <View paddingBottom="$3">{item.content}</View>
+        <View flex={1} paddingBottom="$3">{item.content}</View>
       </Collapsible>
     </View>
   );

@@ -19,6 +19,7 @@ export const BrandSource = ({
   optionsError,
   label,
   placeholder,
+  optionsTitle,
   customPlaceholder,
   onUpdate,
   onBlur,
@@ -29,6 +30,7 @@ export const BrandSource = ({
   options?: BrandSourceOption[];
   optionsLoading?: boolean;
   optionsError?: string | null;
+  optionsTitle?: string;
   onUpdate: (source: string | null) => void;
   onBlur?: () => void;
 }) => {
@@ -95,6 +97,7 @@ export const BrandSource = ({
         options={options}
         optionsLoading={optionsLoading}
         optionsError={optionsError}
+        optionsTitle={optionsTitle}
         label={label}
         placeholder={placeholder}
         onChange={onChangeReferralSource as PickerOnChange}

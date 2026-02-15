@@ -286,6 +286,7 @@ const OptionsList = ({
 
   const search = useCallback((text: string) => {
     setSearchValue(text);
+    scrollingRef.current = false;
 
     flatListRef.current?.scrollToOffset({ offset: 0, animated: false });
   }, []);

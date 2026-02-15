@@ -153,7 +153,7 @@ export const Survey = ({
 
       <View flex={1}>
         <KeyboardAwareScrollView
-          keyboardShouldPersistTaps="never"
+          keyboardShouldPersistTaps="handled"
           keyboardDismissMode="none"
           ref={scrollViewRef}
           scrollEnabled={scrollEnabled}

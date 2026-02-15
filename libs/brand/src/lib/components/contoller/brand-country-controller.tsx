@@ -26,6 +26,7 @@ export function BrandCountryController<T extends FieldValues>(props: {
   return (
     <SelectController
       label={!props.noLabel ? t('brand.form.country.label') : ''}
+      optionsTitle={t('brand.form.country.label')}
       placeholder={t('brand.form.country.placeholder')}
       options={options}
       optionsLoading={isPending}

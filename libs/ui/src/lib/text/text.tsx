@@ -1,17 +1,11 @@
-import {
-  styled,
-  Text as TamaguiText,
-  TextNonStyleProps,
-  TextStyle,
-} from 'tamagui';
+import { styled, Text as TamaguiText } from 'tamagui';
 import { isWeb } from '@symbiot-core-apps/shared';
 
-export const defaultTextStyles: TextNonStyleProps & TextStyle = {
+export const defaultTextStyles = {
   maxWidth: '100%',
   allowFontScaling: true,
   fontSize: 14,
   lineHeight: isWeb ? 18 : undefined,
-  userSelect: 'none',
 };
 
 export const LightText = styled(TamaguiText, {

@@ -20,8 +20,6 @@ export type ToggleGroupItem = {
 export type ToggleGroupValue = unknown | unknown[];
 export type ToggleOnChange = (value: ToggleGroupValue) => void;
 
-export const toggleItemMinHeight = 24;
-
 export const ToggleGroup = ({
   items,
   value,
@@ -75,6 +73,7 @@ export const ToggleGroup = ({
         lazy={Boolean(renderDelay)}
         delay={renderDelay}
         onRendered={onRendered}
+        paddingBottom="$3"
         {...viewProps}
       >
         {items?.map((item, index) => (
@@ -86,7 +85,7 @@ export const ToggleGroup = ({
             ignoreHaptic={ignoreHaptic}
             allowEmpty={allowEmpty}
             disabled={disabled}
-            onChange={onChange}
+            onToggle={onChange}
             {...itemProps}
           />
         ))}
@@ -102,16 +101,16 @@ const Item = memo(
     multiselect,
     ignoreHaptic,
     allowEmpty,
-    onChange,
+    onToggle,
     ...xStackProps
-  }: XStackProps & {
+  }: Omit<XStackProps, 'onChange'> & {
     item: ToggleGroupItem;
     value: ToggleGroupValue;
     multiselect?: boolean;
     ignoreHaptic?: boolean;
     allowEmpty?: boolean;
     disabled?: boolean;
-    onChange?: ToggleOnChange;
+    onToggle?: ToggleOnChange;
   }) => {
     const selected =
       multiselect && Array.isArray(value)
@@ -123,17 +122,17 @@ const Item = memo(
         if (selected && value.length === 1 && !allowEmpty) {
           return;
         } else if (selected) {
-          onChange?.(
+          onToggle?.(
             value.filter((valueItem) => !isEqual(valueItem, item.value)),
           );
         } else {
-          onChange?.([...value, item.value]);
+          onToggle?.([...value, item.value]);
         }
       } else {
         if (!allowEmpty) {
-          onChange?.(item.value);
+          onToggle?.(item.value);
         } else {
-          onChange?.(item.value === value ? null : item.value);
+          onToggle?.(item.value === value ? null : item.value);
         }
       }
 
@@ -146,9 +145,9 @@ const Item = memo(
       <XStack
         gap="$4"
         alignItems="center"
-        paddingVertical="$3"
+        paddingTop="$3"
         disabled={disabled}
-        cursor={!disabled && onChange ? 'pointer' : 'default'}
+        cursor={!disabled && onToggle ? 'pointer' : 'default'}
         disabledStyle={{ opacity: 0.5 }}
         pressStyle={!disabled && { opacity: 0.8 }}
         onPress={onPress}
@@ -156,12 +155,7 @@ const Item = memo(
       >
         {item.icon}
 
-        <View
-          flex={1}
-          gap="$1"
-          minHeight={toggleItemMinHeight}
-          justifyContent="center"
-        >
+        <View flex={1} gap="$1" justifyContent="center">
           <RegularText
             color={disabled ? '$disabled' : '$color'}
             numberOfLines={1}

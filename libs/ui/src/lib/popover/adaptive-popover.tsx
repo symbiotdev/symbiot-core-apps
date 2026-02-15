@@ -196,21 +196,16 @@ export const AdaptivePopover = forwardRef(
           padding={0}
           zIndex={100_000}
         >
-          <NavigationBackground />
-
-          {SCREEN_MEDIA_SIZE[media] > SCREEN_MEDIA_SIZE[adaptiveMediaSize] && (
-            <>
-              {!!topFixedContent && (
-                <View
-                  width="100%"
-                  paddingHorizontal={defaultPageHorizontalPadding}
-                  paddingVertical={defaultPageVerticalPadding}
-                >
-                  {topFixedContent}
-                </View>
-              )}
-            </>
-          )}
+          {SCREEN_MEDIA_SIZE[media] > SCREEN_MEDIA_SIZE[adaptiveMediaSize] &&
+            !!topFixedContent && (
+              <View
+                width="100%"
+                paddingHorizontal={defaultPageHorizontalPadding}
+                paddingVertical={defaultPageVerticalPadding}
+              >
+                {topFixedContent}
+              </View>
+            )}
 
           {!ignoreScroll ? (
             <Popover.ScrollView
@@ -253,10 +248,7 @@ export const AdaptivePopover = forwardRef(
                 exitStyle={{ opacity: 0 }}
                 opacity={1}
               >
-                <NavigationBackground
-                  opacity={0}
-                  backgroundColor="transparent"
-                />
+                <NavigationBackground />
               </Sheet.Overlay>
 
               <NavigationBackground

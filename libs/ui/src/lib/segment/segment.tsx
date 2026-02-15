@@ -19,7 +19,7 @@ export const Segment = memo(
     disabled,
     onChange,
     ...xStackProps
-  }: XStackProps & {
+  }: Omit<XStackProps, 'onChange'> & {
     value: string;
     items: SegmentItem[];
     onChange: (value: string) => void;

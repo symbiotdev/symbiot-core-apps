@@ -3,6 +3,7 @@ import { RegularText } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import { emitHaptic, isEqual } from '@symbiot-core-apps/shared';
 import { FormField } from '../wrapper/form-field';
+import { InputHeight } from '../wrapper/input-field-view';
 
 export type OnChangeMultiToggle = (value?: unknown[]) => unknown;
 export type MultiToggleItem = {
@@ -65,11 +66,16 @@ export const MultiToggle = ({
             }
             padding="$3"
             justifyContent="center"
-            borderRadius="$10"
+            alignItems="center"
+            borderRadius={InputHeight}
+            minWidth={InputHeight}
+            minHeight={InputHeight}
             cursor="pointer"
             onPress={() => onToggle(item.value)}
           >
-            <RegularText textAlign="center">{item.label}</RegularText>
+            <RegularText textAlign="center" fontSize={12}>
+              {item.label}
+            </RegularText>
           </View>
         ))}
       </XStack>

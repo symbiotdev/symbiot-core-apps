@@ -33,7 +33,7 @@ export const Calendar = () => {
   const hiddenDays = useMemo(
     () =>
       DateHelper.getWeekdays({
-        formatStr: 'EEEEEE',
+        formatStr: 'EEEEE',
         weekStartsOn: preferences.appearance?.calendar?.weekStartsOn,
       }),
     [preferences.appearance?.calendar?.weekStartsOn],

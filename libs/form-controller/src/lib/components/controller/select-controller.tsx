@@ -22,11 +22,13 @@ export function SelectController<T extends FieldValues>({
   options,
   optionsLoading,
   optionsError,
+  optionsTitle,
   onBlur,
 }: {
   name: Path<T>;
   control: Control<T>;
   label: string;
+  optionsTitle?: string;
   placeholder: string;
   loading?: boolean;
   searchable?: boolean;
@@ -56,6 +58,7 @@ export function SelectController<T extends FieldValues>({
           options={options}
           optionsLoading={optionsLoading}
           optionsError={optionsError}
+          optionsTitle={optionsTitle}
           label={label}
           placeholder={placeholder}
           onChange={onChange}

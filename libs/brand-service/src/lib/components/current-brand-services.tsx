@@ -104,7 +104,7 @@ export const CurrentBrandServices = ({
           zIndex: 1,
         }}
       >
-        <NavigationBackground backgroundColor="$background1" />
+        <NavigationBackground />
 
         <Search
           value={search}

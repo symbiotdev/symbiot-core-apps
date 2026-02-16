@@ -34,7 +34,6 @@ import {
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
 } from '../view/page-view';
-import { NavigationBackground } from '../navigation/background';
 
 const adaptiveMediaSize = (isWeb ? 'md' : 'xl') as keyof AdaptWhen;
 
@@ -247,24 +246,11 @@ export const AdaptivePopover = forwardRef(
                 enterStyle={{ opacity: 0 }}
                 exitStyle={{ opacity: 0 }}
                 opacity={1}
-              >
-                <NavigationBackground />
-              </Sheet.Overlay>
-
-              <NavigationBackground
-                backgroundColor="$background1"
-                borderColor={theme.$background1?.val}
-                borderWidth={1}
-                height="120%"
-                borderRadius={30}
-                blurStyle={{
-                  height: '120%',
-                  borderRadius: 30,
-                }}
               />
 
               <Sheet.Frame
-                backgroundColor="transparent"
+                backgroundColor="$background1"
+                borderRadius={30}
                 borderBottomWidth={0}
                 paddingLeft={left}
                 paddingRight={right}

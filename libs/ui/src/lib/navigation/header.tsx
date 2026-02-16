@@ -196,13 +196,11 @@ export const ModalHeader = memo(
     relative,
     headerTitle,
     headerRight,
-    opacity,
     onClose,
   }: {
     height?: number;
     transparent?: boolean;
     relative?: boolean;
-    opacity?: number;
     headerLeft?: () => ReactElement;
     headerTitle?: string | (() => ReactElement);
     headerRight?: () => ReactElement;
@@ -233,7 +231,7 @@ export const ModalHeader = memo(
         paddingLeft={left + headerHorizontalPadding}
         paddingRight={right + headerHorizontalPadding}
       >
-        {!transparent && <NavigationBackground opacity={opacity} />}
+        {!transparent && <NavigationBackground />}
 
         <SideElement
           flex={!headerTitle ? 1 : undefined}

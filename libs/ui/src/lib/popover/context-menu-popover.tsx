@@ -145,12 +145,8 @@ const Menu = ({
       };
 
   return (
-    <View
-      {...animationProps}
-      style={StyleSheet.absoluteFill}
-      onPress={onClose}
-    >
-      <NavigationBackground opacity={0.4} />
+    <View {...animationProps} style={StyleSheet.absoluteFill} onPress={onClose}>
+      <NavigationBackground />
 
       <Trigger {...rect} ref={refs.setReference} collapsable={false} />
 
@@ -161,6 +157,9 @@ const Menu = ({
         enterStyle={{ opacity: 0, y: 10 }}
         exitStyle={{ opacity: 0, y: 10 }}
         position={strategy as 'absolute'}
+        borderWidth={1}
+        borderColor="#FFFFFF20"
+        boxShadow="0 0 25px rgba(0, 0, 0, 0.15)"
         top={y - 5 - (StatusBar.currentHeight || 0)}
         left={x - 5}
         paddingVertical="$2"

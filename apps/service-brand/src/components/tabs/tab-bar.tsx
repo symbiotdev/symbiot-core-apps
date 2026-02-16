@@ -91,10 +91,7 @@ export const CustomTabBar = ({
           style={{
             overflow: 'hidden',
             borderRadius: 25,
-            boxShadow:
-              scheme === 'dark'
-                ? '0 0 25px rgba(250, 250, 250, 0.1)'
-                : '0 0 25px rgba(0, 0, 0, 0.15)',
+            boxShadow: '0 0 25px rgba(0, 0, 0, 0.15)',
             ...(isCustomDesignMandatory && {
               borderWidth: 1,
               borderColor: '#FFFFFF20',

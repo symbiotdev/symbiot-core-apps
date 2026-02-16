@@ -1,5 +1,4 @@
 import { BaseSyntheticEvent, ReactElement } from 'react';
-import { PageView } from '../view/page-view';
 import { QrCode } from './qr-code';
 import { Card } from '../card/card';
 import { H4 } from '../text/heading';
@@ -64,25 +63,17 @@ export const QrCodeModal = ({
       animationType="fade"
       onClose={onClose}
     >
-      <NavigationBackground opacity={0.4} />
+      <NavigationBackground custom onPress={onClose} />
 
-      <PageView onPress={onClose}>
-        <Card
-          borderWidth={1}
-          borderColor="$background"
-          margin="auto"
-          gap="$4"
-          alignItems="center"
-        >
-          <QrCode size={qrSize} value={qrValue} content={qrContent} />
+      <Card margin="auto" gap="$4" alignItems="center" zIndex={1}>
+        <QrCode size={qrSize} value={qrValue} content={qrContent} />
 
-          {!!title && (
-            <H4 textAlign="center" maxWidth={qrSize}>
-              {title}
-            </H4>
-          )}
-        </Card>
-      </PageView>
+        {!!title && (
+          <H4 textAlign="center" maxWidth={qrSize}>
+            {title}
+          </H4>
+        )}
+      </Card>
     </FullScreenTransparentModal>
   );
 };

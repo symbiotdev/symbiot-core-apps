@@ -1,5 +1,3 @@
-export * from './lib/blur/blur';
-
 export * from './lib/button/button';
 
 export * from './lib/calendar/calendar';

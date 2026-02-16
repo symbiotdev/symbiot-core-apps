@@ -1,4 +1,4 @@
-import { ScrollView, useTheme, View, XStackProps } from 'tamagui';
+import { ScrollView, View, XStackProps } from 'tamagui';
 import {
   AttentionView,
   Avatar,
@@ -102,7 +102,6 @@ export const DrawerMenu = () => {
   const { icons } = useAppSettings();
   const { t } = useI18n();
   const { permanent } = useDrawer();
-  const theme = useTheme();
   const { top, bottom, left } = useSafeAreaInsets();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
 
@@ -135,8 +134,11 @@ export const DrawerMenu = () => {
       ]}
     >
       <NavigationBackground
-        borderRightWidth={1}
-        borderRightColor={theme?.$background1?.val}
+        style={{
+          borderRightWidth: 1,
+          borderRightColor: '#FFFFFF20',
+          boxShadow: '0 0 25px rgba(0, 0, 0, 0.15)',
+        }}
       />
 
       {!permanent && (
@@ -146,14 +148,11 @@ export const DrawerMenu = () => {
           height={headerHeight}
           alignItems="center"
           justifyContent="center"
+          zIndex={1}
           pressStyle={{ opacity: 0.8 }}
           onPress={toggleDrawerCompression}
         >
-          <Icon
-            name={compressed ? 'Maximize' : 'Minimize'}
-            size={18}
-            color="$buttonTextColor1"
-          />
+          <Icon name={compressed ? 'Maximize' : 'Minimize'} size={18} />
         </View>
       )}
 

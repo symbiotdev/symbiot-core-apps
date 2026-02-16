@@ -40,7 +40,6 @@ export * from './lib/modal/slide-sheet-modal';
 
 export * from './lib/navigation/drawer';
 export * from './lib/navigation/header';
-export * from './lib/navigation/tabs';
 export * from './lib/navigation/background';
 
 export * from './lib/popover/adaptive-popover';
@@ -68,4 +67,3 @@ export * from './lib/view/compact-view';
 export * from './lib/view/init-view';
 export * from './lib/view/loading-view';
 export * from './lib/view/page-view';
-export * from './lib/view/tabs-page-view';

@@ -18,9 +18,11 @@ import { useI18n } from '@symbiot-core-apps/shared';
 
 export const PlusActionAdaptiveModal = ({
   trigger,
+  ignoreHapticOnOpen,
   placement,
 }: {
   trigger: ReactElement;
+  ignoreHapticOnOpen?: boolean;
   placement?: Placement;
 }) => {
   const { t } = useI18n();
@@ -81,11 +83,11 @@ export const PlusActionAdaptiveModal = ({
   return (
     hasAnyOfPermissions(['employees', 'locations', 'catalog', 'clients']) && (
       <AdaptivePopover
-        ignoreHapticOnOpen
         unmountChildrenWhenHidden
         ref={popoverRef}
-        placement={placement}
         trigger={trigger}
+        placement={placement}
+        ignoreHapticOnOpen={ignoreHapticOnOpen}
       >
         <View
           marginVertical={-(defaultPageVerticalPadding / 2)}

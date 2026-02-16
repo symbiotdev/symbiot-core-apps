@@ -1,4 +1,4 @@
-import { Label as TamaguiLabel, styled, Text as TamaguiText } from 'tamagui';
+import { styled, Text as TamaguiText } from 'tamagui';
 import { defaultTextStyles } from './text';
 import { isWeb } from '@symbiot-core-apps/shared';
 
@@ -19,4 +19,4 @@ export const Label = styled(TamaguiText, {
   ...defaultTextStyles,
   fontFamily: 'BodyMedium',
   color: '$placeholder',
-}) as typeof TamaguiLabel;
+});

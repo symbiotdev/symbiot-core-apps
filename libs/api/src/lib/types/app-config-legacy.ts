@@ -29,8 +29,6 @@ export type ThemeConfigLegacy = {
   checkboxColor: string;
   inputBackgroundColor: string;
   placeholder: string;
-  tabBarActiveTintColor: string;
-  tabBarInactiveTintColor: string;
   qrCode: string;
   qrCodeGradientFrom: string;
   qrCodeGradientTo: string;

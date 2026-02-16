@@ -50,6 +50,7 @@
       "bundler": "metro"
     },
     "plugins": [
+      "expo-router",
       "react-native-legal",
       "expo-apple-authentication",
       "@react-native-firebase/app",

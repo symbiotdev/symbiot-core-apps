@@ -14,10 +14,10 @@ import {
   Icon,
   QrCodeModal,
   RegularText,
-  TabsPageView,
 } from '@symbiot-core-apps/ui';
 import { MyBrandsSelectionList } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
+import { TabsView } from '../tabs/tabs-view';
 
 export const InitialAction = () => {
   const { me } = useCurrentAccountState();
@@ -40,7 +40,7 @@ export const InitialAction = () => {
 
   return (
     <>
-      <TabsPageView withHeaderHeight scrollable gap="$5" alignItems="center">
+      <TabsView withHeaderHeight scrollable gap="$5" alignItems="center">
         {currentBrands?.length ? (
           <MyBrandsSelectionList />
         ) : (
@@ -71,7 +71,7 @@ export const InitialAction = () => {
             />
           </CompactView>
         )}
-      </TabsPageView>
+      </TabsView>
 
       {me && (
         <QrCodeModal

@@ -5,7 +5,6 @@ import {
   H3,
   HeaderButton,
   headerButtonSize,
-  TabsPageView,
   useDrawer,
 } from '@symbiot-core-apps/ui';
 import {
@@ -25,6 +24,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { TodayBrandBookings } from '@symbiot-core-apps/brand-booking';
 import { BrandCongrats } from '@symbiot-core-apps/brand';
+import { TabsView } from '../../../components/tabs/tabs-view';
 
 export default () => {
   const { me, stats } = useCurrentAccountState();
@@ -117,7 +117,7 @@ const BrandHome = () => {
   );
 
   return (
-    <TabsPageView scrollable withHeaderHeight>
+    <TabsView scrollable withHeaderHeight>
       <CompactView gap="$3">
         {!!currentBrand && <BrandCongrats brand={currentBrand} />}
 
@@ -207,6 +207,6 @@ const BrandHome = () => {
           />
         )}
       </CompactView>
-    </TabsPageView>
+    </TabsView>
   );
 };

@@ -133,13 +133,7 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
 
   return (
     <Stack screenOptions={screenOptions}>
-      <Stack.Screen
-        name="(tabs)"
-        options={{
-          ...animationControlProps,
-          headerShown: false,
-        }}
-      />
+      <Stack.Screen name="(tabs)" options={screenOptions} />
 
       {/*ACCOUNT*/}
 

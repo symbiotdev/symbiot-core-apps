@@ -29,7 +29,6 @@ import {
   QrCodeModalWithTrigger,
   RegularText,
   Spinner,
-  TabsPageView,
   useDrawer,
 } from '@symbiot-core-apps/ui';
 import { View, XStack } from 'tamagui';
@@ -42,6 +41,7 @@ import {
   useAppSettings,
   useAppVersionUpdateType,
 } from '@symbiot-core-apps/app';
+import { TabsView } from '../../../components/tabs/tabs-view';
 
 export default () => {
   const { t, supportedLanguages } = useI18n();
@@ -81,7 +81,7 @@ export default () => {
 
   return (
     me && (
-      <TabsPageView scrollable withHeaderHeight={isWeb || isTablet}>
+      <TabsView scrollable withHeaderHeight={isWeb || isTablet}>
         <CompactView gap="$3" flex={1}>
           {canSubscribe && (
             <ActionCard
@@ -302,7 +302,7 @@ export default () => {
             )}
           </View>
         </CompactView>
-      </TabsPageView>
+      </TabsView>
     )
   );
 };

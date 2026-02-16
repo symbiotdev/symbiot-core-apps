@@ -18,7 +18,6 @@ import {
   Icon,
   MediumText,
   RegularText,
-  tabBarHeight,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { View, XStack } from 'tamagui';
@@ -35,6 +34,7 @@ import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
 import { useRoute } from '@react-navigation/native';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { SmartSelect } from '@symbiot-core-apps/form-controller';
+import { TabsViewBottomOffset } from '../../../components/tabs/tabs-view';
 
 const today = new Date();
 
@@ -226,7 +226,7 @@ export default () => {
       timeGridRef={timeGridRef}
       isFetching={isFetching || locationsLoading}
       offsetTop={headerHeight}
-      offsetBottom={tabBarHeight}
+      offsetBottom={TabsViewBottomOffset}
       selectedDate={selectedDate}
       onChangeSelectedDate={setSelectedDate}
     />

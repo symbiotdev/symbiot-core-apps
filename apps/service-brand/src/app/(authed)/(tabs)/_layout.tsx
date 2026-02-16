@@ -2,29 +2,31 @@ import { Tabs, useSegments } from 'expo-router';
 import {
   AttentionView,
   Button,
-  CustomTabBar,
   defaultIconSize,
   Icon,
   useDrawer,
-  useTabsScreenOptions,
+  useScreenHeaderOptions,
 } from '@symbiot-core-apps/ui';
 import {
   useCurrentAccountState,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import React, { useEffect } from 'react';
-import { useCountNewNotificationsReq } from '@symbiot-core-apps/api';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { PlusActionAdaptiveModal } from '../../../components/tabs/plus-action-adaptive-modal';
+import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
+import { useCountNewNotificationsReq } from '@symbiot-core-apps/api';
+import { CustomTabBar } from '../../../components/tabs/tab-bar';
 
 export default () => {
+  const { stats } = useCurrentAccountState();
   const { brand: currentBrand } = useCurrentBrandState();
-  const { stats, setMyStats } = useCurrentAccountState();
   const { icons } = useAppSettings();
   const segments = useSegments();
   const { visible: drawerVisible } = useDrawer();
+  const headerOptions = useScreenHeaderOptions();
+  const { setMyStats } = useCurrentAccountState();
   const { data: countNewNotifications } = useCountNewNotificationsReq();
-  const screenOptions = useTabsScreenOptions();
 
   useEffect(() => {
     if (countNewNotifications) {
@@ -36,22 +38,18 @@ export default () => {
 
   return (
     <Tabs
-      screenOptions={{
-        ...screenOptions,
-        ...(drawerVisible && {
-          animation: 'none',
-        }),
-      }}
+      screenOptions={headerOptions as BottomTabNavigationOptions}
       tabBar={(props) => (
         <CustomTabBar
           {...props}
           hidden={drawerVisible || segments.includes('(stack)')}
           DynamicButton={
             <PlusActionAdaptiveModal
+              ignoreHapticOnOpen
               trigger={
                 <Button
                   label="+"
-                  fontSize={24}
+                  fontSize={30}
                   boxShadow="0 0 10px rgba(0, 0, 0, 0.05)"
                   paddingVertical={0}
                   paddingHorizontal={0}
@@ -65,22 +63,6 @@ export default () => {
         />
       )}
     >
-      <Tabs.Screen
-        name="home"
-        options={{
-          tabBarIcon: ({ color, size, focused }) => (
-            <AttentionView attention={!!stats.newNotifications}>
-              <Icon
-                name={icons.Home}
-                color={color}
-                size={Math.min(size, defaultIconSize)}
-                type={focused ? 'SolarBold' : undefined}
-              />
-            </AttentionView>
-          ),
-        }}
-      />
-
       <Tabs.Protected guard={!!currentBrand}>
         <Tabs.Screen
           name="schedule"
@@ -96,6 +78,22 @@ export default () => {
           }}
         />
       </Tabs.Protected>
+
+      <Tabs.Screen
+        name="home"
+        options={{
+          tabBarIcon: ({ color, size, focused }) => (
+            <AttentionView attention={!!stats.newNotifications}>
+              <Icon
+                name={icons.Home}
+                color={color}
+                size={Math.min(size, defaultIconSize)}
+                type={focused ? 'SolarBold' : undefined}
+              />
+            </AttentionView>
+          ),
+        }}
+      />
 
       <Tabs.Screen
         name="menu"

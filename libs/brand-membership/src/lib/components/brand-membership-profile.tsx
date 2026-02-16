@@ -45,7 +45,6 @@ export const BrandMembershipProfile = ({
       <CompactView gap="$5" marginVertical="$5">
         {!!membership.description && (
           <ListItemGroup
-            paddingVertical={0}
             paddingHorizontal="$3"
             backgroundColor="transparent"
             title={t(`${tPrefix}.profile.description`)}
@@ -57,7 +56,6 @@ export const BrandMembershipProfile = ({
         {membership?.services?.length ? (
           <ListItemGroup
             gap="$1"
-            paddingVertical={0}
             paddingHorizontal={0}
             backgroundColor="transparent"
             title={t(`${tPrefix}.profile.services`)}
@@ -85,7 +83,6 @@ export const BrandMembershipProfile = ({
 
         {locations.length && (
           <ListItemGroup
-            paddingVertical={0}
             paddingHorizontal={0}
             backgroundColor="transparent"
             gap="$1"
@@ -107,7 +104,6 @@ export const BrandMembershipProfile = ({
 
         <ListItemGroup
           title={t(`${tPrefix}.profile.note`)}
-          paddingVertical={0}
           paddingHorizontal="$3"
           backgroundColor="transparent"
         >

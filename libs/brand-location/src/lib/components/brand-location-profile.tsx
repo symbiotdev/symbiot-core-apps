@@ -145,7 +145,6 @@ export const BrandLocationProfile = ({
         )}
 
         <ListItemGroup
-          paddingVertical={0}
           paddingHorizontal="$3"
           backgroundColor="transparent"
           title={t('brand_location.profile.address')}
@@ -165,7 +164,6 @@ export const BrandLocationProfile = ({
 
         {!!location.remark && (
           <ListItemGroup
-            paddingVertical={0}
             paddingHorizontal="$3"
             backgroundColor="transparent"
             title={t('brand_location.profile.remark')}
@@ -178,7 +176,6 @@ export const BrandLocationProfile = ({
 
         {!!location.advantages?.length && (
           <ListItemGroup
-            paddingVertical={0}
             paddingHorizontal={0}
             backgroundColor="transparent"
             flexDirection="row"
@@ -200,7 +197,6 @@ export const BrandLocationProfile = ({
         ) : (
           <ListItemGroup
             gap="$1"
-            paddingVertical={0}
             paddingHorizontal={0}
             backgroundColor="transparent"
             title={t('brand_location.profile.providers')}

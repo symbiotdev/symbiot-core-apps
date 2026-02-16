@@ -218,7 +218,6 @@ export const ServiceBrandBookingProfile = ({
 
           {!!booking.note && (
             <ListItemGroup
-              paddingVertical={0}
               paddingHorizontal="$3"
               title={t('service_brand_booking.profile.note')}
               backgroundColor="transparent"

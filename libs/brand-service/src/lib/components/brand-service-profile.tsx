@@ -1,9 +1,9 @@
 import { BrandService } from '@symbiot-core-apps/api';
 import {
   Avatar,
+  CompactView,
   defaultPageHorizontalPadding,
   ExtraBoldText,
-  CompactView,
   H2,
   ListItemGroup,
   MediumText,
@@ -107,7 +107,6 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
 
         {!!service.description && (
           <ListItemGroup
-            paddingVertical={0}
             paddingHorizontal="$3"
             backgroundColor="transparent"
             title={t('brand_service.profile.description')}
@@ -135,7 +134,6 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
 
         {locations.length && (
           <ListItemGroup
-            paddingVertical={0}
             paddingHorizontal={0}
             backgroundColor="transparent"
             gap="$1"
@@ -156,7 +154,6 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
         )}
 
         <ListItemGroup
-          paddingVertical={0}
           paddingHorizontal="$3"
           backgroundColor="transparent"
           title={t('brand_service.profile.note')}

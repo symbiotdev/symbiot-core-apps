@@ -164,7 +164,6 @@ export const BrandEmployeeProfile = ({
           </ListItemGroup>
         ) : (
           <ListItemGroup
-            paddingVertical={0}
             paddingHorizontal="$3"
             backgroundColor="transparent"
             title={t('brand_employee.profile.locations')}
@@ -177,7 +176,6 @@ export const BrandEmployeeProfile = ({
 
         <ListItemGroup
           title={t('brand_employee.profile.about')}
-          paddingVertical={0}
           paddingHorizontal="$3"
           backgroundColor="transparent"
         >

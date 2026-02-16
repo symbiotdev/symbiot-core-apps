@@ -78,7 +78,6 @@ export const BrandSchedule = ({
     </ListItemGroup>
   ) : (
     <ListItemGroup
-      paddingVertical={0}
       paddingHorizontal="$3"
       backgroundColor="transparent"
       title={t('shared.schedule.working_hours')}

@@ -3,7 +3,6 @@ import { useBrandEmployeeProfileByIdReq } from '@symbiot-core-apps/api';
 import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
-import { XStack } from 'tamagui';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 
 export default () => {
@@ -20,7 +19,7 @@ export default () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <XStack flex={1} gap="$3" alignItems="center">
+        <>
           {/*todo - analytics*/}
           {/*{hasPermission('analytics') && (*/}
           {/*  <HeaderButton*/}
@@ -34,7 +33,7 @@ export default () => {
               onPress={() => router.push(`/employees/${id}/update`)}
             />
           )}
-        </XStack>
+        </>
       ),
     });
   }, [hasPermission, navigation, id]);

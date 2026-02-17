@@ -38,6 +38,9 @@ export * from './lib/modal/slide-sheet-modal';
 
 export * from './lib/navigation/drawer';
 export * from './lib/navigation/header';
+export * from './lib/navigation/header-button';
+export * from './lib/navigation/header-title';
+export * from './lib/navigation/modal-header';
 
 export * from './lib/popover/adaptive-popover';
 export * from './lib/popover/context-menu-popover';

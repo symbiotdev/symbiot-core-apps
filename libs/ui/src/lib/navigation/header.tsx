@@ -1,30 +1,16 @@
-import { Pressable, ViewStyle } from 'react-native';
 import { View, XStack } from 'tamagui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  BaseSyntheticEvent,
-  memo,
-  PropsWithChildren,
-  ReactElement,
-  useCallback,
-  useMemo,
-} from 'react';
-import { Icon, IconName } from '../icons';
-import {
-  emitHaptic,
-  isAndroid,
-  isIos,
-  isWeb,
-  SystemScheme,
-} from '@symbiot-core-apps/shared';
-import { AttentionView } from '../view/attention-view';
-import { MediumText, RegularText } from '../text/text';
+import { memo, useCallback, useMemo } from 'react';
+import { isAndroid, isWeb, SystemScheme } from '@symbiot-core-apps/shared';
 import {
   NativeStackHeaderProps,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import { useAppScheme } from '@symbiot-core-apps/state';
 import { GlassView } from '../view/glass-view';
+import { HeaderSideElement } from './header-side-element';
+import { HeaderTitle } from './header-title';
+import { HeaderButton } from './header-button';
 
 export const headerHeight = 50;
 export const headerButtonSize = 24;
@@ -68,90 +54,6 @@ export const useStackScreenHeaderOptions = () => {
     }),
   } as NativeStackNavigationOptions;
 };
-
-const SideElement = memo(
-  ({ children, style }: PropsWithChildren<{ style?: ViewStyle }>) =>
-    children ? (
-      <GlassView
-        interactive
-        children={children}
-        style={{
-          ...style,
-          zIndex: 1,
-          minHeight: 40,
-          minWidth: 40,
-          alignSelf: 'center',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: 20,
-        }}
-      />
-    ) : (
-      <View width={40} />
-    ),
-);
-
-export const HeaderButton = memo(
-  ({
-    attention,
-    iconName,
-    onPress,
-  }: {
-    iconName: IconName;
-    attention?: boolean;
-    onPress?: (e: BaseSyntheticEvent) => void;
-  }) => (
-    <AttentionView
-      width="100%"
-      height={40}
-      justifyContent="center"
-      alignItems="center"
-      attention={Boolean(attention)}
-    >
-      <Pressable
-        style={({ pressed }) => ({
-          width: '100%',
-          height: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          opacity: pressed ? 0.8 : 1,
-          outlineWidth: 0,
-        })}
-        onPress={(e) => {
-          onPress?.(e);
-          emitHaptic();
-        }}
-      >
-        <Icon name={iconName} color="$buttonTextColor1" />
-      </Pressable>
-    </AttentionView>
-  ),
-);
-
-export const HeaderTitle = ({
-  title,
-  subtitle,
-}: {
-  title: string;
-  subtitle?: string;
-}) => (
-  <>
-    <MediumText numberOfLines={subtitle ? 1 : 2} textAlign="center">
-      {title}
-    </MediumText>
-
-    {!!subtitle && (
-      <RegularText
-        color="$disabled"
-        textAlign="center"
-        numberOfLines={1}
-        fontSize={12}
-      >
-        {subtitle}
-      </RegularText>
-    )}
-  </>
-);
 
 const shadowSize = isAndroid ? 25 : 50;
 
@@ -201,7 +103,8 @@ export const ScreenHeader = memo(
           paddingRight={right + headerHorizontalPadding}
           height={top + (withContent ? headerHeight : 0)}
         >
-          <SideElement
+          <HeaderSideElement
+            alignItems="flex-start"
             children={
               typeof options.headerLeft === 'function'
                 ? options.headerLeft({})
@@ -237,86 +140,12 @@ export const ScreenHeader = memo(
             </GlassView>
           )}
 
-          <SideElement children={options.headerRight?.({})} />
+          <HeaderSideElement
+            alignItems="flex-end"
+            children={options.headerRight?.({})}
+          />
         </XStack>
       </>
-    );
-  },
-);
-
-export const ModalHeader = memo(
-  ({
-    height,
-    headerLeft,
-    relative,
-    headerTitle,
-    headerRight,
-    onClose,
-  }: {
-    height?: number;
-    relative?: boolean;
-    headerLeft?: () => ReactElement;
-    headerTitle?: string | (() => ReactElement);
-    headerRight?: () => ReactElement;
-    onClose?: (e: BaseSyntheticEvent) => void;
-  }) => {
-    const { top, left, right } = useSafeAreaInsets();
-
-    const adjustedTop = useMemo(() => (isIos ? 5 : top), [top]);
-
-    const adjustedHeight = adjustedTop + (height || headerHeight);
-
-    return (
-      <XStack
-        zIndex={1}
-        {...(!relative && {
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-        })}
-        width="100%"
-        alignItems="center"
-        justifyContent="space-between"
-        gap="$2"
-        paddingTop={adjustedTop}
-        height={adjustedHeight}
-        maxHeight={adjustedHeight}
-        paddingLeft={left + headerHorizontalPadding}
-        paddingRight={right + headerHorizontalPadding}
-      >
-        <SideElement children={headerLeft?.()} />
-
-        {!!headerTitle && (
-          <GlassView
-            style={{
-              zIndex: 1,
-              borderRadius: 20,
-              paddingVertical: 5,
-              paddingHorizontal: 10,
-              minHeight: 40,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {typeof headerTitle === 'string' && (
-              <HeaderTitle title={headerTitle} />
-            )}
-
-            {typeof headerTitle === 'function' && headerTitle()}
-          </GlassView>
-        )}
-
-        <SideElement
-          children={
-            typeof headerRight === 'function' ? (
-              headerRight()
-            ) : (
-              <HeaderButton iconName="Close" onPress={onClose} />
-            )
-          }
-        />
-      </XStack>
     );
   },
 );

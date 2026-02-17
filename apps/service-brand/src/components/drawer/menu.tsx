@@ -134,7 +134,6 @@ export const DrawerMenu = () => {
       ]}
     >
       <GlassViewBackground
-        interactive
         style={{
           borderBottomWidth: 0,
           borderTopWidth: 0,

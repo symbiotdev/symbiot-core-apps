@@ -1,10 +1,16 @@
 import {
+  ActionCard,
   Avatar,
   CardsGrid,
   CompactView,
+  H2,
   H3,
+  H4,
   HeaderButton,
   headerButtonSize,
+  Icon,
+  QrCodeModal,
+  RegularText,
   useDrawer,
 } from '@symbiot-core-apps/ui';
 import {
@@ -12,31 +18,126 @@ import {
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import { InitialAction } from '../../../components/brand/initial-action';
 import { router, useNavigation } from 'expo-router';
-import React, { useCallback, useLayoutEffect } from 'react';
+import React, { useCallback, useLayoutEffect, useState } from 'react';
 import { useAppSettings } from '@symbiot-core-apps/app';
-import { XStack } from 'tamagui';
+import { View, XStack } from 'tamagui';
 import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
 } from '@symbiot-core-apps/api';
 import { TodayBrandBookings } from '@symbiot-core-apps/brand-booking';
-import { BrandCongrats } from '@symbiot-core-apps/brand';
+import { BrandCongrats, MyBrandsSelectionList } from '@symbiot-core-apps/brand';
 import { TabsView } from '../../../components/tabs/tabs-view';
 
-export default () => {
-  const { me, stats } = useCurrentAccountState();
-  const { brand: currentBrand } = useCurrentBrandState();
-  const { icons } = useAppSettings();
+const InitialAction = () => {
+  const { me } = useCurrentAccountState();
+  const { brands: currentBrands } = useCurrentBrandState();
   const { t } = useI18n();
-  const { visible: drawerVisible } = useDrawer();
+  const { icons } = useAppSettings();
   const navigation = useNavigation();
 
-  const headerLeft = useCallback(() => {
-    if (currentBrand) {
-      return (
+  const [qrCodeVisible, setQrCodeVisible] = useState(false);
+
+  const createBrand = useCallback(() => router.push('/brand/create'), []);
+
+  const onOpenQrCodeModal = useCallback(() => {
+    emitHaptic();
+    setQrCodeVisible(true);
+  }, []);
+  const onCloseQrCodeModal = useCallback(() => {
+    emitHaptic();
+    setQrCodeVisible(false);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!me?.firstname) return;
+
+    navigation.setOptions({
+      headerTitle: t('shared.greeting_firstname', {
+        firstname: me.firstname,
+      }),
+    });
+  }, [me?.firstname, navigation, t]);
+
+  return (
+    <>
+      <TabsView withHeaderHeight scrollable gap="$5" alignItems="center">
+        {currentBrands?.length ? (
+          <MyBrandsSelectionList />
+        ) : (
+          <CompactView gap="$6" marginVertical="auto">
+            <View gap="$2">
+              <H2 textAlign="center">{t('initial_actions.title')}</H2>
+              <RegularText textAlign="center">
+                {t('initial_actions.subtitle')}
+              </RegularText>
+            </View>
+
+            <ActionCard
+              title={t('initial_actions.create_workspace.title')}
+              subtitle={t('initial_actions.create_workspace.subtitle')}
+              buttonLabel={t('initial_actions.create_workspace.button.label')}
+              buttonIcon={<Icon name={icons.Workspace} />}
+              onPress={createBrand}
+            />
+
+            <H4 textAlign="center">{t('shared.or')}</H4>
+
+            <ActionCard
+              title={t('initial_actions.join_workspace.title')}
+              subtitle={t('initial_actions.join_workspace.subtitle')}
+              buttonLabel={t('initial_actions.join_workspace.button.label')}
+              buttonIcon={<Icon name="QrCode" />}
+              onPress={onOpenQrCodeModal}
+            />
+          </CompactView>
+        )}
+      </TabsView>
+
+      {me && (
+        <QrCodeModal
+          visible={qrCodeVisible}
+          qrValue={me.id}
+          title={`ID: ${me.id}`}
+          qrContent={<RegularText fontSize={30}>🤩</RegularText>}
+          onClose={onCloseQrCodeModal}
+        />
+      )}
+    </>
+  );
+};
+
+const BrandHome = () => {
+  const { icons } = useAppSettings();
+  const { t } = useI18n();
+  const { brand: currentBrand } = useCurrentBrandState();
+  const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
+  const navigation = useNavigation();
+
+  const onLocationsPress = useCallback(() => router.push('/locations'), []);
+  const onEmployeesPress = useCallback(() => router.push('/employees'), []);
+  const onClientsPress = useCallback(() => router.push('/clients'), []);
+  const onServicesPress = useCallback(() => router.push('/services'), []);
+  const onPeriodBasedMembershipsPress = useCallback(
+    () => router.push(`/memberships/${BrandMembershipType.period}`),
+    [],
+  );
+  const onVisitBasedMembershipsPress = useCallback(
+    () => router.push(`/memberships/${BrandMembershipType.visits}`),
+    [],
+  );
+  const onTransactionPress = useCallback(
+    () => router.push('/transactions'),
+    [],
+  );
+
+  useLayoutEffect(() => {
+    if (!currentBrand) return;
+
+    navigation.setOptions({
+      headerTitle: () => (
         <XStack
           pressStyle={{ opacity: 0.8 }}
           alignItems="center"
@@ -55,66 +156,9 @@ export default () => {
             {currentBrand.name}
           </H3>
         </XStack>
-      );
-    } else if (me?.firstname) {
-      return (
-        <H3 lineHeight={headerButtonSize} numberOfLines={1}>
-          {t('shared.greeting_firstname', {
-            firstname: me.firstname,
-          })}
-        </H3>
-      );
-    } else return null;
-  }, [currentBrand, me?.firstname, t]);
-
-  const headerRight = useCallback(
-    () =>
-      !drawerVisible && (
-        <HeaderButton
-          attention={!!stats.newNotifications}
-          iconName={icons.Notifications}
-          onPress={() => router.push('/notifications')}
-        />
       ),
-    [drawerVisible, icons.Notifications, stats.newNotifications],
-  );
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft,
-      headerRight,
     });
-  }, [headerLeft, headerRight, navigation]);
-
-  if (!currentBrand) {
-    return <InitialAction />;
-  }
-
-  return <BrandHome />;
-};
-
-const BrandHome = () => {
-  const { icons } = useAppSettings();
-  const { t } = useI18n();
-  const { brand: currentBrand } = useCurrentBrandState();
-  const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
-
-  const onLocationsPress = useCallback(() => router.push('/locations'), []);
-  const onEmployeesPress = useCallback(() => router.push('/employees'), []);
-  const onClientsPress = useCallback(() => router.push('/clients'), []);
-  const onServicesPress = useCallback(() => router.push('/services'), []);
-  const onPeriodBasedMembershipsPress = useCallback(
-    () => router.push(`/memberships/${BrandMembershipType.period}`),
-    [],
-  );
-  const onVisitBasedMembershipsPress = useCallback(
-    () => router.push(`/memberships/${BrandMembershipType.visits}`),
-    [],
-  );
-  const onTransactionPress = useCallback(
-    () => router.push('/transactions'),
-    [],
-  );
+  }, [currentBrand, navigation]);
 
   return (
     <TabsView scrollable withHeaderHeight>
@@ -209,4 +253,36 @@ const BrandHome = () => {
       </CompactView>
     </TabsView>
   );
+};
+
+export default () => {
+  const { stats } = useCurrentAccountState();
+  const { brand: currentBrand } = useCurrentBrandState();
+  const { icons } = useAppSettings();
+  const { visible: drawerVisible } = useDrawer();
+  const navigation = useNavigation();
+
+  const headerRight = useCallback(
+    () =>
+      !drawerVisible && (
+        <HeaderButton
+          attention={!!stats.newNotifications}
+          iconName={icons.Notifications}
+          onPress={() => router.push('/notifications')}
+        />
+      ),
+    [drawerVisible, icons.Notifications, stats.newNotifications],
+  );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight,
+    });
+  }, [headerRight, navigation]);
+
+  if (!currentBrand) {
+    return <InitialAction />;
+  }
+
+  return <BrandHome />;
 };

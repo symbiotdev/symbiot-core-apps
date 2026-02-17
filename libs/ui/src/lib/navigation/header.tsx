@@ -135,17 +135,7 @@ export const HeaderTitle = ({
   title: string;
   subtitle?: string;
 }) => (
-  <GlassView
-    style={{
-      zIndex: 1,
-      borderRadius: 20,
-      paddingVertical: 5,
-      paddingHorizontal: 10,
-      minHeight: 40,
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}
-  >
+  <>
     <MediumText numberOfLines={subtitle ? 1 : 2} textAlign="center">
       {title}
     </MediumText>
@@ -160,7 +150,7 @@ export const HeaderTitle = ({
         {subtitle}
       </RegularText>
     )}
-  </GlassView>
+  </>
 );
 
 const shadowSize = isAndroid ? 25 : 50;
@@ -224,14 +214,27 @@ export const ScreenHeader = memo(
             }
           />
 
-          {typeof options.headerTitle === 'string' && (
-            <HeaderTitle title={options.headerTitle} />
-          )}
+          {!!options.headerTitle && (
+            <GlassView
+              style={{
+                zIndex: 1,
+                borderRadius: 20,
+                paddingVertical: 5,
+                paddingHorizontal: 10,
+                minHeight: 40,
+                flexShrink: 1,
+                alignSelf: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {typeof options.headerTitle === 'string' && (
+                <HeaderTitle title={options.headerTitle} />
+              )}
 
-          {typeof options.headerTitle === 'function' && (
-            <View flex={1} alignItems="center">
-              {options.headerTitle({ children: '' })}
-            </View>
+              {typeof options.headerTitle === 'function' &&
+                options.headerTitle({ children: '' })}
+            </GlassView>
           )}
 
           <SideElement children={options.headerRight?.({})} />
@@ -284,12 +287,24 @@ export const ModalHeader = memo(
       >
         <SideElement children={headerLeft?.()} />
 
-        {typeof headerTitle === 'string' && <HeaderTitle title={headerTitle} />}
+        {!!headerTitle && (
+          <GlassView
+            style={{
+              zIndex: 1,
+              borderRadius: 20,
+              paddingVertical: 5,
+              paddingHorizontal: 10,
+              minHeight: 40,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {typeof headerTitle === 'string' && (
+              <HeaderTitle title={headerTitle} />
+            )}
 
-        {typeof headerTitle === 'function' && (
-          <View flex={1} alignItems="center">
-            {headerTitle()}
-          </View>
+            {typeof headerTitle === 'function' && headerTitle()}
+          </GlassView>
         )}
 
         <SideElement

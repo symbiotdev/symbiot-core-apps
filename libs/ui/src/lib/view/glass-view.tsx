@@ -12,7 +12,7 @@ import { isIos } from '@symbiot-core-apps/shared';
 import { BlurView as ExpoBlurView } from 'expo-blur';
 
 type Props = Omit<ViewProps, 'style'> & {
-  style?: ViewStyle;
+  style?: ViewStyle | ViewStyle[];
   interactive?: boolean;
 };
 
@@ -64,7 +64,7 @@ export const GlassLikeView = ({ children, ...props }: Props) => {
                 : 'rgba(17, 17, 17, .9)',
           }),
         },
-        props.style,
+        ...(Array.isArray(props.style) ? props.style : [props.style]),
       ]}
       {...(props.interactive && {
         onTouchStart: (e) => {

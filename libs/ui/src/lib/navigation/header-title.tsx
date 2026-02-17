@@ -8,7 +8,7 @@ export const HeaderTitle = ({
   title: string;
   subtitle?: string;
 }) => (
-  <View gap={2}>
+  <View gap={2} paddingHorizontal={5}>
     <MediumText numberOfLines={subtitle ? 1 : 2} textAlign="center">
       {title}
     </MediumText>

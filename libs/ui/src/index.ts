@@ -6,7 +6,7 @@ export * from './lib/card/action-card';
 export * from './lib/card/card';
 export * from './lib/card/cards-grid';
 export * from './lib/card/closable-card';
-export * from './lib/card/progress-card'
+export * from './lib/card/progress-card';
 
 export * from './lib/carousel/simple-horizontal-carousel';
 
@@ -51,6 +51,7 @@ export * from './lib/qr/qr-code-scan-modal';
 
 export * from './lib/segment/segment';
 
+export * from './lib/sheet/smart-sheet';
 export * from './lib/sheet/sheet';
 
 export * from './lib/survey/survey';

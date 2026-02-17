@@ -1,12 +1,12 @@
 import { BaseSyntheticEvent, memo, ReactElement, useMemo } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { isIos } from '@symbiot-core-apps/shared';
-import { headerHeight, headerHorizontalPadding } from '@symbiot-core-apps/ui';
 import { XStack } from 'tamagui';
 import { HeaderSideElement } from './header-side-element';
 import { HeaderButton } from './header-button';
 import { HeaderTitle } from './header-title';
 import { GlassView } from '../view/glass-view';
+import { headerHeight, headerHorizontalPadding } from './header';
 
 export const ModalHeader = memo(
   ({

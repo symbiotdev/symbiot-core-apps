@@ -1,10 +1,9 @@
-import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
+import { onSurveyFinish, Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import {
   useBrandServiceFormatsReq,
   useCreateBrandServiceReq,
 } from '@symbiot-core-apps/api';
-import { router, useNavigation } from 'expo-router';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { useForm } from 'react-hook-form';
 import { BrandServiceAvailabilityController } from './controller/brand-service-availability-controller';
@@ -22,8 +21,7 @@ import { BrandServiceDiscountController } from './controller/brand-service-disco
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { BrandServiceCurrencyController } from './controller/brand-service-currency-controller';
 import { BrandServiceNoteController } from './controller/brand-service-note-controller';
-import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
+import { useI18n } from '@symbiot-core-apps/shared';
 import { BrandServiceDurationController } from './controller/brand-service-duration-controller';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { AvatarPicker } from '@symbiot-core-apps/form-controller';
@@ -34,10 +32,7 @@ export const CreateBrandService = () => {
   const { functionality } = useAppSettings();
   const { height } = useWindowDimensions();
   const { mutateAsync, isPending } = useCreateBrandServiceReq();
-  const navigation = useNavigation();
   const { data: formats } = useBrandServiceFormatsReq();
-
-  const createdRef = useRef(false);
 
   const [avatar, setAvatar] = useState<ImagePickerAsset>();
 
@@ -158,9 +153,9 @@ export const CreateBrandService = () => {
       note,
     });
 
-    createdRef.current = true;
-
-    router.replace(`/services/${service.id}/profile`);
+    return {
+      replaceUrl: `/services/${service.id}/profile`,
+    } as onSurveyFinish;
   }, [
     avatar,
     aboutGetValues,
@@ -172,36 +167,6 @@ export const CreateBrandService = () => {
     structureGetValues,
   ]);
 
-  const onLeave = useCallback(
-    (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
-      if (createdRef.current) return;
-
-      e.preventDefault();
-
-      ConfirmAlert({
-        title: t('brand_service.create.discard.title'),
-        message: t('brand_service.create.discard.message'),
-        onAgree: () => navigation.dispatch(e.data.action),
-      });
-    },
-    [t, navigation],
-  );
-
-  useEffect(() => {
-    navigation.setOptions({
-      gestureEnabled: false,
-      headerShown: !isPending,
-    });
-  }, [isPending, navigation]);
-
-  useEffect(() => {
-    navigation.addListener('beforeRemove', onLeave);
-
-    return () => {
-      navigation.removeListener('beforeRemove', onLeave);
-    };
-  }, [onLeave, navigation]);
-
   const { name } = aboutWatch();
   const { format } = structureWatch();
   const { location } = locationWatch();
@@ -212,7 +177,14 @@ export const CreateBrandService = () => {
     : brand?.currencies?.[0];
 
   return (
-    <Survey loading={isPending || createdRef.current} onFinish={onFinish}>
+    <Survey
+      loading={isPending}
+      leaveAlertParams={{
+        title: t('brand_service.create.discard.title'),
+        subtitle: t('brand_service.create.discard.message'),
+      }}
+      onFinish={onFinish}
+    >
       <SurveyStep
         canGoNext={aboutFormState.isValid}
         title={t('brand_service.create.steps.about.title')}
@@ -234,10 +206,7 @@ export const CreateBrandService = () => {
         title={t('brand_service.create.steps.structure.title')}
         subtitle={t('brand_service.create.steps.structure.subtitle')}
       >
-        <BrandServiceTypeController
-          name="type"
-          control={structureControl}
-        />
+        <BrandServiceTypeController name="type" control={structureControl} />
         <BrandServiceFormatController
           required
           name="format"

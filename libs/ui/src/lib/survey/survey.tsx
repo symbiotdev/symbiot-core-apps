@@ -3,6 +3,7 @@ import React, {
   ReactElement,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
@@ -18,7 +19,6 @@ import {
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
 } from '../view/page-view';
-import { Progress } from '../loading/progress';
 import { LoadingView } from '../view/loading-view';
 import { H2 } from '../text/heading';
 import { RegularText, SemiBoldText } from '../text/text';
@@ -29,12 +29,12 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import { Card } from '../card/card';
 import { Icon } from '../icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { compactViewStyles } from '../view/compact-view';
 import { Button } from '../button/button';
 import {
+  ConfirmAlert,
   emitHaptic,
   isWeb,
   useI18n,
@@ -42,6 +42,10 @@ import {
   useRendered,
 } from '@symbiot-core-apps/shared';
 import { ContainerView } from '../view/container-view';
+import { router, useNavigation } from 'expo-router';
+import { Pressable } from 'react-native';
+import { GlassView } from '../view/glass-view';
+import { EventArg, NavigationAction } from '@react-navigation/native';
 
 type SurveyStepProps = PropsWithChildren<{
   title: string;
@@ -49,6 +53,11 @@ type SurveyStepProps = PropsWithChildren<{
   canGoNext: boolean;
   skippable?: boolean;
 }>;
+
+export type onSurveyFinish = {
+  replaceUrl: string;
+  postCallback?: () => Promise<void>;
+};
 
 const headerTextPadding = isWeb
   ? defaultPageVerticalPadding
@@ -61,18 +70,23 @@ export const SurveyStep = (props: SurveyStepProps) => {
 };
 
 export const Survey = ({
+  loading,
   children,
   initialIndex,
-  loading,
+  leaveAlertParams,
   onFinish,
 }: PropsWithChildren<{
+  loading: boolean;
   initialIndex?: number;
-  loading?: boolean;
-  ignoreNavigation?: boolean;
-  onFinish: () => void;
+  leaveAlertParams: {
+    title: string;
+    subtitle?: string;
+  };
+  onFinish: () => Promise<onSurveyFinish>;
 }>) => {
   const { t } = useI18n();
   const { bottom } = useSafeAreaInsets();
+  const navigation = useNavigation();
   const headerHeight = useScreenHeaderHeight();
   const animatedValue$ = useSharedValue(0);
 
@@ -88,6 +102,7 @@ export const Survey = ({
 
   const currentSelectedIndexRef = useRef(selectedIndex);
   const scrollViewRef = useRef<KeyboardAwareScrollViewRef>(null);
+  const finishedRef = useRef(false);
 
   const animatedStyle = useAnimatedStyle(
     () => ({
@@ -98,11 +113,21 @@ export const Survey = ({
   );
 
   const onNext = useKeyboardDismisser(
-    useCallback(() => {
+    useCallback(async () => {
       if (!currentStep) return;
 
       if (isLastStep) {
-        onFinish();
+        try {
+          const { replaceUrl, postCallback } = await onFinish();
+
+          finishedRef.current = true;
+
+          router.replace(replaceUrl);
+
+          await postCallback?.();
+        } catch {
+          finishedRef.current = false;
+        }
       } else {
         setSelectedIndex((current) => current + 1);
       }
@@ -117,6 +142,43 @@ export const Survey = ({
     emitHaptic();
     setSelectedIndex((prev) => prev - 1);
   }, []);
+
+  useLayoutEffect(() => {
+    const onLeave = (
+      e: EventArg<'beforeRemove', true, { action: NavigationAction }>,
+    ) => {
+      if (finishedRef.current) return;
+
+      e.preventDefault();
+
+      ConfirmAlert({
+        title: leaveAlertParams.title,
+        message: leaveAlertParams.subtitle,
+        onAgree: () => navigation.dispatch(e.data.action),
+      });
+    };
+
+    navigation.addListener('beforeRemove', onLeave);
+    navigation.setOptions({
+      gestureEnabled: false,
+      headerShown: !loading && !finishedRef.current,
+      headerRight: () => (
+        <RegularText>
+          {selectedIndex + 1}/{childrenArr.length}
+        </RegularText>
+      ),
+    });
+
+    return () => {
+      navigation.removeListener('beforeRemove', onLeave);
+    };
+  }, [
+    loading,
+    navigation,
+    selectedIndex,
+    leaveAlertParams,
+    childrenArr.length,
+  ]);
 
   useEffect(() => {
     if (
@@ -142,15 +204,6 @@ export const Survey = ({
     <LoadingView />
   ) : (
     <ContainerView flex={1}>
-      <Progress
-        zIndex={1}
-        top={headerHeight}
-        height={2}
-        left={0}
-        position="absolute"
-        value={(100 / childrenArr.length) * (selectedIndex + 1)}
-      />
-
       <View flex={1}>
         <KeyboardAwareScrollView
           keyboardShouldPersistTaps="handled"
@@ -168,34 +221,31 @@ export const Survey = ({
           }}
         >
           {!!previousStep && (
-            <Card
-              gap="$2"
-              cursor="pointer"
-              overflow="hidden"
-              zIndex={1}
-              pressStyle={{ opacity: 0.8 }}
-              style={compactViewStyles}
-              onPress={onBackPress}
-            >
-              <Animated.View
-                style={[animatedStyle, { gap: 6, flexDirection: 'row' }]}
+            <Pressable onPress={onBackPress}>
+              <GlassView
+                interactive
+                style={{ ...compactViewStyles, padding: 15, borderRadius: 20 }}
               >
-                <View flex={1} gap="$1">
-                  <SemiBoldText numberOfLines={1}>
-                    {previousStep.props.title}
-                  </SemiBoldText>
-                  <RegularText
-                    numberOfLines={1}
-                    color="$placeholder"
-                    fontSize={12}
-                  >
-                    {previousStep.props.subtitle}
-                  </RegularText>
-                </View>
+                <Animated.View
+                  style={[animatedStyle, { gap: 6, flexDirection: 'row' }]}
+                >
+                  <View flex={1} gap="$1">
+                    <SemiBoldText numberOfLines={1}>
+                      {previousStep.props.title}
+                    </SemiBoldText>
+                    <RegularText
+                      numberOfLines={1}
+                      color="$placeholder"
+                      fontSize={12}
+                    >
+                      {previousStep.props.subtitle}
+                    </RegularText>
+                  </View>
 
-                <Icon name="ArrowToTopLeft" />
-              </Animated.View>
-            </Card>
+                  <Icon name="ArrowToTopLeft" />
+                </Animated.View>
+              </GlassView>
+            </Pressable>
           )}
 
           {!!currentStep && (

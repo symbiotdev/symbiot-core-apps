@@ -6,10 +6,9 @@ import {
   useBrandEmployeeNewAccountReq,
   useCreateBrandEmployeeReq,
 } from '@symbiot-core-apps/api';
-import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, useI18n, useRateApp } from '@symbiot-core-apps/shared';
+import { router, useLocalSearchParams } from 'expo-router';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useI18n, useRateApp } from '@symbiot-core-apps/shared';
 import { useForm } from 'react-hook-form';
 import { BrandEmployeeFirstnameController } from './controller/brand-employee-firstname-controller';
 import { BrandEmployeeLastnameController } from './controller/brand-employee-lastname-controller';
@@ -38,10 +37,7 @@ export const CreateBrandEmployee = () => {
     useCreateBrandEmployeeReq();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { mutateAsync: getAccountById } = useBrandEmployeeNewAccountReq();
-  const navigation = useNavigation();
   const { rate: rateApp } = useRateApp();
-
-  const createdRef = useRef(false);
 
   const [account, setAccount] = useState<Account | undefined>(undefined);
   const [avatar, setAvatar] = useState<ImagePickerAsset>();
@@ -138,7 +134,7 @@ export const CreateBrandEmployee = () => {
   });
 
   const onFinish = useCallback(async () => {
-    if (!account?.id) return;
+    if (!account?.id) throw new Error('Account not found');
 
     const { firstname, lastname, gender, birthday, taxId, passport } =
       personalityGetValues();
@@ -176,11 +172,10 @@ export const CreateBrandEmployee = () => {
       },
     });
 
-    createdRef.current = true;
-
-    router.dismissTo('/employees');
-
-    void rateApp();
+    return {
+      replaceUrl: '/employees',
+      postCallback: rateApp,
+    };
   }, [
     account?.id,
     avatar,
@@ -193,36 +188,6 @@ export const CreateBrandEmployee = () => {
     personalityGetValues,
     professionalityGetValues,
   ]);
-
-  const onLeave = useCallback(
-    (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
-      if (createdRef.current || !account) return;
-
-      e.preventDefault();
-
-      ConfirmAlert({
-        title: t('brand_employee.create.discard.title'),
-        message: t('brand_employee.create.discard.message'),
-        onAgree: () => navigation.dispatch(e.data.action),
-      });
-    },
-    [t, navigation, account],
-  );
-
-  useEffect(() => {
-    navigation.setOptions({
-      gestureEnabled: false,
-      headerShown: !isPending,
-    });
-  }, [isPending, navigation]);
-
-  useEffect(() => {
-    navigation.addListener('beforeRemove', onLeave);
-
-    return () => {
-      navigation.removeListener('beforeRemove', onLeave);
-    };
-  }, [onLeave, navigation]);
 
   useEffect(() => {
     getAccountById({ id })
@@ -241,7 +206,11 @@ export const CreateBrandEmployee = () => {
 
   return (
     <Survey
-      loading={isPending || createdRef.current || !account}
+      loading={isPending || !account}
+      leaveAlertParams={{
+        title: t('brand_employee.create.discard.title'),
+        subtitle: t('brand_employee.create.discard.message'),
+      }}
       onFinish={onFinish}
     >
       <SurveyStep

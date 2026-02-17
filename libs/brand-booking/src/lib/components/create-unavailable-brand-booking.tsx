@@ -3,15 +3,8 @@ import {
   BrandBookingType,
   useCreateUnavailableBrandBookingReq,
 } from '@symbiot-core-apps/api';
-import { router, useNavigation } from 'expo-router';
-import { useCallback, useEffect, useRef } from 'react';
-import { EventArg, NavigationAction } from '@react-navigation/native';
-import {
-  ConfirmAlert,
-  DateHelper,
-  useI18n,
-  useRateApp,
-} from '@symbiot-core-apps/shared';
+import { useCallback } from 'react';
+import { DateHelper, useI18n, useRateApp } from '@symbiot-core-apps/shared';
 import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useForm } from 'react-hook-form';
 import { UnavailableBrandBookingDatetimeController } from './controller/unavailable-brand-booking-datetime-controller';
@@ -26,12 +19,9 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
   const { t } = useI18n();
   const { mutateAsync: createBooking, isPending: isBookingLoading } =
     useCreateUnavailableBrandBookingReq();
-  const navigation = useNavigation();
   const { addBookings } = useCurrentBrandBookingsState();
   const { currentEmployee } = useCurrentBrandEmployee();
   const { rate: rateApp } = useRateApp();
-
-  const createdRef = useRef(false);
 
   const {
     control: employeesControl,
@@ -106,15 +96,12 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
       employees: [details.employee],
     });
 
-    createdRef.current = true;
-
     addBookings(bookings);
 
-    router.replace(
-      `/bookings/${BrandBookingType.unavailable}/${bookings[0].id}/profile`,
-    );
-
-    void rateApp();
+    return {
+      replaceUrl: `/bookings/${BrandBookingType.unavailable}/${bookings[0].id}/profile`,
+      postCallback: rateApp,
+    };
   }, [
     rateApp,
     datetimeGetValues,
@@ -124,39 +111,13 @@ export const CreateUnavailableBrandBooking = ({ start }: { start: Date }) => {
     addBookings,
   ]);
 
-  const onLeave = useCallback(
-    (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
-      if (createdRef.current) return;
-
-      e.preventDefault();
-
-      ConfirmAlert({
-        title: t(`unavailable_brand_booking.create.discard.title`),
-        message: t(`unavailable_brand_booking.create.discard.message`),
-        onAgree: () => navigation.dispatch(e.data.action),
-      });
-    },
-    [t, navigation],
-  );
-
-  useEffect(() => {
-    navigation.setOptions({
-      gestureEnabled: false,
-      headerShown: !isBookingLoading,
-    });
-  }, [isBookingLoading, navigation]);
-
-  useEffect(() => {
-    navigation.addListener('beforeRemove', onLeave);
-
-    return () => {
-      navigation.removeListener('beforeRemove', onLeave);
-    };
-  }, [onLeave, navigation]);
-
   return (
     <Survey
-      loading={isBookingLoading || createdRef.current}
+      loading={isBookingLoading}
+      leaveAlertParams={{
+        title: t(`unavailable_brand_booking.create.discard.title`),
+        subtitle: t(`unavailable_brand_booking.create.discard.message`),
+      }}
       onFinish={onFinish}
     >
       <SurveyStep

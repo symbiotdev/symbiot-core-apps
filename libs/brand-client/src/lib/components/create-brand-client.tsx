@@ -1,9 +1,7 @@
 import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useCreateBrandClientReq } from '@symbiot-core-apps/api';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { router, useNavigation } from 'expo-router';
-import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
+import React, { useCallback, useState } from 'react';
+import { useI18n } from '@symbiot-core-apps/shared';
 import { useForm } from 'react-hook-form';
 import { BrandClientFirstnameController } from './controller/brand-client-firstname-controller';
 import { BrandClientLastnameController } from './controller/brand-client-lastname-controller';
@@ -19,9 +17,6 @@ import { AvatarPicker } from '@symbiot-core-apps/form-controller';
 export const CreateBrandClient = () => {
   const { t } = useI18n();
   const { mutateAsync, isPending } = useCreateBrandClientReq();
-  const navigation = useNavigation();
-
-  const createdRef = useRef(false);
 
   const [avatar, setAvatar] = useState<ImagePickerAsset>();
 
@@ -89,9 +84,9 @@ export const CreateBrandClient = () => {
       addresses: address ? [address] : [],
     });
 
-    createdRef.current = true;
-
-    router.replace(`/clients/${client.id}/profile`);
+    return {
+      replaceUrl: `/clients/${client.id}/profile`,
+    };
   }, [
     avatar,
     contactGetValues,
@@ -100,40 +95,17 @@ export const CreateBrandClient = () => {
     personalityGetValues,
   ]);
 
-  const onLeave = useCallback(
-    (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
-      if (createdRef.current) return;
-
-      e.preventDefault();
-
-      ConfirmAlert({
-        title: t('brand_client.create.discard.title'),
-        message: t('brand_client.create.discard.message'),
-        onAgree: () => navigation.dispatch(e.data.action),
-      });
-    },
-    [t, navigation],
-  );
-
-  useEffect(() => {
-    navigation.setOptions({
-      gestureEnabled: false,
-      headerShown: !isPending,
-    });
-  }, [isPending, navigation]);
-
-  useEffect(() => {
-    navigation.addListener('beforeRemove', onLeave);
-
-    return () => {
-      navigation.removeListener('beforeRemove', onLeave);
-    };
-  }, [onLeave, navigation]);
-
   const { firstname, lastname } = personalityWatch();
 
   return (
-    <Survey loading={isPending || createdRef.current} onFinish={onFinish}>
+    <Survey
+      loading={isPending}
+      leaveAlertParams={{
+        title: t('brand_client.create.discard.title'),
+        subtitle: t('brand_client.create.discard.message'),
+      }}
+      onFinish={onFinish}
+    >
       <SurveyStep
         canGoNext={personalityFormState.isValid}
         title={t('brand_client.create.steps.personality.title')}

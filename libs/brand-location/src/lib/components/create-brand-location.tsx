@@ -1,6 +1,6 @@
 import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useCreateBrandLocationReq } from '@symbiot-core-apps/api';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { BrandLocationNameController } from './controller/brand-location-name-controller';
 import { BrandLocationCountryController } from './controller/brand-location-country-controller';
@@ -15,19 +15,14 @@ import { BrandLocationScheduleController } from './controller/brand-location-sch
 import { BrandLocationInstagramController } from './controller/brand-location-instagram-controller';
 import { BrandLocationEmailController } from './controller/brand-location-email-controller';
 import { BrandLocationPhoneController } from './controller/brand-location-phone-controller';
-import { router, useNavigation } from 'expo-router';
-import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, useI18n, useRateApp } from '@symbiot-core-apps/shared';
+import { useI18n, useRateApp } from '@symbiot-core-apps/shared';
 import { WeekdaySchedule } from '@symbiot-core-apps/form-controller';
 
 export const CreateBrandLocation = () => {
   const { brand } = useCurrentBrandState();
   const { t } = useI18n();
   const { mutateAsync, isPending } = useCreateBrandLocationReq();
-  const navigation = useNavigation();
   const { rate: rateApp } = useRateApp();
-
-  const createdRef = useRef(false);
 
   const {
     control: nameControl,
@@ -137,11 +132,10 @@ export const CreateBrandLocation = () => {
       instagrams: instagram ? [instagram] : [],
     });
 
-    createdRef.current = true;
-
-    router.dismissTo('/locations');
-
-    void rateApp();
+    return {
+      replaceUrl: '/locations',
+      postCallback: rateApp,
+    };
   }, [
     rateApp,
     addressGetValues,
@@ -153,38 +147,15 @@ export const CreateBrandLocation = () => {
     scheduleGetValues,
   ]);
 
-  const onLeave = useCallback(
-    (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
-      if (createdRef.current) return;
-
-      e.preventDefault();
-
-      ConfirmAlert({
-        title: t('brand_location.create.discard.title'),
-        message: t('brand_location.create.discard.message'),
-        onAgree: () => navigation.dispatch(e.data.action),
-      });
-    },
-    [t, navigation],
-  );
-
-  useEffect(() => {
-    navigation.setOptions({
-      gestureEnabled: false,
-      headerShown: !isPending,
-    });
-  }, [isPending, navigation]);
-
-  useEffect(() => {
-    navigation.addListener('beforeRemove', onLeave);
-
-    return () => {
-      navigation.removeListener('beforeRemove', onLeave);
-    };
-  }, [onLeave, navigation]);
-
   return (
-    <Survey loading={isPending || createdRef.current} onFinish={onFinish}>
+    <Survey
+      loading={isPending}
+      leaveAlertParams={{
+        title: t('brand_location.create.discard.title'),
+        subtitle: t('brand_location.create.discard.message'),
+      }}
+      onFinish={onFinish}
+    >
       <SurveyStep
         canGoNext={nameFormState.isValid}
         title={t('brand_location.create.steps.name.title')}

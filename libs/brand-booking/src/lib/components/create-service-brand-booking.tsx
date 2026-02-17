@@ -5,17 +5,10 @@ import {
   useBrandBookingSlotsByServiceReq,
   useCreateServiceBrandBookingReq,
 } from '@symbiot-core-apps/api';
-import { router, useNavigation } from 'expo-router';
 import { useCurrentBrandBookingsState } from '@symbiot-core-apps/state';
 import { useForm } from 'react-hook-form';
-import { useCallback, useEffect, useRef } from 'react';
-import { EventArg, NavigationAction } from '@react-navigation/native';
-import {
-  ConfirmAlert,
-  DateHelper,
-  useI18n,
-  useRateApp,
-} from '@symbiot-core-apps/shared';
+import { useCallback } from 'react';
+import { DateHelper, useI18n, useRateApp } from '@symbiot-core-apps/shared';
 import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { BrandBookingServicesController } from './controller/brand-booking-services-controller';
 import { ServiceBrandBookingScheduleController } from './controller/service-brand-booking-schedule-controller';
@@ -27,11 +20,8 @@ export const CreateServiceBrandBooking = ({ start }: { start: Date }) => {
   const { t } = useI18n();
   const { mutateAsync: createBooking, isPending: isBookingLoading } =
     useCreateServiceBrandBookingReq();
-  const navigation = useNavigation();
   const { addBookings } = useCurrentBrandBookingsState();
   const { rate: rateApp } = useRateApp();
-
-  const createdRef = useRef(false);
 
   const {
     control: servicesControl,
@@ -112,14 +102,14 @@ export const CreateServiceBrandBooking = ({ start }: { start: Date }) => {
     const start = schedule.start;
 
     if (start === undefined || !slots) {
-      return;
+      throw new Error('No slots found');
     }
 
     const employee =
       schedule.employee ||
       getSlotsRandomEmployee({ slots, start, locationId: schedule.location });
 
-    if (!employee) return;
+    if (!employee) throw new Error('No employee found');
 
     const bookings = await createBooking({
       reminders,
@@ -133,15 +123,12 @@ export const CreateServiceBrandBooking = ({ start }: { start: Date }) => {
       services: [details.service],
     });
 
-    createdRef.current = true;
-
     addBookings(bookings);
 
-    router.replace(
-      `/bookings/${BrandBookingType.service}/${bookings[0].id}/profile`,
-    );
-
-    void rateApp();
+    return {
+      replaceUrl: `/bookings/${BrandBookingType.service}/${bookings[0].id}/profile`,
+      postCallback: rateApp,
+    };
   }, [
     rateApp,
     createBooking,
@@ -152,39 +139,13 @@ export const CreateServiceBrandBooking = ({ start }: { start: Date }) => {
     addBookings,
   ]);
 
-  const onLeave = useCallback(
-    (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
-      if (createdRef.current) return;
-
-      e.preventDefault();
-
-      ConfirmAlert({
-        title: t(`service_brand_booking.create.discard.title`),
-        message: t(`service_brand_booking.create.discard.message`),
-        onAgree: () => navigation.dispatch(e.data.action),
-      });
-    },
-    [t, navigation],
-  );
-
-  useEffect(() => {
-    navigation.setOptions({
-      gestureEnabled: false,
-      headerShown: !isBookingLoading,
-    });
-  }, [isBookingLoading, navigation]);
-
-  useEffect(() => {
-    navigation.addListener('beforeRemove', onLeave);
-
-    return () => {
-      navigation.removeListener('beforeRemove', onLeave);
-    };
-  }, [onLeave, navigation]);
-
   return (
     <Survey
-      loading={isBookingLoading || createdRef.current}
+      loading={isBookingLoading}
+      leaveAlertParams={{
+        title: t(`service_brand_booking.create.discard.title`),
+        subtitle: t(`service_brand_booking.create.discard.message`),
+      }}
       onFinish={onFinish}
     >
       <SurveyStep

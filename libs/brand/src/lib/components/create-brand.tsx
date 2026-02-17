@@ -1,10 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useForm } from 'react-hook-form';
 import { BrandNameController } from './contoller/brand-name-controller';
-import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
-import { router, useNavigation } from 'expo-router';
+import { useI18n } from '@symbiot-core-apps/shared';
 import { useAuthBrand, useBrandAuthState } from '../hooks/use-brand-auth';
 import { useBrandCreateReq } from '@symbiot-core-apps/api';
 import { useAppSettings } from '@symbiot-core-apps/app';
@@ -32,9 +30,6 @@ export const CreateBrand = () => {
   const { hasActualSubscription } = useAccountSubscription();
   const { processing: authProcessing } = useBrandAuthState();
   const switchBrand = useAuthBrand();
-  const navigation = useNavigation();
-  const createdRef = useRef(false);
-  const ignoreNavigation = createdRef.current || authProcessing;
 
   const [avatar, setAvatar] = useState<ImagePickerAsset>();
   const [isPromoCodeValid, setIsPromoCodeValid] = useState(false);
@@ -112,11 +107,10 @@ export const CreateBrand = () => {
       promoCode: isPromoCodeValid ? promoCode : undefined,
     });
 
-    createdRef.current = true;
-
-    router.replace('/');
-
-    await switchBrand({ id: brand.id });
+    return {
+      replaceUrl: '/',
+      postCallback: () => switchBrand({ id: brand.id }),
+    };
   }, [
     avatar,
     isPromoCodeValid,
@@ -131,38 +125,15 @@ export const CreateBrand = () => {
     websiteGetValues,
   ]);
 
-  const onLeave = useCallback(
-    (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
-      if (ignoreNavigation) return;
-
-      e.preventDefault();
-
-      ConfirmAlert({
-        title: t('brand.create.discard.title'),
-        message: t('brand.create.discard.message'),
-        onAgree: () => navigation.dispatch(e.data.action),
-      });
-    },
-    [ignoreNavigation, t, navigation],
-  );
-
-  useEffect(() => {
-    navigation.setOptions({
-      gestureEnabled: false,
-      headerShown: !isPending && !ignoreNavigation,
-    });
-  }, [ignoreNavigation, isPending, navigation]);
-
-  useEffect(() => {
-    navigation.addListener('beforeRemove', onLeave);
-
-    return () => {
-      navigation.removeListener('beforeRemove', onLeave);
-    };
-  }, [onLeave, navigation]);
-
   return (
-    <Survey loading={isPending || createdRef.current} onFinish={onFinish}>
+    <Survey
+      loading={isPending || authProcessing}
+      leaveAlertParams={{
+        title: t('brand.create.discard.title'),
+        subtitle: t('brand.create.discard.message'),
+      }}
+      onFinish={onFinish}
+    >
       <SurveyStep
         canGoNext={nameFormState.isValid}
         title={t('brand.create.steps.name.title')}

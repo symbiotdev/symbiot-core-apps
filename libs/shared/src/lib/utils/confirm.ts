@@ -21,11 +21,11 @@ export const ConfirmAlert = (props: {
       {
         text: props.cancelText || translate('shared.cancel'),
         style: 'cancel',
-        isPreferred: true,
         onPress: props.onCancel,
       },
       {
         text: props.confirmText || translate('shared.continue'),
+        isPreferred: true,
         onPress: props.onAgree,
       },
     ]);

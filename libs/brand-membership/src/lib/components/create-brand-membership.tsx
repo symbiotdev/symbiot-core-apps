@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import {
   BrandMembershipType,
@@ -6,9 +6,7 @@ import {
   useCreateBrandPeriodBasedMembershipReq,
   useCreateBrandVisitBasedMembershipReq,
 } from '@symbiot-core-apps/api';
-import { router, useNavigation } from 'expo-router';
-import { EventArg, NavigationAction } from '@react-navigation/native';
-import { ConfirmAlert, useI18n, useRateApp } from '@symbiot-core-apps/shared';
+import { useI18n, useRateApp } from '@symbiot-core-apps/shared';
 import {
   Card,
   Icon,
@@ -44,11 +42,8 @@ export const CreateBrandMembership = ({
     mutateAsync: createVisitBasedMembership,
     isPending: isVisitBasedMembershipLoading,
   } = useCreateBrandVisitBasedMembershipReq();
-  const navigation = useNavigation();
   const tPrefix = getTranslateKeyByBrandMembershipType(type);
   const { rate: rateApp } = useRateApp();
-
-  const createdRef = useRef(false);
 
   const {
     control: aboutControl,
@@ -153,13 +148,14 @@ export const CreateBrandMembership = ({
           visits,
         }));
 
-    createdRef.current = true;
-
-    router.replace(`/memberships/${membership.id}/profile`);
-
-    if (type === BrandMembershipType.period) {
-      void rateApp();
-    }
+    return {
+      replaceUrl: `/memberships/${membership.id}/profile`,
+      postCallback: async () => {
+        if (type === BrandMembershipType.period) {
+          await rateApp();
+        }
+      },
+    };
   }, [
     type,
     rateApp,
@@ -172,41 +168,6 @@ export const CreateBrandMembership = ({
     createVisitBasedMembership,
   ]);
 
-  const onLeave = useCallback(
-    (e: EventArg<'beforeRemove', true, { action: NavigationAction }>) => {
-      if (createdRef.current) return;
-
-      e.preventDefault();
-
-      ConfirmAlert({
-        title: t(`${tPrefix}.create.discard.title`),
-        message: t(`${tPrefix}.create.discard.message`),
-        onAgree: () => navigation.dispatch(e.data.action),
-      });
-    },
-    [t, navigation, tPrefix],
-  );
-
-  useEffect(() => {
-    navigation.setOptions({
-      gestureEnabled: false,
-      headerShown:
-        !isPeriodBasedMembershipLoading && !isVisitBasedMembershipLoading,
-    });
-  }, [
-    isPeriodBasedMembershipLoading,
-    isVisitBasedMembershipLoading,
-    navigation,
-  ]);
-
-  useEffect(() => {
-    navigation.addListener('beforeRemove', onLeave);
-
-    return () => {
-      navigation.removeListener('beforeRemove', onLeave);
-    };
-  }, [onLeave, navigation]);
-
   const { location } = locationWatch();
   const { currency, price, discount } = pricingWatch();
 
@@ -216,11 +177,11 @@ export const CreateBrandMembership = ({
 
   return (
     <Survey
-      loading={
-        isPeriodBasedMembershipLoading ||
-        isVisitBasedMembershipLoading ||
-        createdRef.current
-      }
+      loading={isPeriodBasedMembershipLoading || isVisitBasedMembershipLoading}
+      leaveAlertParams={{
+        title: t(`${tPrefix}.create.discard.title`),
+        subtitle: t(`${tPrefix}.create.discard.message`),
+      }}
       onFinish={onFinish}
     >
       <SurveyStep

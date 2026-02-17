@@ -6,11 +6,11 @@ import {
   defaultIconSize,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
+  GlassViewBackground,
   headerHeight,
   Icon,
   IconName,
   ListItem,
-  NavigationBackground,
   useDrawer,
   useDrawerState,
 } from '@symbiot-core-apps/ui';
@@ -133,11 +133,12 @@ export const DrawerMenu = () => {
         },
       ]}
     >
-      <NavigationBackground
+      <GlassViewBackground
+        interactive
         style={{
-          borderRightWidth: 1,
-          borderRightColor: '#FFFFFF20',
-          boxShadow: '0 0 25px rgba(0, 0, 0, 0.15)',
+          borderBottomWidth: 0,
+          borderTopWidth: 0,
+          borderLeftWidth: 0,
         }}
       />
 

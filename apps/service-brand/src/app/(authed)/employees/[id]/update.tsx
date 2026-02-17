@@ -1,17 +1,9 @@
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useBrandEmployeeDetailedByIdReq } from '@symbiot-core-apps/api';
-import {
-  ContextMenuItem,
-  ContextMenuPopover,
-  Icon,
-  InitView,
-} from '@symbiot-core-apps/ui';
+import { ContextMenuItem, ContextMenuPopover, Icon, InitView } from '@symbiot-core-apps/ui';
 import { UpdateBrandEmployee } from '@symbiot-core-apps/brand-employee';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
-import {
-  useCurrentBrandEmployee,
-  useCurrentBrandState,
-} from '@symbiot-core-apps/state';
+import { useCurrentBrandEmployee, useCurrentBrandState } from '@symbiot-core-apps/state';
 import { useI18n } from '@symbiot-core-apps/shared';
 
 export default () => {
@@ -43,7 +35,10 @@ export default () => {
   );
 
   const headerRight = useCallback(
-    () => <ContextMenuPopover items={contextMenuItems} />,
+    () =>
+      contextMenuItems.length ? (
+        <ContextMenuPopover items={contextMenuItems} />
+      ) : undefined,
     [contextMenuItems],
   );
 

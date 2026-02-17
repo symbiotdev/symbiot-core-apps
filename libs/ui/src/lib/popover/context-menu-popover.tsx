@@ -29,7 +29,7 @@ import {
 } from '@symbiot-core-apps/shared';
 import { Icon } from '../icons';
 import { FullScreenTransparentModal } from '../modal/full-screen-transparent-modal';
-import { NavigationBackground } from '../navigation/background';
+import { GlassLikeView } from '../view/glass-view';
 
 export type ContextMenuItem = {
   label: string;
@@ -146,7 +146,7 @@ const Menu = ({
 
   return (
     <View {...animationProps} style={StyleSheet.absoluteFill} onPress={onClose}>
-      <NavigationBackground />
+      <GlassLikeView style={StyleSheet.absoluteFill} />
 
       <Trigger {...rect} ref={refs.setReference} collapsable={false} />
 
@@ -195,6 +195,10 @@ const Trigger = forwardRef(
       <View
         {...viewProps}
         ref={ref}
+        justifyContent="center"
+        alignItems="center"
+        width="100%"
+        height={40}
         disabled={disabled}
         opacity={disabled ? 0.8 : 1}
         cursor={disabled ? 'auto' : 'pointer'}

@@ -1,9 +1,10 @@
 import { Tabs, useSegments } from 'expo-router';
 import {
   AttentionView,
-  Button,
   defaultIconSize,
+  GlassView,
   Icon,
+  RegularText,
   useDrawer,
   useScreenHeaderOptions,
 } from '@symbiot-core-apps/ui';
@@ -17,6 +18,7 @@ import { PlusActionAdaptiveModal } from '../../../components/tabs/plus-action-ad
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { useCountNewNotificationsReq } from '@symbiot-core-apps/api';
 import { CustomTabBar } from '../../../components/tabs/tab-bar';
+import { Pressable } from 'react-native';
 
 export default () => {
   const { stats } = useCurrentAccountState();
@@ -45,18 +47,21 @@ export default () => {
           hidden={drawerVisible || segments.includes('(stack)')}
           DynamicButton={
             <PlusActionAdaptiveModal
-              ignoreHapticOnOpen
               trigger={
-                <Button
-                  label="+"
-                  fontSize={30}
-                  boxShadow="0 0 10px rgba(0, 0, 0, 0.05)"
-                  paddingVertical={0}
-                  paddingHorizontal={0}
-                  borderRadius={50}
-                  width={45}
-                  height={45}
-                />
+                <Pressable>
+                  <GlassView
+                    interactive
+                    style={{
+                      width: 55,
+                      height: 55,
+                      borderRadius: 50,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <RegularText fontSize={30}>+</RegularText>
+                  </GlassView>
+                </Pressable>
               }
             />
           }

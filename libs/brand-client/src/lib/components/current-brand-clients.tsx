@@ -5,9 +5,9 @@ import {
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   EmptyView,
+  GlassViewBackground,
   Icon,
   InitView,
-  NavigationBackground,
   PageView,
 } from '@symbiot-core-apps/ui';
 import {
@@ -111,13 +111,13 @@ export const CurrentBrandClients = ({
           zIndex: 1,
         }}
       >
-        <NavigationBackground />
+        <GlassViewBackground />
 
         <Search
           value={search}
           debounce={300}
           placeholder={t('brand_client.search.placeholder')}
-          inputFieldProps={{ backgroundColor: '$background' }}
+          inputFieldProps={{ backgroundColor: '$highlighted' }}
           onChange={setSearch}
         />
       </KeyboardStickyView>

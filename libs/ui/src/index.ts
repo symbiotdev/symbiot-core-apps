@@ -38,7 +38,6 @@ export * from './lib/modal/slide-sheet-modal';
 
 export * from './lib/navigation/drawer';
 export * from './lib/navigation/header';
-export * from './lib/navigation/background';
 
 export * from './lib/popover/adaptive-popover';
 export * from './lib/popover/context-menu-popover';
@@ -61,6 +60,7 @@ export * from './lib/view/attention-view';
 export * from './lib/view/container-view';
 export * from './lib/view/empty-view';
 export * from './lib/view/error-view';
+export * from './lib/view/glass-view';
 export * from './lib/view/compact-view';
 export * from './lib/view/init-view';
 export * from './lib/view/loading-view';

@@ -6,10 +6,10 @@ import {
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   EmptyView,
+  headerHeight,
   InitView,
   LightText,
   ModalHeader,
-  NavigationBackground,
   RegularText,
   Spinner,
 } from '@symbiot-core-apps/ui';
@@ -191,8 +191,6 @@ export const SmartSelect = ({
           supportedOrientations={['portrait', 'landscape']}
           onRequestClose={onCloseModalList}
         >
-          <NavigationBackground onPress={onCloseModalList} />
-
           <OptionsList
             value={value}
             title={optionsTitle || label}
@@ -379,13 +377,8 @@ const OptionsList = ({
       position="relative"
       overflow="hidden"
     >
-      <View backgroundColor="$background1">
-        <ModalHeader
-          transparent
-          relative
-          headerTitle={title}
-          onClose={onClose}
-        />
+      <View paddingTop={headerHeight + defaultPageVerticalPadding / 2}>
+        <ModalHeader headerTitle={title} onClose={onClose} />
 
         {!!options?.length && searchable && (
           <View
@@ -397,7 +390,6 @@ const OptionsList = ({
               disabled={disabled}
               debounce={searchDebounce}
               placeholder={searchPlaceholder}
-              inputFieldProps={{ backgroundColor: '$background' }}
               onChange={search}
               onPress={emitHaptic}
             />

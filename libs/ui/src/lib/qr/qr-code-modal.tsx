@@ -5,7 +5,8 @@ import { H4 } from '../text/heading';
 import { emitHaptic, useModal } from '@symbiot-core-apps/shared';
 import { FullScreenTransparentModal } from '../modal/full-screen-transparent-modal';
 import { View } from 'tamagui';
-import { NavigationBackground } from '../navigation/background';
+import { GlassLikeView } from '../view/glass-view';
+import { Pressable, StyleSheet } from 'react-native';
 
 export const QrCodeModalWithTrigger = ({
   trigger,
@@ -63,9 +64,19 @@ export const QrCodeModal = ({
       animationType="fade"
       onClose={onClose}
     >
-      <NavigationBackground custom onPress={onClose} />
+      <Pressable style={StyleSheet.absoluteFill} onPress={onClose}>
+        <GlassLikeView style={StyleSheet.absoluteFill} />
+      </Pressable>
 
-      <Card margin="auto" gap="$4" alignItems="center" zIndex={1}>
+      <Card
+        margin="auto"
+        gap="$4"
+        alignItems="center"
+        zIndex={1}
+        borderWidth={1}
+        borderColor="#FFFFFF20"
+        boxShadow="0 0 25px rgba(0, 0, 0, 0.15)"
+      >
         <QrCode size={qrSize} value={qrValue} content={qrContent} />
 
         {!!title && (

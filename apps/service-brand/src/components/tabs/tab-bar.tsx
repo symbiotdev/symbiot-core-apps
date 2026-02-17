@@ -5,13 +5,10 @@ import { emitHaptic, eventEmitter } from '@symbiot-core-apps/shared';
 import Animated, {
   Easing,
   useAnimatedStyle,
-  useSharedValue,
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import { NavigationBackground } from '@symbiot-core-apps/ui';
-import { isCustomDesignMandatory } from '@symbiot-core-apps/theme';
-import { useAppScheme } from '@symbiot-core-apps/state';
+import { GlassView } from '@symbiot-core-apps/ui';
 
 export const CustomTabBar = ({
   hidden,
@@ -25,8 +22,6 @@ export const CustomTabBar = ({
   DynamicButton?: ReactElement;
 }) => {
   const theme = useTheme();
-  const { scheme } = useAppScheme();
-  const pressed = useSharedValue(false);
 
   const containerAnimatedStyle = useAnimatedStyle(
     () => ({
@@ -42,21 +37,7 @@ export const CustomTabBar = ({
         },
       ],
     }),
-    [hidden, pressed],
-  );
-
-  const mainTabsAnimatedStyle = useAnimatedStyle(
-    () => ({
-      transform: [
-        {
-          scale: withTiming(pressed.value ? 1.05 : 1, {
-            duration: 150,
-            easing: Easing.inOut(Easing.ease),
-          }),
-        },
-      ],
-    }),
-    [],
+    [hidden],
   );
 
   return (
@@ -76,29 +57,16 @@ export const CustomTabBar = ({
         },
       ]}
     >
-      <Animated.View
-        style={[
-          mainTabsAnimatedStyle,
-          {
-            position: 'relative',
-            alignItems: 'center',
-            flexDirection: 'row',
-            paddingHorizontal: 5,
-          },
-        ]}
+      <GlassView
+        interactive
+        style={{
+          position: 'relative',
+          alignItems: 'center',
+          flexDirection: 'row',
+          borderRadius: 25,
+          paddingHorizontal: 5,
+        }}
       >
-        <NavigationBackground
-          style={{
-            overflow: 'hidden',
-            borderRadius: 25,
-            boxShadow: '0 0 25px rgba(0, 0, 0, 0.15)',
-            ...(isCustomDesignMandatory && {
-              borderWidth: 1,
-              borderColor: '#FFFFFF20',
-            }),
-          }}
-        />
-
         {Object.values(descriptors).map(({ route, options }, index) => {
           const focused = index === state.index;
 
@@ -110,8 +78,6 @@ export const CustomTabBar = ({
               cursor="pointer"
               justifyContent="center"
               alignItems="center"
-              onPressIn={() => pressed.set(true)}
-              onPressOut={() => pressed.set(false)}
               onPress={() => {
                 emitHaptic();
                 eventEmitter.emit('tabPress', route.name);
@@ -126,7 +92,7 @@ export const CustomTabBar = ({
             </View>
           );
         })}
-      </Animated.View>
+      </GlassView>
 
       {DynamicButton}
     </Animated.View>

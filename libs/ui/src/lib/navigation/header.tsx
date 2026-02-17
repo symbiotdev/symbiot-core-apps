@@ -1,23 +1,30 @@
-import { Pressable } from 'react-native';
-import { View, ViewProps, XStack } from 'tamagui';
+import { Pressable, ViewStyle } from 'react-native';
+import { View, XStack } from 'tamagui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   BaseSyntheticEvent,
   memo,
+  PropsWithChildren,
   ReactElement,
   useCallback,
   useMemo,
 } from 'react';
-import { H4 } from '../text/heading';
 import { Icon, IconName } from '../icons';
-import { emitHaptic, isAndroid, isIos } from '@symbiot-core-apps/shared';
+import {
+  emitHaptic,
+  isAndroid,
+  isIos,
+  isWeb,
+  SystemScheme,
+} from '@symbiot-core-apps/shared';
 import { AttentionView } from '../view/attention-view';
-import { NavigationBackground } from './background';
 import { MediumText, RegularText } from '../text/text';
 import {
   NativeStackHeaderProps,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
+import { useAppScheme } from '@symbiot-core-apps/state';
+import { GlassView } from '../view/glass-view';
 
 export const headerHeight = 50;
 export const headerButtonSize = 24;
@@ -31,18 +38,23 @@ export const useScreenHeaderHeight = () => {
 };
 
 export const useScreenHeaderOptions = () => {
+  const { scheme } = useAppScheme();
   const { top, left, right } = useSafeAreaInsets();
 
-  const header = useCallback(
-    (props: NativeStackHeaderProps) => (
-      <ScreenHeader {...props} top={top} left={left} right={right} />
-    ),
-    [left, right, top],
-  );
-
   return {
-    header,
     headerTransparent: true,
+    header: useCallback(
+      (props: NativeStackHeaderProps) => (
+        <ScreenHeader
+          {...props}
+          top={top}
+          left={left}
+          right={right}
+          scheme={scheme}
+        />
+      ),
+      [left, right, top, scheme],
+    ),
   } as NativeStackNavigationOptions;
 };
 
@@ -52,20 +64,32 @@ export const useStackScreenHeaderOptions = () => {
   return {
     ...headerOptions,
     ...(isAndroid && {
-      animation: 'ios_from_right',
+      animation: 'slide_from_right',
     }),
   } as NativeStackNavigationOptions;
 };
 
-const SideElement = memo((props: ViewProps) => (
-  <View
-    zIndex={1}
-    width={60}
-    minWidth={60}
-    justifyContent="center"
-    {...props}
-  />
-));
+const SideElement = memo(
+  ({ children, style }: PropsWithChildren<{ style?: ViewStyle }>) =>
+    children ? (
+      <GlassView
+        interactive
+        children={children}
+        style={{
+          ...style,
+          zIndex: 1,
+          minHeight: 40,
+          minWidth: 40,
+          alignSelf: 'center',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 20,
+        }}
+      />
+    ) : (
+      <View width={40} />
+    ),
+);
 
 export const HeaderButton = memo(
   ({
@@ -77,9 +101,17 @@ export const HeaderButton = memo(
     attention?: boolean;
     onPress?: (e: BaseSyntheticEvent) => void;
   }) => (
-    <AttentionView attention={Boolean(attention)}>
+    <AttentionView
+      width="100%"
+      height={40}
+      justifyContent="center"
+      alignItems="center"
+      attention={Boolean(attention)}
+    >
       <Pressable
         style={({ pressed }) => ({
+          width: '100%',
+          height: '100%',
           justifyContent: 'center',
           alignItems: 'center',
           opacity: pressed ? 0.8 : 1,
@@ -103,7 +135,17 @@ export const HeaderTitle = ({
   title: string;
   subtitle?: string;
 }) => (
-  <View alignItems="center" justifyContent="center" flex={4} zIndex={1}>
+  <GlassView
+    style={{
+      zIndex: 1,
+      borderRadius: 20,
+      paddingVertical: 5,
+      paddingHorizontal: 10,
+      minHeight: 40,
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
     <MediumText numberOfLines={subtitle ? 1 : 2} textAlign="center">
       {title}
     </MediumText>
@@ -118,8 +160,10 @@ export const HeaderTitle = ({
         {subtitle}
       </RegularText>
     )}
-  </View>
+  </GlassView>
 );
+
+const shadowSize = isAndroid ? 25 : 50;
 
 export const ScreenHeader = memo(
   ({
@@ -129,10 +173,12 @@ export const ScreenHeader = memo(
     left,
     right,
     options,
+    scheme,
   }: NativeStackHeaderProps & {
     top: number;
     left: number;
     right: number;
+    scheme: SystemScheme;
   }) => {
     const withContent =
       !!options.headerLeft ||
@@ -142,48 +188,55 @@ export const ScreenHeader = memo(
       typeof options.headerTitle === 'function';
 
     return (
-      <XStack
-        gap="$2"
-        position="relative"
-        justifyContent="space-between"
-        alignItems="center"
-        paddingTop={top}
-        paddingLeft={left + headerHorizontalPadding}
-        paddingRight={right + headerHorizontalPadding}
-        height={top + (withContent ? headerHeight : 0)}
-      >
-        <NavigationBackground />
-
-        <SideElement
-          flex={!options.headerTitle ? 1 : undefined}
-          alignItems="flex-start"
-          children={
-            typeof options.headerLeft === 'function'
-              ? options.headerLeft({})
-              : !!back && (
-                  <HeaderButton
-                    iconName={headerBackButtonIconName}
-                    onPress={navigation.goBack}
-                  />
-                )
-          }
-        />
-
-        {typeof options.headerTitle === 'string' && (
-          <HeaderTitle title={options.headerTitle} />
+      <>
+        {!isWeb && (
+          <View
+            position="absolute"
+            top={-shadowSize * 2}
+            left={-shadowSize}
+            right={-shadowSize}
+            height={shadowSize * 2}
+            boxShadow={`0 ${shadowSize}px ${shadowSize}px ${scheme === 'dark' ? '#000000' : '#FFFFFF'}`}
+          />
         )}
 
-        {typeof options.headerTitle === 'function' && (
-          <View flex={1} alignItems="center">
-            {options.headerTitle({ children: '' })}
-          </View>
-        )}
+        <XStack
+          gap="$2"
+          position="relative"
+          alignItems="center"
+          justifyContent="space-between"
+          zIndex={1}
+          paddingTop={top}
+          paddingLeft={left + headerHorizontalPadding}
+          paddingRight={right + headerHorizontalPadding}
+          height={top + (withContent ? headerHeight : 0)}
+        >
+          <SideElement
+            children={
+              typeof options.headerLeft === 'function'
+                ? options.headerLeft({})
+                : !!back && (
+                    <HeaderButton
+                      iconName={headerBackButtonIconName}
+                      onPress={navigation.goBack}
+                    />
+                  )
+            }
+          />
 
-        <SideElement
-          alignItems="flex-end"
-          children={options.headerRight?.({})}
-        />
-      </XStack>
+          {typeof options.headerTitle === 'string' && (
+            <HeaderTitle title={options.headerTitle} />
+          )}
+
+          {typeof options.headerTitle === 'function' && (
+            <View flex={1} alignItems="center">
+              {options.headerTitle({ children: '' })}
+            </View>
+          )}
+
+          <SideElement children={options.headerRight?.({})} />
+        </XStack>
+      </>
     );
   },
 );
@@ -192,14 +245,12 @@ export const ModalHeader = memo(
   ({
     height,
     headerLeft,
-    transparent,
     relative,
     headerTitle,
     headerRight,
     onClose,
   }: {
     height?: number;
-    transparent?: boolean;
     relative?: boolean;
     headerLeft?: () => ReactElement;
     headerTitle?: string | (() => ReactElement);
@@ -208,7 +259,7 @@ export const ModalHeader = memo(
   }) => {
     const { top, left, right } = useSafeAreaInsets();
 
-    const adjustedTop = useMemo(() => (isIos ? 0 : top), [top]);
+    const adjustedTop = useMemo(() => (isIos ? 5 : top), [top]);
 
     const adjustedHeight = adjustedTop + (height || headerHeight);
 
@@ -231,19 +282,9 @@ export const ModalHeader = memo(
         paddingLeft={left + headerHorizontalPadding}
         paddingRight={right + headerHorizontalPadding}
       >
-        {!transparent && <NavigationBackground />}
+        <SideElement children={headerLeft?.()} />
 
-        <SideElement
-          flex={!headerTitle ? 1 : undefined}
-          alignItems="flex-start"
-          children={headerLeft?.()}
-        />
-
-        {typeof headerTitle === 'string' && (
-          <H4 flex={1} textAlign="center" zIndex={1}>
-            {headerTitle}
-          </H4>
-        )}
+        {typeof headerTitle === 'string' && <HeaderTitle title={headerTitle} />}
 
         {typeof headerTitle === 'function' && (
           <View flex={1} alignItems="center">
@@ -252,7 +293,6 @@ export const ModalHeader = memo(
         )}
 
         <SideElement
-          alignItems="flex-end"
           children={
             typeof headerRight === 'function' ? (
               headerRight()

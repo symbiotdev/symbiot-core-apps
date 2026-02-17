@@ -4,7 +4,7 @@ import {
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   EmptyView,
-  NavigationBackground,
+  GlassViewBackground,
 } from '@symbiot-core-apps/ui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React, {
@@ -109,13 +109,13 @@ export const BrandMembershipsCurrentList = ({
           zIndex: 1,
         }}
       >
-        <NavigationBackground />
+        <GlassViewBackground />
 
         <Search
           value={search}
           debounce={300}
           placeholder={t(`${tPrefix}.search.placeholder`)}
-          inputFieldProps={{ backgroundColor: '$background' }}
+          inputFieldProps={{ backgroundColor: '$highlighted' }}
           onChange={setSearch}
         />
       </KeyboardStickyView>

@@ -44,7 +44,7 @@
     "@react-navigation/native-stack": "^7.12.0",
     "@symbiot.dev/react-native-heatmap": "^1.0.0",
     "@symbiot.dev/react-native-timegrid-pro": "file:symbiot.dev-react-native-timegrid-pro-0.2.5.tgz",
-    "@tamagui/portal": "^2.0.0-rc.12",
+    "@tamagui/portal": "^2.0.0-rc.14",
     "@tanstack/react-query": "^5.90.21",
     "axios": "1.13.1",
     "burnt": "^0.13.0",
@@ -117,7 +117,7 @@
     "react-native-worklets": "^0.7.3",
     "socket.io-client": "^4.8.3",
     "states-us": "^1.1.1",
-    "tamagui": "^2.0.0-rc.12",
+    "tamagui": "^2.0.0-rc.14",
     "zustand": "^5.0.11"
   },
   "devDependencies": {

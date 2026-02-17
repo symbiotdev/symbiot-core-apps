@@ -83,13 +83,9 @@ export const GlassLikeView = ({ children, ...props }: Props) => {
           pressed.set(true);
           props.onPointerDown?.(e);
         },
-        onPointerUp: (e) => {
+        onPointerLeave: (e) => {
           pressed.set(false);
-          props.onPointerUp?.(e);
-        },
-        onPointerCancel: (e) => {
-          pressed.set(false);
-          props.onPointerCancel?.(e);
+          props.onPointerLeave?.(e);
         },
       })}
     >

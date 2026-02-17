@@ -81,7 +81,7 @@ export const BrandMembershipProfile = ({
           </ListItemGroup>
         )}
 
-        {locations.length && (
+        {!!locations.length && (
           <ListItemGroup
             paddingHorizontal={0}
             backgroundColor="transparent"

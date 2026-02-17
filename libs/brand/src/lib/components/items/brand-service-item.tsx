@@ -98,7 +98,7 @@ export const BrandServiceItemChips = ({
   size?: ChipSize;
 }) => (
   <XStack flex={1} flexWrap="wrap" gap="$1">
-    {service.duration && (
+    {!!service.duration && (
       <Chip
         label={DateHelper.formatDuration(service.duration, {
           shortFormat: true,
@@ -108,17 +108,19 @@ export const BrandServiceItemChips = ({
       />
     )}
 
-    {service.type?.value && (
+    {!!service.type?.value && (
       <Chip label={service.type.label} type={type} size={size} />
     )}
-    {service.format?.value && (
+
+    {!!service.format?.value && (
       <Chip
         label={`${service.format.label}${!service.format.fixed ? ` (${service.places})` : ''}`}
         type={type}
         size={size}
       />
     )}
-    {service.gender?.value && (
+
+    {!!service.gender?.value && (
       <Chip label={service.gender.label} type={type} size={size} />
     )}
   </XStack>

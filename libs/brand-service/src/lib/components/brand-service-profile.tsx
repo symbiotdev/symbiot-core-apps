@@ -132,7 +132,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
           </ListItemGroup>
         )}
 
-        {locations.length && (
+        {!!locations.length && (
           <ListItemGroup
             paddingHorizontal={0}
             backgroundColor="transparent"

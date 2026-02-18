@@ -4,7 +4,7 @@ import {
   KeyboardAwareScrollView,
 } from 'react-native-keyboard-controller';
 import { ScrollView } from 'tamagui';
-import { isWeb, useKeyboard } from '@symbiot-core-apps/shared';
+import { isWeb } from '@symbiot-core-apps/shared';
 import { Refresher } from '../loading/refresher';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useScreenHeaderHeight } from '../navigation/header';
@@ -105,7 +105,6 @@ const PageContent = ({
   ignoreBottomSafeArea?: boolean;
 }) => {
   const headerHeight = useScreenHeaderHeight();
-  const { currentHeight: keyboardHeight } = useKeyboard();
   const { top, bottom, left, right } = useSafeAreaInsets();
 
   return (
@@ -117,8 +116,7 @@ const PageContent = ({
         Number(paddingTop)
       }
       paddingBottom={
-        (!ignoreBottomSafeArea && !keyboardHeight ? bottom : 0) +
-        Number(paddingBottom)
+        (!ignoreBottomSafeArea ? bottom : 0) + Number(paddingBottom)
       }
       paddingLeft={left + Number(paddingLeft)}
       paddingRight={right + Number(paddingRight)}

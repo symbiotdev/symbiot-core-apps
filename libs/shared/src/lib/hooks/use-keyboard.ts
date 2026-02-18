@@ -1,65 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Keyboard, KeyboardEventName, useWindowDimensions } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { isAndroid, isIos } from '../utils/device';
-
-const hideEvent: KeyboardEventName = isIos
-  ? 'keyboardWillHide'
-  : 'keyboardDidHide';
-
-export const useKeyboard = () => {
-  const { height } = useWindowDimensions();
-  const { bottom } = useSafeAreaInsets();
-
-  const [shown, setShown] = useState(false);
-  const [currentHeight, setCurrentHeight] = useState(0);
-  const [keyboardHeight, setKeyboardHeight] = useState(
-    bottom + (isIos ? 300 : height * 0.4),
-  );
-  useEffect(() => {
-    const willShowSubscription = Keyboard.addListener(
-      'keyboardWillShow',
-      (e) => {
-        const height = e.endCoordinates.height;
-
-        if (height) {
-          setKeyboardHeight(e.endCoordinates.height);
-          setCurrentHeight(e.endCoordinates.height);
-        }
-
-        setShown(true);
-      },
-    );
-    const didShowSubscription = Keyboard.addListener('keyboardDidShow', (e) => {
-      const height = e.endCoordinates.height;
-
-      if (height !== keyboardHeight) {
-        setCurrentHeight(height);
-        setKeyboardHeight(height);
-      }
-
-      if (isAndroid) {
-        setShown(true);
-      }
-    });
-    const hideSubscription = Keyboard.addListener(hideEvent, () => {
-      setShown(false);
-      setCurrentHeight(0);
-    });
-
-    return () => {
-      willShowSubscription.remove();
-      didShowSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, [keyboardHeight]);
-
-  return {
-    shown,
-    keyboardHeight,
-    currentHeight,
-  };
-};
+import { useCallback } from 'react';
+import { Keyboard } from 'react-native';
+import { isIos } from '../utils/device';
 
 export function useKeyboardDismisser<
   T extends (...args: Parameters<T>) => void,

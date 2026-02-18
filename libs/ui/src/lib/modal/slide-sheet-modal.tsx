@@ -1,10 +1,11 @@
 import { DimensionValue, Modal, ModalProps } from 'react-native';
 import { BaseSyntheticEvent, PropsWithChildren, ReactElement } from 'react';
 import { View, ViewProps } from 'tamagui';
-import { headerHeight, ModalHeader } from '../navigation/header';
+import { headerHeight } from '../navigation/header';
 import { PageView } from '../view/page-view';
 import { isIos, isTablet } from '@symbiot-core-apps/shared';
 import { PortalProvider } from '@tamagui/portal';
+import { ModalHeader } from '../navigation/modal-header';
 
 export const SlideSheetModal = ({
   children,
@@ -45,7 +46,6 @@ export const SlideSheetModal = ({
     <PortalProvider shouldAddRootHost>
       <View flex={1} backgroundColor="$background" position="relative">
         <ModalHeader
-          transparent={transparentHeader}
           headerLeft={headerLeft}
           headerTitle={headerTitle}
           headerRight={headerRight}

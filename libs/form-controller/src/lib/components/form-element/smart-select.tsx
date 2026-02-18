@@ -19,11 +19,11 @@ import {
   isTablet,
   isWeb,
   useI18n,
-  useKeyboard,
 } from '@symbiot-core-apps/shared';
 import { Search } from './search';
 import { PickerItem } from './picker';
 import { FormField } from '../wrapper/form-field';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 
 export type SmartSelectValue = unknown | unknown[];
 export type SmartSelectOnChange = (value: SmartSelectValue) => void;
@@ -245,11 +245,8 @@ const OptionsList = ({
   onClose: () => void;
 }) => {
   const { t } = useI18n();
-  const { shown: keyboardShown } = useKeyboard();
   const { width, height } = useWindowDimensions();
-  const { currentHeight: keyboardHeight } = useKeyboard();
 
-  const scrollingRef = useRef<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
   const sortedOptions = useRef(
     moveSelectedToTop
@@ -284,7 +281,6 @@ const OptionsList = ({
 
   const search = useCallback((text: string) => {
     setSearchValue(text);
-    scrollingRef.current = false;
 
     flatListRef.current?.scrollToOffset({ offset: 0, animated: false });
   }, []);
@@ -302,19 +298,14 @@ const OptionsList = ({
         cursor={!disabled ? 'pointer' : 'default'}
         disabledStyle={{ opacity: 0.5 }}
         pressStyle={!disabled && { opacity: 0.8 }}
-        {...{
-          // the issue on ios - onPress not working when keyboard is opened
-          [isWeb || !keyboardShown ? 'onPress' : 'onTouchEnd']: () => {
-            if (scrollingRef.current) return;
+        onPress={() => {
+          onSelect(item.value);
 
-            onSelect(item.value);
-
-            if (!multiselect) {
-              onClose();
-            } else {
-              emitHaptic();
-            }
-          },
+          if (!multiselect) {
+            onClose();
+          } else {
+            emitHaptic();
+          }
         }}
       >
         {item.icon}
@@ -347,7 +338,7 @@ const OptionsList = ({
         )}
       </XStack>
     ),
-    [disabled, value, keyboardShown, multiselect, onClose, onSelect],
+    [disabled, value, multiselect, onClose, onSelect],
   );
 
   const ListEmptyComponent = useCallback(
@@ -377,46 +368,41 @@ const OptionsList = ({
       position="relative"
       overflow="hidden"
     >
-      <View paddingTop={headerHeight + defaultPageVerticalPadding / 2}>
-        <ModalHeader headerTitle={title} onClose={onClose} />
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+        <View paddingTop={headerHeight + defaultPageVerticalPadding / 2}>
+          <ModalHeader headerTitle={title} onClose={onClose} />
 
-        {!!options?.length && searchable && (
-          <View
-            paddingHorizontal={defaultPageHorizontalPadding}
-            paddingBottom={defaultPageVerticalPadding / 2}
-          >
-            <Search
-              value={searchValue}
-              disabled={disabled}
-              debounce={searchDebounce}
-              placeholder={searchPlaceholder}
-              onChange={search}
-              onPress={emitHaptic}
-            />
-          </View>
-        )}
-      </View>
+          {!!options?.length && searchable && (
+            <View
+              paddingHorizontal={defaultPageHorizontalPadding}
+              paddingBottom={defaultPageVerticalPadding / 2}
+            >
+              <Search
+                value={searchValue}
+                disabled={disabled}
+                debounce={searchDebounce}
+                placeholder={searchPlaceholder}
+                onChange={search}
+                onPress={emitHaptic}
+              />
+            </View>
+          )}
+        </View>
 
-      <AnimatedList
-        ignoreAnimation
-        listRef={flatListRef}
-        data={adjustedOptions}
-        renderItem={renderItem}
-        showsVerticalScrollIndicator={isWeb}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingTop: defaultPageVerticalPadding / 2,
-          paddingBottom: isBigScreen
-            ? defaultPageVerticalPadding
-            : keyboardHeight,
-        }}
-        // onScrollBeginDrag, onScrollEndDrag and onScrollAnimationEnd added due to issue with modal on IOS.
-        // should be removed with onTouchEnd
-        onScrollBeginDrag={() => (scrollingRef.current = true)}
-        onScrollEndDrag={() => (scrollingRef.current = false)}
-        onScrollAnimationEnd={() => (scrollingRef.current = false)}
-        ListEmptyComponent={ListEmptyComponent}
-      />
+        <AnimatedList
+          ignoreAnimation
+          listRef={flatListRef}
+          data={adjustedOptions}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={isWeb}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingTop: defaultPageVerticalPadding / 2,
+            paddingBottom: defaultPageVerticalPadding + 50,
+          }}
+          ListEmptyComponent={ListEmptyComponent}
+        />
+      </KeyboardAvoidingView>
     </View>
   );
 };

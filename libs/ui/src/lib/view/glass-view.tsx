@@ -14,6 +14,7 @@ import { BlurView as ExpoBlurView } from 'expo-blur';
 type Props = Omit<ViewProps, 'style'> & {
   style?: ViewStyle | ViewStyle[];
   interactive?: boolean;
+  withBackgroundColor?: boolean; // applying only to GlassLikeView
 };
 
 const GlassNativeView = (props: Props) => {
@@ -28,7 +29,12 @@ const GlassNativeView = (props: Props) => {
   );
 };
 
-export const GlassLikeView = ({ children, ...props }: Props) => {
+const colorizeOpacity = isIos ? 80 : 95;
+export const GlassLikeView = ({
+  children,
+  withBackgroundColor = !isIos,
+  ...props
+}: Props) => {
   const { scheme } = useAppScheme();
 
   const pressed = useSharedValue(false);
@@ -57,11 +63,11 @@ export const GlassLikeView = ({ children, ...props }: Props) => {
           borderColor: '#FFFFFF30',
           boxShadow: '0 0 25px rgba(0, 0, 0, 0.15)',
           overflow: 'hidden',
-          ...(!isIos && {
+          ...(withBackgroundColor && {
             backgroundColor:
               scheme === 'light'
-                ? 'rgba(250, 250, 250, .9)'
-                : 'rgba(17, 17, 17, .9)',
+                ? `rgba(250, 250, 250, .${colorizeOpacity})`
+                : `rgba(17, 17, 17, .${colorizeOpacity})`,
           }),
         },
         ...(Array.isArray(props.style) ? props.style : [props.style]),

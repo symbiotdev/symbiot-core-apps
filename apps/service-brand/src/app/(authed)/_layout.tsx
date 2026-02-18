@@ -41,7 +41,6 @@ const PlusButton = () => {
   return (
     pathname.split('/').filter(Boolean).length === 1 && (
       <PlusActionAdaptiveModal
-        placement="top-end"
         trigger={
           <Button
             paddingHorizontal={0}

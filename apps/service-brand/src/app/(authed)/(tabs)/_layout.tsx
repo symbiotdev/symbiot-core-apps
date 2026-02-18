@@ -4,7 +4,7 @@ import {
   defaultIconSize,
   GlassView,
   Icon,
-  RegularText,
+  LightText,
   useDrawer,
   useScreenHeaderOptions,
 } from '@symbiot-core-apps/ui';
@@ -18,7 +18,6 @@ import { PlusActionAdaptiveModal } from '../../../components/tabs/plus-action-ad
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { useCountNewNotificationsReq } from '@symbiot-core-apps/api';
 import { CustomTabBar } from '../../../components/tabs/tab-bar';
-import { Pressable } from 'react-native';
 
 export default () => {
   const { stats } = useCurrentAccountState();
@@ -48,42 +47,24 @@ export default () => {
           DynamicButton={
             <PlusActionAdaptiveModal
               trigger={
-                <Pressable>
-                  <GlassView
-                    interactive
-                    style={{
-                      width: 55,
-                      height: 55,
-                      borderRadius: 50,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <RegularText fontSize={30}>+</RegularText>
-                  </GlassView>
-                </Pressable>
+                <GlassView
+                  interactive
+                  style={{
+                    width: 55,
+                    height: 55,
+                    borderRadius: 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <LightText fontSize={30}>+</LightText>
+                </GlassView>
               }
             />
           }
         />
       )}
     >
-      <Tabs.Protected guard={!!currentBrand}>
-        <Tabs.Screen
-          name="schedule"
-          options={{
-            tabBarIcon: ({ color, size, focused }) => (
-              <Icon
-                name={icons.Calendar}
-                color={color}
-                size={Math.min(size, defaultIconSize)}
-                type={focused ? 'SolarBold' : undefined}
-              />
-            ),
-          }}
-        />
-      </Tabs.Protected>
-
       <Tabs.Screen
         name="home"
         options={{
@@ -99,6 +80,22 @@ export default () => {
           ),
         }}
       />
+
+      <Tabs.Protected guard={!!currentBrand}>
+        <Tabs.Screen
+          name="schedule"
+          options={{
+            tabBarIcon: ({ color, size, focused }) => (
+              <Icon
+                name={icons.Calendar}
+                color={color}
+                size={Math.min(size, defaultIconSize)}
+                type={focused ? 'SolarBold' : undefined}
+              />
+            ),
+          }}
+        />
+      </Tabs.Protected>
 
       <Tabs.Screen
         name="menu"

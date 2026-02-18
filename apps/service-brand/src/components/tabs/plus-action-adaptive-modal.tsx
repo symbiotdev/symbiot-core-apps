@@ -1,16 +1,14 @@
 import {
-  AdaptivePopover,
-  AdaptivePopoverRef,
   Br,
-  defaultPageVerticalPadding,
   Icon,
   ListItem,
+  SmartSheet,
+  SmartSheetRef,
 } from '@symbiot-core-apps/ui';
 import React, { ReactElement, useCallback, useRef } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { router } from 'expo-router';
 import { View } from 'tamagui';
-import { Placement } from '@floating-ui/react-native';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { BrandBookingType, BrandMembershipType } from '@symbiot-core-apps/api';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
@@ -18,81 +16,68 @@ import { useI18n } from '@symbiot-core-apps/shared';
 
 export const PlusActionAdaptiveModal = ({
   trigger,
-  ignoreHapticOnOpen,
-  placement,
 }: {
   trigger: ReactElement;
-  ignoreHapticOnOpen?: boolean;
-  placement?: Placement;
 }) => {
   const { t } = useI18n();
   const { icons } = useAppSettings();
   const { tryAction } = useAccountLimits();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
-  const popoverRef = useRef<AdaptivePopoverRef>(null);
+  const popoverRef = useRef<SmartSheetRef>(null);
 
   const addClient = useCallback(() => {
-    popoverRef.current?.close();
+    popoverRef.current?.hide();
     tryAction('addClient', () => router.push('/clients/create'))();
   }, [tryAction]);
 
   const importClients = useCallback(() => {
-    popoverRef.current?.close();
+    popoverRef.current?.hide();
     tryAction('importClients', () => router.push('/clients/import'))();
   }, [tryAction]);
 
   const addEmployee = useCallback(() => {
-    popoverRef.current?.close();
+    popoverRef.current?.hide();
     tryAction('addEmployee', () => router.push('/employees/create'))();
   }, [tryAction]);
 
   const addLocation = useCallback(() => {
-    popoverRef.current?.close();
+    popoverRef.current?.hide();
     tryAction('addLocation', () => router.push('/locations/create'))();
   }, [tryAction]);
 
   const addService = useCallback(() => {
-    popoverRef.current?.close();
+    popoverRef.current?.hide();
     tryAction('addService', () => router.push('/services/create'))();
   }, [tryAction]);
 
   const addPeriodBasedMembership = useCallback(() => {
-    popoverRef.current?.close();
+    popoverRef.current?.hide();
     tryAction('addPeriodMembership', () =>
       router.push(`/memberships/${BrandMembershipType.period}/create`),
     )();
   }, [tryAction]);
 
   const addVisitBasedMembership = useCallback(() => {
-    popoverRef.current?.close();
+    popoverRef.current?.hide();
     tryAction('addVisitMembership', () =>
       router.push(`/memberships/${BrandMembershipType.visits}/create`),
     )();
   }, [tryAction]);
 
   const addServiceBooking = useCallback(() => {
-    popoverRef.current?.close();
+    popoverRef.current?.hide();
     router.push(`/bookings/${BrandBookingType.service}/create`);
   }, []);
 
   const addUnavailableBooking = useCallback(() => {
-    popoverRef.current?.close();
+    popoverRef.current?.hide();
     router.push(`/bookings/${BrandBookingType.unavailable}/create`);
   }, []);
 
   return (
     hasAnyOfPermissions(['employees', 'locations', 'catalog', 'clients']) && (
-      <AdaptivePopover
-        unmountChildrenWhenHidden
-        ref={popoverRef}
-        trigger={trigger}
-        placement={placement}
-        ignoreHapticOnOpen={ignoreHapticOnOpen}
-      >
-        <View
-          marginVertical={-(defaultPageVerticalPadding / 2)}
-          paddingHorizontal="$1"
-        >
+      <SmartSheet ref={popoverRef} trigger={trigger}>
+        <View paddingHorizontal="$2">
           {hasAnyOfPermissions(['employees', 'locations']) && (
             <>
               {hasPermission('locations') && (
@@ -182,7 +167,7 @@ export const PlusActionAdaptiveModal = ({
             </>
           )}
         </View>
-      </AdaptivePopover>
+      </SmartSheet>
     )
   );
 };

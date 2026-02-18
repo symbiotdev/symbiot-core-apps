@@ -104,7 +104,7 @@ export default () => {
     [allLocations, locations, brand?.name, brand?.avatar?.xsUrl],
   );
 
-  const headerLeft = useCallback(() => {
+  const headerTitle = useCallback(() => {
     const date = DateHelper.format(selectedDate, 'LLLL yyyy', lang);
 
     return (
@@ -200,7 +200,7 @@ export default () => {
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      headerLeft,
+      headerTitle,
       headerRight,
     });
 
@@ -219,7 +219,7 @@ export default () => {
     return () => {
       eventEmitter.off('tabPress', onTabPress);
     };
-  }, [headerLeft, headerRight, navigation, route, refetch, isFetching]);
+  }, [headerTitle, headerRight, navigation, route, refetch, isFetching]);
 
   return (
     <BrandBookingsCalendar

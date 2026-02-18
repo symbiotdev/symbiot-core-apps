@@ -1,18 +1,40 @@
 import {
   Br,
   Icon,
-  ListItem,
+  IconName,
+  RegularText,
   SmartSheet,
   SmartSheetRef,
 } from '@symbiot-core-apps/ui';
 import React, { ReactElement, useCallback, useRef } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { router } from 'expo-router';
-import { View } from 'tamagui';
+import { XStack, XStackProps } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { BrandBookingType, BrandMembershipType } from '@symbiot-core-apps/api';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { ScrollView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const ListItem = ({
+  iconName,
+  label,
+  ...xStackProps
+}: XStackProps & { iconName: IconName; label: string }) => {
+  return (
+    <XStack
+      gap="$4"
+      paddingVertical="$2"
+      alignItems="center"
+      cursor="pointer"
+      {...xStackProps}
+    >
+      <Icon name={iconName} />
+      <RegularText numberOfLines={1}>{label}</RegularText>
+    </XStack>
+  );
+};
 
 export const PlusActionAdaptiveModal = ({
   trigger,
@@ -22,6 +44,7 @@ export const PlusActionAdaptiveModal = ({
   const { t } = useI18n();
   const { icons } = useAppSettings();
   const { tryAction } = useAccountLimits();
+  const { bottom } = useSafeAreaInsets();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
   const popoverRef = useRef<SmartSheetRef>(null);
 
@@ -76,13 +99,19 @@ export const PlusActionAdaptiveModal = ({
 
   return (
     hasAnyOfPermissions(['employees', 'locations', 'catalog', 'clients']) && (
-      <SmartSheet ref={popoverRef} trigger={trigger}>
-        <View paddingHorizontal="$2">
+      <SmartSheet excludePaddings ref={popoverRef} trigger={trigger}>
+        <ScrollView
+          contentContainerStyle={{
+            paddingHorizontal: 20,
+            paddingTop: 20,
+            paddingBottom: bottom + 20,
+          }}
+        >
           {hasAnyOfPermissions(['employees', 'locations']) && (
             <>
               {hasPermission('locations') && (
                 <ListItem
-                  icon={<Icon name="MapPointWave" />}
+                  iconName="MapPointWave"
                   label={t('navigation.tabs.plus.actions.add_location.label')}
                   onPress={addLocation}
                 />
@@ -90,7 +119,7 @@ export const PlusActionAdaptiveModal = ({
 
               {hasPermission('employees') && (
                 <ListItem
-                  icon={<Icon name="UsersGroupRounded" />}
+                  iconName="UsersGroupRounded"
                   label={t('navigation.tabs.plus.actions.add_employee.label')}
                   onPress={addEmployee}
                 />
@@ -105,19 +134,19 @@ export const PlusActionAdaptiveModal = ({
               )}
 
               <ListItem
-                icon={<Icon name={icons.Service} />}
+                iconName={icons.Service}
                 label={t('navigation.tabs.plus.actions.add_service.label')}
                 onPress={addService}
               />
               <ListItem
-                icon={<Icon name={icons.VisitBasedMembership} />}
+                iconName={icons.VisitBasedMembership}
                 label={t(
                   'navigation.tabs.plus.actions.add_visit_based_membership.label',
                 )}
                 onPress={addVisitBasedMembership}
               />
               <ListItem
-                icon={<Icon name={icons.PeriodBasedMembership} />}
+                iconName={icons.PeriodBasedMembership}
                 label={t(
                   'navigation.tabs.plus.actions.add_period_based_membership.label',
                 )}
@@ -133,12 +162,12 @@ export const PlusActionAdaptiveModal = ({
               )}
 
               <ListItem
-                icon={<Icon name="Import" />}
+                iconName="Import"
                 label={t('navigation.tabs.plus.actions.import_client.label')}
                 onPress={importClients}
               />
               <ListItem
-                icon={<Icon name="SmileCircle" />}
+                iconName="SmileCircle"
                 label={t('navigation.tabs.plus.actions.add_client.label')}
                 onPress={addClient}
               />
@@ -150,7 +179,7 @@ export const PlusActionAdaptiveModal = ({
               {hasPermission('clients') && <Br marginVertical="$2" />}
 
               <ListItem
-                icon={<Icon name={icons.ServiceBooking} />}
+                iconName={icons.ServiceBooking}
                 label={t(
                   'navigation.tabs.plus.actions.add_service_booking.label',
                 )}
@@ -158,7 +187,7 @@ export const PlusActionAdaptiveModal = ({
               />
 
               <ListItem
-                icon={<Icon name={icons.UnavailableBooking} />}
+                iconName={icons.UnavailableBooking}
                 label={t(
                   'navigation.tabs.plus.actions.add_unavailable_booking.label',
                 )}
@@ -166,7 +195,7 @@ export const PlusActionAdaptiveModal = ({
               />
             </>
           )}
-        </View>
+        </ScrollView>
       </SmartSheet>
     )
   );

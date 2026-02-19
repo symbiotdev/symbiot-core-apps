@@ -1,8 +1,9 @@
 import {
-  Button,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
+  GlassView,
   HeaderTitle,
+  LightText,
   LoadingView,
   useDrawer,
   useStackScreenHeaderOptions,
@@ -42,17 +43,21 @@ const PlusButton = () => {
     pathname.split('/').filter(Boolean).length === 1 && (
       <PlusActionAdaptiveModal
         trigger={
-          <Button
-            paddingHorizontal={0}
-            label="+"
-            fontSize={25}
-            borderRadius={50}
-            width={50}
-            height={50}
-            position="absolute"
-            right={defaultPageHorizontalPadding}
-            bottom={defaultPageVerticalPadding}
-          />
+          <GlassView
+            interactive
+            style={{
+              width: 55,
+              height: 55,
+              borderRadius: 50,
+              position: 'absolute',
+              alignItems: 'center',
+              justifyContent: 'center',
+              bottom: defaultPageVerticalPadding,
+              right: defaultPageHorizontalPadding,
+            }}
+          >
+            <LightText fontSize={30}>+</LightText>
+          </GlassView>
         }
       />
     )

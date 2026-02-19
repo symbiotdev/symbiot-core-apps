@@ -1,11 +1,4 @@
-import {
-  Br,
-  Icon,
-  IconName,
-  RegularText,
-  SmartSheet,
-  SmartSheetRef,
-} from '@symbiot-core-apps/ui';
+import { AdaptiveSheet, Br, Icon, IconName, RegularText, SmartSheetRef } from '@symbiot-core-apps/ui';
 import React, { ReactElement, useCallback, useRef } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { router } from 'expo-router';
@@ -99,14 +92,8 @@ export const PlusActionAdaptiveModal = ({
 
   return (
     hasAnyOfPermissions(['employees', 'locations', 'catalog', 'clients']) && (
-      <SmartSheet excludePaddings ref={popoverRef} trigger={trigger}>
-        <ScrollView
-          contentContainerStyle={{
-            paddingHorizontal: 20,
-            paddingTop: 20,
-            paddingBottom: bottom + 20,
-          }}
-        >
+      <AdaptiveSheet excludePaddings ref={popoverRef} trigger={trigger}>
+        <ScrollView contentContainerStyle={{ padding: 20 }}>
           {hasAnyOfPermissions(['employees', 'locations']) && (
             <>
               {hasPermission('locations') && (
@@ -196,7 +183,7 @@ export const PlusActionAdaptiveModal = ({
             </>
           )}
         </ScrollView>
-      </SmartSheet>
+      </AdaptiveSheet>
     )
   );
 };

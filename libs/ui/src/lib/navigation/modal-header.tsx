@@ -53,6 +53,7 @@ export const ModalHeader = memo(
 
         {!!headerTitle && (
           <GlassView
+            interactive={typeof headerTitle === 'function'}
             style={{
               zIndex: 1,
               borderRadius: 20,

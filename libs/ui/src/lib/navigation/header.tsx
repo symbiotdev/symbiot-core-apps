@@ -119,6 +119,7 @@ export const ScreenHeader = memo(
 
           {!!options.headerTitle && (
             <GlassView
+              interactive={typeof options.headerTitle === 'function'}
               style={{
                 zIndex: 1,
                 borderRadius: 20,

@@ -77,7 +77,7 @@ export const SmartSheet = forwardRef(
         setState((prev) => ({ ...prev, sheetVisible: false }));
         setTimeout(
           () => setState((prev) => ({ ...prev, modalVisible: false })),
-          250,
+          300,
         );
       }, []),
     );
@@ -197,7 +197,7 @@ const SheetContent = ({
 
   useLayoutEffect(() => {
     y$.value = withSpring(visible ? 0 : height);
-    overlayOpacity$.value = withSpring(visible ? 0.3 : 0);
+    overlayOpacity$.value = withSpring(visible ? 0.4 : 0);
   }, [visible, height, y$, overlayOpacity$]);
 
   return (

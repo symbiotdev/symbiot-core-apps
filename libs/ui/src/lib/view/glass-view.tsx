@@ -59,7 +59,7 @@ export const GlassLikeView = ({
       style={[
         animatedStyle,
         {
-          borderWidth: 1,
+          borderWidth: scheme === 'light' ? 0 : 1,
           borderColor: '#FFFFFF30',
           boxShadow: '0 0 25px rgba(0, 0, 0, 0.15)',
           overflow: 'hidden',

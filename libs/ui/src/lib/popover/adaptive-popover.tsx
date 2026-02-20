@@ -29,11 +29,11 @@ import {
   useRendered,
   useScreenSize,
 } from '@symbiot-core-apps/shared';
-import { ContainerView } from '../view/container-view';
 import {
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
 } from '../view/page-view';
+import { Container } from '@symbiot-core-apps/ui2';
 
 const adaptiveMediaSize = (isWeb ? 'md' : 'xl') as keyof AdaptWhen;
 
@@ -222,10 +222,10 @@ export const AdaptivePopover = forwardRef(
                 paddingHorizontal: defaultPageHorizontalPadding,
               }}
             >
-              <ContainerView children={children} />
+              <Container children={children} />
             </Popover.ScrollView>
           ) : (
-            <ContainerView children={children} />
+            <Container children={children} />
           )}
         </Popover.Content>
 

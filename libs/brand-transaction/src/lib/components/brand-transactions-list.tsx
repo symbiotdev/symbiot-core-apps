@@ -1,6 +1,5 @@
 import {
   AnimatedList,
-  ContainerView,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   EmptyView,
@@ -10,6 +9,7 @@ import { BrandTransactionItem } from '@symbiot-core-apps/brand';
 import { BrandTransaction } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { Container } from '@symbiot-core-apps/ui2';
 
 export const BrandTransactionsList = ({
   transactions,
@@ -46,7 +46,7 @@ export const BrandTransactionsList = ({
   }
 
   return (
-    <ContainerView flex={1} paddingVertical={defaultPageVerticalPadding}>
+    <Container style={{ flex: 1, paddingVertical: defaultPageVerticalPadding }}>
       <AnimatedList
         keyboardDismissMode="on-drag"
         refreshing={isRefetching}
@@ -73,6 +73,6 @@ export const BrandTransactionsList = ({
         onRefresh={onRefresh}
         onEndReached={onEndReached}
       />
-    </ContainerView>
+    </Container>
   );
 };

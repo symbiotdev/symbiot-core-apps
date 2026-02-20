@@ -16,7 +16,6 @@ import {
 import {
   AdaptivePopover,
   AdaptivePopoverRef,
-  ContainerView,
   Icon,
   LightText,
 } from '@symbiot-core-apps/ui';
@@ -24,6 +23,7 @@ import RNDatepicker from 'react-native-date-picker';
 import { MaskedTextInput } from 'react-native-mask-text';
 import { FormField } from '../wrapper/form-field';
 import { InputFieldView } from '../wrapper/input-field-view';
+import { Container } from '@symbiot-core-apps/ui2';
 
 type Value = Date | null | string;
 
@@ -429,9 +429,7 @@ const PopoverDateField = ({
       trigger={
         <InputFieldView pressStyle={{ opacity: 0.8 }} {...viewProps}>
           <LightText
-            color={
-              !value ? '$placeholder' : disabled ? '$disabled' : '$color'
-            }
+            color={!value ? '$placeholder' : disabled ? '$disabled' : '$color'}
           >
             {value ? DateHelper.format(value, dateFormat) : placeholder}
           </LightText>
@@ -439,7 +437,12 @@ const PopoverDateField = ({
       }
       onClose={onBlur}
     >
-      <ContainerView alignItems="center" maxWidth={isWeb ? 350 : undefined}>
+      <Container
+        style={{
+          alignItems: 'center',
+          maxWidth: isWeb ? 350 : undefined,
+        }}
+      >
         {forceCalendar || !isIos ? (
           <DateAsCalendar
             value={value}
@@ -457,7 +460,7 @@ const PopoverDateField = ({
             onChange={onChange}
           />
         )}
-      </ContainerView>
+      </Container>
     </AdaptivePopover>
   );
 };

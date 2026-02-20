@@ -82,7 +82,7 @@ export default () => {
   return (
     me && (
       <TabsView scrollable withHeaderHeight={isWeb || isTablet}>
-        <CompactView gap="$3" flex={1}>
+        <CompactView gap="$3" flex={1} paddingTop={10}>
           {canSubscribe && (
             <ActionCard
               title={t('subscription.card.title')}

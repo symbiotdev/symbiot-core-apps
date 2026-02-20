@@ -12,10 +12,10 @@ import { EmptyView } from '../view/empty-view';
 import { Button } from '../button/button';
 import { CompactView } from '../view/compact-view';
 import { isIos, useI18n, useRendered } from '@symbiot-core-apps/shared';
-import { LoadingView } from '../view/loading-view';
 import { headerHeight } from '../navigation/header';
 import { Spinner } from '../loading/spinner';
 import Svg, { Mask, Rect } from 'react-native-svg';
+import { LoadingContainer } from '@symbiot-core-apps/ui2';
 
 export const QrCodeScanModal = (props: {
   visible: boolean;
@@ -83,7 +83,7 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
   }, [permission?.granted, rendered, requestPermission]);
 
   if (!rendered) {
-    return <LoadingView />;
+    return <LoadingContainer />;
   }
 
   if (!permission) {

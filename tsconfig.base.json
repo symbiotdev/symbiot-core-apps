@@ -46,7 +46,8 @@
       "@symbiot-core-apps/shared": ["libs/shared/src/index.ts"],
       "@symbiot-core-apps/state": ["libs/state/src/index.ts"],
       "@symbiot-core-apps/theme": ["libs/theme/src/index.ts"],
-      "@symbiot-core-apps/ui": ["libs/ui/src/index.ts"]
+      "@symbiot-core-apps/ui": ["libs/ui/src/index.ts"],
+      "@symbiot-core-apps/ui2": ["libs/ui2/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

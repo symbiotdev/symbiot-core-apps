@@ -1,7 +1,7 @@
 import { View, ViewProps } from 'tamagui';
 import { isDeviceSlow, useRendered } from '@symbiot-core-apps/shared';
-import { LoadingView } from './loading-view';
 import { ReactElement, useCallback, useRef } from 'react';
+import { LoadingContainer } from '@symbiot-core-apps/ui2';
 
 const defaultDelay = isDeviceSlow() ? 300 : 0;
 
@@ -37,7 +37,7 @@ export const ContainerView = ({
   }, [onRendered]);
 
   if (!rendered) {
-    return LoadingElement || <LoadingView />;
+    return LoadingElement || <LoadingContainer />;
   }
 
   return (

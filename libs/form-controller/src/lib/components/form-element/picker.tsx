@@ -14,9 +14,9 @@ import {
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   InitView,
-  LoadingView,
   RegularText,
 } from '@symbiot-core-apps/ui';
+import { LoadingContainer } from '@symbiot-core-apps/ui2';
 
 export type PickerItem = {
   label: string;
@@ -222,7 +222,7 @@ const CustomPicker = ({
   }, [rendered, scrollToIndex]);
 
   if (!rendered) {
-    return <LoadingView flex={1} height={200} maxHeight="100%" />;
+    return <LoadingContainer style={{ height: 200 }} />;
   }
 
   return (

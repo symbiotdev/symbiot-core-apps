@@ -12,13 +12,12 @@ import {
   useUpdateBrandMembershipReq,
 } from '@symbiot-core-apps/api';
 import {
-  defaultPageVerticalPadding,
   CompactView,
   compactViewStyles,
+  defaultPageVerticalPadding,
   Icon,
   ListItem,
   ListItemGroup,
-  LoadingView,
   PageView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
@@ -45,6 +44,7 @@ import { BrandMembershipLocationController } from './controller/brand-membership
 import { BrandMembershipServicesController } from './controller/brand-membership-services-controller';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { BrandMembershipVisitsController } from './controller/brand-membership-visits-controller';
+import { LoadingContainer } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandMembership = ({
   membership,
@@ -360,7 +360,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
               Controller={BrandMembershipServicesController}
             />
           ) : (
-            <LoadingView />
+            <LoadingContainer />
           )}
         </CompactView>
       </SlideSheetModal>

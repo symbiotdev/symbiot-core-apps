@@ -1,6 +1,5 @@
 import {
   AnimatedList,
-  ContainerView,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   EmptyView,
@@ -23,6 +22,7 @@ import {
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
+import { Container } from '@symbiot-core-apps/ui2';
 
 export const BrandMembershipsCurrentList = ({
   offsetTop,
@@ -75,7 +75,9 @@ export const BrandMembershipsCurrentList = ({
 
   return (
     <>
-      <ContainerView flex={1} paddingVertical={defaultPageVerticalPadding}>
+      <Container
+        style={{ flex: 1, paddingVertical: defaultPageVerticalPadding }}
+      >
         <AnimatedList
           keyboardDismissMode="on-drag"
           refreshing={isManualRefetching}
@@ -94,7 +96,7 @@ export const BrandMembershipsCurrentList = ({
           onRefresh={onRefresh}
           onEndReached={onEndReached}
         />
-      </ContainerView>
+      </Container>
 
       <KeyboardStickyView
         offset={{ opened: bottom }}

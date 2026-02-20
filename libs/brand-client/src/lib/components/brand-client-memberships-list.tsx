@@ -8,13 +8,13 @@ import {
 import React, { ReactElement, useCallback } from 'react';
 import {
   AnimatedList,
-  ContainerView,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   InitView,
 } from '@symbiot-core-apps/ui';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { Container } from '@symbiot-core-apps/ui2';
 
 const byType = {
   [BrandMembershipType.period]: {
@@ -80,7 +80,7 @@ export const BrandClientMembershipsList = ({
   );
 
   return (
-    <ContainerView flex={1} paddingVertical={defaultPageVerticalPadding}>
+    <Container style={{ flex: 1, paddingVertical: defaultPageVerticalPadding }}>
       <AnimatedList
         keyboardDismissMode="on-drag"
         refreshing={isManualRefetching}
@@ -99,6 +99,6 @@ export const BrandClientMembershipsList = ({
         onRefresh={onRefresh}
         onEndReached={onEndReached}
       />
-    </ContainerView>
+    </Container>
   );
 };

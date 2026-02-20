@@ -1,6 +1,5 @@
 import {
   AnimatedList,
-  ContainerView,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   EmptyView,
@@ -17,6 +16,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
+import { Container } from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandEmployees = ({
   offsetTop,
@@ -57,7 +57,9 @@ export const CurrentBrandEmployees = ({
 
   return (
     <>
-      <ContainerView flex={1} paddingVertical={defaultPageVerticalPadding}>
+      <Container
+        style={{ flex: 1, paddingVertical: defaultPageVerticalPadding }}
+      >
         <AnimatedList
           refreshing={isManualRefetching}
           expanding={isFetchingNextPage}
@@ -83,7 +85,7 @@ export const CurrentBrandEmployees = ({
           onRefresh={onRefresh}
           onEndReached={onEndReached}
         />
-      </ContainerView>
+      </Container>
 
       <KeyboardStickyView
         offset={{ opened: bottom }}

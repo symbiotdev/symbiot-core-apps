@@ -1,8 +1,8 @@
-import { LoadingView } from './loading-view';
 import { ErrorView } from './error-view';
 import { EmptyView } from './empty-view';
 import { ViewProps } from 'tamagui';
 import { IconName } from '../icons';
+import { LoadingContainer } from '@symbiot-core-apps/ui2';
 
 export const InitView = ({
   loading,
@@ -19,7 +19,7 @@ export const InitView = ({
   error?: string | null;
 }) => {
   if (loading) {
-    return <LoadingView {...viewProps} />;
+    return <LoadingContainer />;
   }
 
   if (error) {

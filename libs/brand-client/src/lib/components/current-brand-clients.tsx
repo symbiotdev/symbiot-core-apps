@@ -1,7 +1,6 @@
 import {
   AnimatedList,
   Button,
-  ContainerView,
   defaultPageHorizontalPadding,
   defaultPageVerticalPadding,
   EmptyView,
@@ -23,6 +22,7 @@ import { View } from 'tamagui';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { Search } from '@symbiot-core-apps/form-controller';
+import { Container } from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandClients = ({
   offsetTop,
@@ -67,7 +67,9 @@ export const CurrentBrandClients = ({
 
   return (
     <>
-      <ContainerView flex={1} paddingVertical={defaultPageVerticalPadding}>
+      <Container
+        style={{ flex: 1, paddingVertical: defaultPageVerticalPadding }}
+      >
         <AnimatedList
           keyboardDismissMode="on-drag"
           refreshing={isManualRefetching}
@@ -96,7 +98,7 @@ export const CurrentBrandClients = ({
           onRefresh={onRefresh}
           onEndReached={onEndReached}
         />
-      </ContainerView>
+      </Container>
 
       <KeyboardStickyView
         offset={{ opened: bottom }}

@@ -1,4 +1,11 @@
-import { AdaptiveSheet, Br, Icon, IconName, RegularText, SmartSheetRef } from '@symbiot-core-apps/ui';
+import {
+  AdaptiveSheet,
+  Br,
+  Icon,
+  IconName,
+  RegularText,
+  SmartSheetRef,
+} from '@symbiot-core-apps/ui';
 import React, { ReactElement, useCallback, useRef } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { router } from 'expo-router';
@@ -8,7 +15,6 @@ import { BrandBookingType, BrandMembershipType } from '@symbiot-core-apps/api';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { ScrollView } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const ListItem = ({
   iconName,
@@ -37,7 +43,6 @@ export const PlusActionAdaptiveModal = ({
   const { t } = useI18n();
   const { icons } = useAppSettings();
   const { tryAction } = useAccountLimits();
-  const { bottom } = useSafeAreaInsets();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
   const popoverRef = useRef<SmartSheetRef>(null);
 
@@ -92,7 +97,12 @@ export const PlusActionAdaptiveModal = ({
 
   return (
     hasAnyOfPermissions(['employees', 'locations', 'catalog', 'clients']) && (
-      <AdaptiveSheet excludePaddings ref={popoverRef} trigger={trigger}>
+      <AdaptiveSheet
+        excludePaddings
+        popoverPlacement="left-end"
+        ref={popoverRef}
+        trigger={trigger}
+      >
         <ScrollView contentContainerStyle={{ padding: 20 }}>
           {hasAnyOfPermissions(['employees', 'locations']) && (
             <>

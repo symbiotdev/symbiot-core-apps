@@ -51,7 +51,7 @@ export * from './lib/qr/qr-code-scan-modal';
 
 export * from './lib/segment/segment';
 
-export * from './lib/sheet/smart-sheet';
+export * from './lib/sheet/adaptive-sheet';
 export * from './lib/sheet/sheet';
 
 export * from './lib/survey/survey';
@@ -67,5 +67,4 @@ export * from './lib/view/error-view';
 export * from './lib/view/glass-view';
 export * from './lib/view/compact-view';
 export * from './lib/view/init-view';
-export * from './lib/view/loading-view';
 export * from './lib/view/page-view';

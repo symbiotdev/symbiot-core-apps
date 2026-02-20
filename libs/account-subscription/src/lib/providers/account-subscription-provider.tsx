@@ -18,7 +18,6 @@ import {
 import {
   AdaptivePopover,
   AdaptivePopoverRef,
-  LoadingView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import { SubscriptionsPaywall } from '../components/subscriptions-paywall';
@@ -31,6 +30,7 @@ import {
   isWeb,
   useI18n,
 } from '@symbiot-core-apps/shared';
+import { LoadingContainer } from '@symbiot-core-apps/ui2';
 
 type AccountSubscriptionContext = {
   processing: boolean;
@@ -187,7 +187,7 @@ export const AccountSubscriptionProvider = ({
             <DevelopmentPaywall onApplyPromoCode={showPromoCodeForm} />
           ) : (
             <>
-              {!packages.length && <LoadingView />}
+              {!packages.length && <LoadingContainer />}
 
               {!!packages.length && (
                 <SubscriptionsPaywall

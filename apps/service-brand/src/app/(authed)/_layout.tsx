@@ -4,7 +4,6 @@ import {
   GlassView,
   HeaderTitle,
   LightText,
-  LoadingView,
   useDrawer,
   useStackScreenHeaderOptions,
 } from '@symbiot-core-apps/ui';
@@ -16,7 +15,7 @@ import {
 import { useCurrentEntitiesLoader } from '../../hooks/use-current-entities-loader';
 import React, { useEffect, useMemo } from 'react';
 import { hideAsync } from 'expo-splash-screen';
-import { XStack } from 'tamagui';
+import { View, XStack } from 'tamagui';
 import { DrawerMenu } from '../../components/drawer/menu';
 import { SocketProvider } from '../../providers/socket.provider';
 import { NotificationsProvider } from '@symbiot-core-apps/notification';
@@ -35,31 +34,37 @@ import {
 } from '@symbiot-core-apps/account-subscription';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import type { ScreenProps } from 'react-native-screens';
+import { LoadingContainer } from '@symbiot-core-apps/ui2';
 
 const PlusButton = () => {
   const pathname = usePathname();
 
   return (
     pathname.split('/').filter(Boolean).length === 1 && (
-      <PlusActionAdaptiveModal
-        trigger={
-          <GlassView
-            interactive
-            style={{
-              width: 55,
-              height: 55,
-              borderRadius: 50,
-              position: 'absolute',
-              alignItems: 'center',
-              justifyContent: 'center',
-              bottom: defaultPageVerticalPadding,
-              right: defaultPageHorizontalPadding,
-            }}
-          >
-            <LightText fontSize={30}>+</LightText>
-          </GlassView>
-        }
-      />
+      <View
+        style={{
+          position: 'absolute',
+          bottom: defaultPageVerticalPadding,
+          right: defaultPageHorizontalPadding,
+        }}
+      >
+        <PlusActionAdaptiveModal
+          trigger={
+            <GlassView
+              interactive
+              style={{
+                width: 55,
+                height: 55,
+                borderRadius: 50,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <LightText fontSize={30}>+</LightText>
+            </GlassView>
+          }
+        />
+      </View>
     )
   );
 };
@@ -88,7 +93,7 @@ export default () => {
           <XStack flex={1}>
             {drawerVisible && <DrawerMenu />}
             {!currentEntitiesLoaded ? (
-              <LoadingView />
+              <LoadingContainer />
             ) : (
               <StackNavigation animated={!drawerVisible} />
             )}

@@ -13,7 +13,6 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
-  LoadingView,
   PageView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
@@ -49,6 +48,7 @@ import { BrandServiceEmployeesController } from './controller/brand-service-empl
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
+import { LoadingContainer } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandService = ({ service }: { service: BrandService }) => {
   const { height } = useWindowDimensions();
@@ -318,7 +318,7 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
               Controller={BrandServiceEmployeesController}
             />
           ) : (
-            <LoadingView />
+            <LoadingContainer />
           )}
         </CompactView>
       </SlideSheetModal>

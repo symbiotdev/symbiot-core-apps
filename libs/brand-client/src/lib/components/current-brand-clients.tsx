@@ -1,8 +1,6 @@
 import {
   AnimatedList,
   Button,
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
   EmptyView,
   GlassViewBackground,
   Icon,
@@ -22,7 +20,7 @@ import { View } from 'tamagui';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { Search } from '@symbiot-core-apps/form-controller';
-import { Container } from '@symbiot-core-apps/ui2';
+import { Container, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandClients = ({
   offsetTop,
@@ -68,7 +66,7 @@ export const CurrentBrandClients = ({
   return (
     <>
       <Container
-        style={{ flex: 1, paddingVertical: defaultPageVerticalPadding }}
+        style={{ flex: 1, paddingVertical: PAGE_STYLE.paddingVertical }}
       >
         <AnimatedList
           keyboardDismissMode="on-drag"
@@ -79,7 +77,7 @@ export const CurrentBrandClients = ({
           contentContainerStyle={{
             gap: 2,
             paddingTop: offsetTop,
-            paddingHorizontal: defaultPageHorizontalPadding,
+            paddingHorizontal: PAGE_STYLE.paddingHorizontal,
             paddingBottom: 100,
           }}
           keyExtractor={(item) => item.id}
@@ -108,7 +106,7 @@ export const CurrentBrandClients = ({
           left: 0,
           paddingTop: 10,
           paddingBottom: bottom + 10,
-          paddingHorizontal: defaultPageHorizontalPadding,
+          paddingHorizontal: PAGE_STYLE.paddingHorizontal,
           width: '100%',
           zIndex: 1,
         }}

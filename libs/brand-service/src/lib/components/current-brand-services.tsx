@@ -1,8 +1,6 @@
 import {
   AnimatedList,
   Button,
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
   EmptyView,
   GlassViewBackground,
   InitView,
@@ -21,7 +19,7 @@ import { BrandServiceItem } from '@symbiot-core-apps/brand';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
-import { Container } from '@symbiot-core-apps/ui2';
+import { Container, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandServices = ({
   offsetTop,
@@ -63,7 +61,7 @@ export const CurrentBrandServices = ({
   return (
     <>
       <Container
-        style={{ flex: 1, paddingVertical: defaultPageVerticalPadding }}
+        style={{ flex: 1, paddingVertical: PAGE_STYLE.paddingVertical }}
       >
         <AnimatedList
           keyboardDismissMode="on-drag"
@@ -74,7 +72,7 @@ export const CurrentBrandServices = ({
           contentContainerStyle={{
             gap: 2,
             paddingTop: offsetTop,
-            paddingHorizontal: defaultPageHorizontalPadding,
+            paddingHorizontal: PAGE_STYLE.paddingHorizontal,
             paddingBottom: 100,
           }}
           keyExtractor={(item) => item.id}
@@ -101,7 +99,7 @@ export const CurrentBrandServices = ({
           left: 0,
           paddingTop: 10,
           paddingBottom: bottom + 10,
-          paddingHorizontal: defaultPageHorizontalPadding,
+          paddingHorizontal: PAGE_STYLE.paddingHorizontal,
           width: '100%',
           zIndex: 1,
         }}

@@ -1,6 +1,5 @@
 import {
   CompactView,
-  defaultPageVerticalPadding,
   Icon,
   ListItem,
   ListItemGroup,
@@ -37,6 +36,7 @@ import { BrandCurrencyController } from './contoller/brand-currency-controller';
 import { BrandWebsiteController } from './contoller/brand-website-controller';
 import { BrandInstagramController } from './contoller/brand-instagram-controller';
 import { View } from 'tamagui';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 type GroupProps = {
   brand: Brand;
@@ -143,7 +143,7 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <DateFrom
             name="birthday"
             value={brand.birthday}
@@ -208,7 +208,7 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <NoDragForm
             name="countries"
             value={value.countries}
@@ -272,7 +272,7 @@ const ExternalLinks = ({ brand, onUpdated }: GroupProps) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingleElementToArrayForm
             name="websites"
             value={value.websites}

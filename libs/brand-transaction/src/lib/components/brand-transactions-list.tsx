@@ -1,15 +1,9 @@
-import {
-  AnimatedList,
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
-  EmptyView,
-  InitView,
-} from '@symbiot-core-apps/ui';
+import { AnimatedList, EmptyView, InitView } from '@symbiot-core-apps/ui';
 import { BrandTransactionItem } from '@symbiot-core-apps/brand';
 import { BrandTransaction } from '@symbiot-core-apps/api';
 import { useCallback } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { Container } from '@symbiot-core-apps/ui2';
+import { Container, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const BrandTransactionsList = ({
   transactions,
@@ -46,7 +40,7 @@ export const BrandTransactionsList = ({
   }
 
   return (
-    <Container style={{ flex: 1, paddingVertical: defaultPageVerticalPadding }}>
+    <Container style={{ flex: 1, paddingVertical: PAGE_STYLE.paddingVertical }}>
       <AnimatedList
         keyboardDismissMode="on-drag"
         refreshing={isRefetching}
@@ -56,7 +50,7 @@ export const BrandTransactionsList = ({
         contentContainerStyle={{
           gap: 4,
           paddingTop: offsetTop,
-          paddingHorizontal: defaultPageHorizontalPadding,
+          paddingHorizontal: PAGE_STYLE.paddingHorizontal,
           paddingBottom: 100,
         }}
         keyExtractor={(item) => item.id}

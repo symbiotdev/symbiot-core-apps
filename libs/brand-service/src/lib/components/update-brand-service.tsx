@@ -9,7 +9,6 @@ import {
 import {
   CompactView,
   compactViewStyles,
-  defaultPageVerticalPadding,
   Icon,
   ListItem,
   ListItemGroup,
@@ -48,7 +47,7 @@ import { BrandServiceEmployeesController } from './controller/brand-service-empl
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
-import { LoadingContainer } from '@symbiot-core-apps/ui2';
+import { LoadingContainer, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandService = ({ service }: { service: BrandService }) => {
   const { height } = useWindowDimensions();
@@ -205,7 +204,7 @@ const Pricing = ({ service }: { service: BrandService }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           {brand?.currencies && brand.currencies.length > 1 && (
             <SingeElementForm
               name="currency"
@@ -289,7 +288,7 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingleElementToArrayForm
             name="locations"
             value={
@@ -363,7 +362,7 @@ const About = ({ service }: { service: BrandService }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingeElementForm
             name="name"
             value={value.name}
@@ -433,7 +432,7 @@ const Structure = ({ service }: { service: BrandService }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingeElementForm
             name="type"
             value={value.type}
@@ -514,7 +513,7 @@ const Note = ({ service }: { service: BrandService }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingeElementForm
             name="note"
             value={value.note}

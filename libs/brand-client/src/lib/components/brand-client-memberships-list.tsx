@@ -6,15 +6,10 @@ import {
   useBrandClientVisitsBasedMembershipsListReq,
 } from '@symbiot-core-apps/api';
 import React, { ReactElement, useCallback } from 'react';
-import {
-  AnimatedList,
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
-  InitView,
-} from '@symbiot-core-apps/ui';
+import { AnimatedList, InitView } from '@symbiot-core-apps/ui';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { Container } from '@symbiot-core-apps/ui2';
+import { Container, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 const byType = {
   [BrandMembershipType.period]: {
@@ -80,7 +75,7 @@ export const BrandClientMembershipsList = ({
   );
 
   return (
-    <Container style={{ flex: 1, paddingVertical: defaultPageVerticalPadding }}>
+    <Container style={{ flex: 1, paddingVertical: PAGE_STYLE.paddingVertical }}>
       <AnimatedList
         keyboardDismissMode="on-drag"
         refreshing={isManualRefetching}
@@ -90,7 +85,7 @@ export const BrandClientMembershipsList = ({
         contentContainerStyle={{
           gap: 4,
           paddingTop: offsetTop,
-          paddingHorizontal: defaultPageHorizontalPadding,
+          paddingHorizontal: PAGE_STYLE.paddingHorizontal,
           paddingBottom: 100,
         }}
         keyExtractor={(item) => item.id}

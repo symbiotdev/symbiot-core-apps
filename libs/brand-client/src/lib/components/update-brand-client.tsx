@@ -6,7 +6,6 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   CompactView,
-  defaultPageVerticalPadding,
   Icon,
   ListItem,
   ListItemGroup,
@@ -32,6 +31,7 @@ import { BrandClientLastnameController } from './controller/brand-client-lastnam
 import { BrandClientNoteController } from './controller/brand-client-note-controller';
 import { BrandClientPhoneController } from './controller/brand-client-phone-controller';
 import { PhoneNumber } from 'react-native-phone-input/dist';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
@@ -118,7 +118,7 @@ const Personality = ({ client }: { client: BrandClient }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingeElementForm
             name="firstname"
             value={value.firstname}
@@ -208,7 +208,7 @@ const Contact = ({ client }: { client: BrandClient }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingleElementToArrayForm
             name="phones"
             value={value.phones}
@@ -268,7 +268,7 @@ const Note = ({ client }: { client: BrandClient }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingeElementForm
             name="note"
             value={value.note}

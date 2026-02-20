@@ -29,11 +29,7 @@ import {
   useRendered,
   useScreenSize,
 } from '@symbiot-core-apps/shared';
-import {
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
-} from '../view/page-view';
-import { Container } from '@symbiot-core-apps/ui2';
+import { Container, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 const adaptiveMediaSize = (isWeb ? 'md' : 'xl') as keyof AdaptWhen;
 
@@ -199,8 +195,8 @@ export const AdaptivePopover = forwardRef(
             !!topFixedContent && (
               <View
                 width="100%"
-                paddingHorizontal={defaultPageHorizontalPadding}
-                paddingVertical={defaultPageVerticalPadding}
+                paddingHorizontal={PAGE_STYLE.paddingHorizontal}
+                paddingVertical={PAGE_STYLE.paddingVertical}
               >
                 {topFixedContent}
               </View>
@@ -217,9 +213,9 @@ export const AdaptivePopover = forwardRef(
                 width: '100%',
               }}
               contentContainerStyle={{
-                paddingTop: topFixedContent ? 0 : defaultPageVerticalPadding,
-                paddingBottom: defaultPageHorizontalPadding,
-                paddingHorizontal: defaultPageHorizontalPadding,
+                paddingTop: topFixedContent ? 0 : PAGE_STYLE.paddingVertical,
+                paddingBottom: PAGE_STYLE.paddingVertical,
+                paddingHorizontal: PAGE_STYLE.paddingHorizontal,
               }}
             >
               <Container children={children} />
@@ -263,11 +259,11 @@ export const AdaptivePopover = forwardRef(
                       borderRadius="$10"
                       cursor="pointer"
                       backgroundColor="$disabled"
-                      marginVertical={defaultPageVerticalPadding}
+                      marginVertical={PAGE_STYLE.paddingVertical}
                       marginHorizontal="auto"
                     />
                   ) : (
-                    <View height={defaultPageVerticalPadding * 2 + 2} />
+                    <View height={PAGE_STYLE.paddingVertical * 2 + 2} />
                   )
                 ) : (
                   <View />
@@ -276,8 +272,8 @@ export const AdaptivePopover = forwardRef(
                 {!!sheetTitle && (
                   <H4
                     textAlign="center"
-                    paddingHorizontal={defaultPageHorizontalPadding}
-                    paddingBottom={defaultPageVerticalPadding}
+                    paddingHorizontal={PAGE_STYLE.paddingHorizontal}
+                    paddingBottom={PAGE_STYLE.paddingVertical}
                   >
                     {sheetTitle}
                   </H4>
@@ -286,8 +282,8 @@ export const AdaptivePopover = forwardRef(
                 {!!topFixedContent && (
                   <View
                     width="100%"
-                    paddingHorizontal={defaultPageHorizontalPadding}
-                    paddingBottom={defaultPageVerticalPadding}
+                    paddingHorizontal={PAGE_STYLE.paddingHorizontal}
+                    paddingBottom={PAGE_STYLE.paddingVertical}
                   >
                     {topFixedContent}
                   </View>
@@ -302,8 +298,8 @@ export const AdaptivePopover = forwardRef(
                     showsVerticalScrollIndicator={false}
                     style={{ maxHeight: adjustedMaxHeight }}
                     contentContainerStyle={{
-                      paddingBottom: bottom + defaultPageHorizontalPadding,
-                      paddingHorizontal: defaultPageHorizontalPadding,
+                      paddingBottom: bottom + PAGE_STYLE.paddingVertical,
+                      paddingHorizontal: PAGE_STYLE.paddingHorizontal,
                     }}
                   >
                     <Adapt.Contents />

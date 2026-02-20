@@ -3,8 +3,6 @@ import { FlatList, Modal, useWindowDimensions } from 'react-native';
 import { InputFieldView } from '../wrapper/input-field-view';
 import {
   AnimatedList,
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
   EmptyView,
   headerHeight,
   InitView,
@@ -24,6 +22,7 @@ import { Search } from './search';
 import { PickerItem } from './picker';
 import { FormField } from '../wrapper/form-field';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export type SmartSelectValue = unknown | unknown[];
 export type SmartSelectOnChange = (value: SmartSelectValue) => void;
@@ -292,8 +291,8 @@ const OptionsList = ({
         alignItems="center"
         paddingVertical="$3"
         disabled={disabled}
-        paddingHorizontal={defaultPageHorizontalPadding}
-        marginRight={defaultPageHorizontalPadding}
+        paddingHorizontal={PAGE_STYLE.paddingHorizontal}
+        marginRight={PAGE_STYLE.paddingHorizontal}
         borderRadius="$10"
         cursor={!disabled ? 'pointer' : 'default'}
         disabledStyle={{ opacity: 0.5 }}
@@ -369,13 +368,13 @@ const OptionsList = ({
       overflow="hidden"
     >
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <View paddingTop={headerHeight + defaultPageVerticalPadding / 2}>
+        <View paddingTop={headerHeight + PAGE_STYLE.paddingVertical / 2}>
           <ModalHeader headerTitle={title} onClose={onClose} />
 
           {!!options?.length && searchable && (
             <View
-              paddingHorizontal={defaultPageHorizontalPadding}
-              paddingBottom={defaultPageVerticalPadding / 2}
+              paddingHorizontal={PAGE_STYLE.paddingHorizontal}
+              paddingBottom={PAGE_STYLE.paddingVertical / 2}
             >
               <Search
                 value={searchValue}
@@ -397,8 +396,8 @@ const OptionsList = ({
           showsVerticalScrollIndicator={isWeb}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
-            paddingTop: defaultPageVerticalPadding / 2,
-            paddingBottom: defaultPageVerticalPadding + 50,
+            paddingTop: PAGE_STYLE.paddingVertical / 2,
+            paddingBottom: PAGE_STYLE.paddingVertical + 50,
           }}
           ListEmptyComponent={ListEmptyComponent}
         />

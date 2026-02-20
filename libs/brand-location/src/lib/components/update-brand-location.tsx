@@ -7,8 +7,6 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   CompactView,
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
   Icon,
   ListItem,
   ListItemGroup,
@@ -42,6 +40,7 @@ import { BrandLocationAdvantagesController } from './controller/brand-location-a
 import { BrandLocationTimezoneController } from './controller/brand-location-timezone-controller';
 import { BrandLocationCountryController } from './controller/brand-location-country-controller';
 import { BrandLocationUsStateController } from './controller/brand-location-us-state-controller';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandLocation = ({
   location,
@@ -59,7 +58,7 @@ export const UpdateBrandLocation = ({
     >
       <BrandLocationMediaForm marginTop="$5" location={location} />
 
-      <CompactView paddingHorizontal={defaultPageHorizontalPadding}>
+      <CompactView paddingHorizontal={PAGE_STYLE.paddingHorizontal}>
         <Name location={location} />
 
         <ListItemGroup>
@@ -134,7 +133,7 @@ const Address = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingeElementForm
             name="address"
             value={value.address}
@@ -233,7 +232,7 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={PAGE_STYLE.paddingVertical}>
           <ArrayForm
             name="schedules"
             value={value.schedules}
@@ -297,7 +296,7 @@ const Locale = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           {canChangeCountry && (
             <>
               <SingeElementForm
@@ -369,7 +368,7 @@ const Advantages = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <ArrayForm
             name="advantages"
             value={value.advantages}
@@ -435,7 +434,7 @@ const Contact = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingleElementToArrayForm
             name="phones"
             value={value.phones}

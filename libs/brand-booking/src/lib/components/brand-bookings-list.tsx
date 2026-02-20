@@ -1,7 +1,6 @@
 import {
   Button,
   compactViewStyles,
-  defaultPageHorizontalPadding,
   EmptyView,
   InitView,
   RegularText,
@@ -22,6 +21,7 @@ import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
 import { useAppSettings } from '@symbiot-core-apps/app';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const BrandBookingsList = () => {
   const { timezone } = useBookingDatetime();
@@ -79,7 +79,7 @@ export const BrandBookingsList = () => {
       }}
       contentContainerStyle={{
         gap: 4,
-        paddingHorizontal: defaultPageHorizontalPadding,
+        paddingHorizontal: PAGE_STYLE.paddingHorizontal,
       }}
       keyExtractor={(item) => item.id}
       ListEmptyComponent={ListEmptyComponent}

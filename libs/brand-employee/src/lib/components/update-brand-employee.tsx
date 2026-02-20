@@ -1,7 +1,6 @@
 import {
   Card,
   CompactView,
-  defaultPageVerticalPadding,
   Icon,
   ListItem,
   ListItemGroup,
@@ -54,6 +53,7 @@ import { BrandEmployeePermissionsController } from './controller/brand-employee-
 import { useForm } from 'react-hook-form';
 import { useDynamicBrandLocation } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandEmployee = ({
   employee,
@@ -155,7 +155,7 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingeElementForm
             name="firstname"
             value={value.firstname}
@@ -227,7 +227,7 @@ const Professionality = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingeElementForm
             name="role"
             value={value.role}
@@ -282,7 +282,7 @@ const About = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingeElementForm
             name="about"
             value={value.about}
@@ -384,7 +384,7 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingleElementToArrayForm
             name="locations"
             value={
@@ -488,7 +488,7 @@ const Contact = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingleElementToArrayForm
             name="phones"
             value={value.phones}
@@ -551,7 +551,7 @@ const Identification = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingeElementForm
             name="passport"
             value={value.passport}
@@ -637,7 +637,7 @@ const Permissions = ({ employee }: { employee: BrandEmployee }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView paddingVertical={defaultPageVerticalPadding}>
+        <CompactView paddingVertical={PAGE_STYLE.paddingVertical}>
           <BrandEmployeePermissionsController
             loadingKey={updatingKey}
             control={control}

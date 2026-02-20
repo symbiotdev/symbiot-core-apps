@@ -10,13 +10,8 @@ import {
 import { useTheme, View, ViewProps, XStack } from 'tamagui';
 import { FlatList, ViewStyle } from 'react-native';
 import { emitHaptic, isIos, useRendered } from '@symbiot-core-apps/shared';
-import {
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
-  InitView,
-  RegularText,
-} from '@symbiot-core-apps/ui';
-import { LoadingContainer } from '@symbiot-core-apps/ui2';
+import { InitView, RegularText } from '@symbiot-core-apps/ui';
+import { LoadingContainer, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export type PickerItem = {
   label: string;
@@ -165,7 +160,7 @@ const CustomPicker = ({
           alignItems={optionsCentered ? 'center' : 'flex-start'}
           paddingVertical={10}
           minHeight={24}
-          paddingHorizontal={defaultPageHorizontalPadding}
+          paddingHorizontal={PAGE_STYLE.paddingHorizontal}
           disabled={disabled}
           backgroundColor={value === item.value ? '$background' : undefined}
           borderRadius="$10"
@@ -234,13 +229,7 @@ const CustomPicker = ({
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       style={{ maxHeight: 200 }}
-      contentContainerStyle={[
-        {
-          paddingHorizontal: defaultPageHorizontalPadding,
-          paddingVertical: defaultPageVerticalPadding,
-        },
-        contentContainerStyle,
-      ]}
+      contentContainerStyle={[PAGE_STYLE, contentContainerStyle]}
       renderItem={renderItem}
       onScrollToIndexFailed={(info) =>
         setTimeout(() => scrollToIndex(info.index))

@@ -2,7 +2,6 @@ import {
   CompactView,
   ContextMenuItem,
   ContextMenuPopover,
-  defaultPageVerticalPadding,
   H1,
   H2,
   Icon,
@@ -52,6 +51,7 @@ import { getSlotsRandomEmployee } from '../utils/get-slots-random-employee';
 import { ServiceBrandBookingProfileClients } from './service-brand-booking-profile-clients';
 import { View, XStack } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const ServiceBrandBookingProfile = ({
   booking,
@@ -272,7 +272,7 @@ export const ServiceBrandBookingProfile = ({
         visible={rescheduleModalVisible}
         onClose={closeRescheduleModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <RescheduleForm booking={booking} onUpdate={onUpdate} />
         </CompactView>
       </SlideSheetModal>
@@ -283,7 +283,7 @@ export const ServiceBrandBookingProfile = ({
         visible={serviceNoteModalVisible}
         onClose={closeServiceNoteModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <NoteForm booking={booking} onUpdate={onUpdate} />
         </CompactView>
       </SlideSheetModal>

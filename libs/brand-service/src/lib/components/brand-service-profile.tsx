@@ -2,7 +2,6 @@ import { BrandService } from '@symbiot-core-apps/api';
 import {
   Avatar,
   CompactView,
-  defaultPageHorizontalPadding,
   ExtraBoldText,
   H2,
   ListItemGroup,
@@ -22,6 +21,7 @@ import { View } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { formatPrice, useI18n } from '@symbiot-core-apps/shared';
 import React, { useMemo } from 'react';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
   const { brand } = useCurrentBrandState();
@@ -57,7 +57,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
       <CompactView
         marginTop="$3"
         gap="$5"
-        paddingHorizontal={defaultPageHorizontalPadding}
+        paddingHorizontal={PAGE_STYLE.paddingHorizontal}
       >
         <View paddingHorizontal="$3" paddingTop="$3" gap="$3">
           <H2>{service.name}</H2>

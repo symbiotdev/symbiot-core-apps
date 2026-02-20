@@ -7,12 +7,12 @@ import { FlatList } from 'react-native';
 import {
   avatarBlurhash,
   ButtonIcon,
-  defaultPageHorizontalPadding,
   RegularText,
   Spinner,
 } from '@symbiot-core-apps/ui';
 import { FormField } from '../wrapper/form-field';
 import { isWeb } from '@symbiot-core-apps/shared';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 const MediaList = FlatList<ImageSource | string>;
 
@@ -145,7 +145,7 @@ export const GalleryPicker = ({
         contentContainerStyle={{
           gap: 6,
           paddingVertical: 5,
-          paddingHorizontal: defaultPageHorizontalPadding,
+          paddingHorizontal: PAGE_STYLE.paddingHorizontal,
         }}
         ListFooterComponent={ListFooterComponent}
         ListHeaderComponent={

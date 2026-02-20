@@ -1,7 +1,5 @@
 import {
   AnimatedList,
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
   EmptyView,
   GlassViewBackground,
   InitView,
@@ -16,7 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
-import { Container } from '@symbiot-core-apps/ui2';
+import { Container, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandEmployees = ({
   offsetTop,
@@ -58,7 +56,7 @@ export const CurrentBrandEmployees = ({
   return (
     <>
       <Container
-        style={{ flex: 1, paddingVertical: defaultPageVerticalPadding }}
+        style={{ flex: 1, paddingVertical: PAGE_STYLE.paddingVertical }}
       >
         <AnimatedList
           refreshing={isManualRefetching}
@@ -68,7 +66,7 @@ export const CurrentBrandEmployees = ({
           contentContainerStyle={{
             gap: 2,
             paddingTop: offsetTop,
-            paddingHorizontal: defaultPageHorizontalPadding,
+            paddingHorizontal: PAGE_STYLE.paddingHorizontal,
             paddingBottom: 100,
           }}
           keyExtractor={(item) => item.id}
@@ -95,7 +93,7 @@ export const CurrentBrandEmployees = ({
           left: 0,
           paddingTop: 10,
           paddingBottom: bottom + 10,
-          paddingHorizontal: defaultPageHorizontalPadding,
+          paddingHorizontal: PAGE_STYLE.paddingHorizontal,
           width: '100%',
           zIndex: 1,
         }}

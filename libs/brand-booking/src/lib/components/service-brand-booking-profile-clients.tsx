@@ -12,10 +12,9 @@ import {
   ActionCard,
   Br,
   Button,
-  defaultPageVerticalPadding,
-  EmptyView,
   CompactView,
   compactViewStyles,
+  EmptyView,
   Icon,
   InitView,
   ListItem,
@@ -37,6 +36,7 @@ import {
 } from '@symbiot-core-apps/brand-client';
 import { router } from 'expo-router';
 import { View, ViewProps } from 'tamagui';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 const ClientItem = ({
   client,
@@ -342,7 +342,7 @@ const Balance = ({
   }
 
   return (
-    <CompactView paddingVertical={defaultPageVerticalPadding}>
+    <CompactView paddingVertical={PAGE_STYLE.paddingVertical}>
       <RegularText flex={1}>
         {t(`service_brand_booking.profile.clients.actions.use_balance.info`)}
       </RegularText>

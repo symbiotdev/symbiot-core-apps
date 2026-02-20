@@ -4,8 +4,6 @@ import {
   Avatar,
   Br,
   defaultIconSize,
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
   GlassViewBackground,
   headerHeight,
   Icon,
@@ -29,6 +27,7 @@ import {
 } from '@symbiot-core-apps/state';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { BrandMembershipType } from '@symbiot-core-apps/api';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const drawerMenuMaxWidth = 250;
 export const drawerMenuMinWidth = 68;
@@ -75,8 +74,8 @@ const MenuItem = memo(
       <ListItem
         borderRadius="$10"
         labelNumberOfLines={1}
-        paddingHorizontal={defaultPageHorizontalPadding}
-        marginHorizontal={defaultPageHorizontalPadding / 2}
+        paddingHorizontal={PAGE_STYLE.paddingHorizontal}
+        marginHorizontal={PAGE_STYLE.paddingHorizontal / 2}
         backgroundColor={focused ? '$background' : 'transparent'}
         label={label}
         icon={
@@ -128,7 +127,7 @@ export const DrawerMenu = () => {
         animatedStyle,
         {
           paddingTop: top,
-          paddingBottom: bottom + defaultPageVerticalPadding,
+          paddingBottom: bottom + PAGE_STYLE.paddingVertical,
           paddingLeft: left,
         },
       ]}
@@ -184,7 +183,7 @@ export const DrawerMenu = () => {
             />
 
             {!permanent && (
-              <Br marginHorizontal={defaultPageHorizontalPadding} />
+              <Br marginHorizontal={PAGE_STYLE.paddingHorizontal} />
             )}
           </>
         )}
@@ -217,7 +216,7 @@ export const DrawerMenu = () => {
         )}
 
         {hasAnyOfPermissions(['clients', 'locations', 'employees']) && (
-          <Br marginHorizontal={defaultPageHorizontalPadding} />
+          <Br marginHorizontal={PAGE_STYLE.paddingHorizontal} />
         )}
 
         {hasPermission('clients') && (
@@ -249,7 +248,7 @@ export const DrawerMenu = () => {
 
         {hasPermission('catalog') && (
           <>
-            <Br marginHorizontal={defaultPageHorizontalPadding} />
+            <Br marginHorizontal={PAGE_STYLE.paddingHorizontal} />
 
             <MenuItem
               route="/services"
@@ -271,7 +270,7 @@ export const DrawerMenu = () => {
         )}
 
         {hasAnyOfPermissions(['analytics', 'finances']) && (
-          <Br marginHorizontal={defaultPageHorizontalPadding} />
+          <Br marginHorizontal={PAGE_STYLE.paddingHorizontal} />
         )}
 
         {/*todo - analytics*/}
@@ -291,7 +290,7 @@ export const DrawerMenu = () => {
           />
         )}
 
-        <Br marginTop="auto" marginHorizontal={defaultPageHorizontalPadding} />
+        <Br marginTop="auto" marginHorizontal={PAGE_STYLE.paddingHorizontal} />
 
         <MenuItem
           icon="QuestionCircle"
@@ -299,7 +298,7 @@ export const DrawerMenu = () => {
           route="/app/help-feedback"
         />
 
-        <Br marginHorizontal={defaultPageHorizontalPadding} />
+        <Br marginHorizontal={PAGE_STYLE.paddingHorizontal} />
 
         <MenuItem
           icon={icons.More}

@@ -7,7 +7,6 @@ import {
   avatarBlurhash,
   ButtonIcon,
   Chip,
-  defaultPageHorizontalPadding,
   CompactView,
   H3,
   InitView,
@@ -31,6 +30,7 @@ import {
 import { BrandLocationCompletion } from './brand-location-completion';
 import { Image } from 'expo-image';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const BrandLocationProfile = ({
   location,
@@ -90,7 +90,7 @@ export const BrandLocationProfile = ({
         gap="$5"
         flex={1}
         marginTop={location?.gallery?.length ? -50 : 0}
-        paddingHorizontal={defaultPageHorizontalPadding}
+        paddingHorizontal={PAGE_STYLE.paddingHorizontal}
       >
         <View gap="$2" alignItems="center">
           <Avatar

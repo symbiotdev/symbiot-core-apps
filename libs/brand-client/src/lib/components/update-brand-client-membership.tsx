@@ -9,7 +9,6 @@ import {
 import {
   ButtonIcon,
   CompactView,
-  defaultPageVerticalPadding,
   Icon,
   ListItem,
   ListItemGroup,
@@ -24,6 +23,7 @@ import { SingeElementForm } from '@symbiot-core-apps/form-controller';
 import { BrandClientBirthdayController } from './controller/brand-client-membership-end-at-controller';
 import { View, XStack } from 'tamagui';
 import { BrandClientMembershipVisitsController } from './controller/brand-client-membership-visits-controller';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandClientMembership = ({
   clientId,
@@ -140,7 +140,7 @@ const EndAt = ({
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <XStack gap="$3" alignItems="center" width="100%">
             <View flex={1}>
               <SingeElementForm

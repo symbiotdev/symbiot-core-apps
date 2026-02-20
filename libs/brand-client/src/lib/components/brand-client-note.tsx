@@ -5,7 +5,6 @@ import {
   useUpdateBrandClientReq,
 } from '@symbiot-core-apps/api';
 import {
-  defaultPageVerticalPadding,
   CompactView,
   ListItemGroup,
   RegularText,
@@ -15,6 +14,7 @@ import { SingeElementForm } from '@symbiot-core-apps/form-controller';
 import { BrandClientNoteController } from './controller/brand-client-note-controller';
 import React from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const BrandClientNote = ({ client }: { client: BrandClient }) => {
   const { t } = useI18n();
@@ -57,7 +57,7 @@ export const BrandClientNote = ({ client }: { client: BrandClient }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <SingeElementForm
             name="note"
             value={client.note}

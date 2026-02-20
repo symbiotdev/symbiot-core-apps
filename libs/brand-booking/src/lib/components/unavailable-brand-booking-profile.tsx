@@ -2,7 +2,6 @@ import {
   CompactView,
   ContextMenuItem,
   ContextMenuPopover,
-  defaultPageVerticalPadding,
   H1,
   H2,
   H4,
@@ -40,6 +39,7 @@ import { BrandBookingNoteController } from './controller/brand-booking-note-cont
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { View, XStack } from 'tamagui';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const UnavailableBrandBookingProfile = ({
   booking,
@@ -233,7 +233,7 @@ export const UnavailableBrandBookingProfile = ({
         visible={rescheduleModalVisible}
         onClose={closeRescheduleModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <RescheduleForm booking={booking} onUpdate={onUpdate} />
         </CompactView>
       </SlideSheetModal>
@@ -244,7 +244,7 @@ export const UnavailableBrandBookingProfile = ({
         visible={noteModalVisible}
         onClose={closeNoteModal}
       >
-        <CompactView gap="$5" paddingVertical={defaultPageVerticalPadding}>
+        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
           <NoteForm booking={booking} onUpdate={onUpdate} />
         </CompactView>
       </SlideSheetModal>

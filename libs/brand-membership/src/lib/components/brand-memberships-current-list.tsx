@@ -1,7 +1,5 @@
 import {
   AnimatedList,
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
   EmptyView,
   GlassViewBackground,
 } from '@symbiot-core-apps/ui';
@@ -22,7 +20,7 @@ import {
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
-import { Container } from '@symbiot-core-apps/ui2';
+import { Container, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const BrandMembershipsCurrentList = ({
   offsetTop,
@@ -76,7 +74,7 @@ export const BrandMembershipsCurrentList = ({
   return (
     <>
       <Container
-        style={{ flex: 1, paddingVertical: defaultPageVerticalPadding }}
+        style={{ flex: 1, paddingVertical: PAGE_STYLE.paddingVertical }}
       >
         <AnimatedList
           keyboardDismissMode="on-drag"
@@ -87,7 +85,7 @@ export const BrandMembershipsCurrentList = ({
           contentContainerStyle={{
             gap: 4,
             paddingTop: offsetTop,
-            paddingHorizontal: defaultPageHorizontalPadding,
+            paddingHorizontal: PAGE_STYLE.paddingHorizontal,
             paddingBottom: 100,
           }}
           keyExtractor={(item) => item.id}
@@ -106,7 +104,7 @@ export const BrandMembershipsCurrentList = ({
           left: 0,
           paddingTop: 10,
           paddingBottom: bottom + 10,
-          paddingHorizontal: defaultPageHorizontalPadding,
+          paddingHorizontal: PAGE_STYLE.paddingHorizontal,
           width: '100%',
           zIndex: 1,
         }}

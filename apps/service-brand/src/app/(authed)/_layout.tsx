@@ -1,6 +1,4 @@
 import {
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
   GlassView,
   HeaderTitle,
   LightText,
@@ -34,7 +32,7 @@ import {
 } from '@symbiot-core-apps/account-subscription';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import type { ScreenProps } from 'react-native-screens';
-import { LoadingContainer } from '@symbiot-core-apps/ui2';
+import { LoadingContainer, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 const PlusButton = () => {
   const pathname = usePathname();
@@ -44,8 +42,8 @@ const PlusButton = () => {
       <View
         style={{
           position: 'absolute',
-          bottom: defaultPageVerticalPadding,
-          right: defaultPageHorizontalPadding,
+          bottom: PAGE_STYLE.paddingVertical,
+          right: PAGE_STYLE.paddingHorizontal,
         }}
       >
         <PlusActionAdaptiveModal

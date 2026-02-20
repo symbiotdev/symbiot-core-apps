@@ -67,4 +67,3 @@ export * from './lib/view/error-view';
 export * from './lib/view/glass-view';
 export * from './lib/view/compact-view';
 export * from './lib/view/init-view';
-export * from './lib/view/page-view';

@@ -2,7 +2,6 @@ import {
   DateHelper,
   DeviceVersion,
   emitHaptic,
-  isTablet,
   isWeb,
   openPlatformStore,
   ShowNativeSuccessAlert,
@@ -41,7 +40,7 @@ import {
   useAppSettings,
   useAppVersionUpdateType,
 } from '@symbiot-core-apps/app';
-import { TabsView } from '../../../components/tabs/tabs-view';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t, supportedLanguages } = useI18n();
@@ -81,7 +80,7 @@ export default () => {
 
   return (
     me && (
-      <TabsView scrollable withHeaderHeight={isWeb || isTablet}>
+      <ScrollablePage ignoreHeaderHeight>
         <CompactView gap="$3" flex={1} paddingTop={10}>
           {canSubscribe && (
             <ActionCard
@@ -302,7 +301,7 @@ export default () => {
             )}
           </View>
         </CompactView>
-      </TabsView>
+      </ScrollablePage>
     )
   );
 };

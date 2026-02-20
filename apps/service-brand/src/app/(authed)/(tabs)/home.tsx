@@ -29,7 +29,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { TodayBrandBookings } from '@symbiot-core-apps/brand-booking';
 import { BrandCongrats, MyBrandsSelectionList } from '@symbiot-core-apps/brand';
-import { TabsView } from '../../../components/tabs/tabs-view';
+import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 const InitialAction = () => {
   const { me } = useCurrentAccountState();
@@ -63,7 +63,13 @@ const InitialAction = () => {
 
   return (
     <>
-      <TabsView withHeaderHeight scrollable gap="$5" alignItems="center">
+      <ScrollablePage
+        style={{
+          alignItems: 'center',
+          gap: PAGE_STYLE.paddingVertical,
+          paddingBottom: 100,
+        }}
+      >
         {currentBrands?.length ? (
           <MyBrandsSelectionList />
         ) : (
@@ -94,7 +100,7 @@ const InitialAction = () => {
             />
           </CompactView>
         )}
-      </TabsView>
+      </ScrollablePage>
 
       {me && (
         <QrCodeModal
@@ -161,7 +167,7 @@ const BrandHome = () => {
   }, [currentBrand, navigation]);
 
   return (
-    <TabsView scrollable withHeaderHeight>
+    <ScrollablePage style={{ paddingBottom: 100 }}>
       <CompactView gap="$3">
         {!!currentBrand && <BrandCongrats brand={currentBrand} />}
 
@@ -251,7 +257,7 @@ const BrandHome = () => {
           />
         )}
       </CompactView>
-    </TabsView>
+    </ScrollablePage>
   );
 };
 

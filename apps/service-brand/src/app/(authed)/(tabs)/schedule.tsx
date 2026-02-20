@@ -34,7 +34,6 @@ import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
 import { useRoute } from '@react-navigation/native';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { SmartSelect } from '@symbiot-core-apps/form-controller';
-import { TabsViewBottomOffset } from '../../../components/tabs/tabs-view';
 
 const today = new Date();
 
@@ -226,7 +225,7 @@ export default () => {
       timeGridRef={timeGridRef}
       isFetching={isFetching || locationsLoading}
       offsetTop={headerHeight}
-      offsetBottom={TabsViewBottomOffset}
+      offsetBottom={100}
       selectedDate={selectedDate}
       onChangeSelectedDate={setSelectedDate}
     />

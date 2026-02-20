@@ -22,13 +22,13 @@ import {
 import { Overlay } from './overlay';
 import { isCustomDesignMandatory } from '@symbiot-core-apps/theme';
 import { SheetHandle } from './sheet-handle';
-import { GlassView } from '../../view/glass-view';
+import { GlassView } from '../../glass/glass-view';
 
 const isGestureScrollLimited = isAndroid;
 const defaultBorderRadius = Object.keys(iosCornerRadiusGroups).find((key) =>
   iosCornerRadiusGroups[key].includes(DeviceInfo.modelName as string),
 );
-const defaultBorderTopRadius = Number(defaultBorderRadius || 25);
+const defaultBorderTopRadius = Number(defaultBorderRadius || 30);
 const defaultBorderBottomRadius = Number(defaultBorderRadius || 0);
 const defaultMarginBottom = defaultBorderRadius ? 5 : -20;
 const defaultPaddingBottom = defaultBorderRadius ? 0 : 20;

@@ -11,7 +11,6 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   ActionCard,
-  AdaptiveSheet,
   Br,
   Button,
   CompactView,
@@ -22,7 +21,6 @@ import {
   ListItem,
   ListItemGroup,
   RegularText,
-  SheetRef,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import React, { useCallback, useMemo, useRef } from 'react';
@@ -38,7 +36,11 @@ import {
 } from '@symbiot-core-apps/brand-client';
 import { router } from 'expo-router';
 import { View, ViewProps } from 'tamagui';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import {
+  AdaptiveSheet,
+  AdaptiveSheetRef,
+  PAGE_STYLE,
+} from '@symbiot-core-apps/ui2';
 
 const ClientItem = ({
   client,
@@ -198,7 +200,7 @@ const Client = ({
     close: closeClientBalanceModal,
   } = useModal();
 
-  const sheetRef = useRef<SheetRef>(null);
+  const sheetRef = useRef<AdaptiveSheetRef>(null);
 
   const onMarkAsFree = useCallback(() => {
     sheetRef.current?.hide();

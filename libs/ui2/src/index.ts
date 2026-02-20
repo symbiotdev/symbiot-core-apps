@@ -10,3 +10,5 @@ export * from './lib/progress/loading-container';
 // fixme rid off export of refresher
 export * from './lib/progress/refresher';
 export * from './lib/progress/spinner';
+
+export * from './lib/sheet/adaptive-sheet';

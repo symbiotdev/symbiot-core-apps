@@ -1,9 +1,9 @@
 import { isWeb } from '@symbiot-core-apps/shared';
-import { ScrollView } from 'tamagui';
 import { Refresher } from '../progress/refresher';
 import { PageShadow } from './components/page-shadow';
 import { PageContent, PageContentProps } from './components/page-content';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { ScrollView } from 'react-native';
 
 // fixme - rename to ScrollPage
 export const ScrollablePage = ({

@@ -4,7 +4,6 @@ import {
   Avatar,
   Br,
   defaultIconSize,
-  GlassViewBackground,
   headerHeight,
   Icon,
   IconName,
@@ -27,7 +26,7 @@ import {
 } from '@symbiot-core-apps/state';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { BrandMembershipType } from '@symbiot-core-apps/api';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { GlassViewBackground, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const drawerMenuMaxWidth = 250;
 export const drawerMenuMinWidth = 68;

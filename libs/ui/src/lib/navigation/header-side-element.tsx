@@ -1,7 +1,7 @@
 import { memo, PropsWithChildren } from 'react';
 import { ViewStyle } from 'react-native';
 import { View } from 'tamagui';
-import { GlassView } from '../view/glass-view';
+import { GlassView } from '@symbiot-core-apps/ui2';
 
 export const HeaderSideElement = memo(
   ({

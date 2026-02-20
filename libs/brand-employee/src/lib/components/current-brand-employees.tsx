@@ -1,9 +1,4 @@
-import {
-  AnimatedList,
-  EmptyView,
-  GlassViewBackground,
-  InitView,
-} from '@symbiot-core-apps/ui';
+import { AnimatedList, EmptyView, InitView } from '@symbiot-core-apps/ui';
 import {
   BrandEmployee,
   useBrandEmployeeCurrentListReq,
@@ -14,7 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
-import { Container, PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { GlassViewBackground, Page, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandEmployees = ({
   offsetTop,
@@ -55,8 +50,11 @@ export const CurrentBrandEmployees = ({
 
   return (
     <>
-      <Container
-        style={{ flex: 1, paddingVertical: PAGE_STYLE.paddingVertical }}
+      <Page
+        ignoreHeaderHeight
+        ignoreTopSafeArea
+        ignoreBottomSafeArea
+        style={{ paddingLeft: 0, paddingRight: 0 }}
       >
         <AnimatedList
           refreshing={isManualRefetching}
@@ -83,7 +81,7 @@ export const CurrentBrandEmployees = ({
           onRefresh={onRefresh}
           onEndReached={onEndReached}
         />
-      </Container>
+      </Page>
 
       <KeyboardStickyView
         offset={{ opened: bottom }}
@@ -91,10 +89,11 @@ export const CurrentBrandEmployees = ({
           position: 'absolute',
           bottom: 0,
           left: 0,
+          right: 0,
           paddingTop: 10,
           paddingBottom: bottom + 10,
           paddingHorizontal: PAGE_STYLE.paddingHorizontal,
-          width: '100%',
+          marginHorizontal: -1,
           zIndex: 1,
         }}
       >
@@ -104,7 +103,7 @@ export const CurrentBrandEmployees = ({
           value={search}
           debounce={300}
           placeholder={t('brand_employee.search.placeholder')}
-          inputFieldProps={{ backgroundColor: '$highlighted' }}
+          inputFieldProps={{ backgroundColor: '$highlighted', zIndex: 1 }}
           onChange={setSearch}
         />
       </KeyboardStickyView>

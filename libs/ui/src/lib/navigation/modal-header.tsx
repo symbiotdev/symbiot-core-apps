@@ -5,8 +5,8 @@ import { XStack } from 'tamagui';
 import { HeaderSideElement } from './header-side-element';
 import { HeaderButton } from './header-button';
 import { HeaderTitle } from './header-title';
-import { GlassView } from '../view/glass-view';
 import { headerHeight, headerHorizontalPadding } from './header';
+import { GlassView } from '@symbiot-core-apps/ui2';
 
 export const ModalHeader = memo(
   ({

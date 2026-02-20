@@ -5,8 +5,8 @@ import { H4 } from '../text/heading';
 import { emitHaptic, useModal } from '@symbiot-core-apps/shared';
 import { FullScreenTransparentModal } from '../modal/full-screen-transparent-modal';
 import { View } from 'tamagui';
-import { GlassLikeView } from '../view/glass-view';
 import { Pressable, StyleSheet } from 'react-native';
+import { GlassLikeView } from '@symbiot-core-apps/ui2';
 
 export const QrCodeModalWithTrigger = ({
   trigger,

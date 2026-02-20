@@ -2,7 +2,6 @@ import { Tabs, useSegments } from 'expo-router';
 import {
   AttentionView,
   defaultIconSize,
-  GlassView,
   Icon,
   LightText,
   useDrawer,
@@ -18,6 +17,7 @@ import { PlusActionAdaptiveModal } from '../../../components/tabs/plus-action-ad
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { useCountNewNotificationsReq } from '@symbiot-core-apps/api';
 import { CustomTabBar } from '../../../components/tabs/tab-bar';
+import { GlassView } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { stats } = useCurrentAccountState();

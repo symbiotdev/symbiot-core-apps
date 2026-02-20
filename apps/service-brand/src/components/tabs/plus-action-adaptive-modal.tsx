@@ -4,7 +4,7 @@ import {
   Icon,
   IconName,
   RegularText,
-  SmartSheetRef,
+  SheetRef,
 } from '@symbiot-core-apps/ui';
 import React, { ReactElement, useCallback, useRef } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
@@ -44,7 +44,7 @@ export const PlusActionAdaptiveModal = ({
   const { icons } = useAppSettings();
   const { tryAction } = useAccountLimits();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
-  const popoverRef = useRef<SmartSheetRef>(null);
+  const popoverRef = useRef<SheetRef>(null);
 
   const addClient = useCallback(() => {
     popoverRef.current?.hide();

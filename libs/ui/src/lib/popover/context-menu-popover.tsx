@@ -29,7 +29,7 @@ import {
 } from '@symbiot-core-apps/shared';
 import { Icon } from '../icons';
 import { FullScreenTransparentModal } from '../modal/full-screen-transparent-modal';
-import { GlassLikeView } from '../view/glass-view';
+import { GlassLikeView } from '@symbiot-core-apps/ui2';
 
 export type ContextMenuItem = {
   label: string;

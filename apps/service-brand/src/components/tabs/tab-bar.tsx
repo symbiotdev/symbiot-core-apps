@@ -8,7 +8,7 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import { GlassView } from '@symbiot-core-apps/ui';
+import { GlassView } from '@symbiot-core-apps/ui2';
 
 export const CustomTabBar = ({
   hidden,

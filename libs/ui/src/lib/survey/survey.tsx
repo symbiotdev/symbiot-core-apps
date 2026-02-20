@@ -38,10 +38,10 @@ import {
 } from '@symbiot-core-apps/shared';
 import { router, useNavigation } from 'expo-router';
 import { Pressable } from 'react-native';
-import { GlassView } from '../view/glass-view';
 import { EventArg, NavigationAction } from '@react-navigation/native';
 import {
   Container,
+  GlassView,
   LoadingContainer,
   PAGE_STYLE,
 } from '@symbiot-core-apps/ui2';

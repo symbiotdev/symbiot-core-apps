@@ -1,3 +1,5 @@
+export * from './lib/glass/glass-view';
+
 export * from './lib/layout/container';
 
 export * from './lib/page/utils/style-rules';

@@ -1,5 +1,6 @@
 import {
   AnyBrandClientMembership,
+  BrandBooking,
   BrandBookingClient,
   BrandClient,
   ServiceBrandBooking,
@@ -10,6 +11,7 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   ActionCard,
+  AdaptiveSheet,
   Br,
   Button,
   CompactView,
@@ -20,10 +22,10 @@ import {
   ListItem,
   ListItemGroup,
   RegularText,
-  Sheet,
+  SheetRef,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { BrandClientItem } from '@symbiot-core-apps/brand';
 import { useI18n, useModal } from '@symbiot-core-apps/shared';
 import {
@@ -77,22 +79,12 @@ export const ServiceBrandBookingProfileClients = ({
   const { hasPermission } = useCurrentBrandEmployee();
   const { mutateAsync: addClient, isPending: clientAdding } =
     useAddServiceBrandBookingClientReq();
-  const { mutateAsync: removeClient } = useRemoveServiceBrandBookingClientReq();
-  const { mutateAsync: updateClient } = useUpdateServiceBrandBookingClientReq();
   const { upsertBookings } = useCurrentBrandBookingsState();
   const {
     visible: clientsModalVisible,
     open: openClientsModal,
     close: closeClientsModal,
   } = useModal();
-  const {
-    visible: clientBalanceModalVisible,
-    open: openClientBalanceModal,
-    close: closeClientBalanceModal,
-  } = useModal();
-
-  const [actionClient, setActionClient] = useState<BrandBookingClient>();
-  const [loadingId, setLoadingId] = useState<string>();
 
   const sortedClients = useMemo(
     () =>
@@ -114,60 +106,6 @@ export const ServiceBrandBookingProfileClients = ({
       upsertBookings([newBooking]);
     },
     [addClient, booking.id, closeClientsModal, upsertBookings],
-  );
-
-  const onRemove = useCallback(
-    async (client: BrandClient) => {
-      setLoadingId(client.id);
-
-      try {
-        await removeClient({
-          bookingId: booking.id,
-          clientId: client.id,
-        });
-      } finally {
-        setLoadingId(undefined);
-      }
-    },
-    [booking.id, removeClient],
-  );
-
-  const onChangeMembership = useCallback(
-    async (client: BrandClient, membership: string) => {
-      setLoadingId(client.id);
-
-      try {
-        await updateClient({
-          bookingId: booking.id,
-          clientId: client.id,
-          data: {
-            membership,
-          },
-        });
-      } finally {
-        setLoadingId(undefined);
-      }
-    },
-    [booking.id, updateClient],
-  );
-
-  const onMarkAsFree = useCallback(
-    async (client: BrandClient) => {
-      setLoadingId(client.id);
-
-      try {
-        await updateClient({
-          bookingId: booking.id,
-          clientId: client.id,
-          data: {
-            free: true,
-          },
-        });
-      } finally {
-        setLoadingId(undefined);
-      }
-    },
-    [booking.id, updateClient],
   );
 
   return (
@@ -220,15 +158,7 @@ export const ServiceBrandBookingProfileClients = ({
           )
         ) : (
           sortedClients.map((client) => (
-            <ClientItem
-              paddingVertical="$1"
-              key={client.id}
-              hideArrow={!!booking.cancelAt}
-              disabled={!!booking.cancelAt}
-              loading={loadingId === client.id}
-              client={client}
-              onPress={() => setActionClient(client)}
-            />
+            <Client key={client.id} client={client} booking={booking} />
           ))
         )}
       </ListItemGroup>
@@ -246,6 +176,131 @@ export const ServiceBrandBookingProfileClients = ({
           onClientPress={onAdd}
         />
       </SlideSheetModal>
+    </>
+  );
+};
+
+const Client = ({
+  client,
+  booking,
+}: {
+  client: BrandBookingClient;
+  booking: BrandBooking;
+}) => {
+  const { t } = useI18n();
+  const { mutateAsync: updateClient, isPending: isUpdating } =
+    useUpdateServiceBrandBookingClientReq();
+  const { mutateAsync: removeClient, isPending: isRemoving } =
+    useRemoveServiceBrandBookingClientReq();
+  const {
+    visible: clientBalanceModalVisible,
+    open: openClientBalanceModal,
+    close: closeClientBalanceModal,
+  } = useModal();
+
+  const sheetRef = useRef<SheetRef>(null);
+
+  const onMarkAsFree = useCallback(() => {
+    sheetRef.current?.hide();
+
+    void updateClient({
+      bookingId: booking.id,
+      clientId: client.id,
+      data: {
+        free: true,
+      },
+    });
+  }, [booking.id, client.id, updateClient]);
+
+  const onRemove = useCallback(() => {
+    sheetRef.current?.hide();
+
+    void removeClient({
+      bookingId: booking.id,
+      clientId: client.id,
+    });
+  }, [booking.id, client.id, removeClient]);
+
+  const onChangeMembership = useCallback(
+    (membership: AnyBrandClientMembership) => {
+      closeClientBalanceModal();
+      sheetRef.current?.hide();
+      void updateClient({
+        bookingId: booking.id,
+        clientId: client.id,
+        data: {
+          membership: membership.id,
+        },
+      });
+    },
+    [booking.id, client.id, closeClientBalanceModal, updateClient],
+  );
+
+  return (
+    <AdaptiveSheet
+      excludePaddings
+      ref={sheetRef}
+      trigger={
+        <ClientItem
+          paddingVertical="$1"
+          key={client.id}
+          hideArrow={!!booking.cancelAt}
+          disabled={!!booking.cancelAt}
+          loading={isUpdating || isRemoving}
+          client={client}
+        />
+      }
+    >
+      <View minWidth={220} paddingHorizontal={20}>
+        <ClientItem
+          hideArrow
+          marginTop="$5"
+          paddingVertical="$2"
+          client={client}
+        />
+
+        <View paddingLeft="$2" style={compactViewStyles}>
+          <Br marginVertical="$2" />
+
+          {!client.membership && (
+            <ListItem
+              label={t(
+                `service_brand_booking.profile.clients.actions.use_balance.label`,
+              )}
+              icon={<Icon name="Wallet" />}
+              onPress={openClientBalanceModal}
+            />
+          )}
+
+          {!client.free && (
+            <ListItem
+              label={t(
+                `service_brand_booking.profile.clients.actions.mark_as_free.label`,
+              )}
+              icon={<Icon name="Balloon" />}
+              onPress={onMarkAsFree}
+            />
+          )}
+          <ListItem
+            label={t(
+              `service_brand_booking.profile.clients.actions.profile.label`,
+            )}
+            icon={<Icon name="SmileCircle" />}
+            onPress={() => {
+              sheetRef.current?.hide();
+              router.push(`/clients/${client.id}/profile`);
+            }}
+          />
+          <ListItem
+            color="$error"
+            label={t(
+              `service_brand_booking.profile.clients.actions.cancel_by_brand.label`,
+            )}
+            icon={<Icon name="TrashBinMinimalistic" />}
+            onPress={onRemove}
+          />
+        </View>
+      </View>
 
       <SlideSheetModal
         scrollable
@@ -255,73 +310,13 @@ export const ServiceBrandBookingProfileClients = ({
         visible={clientBalanceModalVisible}
         onClose={closeClientBalanceModal}
       >
-        {!!actionClient && (
-          <Balance
-            id={actionClient.id}
-            membershipId={actionClient.membership?.id}
-            onPressMembership={(membership) => {
-              closeClientBalanceModal();
-              setActionClient(undefined);
-              void onChangeMembership(actionClient, membership.id);
-            }}
-          />
-        )}
+        <Balance
+          id={client.id}
+          membershipId={client.membership?.id}
+          onPressMembership={onChangeMembership}
+        />
       </SlideSheetModal>
-
-      <Sheet
-        opened={!!actionClient && !clientBalanceModalVisible}
-        onClose={() => setActionClient(undefined)}
-      >
-        {!!actionClient && (
-          <ClientItem hideArrow paddingVertical="$2" client={actionClient} />
-        )}
-
-        <Br style={compactViewStyles} />
-
-        <View paddingLeft="$2" style={compactViewStyles}>
-          <ListItem
-            label={t(
-              `service_brand_booking.profile.clients.actions.use_balance.label`,
-            )}
-            icon={<Icon name="Wallet" />}
-            onPress={openClientBalanceModal}
-          />
-          {!actionClient?.free && (
-            <ListItem
-              label={t(
-                `service_brand_booking.profile.clients.actions.mark_as_free.label`,
-              )}
-              icon={<Icon name="Balloon" />}
-              onPress={() => {
-                void onMarkAsFree(actionClient as BrandBookingClient);
-                setActionClient(undefined);
-              }}
-            />
-          )}
-          <ListItem
-            label={t(
-              `service_brand_booking.profile.clients.actions.profile.label`,
-            )}
-            icon={<Icon name="SmileCircle" />}
-            onPress={() => {
-              setActionClient(undefined);
-              router.push(`/clients/${actionClient?.id}/profile`);
-            }}
-          />
-          <ListItem
-            color="$error"
-            label={t(
-              `service_brand_booking.profile.clients.actions.cancel_by_brand.label`,
-            )}
-            icon={<Icon name="TrashBinMinimalistic" />}
-            onPress={() => {
-              void onRemove(actionClient as BrandBookingClient);
-              setActionClient(undefined);
-            }}
-          />
-        </View>
-      </Sheet>
-    </>
+    </AdaptiveSheet>
   );
 };
 

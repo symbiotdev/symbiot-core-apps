@@ -1,5 +1,4 @@
 import {
-  GlassView,
   HeaderTitle,
   LightText,
   useDrawer,
@@ -32,7 +31,11 @@ import {
 } from '@symbiot-core-apps/account-subscription';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import type { ScreenProps } from 'react-native-screens';
-import { LoadingContainer, PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import {
+  GlassView,
+  LoadingContainer,
+  PAGE_STYLE,
+} from '@symbiot-core-apps/ui2';
 
 const PlusButton = () => {
   const pathname = usePathname();

@@ -2,7 +2,6 @@ import {
   AnimatedList,
   Button,
   EmptyView,
-  GlassViewBackground,
   InitView,
 } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
@@ -18,7 +17,12 @@ import { BrandServiceItem } from '@symbiot-core-apps/brand';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
-import { Container, PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
+import {
+  GlassViewBackground,
+  Page,
+  PAGE_STYLE,
+  ScrollablePage,
+} from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandServices = ({
   offsetTop,
@@ -59,8 +63,11 @@ export const CurrentBrandServices = ({
 
   return (
     <>
-      <Container
-        style={{ flex: 1, paddingVertical: PAGE_STYLE.paddingVertical }}
+      <Page
+        ignoreHeaderHeight
+        ignoreTopSafeArea
+        ignoreBottomSafeArea
+        style={{ paddingLeft: 0, paddingRight: 0 }}
       >
         <AnimatedList
           keyboardDismissMode="on-drag"
@@ -88,7 +95,7 @@ export const CurrentBrandServices = ({
           onRefresh={onRefresh}
           onEndReached={onEndReached}
         />
-      </Container>
+      </Page>
 
       <KeyboardStickyView
         offset={{ opened: bottom }}
@@ -96,10 +103,11 @@ export const CurrentBrandServices = ({
           position: 'absolute',
           bottom: 0,
           left: 0,
+          right: 0,
           paddingTop: 10,
           paddingBottom: bottom + 10,
           paddingHorizontal: PAGE_STYLE.paddingHorizontal,
-          width: '100%',
+          marginHorizontal: -1,
           zIndex: 1,
         }}
       >
@@ -109,7 +117,7 @@ export const CurrentBrandServices = ({
           value={search}
           debounce={300}
           placeholder={t('brand_service.search.placeholder')}
-          inputFieldProps={{ backgroundColor: '$highlighted' }}
+          inputFieldProps={{ backgroundColor: '$highlighted', zIndex: 1 }}
           onChange={setSearch}
         />
       </KeyboardStickyView>

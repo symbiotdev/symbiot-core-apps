@@ -3,7 +3,6 @@ import {
   Button,
   EmptyView,
   InitView,
-  PageView,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
@@ -16,6 +15,7 @@ import { useMemo } from 'react';
 import { BrandLocationItem } from '@symbiot-core-apps/brand';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { Page, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandLocations = ({
   onLocationPress,
@@ -31,12 +31,18 @@ export const CurrentBrandLocations = ({
     () => data?.items || brand?.locations,
     [data?.items, brand?.locations],
   );
+
   if (!locations?.length) {
     return <Intro loading={isLoading} error={error} />;
   }
 
   return (
-    <PageView ignoreTopSafeArea ignoreBottomSafeArea paddingBottom={0}>
+    <Page
+      ignoreHeaderHeight
+      ignoreTopSafeArea
+      ignoreBottomSafeArea
+      style={{ paddingBottom: 0 }}
+    >
       <AnimatedList
         refreshing={isRefetching && !isLoading}
         data={locations}
@@ -59,7 +65,7 @@ export const CurrentBrandLocations = ({
         )}
         onRefresh={refetch}
       />
-    </PageView>
+    </Page>
   );
 };
 
@@ -77,13 +83,7 @@ const Intro = ({
     return <InitView loading={loading} error={error} />;
   } else {
     return (
-      <PageView
-        scrollable
-        transition="medium"
-        opacity={1}
-        enterStyle={{ opacity: 0 }}
-        exitStyle={{ opacity: 0 }}
-      >
+      <ScrollablePage>
         <EmptyView
           padding={0}
           iconName="MapPointWave"
@@ -97,7 +97,7 @@ const Intro = ({
             )}
           />
         </EmptyView>
-      </PageView>
+      </ScrollablePage>
     );
   }
 };

@@ -10,7 +10,6 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
-  PageView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import { BrandLocationMediaForm } from './form/brand-location-media-form';
@@ -40,7 +39,7 @@ import { BrandLocationAdvantagesController } from './controller/brand-location-a
 import { BrandLocationTimezoneController } from './controller/brand-location-timezone-controller';
 import { BrandLocationCountryController } from './controller/brand-location-country-controller';
 import { BrandLocationUsStateController } from './controller/brand-location-us-state-controller';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandLocation = ({
   location,
@@ -48,13 +47,13 @@ export const UpdateBrandLocation = ({
   location: BrandLocation;
 }) => {
   return (
-    <PageView
-      scrollable
-      withHeaderHeight
+    <ScrollablePage
       withKeyboard
-      gap="$5"
-      paddingLeft={0}
-      paddingRight={0}
+      style={{
+        gap: PAGE_STYLE.paddingVertical,
+        paddingLeft: 0,
+        paddingRight: 0,
+      }}
     >
       <BrandLocationMediaForm marginTop="$5" location={location} />
 
@@ -69,7 +68,7 @@ export const UpdateBrandLocation = ({
           <Contact location={location} />
         </ListItemGroup>
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };
 

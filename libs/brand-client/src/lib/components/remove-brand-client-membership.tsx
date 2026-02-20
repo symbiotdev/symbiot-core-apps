@@ -1,4 +1,4 @@
-import { ActionCard, CompactView, Icon, PageView } from '@symbiot-core-apps/ui';
+import { ActionCard, CompactView, Icon } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import {
@@ -6,6 +6,7 @@ import {
   useRemoveBrandClientMembershipReq,
 } from '@symbiot-core-apps/api';
 import { router } from 'expo-router';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const RemoveBrandClientMembership = ({
   clientId,
@@ -32,7 +33,7 @@ export const RemoveBrandClientMembership = ({
   );
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       <CompactView>
         <ActionCard
           title={t('brand_client_membership.remove.title')}
@@ -46,6 +47,6 @@ export const RemoveBrandClientMembership = ({
           onPress={onPress}
         />
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

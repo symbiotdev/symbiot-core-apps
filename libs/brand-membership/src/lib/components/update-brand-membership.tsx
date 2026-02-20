@@ -17,7 +17,6 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
-  PageView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import React, { useCallback, useMemo } from 'react';
@@ -43,7 +42,11 @@ import { BrandMembershipLocationController } from './controller/brand-membership
 import { BrandMembershipServicesController } from './controller/brand-membership-services-controller';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { BrandMembershipVisitsController } from './controller/brand-membership-visits-controller';
-import { LoadingContainer, PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import {
+  LoadingContainer,
+  PAGE_STYLE,
+  ScrollablePage,
+} from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandMembership = ({
   membership,
@@ -51,7 +54,7 @@ export const UpdateBrandMembership = ({
   membership: AnyBrandMembership;
 }) => {
   return (
-    <PageView scrollable withHeaderHeight withKeyboard gap="$5">
+    <ScrollablePage withKeyboard style={{ gap: PAGE_STYLE.paddingVertical }}>
       <Availability membership={membership} />
 
       <CompactView>
@@ -69,7 +72,7 @@ export const UpdateBrandMembership = ({
         <LocationServices membership={membership} />
         <Note membership={membership} />
       </ListItemGroup>
-    </PageView>
+    </ScrollablePage>
   );
 };
 

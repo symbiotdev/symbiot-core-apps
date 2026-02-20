@@ -13,7 +13,6 @@ import {
   ListItemGroup,
   MapsTrigger,
   MediumText,
-  PageView,
   RegularText,
   SimpleHorizontalCarousel,
 } from '@symbiot-core-apps/ui';
@@ -30,7 +29,7 @@ import {
 import { BrandLocationCompletion } from './brand-location-completion';
 import { Image } from 'expo-image';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const BrandLocationProfile = ({
   location,
@@ -53,12 +52,9 @@ export const BrandLocationProfile = ({
   const galleryImageHeight = Math.max(height / 4, 200);
 
   return (
-    <PageView
-      scrollable
-      withHeaderHeight
+    <ScrollablePage
       scrollEnabled={scrollEnabled}
-      paddingLeft={0}
-      paddingRight={0}
+      style={{ paddingLeft: 0, paddingRight: 0 }}
     >
       {!!location.gallery?.length && (
         <View height={galleryImageHeight} width="100%" position="relative">
@@ -214,6 +210,6 @@ export const BrandLocationProfile = ({
           </ListItemGroup>
         )}
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

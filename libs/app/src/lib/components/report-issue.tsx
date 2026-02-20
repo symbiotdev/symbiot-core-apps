@@ -1,4 +1,4 @@
-import { Button, CompactView, PageView } from '@symbiot-core-apps/ui';
+import { Button, CompactView } from '@symbiot-core-apps/ui';
 import { useForm } from 'react-hook-form';
 import { TextController } from '@symbiot-core-apps/form-controller';
 import {
@@ -8,6 +8,7 @@ import {
 } from '@symbiot-core-apps/shared';
 import { useCallback } from 'react';
 import { useCreateIssueReq } from '@symbiot-core-apps/api';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 type FormData = {
   message: string;
@@ -40,7 +41,7 @@ export const ReportIssue = () => {
   );
 
   return (
-    <PageView scrollable withHeaderHeight withKeyboard>
+    <ScrollablePage withKeyboard>
       <CompactView flexGrow={1}>
         <TextController
           name="message"
@@ -62,6 +63,6 @@ export const ReportIssue = () => {
           onPress={handleSubmit(send)}
         />
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

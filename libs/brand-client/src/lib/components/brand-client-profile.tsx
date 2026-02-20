@@ -6,7 +6,6 @@ import {
   CompactView,
   H3,
   MapsTrigger,
-  PageView,
   RegularText,
 } from '@symbiot-core-apps/ui';
 import { DateHelper } from '@symbiot-core-apps/shared';
@@ -19,6 +18,7 @@ import { BrandClientNote } from './brand-client-note';
 import { BrandClientHistory } from './brand-client-history';
 import { BrandClientTopUpBalance } from './brand-client-top-up-balance';
 import { router } from 'expo-router';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
   const preferences = useCurrentAccountPreferences();
@@ -45,7 +45,7 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
   );
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       <CompactView gap="$5">
         <View alignItems="center" gap="$2">
           <Avatar
@@ -113,6 +113,6 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
         <BrandClientNote client={client} />
         <BrandClientHistory client={client} />
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

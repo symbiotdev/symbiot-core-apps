@@ -1,10 +1,7 @@
 import { Sheet as SheetUI, View } from 'tamagui';
 import React, { PropsWithChildren } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
-} from '../view/page-view';
+import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export const Sheet = ({
   children,
@@ -49,7 +46,7 @@ export const Sheet = ({
           borderRadius="$10"
           cursor="pointer"
           backgroundColor="$disabled"
-          marginVertical={defaultPageVerticalPadding}
+          marginVertical={PAGE_STYLE.paddingVertical}
           marginHorizontal="auto"
         />
 
@@ -60,8 +57,8 @@ export const Sheet = ({
           style={{ maxHeight: '80%' }}
           contentContainerStyle={{
             gap: 10,
-            paddingBottom: bottom + defaultPageHorizontalPadding,
-            paddingHorizontal: defaultPageHorizontalPadding,
+            paddingBottom: bottom + PAGE_STYLE.paddingVertical,
+            paddingHorizontal: PAGE_STYLE.paddingHorizontal,
           }}
         >
           {children}

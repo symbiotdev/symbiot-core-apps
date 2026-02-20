@@ -6,7 +6,6 @@ import {
   H2,
   Icon,
   ListItemGroup,
-  PageView,
   RegularText,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
@@ -51,7 +50,7 @@ import { getSlotsRandomEmployee } from '../utils/get-slots-random-employee';
 import { ServiceBrandBookingProfileClients } from './service-brand-booking-profile-clients';
 import { View, XStack } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const ServiceBrandBookingProfile = ({
   booking,
@@ -182,7 +181,7 @@ export const ServiceBrandBookingProfile = ({
 
   return (
     <>
-      <PageView scrollable withHeaderHeight>
+      <ScrollablePage>
         <CompactView gap="$5">
           <View gap="$2" marginVertical="$3">
             <H2 textDecorationLine={textDecorationLine}>{booking.name}</H2>
@@ -264,7 +263,7 @@ export const ServiceBrandBookingProfile = ({
 
           <ServiceBrandBookingProfileClients booking={booking} />
         </CompactView>
-      </PageView>
+      </ScrollablePage>
 
       <SlideSheetModal
         scrollable

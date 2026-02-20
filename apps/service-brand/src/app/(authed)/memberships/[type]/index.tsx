@@ -6,7 +6,6 @@ import {
   HeaderButton,
   HeaderTitle,
   InitView,
-  PageView,
   useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
@@ -20,6 +19,7 @@ import { BrandMembershipItem } from '@symbiot-core-apps/brand';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t } = useI18n();
@@ -44,13 +44,7 @@ export default () => {
         const tPrefix = `${getTranslateKeyByBrandMembershipType(type)}.create.intro`;
 
         return (
-          <PageView
-            scrollable
-            transition="medium"
-            opacity={1}
-            enterStyle={{ opacity: 0 }}
-            exitStyle={{ opacity: 0 }}
-          >
+          <ScrollablePage ignoreHeaderHeight>
             <EmptyView
               padding={0}
               iconName={
@@ -68,7 +62,7 @@ export default () => {
                 )}
               />
             </EmptyView>
-          </PageView>
+          </ScrollablePage>
         );
       }
     },

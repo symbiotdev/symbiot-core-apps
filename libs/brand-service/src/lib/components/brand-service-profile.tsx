@@ -6,7 +6,6 @@ import {
   H2,
   ListItemGroup,
   MediumText,
-  PageView,
   RegularText,
 } from '@symbiot-core-apps/ui';
 import { useWindowDimensions } from 'react-native';
@@ -21,7 +20,7 @@ import { View } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { formatPrice, useI18n } from '@symbiot-core-apps/shared';
 import React, { useMemo } from 'react';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
   const { brand } = useCurrentBrandState();
@@ -36,13 +35,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
   );
 
   return (
-    <PageView
-      scrollable
-      withHeaderHeight
-      paddingLeft={0}
-      paddingRight={0}
-      paddingTop={0}
-    >
+    <ScrollablePage style={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0 }}>
       <Avatar
         name={service.name}
         url={service.avatar?.url}
@@ -163,6 +156,6 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
           </RegularText>
         </ListItemGroup>
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

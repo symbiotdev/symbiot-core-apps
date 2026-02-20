@@ -4,7 +4,6 @@ import {
   Avatar,
   CompactView,
   InitView,
-  PageView,
   RegularText,
   SemiBoldText,
   useScreenHeaderHeight,
@@ -21,6 +20,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { View, XStack } from 'tamagui';
 import { DateHelper, emitHaptic } from '@symbiot-core-apps/shared';
+import { Page } from '@symbiot-core-apps/ui2';
 
 export const Notifications = ({
   onPressNotification,
@@ -106,7 +106,12 @@ export const Notifications = ({
   }, [markAllNotificationsAsRead]);
 
   return (
-    <PageView ignoreTopSafeArea ignoreBottomSafeArea paddingBottom={0}>
+    <Page
+      ignoreHeaderHeight
+      ignoreTopSafeArea
+      ignoreBottomSafeArea
+      style={{ paddingBottom: 0 }}
+    >
       {!notifications?.length ? (
         <InitView loading={isLoading} error={error} />
       ) : (
@@ -126,6 +131,6 @@ export const Notifications = ({
           onEndReached={onEndReached}
         />
       )}
-    </PageView>
+    </Page>
   );
 };

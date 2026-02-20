@@ -2,12 +2,7 @@ import {
   BrandMembership,
   getTranslateKeyByBrandMembership,
 } from '@symbiot-core-apps/api';
-import {
-  CompactView,
-  ListItemGroup,
-  PageView,
-  RegularText,
-} from '@symbiot-core-apps/ui';
+import { CompactView, ListItemGroup, RegularText } from '@symbiot-core-apps/ui';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import {
   BrandLocationItem,
@@ -17,6 +12,7 @@ import {
 import { router } from 'expo-router';
 import React, { ReactElement, useMemo } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const BrandMembershipProfile = ({
   membership,
@@ -39,7 +35,7 @@ export const BrandMembershipProfile = ({
   );
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       {Item}
 
       <CompactView gap="$5" marginVertical="$5">
@@ -112,6 +108,6 @@ export const BrandMembershipProfile = ({
           </RegularText>
         </ListItemGroup>
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

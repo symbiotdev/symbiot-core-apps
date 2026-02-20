@@ -1,4 +1,4 @@
-import { Button, CompactView, PageView } from '@symbiot-core-apps/ui';
+import { Button, CompactView } from '@symbiot-core-apps/ui';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import {
   UpdateAccountData,
@@ -23,6 +23,7 @@ import { AccountPhoneController } from './controller/account-phone-controller';
 import { View } from 'tamagui';
 import { isIos, useI18n } from '@symbiot-core-apps/shared';
 import { router } from 'expo-router';
+import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const UpdateAccount = () => {
   const { me, setMe } = useCurrentAccountState();
@@ -50,7 +51,7 @@ export const UpdateAccount = () => {
 
   return (
     me && (
-      <PageView scrollable withHeaderHeight withKeyboard gap="$5">
+      <ScrollablePage withKeyboard style={{ gap: PAGE_STYLE.paddingVertical }}>
         <View>
           <AvatarPicker
             alignSelf="center"
@@ -120,7 +121,7 @@ export const UpdateAccount = () => {
             onPress={() => router.push('/account/remove')}
           />
         )}
-      </PageView>
+      </ScrollablePage>
     )
   );
 };

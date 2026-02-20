@@ -6,7 +6,6 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
-  PageView,
   RegularText,
   SemiBoldText,
   Spinner,
@@ -27,6 +26,7 @@ import {
   usePartnerPromoImage,
   usePartnerPromoPresentation,
 } from '@symbiot-core-apps/api';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 const downloadUrl = process.env['EXPO_PUBLIC_UNIVERSAL_DOWNLOAD_URL'] as string;
 const websiteUrl = process.env['EXPO_PUBLIC_WEBSITE_URL'] as string;
@@ -41,7 +41,7 @@ export default () => {
 
   return (
     !!me?.partner && (
-      <PageView scrollable withHeaderHeight>
+      <ScrollablePage>
         <CompactView gap="$5">
           <ListItemGroup
             title={t('shared.partner_program.promo_code.your_promo_code')}
@@ -183,7 +183,7 @@ export default () => {
             onPress={openMail}
           />
         </CompactView>
-      </PageView>
+      </ScrollablePage>
     )
   );
 };

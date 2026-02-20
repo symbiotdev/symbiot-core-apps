@@ -1,4 +1,4 @@
-import { CompactView, PageView, Spinner } from '@symbiot-core-apps/ui';
+import { CompactView, Spinner } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
 import {
@@ -12,6 +12,7 @@ import {
   PickerOnChange,
   SmartSelect,
 } from '@symbiot-core-apps/form-controller';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const Datetime = () => {
   const navigation = useNavigation();
@@ -48,7 +49,7 @@ export const Datetime = () => {
   }, [updating, navigation]);
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       <CompactView>
         <SmartSelect
           searchable={false}
@@ -89,6 +90,6 @@ export const Datetime = () => {
           onChange={onChangeDateElement as PickerOnChange}
         />
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

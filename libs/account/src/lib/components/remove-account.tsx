@@ -1,8 +1,9 @@
-import { ActionCard, CompactView, Icon, PageView } from '@symbiot-core-apps/ui';
+import { ActionCard, CompactView, Icon } from '@symbiot-core-apps/ui';
 import { useCurrentAccountState } from '@symbiot-core-apps/state';
 import { useCallback } from 'react';
 import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import { useAccountRemoveMeReq } from '@symbiot-core-apps/api';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const RemoveAccount = () => {
   const { t } = useI18n();
@@ -20,7 +21,7 @@ export const RemoveAccount = () => {
   );
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       <CompactView>
         <ActionCard
           title={t('shared.account.remove.title')}
@@ -34,6 +35,6 @@ export const RemoveAccount = () => {
           onPress={onPress}
         />
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

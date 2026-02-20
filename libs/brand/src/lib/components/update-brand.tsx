@@ -3,7 +3,6 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
-  PageView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import {
@@ -36,7 +35,7 @@ import { BrandCurrencyController } from './contoller/brand-currency-controller';
 import { BrandWebsiteController } from './contoller/brand-website-controller';
 import { BrandInstagramController } from './contoller/brand-instagram-controller';
 import { View } from 'tamagui';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 type GroupProps = {
   brand: Brand;
@@ -56,7 +55,7 @@ export const UpdateBrand = () => {
 
   return (
     brand && (
-      <PageView scrollable withHeaderHeight withKeyboard gap="$5">
+      <ScrollablePage withKeyboard style={{ gap: PAGE_STYLE.paddingVertical }}>
         <View>
           <AvatarPicker
             alignSelf="center"
@@ -78,7 +77,7 @@ export const UpdateBrand = () => {
             <ExternalLinks brand={brand} onUpdated={setBrand} />
           </ListItemGroup>
         </CompactView>
-      </PageView>
+      </ScrollablePage>
     )
   );
 };

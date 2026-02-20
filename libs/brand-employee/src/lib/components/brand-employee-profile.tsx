@@ -9,7 +9,6 @@ import {
   ListItemGroup,
   MapsTrigger,
   MediumText,
-  PageView,
   RegularText,
 } from '@symbiot-core-apps/ui';
 import React, { useMemo } from 'react';
@@ -26,6 +25,7 @@ import { router } from 'expo-router';
 import { Linking } from 'react-native';
 import { BrandEmployeeCongrats } from './brand-employee-congrats';
 import { BrandEmployeeProfileCompletion } from './brand-employee-profile-completion';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const BrandEmployeeProfile = ({
   employee,
@@ -69,7 +69,7 @@ export const BrandEmployeeProfile = ({
   );
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       <CompactView alignItems="center" gap="$5" flex={1}>
         <BrandEmployeeCongrats employee={employee} />
 
@@ -184,6 +184,6 @@ export const BrandEmployeeProfile = ({
           </RegularText>
         </ListItemGroup>
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

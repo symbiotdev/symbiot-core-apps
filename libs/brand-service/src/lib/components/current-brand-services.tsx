@@ -4,7 +4,6 @@ import {
   EmptyView,
   GlassViewBackground,
   InitView,
-  PageView,
 } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useAppSettings } from '@symbiot-core-apps/app';
@@ -19,7 +18,7 @@ import { BrandServiceItem } from '@symbiot-core-apps/brand';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
-import { Container, PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { Container, PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandServices = ({
   offsetTop,
@@ -133,13 +132,7 @@ const Intro = ({
     return <InitView loading={loading} error={error} />;
   } else {
     return (
-      <PageView
-        scrollable
-        transition="medium"
-        opacity={1}
-        enterStyle={{ opacity: 0 }}
-        exitStyle={{ opacity: 0 }}
-      >
+      <ScrollablePage ignoreHeaderHeight>
         <EmptyView
           padding={0}
           iconName={icons.Service}
@@ -153,7 +146,7 @@ const Intro = ({
             )}
           />
         </EmptyView>
-      </PageView>
+      </ScrollablePage>
     );
   }
 };

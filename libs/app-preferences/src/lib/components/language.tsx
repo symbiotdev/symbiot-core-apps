@@ -1,16 +1,11 @@
-import {
-  Card,
-  CompactView,
-  PageView,
-  RegularText,
-  Spinner,
-} from '@symbiot-core-apps/ui';
+import { Card, CompactView, RegularText, Spinner } from '@symbiot-core-apps/ui';
 import { useEffect, useMemo } from 'react';
 import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { queryClient } from '@symbiot-core-apps/api';
 import { allLanguages, useI18n } from '@symbiot-core-apps/shared';
 import { ToggleGroup } from '@symbiot-core-apps/form-controller';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const Language = () => {
   const { lang, supportedLanguages, changeLanguage } = useI18n();
@@ -36,7 +31,7 @@ export const Language = () => {
   }, [updating, navigation]);
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       <CompactView>
         <Card paddingVertical={0}>
           <ToggleGroup
@@ -50,6 +45,6 @@ export const Language = () => {
           />
         </Card>
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

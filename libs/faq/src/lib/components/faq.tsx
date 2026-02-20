@@ -3,7 +3,6 @@ import {
   ActionCard,
   CompactView,
   Icon,
-  PageView,
   RegularText,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
@@ -11,7 +10,7 @@ import { Linking } from 'react-native';
 import { useFaqState } from '@symbiot-core-apps/state';
 import { useAppFaqReq } from '@symbiot-core-apps/api';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { LoadingContainer } from '@symbiot-core-apps/ui2';
+import { LoadingContainer, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const Faq = () => {
   const { t } = useI18n();
@@ -32,7 +31,7 @@ export const Faq = () => {
   }, [data, setFAQ]);
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       {!sortedFaq ? (
         <LoadingContainer />
       ) : (
@@ -53,6 +52,6 @@ export const Faq = () => {
           />
         </CompactView>
       )}
-    </PageView>
+    </ScrollablePage>
   );
 };

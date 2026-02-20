@@ -5,6 +5,7 @@ import { PageShadow } from './components/page-shadow';
 import { PageContent, PageContentProps } from './components/page-content';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
+// fixme - rename to ScrollPage
 export const ScrollablePage = ({
   refreshable,
   refreshing,

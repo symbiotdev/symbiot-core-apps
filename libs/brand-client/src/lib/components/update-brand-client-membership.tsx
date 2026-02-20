@@ -12,7 +12,6 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
-  PageView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import { BrandClientMembershipItem } from '@symbiot-core-apps/brand';
@@ -23,7 +22,7 @@ import { SingeElementForm } from '@symbiot-core-apps/form-controller';
 import { BrandClientBirthdayController } from './controller/brand-client-membership-end-at-controller';
 import { View, XStack } from 'tamagui';
 import { BrandClientMembershipVisitsController } from './controller/brand-client-membership-visits-controller';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandClientMembership = ({
   clientId,
@@ -33,7 +32,7 @@ export const UpdateBrandClientMembership = ({
   membership: AnyBrandClientMembership;
 }) => {
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       <CompactView>
         <BrandClientMembershipItem alignSelf="center" membership={membership} />
 
@@ -45,7 +44,7 @@ export const UpdateBrandClientMembership = ({
           <EndAt clientId={clientId} membership={membership} />
         </ListItemGroup>
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };
 

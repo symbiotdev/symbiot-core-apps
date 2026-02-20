@@ -6,7 +6,6 @@ import {
   H3,
   Icon,
   MediumText,
-  PageView,
   RegularText,
   SemiBoldText,
 } from '@symbiot-core-apps/ui';
@@ -36,6 +35,7 @@ import {
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { DocumentPicker, FileChip } from '@symbiot-core-apps/form-controller';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const ImportBrandClient = () => {
   const { t } = useI18n();
@@ -133,7 +133,7 @@ export const ImportBrandClient = () => {
   }, [clients, importClients]);
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       {uploaded ? (
         <CompactView flex={1} justifyContent="center" gap="$5">
           <Icon name="SmileCircle" size={60} style={{ alignSelf: 'center' }} />
@@ -245,7 +245,7 @@ export const ImportBrandClient = () => {
           />
         </CompactView>
       )}
-    </PageView>
+    </ScrollablePage>
   );
 };
 

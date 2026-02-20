@@ -2,7 +2,6 @@ import {
   CompactView,
   Icon,
   ListItemGroup,
-  PageView,
   Spinner,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
@@ -18,6 +17,7 @@ import {
   ToggleOnChange,
 } from '@symbiot-core-apps/form-controller';
 import { AccountAppearance } from '@symbiot-core-apps/api';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const SchemeAppearance = () => {
   const navigation = useNavigation();
@@ -59,7 +59,7 @@ export const SchemeAppearance = () => {
   }, [updating, navigation]);
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       <CompactView>
         <ListItemGroup
           // title={t('shared.preferences.scheme.theme.title')}
@@ -85,6 +85,6 @@ export const SchemeAppearance = () => {
           )}
         </ListItemGroup>
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

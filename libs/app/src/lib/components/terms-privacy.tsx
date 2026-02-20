@@ -3,7 +3,6 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
-  PageView,
 } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import {
@@ -12,6 +11,7 @@ import {
 } from 'expo-web-browser';
 import { ReactNativeLegal } from 'react-native-legal';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const TermsPrivacy = () => {
   const { t } = useI18n();
@@ -38,7 +38,7 @@ export const TermsPrivacy = () => {
   );
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       <CompactView>
         <ListItemGroup>
           <ListItem
@@ -58,6 +58,6 @@ export const TermsPrivacy = () => {
           />
         </ListItemGroup>
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

@@ -2,7 +2,6 @@ import {
   Card,
   CompactView,
   Link,
-  PageView,
   RegularText,
   Spinner,
 } from '@symbiot-core-apps/ui';
@@ -19,6 +18,7 @@ import {
 import { Linking } from 'react-native';
 import { isWeb, useI18n } from '@symbiot-core-apps/shared';
 import { Switch } from '@symbiot-core-apps/form-controller';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const Notifications = () => {
   const { t } = useI18n();
@@ -50,7 +50,7 @@ export const Notifications = () => {
   );
 
   return (
-    <PageView scrollable withHeaderHeight gap="$2">
+    <ScrollablePage style={{ gap: 4 }}>
       <CompactView>
         {pushNotificationsDenied && (
           <Card>
@@ -85,6 +85,6 @@ export const Notifications = () => {
           />
         </Card>
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

@@ -9,7 +9,6 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
-  PageView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
@@ -31,7 +30,7 @@ import { BrandClientLastnameController } from './controller/brand-client-lastnam
 import { BrandClientNoteController } from './controller/brand-client-note-controller';
 import { BrandClientPhoneController } from './controller/brand-client-phone-controller';
 import { PhoneNumber } from 'react-native-phone-input/dist';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
@@ -49,7 +48,7 @@ export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
   );
 
   return (
-    <PageView scrollable withHeaderHeight withKeyboard gap="$5">
+    <ScrollablePage withKeyboard style={{ gap: PAGE_STYLE.paddingVertical }}>
       <CompactView gap="$10" paddingVertical="$5">
         <AvatarPicker
           marginHorizontal="auto"
@@ -67,7 +66,7 @@ export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
           <Note client={client} />
         </ListItemGroup>
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };
 

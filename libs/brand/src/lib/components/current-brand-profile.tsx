@@ -6,7 +6,6 @@ import {
   H3,
   InitView,
   ListItemGroup,
-  PageView,
   RegularText,
 } from '@symbiot-core-apps/ui';
 import React, { useEffect, useMemo } from 'react';
@@ -22,6 +21,7 @@ import {
 } from '@symbiot-core-apps/state';
 import { BrandCongrats } from './brand-congrats';
 import { BrandProfileCompletion } from './brand-profile-completion';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandProfile = () => {
   const { brand: currentBrand, setBrand } = useCurrentBrandState();
@@ -51,7 +51,7 @@ export const CurrentBrandProfile = () => {
   }
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       <CompactView gap="$5">
         <BrandCongrats brand={currentBrand} />
 
@@ -130,6 +130,6 @@ export const CurrentBrandProfile = () => {
           </RegularText>
         </ListItemGroup>
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

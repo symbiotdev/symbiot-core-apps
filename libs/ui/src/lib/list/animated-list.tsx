@@ -4,10 +4,10 @@ import Animated, {
   FadingTransition,
   FlatListPropsWithLayout,
 } from 'react-native-reanimated';
-import { Refresher } from '../loading/refresher';
 import { ListLoadingFooter } from './list-loading-footer';
 import { ViewProps } from 'tamagui';
 import { isWeb } from '@symbiot-core-apps/shared';
+import { Refresher } from '@symbiot-core-apps/ui2';
 
 export function AnimatedList<T>({
   listRef,

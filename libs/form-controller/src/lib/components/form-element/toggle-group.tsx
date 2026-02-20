@@ -1,14 +1,9 @@
 import { View, ViewProps, XStack, XStackProps } from 'tamagui';
 import { memo, ReactElement } from 'react';
 import { emitHaptic, isEqual } from '@symbiot-core-apps/shared';
-import {
-  ContainerView,
-  Icon,
-  IconName,
-  InitView,
-  RegularText,
-} from '@symbiot-core-apps/ui';
+import { Icon, IconName, InitView, RegularText } from '@symbiot-core-apps/ui';
 import { FormField } from '../wrapper/form-field';
+import { Container } from '@symbiot-core-apps/ui2';
 
 export type ToggleGroupItem = {
   value: unknown;
@@ -30,7 +25,6 @@ export const ToggleGroup = ({
   disabled,
   required,
   label,
-  renderDelay,
   noDataIcon,
   noDataTitle,
   noDataMessage,
@@ -48,7 +42,6 @@ export const ToggleGroup = ({
   loading?: boolean;
   disabled?: boolean;
   required?: boolean;
-  renderDelay?: number;
   label?: string;
   noDataIcon?: IconName;
   noDataTitle?: string;
@@ -69,12 +62,10 @@ export const ToggleGroup = ({
     />
   ) : (
     <FormField label={label} required={required}>
-      <ContainerView
-        lazy={Boolean(renderDelay)}
-        delay={renderDelay}
+      <Container
+        lazy={false}
+        style={{ paddingBottom: 10 }}
         onRendered={onRendered}
-        paddingBottom="$3"
-        {...viewProps}
       >
         {items?.map((item, index) => (
           <Item
@@ -89,7 +80,7 @@ export const ToggleGroup = ({
             {...itemProps}
           />
         ))}
-      </ContainerView>
+      </Container>
     </FormField>
   );
 
@@ -164,11 +155,7 @@ const Item = memo(
           </RegularText>
 
           {!!item.description && (
-            <RegularText
-              fontSize={12}
-              color="$placeholder"
-              numberOfLines={2}
-            >
+            <RegularText fontSize={12} color="$placeholder" numberOfLines={2}>
               {item.description}
             </RegularText>
           )}

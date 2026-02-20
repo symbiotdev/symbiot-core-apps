@@ -1,4 +1,4 @@
-import { CompactView, PageView, Spinner } from '@symbiot-core-apps/ui';
+import { CompactView, Spinner } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
 import {
   DateHelper,
@@ -18,6 +18,7 @@ import {
   PickerOnChange,
   SmartSelect,
 } from '@symbiot-core-apps/form-controller';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 const numberOfDaysLandscapeLabel = isPhone
   ? 'shared.preferences.calendar.number_of_days.landscape_label'
@@ -84,7 +85,7 @@ export const Calendar = () => {
   }, [updating, navigation]);
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       <CompactView>
         <SmartSelect
           searchable={false}
@@ -139,6 +140,6 @@ export const Calendar = () => {
           onChange={onChangeHiddenDays as OnChangeMultiToggle}
         />
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

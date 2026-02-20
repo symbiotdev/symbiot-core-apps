@@ -12,7 +12,6 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
-  PageView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import { useWindowDimensions } from 'react-native';
@@ -47,7 +46,11 @@ import { BrandServiceEmployeesController } from './controller/brand-service-empl
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
-import { LoadingContainer, PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import {
+  LoadingContainer,
+  PAGE_STYLE,
+  ScrollablePage,
+} from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandService = ({ service }: { service: BrandService }) => {
   const { height } = useWindowDimensions();
@@ -67,7 +70,7 @@ export const UpdateBrandService = ({ service }: { service: BrandService }) => {
   );
 
   return (
-    <PageView scrollable withHeaderHeight withKeyboard gap="$5">
+    <ScrollablePage withKeyboard style={{ gap: PAGE_STYLE.paddingVertical }}>
       <View>
         <AvatarPicker
           allowsEditing={false}
@@ -95,7 +98,7 @@ export const UpdateBrandService = ({ service }: { service: BrandService }) => {
         <LocationProviders service={service} />
         <Note service={service} />
       </ListItemGroup>
-    </PageView>
+    </ScrollablePage>
   );
 };
 

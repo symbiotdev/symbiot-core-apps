@@ -15,11 +15,6 @@ import {
   KeyboardStickyView,
 } from 'react-native-keyboard-controller';
 import { useScreenHeaderHeight } from '../navigation/header';
-import {
-  defaultPageHorizontalPadding,
-  defaultPageVerticalPadding,
-} from '../view/page-view';
-import { LoadingView } from '../view/loading-view';
 import { H2 } from '../text/heading';
 import { RegularText, SemiBoldText } from '../text/text';
 import Animated, {
@@ -41,11 +36,15 @@ import {
   useKeyboardDismisser,
   useRendered,
 } from '@symbiot-core-apps/shared';
-import { ContainerView } from '../view/container-view';
 import { router, useNavigation } from 'expo-router';
 import { Pressable } from 'react-native';
 import { GlassView } from '../view/glass-view';
 import { EventArg, NavigationAction } from '@react-navigation/native';
+import {
+  Container,
+  LoadingContainer,
+  PAGE_STYLE,
+} from '@symbiot-core-apps/ui2';
 
 type SurveyStepProps = PropsWithChildren<{
   title: string;
@@ -60,8 +59,8 @@ export type onSurveyFinish = {
 };
 
 const headerTextPadding = isWeb
-  ? defaultPageVerticalPadding
-  : defaultPageVerticalPadding / 2;
+  ? PAGE_STYLE.paddingVertical
+  : PAGE_STYLE.paddingVertical / 2;
 
 export const SurveyStep = (props: SurveyStepProps) => {
   const { rendered } = useRendered();
@@ -201,9 +200,9 @@ export const Survey = ({
   }, [animatedValue$, selectedIndex]);
 
   return loading ? (
-    <LoadingView />
+    <LoadingContainer />
   ) : (
-    <ContainerView flex={1}>
+    <Container style={{ flex: 1 }}>
       <View flex={1}>
         <KeyboardAwareScrollView
           keyboardShouldPersistTaps="handled"
@@ -215,9 +214,9 @@ export const Survey = ({
           style={{ flex: 1 }}
           contentContainerStyle={{
             flexGrow: 1,
-            paddingTop: headerHeight + defaultPageVerticalPadding,
-            paddingHorizontal: defaultPageHorizontalPadding,
-            gap: defaultPageVerticalPadding,
+            paddingTop: headerHeight + PAGE_STYLE.paddingVertical,
+            paddingHorizontal: PAGE_STYLE.paddingHorizontal,
+            gap: PAGE_STYLE.paddingVertical,
           }}
         >
           {!!previousStep && (
@@ -253,7 +252,7 @@ export const Survey = ({
               style={[
                 animatedStyle,
                 compactViewStyles,
-                { gap: defaultPageVerticalPadding },
+                { gap: PAGE_STYLE.paddingVertical },
               ]}
             >
               <View gap="$2" paddingVertical={headerTextPadding}>
@@ -274,9 +273,9 @@ export const Survey = ({
                 compactViewStyles,
                 {
                   gap: 0,
-                  paddingHorizontal: defaultPageHorizontalPadding,
+                  paddingHorizontal: PAGE_STYLE.paddingHorizontal,
                   paddingTop: 4,
-                  paddingBottom: bottom + defaultPageVerticalPadding,
+                  paddingBottom: bottom + PAGE_STYLE.paddingVertical,
                 },
               ]}
             >
@@ -297,6 +296,6 @@ export const Survey = ({
           </Animated.View>
         )}
       </View>
-    </ContainerView>
+    </Container>
   );
 };

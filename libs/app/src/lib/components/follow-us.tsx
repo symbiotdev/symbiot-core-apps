@@ -3,13 +3,13 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
-  PageView,
 } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import {
   openBrowserAsync,
   WebBrowserPresentationStyle,
 } from 'expo-web-browser';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const FollowUs = () => {
   const openTwitter = useCallback(
@@ -35,7 +35,7 @@ export const FollowUs = () => {
   );
 
   return (
-    <PageView scrollable withHeaderHeight>
+    <ScrollablePage>
       <CompactView>
         <ListItemGroup>
           {/*<ListItem*/}
@@ -55,6 +55,6 @@ export const FollowUs = () => {
           />
         </ListItemGroup>
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

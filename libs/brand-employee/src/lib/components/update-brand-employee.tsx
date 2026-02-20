@@ -4,7 +4,6 @@ import {
   Icon,
   ListItem,
   ListItemGroup,
-  PageView,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
 import {
@@ -53,7 +52,7 @@ import { BrandEmployeePermissionsController } from './controller/brand-employee-
 import { useForm } from 'react-hook-form';
 import { useDynamicBrandLocation } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandEmployee = ({
   employee,
@@ -77,7 +76,7 @@ export const UpdateBrandEmployee = ({
   );
 
   return (
-    <PageView scrollable withHeaderHeight withKeyboard gap="$5">
+    <ScrollablePage withKeyboard style={{ gap: PAGE_STYLE.paddingVertical }}>
       <View>
         <AvatarPicker
           marginHorizontal="auto"
@@ -104,7 +103,7 @@ export const UpdateBrandEmployee = ({
             hasAnyPermission && <Permissions employee={employee} />}
         </ListItemGroup>
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };
 

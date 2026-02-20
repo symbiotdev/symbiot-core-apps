@@ -7,7 +7,6 @@ import {
   H4,
   Icon,
   ListItemGroup,
-  PageView,
   RegularText,
   SlideSheetModal,
 } from '@symbiot-core-apps/ui';
@@ -39,7 +38,7 @@ import { BrandBookingNoteController } from './controller/brand-booking-note-cont
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { View, XStack } from 'tamagui';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const UnavailableBrandBookingProfile = ({
   booking,
@@ -164,7 +163,7 @@ export const UnavailableBrandBookingProfile = ({
 
   return (
     <>
-      <PageView scrollable withHeaderHeight>
+      <ScrollablePage>
         <CompactView gap="$4">
           <View gap="$2" marginVertical="$3">
             <H2 textDecorationLine={textDecorationLine}>
@@ -225,7 +224,7 @@ export const UnavailableBrandBookingProfile = ({
             </RegularText>
           </ListItemGroup>
         </CompactView>
-      </PageView>
+      </ScrollablePage>
 
       <SlideSheetModal
         scrollable

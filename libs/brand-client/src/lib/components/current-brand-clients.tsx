@@ -5,7 +5,6 @@ import {
   GlassViewBackground,
   Icon,
   InitView,
-  PageView,
 } from '@symbiot-core-apps/ui';
 import {
   BrandClient,
@@ -20,7 +19,7 @@ import { View } from 'tamagui';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { Search } from '@symbiot-core-apps/form-controller';
-import { Container, PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { Container, PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandClients = ({
   offsetTop,
@@ -141,13 +140,7 @@ const Intro = ({
     return <InitView loading={loading} error={error} />;
   } else {
     return (
-      <PageView
-        scrollable
-        transition="medium"
-        opacity={1}
-        enterStyle={{ opacity: 0 }}
-        exitStyle={{ opacity: 0 }}
-      >
+      <ScrollablePage ignoreHeaderHeight>
         <EmptyView
           padding={0}
           iconName="SmileCircle"
@@ -173,7 +166,7 @@ const Intro = ({
             </View>
           )}
         </EmptyView>
-      </PageView>
+      </ScrollablePage>
     );
   }
 };

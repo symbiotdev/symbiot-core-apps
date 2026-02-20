@@ -1,13 +1,13 @@
 import {
   Button,
-  Error,
   CompactView,
+  Error,
   H2,
-  PageView,
   RegularText,
 } from '@symbiot-core-apps/ui';
 import { PropsWithChildren, ReactElement } from 'react';
 import { View } from 'tamagui';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const AuthFormView = ({
   children,
@@ -32,7 +32,7 @@ export const AuthFormView = ({
   onButtonPress: () => Promise<void>;
 }>) => {
   return (
-    <PageView scrollable withKeyboard withHeaderHeight lazy={false}>
+    <ScrollablePage withKeyboard lazy={false}>
       <CompactView flex={1} justifyContent="center">
         <View gap="$5" marginVertical="$5" alignItems="center">
           {logo}
@@ -58,6 +58,6 @@ export const AuthFormView = ({
 
         {externalLink}
       </CompactView>
-    </PageView>
+    </ScrollablePage>
   );
 };

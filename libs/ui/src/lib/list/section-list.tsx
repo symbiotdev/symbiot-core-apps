@@ -1,9 +1,9 @@
 import React, { ForwardedRef } from 'react';
 import { SectionList as RNSectionList, SectionListProps } from 'react-native';
-import { Refresher } from '../loading/refresher';
 import { ListLoadingFooter } from './list-loading-footer';
 import { ViewProps } from 'tamagui';
 import { isWeb } from '@symbiot-core-apps/shared';
+import { Refresher } from '@symbiot-core-apps/ui2';
 
 export function SectionList<T>({
   listRef,

@@ -1,9 +1,10 @@
-import { EmptyView, PageView } from '@symbiot-core-apps/ui';
+import { EmptyView } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import { View } from 'tamagui';
 import { router } from 'expo-router';
 import { BrandNewEmployeeIdForm } from './form/brand-new-employee-id-form';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const NewBrandEmployee = () => {
   const { t } = useI18n();
@@ -14,15 +15,7 @@ export const NewBrandEmployee = () => {
   );
 
   return (
-    <PageView
-      scrollable
-      withKeyboard
-      withHeaderHeight
-      transition="medium"
-      opacity={1}
-      enterStyle={{ opacity: 0 }}
-      exitStyle={{ opacity: 0 }}
-    >
+    <ScrollablePage withKeyboard>
       <EmptyView
         padding={0}
         iconName="UsersGroupRounded"
@@ -33,6 +26,6 @@ export const NewBrandEmployee = () => {
 
         <BrandNewEmployeeIdForm onAdd={onAdd} />
       </EmptyView>
-    </PageView>
+    </ScrollablePage>
   );
 };

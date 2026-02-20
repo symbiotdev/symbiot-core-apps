@@ -1,4 +1,4 @@
-import { StyleSheet, ViewProps, ViewStyle } from 'react-native';
+import { StyleSheet, ViewProps } from 'react-native';
 import { GlassView as ExpoGlassView } from 'expo-glass-effect';
 import { isCustomDesignMandatory } from '@symbiot-core-apps/theme';
 import { useAppScheme } from '@symbiot-core-apps/state';
@@ -11,8 +11,7 @@ import Animated, {
 import { isIos } from '@symbiot-core-apps/shared';
 import { BlurView as ExpoBlurView } from 'expo-blur';
 
-type Props = Omit<ViewProps, 'style'> & {
-  style?: ViewStyle | ViewStyle[];
+type Props = ViewProps & {
   interactive?: boolean;
   withBackgroundColor?: boolean; // applying only to GlassLikeView
 };
@@ -33,6 +32,7 @@ const colorizeOpacity = isIos ? 80 : 95;
 export const GlassLikeView = ({
   children,
   withBackgroundColor = !isIos,
+  style,
   ...props
 }: Props) => {
   const { scheme } = useAppScheme();
@@ -59,9 +59,6 @@ export const GlassLikeView = ({
       style={[
         animatedStyle,
         {
-          borderWidth: scheme === 'light' ? 0 : 1,
-          borderColor: '#FFFFFF30',
-          boxShadow: '0 0 25px rgba(0, 0, 0, 0.15)',
           overflow: 'hidden',
           ...(withBackgroundColor && {
             backgroundColor:
@@ -69,8 +66,20 @@ export const GlassLikeView = ({
                 ? `rgba(250, 250, 250, .${colorizeOpacity})`
                 : `rgba(17, 17, 17, .${colorizeOpacity})`,
           }),
+          ...(isIos
+            ? {
+                boxShadow:
+                  scheme === 'light'
+                    ? '0 0 25px rgba(17, 17, 17, 0.2)'
+                    : `0 0 1px rgba(250, 250, 250, .${colorizeOpacity})`,
+              }
+            : {
+                borderWidth: scheme === 'light' ? 0 : 1,
+                borderColor: '#FFFFFF30',
+                boxShadow: '0 0 25px rgba(0, 0, 0, 0.15)',
+              }),
         },
-        ...(Array.isArray(props.style) ? props.style : [props.style]),
+        style,
       ]}
       {...(props.interactive && {
         onTouchStart: (e) => {
@@ -111,11 +120,5 @@ export const GlassView = isCustomDesignMandatory
   : GlassNativeView;
 
 export const GlassViewBackground = ({ style, ...props }: Props) => (
-  <GlassView
-    {...props}
-    style={{
-      ...StyleSheet.absoluteFill,
-      ...style,
-    }}
-  />
+  <GlassView {...props} style={[StyleSheet.absoluteFill, style]} />
 );

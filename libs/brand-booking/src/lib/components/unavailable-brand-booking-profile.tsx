@@ -1,11 +1,8 @@
 import {
   CompactView,
-  ContextMenuItem,
-  ContextMenuPopover,
   H1,
   H2,
   H4,
-  Icon,
   ListItemGroup,
   RegularText,
   SlideSheetModal,
@@ -38,7 +35,13 @@ import { BrandBookingNoteController } from './controller/brand-booking-note-cont
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { View, XStack } from 'tamagui';
-import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
+import {
+  ContextMenu,
+  ContextMenuItem,
+  Icon,
+  PAGE_STYLE,
+  ScrollablePage,
+} from '@symbiot-core-apps/ui2';
 
 export const UnavailableBrandBookingProfile = ({
   booking,
@@ -122,7 +125,8 @@ export const UnavailableBrandBookingProfile = ({
       {
         label: t(`unavailable_brand_booking.profile.context_menu.cancel.label`),
         icon: <Icon name="Close" />,
-        color: '$error',
+        // fixme colorize
+        color: 'red',
         onPress: async () =>
           cancel({
             id: booking.id,
@@ -138,7 +142,7 @@ export const UnavailableBrandBookingProfile = ({
       !!booking?.id &&
       !booking?.cancelAt &&
       hasPermission('bookings') && (
-        <ContextMenuPopover
+        <ContextMenu
           loading={cancelProcessing || updateProcessing}
           disabled={cancelProcessing || updateProcessing}
           items={contextMenuItems}

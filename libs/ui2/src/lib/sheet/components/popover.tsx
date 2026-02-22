@@ -1,5 +1,11 @@
 import { PropsWithChildren, useLayoutEffect } from 'react';
-import { flip, Placement, shift, useFloating } from '@floating-ui/react-native';
+import {
+  flip,
+  offset,
+  Placement,
+  shift,
+  useFloating,
+} from '@floating-ui/react-native';
 import { LayoutRectangle, View, ViewStyle } from 'react-native';
 import { Overlay } from './overlay';
 import Animated, {
@@ -14,6 +20,7 @@ import { GlassView } from '../../glass/glass-view';
 const AnimatedGlassView = Animated.createAnimatedComponent(GlassView);
 
 export const Popover = ({
+  popoverOffset,
   visible,
   disabled,
   maxHeight,
@@ -24,6 +31,7 @@ export const Popover = ({
 }: PropsWithChildren<{
   visible: boolean;
   maxHeight: number;
+  popoverOffset?: number;
   disabled?: boolean;
   popoverPlacement?: Placement;
   triggerRect: LayoutRectangle;
@@ -32,7 +40,12 @@ export const Popover = ({
   const { refs, strategy, x, y } = useFloating({
     placement: popoverPlacement,
     sameScrollView: false,
-    middleware: [flip(), shift(), ...(popoverPlacement || isWeb ? [] : [])],
+    middleware: [
+      flip(),
+      shift(),
+      ...(popoverPlacement || isWeb ? [] : []),
+      ...(popoverOffset ? [offset(popoverOffset)] : []),
+    ],
   });
 
   const y$ = useSharedValue(-20);

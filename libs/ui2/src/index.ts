@@ -1,6 +1,10 @@
 export * from './lib/glass/glass-view';
 
+export * from './lib/icon/icon';
+
 export * from './lib/layout/container';
+
+export * from './lib/menu/context-menu';
 
 export * from './lib/page/utils/style-rules';
 export * from './lib/page/page';

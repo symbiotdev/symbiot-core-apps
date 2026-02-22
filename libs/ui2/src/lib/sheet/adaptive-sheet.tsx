@@ -4,12 +4,10 @@ import React, {
   PropsWithChildren,
   ReactElement,
   useCallback,
-  useEffect,
   useImperativeHandle,
   useState,
 } from 'react';
 import {
-  Dimensions,
   GestureResponderEvent,
   Keyboard,
   LayoutRectangle,
@@ -22,6 +20,7 @@ import {
   isTablet,
   isWeb,
   useKeyboardDismisser,
+  useScreenOrientation,
 } from '@symbiot-core-apps/shared';
 import { Sheet } from './components/sheet';
 import { Placement } from '@floating-ui/react-native';
@@ -36,6 +35,7 @@ type Props = PropsWithChildren<{
   trigger?: ReactElement;
   disabled?: boolean;
   forceAdaptive?: 'sheet' | 'popover';
+  popoverOffset?: number;
   popoverPlacement?: Placement;
   sheetTitle?: string;
   sheetGestureDisabled?: boolean;
@@ -165,11 +165,7 @@ const AdaptiveContent = ({
 }) => {
   const { height, width } = useWindowDimensions();
 
-  useEffect(() => {
-    const subscription = Dimensions.addEventListener('change', onClose);
-
-    return () => subscription.remove();
-  }, [onClose]);
+  useScreenOrientation({ onBeforeChange: onClose });
 
   return (
     <Modal

@@ -1,10 +1,14 @@
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useBrandEmployeeDetailedByIdReq } from '@symbiot-core-apps/api';
-import { ContextMenuItem, ContextMenuPopover, Icon, InitView } from '@symbiot-core-apps/ui';
+import { InitView } from '@symbiot-core-apps/ui';
 import { UpdateBrandEmployee } from '@symbiot-core-apps/brand-employee';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
-import { useCurrentBrandEmployee, useCurrentBrandState } from '@symbiot-core-apps/state';
+import {
+  useCurrentBrandEmployee,
+  useCurrentBrandState,
+} from '@symbiot-core-apps/state';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { ContextMenu, ContextMenuItem, Icon } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { brand } = useCurrentBrandState();
@@ -25,7 +29,8 @@ export default () => {
             {
               label: t('brand_employee.update.context_menu.remove.label'),
               icon: <Icon name="TrashBinMinimalistic" />,
-              color: '$error',
+              // fixme colorize
+              color: 'red',
               onPress: () => router.push(`/employees/${id}/remove`),
             } as ContextMenuItem,
           ]
@@ -37,7 +42,7 @@ export default () => {
   const headerRight = useCallback(
     () =>
       contextMenuItems.length ? (
-        <ContextMenuPopover items={contextMenuItems} />
+        <ContextMenu items={contextMenuItems} />
       ) : undefined,
     [contextMenuItems],
   );

@@ -1,15 +1,11 @@
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandEmployeeProfile } from '@symbiot-core-apps/brand-employee';
 import React, { useCallback, useLayoutEffect, useMemo } from 'react';
-import {
-  ContextMenuItem,
-  ContextMenuPopover,
-  Icon,
-  InitView,
-} from '@symbiot-core-apps/ui';
+import { InitView } from '@symbiot-core-apps/ui';
 import { router, useNavigation } from 'expo-router';
 import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import { useAccountAuthSignOutReq } from '@symbiot-core-apps/api';
+import { ContextMenu, ContextMenuItem, Icon } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t } = useI18n();
@@ -46,7 +42,7 @@ export default () => {
   );
 
   const headerRight = useCallback(
-    () => <ContextMenuPopover items={contextMenuItems} />,
+    () => <ContextMenu items={contextMenuItems} />,
     [contextMenuItems],
   );
 

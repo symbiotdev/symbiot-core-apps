@@ -1,10 +1,7 @@
 import {
   CompactView,
-  ContextMenuItem,
-  ContextMenuPopover,
   H1,
   H2,
-  Icon,
   ListItemGroup,
   RegularText,
   SlideSheetModal,
@@ -50,7 +47,13 @@ import { getSlotsRandomEmployee } from '../utils/get-slots-random-employee';
 import { ServiceBrandBookingProfileClients } from './service-brand-booking-profile-clients';
 import { View, XStack } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
-import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
+import {
+  ContextMenu,
+  ContextMenuItem,
+  Icon,
+  PAGE_STYLE,
+  ScrollablePage,
+} from '@symbiot-core-apps/ui2';
 
 export const ServiceBrandBookingProfile = ({
   booking,
@@ -133,7 +136,8 @@ export const ServiceBrandBookingProfile = ({
       {
         label: t(`service_brand_booking.profile.context_menu.cancel.label`),
         icon: <Icon name="Close" />,
-        color: '$error',
+        // fixme colorize
+        color: 'red',
         onPress: async () =>
           cancel({
             id: booking.id,
@@ -156,7 +160,7 @@ export const ServiceBrandBookingProfile = ({
       !!booking?.id &&
       !booking?.cancelAt &&
       hasPermission('bookings') && (
-        <ContextMenuPopover
+        <ContextMenu
           loading={cancelProcessing || updateProcessing}
           disabled={cancelProcessing || updateProcessing}
           items={contextMenuItems}

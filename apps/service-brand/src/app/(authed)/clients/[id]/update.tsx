@@ -1,14 +1,10 @@
 import { UpdateBrandClient } from '@symbiot-core-apps/brand-client';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useBrandClientDetailedByIdReq } from '@symbiot-core-apps/api';
-import {
-  ContextMenuItem,
-  ContextMenuPopover,
-  Icon,
-  InitView,
-} from '@symbiot-core-apps/ui';
+import { InitView } from '@symbiot-core-apps/ui';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { ContextMenu, ContextMenuItem, Icon } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t } = useI18n();
@@ -21,7 +17,8 @@ export default () => {
       {
         label: t('brand_client.update.context_menu.remove.label'),
         icon: <Icon name="TrashBinMinimalistic" />,
-        color: '$error',
+        // fixme colorize
+        color: 'red',
         onPress: () => router.push(`/clients/${id}/remove`),
       } as ContextMenuItem,
     ],
@@ -29,7 +26,7 @@ export default () => {
   );
 
   const headerRight = useCallback(
-    () => <ContextMenuPopover items={contextMenuItems} />,
+    () => <ContextMenu items={contextMenuItems} />,
     [contextMenuItems],
   );
 

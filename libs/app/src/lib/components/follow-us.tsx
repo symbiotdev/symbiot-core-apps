@@ -1,15 +1,10 @@
-import {
-  CompactView,
-  Icon,
-  ListItem,
-  ListItemGroup,
-} from '@symbiot-core-apps/ui';
+import { CompactView, ListItem, ListItemGroup } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import {
   openBrowserAsync,
   WebBrowserPresentationStyle,
 } from 'expo-web-browser';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const FollowUs = () => {
   const openTwitter = useCallback(

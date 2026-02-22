@@ -3,11 +3,11 @@ import { emitHaptic } from '@symbiot-core-apps/shared';
 import {
   Avatar,
   CompactView,
-  Icon,
   RegularText,
   SemiBoldText,
 } from '@symbiot-core-apps/ui';
 import { View, ViewProps } from 'tamagui';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 export const BrandLocationItem = ({
   location,
@@ -27,14 +27,15 @@ export const BrandLocationItem = ({
       flexDirection="row"
       disabledStyle={{ opacity: 0.5 }}
       {...viewProps}
-      {...(onPress && !viewProps.disabled && {
-        cursor: 'pointer',
-        pressStyle: { opacity: 0.8 },
-        onPress: (e) => {
-          emitHaptic();
-          onPress?.(e);
-        },
-      })}
+      {...(onPress &&
+        !viewProps.disabled && {
+          cursor: 'pointer',
+          pressStyle: { opacity: 0.8 },
+          onPress: (e) => {
+            emitHaptic();
+            onPress?.(e);
+          },
+        })}
     >
       <Avatar
         name={location.name}

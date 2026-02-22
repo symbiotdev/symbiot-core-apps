@@ -4,7 +4,6 @@ import {
   Card,
   CompactView,
   H3,
-  Icon,
   MediumText,
   RegularText,
   SemiBoldText,
@@ -35,7 +34,7 @@ import {
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import { DocumentPicker, FileChip } from '@symbiot-core-apps/form-controller';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const ImportBrandClient = () => {
   const { t } = useI18n();

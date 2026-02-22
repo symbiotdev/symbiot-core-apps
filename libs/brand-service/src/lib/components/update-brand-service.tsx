@@ -9,7 +9,6 @@ import {
 import {
   CompactView,
   compactViewStyles,
-  Icon,
   ListItem,
   ListItemGroup,
   SlideSheetModal,
@@ -47,6 +46,7 @@ import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import {
+  Icon,
   LoadingContainer,
   PAGE_STYLE,
   ScrollablePage,

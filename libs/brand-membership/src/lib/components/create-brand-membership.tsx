@@ -7,13 +7,7 @@ import {
   useCreateBrandVisitBasedMembershipReq,
 } from '@symbiot-core-apps/api';
 import { useI18n, useRateApp } from '@symbiot-core-apps/shared';
-import {
-  Card,
-  Icon,
-  SemiBoldText,
-  Survey,
-  SurveyStep,
-} from '@symbiot-core-apps/ui';
+import { Card, SemiBoldText, Survey, SurveyStep } from '@symbiot-core-apps/ui';
 import { useForm } from 'react-hook-form';
 import { BrandMembershipAvailabilityController } from './controller/brand-membership-availability-controller';
 import { BrandMembershipNameController } from './controller/brand-membership-name-controller';
@@ -26,6 +20,7 @@ import { BrandMembershipNoteController } from './controller/brand-membership-not
 import { BrandMembershipLocationController } from './controller/brand-membership-location-controller';
 import { BrandMembershipVisitsController } from './controller/brand-membership-visits-controller';
 import { BrandMembershipPeriodController } from './controller/brand-membership-period-controller';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 export const CreateBrandMembership = ({
   type,

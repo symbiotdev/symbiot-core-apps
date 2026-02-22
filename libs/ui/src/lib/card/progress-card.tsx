@@ -2,9 +2,9 @@ import { ViewProps, XStack } from 'tamagui';
 import { compactViewStyles } from '../view/compact-view';
 import { Card } from './card';
 import { CircularProgress } from '../chart/circular-progress';
-import { defaultIconSize } from '../icons';
 import { RegularText } from '../text/text';
 import { ButtonIcon } from '../button/button';
+import { defaultIconSize } from '@symbiot-core-apps/ui2';
 
 export const ProgressCard = ({
   children,

@@ -1,15 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { BrandNewEmployeeIdController } from '../controller/brand-new-employee-id-controller';
-import {
-  Button,
-  Icon,
-  MediumText,
-  QrCodeScanModal,
-} from '@symbiot-core-apps/ui';
+import { Button, MediumText, QrCodeScanModal } from '@symbiot-core-apps/ui';
 import { useCallback, useState } from 'react';
 import { View } from 'tamagui';
 import { requestCameraPermissionsAsync } from 'expo-image-picker';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 type FormValue = {
   id: string;

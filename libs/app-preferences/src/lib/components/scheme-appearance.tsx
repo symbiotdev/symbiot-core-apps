@@ -1,9 +1,4 @@
-import {
-  CompactView,
-  Icon,
-  ListItemGroup,
-  Spinner,
-} from '@symbiot-core-apps/ui';
+import { CompactView, ListItemGroup, Spinner } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
 import {
   useCurrentAccountPreferences,
@@ -17,7 +12,7 @@ import {
   ToggleOnChange,
 } from '@symbiot-core-apps/form-controller';
 import { AccountAppearance } from '@symbiot-core-apps/api';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const SchemeAppearance = () => {
   const navigation = useNavigation();
@@ -75,6 +70,7 @@ export const SchemeAppearance = () => {
             }
           />
 
+          {/*todo check*/}
           {!!scheme && (
             <ToggleGroup
               disabled={updating}

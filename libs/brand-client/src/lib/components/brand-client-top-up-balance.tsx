@@ -7,12 +7,7 @@ import {
   useBrandVisitBasedMembershipCurrentListReq,
 } from '@symbiot-core-apps/api';
 import React, { ReactElement, RefObject, useCallback } from 'react';
-import {
-  Icon,
-  InitView,
-  ListItem,
-  SlideSheetModal,
-} from '@symbiot-core-apps/ui';
+import { InitView, ListItem, SlideSheetModal } from '@symbiot-core-apps/ui';
 import { View } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { useI18n, useModal } from '@symbiot-core-apps/shared';
@@ -20,7 +15,7 @@ import { BrandMembershipsCurrentList } from '@symbiot-core-apps/brand-membership
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
-import { AdaptiveSheet, AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
+import { AdaptiveSheet, AdaptiveSheetRef, Icon } from '@symbiot-core-apps/ui2';
 
 export const BrandClientTopUpBalance = ({
   client,

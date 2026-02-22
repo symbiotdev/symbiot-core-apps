@@ -2,7 +2,6 @@ import {
   AnimatedList,
   Button,
   EmptyView,
-  Icon,
   InitView,
 } from '@symbiot-core-apps/ui';
 import {
@@ -20,6 +19,7 @@ import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { Search } from '@symbiot-core-apps/form-controller';
 import {
   GlassViewBackground,
+  Icon,
   Page,
   PAGE_STYLE,
   ScrollablePage,

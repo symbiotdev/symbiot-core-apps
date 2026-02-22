@@ -16,7 +16,6 @@ import {
   CompactView,
   compactViewStyles,
   EmptyView,
-  Icon,
   InitView,
   ListItem,
   ListItemGroup,
@@ -39,6 +38,7 @@ import { View, ViewProps } from 'tamagui';
 import {
   AdaptiveSheet,
   AdaptiveSheetRef,
+  Icon,
   PAGE_STYLE,
 } from '@symbiot-core-apps/ui2';
 

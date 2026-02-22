@@ -1,10 +1,10 @@
 import { ViewProps, XStack } from 'tamagui';
 import { compactViewStyles } from '../view/compact-view';
-import { defaultIconSize, Icon, IconName } from '../icons';
 import { Card } from './card';
 import { ButtonIcon } from '../button/button';
 import { RegularText } from '../text/text';
 import { H3 } from '../text/heading';
+import { defaultIconSize, Icon, IconName } from '@symbiot-core-apps/ui2';
 
 export const ClosableCard = ({
   iconName,

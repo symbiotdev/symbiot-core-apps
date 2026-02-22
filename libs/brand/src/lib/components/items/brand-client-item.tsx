@@ -2,13 +2,13 @@ import { emitHaptic } from '@symbiot-core-apps/shared';
 import {
   Avatar,
   CompactView,
-  Icon,
   MediumText,
   RegularText,
   Spinner,
 } from '@symbiot-core-apps/ui';
 import { View, ViewProps } from 'tamagui';
 import { BrandClient } from '@symbiot-core-apps/api';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 export const BrandClientItem = ({
   client,

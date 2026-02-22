@@ -9,7 +9,6 @@ import {
 import {
   ButtonIcon,
   CompactView,
-  Icon,
   ListItem,
   ListItemGroup,
   SlideSheetModal,
@@ -22,7 +21,7 @@ import { SingeElementForm } from '@symbiot-core-apps/form-controller';
 import { BrandClientBirthdayController } from './controller/brand-client-membership-end-at-controller';
 import { View, XStack } from 'tamagui';
 import { BrandClientMembershipVisitsController } from './controller/brand-client-membership-visits-controller';
-import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandClientMembership = ({
   clientId,

@@ -13,7 +13,7 @@ import {
   useAppScheme,
   useCurrentAccountPreferences,
 } from '@symbiot-core-apps/state';
-import { Icon, LightText } from '@symbiot-core-apps/ui';
+import { LightText } from '@symbiot-core-apps/ui';
 import RNDatepicker from 'react-native-date-picker';
 import { MaskedTextInput } from 'react-native-mask-text';
 import { FormField } from '../wrapper/form-field';
@@ -22,6 +22,7 @@ import {
   AdaptiveSheet,
   AdaptiveSheetRef,
   Container,
+  Icon,
 } from '@symbiot-core-apps/ui2';
 
 type Value = Date | null | string;

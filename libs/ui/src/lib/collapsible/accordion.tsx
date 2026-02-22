@@ -1,10 +1,10 @@
 import { useTheme, View, ViewProps, XStack } from 'tamagui';
 import Collapsible from 'react-native-collapsible';
 import { ReactElement, useCallback, useState } from 'react';
-import { Icon } from '../icons';
 import { Card } from '../card/card';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { SemiBoldText } from '../text/text';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 type AccordionItem = {
   title: string;
@@ -60,11 +60,7 @@ const Item = ({
         alignItems="center"
         onPress={toggle}
       >
-        <SemiBoldText
-          lineHeight={20}
-          paddingVertical="$4"
-          flex={1}
-        >
+        <SemiBoldText lineHeight={20} paddingVertical="$4" flex={1}>
           {item.title}
         </SemiBoldText>
 
@@ -72,7 +68,9 @@ const Item = ({
       </XStack>
 
       <Collapsible collapsed={collapsed}>
-        <View flex={1} paddingBottom="$3">{item.content}</View>
+        <View flex={1} paddingBottom="$3">
+          {item.content}
+        </View>
       </Collapsible>
     </View>
   );

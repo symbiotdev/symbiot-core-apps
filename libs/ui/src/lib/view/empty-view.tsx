@@ -1,9 +1,9 @@
 import { View, ViewProps } from 'tamagui';
 import { H3 } from '../text/heading';
 import { RegularText } from '../text/text';
-import { Icon, IconName } from '../icons';
 import { CompactView } from './compact-view';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { Icon, IconName } from '@symbiot-core-apps/ui2';
 
 export const EmptyView = ({
   iconName,

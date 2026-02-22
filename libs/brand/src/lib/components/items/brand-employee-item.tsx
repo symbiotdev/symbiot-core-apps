@@ -3,11 +3,11 @@ import { emitHaptic } from '@symbiot-core-apps/shared';
 import {
   Avatar,
   CompactView,
-  Icon,
   MediumText,
   RegularText,
 } from '@symbiot-core-apps/ui';
 import { View, ViewProps } from 'tamagui';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 export const BrandEmployeeItem = ({
   employee,
@@ -44,11 +44,7 @@ export const BrandEmployeeItem = ({
 
       <View gap="$1" flex={1}>
         <MediumText numberOfLines={1}>{employee.name}</MediumText>
-        <RegularText
-          color="$placeholder"
-          numberOfLines={1}
-          lineHeight={20}
-        >
+        <RegularText color="$placeholder" numberOfLines={1} lineHeight={20}>
           {employee.role}
         </RegularText>
       </View>

@@ -1,10 +1,11 @@
 import { BrandClient, BrandMembershipType } from '@symbiot-core-apps/api';
 import { useAppSettings } from '@symbiot-core-apps/app';
-import { Icon, ListItem, ListItemGroup } from '@symbiot-core-apps/ui';
+import { ListItem, ListItemGroup } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import React from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 export const BrandClientHistory = ({ client }: { client: BrandClient }) => {
   const { icons } = useAppSettings();

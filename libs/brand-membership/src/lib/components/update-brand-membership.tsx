@@ -14,7 +14,6 @@ import {
 import {
   CompactView,
   compactViewStyles,
-  Icon,
   ListItem,
   ListItemGroup,
   SlideSheetModal,
@@ -43,6 +42,7 @@ import { BrandMembershipServicesController } from './controller/brand-membership
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { BrandMembershipVisitsController } from './controller/brand-membership-visits-controller';
 import {
+  Icon,
   LoadingContainer,
   PAGE_STYLE,
   ScrollablePage,

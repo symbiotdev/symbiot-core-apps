@@ -21,7 +21,6 @@ import {
   Avatar,
   CompactView,
   H3,
-  Icon,
   ListItem,
   ListItemGroup,
   MediumText,
@@ -40,7 +39,7 @@ import {
   useAppSettings,
   useAppVersionUpdateType,
 } from '@symbiot-core-apps/app';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t, supportedLanguages } = useI18n();

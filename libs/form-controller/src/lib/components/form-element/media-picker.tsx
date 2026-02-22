@@ -18,8 +18,8 @@ import {
 import { filesize } from 'filesize';
 import { Linking } from 'react-native';
 import { View } from 'tamagui';
-import { Icon, Link, ListItem } from '@symbiot-core-apps/ui';
-import { AdaptiveSheet, AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
+import { Link, ListItem } from '@symbiot-core-apps/ui';
+import { AdaptiveSheet, AdaptiveSheetRef, Icon } from '@symbiot-core-apps/ui2';
 
 export const maxAvatarFileSize = 10485760;
 

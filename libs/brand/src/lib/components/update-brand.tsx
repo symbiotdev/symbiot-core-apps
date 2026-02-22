@@ -1,6 +1,5 @@
 import {
   CompactView,
-  Icon,
   ListItem,
   ListItemGroup,
   SlideSheetModal,
@@ -35,7 +34,7 @@ import { BrandCurrencyController } from './contoller/brand-currency-controller';
 import { BrandWebsiteController } from './contoller/brand-website-controller';
 import { BrandInstagramController } from './contoller/brand-instagram-controller';
 import { View } from 'tamagui';
-import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 type GroupProps = {
   brand: Brand;

@@ -6,9 +6,8 @@ import {
 } from 'expo-location';
 import {
   Button,
-  EmptyView,
   CompactView,
-  Icon,
+  EmptyView,
   MediumText,
   SlideSheetModal,
   Spinner,
@@ -19,6 +18,7 @@ import { View, XStack } from 'tamagui';
 import { Linking, TextInputProps } from 'react-native';
 import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 import { Input, onChangeInput } from './input';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 export const AddressPicker = ({
   onChange,

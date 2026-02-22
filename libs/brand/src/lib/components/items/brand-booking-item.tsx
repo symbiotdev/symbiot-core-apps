@@ -5,10 +5,11 @@ import {
   BrandBookingType,
   isBrandBookingAllDay,
 } from '@symbiot-core-apps/api';
-import { Icon, MediumText, RegularText } from '@symbiot-core-apps/ui';
+import { MediumText, RegularText } from '@symbiot-core-apps/ui';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { useMemo } from 'react';
 import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 export const configByType: Record<
   BrandBookingType,

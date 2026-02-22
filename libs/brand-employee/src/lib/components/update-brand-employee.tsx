@@ -1,7 +1,6 @@
 import {
   Card,
   CompactView,
-  Icon,
   ListItem,
   ListItemGroup,
   SlideSheetModal,
@@ -52,7 +51,7 @@ import { BrandEmployeePermissionsController } from './controller/brand-employee-
 import { useForm } from 'react-hook-form';
 import { useDynamicBrandLocation } from '@symbiot-core-apps/brand';
 import { View } from 'tamagui';
-import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandEmployee = ({
   employee,

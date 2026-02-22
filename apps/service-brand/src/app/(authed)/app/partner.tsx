@@ -3,7 +3,6 @@ import {
   ActionCard,
   CompactView,
   H2,
-  Icon,
   ListItem,
   ListItemGroup,
   RegularText,
@@ -26,7 +25,7 @@ import {
   usePartnerPromoImage,
   usePartnerPromoPresentation,
 } from '@symbiot-core-apps/api';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 const downloadUrl = process.env['EXPO_PUBLIC_UNIVERSAL_DOWNLOAD_URL'] as string;
 const websiteUrl = process.env['EXPO_PUBLIC_WEBSITE_URL'] as string;

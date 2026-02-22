@@ -14,7 +14,6 @@ import {
   H3,
   H4,
   headerButtonSize,
-  Icon,
   MediumText,
   RegularText,
   useScreenHeaderHeight,
@@ -33,7 +32,7 @@ import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
 import { useRoute } from '@react-navigation/native';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { SmartSelect } from '@symbiot-core-apps/form-controller';
-import { AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
+import { AdaptiveSheetRef, Icon } from '@symbiot-core-apps/ui2';
 
 const today = new Date();
 

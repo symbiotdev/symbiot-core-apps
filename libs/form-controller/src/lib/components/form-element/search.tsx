@@ -6,7 +6,7 @@ import { useDebounceCallback, useI18n } from '@symbiot-core-apps/shared';
 import { forwardRef, Ref, useCallback, useMemo, useState } from 'react';
 import { FormField } from '../wrapper/form-field';
 import { InputFieldView, InputHeight } from '../wrapper/input-field-view';
-import { Icon } from '@symbiot-core-apps/ui';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 export const Search = forwardRef(
   (

@@ -2,8 +2,8 @@ import { ColorTokens, View, ViewProps } from 'tamagui';
 import { useState } from 'react';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { BoldText, MediumText, RegularText } from '../text/text';
-import { defaultIconSize, Icon, IconName } from '../icons';
 import { StyleSheet, View as RNView } from 'react-native';
+import { defaultIconSize, Icon, IconName } from '@symbiot-core-apps/ui2';
 
 type CardGridItem = {
   label: string;

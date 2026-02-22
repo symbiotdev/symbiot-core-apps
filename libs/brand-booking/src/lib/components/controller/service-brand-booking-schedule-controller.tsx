@@ -6,7 +6,6 @@ import {
   Avatar,
   Button,
   EmptyView,
-  Icon,
   InitView,
 } from '@symbiot-core-apps/ui';
 import {
@@ -25,6 +24,7 @@ import {
   SmartSelect,
 } from '@symbiot-core-apps/form-controller';
 import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 type ScheduleControl = Control<{
   schedule: {

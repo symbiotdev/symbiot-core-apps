@@ -18,8 +18,6 @@ export * from './lib/collapsible/accordion';
 
 export * from './lib/devider/br';
 
-export * from './lib/icons';
-
 export * from './lib/list/animated-list';
 export * from './lib/list/list-item';
 export * from './lib/list/section-list';
@@ -41,9 +39,6 @@ export * from './lib/navigation/header';
 export * from './lib/navigation/header-button';
 export * from './lib/navigation/header-title';
 export * from './lib/navigation/modal-header';
-
-export * from './lib/popover/adaptive-popover';
-export * from './lib/popover/context-menu-popover';
 
 export * from './lib/qr/qr-code';
 export * from './lib/qr/qr-code-modal';

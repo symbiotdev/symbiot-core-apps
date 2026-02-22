@@ -1,4 +1,4 @@
-import { Br, Icon, IconName, RegularText } from '@symbiot-core-apps/ui';
+import { Br, RegularText } from '@symbiot-core-apps/ui';
 import React, { ReactElement, useCallback, useRef } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { router } from 'expo-router';
@@ -8,7 +8,12 @@ import { BrandBookingType, BrandMembershipType } from '@symbiot-core-apps/api';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { ScrollView } from 'react-native';
-import { AdaptiveSheet, AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
+import {
+  AdaptiveSheet,
+  AdaptiveSheetRef,
+  Icon,
+  IconName,
+} from '@symbiot-core-apps/ui2';
 
 const ListItem = ({
   iconName,

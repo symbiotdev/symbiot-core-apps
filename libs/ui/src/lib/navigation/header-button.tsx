@@ -1,8 +1,8 @@
 import { BaseSyntheticEvent, memo } from 'react';
 import { Pressable } from 'react-native';
 import { emitHaptic } from '@symbiot-core-apps/shared';
-import { Icon, IconName } from '../icons';
 import { AttentionView } from '../view/attention-view';
+import { Icon, IconName } from '@symbiot-core-apps/ui2';
 
 export const HeaderButton = memo(
   ({

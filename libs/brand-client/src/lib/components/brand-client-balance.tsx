@@ -4,7 +4,6 @@ import {
   Button,
   compactViewStyles,
   EmptyView,
-  Icon,
 } from '@symbiot-core-apps/ui';
 import React, { useRef } from 'react';
 import { AnyBrandClientMembership, BrandClient } from '@symbiot-core-apps/api';
@@ -12,7 +11,7 @@ import { BrandClientMembershipItem } from '@symbiot-core-apps/brand';
 import { BrandClientTopUpBalance } from './brand-client-top-up-balance';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
-import { AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
+import { AdaptiveSheetRef, Icon } from '@symbiot-core-apps/ui2';
 
 export const BrandClientBalance = ({
   client,

@@ -2,7 +2,6 @@ import {
   Button,
   CompactView,
   H2,
-  Icon,
   RegularText,
   SemiBoldText,
 } from '@symbiot-core-apps/ui';
@@ -14,7 +13,7 @@ import {
 import { useAppVersionUpdateType } from '@symbiot-core-apps/app';
 import { useLayoutEffect } from 'react';
 import { hideAsync } from 'expo-splash-screen';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t } = useI18n();

@@ -1,4 +1,4 @@
-import { Button, Icon } from '@symbiot-core-apps/ui';
+import { Button } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useState } from 'react';
 import {
   GoogleSignin,
@@ -6,6 +6,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import { isWeb, useI18n } from '@symbiot-core-apps/shared';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 GoogleSignin.configure({
   webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,

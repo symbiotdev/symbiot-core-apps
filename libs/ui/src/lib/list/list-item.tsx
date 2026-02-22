@@ -11,7 +11,7 @@ import { MediumText, RegularText } from '../text/text';
 import { Card } from '../card/card';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { GestureResponderEvent } from 'react-native';
-import { defaultIconSize } from '../icons';
+import { defaultIconSize } from '@symbiot-core-apps/ui2';
 
 export const ListItemGroup = memo(
   (props: ViewProps & { title?: string; titleProps?: TextProps }) => {

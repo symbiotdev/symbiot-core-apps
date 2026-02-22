@@ -8,7 +8,6 @@ import {
   H4,
   HeaderButton,
   headerButtonSize,
-  Icon,
   QrCodeModal,
   RegularText,
   useDrawer,
@@ -29,7 +28,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { TodayBrandBookings } from '@symbiot-core-apps/brand-booking';
 import { BrandCongrats, MyBrandsSelectionList } from '@symbiot-core-apps/brand';
-import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 const InitialAction = () => {
   const { me } = useCurrentAccountState();

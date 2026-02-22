@@ -24,7 +24,6 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import { Icon } from '../icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { compactViewStyles } from '../view/compact-view';
 import { Button } from '../button/button';
@@ -42,6 +41,7 @@ import { EventArg, NavigationAction } from '@react-navigation/native';
 import {
   Container,
   GlassView,
+  Icon,
   LoadingContainer,
   PAGE_STYLE,
 } from '@symbiot-core-apps/ui2';

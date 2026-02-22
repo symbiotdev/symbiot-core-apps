@@ -7,7 +7,6 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   CompactView,
-  Icon,
   ListItem,
   ListItemGroup,
   SlideSheetModal,
@@ -39,7 +38,7 @@ import { BrandLocationAdvantagesController } from './controller/brand-location-a
 import { BrandLocationTimezoneController } from './controller/brand-location-timezone-controller';
 import { BrandLocationCountryController } from './controller/brand-location-country-controller';
 import { BrandLocationUsStateController } from './controller/brand-location-us-state-controller';
-import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandLocation = ({
   location,

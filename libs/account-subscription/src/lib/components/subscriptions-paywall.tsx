@@ -4,7 +4,6 @@ import {
   CompactView,
   ExtraBoldText,
   H2,
-  Icon,
   MediumText,
   RegularText,
   SemiBoldText,
@@ -24,6 +23,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { DeiceOS, emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 import { PromoCodeTrigger } from './promo-code-trigger';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 export const SubscriptionsPaywall = ({
   offering,
@@ -157,11 +157,7 @@ export const SubscriptionsPaywall = ({
               {pkg.product.priceString}
             </ExtraBoldText>
 
-            <MediumText
-              textAlign="center"
-              color="$placeholder"
-              fontSize={12}
-            >
+            <MediumText textAlign="center" color="$placeholder" fontSize={12}>
               {pkg.product.pricePerWeekString}/{t('shared.datetime.unit.week')}
             </MediumText>
           </View>

@@ -2,7 +2,6 @@ import {
   Accordion,
   ActionCard,
   CompactView,
-  Icon,
   RegularText,
 } from '@symbiot-core-apps/ui';
 import { useCallback, useEffect, useMemo } from 'react';
@@ -10,7 +9,7 @@ import { Linking } from 'react-native';
 import { useFaqState } from '@symbiot-core-apps/state';
 import { useAppFaqReq } from '@symbiot-core-apps/api';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { LoadingContainer, ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, LoadingContainer, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const Faq = () => {
   const { t } = useI18n();

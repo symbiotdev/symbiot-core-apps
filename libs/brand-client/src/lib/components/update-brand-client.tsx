@@ -6,7 +6,6 @@ import {
 } from '@symbiot-core-apps/api';
 import {
   CompactView,
-  Icon,
   ListItem,
   ListItemGroup,
   SlideSheetModal,
@@ -30,7 +29,7 @@ import { BrandClientLastnameController } from './controller/brand-client-lastnam
 import { BrandClientNoteController } from './controller/brand-client-note-controller';
 import { BrandClientPhoneController } from './controller/brand-client-phone-controller';
 import { PhoneNumber } from 'react-native-phone-input/dist';
-import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =

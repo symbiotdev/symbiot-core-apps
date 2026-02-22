@@ -1,9 +1,9 @@
 import { View, ViewProps, XStack, XStackProps } from 'tamagui';
 import { memo, ReactElement } from 'react';
 import { emitHaptic, isEqual } from '@symbiot-core-apps/shared';
-import { Icon, IconName, InitView, RegularText } from '@symbiot-core-apps/ui';
+import { InitView, RegularText } from '@symbiot-core-apps/ui';
 import { FormField } from '../wrapper/form-field';
-import { Container } from '@symbiot-core-apps/ui2';
+import { Container, Icon, IconName } from '@symbiot-core-apps/ui2';
 
 export type ToggleGroupItem = {
   value: unknown;

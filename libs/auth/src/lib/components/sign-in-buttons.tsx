@@ -3,10 +3,11 @@ import { useCallback, useMemo, useState } from 'react';
 import FirebaseAuth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { GoogleAuthButton } from './google-auth-button';
 import { isAvailableAsync } from 'expo-apple-authentication';
-import { Button, CompactView, Error, Icon } from '@symbiot-core-apps/ui';
+import { Button, CompactView, Error } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useAccountAuthSignInWithFirebaseReq } from '@symbiot-core-apps/api';
 import { isIos, isWeb, useI18n } from '@symbiot-core-apps/shared';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 // check why not available on web https://react-native-google-signin.github.io/docs/setting-up/web
 const isGoogleAuthAvailable = !isWeb;

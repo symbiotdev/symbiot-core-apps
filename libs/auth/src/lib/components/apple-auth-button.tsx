@@ -3,8 +3,9 @@ import {
   signInAsync,
 } from 'expo-apple-authentication';
 import { useCallback, useState } from 'react';
-import { Button, Icon } from '@symbiot-core-apps/ui';
+import { Button } from '@symbiot-core-apps/ui';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { Icon } from '@symbiot-core-apps/ui2';
 
 export const AppleAuthButton = ({
   pending,

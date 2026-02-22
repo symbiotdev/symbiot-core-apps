@@ -1,9 +1,4 @@
-import {
-  CompactView,
-  Icon,
-  ListItem,
-  ListItemGroup,
-} from '@symbiot-core-apps/ui';
+import { CompactView, ListItem, ListItemGroup } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import {
   openBrowserAsync,
@@ -11,7 +6,7 @@ import {
 } from 'expo-web-browser';
 import { ReactNativeLegal } from 'react-native-legal';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const TermsPrivacy = () => {
   const { t } = useI18n();

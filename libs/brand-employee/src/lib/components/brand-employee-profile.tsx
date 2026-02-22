@@ -5,7 +5,6 @@ import {
   Card,
   CompactView,
   H3,
-  Icon,
   ListItemGroup,
   MapsTrigger,
   MediumText,
@@ -25,7 +24,7 @@ import { router } from 'expo-router';
 import { Linking } from 'react-native';
 import { BrandEmployeeCongrats } from './brand-employee-congrats';
 import { BrandEmployeeProfileCompletion } from './brand-employee-profile-completion';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const BrandEmployeeProfile = ({
   employee,

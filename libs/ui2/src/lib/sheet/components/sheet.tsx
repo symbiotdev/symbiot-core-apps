@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useLayoutEffect } from 'react';
-import { ScrollViewProps, View } from 'react-native';
+import { ScrollViewProps, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
 import Animated, {
@@ -36,14 +36,20 @@ const defaultHorizontalMargin = defaultBorderRadius ? 5 : 0;
 const AnimatedGlassView = Animated.createAnimatedComponent(GlassView);
 
 export const Sheet = ({
+  title,
   visible,
-  maxHeight,
+  disabled,
+  gestureDisabled,
   children,
+  maxHeight,
   excludePaddings,
   onClose,
 }: PropsWithChildren<{
+  title?: string;
   visible: boolean;
   maxHeight: number;
+  disabled?: boolean;
+  gestureDisabled?: boolean;
   excludePaddings?: boolean;
   onClose: () => void;
 }>) => {
@@ -86,7 +92,8 @@ export const Sheet = ({
       } else {
         scheduleOnRN(onClose);
       }
-    });
+    })
+    .enabled(!gestureDisabled && !disabled);
 
   const sheetAnimatedStyle = useAnimatedStyle(() => ({
     paddingBottom: Math.abs(
@@ -143,6 +150,10 @@ export const Sheet = ({
               marginBottom: defaultMarginBottom,
               maxHeight:
                 maxHeight - top - Math.abs(defaultHorizontalMargin * 2),
+              ...(disabled && {
+                pointerEvents: 'none',
+                opacity: 0.5,
+              }),
             },
           ]}
           onLayout={(e) => height$.set(e.nativeEvent.layout.height)}
@@ -161,10 +172,17 @@ export const Sheet = ({
             }}
           >
             <SheetHandle
-              ignorePanGesture={isGestureScrollLimited}
+              ignorePanGesture={!isGestureScrollLimited}
               panGesture={panGesture}
               onPress={() => ignoreScroll$.set(true)}
             />
+
+            {/*fixme - replace to header*/}
+            {!!title && (
+              <Text style={{ paddingTop: 25, textAlign: 'center' }}>
+                {title}
+              </Text>
+            )}
 
             {isGestureScrollLimited
               ? children

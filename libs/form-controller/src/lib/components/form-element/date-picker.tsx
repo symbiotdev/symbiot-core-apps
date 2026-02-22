@@ -13,17 +13,16 @@ import {
   useAppScheme,
   useCurrentAccountPreferences,
 } from '@symbiot-core-apps/state';
-import {
-  AdaptivePopover,
-  AdaptivePopoverRef,
-  Icon,
-  LightText,
-} from '@symbiot-core-apps/ui';
+import { Icon, LightText } from '@symbiot-core-apps/ui';
 import RNDatepicker from 'react-native-date-picker';
 import { MaskedTextInput } from 'react-native-mask-text';
 import { FormField } from '../wrapper/form-field';
 import { InputFieldView } from '../wrapper/input-field-view';
-import { Container } from '@symbiot-core-apps/ui2';
+import {
+  AdaptiveSheet,
+  AdaptiveSheetRef,
+  Container,
+} from '@symbiot-core-apps/ui2';
 
 type Value = Date | null | string;
 
@@ -358,11 +357,13 @@ const DateAsPicker = ({
   minDate,
   maxDate,
   onChange,
+  onChangeGestureAvailability,
 }: {
   value?: Value;
   minDate?: Date;
   maxDate?: Date;
   onChange?: (date: Date | null) => void;
+  onChangeGestureAvailability: (enabled: boolean) => void;
 }) => {
   const { lang } = useI18n();
   const { scheme } = useAppScheme();
@@ -372,10 +373,14 @@ const DateAsPicker = ({
       date={new Date(value || Date.now())}
       mode="date"
       locale={lang}
+      theme={scheme}
       minimumDate={minDate}
       maximumDate={maxDate}
-      theme={scheme}
       onDateChange={onChange}
+      onTouchStart={() => onChangeGestureAvailability(false)}
+      onTouchMove={() => onChangeGestureAvailability(false)}
+      onTouchEnd={() => onChangeGestureAvailability(true)}
+      onTouchCancel={() => onChangeGestureAvailability(true)}
     />
   );
 };
@@ -409,11 +414,13 @@ const PopoverDateField = ({
   onChange?: (date: Date | null) => unknown;
   onBlur?: () => void;
 }) => {
-  const popoverRef = useRef<AdaptivePopoverRef>(null);
+  const popoverRef = useRef<AdaptiveSheetRef>(null);
+
+  const [sheetGestureEnabled, setSheetGestureEnabled] = useState(true);
 
   const onChangeCalendarDate = useCallback(
     (date: Date | null) => {
-      popoverRef.current?.close();
+      popoverRef.current?.hide();
       onChange?.(date);
       onBlur?.();
     },
@@ -421,13 +428,13 @@ const PopoverDateField = ({
   );
 
   return (
-    <AdaptivePopover
+    <AdaptiveSheet
       ref={popoverRef}
       disabled={disabled}
-      disableDrag={disableDrag}
+      sheetGestureDisabled={!sheetGestureEnabled}
       sheetTitle={label}
       trigger={
-        <InputFieldView pressStyle={{ opacity: 0.8 }} {...viewProps}>
+        <InputFieldView {...viewProps}>
           <LightText
             color={!value ? '$placeholder' : disabled ? '$disabled' : '$color'}
           >
@@ -458,9 +465,10 @@ const PopoverDateField = ({
             minDate={minDate}
             maxDate={maxDate}
             onChange={onChange}
+            onChangeGestureAvailability={setSheetGestureEnabled}
           />
         )}
       </Container>
-    </AdaptivePopover>
+    </AdaptiveSheet>
   );
 };

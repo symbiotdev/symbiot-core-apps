@@ -15,6 +15,7 @@ const AnimatedGlassView = Animated.createAnimatedComponent(GlassView);
 
 export const Popover = ({
   visible,
+  disabled,
   maxHeight,
   children,
   triggerRect,
@@ -23,6 +24,7 @@ export const Popover = ({
 }: PropsWithChildren<{
   visible: boolean;
   maxHeight: number;
+  disabled?: boolean;
   popoverPlacement?: Placement;
   triggerRect: LayoutRectangle;
   onClose: () => void;
@@ -73,6 +75,10 @@ export const Popover = ({
             borderRadius: 25,
             maxHeight: maxHeight - 50,
             position: strategy as ViewStyle['position'],
+            ...(disabled && {
+              pointerEvents: 'none',
+              opacity: 0.5,
+            }),
           },
         ]}
       >

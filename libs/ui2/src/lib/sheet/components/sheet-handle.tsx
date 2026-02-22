@@ -12,11 +12,11 @@ export const SheetHandle = ({
   onPress: () => void;
 }) =>
   ignorePanGesture ? (
+    <Container onPress={onPress} />
+  ) : (
     <GestureDetector gesture={panGesture}>
       <Container onPress={onPress} />
     </GestureDetector>
-  ) : (
-    <Container onPress={onPress} />
   );
 
 const Container = ({ onPress }: { onPress: () => void }) => (
@@ -25,7 +25,6 @@ const Container = ({ onPress }: { onPress: () => void }) => (
       position: 'absolute',
       alignItems: 'center',
       justifyContent: 'center',
-      width: '100%',
       height: 24,
       top: 0,
       left: 0,

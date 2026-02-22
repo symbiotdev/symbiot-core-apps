@@ -29,12 +29,21 @@ export type AdaptiveSheetRef = {
 
 type Props = PropsWithChildren<{
   trigger: ReactElement;
+  disabled?: boolean;
+  forceAdaptive?: 'sheet' | 'popover';
   popoverPlacement?: Placement;
+  sheetTitle?: string;
+  sheetGestureDisabled?: boolean;
   excludePaddings?: boolean;
+  onOpen?: () => void;
+  onClose?: () => void;
 }>;
 
 export const AdaptiveSheet = forwardRef(
-  ({ trigger, ...props }: Props, ref: ForwardedRef<AdaptiveSheetRef>) => {
+  (
+    { trigger, disabled, onOpen, onClose, ...props }: Props,
+    ref: ForwardedRef<AdaptiveSheetRef>,
+  ) => {
     const [state, setState] = useState<{
       modalRendered: boolean;
       modalVisible: boolean;
@@ -55,18 +64,21 @@ export const AdaptiveSheet = forwardRef(
           modalVisible: true,
           contentVisible: true,
         }));
-      }, []),
+        onOpen?.();
+      }, [onOpen]),
     );
 
     const hide = useKeyboardDismisser(
       useCallback(() => {
+        if (disabled) return;
+
         emitHaptic();
         setState((prev) => ({ ...prev, contentVisible: false }));
-        setTimeout(
-          () => setState((prev) => ({ ...prev, modalVisible: false })),
-          300,
-        );
-      }, []),
+        setTimeout(() => {
+          setState((prev) => ({ ...prev, modalVisible: false }));
+          onClose?.();
+        }, 300);
+      }, [disabled, onClose]),
     );
 
     const onTriggerPress = useCallback(
@@ -113,6 +125,7 @@ export const AdaptiveSheet = forwardRef(
         {state.modalRendered && (
           <AdaptiveContent
             {...props}
+            disabled={disabled}
             triggerRect={state.triggerRect}
             modalVisible={state.modalVisible}
             contentVisible={state.contentVisible}
@@ -125,9 +138,12 @@ export const AdaptiveSheet = forwardRef(
 );
 
 const AdaptiveContent = ({
+  sheetTitle,
+  sheetGestureDisabled,
+  triggerRect,
   modalVisible,
   contentVisible,
-  triggerRect,
+  forceAdaptive,
   onClose,
   ...props
 }: Omit<Props, 'trigger'> & {
@@ -152,7 +168,7 @@ const AdaptiveContent = ({
       supportedOrientations={['portrait', 'landscape']}
       onRequestClose={onClose}
     >
-      {triggerRect && width > 768 ? (
+      {triggerRect && (forceAdaptive === 'popover' || width > 768) ? (
         <Popover
           {...props}
           triggerRect={triggerRect}
@@ -163,8 +179,10 @@ const AdaptiveContent = ({
       ) : (
         <Sheet
           {...props}
+          title={sheetTitle}
           maxHeight={height}
           visible={contentVisible}
+          gestureDisabled={sheetGestureDisabled}
           onClose={onClose}
         />
       )}

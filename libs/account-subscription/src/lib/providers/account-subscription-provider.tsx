@@ -9,17 +9,13 @@ import React, {
   useState,
 } from 'react';
 import Purchases, { PurchasesPackage } from 'react-native-purchases';
-import { Linking } from 'react-native';
+import { Linking, ScrollView } from 'react-native';
 import {
   useCurrentAccountState,
   useCurrentBrandEmployee,
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
-import {
-  AdaptivePopover,
-  AdaptivePopoverRef,
-  SlideSheetModal,
-} from '@symbiot-core-apps/ui';
+import { SlideSheetModal } from '@symbiot-core-apps/ui';
 import { SubscriptionsPaywall } from '../components/subscriptions-paywall';
 import { DevelopmentPaywall } from '../components/development-paywall';
 import { PromoCodeApplyForm } from '../components/promo-code-apply-form';
@@ -30,7 +26,11 @@ import {
   isWeb,
   useI18n,
 } from '@symbiot-core-apps/shared';
-import { LoadingContainer } from '@symbiot-core-apps/ui2';
+import {
+  AdaptiveSheet,
+  AdaptiveSheetRef,
+  LoadingContainer,
+} from '@symbiot-core-apps/ui2';
 
 type AccountSubscriptionContext = {
   processing: boolean;
@@ -61,7 +61,7 @@ export const AccountSubscriptionProvider = ({
   const { brand } = useCurrentBrandState();
   const { currentEmployee } = useCurrentBrandEmployee();
 
-  const paywallRef = useRef<AdaptivePopoverRef>(null);
+  const sheetRef = useRef<AdaptiveSheetRef>(null);
 
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [restoring, setRestoring] = useState<boolean>(false);
@@ -95,9 +95,9 @@ export const AccountSubscriptionProvider = ({
     [isSubscriptionsAvailable, hasActualSubscription],
   );
 
-  const showPaywall = useCallback(() => paywallRef.current?.open(), []);
+  const showPaywall = useCallback(() => sheetRef.current?.show(), []);
 
-  const closePaywall = useCallback(() => paywallRef.current?.close(), []);
+  const closePaywall = useCallback(() => sheetRef.current?.hide(), []);
 
   const showPromoCodeForm = useCallback(() => {
     closePaywall();
@@ -174,19 +174,15 @@ export const AccountSubscriptionProvider = ({
       {children}
 
       {!isPromoCodeFormVisible && !!me?.offering && (
-        <AdaptivePopover
-          hideHandle
-          unmountChildrenWhenHidden
-          triggerType="manual"
-          maxHeight={1000}
+        <AdaptiveSheet
+          sheetHandleVisible={false}
           disabled={subscribing || restoring}
-          disableDrag={subscribing || restoring}
-          ref={paywallRef}
+          ref={sheetRef}
         >
           {isDevMode ? (
             <DevelopmentPaywall onApplyPromoCode={showPromoCodeForm} />
           ) : (
-            <>
+            <ScrollView>
               {!packages.length && <LoadingContainer />}
 
               {!!packages.length && (
@@ -201,9 +197,9 @@ export const AccountSubscriptionProvider = ({
                   onApplyPromoCode={showPromoCodeForm}
                 />
               )}
-            </>
+            </ScrollView>
           )}
-        </AdaptivePopover>
+        </AdaptiveSheet>
       )}
 
       <SlideSheetModal

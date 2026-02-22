@@ -33,6 +33,10 @@ export const Picker = ({
   contentContainerStyle,
   moveSelectedToTop,
   onChange,
+  onTouchStart,
+  onTouchMove,
+  onTouchEnd,
+  onTouchCancel,
   ...viewProps
 }: Omit<ViewProps, 'onMoveShouldSetResponder'> & {
   value?: unknown;
@@ -45,6 +49,10 @@ export const Picker = ({
   moveSelectedToTop?: boolean; // not applicable on IOS
   contentContainerStyle?: ViewStyle; // not applicable on IOS
   onChange?: PickerOnChange;
+  onTouchStart?: () => void;
+  onTouchMove?: () => void;
+  onTouchEnd?: () => void;
+  onTouchCancel: () => void;
 }) => {
   const theme = useTheme();
   const [selectedValue, setSelectedValue] = useState(value);
@@ -75,14 +83,10 @@ export const Picker = ({
     <View
       flex={1}
       disabled={disabled}
-      paddingTop={25}
-      paddingBottom={50}
-      onMoveShouldSetResponder={(e) => {
-        e?.stopPropagation?.();
-        e?.preventDefault?.();
-
-        return false;
-      }}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      onTouchCancel={onTouchCancel}
       {...viewProps}
     >
       <RNPicker
@@ -109,6 +113,10 @@ export const Picker = ({
       contentContainerStyle={contentContainerStyle}
       ignoreScrollTopOnChange={!moveSelectedToTop}
       onChange={onValueChange as PickerOnChange}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      onTouchCancel={onTouchCancel}
     />
   );
 };
@@ -122,6 +130,10 @@ const CustomPicker = ({
   optionsCentered = true,
   contentContainerStyle,
   onChange,
+  onTouchStart,
+  onTouchMove,
+  onTouchEnd,
+  onTouchCancel,
 }: {
   value?: unknown;
   disabled?: boolean;
@@ -131,6 +143,10 @@ const CustomPicker = ({
   optionsCentered?: boolean;
   options: PickerItem[];
   onChange: PickerOnChange;
+  onTouchStart?: () => void;
+  onTouchMove?: () => void;
+  onTouchEnd?: () => void;
+  onTouchCancel: () => void;
 }) => {
   const { rendered } = useRendered({ defaultTrue: !lazy, delay: 300 });
 
@@ -234,11 +250,10 @@ const CustomPicker = ({
       onScrollToIndexFailed={(info) =>
         setTimeout(() => scrollToIndex(info.index))
       }
-      onMoveShouldSetResponder={(e) => {
-        e.stopPropagation();
-
-        return false;
-      }}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      onTouchCancel={onTouchCancel}
     />
   );
 };

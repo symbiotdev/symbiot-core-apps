@@ -9,7 +9,6 @@ import {
   useNativeNow,
 } from '@symbiot-core-apps/shared';
 import {
-  AdaptivePopoverRef,
   Avatar,
   ButtonIcon,
   H3,
@@ -34,6 +33,7 @@ import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
 import { useRoute } from '@react-navigation/native';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { SmartSelect } from '@symbiot-core-apps/form-controller';
+import { AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
 
 const today = new Date();
 
@@ -48,7 +48,7 @@ export default () => {
   const { hasPermission } = useCurrentBrandEmployee();
   const allLocations = useAllBrandLocation();
 
-  const popoverRef = useRef<AdaptivePopoverRef>(null);
+  const sheetRef = useRef<AdaptiveSheetRef>(null);
   const timeGridRef = useRef<TimeGridRef>(null);
 
   const [selectedDate, setSelectedDate] = useState(today);
@@ -175,7 +175,7 @@ export default () => {
             )
           }
           onChange={(selectedId) => {
-            !isIos && popoverRef.current?.close();
+            !isIos && sheetRef.current?.hide();
 
             setLocation(
               locations?.items.find(({ id }) => selectedId === id) ||

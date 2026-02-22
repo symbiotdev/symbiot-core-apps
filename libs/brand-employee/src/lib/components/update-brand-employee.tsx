@@ -419,9 +419,6 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
             <MultiElementsForm
               name="schedules"
               value={value.schedules}
-              controllerProps={{
-                disableDrag: true,
-              }}
               onUpdate={({ schedules }) =>
                 onChangeCustomSchedule(schedules as Schedule[])
               }

@@ -8,8 +8,6 @@ import {
 } from '@symbiot-core-apps/api';
 import React, { ReactElement, RefObject, useCallback } from 'react';
 import {
-  AdaptivePopover,
-  AdaptivePopoverRef,
   Icon,
   InitView,
   ListItem,
@@ -22,14 +20,15 @@ import { BrandMembershipsCurrentList } from '@symbiot-core-apps/brand-membership
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
+import { AdaptiveSheet, AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
 
 export const BrandClientTopUpBalance = ({
   client,
-  popoverRef,
+  sheetRef,
   trigger,
   preventNavigationToProfile,
 }: {
-  popoverRef: RefObject<AdaptivePopoverRef | null>;
+  sheetRef: RefObject<AdaptiveSheetRef | null>;
   client: BrandClient;
   trigger: ReactElement<{ loading?: boolean }>;
   preventNavigationToProfile?: boolean;
@@ -44,14 +43,14 @@ export const BrandClientTopUpBalance = ({
     open: openVisitBasedMembershipsModal,
     close: closeVisitBasedMembershipsModal,
   } = useModal({
-    onOpen: () => popoverRef.current?.close(),
+    onClose: () => sheetRef.current?.hide(),
   });
   const {
     visible: periodBasedMembershipsModalVisible,
     open: openPeriodBasedMembershipsModal,
     close: closePeriodBasedMembershipsModal,
   } = useModal({
-    onOpen: () => popoverRef.current?.close(),
+    onClose: () => sheetRef.current?.hide(),
   });
 
   const onAdd = useCallback(
@@ -71,29 +70,28 @@ export const BrandClientTopUpBalance = ({
   );
 
   return (
-    <>
-      <AdaptivePopover
-        placement="bottom"
-        disabled={!hasPermission('catalog')}
-        trigger={React.cloneElement(trigger, {
-          loading: isMembershipLoading,
-        })}
-        ref={popoverRef}
-        sheetTitle={t('brand_client.balance.top_up.title')}
-      >
-        <View>
-          <ListItem
-            label={t('brand_client.balance.menu.add_visit_based_membership')}
-            icon={<Icon name={icons.VisitBasedMembership} />}
-            onPress={openVisitBasedMembershipsModal}
-          />
-          <ListItem
-            label={t('brand_client.balance.menu.add_period_based_membership')}
-            icon={<Icon name={icons.PeriodBasedMembership} />}
-            onPress={openPeriodBasedMembershipsModal}
-          />
-        </View>
-      </AdaptivePopover>
+    <AdaptiveSheet
+      excludePaddings
+      popoverPlacement="bottom"
+      disabled={!hasPermission('catalog')}
+      trigger={React.cloneElement(trigger, {
+        loading: isMembershipLoading,
+      })}
+      ref={sheetRef}
+      sheetTitle={t('brand_client.balance.top_up.title')}
+    >
+      <View paddingHorizontal={20} paddingVertical={10}>
+        <ListItem
+          label={t('brand_client.balance.menu.add_visit_based_membership')}
+          icon={<Icon name={icons.VisitBasedMembership} />}
+          onPress={openVisitBasedMembershipsModal}
+        />
+        <ListItem
+          label={t('brand_client.balance.menu.add_period_based_membership')}
+          icon={<Icon name={icons.PeriodBasedMembership} />}
+          onPress={openPeriodBasedMembershipsModal}
+        />
+      </View>
 
       <SlideSheetModal
         withKeyboard={false}
@@ -168,6 +166,6 @@ export const BrandClientTopUpBalance = ({
           )}
         />
       </SlideSheetModal>
-    </>
+    </AdaptiveSheet>
   );
 };

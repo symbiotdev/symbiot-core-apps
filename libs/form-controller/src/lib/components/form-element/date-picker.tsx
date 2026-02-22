@@ -414,13 +414,13 @@ const PopoverDateField = ({
   onChange?: (date: Date | null) => unknown;
   onBlur?: () => void;
 }) => {
-  const popoverRef = useRef<AdaptiveSheetRef>(null);
+  const sheetRef = useRef<AdaptiveSheetRef>(null);
 
   const [sheetGestureEnabled, setSheetGestureEnabled] = useState(true);
 
   const onChangeCalendarDate = useCallback(
     (date: Date | null) => {
-      popoverRef.current?.hide();
+      sheetRef.current?.hide();
       onChange?.(date);
       onBlur?.();
     },
@@ -429,7 +429,7 @@ const PopoverDateField = ({
 
   return (
     <AdaptiveSheet
-      ref={popoverRef}
+      ref={sheetRef}
       disabled={disabled}
       sheetGestureDisabled={!sheetGestureEnabled}
       sheetTitle={label}

@@ -1,9 +1,8 @@
-import { XStack } from 'tamagui';
+import { View, XStack } from 'tamagui';
 import { DateHelper, useI18n, Weekday } from '@symbiot-core-apps/shared';
 import { useCallback, useMemo, useState } from 'react';
 import { Picker } from './picker';
 import {
-  AdaptivePopover,
   CompactView,
   EmptyView,
   H4,
@@ -16,6 +15,7 @@ import { InputFieldView } from '../wrapper/input-field-view';
 import { ToggleOnChange } from './toggle-group';
 import { Switch } from './switch';
 import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
+import { AdaptiveSheet } from '@symbiot-core-apps/ui2';
 
 export type WeekdaySchedule = {
   day: number;
@@ -33,7 +33,6 @@ export const WeekdaysSchedule = ({
   weekStartsOn,
   disabled,
   required,
-  disableDrag,
   onChange,
   onBlur,
 }: {
@@ -42,7 +41,6 @@ export const WeekdaysSchedule = ({
   weekStartsOn?: Weekday;
   disabled?: boolean;
   required?: boolean;
-  disableDrag?: boolean;
   onChange: (value: WeekdaySchedule[]) => void;
   onBlur?: () => void;
 }) => {
@@ -77,7 +75,6 @@ export const WeekdaysSchedule = ({
         <WeekdayScheduleElement
           key={index}
           disabled={disabled}
-          disableDrag={disableDrag}
           minutes={minutes}
           weekday={weekday}
           value={value?.find(({ day }) => day === weekday.value)}
@@ -92,7 +89,6 @@ export const WeekdaysSchedule = ({
 const WeekdayScheduleElement = ({
   value,
   disabled,
-  disableDrag,
   weekday,
   minutes,
   onChange,
@@ -100,7 +96,6 @@ const WeekdayScheduleElement = ({
 }: {
   value?: WeekdaySchedule;
   disabled?: boolean;
-  disableDrag?: boolean;
   weekday: { label: string; value: number };
   minutes: MinutesOptions;
   onChange: (value: WeekdaySchedule) => void;
@@ -110,6 +105,8 @@ const WeekdayScheduleElement = ({
   const preferences = useCurrentAccountPreferences();
 
   const [activeSegment, setActiveSegment] = useState<string>('start');
+  const [sheetGestureDisabled, setSheetGestureDisabled] =
+    useState<boolean>(false);
 
   const endMinutes = useMemo(
     () =>
@@ -149,6 +146,16 @@ const WeekdayScheduleElement = ({
       },
     ],
     [end, isDayOff, start, t],
+  );
+
+  const touchHandleProps = useMemo(
+    () => ({
+      onTouchStart: () => setSheetGestureDisabled(true),
+      onTouchMove: () => setSheetGestureDisabled(true),
+      onTouchEnd: () => setSheetGestureDisabled(false),
+      onTouchCancel: () => setSheetGestureDisabled(false),
+    }),
+    [],
   );
 
   const resetSegment = useCallback(() => setActiveSegment('start'), []);
@@ -216,57 +223,48 @@ const WeekdayScheduleElement = ({
   );
 
   return (
-    <AdaptivePopover
-      ignoreScroll
-      disableDrag={disableDrag}
+    <AdaptiveSheet
+      excludePaddings
       key={`weekday${weekday.value}`}
-      placement="bottom"
-      maxHeight={300}
-      minWidth={250}
+      popoverPlacement="bottom-start"
+      sheetGestureDisabled={sheetGestureDisabled}
       trigger={
-        <InputFieldView
-          justifyContent="space-between"
-          disabled={disabled}
-          pressStyle={{ opacity: 0.8 }}
-        >
-          <LightText>{weekday.label}</LightText>
+        <View>
+          <InputFieldView justifyContent="space-between" disabled={disabled}>
+            <LightText>{weekday.label}</LightText>
 
-          <MediumText color={'$disabled'}>
-            {isDayOff ? t('shared.schedule.day_off') : `${start} - ${end}`}
-          </MediumText>
-        </InputFieldView>
-      }
-      topFixedContent={
-        <CompactView gap="$3">
-          <XStack
-            flex={1}
-            alignItems="center"
-            justifyContent="space-between"
-            gap="$5"
-          >
-            <H4 flex={1}>{weekday.label}</H4>
-            <Switch checked={!isDayOff} onChange={toggleDayOff} />
-          </XStack>
-
-          <Segment
-            disabled={isDayOff}
-            value={activeSegment}
-            items={segmentItems}
-            onChange={setActiveSegment}
-          />
-        </CompactView>
+            <MediumText color={'$disabled'}>
+              {isDayOff ? t('shared.schedule.day_off') : `${start} - ${end}`}
+            </MediumText>
+          </InputFieldView>
+        </View>
       }
       onOpen={resetSegment}
       onClose={onClose}
     >
+      <CompactView gap="$3" padding={20}>
+        <XStack gap="$5" alignItems="center" justifyContent="space-between">
+          <H4>{weekday.label}</H4>
+          <Switch checked={!isDayOff} onChange={toggleDayOff} />
+        </XStack>
+
+        <Segment
+          disabled={isDayOff}
+          value={activeSegment}
+          items={segmentItems}
+          onChange={setActiveSegment}
+        />
+      </CompactView>
+
       {!isDayOff ? (
-        <CompactView>
+        <CompactView paddingHorizontal={20} paddingBottom={20}>
           {activeSegment === 'start' && (
             <Picker
               lazy
               value={value?.start}
               options={minutes}
               onChange={onChangeStartValue as ToggleOnChange}
+              {...touchHandleProps}
             />
           )}
 
@@ -276,6 +274,7 @@ const WeekdayScheduleElement = ({
               value={value?.end}
               options={endMinutes}
               onChange={onChangeEndValue as ToggleOnChange}
+              {...touchHandleProps}
             />
           )}
         </CompactView>
@@ -286,6 +285,6 @@ const WeekdayScheduleElement = ({
           message={t('shared.schedule.day_off')}
         />
       )}
-    </AdaptivePopover>
+    </AdaptiveSheet>
   );
 };

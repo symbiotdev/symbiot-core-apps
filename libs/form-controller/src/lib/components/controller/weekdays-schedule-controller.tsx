@@ -15,14 +15,12 @@ export function WeekdaysScheduleController<T extends FieldValues>({
   name,
   control,
   disabled,
-  disableDrag,
   rules,
   onBlur,
 }: {
   name: Path<T>;
   control: Control<T>;
   disabled?: boolean;
-  disableDrag?: boolean;
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
 }) {
@@ -36,7 +34,6 @@ export function WeekdaysScheduleController<T extends FieldValues>({
       render={({ field: { value, onChange } }) => (
         <WeekdaysSchedule
           disabled={disabled}
-          disableDrag={disableDrag}
           value={value as WeekdaySchedule[]}
           weekStartsOn={preferences.appearance?.calendar?.weekStartsOn}
           onChange={onChange}

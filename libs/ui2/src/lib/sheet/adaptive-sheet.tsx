@@ -17,7 +17,12 @@ import {
   Pressable,
   useWindowDimensions,
 } from 'react-native';
-import { emitHaptic, useKeyboardDismisser } from '@symbiot-core-apps/shared';
+import {
+  emitHaptic,
+  isTablet,
+  isWeb,
+  useKeyboardDismisser,
+} from '@symbiot-core-apps/shared';
 import { Sheet } from './components/sheet';
 import { Placement } from '@floating-ui/react-native';
 import { Popover } from './components/popover';
@@ -28,12 +33,13 @@ export type AdaptiveSheetRef = {
 };
 
 type Props = PropsWithChildren<{
-  trigger: ReactElement;
+  trigger?: ReactElement;
   disabled?: boolean;
   forceAdaptive?: 'sheet' | 'popover';
   popoverPlacement?: Placement;
   sheetTitle?: string;
   sheetGestureDisabled?: boolean;
+  sheetHandleVisible?: boolean;
   excludePaddings?: boolean;
   onOpen?: () => void;
   onClose?: () => void;
@@ -120,7 +126,11 @@ export const AdaptiveSheet = forwardRef(
 
     return (
       <>
-        <Pressable onPress={onTriggerPress}>{trigger}</Pressable>
+        {Boolean(trigger) && (
+          <Pressable style={{ position: 'relative' }} onPress={onTriggerPress}>
+            {trigger}
+          </Pressable>
+        )}
 
         {state.modalRendered && (
           <AdaptiveContent
@@ -140,6 +150,7 @@ export const AdaptiveSheet = forwardRef(
 const AdaptiveContent = ({
   sheetTitle,
   sheetGestureDisabled,
+  sheetHandleVisible,
   triggerRect,
   modalVisible,
   contentVisible,
@@ -168,7 +179,8 @@ const AdaptiveContent = ({
       supportedOrientations={['portrait', 'landscape']}
       onRequestClose={onClose}
     >
-      {triggerRect && (forceAdaptive === 'popover' || width > 768) ? (
+      {triggerRect &&
+      (forceAdaptive === 'popover' || (width > 768 && (isTablet || isWeb))) ? (
         <Popover
           {...props}
           triggerRect={triggerRect}
@@ -182,6 +194,7 @@ const AdaptiveContent = ({
           title={sheetTitle}
           maxHeight={height}
           visible={contentVisible}
+          handleVisible={sheetHandleVisible !== false}
           gestureDisabled={sheetGestureDisabled}
           onClose={onClose}
         />

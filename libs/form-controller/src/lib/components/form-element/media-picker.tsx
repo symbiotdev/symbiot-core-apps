@@ -18,13 +18,8 @@ import {
 import { filesize } from 'filesize';
 import { Linking } from 'react-native';
 import { View } from 'tamagui';
-import {
-  AdaptivePopover,
-  AdaptivePopoverRef,
-  Icon,
-  Link,
-  ListItem,
-} from '@symbiot-core-apps/ui';
+import { Icon, Link, ListItem } from '@symbiot-core-apps/ui';
+import { AdaptiveSheet, AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
 
 export const maxAvatarFileSize = 10485760;
 
@@ -46,7 +41,7 @@ export const MediaPicker = ({
     useMediaLibraryPermissions();
   const [cameraPermissions, requestCameraPermissions] = useCameraPermissions();
 
-  const popoverRef = useRef<AdaptivePopoverRef>(null);
+  const sheetRef = useRef<AdaptiveSheetRef>(null);
 
   const [processing, setProcessing] = useState(false);
 
@@ -100,9 +95,9 @@ export const MediaPicker = ({
 
   const pick = useCallback(
     async (type: 'gallery' | 'camera') => {
-      setProcessing(true);
+      sheetRef.current?.hide?.();
 
-      popoverRef.current?.close?.();
+      setProcessing(true);
 
       try {
         const result: ImagePickerResult = await (type === 'gallery'
@@ -139,7 +134,7 @@ export const MediaPicker = ({
   );
 
   const remove = useCallback(() => {
-    popoverRef.current?.close?.();
+    sheetRef.current?.hide?.();
 
     ConfirmAlert({
       title: t('shared.preferences.media.action.delete.confirm.title'),
@@ -156,15 +151,15 @@ export const MediaPicker = ({
   }, [onRemove, t]);
 
   return (
-    <AdaptivePopover
-      placement="bottom"
-      minWidth={250}
-      ref={popoverRef}
+    <AdaptiveSheet
+      excludePaddings
+      popoverPlacement="bottom-start"
+      ref={sheetRef}
       disabled={processing}
       sheetTitle={t('shared.preferences.media.trigger.label')}
       trigger={trigger}
     >
-      <View gap="$2">
+      <View gap="$2" paddingVertical={10} paddingHorizontal={20}>
         <ListItem
           icon={<Icon name="Gallery" />}
           label={t('shared.preferences.media.action.choose_from_gallery.label')}
@@ -177,7 +172,7 @@ export const MediaPicker = ({
           onPress={() => pick('gallery')}
         />
 
-        {isWeb && (
+        {!isWeb && (
           <ListItem
             icon={<Icon name="Camera" />}
             label={t('shared.preferences.media.action.take_phone.label')}
@@ -200,7 +195,7 @@ export const MediaPicker = ({
           />
         )}
       </View>
-    </AdaptivePopover>
+    </AdaptiveSheet>
   );
 };
 

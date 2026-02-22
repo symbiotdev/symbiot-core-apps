@@ -38,54 +38,54 @@ export const PlusActionAdaptiveModal = ({
   const { icons } = useAppSettings();
   const { tryAction } = useAccountLimits();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
-  const popoverRef = useRef<AdaptiveSheetRef>(null);
+  const sheetRef = useRef<AdaptiveSheetRef>(null);
 
   const addClient = useCallback(() => {
-    popoverRef.current?.hide();
+    sheetRef.current?.hide();
     tryAction('addClient', () => router.push('/clients/create'))();
   }, [tryAction]);
 
   const importClients = useCallback(() => {
-    popoverRef.current?.hide();
+    sheetRef.current?.hide();
     tryAction('importClients', () => router.push('/clients/import'))();
   }, [tryAction]);
 
   const addEmployee = useCallback(() => {
-    popoverRef.current?.hide();
+    sheetRef.current?.hide();
     tryAction('addEmployee', () => router.push('/employees/create'))();
   }, [tryAction]);
 
   const addLocation = useCallback(() => {
-    popoverRef.current?.hide();
+    sheetRef.current?.hide();
     tryAction('addLocation', () => router.push('/locations/create'))();
   }, [tryAction]);
 
   const addService = useCallback(() => {
-    popoverRef.current?.hide();
+    sheetRef.current?.hide();
     tryAction('addService', () => router.push('/services/create'))();
   }, [tryAction]);
 
   const addPeriodBasedMembership = useCallback(() => {
-    popoverRef.current?.hide();
+    sheetRef.current?.hide();
     tryAction('addPeriodMembership', () =>
       router.push(`/memberships/${BrandMembershipType.period}/create`),
     )();
   }, [tryAction]);
 
   const addVisitBasedMembership = useCallback(() => {
-    popoverRef.current?.hide();
+    sheetRef.current?.hide();
     tryAction('addVisitMembership', () =>
       router.push(`/memberships/${BrandMembershipType.visits}/create`),
     )();
   }, [tryAction]);
 
   const addServiceBooking = useCallback(() => {
-    popoverRef.current?.hide();
+    sheetRef.current?.hide();
     router.push(`/bookings/${BrandBookingType.service}/create`);
   }, []);
 
   const addUnavailableBooking = useCallback(() => {
-    popoverRef.current?.hide();
+    sheetRef.current?.hide();
     router.push(`/bookings/${BrandBookingType.unavailable}/create`);
   }, []);
 
@@ -94,7 +94,7 @@ export const PlusActionAdaptiveModal = ({
       <AdaptiveSheet
         excludePaddings
         popoverPlacement="left-end"
-        ref={popoverRef}
+        ref={sheetRef}
         trigger={trigger}
       >
         <ScrollView contentContainerStyle={{ padding: 20 }}>

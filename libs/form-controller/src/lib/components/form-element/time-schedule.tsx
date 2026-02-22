@@ -2,11 +2,9 @@ import { useCallback, useMemo, useState } from 'react';
 import { Picker } from './picker';
 import { ToggleOnChange } from './toggle-group';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
-import { YStack } from 'tamagui';
+import { View, YStack } from 'tamagui';
 import {
-  AdaptivePopover,
   CompactView,
-  compactViewStyles,
   LightText,
   RegularText,
   Segment,
@@ -14,6 +12,7 @@ import {
 import { FormField } from '../wrapper/form-field';
 import { InputFieldView } from '../wrapper/input-field-view';
 import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
+import { AdaptiveSheet } from '@symbiot-core-apps/ui2';
 
 const timeInterval = 5;
 
@@ -23,7 +22,6 @@ export const TimeSchedule = ({
   error,
   required,
   disabled,
-  disableDrag,
   onChange,
   onBlur,
 }: {
@@ -32,7 +30,6 @@ export const TimeSchedule = ({
   error?: string;
   required?: boolean;
   disabled?: boolean;
-  disableDrag?: boolean;
   onChange: (params: { start: Date; end: Date }) => void;
   onBlur?: () => void;
 }) => {
@@ -42,6 +39,8 @@ export const TimeSchedule = ({
   const timeFormat = preferences.timeFormat;
 
   const [activeSegment, setActiveSegment] = useState<string>('start');
+  const [sheetGestureDisabled, setSheetGestureDisabled] =
+    useState<boolean>(false);
 
   const minutes = useMemo(
     () =>
@@ -83,6 +82,16 @@ export const TimeSchedule = ({
     [value.end, disabled, value.start, t, preferences.timeFormat],
   );
 
+  const touchHandleProps = useMemo(
+    () => ({
+      onTouchStart: () => setSheetGestureDisabled(true),
+      onTouchMove: () => setSheetGestureDisabled(true),
+      onTouchEnd: () => setSheetGestureDisabled(false),
+      onTouchCancel: () => setSheetGestureDisabled(false),
+    }),
+    [],
+  );
+
   const onChangeStartValue = useCallback(
     (minutes: number) => {
       const adjustedStart = DateHelper.addMinutes(startOfDay, minutes);
@@ -116,46 +125,45 @@ export const TimeSchedule = ({
   );
 
   return (
-    <AdaptivePopover
-      ignoreScroll
-      disableDrag={disableDrag}
-      placement="bottom"
-      maxHeight={300}
-      minWidth={250}
+    <AdaptiveSheet
+      excludePaddings
+      popoverPlacement="bottom-start"
+      sheetGestureDisabled={sheetGestureDisabled}
       trigger={
-        <YStack gap="$1" disabled={disabled} pressStyle={{ opacity: 0.8 }}>
-          <FormField label={label} error={error} required={required}>
-            <InputFieldView>
-              <LightText>
-                {`${DateHelper.format(value.start, timeFormat)} - ${DateHelper.format(value.end, timeFormat)}`}
-              </LightText>
-            </InputFieldView>
-          </FormField>
-          <RegularText color="$disabled" marginHorizontal="$4">
-            {`${t('shared.duration')} - ${DateHelper.formatDuration(
-              DateHelper.differenceInMinutes(value.end, value.start),
-            )}`}
-          </RegularText>
-        </YStack>
+        <View>
+          <YStack gap="$1" disabled={disabled}>
+            <FormField label={label} error={error} required={required}>
+              <InputFieldView>
+                <LightText>
+                  {`${DateHelper.format(value.start, timeFormat)} - ${DateHelper.format(value.end, timeFormat)}`}
+                </LightText>
+              </InputFieldView>
+            </FormField>
+            <RegularText color="$disabled" marginHorizontal="$4">
+              {`${t('shared.duration')} - ${DateHelper.formatDuration(
+                DateHelper.differenceInMinutes(value.end, value.start),
+              )}`}
+            </RegularText>
+          </YStack>
+        </View>
       }
-      topFixedContent={
+      onClose={onBlur}
+    >
+      <CompactView padding={20}>
         <Segment
-          style={compactViewStyles}
           disabled={disabled}
           value={activeSegment}
           items={segmentItems}
           onChange={setActiveSegment}
         />
-      }
-      onClose={onBlur}
-    >
-      <CompactView>
+
         {activeSegment === 'start' && (
           <Picker
             lazy
             value={DateHelper.differenceInMinutes(value.start, startOfDay)}
             options={minutes}
             onChange={onChangeStartValue as ToggleOnChange}
+            {...touchHandleProps}
           />
         )}
 
@@ -165,9 +173,10 @@ export const TimeSchedule = ({
             value={DateHelper.differenceInMinutes(value.end, startOfDay)}
             options={endMinutes}
             onChange={onChangeEndValue as ToggleOnChange}
+            {...touchHandleProps}
           />
         )}
       </CompactView>
-    </AdaptivePopover>
+    </AdaptiveSheet>
   );
 };

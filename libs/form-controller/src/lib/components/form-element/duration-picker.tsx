@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   DateHelper,
   isIos,
@@ -7,15 +7,12 @@ import {
   useI18n,
 } from '@symbiot-core-apps/shared';
 import { minutesInDay, minutesInHour } from 'date-fns/constants';
-import { ViewProps, XStack } from 'tamagui';
-import {
-  AdaptivePopover,
-  AdaptivePopoverRef,
-  LightText,
-} from '@symbiot-core-apps/ui';
+import { View, ViewProps, XStack } from 'tamagui';
+import { LightText } from '@symbiot-core-apps/ui';
 import { FormField } from '../wrapper/form-field';
 import { InputFieldView } from '../wrapper/input-field-view';
 import { Picker } from './picker';
+import { AdaptiveSheet, AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
 
 export type DurationPickerUnit =
   | 'minutes'
@@ -57,7 +54,10 @@ export const DurationPicker = ({
 }) => {
   const { t } = useI18n();
 
-  const popoverRef = useRef<AdaptivePopoverRef>(null);
+  const sheetRef = useRef<AdaptiveSheetRef>(null);
+
+  const [sheetGestureDisabled, setSheetGestureDisabled] =
+    useState<boolean>(false);
 
   const { minutes, hours, days, months, years } = useMemo(() => {
     const totalMinutes = value || 0;
@@ -121,6 +121,16 @@ export const DurationPicker = ({
     [formatOptions, minutesInterval, t],
   );
 
+  const touchHandleProps = useMemo(
+    () => ({
+      onTouchStart: () => setSheetGestureDisabled(true),
+      onTouchMove: () => setSheetGestureDisabled(true),
+      onTouchEnd: () => setSheetGestureDisabled(false),
+      onTouchCancel: () => setSheetGestureDisabled(false),
+    }),
+    [],
+  );
+
   const onChangeDate = useCallback(
     (y: number, m: number, d: number, h: number, min: number) => {
       onChange?.(
@@ -136,24 +146,23 @@ export const DurationPicker = ({
 
   return (
     <FormField label={label} error={error} required={required}>
-      <AdaptivePopover
-        ref={popoverRef}
+      <AdaptiveSheet
+        ref={sheetRef}
         disabled={disabled}
         sheetTitle={label}
+        sheetGestureDisabled={sheetGestureDisabled}
         trigger={
-          <InputFieldView
-            disabled={disabled}
-            pressStyle={{ opacity: 0.8 }}
-            {...viewProps}
-          >
-            <LightText
-              color={
-                !value ? '$placeholder' : disabled ? '$disabled' : '$color'
-              }
-            >
-              {value ? DateHelper.formatDuration(value) : placeholder}
-            </LightText>
-          </InputFieldView>
+          <View>
+            <InputFieldView disabled={disabled} {...viewProps}>
+              <LightText
+                color={
+                  !value ? '$placeholder' : disabled ? '$disabled' : '$color'
+                }
+              >
+                {value ? DateHelper.formatDuration(value) : placeholder}
+              </LightText>
+            </InputFieldView>
+          </View>
         }
         onClose={onBlur}
       >
@@ -167,6 +176,7 @@ export const DurationPicker = ({
               onChange={(years) =>
                 onChangeDate(years as number, months, days, hours, minutes)
               }
+              {...touchHandleProps}
             />
           )}
 
@@ -179,6 +189,7 @@ export const DurationPicker = ({
               onChange={(months) =>
                 onChangeDate(years, months as number, days, hours, minutes)
               }
+              {...touchHandleProps}
             />
           )}
 
@@ -191,6 +202,7 @@ export const DurationPicker = ({
               onChange={(days) =>
                 onChangeDate(years, months, days as number, hours, minutes)
               }
+              {...touchHandleProps}
             />
           )}
 
@@ -203,6 +215,7 @@ export const DurationPicker = ({
               onChange={(hours) =>
                 onChangeDate(years, months, days, hours as number, minutes)
               }
+              {...touchHandleProps}
             />
           )}
 
@@ -215,10 +228,11 @@ export const DurationPicker = ({
               onChange={(minutes) =>
                 onChangeDate(years, months, days, hours, minutes as number)
               }
+              {...touchHandleProps}
             />
           )}
         </XStack>
-      </AdaptivePopover>
+      </AdaptiveSheet>
     </FormField>
   );
 };

@@ -1,10 +1,9 @@
 import { View } from 'tamagui';
 import {
   ActionCardWithCustomButton,
-  AdaptivePopoverRef,
   Button,
-  EmptyView,
   compactViewStyles,
+  EmptyView,
   Icon,
 } from '@symbiot-core-apps/ui';
 import React, { useRef } from 'react';
@@ -13,6 +12,7 @@ import { BrandClientMembershipItem } from '@symbiot-core-apps/brand';
 import { BrandClientTopUpBalance } from './brand-client-top-up-balance';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
+import { AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
 
 export const BrandClientBalance = ({
   client,
@@ -31,7 +31,7 @@ export const BrandClientBalance = ({
 }) => {
   const { t } = useI18n();
   const { hasPermission } = useCurrentBrandEmployee();
-  const topUpBalancePopoverRef = useRef<AdaptivePopoverRef>(null);
+  const sheetRef = useRef<AdaptiveSheetRef>(null);
 
   return (
     <View gap="$2" alignItems="center">
@@ -44,7 +44,7 @@ export const BrandClientBalance = ({
             <BrandClientTopUpBalance
               client={client}
               preventNavigationToProfile={preventNavigationToCreatedMembership}
-              popoverRef={topUpBalancePopoverRef}
+              sheetRef={sheetRef}
               trigger={
                 <Button
                   icon={<Icon name="Wallet" />}

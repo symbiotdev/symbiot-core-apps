@@ -1,6 +1,5 @@
 import { AnyBrandClientMembership, BrandClient } from '@symbiot-core-apps/api';
 import {
-  AdaptivePopoverRef,
   Avatar,
   ButtonIcon,
   CompactView,
@@ -18,12 +17,12 @@ import { BrandClientNote } from './brand-client-note';
 import { BrandClientHistory } from './brand-client-history';
 import { BrandClientTopUpBalance } from './brand-client-top-up-balance';
 import { router } from 'expo-router';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import { AdaptiveSheetRef, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
   const preferences = useCurrentAccountPreferences();
 
-  const topUpBalanceRef = useRef<AdaptivePopoverRef>(null);
+  const sheetRef = useRef<AdaptiveSheetRef>(null);
 
   const onPhonePress = useCallback(
     () => Linking.openURL(`tel:${client.phones[0]}`),
@@ -90,7 +89,7 @@ export const BrandClientProfile = ({ client }: { client: BrandClient }) => {
 
             <BrandClientTopUpBalance
               client={client}
-              popoverRef={topUpBalanceRef}
+              sheetRef={sheetRef}
               trigger={<ButtonIcon iconName="Wallet" size={40} iconSize={20} />}
             />
 

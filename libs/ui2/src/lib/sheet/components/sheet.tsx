@@ -40,6 +40,7 @@ export const Sheet = ({
   visible,
   disabled,
   gestureDisabled,
+  handleVisible = true,
   children,
   maxHeight,
   excludePaddings,
@@ -47,6 +48,7 @@ export const Sheet = ({
 }: PropsWithChildren<{
   title?: string;
   visible: boolean;
+  handleVisible: boolean;
   maxHeight: number;
   disabled?: boolean;
   gestureDisabled?: boolean;
@@ -171,11 +173,13 @@ export const Sheet = ({
               }),
             }}
           >
-            <SheetHandle
-              ignorePanGesture={!isGestureScrollLimited}
-              panGesture={panGesture}
-              onPress={() => ignoreScroll$.set(true)}
-            />
+            {handleVisible && (
+              <SheetHandle
+                ignorePanGesture={!isGestureScrollLimited}
+                panGesture={panGesture}
+                onPress={() => ignoreScroll$.set(true)}
+              />
+            )}
 
             {/*fixme - replace to header*/}
             {!!title && (

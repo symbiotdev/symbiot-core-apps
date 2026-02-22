@@ -62,7 +62,6 @@ export const Segment = memo(
             <MediumText
               color="$placeholder"
               textAlign="center"
-              flex={1}
               numberOfLines={1}
             >
               {item.placeholder}
@@ -71,7 +70,6 @@ export const Segment = memo(
           <SemiBoldText
             textAlign="center"
             numberOfLines={1}
-            flex={1}
             color={value === item.value ? '$background' : '$color'}
           >
             {item.label}
@@ -96,6 +94,7 @@ export const Segment = memo(
         gap="$1"
         width="100%"
         maxWidth="100%"
+        minWidth={250}
         borderRadius={50}
         backgroundColor="$background"
         overflow="hidden"

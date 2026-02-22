@@ -5,6 +5,7 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { Avatar, AvatarSize, ButtonIcon, Spinner } from '@symbiot-core-apps/ui';
 import { MediaPicker } from './media-picker';
 import { FormField } from '../wrapper/form-field';
+import { StyleSheet } from 'react-native';
 
 export const AvatarPicker = ({
   name,
@@ -91,28 +92,29 @@ export const AvatarPicker = ({
           </View>
         )}
 
-        <MediaPicker
-          allowsEditing={allowsEditing}
-          removable={removable}
-          selectionLimit={1}
-          aspect={[1, 1]}
-          mediaTypes={['images']}
-          trigger={
-            !loading && !processing ? (
-              <ButtonIcon
-                hapticable={false}
-                position="absolute"
-                bottom={0}
-                right={0}
-                iconName="Pen"
-              />
-            ) : (
-              <View position="absolute" />
-            )
-          }
-          onAdd={add}
-          onRemove={remove}
-        />
+        <View
+          style={[
+            StyleSheet.absoluteFill,
+            { justifyContent: 'flex-end', alignItems: 'flex-end' },
+          ]}
+        >
+          <MediaPicker
+            allowsEditing={allowsEditing}
+            removable={removable}
+            selectionLimit={1}
+            aspect={[1, 1]}
+            mediaTypes={['images']}
+            trigger={
+              <View>
+                {!loading && !processing && (
+                  <ButtonIcon hapticable={false} iconName="Pen" />
+                )}
+              </View>
+            }
+            onAdd={add}
+            onRemove={remove}
+          />
+        </View>
       </View>
     </FormField>
   );

@@ -118,7 +118,7 @@ const Employee = ({
       optionsError={error}
       trigger={
         selectedEmployee ? (
-          <XStack alignItems="center" gap="$2" flex={1}>
+          <XStack alignItems="center" gap="$2">
             <BrandEmployeeItem
               flex={1}
               backgroundColor="$background1"

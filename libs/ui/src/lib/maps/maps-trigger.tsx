@@ -1,29 +1,24 @@
 import { ReactElement, useCallback, useRef } from 'react';
-import {
-  AdaptivePopover,
-  AdaptivePopoverRef,
-} from '../popover/adaptive-popover';
 import { Alert, Linking } from 'react-native';
 import { ListItem } from '../list/list-item';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { AdaptiveSheet, AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
 
 export const MapsTrigger = ({
   address,
-  disableDrag,
   disabled,
   trigger,
 }: {
   address: string;
-  disableDrag?: boolean;
   disabled?: boolean;
   trigger: ReactElement;
 }) => {
   const { t } = useI18n();
-  const popoverRef = useRef<AdaptivePopoverRef>(null);
+  const sheetRef = useRef<AdaptiveSheetRef>(null);
 
   const open = useCallback(
     async (type: 'google' | 'apple') => {
-      popoverRef.current?.close();
+      sheetRef.current?.hide();
 
       const encodedAddress = encodeURIComponent(address);
 
@@ -48,16 +43,14 @@ export const MapsTrigger = ({
   );
 
   return (
-    <AdaptivePopover
-      ref={popoverRef}
+    <AdaptiveSheet
+      ref={sheetRef}
       disabled={disabled}
-      disableDrag={disableDrag}
-      placement="bottom"
       sheetTitle={t('shared.maps.open.title')}
       trigger={trigger}
     >
       <ListItem label="Apple Maps" onPress={() => open('apple')} />
       <ListItem label="Google Maps" onPress={() => open('google')} />
-    </AdaptivePopover>
+    </AdaptiveSheet>
   );
 };

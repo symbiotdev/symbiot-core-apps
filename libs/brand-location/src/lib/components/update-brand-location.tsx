@@ -236,9 +236,6 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
             name="schedules"
             value={value.schedules}
             onUpdate={updateValue}
-            controllerProps={{
-              disableDrag: true,
-            }}
             Controller={BrandLocationScheduleController}
           />
         </CompactView>

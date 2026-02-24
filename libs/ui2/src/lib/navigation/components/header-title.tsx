@@ -16,7 +16,10 @@ export const HeaderTitle = ({
   const titleColor = scheme === 'dark' ? '#FFFFFF' : '#000000';
 
   return (
-    <View style={[{ gap: 2 }, style]} {...viewProps}>
+    <View
+      style={[{ gap: 2, paddingVertical: 5, paddingHorizontal: 10 }, style]}
+      {...viewProps}
+    >
       <Text
         numberOfLines={subtitle ? 1 : 2}
         style={{

@@ -100,33 +100,6 @@ export default () => {
     [allLocations, locations, brand?.name, brand?.avatar?.xsUrl],
   );
 
-  const headerLeft = useCallback(
-    () => (
-      <View
-        position="relative"
-        alignItems="center"
-        justifyContent="center"
-        onPress={() => {
-          emitHaptic();
-          router.push('/bookings');
-        }}
-      >
-        <Icon name="CalendarMinimalistic" />
-
-        <MediumText
-          position="absolute"
-          bottom={3}
-          color="$buttonTextColor1"
-          fontSize={10}
-          lineHeight={10}
-        >
-          {now.getDate()}
-        </MediumText>
-      </View>
-    ),
-    [now],
-  );
-
   const headerTitle = useCallback(() => {
     const date = DateHelper.format(selectedDate, 'LLLL yyyy', lang);
 
@@ -163,7 +136,7 @@ export default () => {
     locations?.items?.length,
   ]);
 
-  const headerRight = useCallback(
+  const headerLeft = useCallback(
     () =>
       locations?.items &&
       locations.items.length > 1 &&
@@ -211,6 +184,35 @@ export default () => {
       allLocations,
       hasPermission,
     ],
+  );
+
+  const headerRight = useCallback(
+    () => (
+      <View
+        position="relative"
+        alignItems="center"
+        justifyContent="center"
+        width={40}
+        height={40}
+        onPress={() => {
+          emitHaptic();
+          router.push('/bookings');
+        }}
+      >
+        <Icon name="CalendarMinimalistic" />
+
+        <MediumText
+          position="absolute"
+          bottom={11}
+          color="$buttonTextColor1"
+          fontSize={10}
+          lineHeight={10}
+        >
+          {now.getDate()}
+        </MediumText>
+      </View>
+    ),
+    [now],
   );
 
   useEffect(() => {

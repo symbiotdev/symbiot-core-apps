@@ -65,8 +65,6 @@ export const Header = ({
             style={{
               zIndex: 1,
               borderRadius: 20,
-              paddingVertical: 5,
-              paddingHorizontal: 10,
               minHeight: 40,
               flexShrink: 1,
               alignSelf: 'center',

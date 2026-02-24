@@ -15,7 +15,6 @@ export const HeaderSideElement = memo(
       {children && (
         <GlassView
           interactive
-          children={children}
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -26,7 +25,9 @@ export const HeaderSideElement = memo(
             minHeight: 40,
             borderRadius: 20,
           }}
-        />
+        >
+          {children}
+        </GlassView>
       )}
     </View>
   ),

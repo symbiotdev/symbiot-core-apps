@@ -1,12 +1,12 @@
 import { CurrentBrandClients } from '@symbiot-core-apps/brand-client';
 import { router, useNavigation } from 'expo-router';
-import { HeaderButton, useScreenHeaderHeight } from '@symbiot-core-apps/ui';
 import React, { useLayoutEffect } from 'react';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
+import { HeaderButton, useHeaderHeight } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const navigation = useNavigation();
-  const headerHeight = useScreenHeaderHeight();
+  const headerHeight = useHeaderHeight();
   const { tryAction } = useAccountLimits();
 
   useLayoutEffect(() => {

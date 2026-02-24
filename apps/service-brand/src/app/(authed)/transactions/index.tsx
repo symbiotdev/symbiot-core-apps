@@ -1,8 +1,8 @@
 import { CurrentBrandTransactions } from '@symbiot-core-apps/brand-transaction';
-import { useScreenHeaderHeight } from '@symbiot-core-apps/ui';
+import { useHeaderHeight } from '@symbiot-core-apps/ui2';
 
 export default () => {
-  const headerHeight = useScreenHeaderHeight();
+  const headerHeight = useHeaderHeight();
 
   return <CurrentBrandTransactions offsetTop={headerHeight} />;
 };

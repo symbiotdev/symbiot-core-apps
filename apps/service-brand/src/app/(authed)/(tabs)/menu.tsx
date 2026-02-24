@@ -27,7 +27,6 @@ import {
   QrCodeModalWithTrigger,
   RegularText,
   Spinner,
-  useDrawer,
 } from '@symbiot-core-apps/ui';
 import { View, XStack } from 'tamagui';
 import { GestureResponderEvent, Linking } from 'react-native';
@@ -39,7 +38,7 @@ import {
   useAppSettings,
   useAppVersionUpdateType,
 } from '@symbiot-core-apps/app';
-import { Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, ScrollablePage, useSideMenu } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t, supportedLanguages } = useI18n();
@@ -47,7 +46,7 @@ export default () => {
   const { brand } = useCurrentBrandState();
   const { currentEmployee } = useCurrentBrandEmployee();
   const { functionality } = useAppSettings();
-  const { visible: drawerVisible } = useDrawer();
+  const { visible: sideMenuVisible } = useSideMenu();
   const { updateType: appUpdateType } = useAppVersionUpdateType();
   const share = useShareApp();
   const { leaveReview } = useRateApp();
@@ -258,7 +257,7 @@ export default () => {
                 onPress={leaveReview}
               />
             )}
-            {!drawerVisible && (
+            {!sideMenuVisible && (
               <ListItem
                 label={t('shared.faq.title')}
                 icon={<Icon name="QuestionCircle" />}

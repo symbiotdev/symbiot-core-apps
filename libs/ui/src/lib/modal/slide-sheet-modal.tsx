@@ -1,16 +1,20 @@
 import { DimensionValue, Modal, ModalProps, StyleSheet } from 'react-native';
 import { BaseSyntheticEvent, PropsWithChildren, ReactElement } from 'react';
 import { ScrollView, View, ViewProps } from 'tamagui';
-import { headerHeight, useScreenHeaderHeight } from '../navigation/header';
 import { isIos, isTablet, isWeb } from '@symbiot-core-apps/shared';
 import { PortalProvider } from '@tamagui/portal';
-import { ModalHeader } from '../navigation/modal-header';
 import { ContainerView, ContainerViewProps } from '../view/container-view';
 import {
   KeyboardAvoidingView,
   KeyboardAwareScrollView,
 } from 'react-native-keyboard-controller';
-import { PAGE_STYLE, Refresher } from '@symbiot-core-apps/ui2';
+import {
+  HEADER_HEIGHT,
+  ModalHeader,
+  PAGE_STYLE,
+  Refresher,
+  useHeaderHeight,
+} from '@symbiot-core-apps/ui2';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const SlideSheetModal = ({
@@ -25,7 +29,7 @@ export const SlideSheetModal = ({
   supportedOrientations = ['portrait', 'landscape'],
   withKeyboard = true,
   onClose,
-  paddingTop = isTablet ? undefined : headerHeight,
+  paddingTop = isTablet ? undefined : HEADER_HEIGHT,
   ...viewProps
 }: PropsWithChildren<
   ViewProps & {
@@ -92,7 +96,7 @@ const PageView = ({
   ignoreBottomSafeArea?: boolean;
   onRefresh?: () => void;
 }) => {
-  const headerHeight = useScreenHeaderHeight();
+  const headerHeight = useHeaderHeight();
 
   if (scrollable && withKeyboard) {
     return (
@@ -163,7 +167,7 @@ const PageContent = ({
   ignoreTopSafeArea?: boolean;
   ignoreBottomSafeArea?: boolean;
 }) => {
-  const headerHeight = useScreenHeaderHeight();
+  const headerHeight = useHeaderHeight();
   const { top, bottom, left, right } = useSafeAreaInsets();
 
   return (

@@ -1,24 +1,21 @@
-import { BaseSyntheticEvent, memo, ReactElement, useMemo } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BaseSyntheticEvent, memo, ReactElement } from 'react';
 import { isIos } from '@symbiot-core-apps/shared';
-import { XStack } from 'tamagui';
-import { HeaderSideElement } from './header-side-element';
-import { HeaderButton } from './header-button';
-import { HeaderTitle } from './header-title';
-import { headerHeight, headerHorizontalPadding } from './header';
-import { GlassView } from '@symbiot-core-apps/ui2';
+import { View } from 'react-native';
+import { HEADER_HEIGHT } from './consts/dimensions';
+import { PAGE_STYLE } from '../page/utils/style-rules';
+import { HeaderSideElement } from './components/header-side-element';
+import { GlassView } from '../glass/glass-view';
+import { HeaderTitle } from './components/header-title';
+import { HeaderButton } from './components/header-button';
 
 export const ModalHeader = memo(
   ({
-    height,
     headerLeft,
-    relative,
-    headerTitle,
     headerRight,
+    headerTitle,
     onClose,
   }: {
-    height?: number;
-    relative?: boolean;
     headerLeft?: () => ReactElement;
     headerTitle?: string | (() => ReactElement);
     headerRight?: () => ReactElement;
@@ -26,28 +23,25 @@ export const ModalHeader = memo(
   }) => {
     const { top, left, right } = useSafeAreaInsets();
 
-    const adjustedTop = useMemo(() => (isIos ? 5 : top), [top]);
-
-    const adjustedHeight = adjustedTop + (height || headerHeight);
+    const _top = isIos ? 5 : top;
 
     return (
-      <XStack
-        zIndex={1}
-        {...(!relative && {
+      <View
+        style={{
           position: 'absolute',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 5,
           top: 0,
           left: 0,
           right: 0,
-        })}
-        width="100%"
-        alignItems="center"
-        justifyContent="space-between"
-        gap="$2"
-        paddingTop={adjustedTop}
-        height={adjustedHeight}
-        maxHeight={adjustedHeight}
-        paddingLeft={left + headerHorizontalPadding}
-        paddingRight={right + headerHorizontalPadding}
+          zIndex: 2,
+          height: _top + HEADER_HEIGHT,
+          paddingTop: _top,
+          paddingLeft: left + PAGE_STYLE.paddingHorizontal,
+          paddingRight: right + PAGE_STYLE.paddingHorizontal,
+        }}
       >
         <HeaderSideElement alignItems="flex-start" children={headerLeft?.()} />
 
@@ -60,6 +54,8 @@ export const ModalHeader = memo(
               paddingVertical: 5,
               paddingHorizontal: 10,
               minHeight: 40,
+              flexShrink: 1,
+              alignSelf: 'center',
               alignItems: 'center',
               justifyContent: 'center',
             }}
@@ -82,7 +78,7 @@ export const ModalHeader = memo(
             )
           }
         />
-      </XStack>
+      </View>
     );
   },
 );

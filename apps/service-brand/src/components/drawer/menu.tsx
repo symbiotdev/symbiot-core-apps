@@ -1,13 +1,5 @@
 import { ScrollView, View, XStackProps } from 'tamagui';
-import {
-  AttentionView,
-  Avatar,
-  Br,
-  headerHeight,
-  ListItem,
-  useDrawer,
-  useDrawerState,
-} from '@symbiot-core-apps/ui';
+import { Avatar, Br, ListItem } from '@symbiot-core-apps/ui';
 import { router, usePathname } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { memo, ReactElement, useCallback } from 'react';
@@ -24,11 +16,15 @@ import {
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { BrandMembershipType } from '@symbiot-core-apps/api';
 import {
+  Attention,
   defaultIconSize,
   GlassViewBackground,
   Icon,
   IconName,
   PAGE_STYLE,
+  useHeaderHeight,
+  useSideMenu,
+  useSideMenuState,
 } from '@symbiot-core-apps/ui2';
 
 export const drawerMenuMaxWidth = 250;
@@ -81,13 +77,13 @@ const MenuItem = memo(
         backgroundColor={focused ? '$background' : 'transparent'}
         label={label}
         icon={
-          <AttentionView attention={Boolean(attention)}>
+          <Attention active={Boolean(attention)}>
             {typeof icon === 'string' ? (
               <Icon name={icon} type={focused ? 'SolarBold' : undefined} />
             ) : (
               icon
             )}
-          </AttentionView>
+          </Attention>
         }
         onPress={onPress}
         {...xStackProps}
@@ -99,12 +95,13 @@ const MenuItem = memo(
 export const DrawerMenu = () => {
   const { stats } = useCurrentAccountState();
   const { brand: currentBrand } = useCurrentBrandState();
-  const { compressed, toggleCompressed } = useDrawerState();
+  const { compressed, toggleCompressed } = useSideMenuState();
   const { icons } = useAppSettings();
   const { t } = useI18n();
-  const { permanent } = useDrawer();
+  const { permanent } = useSideMenu();
   const { top, bottom, left } = useSafeAreaInsets();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
+  const headerHeight = useHeaderHeight();
 
   const animatedStyle = useAnimatedStyle(
     () => ({

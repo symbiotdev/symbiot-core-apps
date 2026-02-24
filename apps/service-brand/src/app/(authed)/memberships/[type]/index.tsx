@@ -1,13 +1,6 @@
 import { BrandMembershipsCurrentList } from '@symbiot-core-apps/brand-membership';
 import React, { useCallback, useLayoutEffect, useMemo } from 'react';
-import {
-  Button,
-  EmptyView,
-  HeaderButton,
-  HeaderTitle,
-  InitView,
-  useScreenHeaderHeight,
-} from '@symbiot-core-apps/ui';
+import { Button, EmptyView, InitView } from '@symbiot-core-apps/ui';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import {
   BrandMembershipType,
@@ -19,12 +12,17 @@ import { BrandMembershipItem } from '@symbiot-core-apps/brand';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import {
+  HeaderButton,
+  HeaderTitle,
+  ScrollablePage,
+  useHeaderHeight,
+} from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t } = useI18n();
   const navigation = useNavigation();
-  const headerHeight = useScreenHeaderHeight();
+  const headerHeight = useHeaderHeight();
   const { tryAction, getMembershipDetails } = useAccountLimits();
   const { type } = useLocalSearchParams<{
     type: BrandMembershipType;

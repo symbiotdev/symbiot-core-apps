@@ -3,7 +3,6 @@ import {
   Button,
   EmptyView,
   InitView,
-  useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import {
@@ -15,7 +14,7 @@ import { useMemo } from 'react';
 import { BrandLocationItem } from '@symbiot-core-apps/brand';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { Page, ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Page, ScrollablePage, useHeaderHeight } from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandLocations = ({
   onLocationPress,
@@ -23,7 +22,7 @@ export const CurrentBrandLocations = ({
   onLocationPress: (location: BrandLocation) => void;
 }) => {
   const { brand } = useCurrentBrandState();
-  const headerHeight = useScreenHeaderHeight();
+  const headerHeight = useHeaderHeight();
   const { data, isLoading, isRefetching, error, refetch } =
     useCurrentBrandLocationsReq();
 

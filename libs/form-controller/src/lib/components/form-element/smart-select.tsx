@@ -4,10 +4,8 @@ import { InputFieldView } from '../wrapper/input-field-view';
 import {
   AnimatedList,
   EmptyView,
-  headerHeight,
   InitView,
   LightText,
-  ModalHeader,
   RegularText,
   Spinner,
 } from '@symbiot-core-apps/ui';
@@ -22,7 +20,7 @@ import { Search } from './search';
 import { PickerItem } from './picker';
 import { FormField } from '../wrapper/form-field';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { HEADER_HEIGHT, ModalHeader, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export type SmartSelectValue = unknown | unknown[];
 export type SmartSelectOnChange = (value: SmartSelectValue) => void;
@@ -368,7 +366,7 @@ const OptionsList = ({
       overflow="hidden"
     >
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <View paddingTop={headerHeight + PAGE_STYLE.paddingVertical / 2}>
+        <View paddingTop={HEADER_HEIGHT + PAGE_STYLE.paddingVertical / 2}>
           <ModalHeader headerTitle={title} onClose={onClose} />
 
           {!!options?.length && searchable && (

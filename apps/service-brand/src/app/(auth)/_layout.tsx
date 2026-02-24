@@ -8,10 +8,10 @@ import {
   useFaqState,
   useOnboardingState,
 } from '@symbiot-core-apps/state';
-import { useStackScreenHeaderOptions } from '@symbiot-core-apps/ui';
 import { useEffect } from 'react';
 import { hideAsync } from 'expo-splash-screen';
 import { isWeb, useI18n } from '@symbiot-core-apps/shared';
+import { useStackNavigationOptions } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { tokens } = useAuthTokens();
@@ -24,7 +24,7 @@ export default () => {
   const { clear: clearCurrentBrandEmployeeState } =
     useCurrentBrandEmployeeState();
   const { clear: clearFaq } = useFaqState();
-  const headerScreenOptions = useStackScreenHeaderOptions();
+  const stackNavigationOptions = useStackNavigationOptions();
 
   useEffect(() => {
     if (!tokens.access) {
@@ -54,7 +54,7 @@ export default () => {
   return (
     <Stack
       screenOptions={{
-        ...headerScreenOptions,
+        ...stackNavigationOptions,
         headerShown: !isWeb,
       }}
     >

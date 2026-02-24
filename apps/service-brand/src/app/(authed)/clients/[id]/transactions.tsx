@@ -1,12 +1,13 @@
-import { InitView, useScreenHeaderHeight } from '@symbiot-core-apps/ui';
+import { InitView } from '@symbiot-core-apps/ui';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { BrandClientTransactions } from '@symbiot-core-apps/brand-transaction';
 import { useEffect } from 'react';
 import { useBrandClientDetailedByIdReq } from '@symbiot-core-apps/api';
+import { useHeaderHeight } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const headerHeight = useScreenHeaderHeight();
+  const headerHeight = useHeaderHeight();
   const navigation = useNavigation();
   const {
     data: client,

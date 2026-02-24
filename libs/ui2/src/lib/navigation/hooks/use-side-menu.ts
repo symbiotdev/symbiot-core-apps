@@ -8,25 +8,25 @@ import { useMemo } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type DrawerState = {
+type State = {
   compressed: boolean;
   toggleCompressed: () => void;
 };
 
-export const useDrawerState = create<DrawerState>()(
-  persist<DrawerState>(
+export const useSideMenuState = create<State>()(
+  persist<State>(
     (set, get) => ({
       compressed: true,
       toggleCompressed: () => set({ compressed: !get().compressed }),
     }),
     {
-      name: 'symbiot-drawer',
+      name: 'symbiot::side-menu',
       storage: createZustandStorage(),
     },
   ),
 );
 
-export const useDrawer = () => {
+export const useSideMenu = () => {
   const { media } = useScreenSize();
 
   return useMemo(

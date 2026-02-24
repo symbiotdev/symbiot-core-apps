@@ -3,14 +3,15 @@ import {
   BrandMembershipType,
   useBrandClientDetailedByIdReq,
 } from '@symbiot-core-apps/api';
-import { InitView, useScreenHeaderHeight } from '@symbiot-core-apps/ui';
+import { InitView } from '@symbiot-core-apps/ui';
 import React, { useEffect } from 'react';
 import { BrandClientMembershipsList } from '@symbiot-core-apps/brand-client';
 import { BrandClientMembershipItem } from '@symbiot-core-apps/brand';
+import { useHeaderHeight } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const navigation = useNavigation();
-  const headerHeight = useScreenHeaderHeight();
+  const headerHeight = useHeaderHeight();
   const { id, type } = useLocalSearchParams<{
     id: string;
     type: BrandMembershipType;

@@ -34,12 +34,6 @@ export * from './lib/media/media-background';
 export * from './lib/modal/full-screen-transparent-modal';
 export * from './lib/modal/slide-sheet-modal';
 
-export * from './lib/navigation/drawer';
-export * from './lib/navigation/header';
-export * from './lib/navigation/header-button';
-export * from './lib/navigation/header-title';
-export * from './lib/navigation/modal-header';
-
 export * from './lib/qr/qr-code';
 export * from './lib/qr/qr-code-modal';
 export * from './lib/qr/qr-code-scan-modal';
@@ -52,7 +46,6 @@ export * from './lib/text/heading';
 export * from './lib/text/text';
 export * from './lib/text/custom';
 
-export * from './lib/view/attention-view';
 export * from './lib/view/container-view';
 export * from './lib/view/empty-view';
 export * from './lib/view/error-view';

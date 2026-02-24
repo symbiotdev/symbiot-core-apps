@@ -1,12 +1,12 @@
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import React, { useLayoutEffect } from 'react';
-import { HeaderButton, useDrawer } from '@symbiot-core-apps/ui';
 import { XStack } from 'tamagui';
 import { router, useNavigation } from 'expo-router';
 import { CurrentBrandProfile } from '@symbiot-core-apps/brand';
+import { HeaderButton, useSideMenu } from '@symbiot-core-apps/ui2';
 
 export default () => {
-  const { visible: drawerVisible } = useDrawer();
+  const { visible: sideMenuVisible } = useSideMenu();
   const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
 
@@ -31,7 +31,7 @@ export default () => {
         </XStack>
       ),
     });
-  }, [drawerVisible, hasPermission, navigation]);
+  }, [sideMenuVisible, hasPermission, navigation]);
 
   return <CurrentBrandProfile />;
 };

@@ -6,11 +6,8 @@ import {
   H2,
   H3,
   H4,
-  HeaderButton,
-  headerButtonSize,
   QrCodeModal,
   RegularText,
-  useDrawer,
 } from '@symbiot-core-apps/ui';
 import {
   useCurrentAccountState,
@@ -28,7 +25,14 @@ import {
 } from '@symbiot-core-apps/api';
 import { TodayBrandBookings } from '@symbiot-core-apps/brand-booking';
 import { BrandCongrats, MyBrandsSelectionList } from '@symbiot-core-apps/brand';
-import { Icon, PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
+import {
+  HEADER_BUTTON_SIZE,
+  HeaderButton,
+  Icon,
+  PAGE_STYLE,
+  ScrollablePage,
+  useSideMenu,
+} from '@symbiot-core-apps/ui2';
 
 const InitialAction = () => {
   const { me } = useCurrentAccountState();
@@ -157,7 +161,7 @@ const BrandHome = () => {
             url={currentBrand.avatar?.xsUrl}
             size={30}
           />
-          <H3 lineHeight={headerButtonSize} numberOfLines={1}>
+          <H3 lineHeight={HEADER_BUTTON_SIZE} numberOfLines={1}>
             {currentBrand.name}
           </H3>
         </XStack>
@@ -264,19 +268,19 @@ export default () => {
   const { stats } = useCurrentAccountState();
   const { brand: currentBrand } = useCurrentBrandState();
   const { icons } = useAppSettings();
-  const { visible: drawerVisible } = useDrawer();
+  const { visible: sideMenuVisible } = useSideMenu();
   const navigation = useNavigation();
 
   const headerRight = useCallback(
     () =>
-      !drawerVisible && (
+      !sideMenuVisible && (
         <HeaderButton
           attention={!!stats.newNotifications}
           iconName={icons.Notifications}
           onPress={() => router.push('/notifications')}
         />
       ),
-    [drawerVisible, icons.Notifications, stats.newNotifications],
+    [sideMenuVisible, icons.Notifications, stats.newNotifications],
   );
 
   useLayoutEffect(() => {

@@ -5,7 +5,6 @@ import {
   InitView,
   RegularText,
   SectionList,
-  useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import {
   BrandBookingType,
@@ -21,11 +20,11 @@ import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
 import { useAppSettings } from '@symbiot-core-apps/app';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { PAGE_STYLE, useHeaderHeight } from '@symbiot-core-apps/ui2';
 
 export const BrandBookingsList = () => {
   const { timezone } = useBookingDatetime();
-  const headerHeight = useScreenHeaderHeight();
+  const headerHeight = useHeaderHeight();
   const {
     items: bookings,
     isFetchingNextPage,

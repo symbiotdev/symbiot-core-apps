@@ -1,10 +1,5 @@
 import { Tabs, useSegments } from 'expo-router';
-import {
-  AttentionView,
-  LightText,
-  useDrawer,
-  useScreenHeaderOptions,
-} from '@symbiot-core-apps/ui';
+import { LightText } from '@symbiot-core-apps/ui';
 import {
   useCurrentAccountState,
   useCurrentBrandState,
@@ -15,15 +10,22 @@ import { PlusActionAdaptiveModal } from '../../../components/tabs/plus-action-ad
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { useCountNewNotificationsReq } from '@symbiot-core-apps/api';
 import { CustomTabBar } from '../../../components/tabs/tab-bar';
-import { defaultIconSize, GlassView, Icon } from '@symbiot-core-apps/ui2';
+import {
+  Attention,
+  defaultIconSize,
+  GlassView,
+  Icon,
+  useSideMenu,
+  useStackNavigationOptions,
+} from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { stats } = useCurrentAccountState();
   const { brand: currentBrand } = useCurrentBrandState();
   const { icons } = useAppSettings();
   const segments = useSegments();
-  const { visible: drawerVisible } = useDrawer();
-  const headerOptions = useScreenHeaderOptions();
+  const { visible: sideMenuVisible } = useSideMenu();
+  const stackNavigationOptions = useStackNavigationOptions();
   const { setMyStats } = useCurrentAccountState();
   const { data: countNewNotifications } = useCountNewNotificationsReq();
 
@@ -37,11 +39,11 @@ export default () => {
 
   return (
     <Tabs
-      screenOptions={headerOptions as BottomTabNavigationOptions}
+      screenOptions={stackNavigationOptions as BottomTabNavigationOptions}
       tabBar={(props) => (
         <CustomTabBar
           {...props}
-          hidden={drawerVisible || segments.includes('(stack)')}
+          hidden={sideMenuVisible || segments.includes('(stack)')}
           DynamicButton={
             <PlusActionAdaptiveModal
               trigger={
@@ -67,14 +69,14 @@ export default () => {
         name="home"
         options={{
           tabBarIcon: ({ color, size, focused }) => (
-            <AttentionView attention={!!stats.newNotifications}>
+            <Attention active={!!stats.newNotifications}>
               <Icon
                 name={icons.Home}
                 color={color}
                 size={Math.min(size, defaultIconSize)}
                 type={focused ? 'SolarBold' : undefined}
               />
-            </AttentionView>
+            </Attention>
           ),
         }}
       />

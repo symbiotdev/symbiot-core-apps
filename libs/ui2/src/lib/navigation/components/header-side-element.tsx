@@ -1,7 +1,6 @@
 import { memo, PropsWithChildren } from 'react';
-import { ViewStyle } from 'react-native';
-import { View } from 'tamagui';
-import { GlassView } from '@symbiot-core-apps/ui2';
+import { View, ViewStyle } from 'react-native';
+import { GlassView } from '../../glass/glass-view';
 
 export const HeaderSideElement = memo(
   ({
@@ -18,12 +17,12 @@ export const HeaderSideElement = memo(
           interactive
           children={children}
           style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
             zIndex: 1,
             minWidth: 40,
             minHeight: 40,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
             borderRadius: 20,
           }}
         />

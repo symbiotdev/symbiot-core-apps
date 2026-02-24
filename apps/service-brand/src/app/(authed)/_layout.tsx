@@ -1,9 +1,4 @@
-import {
-  HeaderTitle,
-  LightText,
-  useDrawer,
-  useStackScreenHeaderOptions,
-} from '@symbiot-core-apps/ui';
+import { LightText } from '@symbiot-core-apps/ui';
 import { Redirect, Stack, usePathname } from 'expo-router';
 import {
   useAuthTokens,
@@ -33,8 +28,11 @@ import { useAppSettings } from '@symbiot-core-apps/app';
 import type { ScreenProps } from 'react-native-screens';
 import {
   GlassView,
+  HeaderTitle,
   LoadingContainer,
   PAGE_STYLE,
+  useSideMenu,
+  useStackNavigationOptions,
 } from '@symbiot-core-apps/ui2';
 
 const PlusButton = () => {
@@ -73,7 +71,7 @@ const PlusButton = () => {
 export default () => {
   const { tokens } = useAuthTokens();
   const { brand: currentBrand } = useCurrentBrandState();
-  const { visible: drawerVisible } = useDrawer();
+  const { visible: sideMenuVisible } = useSideMenu();
   const { loaded: currentEntitiesLoaded, refetchCurrentAccount } =
     useCurrentEntitiesLoader();
 
@@ -92,13 +90,13 @@ export default () => {
       <SocketProvider refetchCurrentAccount={refetchCurrentAccount}>
         <NotificationsProvider onPressNotification={onPressNotification}>
           <XStack flex={1}>
-            {drawerVisible && <DrawerMenu />}
+            {sideMenuVisible && <DrawerMenu />}
             {!currentEntitiesLoaded ? (
               <LoadingContainer />
             ) : (
-              <StackNavigation animated={!drawerVisible} />
+              <StackNavigation animated={!sideMenuVisible} />
             )}
-            {drawerVisible && !!currentBrand && <PlusButton />}
+            {sideMenuVisible && !!currentBrand && <PlusButton />}
           </XStack>
         </NotificationsProvider>
       </SocketProvider>
@@ -112,7 +110,7 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
   const { canDo, used } = useAccountLimits();
   const { functionality } = useAppSettings();
   const { hasPermission } = useCurrentBrandEmployee();
-  const screenOptions = useStackScreenHeaderOptions();
+  const stackNavigationOptions = useStackNavigationOptions();
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
   const { location, setLocation } = useCurrentBrandBookingsState();
   const { data: locations } = useCurrentBrandLocationsReq({
@@ -142,8 +140,8 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
   }, [location, locations, setLocation]);
 
   return (
-    <Stack screenOptions={screenOptions}>
-      <Stack.Screen name="(tabs)" options={screenOptions} />
+    <Stack screenOptions={stackNavigationOptions}>
+      <Stack.Screen name="(tabs)" options={stackNavigationOptions} />
 
       {/*ACCOUNT*/}
 

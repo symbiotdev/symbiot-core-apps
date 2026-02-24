@@ -1,6 +1,7 @@
 import { Container, ContainerProps } from '../../layout/container';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PAGE_STYLE } from '../utils/style-rules';
+import { useHeaderHeight } from '../../navigation/hooks/use-header-height';
 
 export type PageContentProps = ContainerProps & {
   ignoreHeaderHeight?: boolean;
@@ -15,9 +16,8 @@ export const PageContent = ({
   style,
   ...containerProps
 }: PageContentProps) => {
+  const headerHeight = useHeaderHeight();
   const { top, bottom, left, right } = useSafeAreaInsets();
-  // fixme - replace with real height
-  const headerHeight = top + 60;
 
   const paddings = {
     paddingTop:

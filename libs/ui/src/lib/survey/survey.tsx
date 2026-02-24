@@ -14,7 +14,6 @@ import {
   KeyboardAwareScrollViewRef,
   KeyboardStickyView,
 } from 'react-native-keyboard-controller';
-import { useScreenHeaderHeight } from '../navigation/header';
 import { H2 } from '../text/heading';
 import { RegularText, SemiBoldText } from '../text/text';
 import Animated, {
@@ -44,6 +43,7 @@ import {
   Icon,
   LoadingContainer,
   PAGE_STYLE,
+  useHeaderHeight,
 } from '@symbiot-core-apps/ui2';
 
 type SurveyStepProps = PropsWithChildren<{
@@ -86,7 +86,7 @@ export const Survey = ({
   const { t } = useI18n();
   const { bottom } = useSafeAreaInsets();
   const navigation = useNavigation();
-  const headerHeight = useScreenHeaderHeight();
+  const headerHeight = useHeaderHeight();
   const animatedValue$ = useSharedValue(0);
 
   const [selectedIndex, setSelectedIndex] = useState(initialIndex || 0);

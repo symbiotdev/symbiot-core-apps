@@ -1,12 +1,10 @@
 import {
   AnimatedList,
-  AttentionView,
   Avatar,
   CompactView,
   InitView,
   RegularText,
   SemiBoldText,
-  useScreenHeaderHeight,
 } from '@symbiot-core-apps/ui';
 import {
   useCurrentAccountPreferences,
@@ -20,7 +18,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { View, XStack } from 'tamagui';
 import { DateHelper, emitHaptic } from '@symbiot-core-apps/shared';
-import { Page } from '@symbiot-core-apps/ui2';
+import { Attention, Page, useHeaderHeight } from '@symbiot-core-apps/ui2';
 
 export const Notifications = ({
   onPressNotification,
@@ -29,7 +27,7 @@ export const Notifications = ({
 }) => {
   const { setMyStats } = useCurrentAccountState();
   const preferences = useCurrentAccountPreferences();
-  const headerHeight = useScreenHeaderHeight();
+  const headerHeight = useHeaderHeight();
   const { mutateAsync: readAll } = useNotificationsReadReq();
   const {
     items: notifications,
@@ -77,14 +75,11 @@ export const Notifications = ({
               <RegularText color="$placeholder" numberOfLines={1}>
                 {item.from.name}
               </RegularText>
-              <AttentionView
-                attention={!item.read}
-                dotProps={{ right: -5, top: -5 }}
-              >
+              <Attention dotOffset={-5} active={!item.read}>
                 <RegularText color="$placeholder" numberOfLines={1}>
                   {DateHelper.format(item.cAt, preferences.dateFormat)}
                 </RegularText>
-              </AttentionView>
+              </Attention>
             </XStack>
 
             <SemiBoldText numberOfLines={1}>{item.title}</SemiBoldText>

@@ -1,4 +1,4 @@
-import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
+import { InitView } from '@symbiot-core-apps/ui';
 import {
   getTranslateKeyByBrandMembershipType,
   useBrandMembershipProfileByIdReq,
@@ -10,6 +10,7 @@ import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandMembershipProfile } from '@symbiot-core-apps/brand-membership';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { HeaderButton } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t } = useI18n();

@@ -1,4 +1,11 @@
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import {
+  ReactElement,
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import DateTimePicker, { useDefaultStyles } from 'react-native-ui-datepicker';
 import { useTheme, ViewProps } from 'tamagui';
 import {
@@ -26,6 +33,7 @@ import {
 } from '@symbiot-core-apps/ui2';
 
 type Value = Date | null | string;
+export type OnDatePickerChange = (date: Date | null) => void;
 
 export const DatePicker = ({
   value,
@@ -36,30 +44,34 @@ export const DatePicker = ({
   description,
   error,
   placeholder,
+  trigger,
+  forceElement,
   startDate,
   minDate,
   maxDate,
   onChange,
   onBlur,
   ...viewProps
-}: Omit<ViewProps, 'onPress'> & {
+}: Omit<ViewProps, 'onPress' | 'onChange'> & {
   value: Value;
   label?: string;
   description?: string;
   error?: string;
   placeholder?: string;
   required?: boolean;
+  forceElement?: 'calendar' | 'input';
   disableDrag?: boolean;
   startDate?: Date;
   minDate?: Date;
   maxDate?: Date;
-  onChange?: (date: Date | null) => void;
+  trigger?: ReactElement;
+  onChange?: OnDatePickerChange;
   onBlur?: () => void;
 }) => {
   const preferences = useCurrentAccountPreferences();
 
   const dateFormat = preferences.dateFormat;
-  const element = preferences.appearance?.date?.element;
+  const element = forceElement || preferences.appearance?.date?.element;
   const weekStartsOn = preferences.appearance?.calendar?.weekStartsOn;
 
   const onChangeDate = useCallback(
@@ -92,6 +104,7 @@ export const DatePicker = ({
           {...viewProps}
           value={value}
           label={label}
+          trigger={trigger}
           forceCalendar={element === 'calendar'}
           disabled={disabled}
           weekStartsOn={weekStartsOn}
@@ -391,6 +404,7 @@ const PopoverDateField = ({
   label,
   minDate,
   maxDate,
+  trigger,
   disabled,
   startDate,
   dateFormat,
@@ -412,6 +426,7 @@ const PopoverDateField = ({
   startDate?: Date;
   minDate?: Date;
   maxDate?: Date;
+  trigger?: ReactElement;
   onChange?: (date: Date | null) => unknown;
   onBlur?: () => void;
 }) => {
@@ -435,18 +450,23 @@ const PopoverDateField = ({
       sheetGestureDisabled={!sheetGestureEnabled}
       sheetTitle={label}
       trigger={
-        <InputFieldView {...viewProps}>
-          <LightText
-            color={!value ? '$placeholder' : disabled ? '$disabled' : '$color'}
-          >
-            {value ? DateHelper.format(value, dateFormat) : placeholder}
-          </LightText>
-        </InputFieldView>
+        trigger || (
+          <InputFieldView {...viewProps}>
+            <LightText
+              color={
+                !value ? '$placeholder' : disabled ? '$disabled' : '$color'
+              }
+            >
+              {value ? DateHelper.format(value, dateFormat) : placeholder}
+            </LightText>
+          </InputFieldView>
+        )
       }
       onClose={onBlur}
     >
       <Container
         style={{
+          paddingTop: label ? 0 : 25,
           alignItems: 'center',
           maxWidth: isWeb ? 350 : undefined,
         }}

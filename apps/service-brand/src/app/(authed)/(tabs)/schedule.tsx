@@ -1,24 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { TimeGridRef } from '@symbiot.dev/react-native-timegrid-pro';
-import { useNavigation } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import {
   DateHelper,
+  emitHaptic,
   eventEmitter,
   isIos,
   useI18n,
   useNativeNow,
 } from '@symbiot-core-apps/shared';
-import {
-  Avatar,
-  ButtonIcon,
-  H3,
-  H4,
-  headerButtonSize,
-  MediumText,
-  RegularText,
-  useScreenHeaderHeight,
-} from '@symbiot-core-apps/ui';
-import { View, XStack } from 'tamagui';
+import { Avatar, ButtonIcon, MediumText } from '@symbiot-core-apps/ui';
+import { View } from 'tamagui';
 import {
   BrandBookingsCalendar,
   useBrandBookingLoader,
@@ -31,8 +23,14 @@ import {
 import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
 import { useRoute } from '@react-navigation/native';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
-import { SmartSelect } from '@symbiot-core-apps/form-controller';
-import { AdaptiveSheetRef, Icon } from '@symbiot-core-apps/ui2';
+import { DatePicker, SmartSelect } from '@symbiot-core-apps/form-controller';
+import {
+  AdaptiveSheetRef,
+  HEADER_BUTTON_SIZE,
+  HeaderTitle,
+  Icon,
+  useHeaderHeight,
+} from '@symbiot-core-apps/ui2';
 
 const today = new Date();
 
@@ -40,7 +38,7 @@ export default () => {
   const { lang } = useI18n();
   const { now } = useNativeNow();
   const route = useRoute();
-  const headerHeight = useScreenHeaderHeight();
+  const headerHeight = useHeaderHeight();
   const navigation = useNavigation();
   const { brand } = useCurrentBrandState();
   const { location, setLocation } = useCurrentBrandBookingsState();
@@ -50,7 +48,7 @@ export default () => {
   const sheetRef = useRef<AdaptiveSheetRef>(null);
   const timeGridRef = useRef<TimeGridRef>(null);
 
-  const [selectedDate, setSelectedDate] = useState(today);
+  const [selectedDate, setSelectedDate] = useState<Date>(today);
 
   const {
     data: locations,
@@ -102,44 +100,62 @@ export default () => {
     [allLocations, locations, brand?.name, brand?.avatar?.xsUrl],
   );
 
+  const headerLeft = useCallback(
+    () => (
+      <View
+        position="relative"
+        alignItems="center"
+        justifyContent="center"
+        onPress={() => {
+          emitHaptic();
+          router.push('/bookings');
+        }}
+      >
+        <Icon name="CalendarMinimalistic" />
+
+        <MediumText
+          position="absolute"
+          bottom={3}
+          color="$buttonTextColor1"
+          fontSize={10}
+          lineHeight={10}
+        >
+          {now.getDate()}
+        </MediumText>
+      </View>
+    ),
+    [now],
+  );
+
   const headerTitle = useCallback(() => {
     const date = DateHelper.format(selectedDate, 'LLLL yyyy', lang);
 
     return (
-      <XStack gap="$3" alignItems="center" width="100%" flex={1}>
-        <View position="relative" alignItems="center" justifyContent="center">
-          <Icon name="CalendarMinimalistic" color="$buttonTextColor1" />
+      <DatePicker
+        forceElement="calendar"
+        value={selectedDate}
+        trigger={
+          <HeaderTitle
+            title={date}
+            subtitle={
+              locations?.items?.length
+                ? location?.name || allLocations.label
+                : ''
+            }
+          />
+        }
+        onChange={(date) => {
+          if (!date) return;
 
-          <MediumText
-            position="absolute"
-            bottom={3}
-            color="$buttonTextColor1"
-            fontSize={10}
-            lineHeight={10}
-          >
-            {now.getDate()}
-          </MediumText>
-        </View>
-
-        {locations?.items?.length ? (
-          <View flex={1} gap={1} marginTop={3} justifyContent="center">
-            <H4 numberOfLines={1}>{date}</H4>
-
-            {!!locations?.items?.length && (
-              <RegularText color="$disabled" fontSize={12} numberOfLines={1}>
-                {location?.name || allLocations.label}
-              </RegularText>
-            )}
-          </View>
-        ) : (
-          <H3 numberOfLines={1} marginTop={3}>
-            {date}
-          </H3>
-        )}
-      </XStack>
+          setSelectedDate(date);
+          timeGridRef.current?.toDatetime(date, {
+            animated: true,
+            ignoreTime: true,
+          });
+        }}
+      />
     );
   }, [
-    now,
     selectedDate,
     lang,
     allLocations.label,
@@ -162,13 +178,13 @@ export default () => {
               <Avatar
                 cursor="pointer"
                 name={location?.name || allLocations.label}
-                size={headerButtonSize}
+                size={HEADER_BUTTON_SIZE}
                 url={location?.avatar?.xsUrl}
               />
             ) : (
               <ButtonIcon
                 type="clear"
-                iconSize={headerButtonSize}
+                iconSize={HEADER_BUTTON_SIZE}
                 iconName="MapPointWave"
               />
             )
@@ -198,6 +214,7 @@ export default () => {
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
+      headerLeft,
       headerTitle,
       headerRight,
     });
@@ -217,7 +234,15 @@ export default () => {
     return () => {
       eventEmitter.off('tabPress', onTabPress);
     };
-  }, [headerTitle, headerRight, navigation, route, refetch, isFetching]);
+  }, [
+    headerLeft,
+    headerTitle,
+    headerRight,
+    navigation,
+    route,
+    refetch,
+    isFetching,
+  ]);
 
   return (
     <BrandBookingsCalendar

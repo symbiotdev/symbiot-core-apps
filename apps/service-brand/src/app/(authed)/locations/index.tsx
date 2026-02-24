@@ -1,8 +1,8 @@
 import { CurrentBrandLocations } from '@symbiot-core-apps/brand-location';
 import { router, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
-import { HeaderButton } from '@symbiot-core-apps/ui';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
+import { HeaderButton } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const navigation = useNavigation();

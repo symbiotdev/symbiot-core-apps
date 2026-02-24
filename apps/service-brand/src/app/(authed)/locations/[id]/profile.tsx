@@ -1,10 +1,11 @@
-import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
+import { InitView } from '@symbiot-core-apps/ui';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { XStack } from 'tamagui';
 import { useBrandLocationByIdReq } from '@symbiot-core-apps/api';
 import { BrandLocationProfile } from '@symbiot-core-apps/brand-location';
+import { HeaderButton } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { id } = useLocalSearchParams<{ id: string }>();

@@ -1,9 +1,10 @@
 import { BrandEmployeeProfile } from '@symbiot-core-apps/brand-employee';
 import { useBrandEmployeeProfileByIdReq } from '@symbiot-core-apps/api';
-import { HeaderButton, InitView } from '@symbiot-core-apps/ui';
+import { InitView } from '@symbiot-core-apps/ui';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
+import { HeaderButton } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { id } = useLocalSearchParams<{ id: string }>();

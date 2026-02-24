@@ -14,6 +14,8 @@ export function BrandIndustryController<T extends FieldValues>(props: {
 
   return (
     <SelectController
+      searchable
+      moveSelectedToTop
       options={data}
       optionsLoading={isPending}
       optionsError={error}

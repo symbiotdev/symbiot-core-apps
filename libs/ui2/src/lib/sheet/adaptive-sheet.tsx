@@ -189,7 +189,7 @@ const AdaptiveContent = ({
           {...props}
           triggerRect={triggerRect}
           visible={contentVisible}
-          maxHeight={height}
+          maxHeight={Math.min(height, 400)}
           onClose={onClose}
         />
       ) : (

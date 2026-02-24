@@ -25,8 +25,10 @@ export function BrandCountryController<T extends FieldValues>(props: {
 
   return (
     <SelectController
+      searchable
+      moveSelectedToTop
       label={!props.noLabel ? t('brand.form.country.label') : ''}
-      optionsTitle={t('brand.form.country.label')}
+      optionsLabel={t('brand.form.country.label')}
       placeholder={t('brand.form.country.placeholder')}
       options={options}
       optionsLoading={isPending}

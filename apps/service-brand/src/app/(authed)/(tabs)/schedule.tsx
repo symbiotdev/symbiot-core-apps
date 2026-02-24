@@ -23,7 +23,7 @@ import {
 import { useCurrentBrandLocationsReq } from '@symbiot-core-apps/api';
 import { useRoute } from '@react-navigation/native';
 import { useAllBrandLocation } from '@symbiot-core-apps/brand';
-import { DatePicker, SmartSelect } from '@symbiot-core-apps/form-controller';
+import { DatePicker, Select } from '@symbiot-core-apps/form-controller';
 import {
   AdaptiveSheetRef,
   HEADER_BUTTON_SIZE,
@@ -168,7 +168,9 @@ export default () => {
       locations?.items &&
       locations.items.length > 1 &&
       hasPermission('locations') && (
-        <SmartSelect
+        <Select
+          searchable
+          moveSelectedToTop
           value={location?.id || allLocations.value}
           options={locationsOptions}
           optionsLoading={locationsLoading}

@@ -20,6 +20,8 @@ export function BrandLocationUsStateController<T extends FieldValues>(props: {
 
   return (
     <SelectController
+      searchable
+      moveSelectedToTop
       options={options}
       label={!props.noLabel ? t('brand_location.form.us_state.label') : ''}
       placeholder={t('brand_location.form.us_state.placeholder')}

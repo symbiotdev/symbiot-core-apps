@@ -5,10 +5,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { useEffect } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
-import {
-  PickerOnChange,
-  SmartSelect,
-} from '@symbiot-core-apps/form-controller';
+import { PickerOnChange, Select } from '@symbiot-core-apps/form-controller';
 
 export function BrandServiceFormatController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -74,9 +71,9 @@ const SelectFormat = ({
   }, [options, value, onChange]);
 
   return (
-    <SmartSelect
+    <Select
       required
-      searchable={false}
+      moveSelectedToTop
       label={t('brand_service.form.format.label')}
       placeholder={t('brand_service.form.format.placeholder')}
       value={value}

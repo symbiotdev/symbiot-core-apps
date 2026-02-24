@@ -111,6 +111,7 @@ const Employee = ({
     <Select
       required
       searchable
+      moveSelectedToTop
       value={value}
       placeholder={t('unavailable_brand_booking.form.employee.placeholder')}
       options={options}

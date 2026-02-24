@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { Text, View, ViewProps } from 'react-native';
-import { Icon, IconName } from '../icon/icon';
+import { DEFAULT_ICON_SIZE, Icon, IconName } from '../icon/icon';
 import { Compactor } from '../layout/compactor';
 import { useAppScheme } from '@symbiot-core-apps/state';
 
@@ -31,13 +31,15 @@ export const EmptyView = memo(
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 20,
-            padding: 10,
+            gap: 10,
+            padding: 20,
           },
           style,
         ]}
       >
-        {!!iconName && <Icon name={iconName} size={60} />}
+        {!!iconName && (
+          <Icon color={color} name={iconName} size={DEFAULT_ICON_SIZE * 1.5} />
+        )}
 
         <View style={{ gap: 5 }}>
           {!!title && (
@@ -53,7 +55,7 @@ export const EmptyView = memo(
             </Text>
           )}
 
-          <Text style={{ color, textAlign: 'center' }}>
+          <Text style={{ color: '#999999', textAlign: 'center' }}>
             {message?.trim() || t('shared.its_empty')}
           </Text>
         </View>

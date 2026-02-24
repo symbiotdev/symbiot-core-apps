@@ -1,7 +1,7 @@
 import { Control, Controller } from 'react-hook-form';
 import {
   DatePicker,
-  SmartSelect,
+  Select,
   TimeScheduleController,
 } from '@symbiot-core-apps/form-controller';
 import { View } from 'tamagui';
@@ -45,8 +45,8 @@ export function UnavailableBrandBookingDatetimeController(props: {
               onBlur={props.onBlur}
             />
 
-            <SmartSelect
-              searchable={false}
+            <Select
+              moveSelectedToTop
               label={t('unavailable_brand_booking.form.duration.label')}
               value={isAllDay ? Duration.allDay : Duration.custom}
               options={[

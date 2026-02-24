@@ -31,6 +31,8 @@ export function BrandEmployeeLocationController<T extends FieldValues>(props: {
   return (
     <SelectController
       {...props}
+      searchable
+      moveSelectedToTop
       disabled={!data?.items?.length}
       label={t('brand_employee.form.location.label')}
       placeholder={t('brand_employee.form.location.placeholder')}

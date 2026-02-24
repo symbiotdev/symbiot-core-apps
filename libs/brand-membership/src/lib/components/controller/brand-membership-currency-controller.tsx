@@ -24,6 +24,8 @@ export function BrandMembershipCurrencyController<
 
   return (
     <SelectController
+      searchable
+      moveSelectedToTop
       label={!props.noLabel ? t(`${tPrefix}.form.currency.label`) : ''}
       placeholder={t(`${tPrefix}.form.currency.placeholder`)}
       options={brand?.currencies}

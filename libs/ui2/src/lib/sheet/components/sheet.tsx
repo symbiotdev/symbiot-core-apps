@@ -1,10 +1,7 @@
 import React, { PropsWithChildren, useLayoutEffect } from 'react';
 import { ScrollViewProps, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  KeyboardStickyView,
-  useReanimatedKeyboardAnimation,
-} from 'react-native-keyboard-controller';
+import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -35,7 +32,7 @@ const defaultBorderRadius = Object.keys(iosCornerRadiusGroups).find((key) =>
 const defaultBorderTopRadius = Number(defaultBorderRadius || 30);
 const defaultBorderBottomRadius = Number(defaultBorderRadius || 0);
 const defaultMarginBottom = defaultBorderRadius ? 5 : -20;
-const defaultPaddingBottom = defaultBorderRadius ? 0 : 20;
+const defaultPaddingBottom = defaultBorderRadius ? 5 : 20;
 const AnimatedGlassView = Animated.createAnimatedComponent(GlassView);
 
 export const Sheet = ({
@@ -59,7 +56,8 @@ export const Sheet = ({
   onClose: () => void;
 }>) => {
   const { top, left, right, bottom } = useSafeAreaInsets();
-  const { progress: keyboardShown$ } = useReanimatedKeyboardAnimation();
+  const { progress: keyboardShown$, height: keyboardHeight$ } =
+    useReanimatedKeyboardAnimation();
 
   const y$ = useSharedValue(maxHeight);
   const offsetY$ = useSharedValue(0);
@@ -100,9 +98,8 @@ export const Sheet = ({
     .enabled(!gestureDisabled && !disabled);
 
   const sheetAnimatedStyle = useAnimatedStyle(() => ({
-    paddingBottom: Math.abs(
-      defaultPaddingBottom + (defaultPaddingBottom ? bottom : 0),
-    ),
+    paddingBottom:
+      Math.abs(keyboardHeight$.value) + (defaultPaddingBottom ? bottom : 0),
     ...(isIos
       ? {
           bottom: 0,
@@ -129,87 +126,102 @@ export const Sheet = ({
   }, [visible, maxHeight, y$]);
 
   return (
-    <KeyboardStickyView offset={{ opened: bottom }} style={{ flex: 1 }}>
-      <GestureHandlerRootView>
-        <Overlay visible={visible} onPress={onClose} />
+    <GestureHandlerRootView>
+      <Overlay visible={visible} onPress={onClose} />
 
-        <GestureDetector
-          gesture={Gesture.Simultaneous(
-            ...(isGestureScrollLimited ? [] : [nativeGesture, panGesture]),
-          )}
+      <GestureDetector
+        gesture={Gesture.Simultaneous(
+          ...(isGestureScrollLimited ? [] : [nativeGesture, panGesture]),
+        )}
+      >
+        <AnimatedGlassView
+          withBackgroundColor
+          interactive={!isCustomDesignMandatory}
+          style={[
+            sheetAnimatedStyle,
+            {
+              left,
+              right,
+              position: 'absolute',
+              zIndex: 1,
+              borderTopLeftRadius: defaultBorderTopRadius,
+              borderTopRightRadius: defaultBorderTopRadius,
+              marginBottom: defaultMarginBottom,
+              maxHeight: maxHeight - top - 10,
+              ...(disabled && {
+                pointerEvents: 'none',
+                opacity: 0.5,
+              }),
+            },
+          ]}
+          onLayout={(e) => height$.set(e.nativeEvent.layout.height)}
         >
-          <AnimatedGlassView
-            withBackgroundColor
-            interactive={!isCustomDesignMandatory}
-            style={[
-              sheetAnimatedStyle,
-              {
-                left,
-                right,
-                position: 'absolute',
-                zIndex: 1,
-                borderTopLeftRadius: defaultBorderTopRadius,
-                borderTopRightRadius: defaultBorderTopRadius,
-                marginBottom: defaultMarginBottom,
-                maxHeight: maxHeight - top - 10,
-                ...(disabled && {
-                  pointerEvents: 'none',
-                  opacity: 0.5,
-                }),
-              },
-            ]}
-            onLayout={(e) => height$.set(e.nativeEvent.layout.height)}
+          <View
+            style={{
+              flexShrink: 1,
+              overflow: 'hidden',
+              paddingTop: 5,
+              borderTopLeftRadius: defaultBorderTopRadius,
+              borderTopRightRadius: defaultBorderTopRadius,
+              borderBottomLeftRadius: defaultBorderBottomRadius,
+              borderBottomRightRadius: defaultBorderBottomRadius,
+              ...(!excludePaddings && {
+                paddingHorizontal: 14,
+              }),
+            }}
           >
-            <View
-              style={{
-                flexShrink: 1,
-                overflow: 'hidden',
-                paddingTop: handleVisible ? 20 : 0,
-                borderTopLeftRadius: defaultBorderTopRadius,
-                borderTopRightRadius: defaultBorderTopRadius,
-                borderBottomLeftRadius: defaultBorderBottomRadius,
-                borderBottomRightRadius: defaultBorderBottomRadius,
-                ...(!excludePaddings && {
-                  paddingHorizontal: 14,
-                }),
-              }}
-            >
-              {handleVisible && (
-                <SheetHandle
-                  ignorePanGesture={!isGestureScrollLimited}
-                  panGesture={panGesture}
-                  onPress={() => ignoreScroll$.set(true)}
-                />
-              )}
+            {handleVisible && (
+              <SheetHandle
+                ignorePanGesture={!isGestureScrollLimited}
+                panGesture={panGesture}
+                onPress={() => ignoreScroll$.set(true)}
+              />
+            )}
 
-              {!!title && <HeaderTitle title={title} />}
+            {!!title && (
+              <HeaderTitle
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  top: handleVisible ? 20 : 10,
+                }}
+                title={title}
+              />
+            )}
 
-              {isGestureScrollLimited
-                ? children
-                : React.Children.toArray(children).map((child) => {
-                    if (React.isValidElement(child)) {
-                      const childProps = child.props as ScrollViewProps;
+            {isGestureScrollLimited
+              ? children
+              : React.Children.toArray(children).map((child) => {
+                  if (React.isValidElement(child)) {
+                    const childProps = child.props as ScrollViewProps;
 
-                      return React.cloneElement(child, {
-                        ...childProps,
-                        bounces: false,
-                        scrollEventThrottle: Math.min(
-                          16,
-                          childProps.scrollEventThrottle || 17,
-                        ),
-                        onScroll: (e) => {
-                          childProps?.onScroll?.(e);
-                          scrolled$.set(e.nativeEvent.contentOffset.y > 0);
+                    return React.cloneElement(child, {
+                      ...childProps,
+                      bounces: false,
+                      scrollEventThrottle: Math.min(
+                        16,
+                        childProps.scrollEventThrottle || 17,
+                      ),
+                      contentContainerStyle: [
+                        {
+                          paddingTop:
+                            (handleVisible ? 20 : 0) + (title ? 20 : 0),
                         },
-                      } as ScrollViewProps);
-                    }
+                        childProps.contentContainerStyle,
+                      ],
+                      onScroll: (e) => {
+                        childProps?.onScroll?.(e);
+                        scrolled$.set(e.nativeEvent.contentOffset.y > 0);
+                      },
+                    } as ScrollViewProps);
+                  }
 
-                    return child;
-                  })}
-            </View>
-          </AnimatedGlassView>
-        </GestureDetector>
-      </GestureHandlerRootView>
-    </KeyboardStickyView>
+                  return child;
+                })}
+          </View>
+        </AnimatedGlassView>
+      </GestureDetector>
+    </GestureHandlerRootView>
   );
 };

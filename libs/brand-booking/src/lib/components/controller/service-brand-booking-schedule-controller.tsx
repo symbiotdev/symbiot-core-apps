@@ -15,7 +15,7 @@ import {
   HorizontalPickerOnChange,
   PickerItem,
   PickerOnChange,
-  SmartSelect,
+  Select,
 } from '@symbiot-core-apps/form-controller';
 import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 import {
@@ -189,8 +189,10 @@ const Locations = ({
 
   return (
     canSelectLocation && (
-      <SmartSelect
+      <Select
         required
+        searchable
+        moveSelectedToTop
         label={t('service_brand_booking.form.location.label')}
         placeholder={t('service_brand_booking.form.location.placeholder')}
         value={value}

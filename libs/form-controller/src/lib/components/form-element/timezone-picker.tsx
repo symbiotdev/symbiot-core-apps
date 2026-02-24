@@ -5,7 +5,7 @@ import {
 } from 'countries-and-timezones';
 import { useEffect, useMemo } from 'react';
 import { isIos } from '@symbiot-core-apps/shared';
-import { SmartSelect } from './smart-select';
+import { Select } from './select';
 
 export const TimezonePicker = ({
   value,
@@ -71,7 +71,9 @@ export const TimezonePicker = ({
   }, [onChange, onlyCountryTimezones, options, value]);
 
   return (
-    <SmartSelect
+    <Select
+      searchable
+      moveSelectedToTop
       label={label}
       value={value}
       error={error}

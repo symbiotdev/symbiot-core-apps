@@ -15,6 +15,8 @@ export function BrandCurrencyController<T extends FieldValues>(props: {
 
   return (
     <SelectController
+      searchable
+      moveSelectedToTop
       label={!props.noLabel ? t('brand.form.currency.label') : ''}
       placeholder={t('brand.form.currency.placeholder')}
       options={data}

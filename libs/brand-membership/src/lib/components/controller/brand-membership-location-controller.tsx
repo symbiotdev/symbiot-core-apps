@@ -40,6 +40,8 @@ export function BrandMembershipLocationController<
   return (
     <SelectController
       {...props}
+      searchable
+      moveSelectedToTop
       disabled={!data?.items?.length}
       label={!props.noLabel ? t(`${tPrefix}.form.location.label`) : ''}
       placeholder={t(`${tPrefix}.form.location.placeholder`)}

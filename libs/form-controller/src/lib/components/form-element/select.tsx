@@ -1,10 +1,12 @@
 import {
   AdaptiveSheet,
+  AdaptiveSheetRef,
   EmptyView,
   FallbackView,
   PAGE_STYLE,
   ToggleList,
   ToggleListProps,
+  ToggleListValue,
 } from '@symbiot-core-apps/ui2';
 import React, {
   ReactElement,
@@ -19,6 +21,7 @@ import { FormField } from '../wrapper/form-field';
 import { Search } from './search';
 import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 import { FlatList } from 'react-native';
+import { View } from 'tamagui';
 
 export const Select = ({
   value,
@@ -31,6 +34,7 @@ export const Select = ({
   trigger,
   options,
   placeholder,
+  multiselect,
   searchable,
   optionsError,
   searchDebounce,
@@ -38,6 +42,8 @@ export const Select = ({
   noSelectedValue,
   searchPlaceholder,
   showSelectedDescription,
+  onBlur,
+  onChange,
   ...toggleListProps
 }: Omit<ToggleListProps, 'ListEmptyComponent'> & {
   label?: string;
@@ -53,26 +59,30 @@ export const Select = ({
   trigger?: ReactElement;
   noSelectedValue?: string;
   showSelectedDescription?: boolean;
+  onBlur?: () => void;
 }) => {
   const { t } = useI18n();
 
-  const areOptionsLoading = !options && optionsLoading;
-
   const listRef = useRef<FlatList>(null);
+  const sheetRef = useRef<AdaptiveSheetRef>(null);
 
   const [searchValue, setSearchValue] = useState('');
 
   const adjustedOptions = useMemo(
     () =>
-      options?.filter(
-        (option) =>
-          option.label
+      options?.filter((option) => {
+        const isExist = (text: string) =>
+          text
             .toLowerCase()
             .replace(/[^\p{L}\p{N}]/gu, '')
             .indexOf(
               searchValue.toLowerCase().replace(/[^\p{L}\p{N}]/gu, ''),
-            ) !== -1,
-      ),
+            ) !== -1;
+
+        if (isExist(option.label)) return true;
+        else if (option.description) return isExist(option.description);
+        else return false;
+      }),
     [options, searchValue],
   );
 
@@ -124,11 +134,28 @@ export const Select = ({
     [options, optionsError, optionsLoading, searchValue, t],
   );
 
+  const _onChange = useCallback(
+    (value: ToggleListValue) => {
+      onChange?.(value);
+      if (!multiselect) sheetRef.current?.hide?.();
+    },
+    [multiselect, onChange],
+  );
+
+  const onClose = useCallback(() => {
+    onBlur?.();
+    setSearchValue('');
+  }, [onBlur]);
+
+  const areOptionsLoading = !options && optionsLoading;
+
   return (
     <AdaptiveSheet
       excludePaddings
-      sheetTitle={optionsLabel}
+      ref={sheetRef}
+      sheetTitle={optionsLabel || label}
       popoverPlacement="bottom-start"
+      onClose={onClose}
       trigger={
         <FormField
           required={required}
@@ -164,30 +191,38 @@ export const Select = ({
         ignoreAnimation
         value={value}
         listRef={listRef}
+        multiselect={multiselect}
         options={adjustedOptions}
+        singleSelectHaptic={false}
         contentContainerStyle={{
-          paddingVertical: PAGE_STYLE.paddingVertical / 2,
+          paddingBottom: PAGE_STYLE.paddingVertical / 2 + (searchable ? 50 : 0),
           paddingHorizontal: PAGE_STYLE.paddingHorizontal,
         }}
         optionsLoading={optionsLoading}
         ListEmptyComponent={ListEmptyComponent}
+        onChange={_onChange}
         {...toggleListProps}
       />
 
       {!!searchable && (
-        <Search
-          value={searchValue}
-          disabled={disabled}
-          debounce={searchDebounce}
-          placeholder={searchPlaceholder}
-          inputFieldProps={{
-            backgroundColor: '$background',
-            marginHorizontal: PAGE_STYLE.paddingHorizontal,
-            marginBottom: PAGE_STYLE.paddingVertical,
+        <View
+          style={{
+            position: 'absolute',
+            left: PAGE_STYLE.paddingHorizontal,
+            right: PAGE_STYLE.paddingHorizontal,
+            bottom: 10,
           }}
-          onChange={search}
-          onPress={emitHaptic}
-        />
+        >
+          <Search
+            value={searchValue}
+            disabled={disabled}
+            debounce={searchDebounce}
+            placeholder={searchPlaceholder}
+            inputFieldProps={{ backgroundColor: '$background' }}
+            onChange={search}
+            onPress={emitHaptic}
+          />
+        </View>
       )}
     </AdaptiveSheet>
   );

@@ -22,6 +22,7 @@ export function BrandMembershipPeriodController<T extends FieldValues>(props: {
   return (
     <SelectController
       {...props}
+      moveSelectedToTop
       label={t(`${tPrefix}.form.period.label`)}
       placeholder={t(`${tPrefix}.form.period.placeholder`)}
       options={data}

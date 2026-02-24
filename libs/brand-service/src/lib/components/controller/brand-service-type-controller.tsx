@@ -5,10 +5,7 @@ import {
 } from '@symbiot-core-apps/api';
 import { useEffect } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
-import {
-  PickerOnChange,
-  SmartSelect,
-} from '@symbiot-core-apps/form-controller';
+import { PickerOnChange, Select } from '@symbiot-core-apps/form-controller';
 
 export function BrandServiceTypeController<T extends FieldValues>(props: {
   name: Path<T>;
@@ -23,7 +20,7 @@ export function BrandServiceTypeController<T extends FieldValues>(props: {
       name={props.name}
       control={props.control}
       rules={{
-        required: false
+        required: false,
       }}
       render={({ field: { value, onChange } }) => (
         <SelectType
@@ -69,8 +66,10 @@ const SelectType = ({
   }, [options, value, onChange]);
 
   return (
-    <SmartSelect
+    <Select
       required
+      searchable
+      moveSelectedToTop
       label={t('brand_service.form.type.label')}
       placeholder={t('brand_service.form.type.placeholder')}
       value={value}

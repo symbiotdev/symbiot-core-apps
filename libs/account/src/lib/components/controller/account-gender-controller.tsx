@@ -14,8 +14,6 @@ export function AccountGenderController<T extends FieldValues>(props: {
 
   return (
     <SelectController
-      searchable={false}
-      moveSelectedToTop={false}
       label={t('shared.account.form.gender.label')}
       placeholder={t('shared.account.form.gender.placeholder')}
       options={data}

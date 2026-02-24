@@ -38,6 +38,8 @@ export function BrandClientMembershipVisitsController<
 
   return (
     <SelectController
+      searchable
+      moveSelectedToTop
       label={!props.noLabel ? t(`${tPrefix}.form.visits.label`) : ''}
       placeholder={t(`${tPrefix}.form.visits.placeholder`)}
       options={options}

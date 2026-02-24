@@ -5,7 +5,6 @@ import {
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
-import { XStack } from 'tamagui';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandMembershipProfile } from '@symbiot-core-apps/brand-membership';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
@@ -33,7 +32,7 @@ export default () => {
           )
         : '',
       headerRight: () => (
-        <XStack flex={1} gap="$3" alignItems="center">
+        <>
           {/*todo - analytics*/}
           {/*{hasPermission('analytics') && (*/}
           {/*  <HeaderButton*/}
@@ -49,7 +48,7 @@ export default () => {
               onPress={() => router.push(`/memberships/${id}/update`)}
             />
           )}
-        </XStack>
+        </>
       ),
     });
   }, [hasPermission, id, membership?.type, navigation, t]);

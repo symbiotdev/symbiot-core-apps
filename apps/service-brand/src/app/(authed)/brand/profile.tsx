@@ -1,6 +1,5 @@
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import React, { useLayoutEffect } from 'react';
-import { XStack } from 'tamagui';
 import { router, useNavigation } from 'expo-router';
 import { CurrentBrandProfile } from '@symbiot-core-apps/brand';
 import { HeaderButton, useSideMenu } from '@symbiot-core-apps/ui2';
@@ -13,7 +12,7 @@ export default () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <XStack flex={1} gap="$3" alignItems="center">
+        <>
           {/*todo - analytics*/}
           {/*{!drawerVisible && hasPermission('analytics') && (*/}
           {/*  <HeaderButton*/}
@@ -28,7 +27,7 @@ export default () => {
               onPress={() => router.push(`/brand/update`)}
             />
           )}
-        </XStack>
+        </>
       ),
     });
   }, [sideMenuVisible, hasPermission, navigation]);

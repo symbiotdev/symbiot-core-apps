@@ -1,15 +1,15 @@
-import { cacheDirectory, writeAsStringAsync } from 'expo-file-system';
 import { Asset } from 'expo-asset';
 import { shareAsync } from 'expo-sharing';
 import { ShowNativeFailedAlert } from './burnt';
 import { isWeb } from './device';
+import { cacheDirectory, writeAsStringAsync } from 'expo-file-system/legacy';
 
 export async function downloadArrayBuffer(
   arrayBuffer: ArrayBufferLike,
   fileName: string,
 ) {
   if (isWeb) {
-    const blob = new Blob([arrayBuffer]);
+    const blob = new Blob([arrayBuffer as BlobPart]);
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement('a');

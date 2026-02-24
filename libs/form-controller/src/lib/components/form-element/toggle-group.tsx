@@ -62,25 +62,27 @@ export const ToggleGroup = ({
     />
   ) : (
     <FormField label={label} required={required}>
-      <Container
-        lazy={false}
-        style={{ paddingBottom: 10 }}
-        onRendered={onRendered}
-      >
-        {items?.map((item, index) => (
-          <Item
-            key={index}
-            item={item}
-            value={value}
-            multiselect={multiselect}
-            ignoreHaptic={ignoreHaptic}
-            allowEmpty={allowEmpty}
-            disabled={disabled}
-            onToggle={onChange}
-            {...itemProps}
-          />
-        ))}
-      </Container>
+      <View {...viewProps}>
+        <Container
+          lazy={false}
+          style={{ paddingBottom: 10 }}
+          onRendered={onRendered}
+        >
+          {items?.map((item, index) => (
+            <Item
+              key={index}
+              item={item}
+              value={value}
+              multiselect={multiselect}
+              ignoreHaptic={ignoreHaptic}
+              allowEmpty={allowEmpty}
+              disabled={disabled}
+              onToggle={onChange}
+              {...itemProps}
+            />
+          ))}
+        </Container>
+      </View>
     </FormField>
   );
 
@@ -138,6 +140,7 @@ const Item = memo(
         alignItems="center"
         paddingTop="$3"
         disabled={disabled}
+        minHeight={40}
         cursor={!disabled && onToggle ? 'pointer' : 'default'}
         disabledStyle={{ opacity: 0.5 }}
         pressStyle={!disabled && { opacity: 0.8 }}
@@ -162,10 +165,7 @@ const Item = memo(
         </View>
 
         {selected && (
-          <Icon
-            name="Unread"
-            color={disabled ? '$disabled' : '$checkboxColor'}
-          />
+          <Icon name="Unread" color={disabled ? '#999999' : undefined} />
         )}
       </XStack>
     );

@@ -4,7 +4,7 @@ import { Card } from './card';
 import { CircularProgress } from '../chart/circular-progress';
 import { RegularText } from '../text/text';
 import { ButtonIcon } from '../button/button';
-import { defaultIconSize } from '@symbiot-core-apps/ui2';
+import { DEFAULT_ICON_SIZE } from '@symbiot-core-apps/ui2';
 
 export const ProgressCard = ({
   children,
@@ -28,7 +28,7 @@ export const ProgressCard = ({
         />
 
         {!!subtitle && (
-          <RegularText flex={1} lineHeight={defaultIconSize}>
+          <RegularText flex={1} lineHeight={DEFAULT_ICON_SIZE}>
             {subtitle}
           </RegularText>
         )}

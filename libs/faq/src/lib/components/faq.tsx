@@ -9,7 +9,7 @@ import { Linking } from 'react-native';
 import { useFaqState } from '@symbiot-core-apps/state';
 import { useAppFaqReq } from '@symbiot-core-apps/api';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { Icon, LoadingContainer, ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Icon, LoadingView, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const Faq = () => {
   const { t } = useI18n();
@@ -32,7 +32,7 @@ export const Faq = () => {
   return (
     <ScrollablePage>
       {!sortedFaq ? (
-        <LoadingContainer />
+        <LoadingView />
       ) : (
         <CompactView>
           <Accordion

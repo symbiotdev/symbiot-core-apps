@@ -16,8 +16,8 @@ import {
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { BrandMembershipType } from '@symbiot-core-apps/api';
 import {
-  Attention,
-  defaultIconSize,
+  AttentionView,
+  DEFAULT_ICON_SIZE,
   GlassViewBackground,
   Icon,
   IconName,
@@ -77,13 +77,13 @@ const MenuItem = memo(
         backgroundColor={focused ? '$background' : 'transparent'}
         label={label}
         icon={
-          <Attention active={Boolean(attention)}>
+          <AttentionView active={Boolean(attention)}>
             {typeof icon === 'string' ? (
               <Icon name={icon} type={focused ? 'SolarBold' : undefined} />
             ) : (
               icon
             )}
-          </Attention>
+          </AttentionView>
         }
         onPress={onPress}
         {...xStackProps}
@@ -173,7 +173,7 @@ export const DrawerMenu = () => {
               icon={
                 <Avatar
                   marginHorizontal={-4}
-                  size={defaultIconSize + 8}
+                  size={DEFAULT_ICON_SIZE + 8}
                   name={currentBrand.name}
                   color={currentBrand.avatarColor}
                   url={currentBrand.avatar?.xsUrl}

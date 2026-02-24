@@ -9,7 +9,6 @@ import {
   Chip,
   CompactView,
   H3,
-  InitView,
   ListItemGroup,
   MapsTrigger,
   MediumText,
@@ -29,7 +28,11 @@ import {
 import { BrandLocationCompletion } from './brand-location-completion';
 import { Image } from 'expo-image';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
+import {
+  FallbackView,
+  PAGE_STYLE,
+  ScrollablePage,
+} from '@symbiot-core-apps/ui2';
 
 export const BrandLocationProfile = ({
   location,
@@ -189,7 +192,7 @@ export const BrandLocationProfile = ({
         )}
 
         {!items ? (
-          <InitView loading={isPending} error={error} />
+          <FallbackView loading={isPending} error={error} />
         ) : (
           <ListItemGroup
             gap="$1"

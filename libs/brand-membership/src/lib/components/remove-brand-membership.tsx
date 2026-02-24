@@ -1,4 +1,4 @@
-import { ActionCard, CompactView } from '@symbiot-core-apps/ui';
+import { ActionCard } from '@symbiot-core-apps/ui';
 import { useCallback } from 'react';
 import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import {
@@ -8,7 +8,7 @@ import {
   useRemoveBrandMembershipReq,
 } from '@symbiot-core-apps/api';
 import { router } from 'expo-router';
-import { Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Compactor, Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const RemoveBrandMembership = ({
   type,
@@ -38,7 +38,7 @@ export const RemoveBrandMembership = ({
 
   return (
     <ScrollablePage>
-      <CompactView>
+      <Compactor>
         <ActionCard
           title={t(`${tPrefix}.remove.title`)}
           subtitle={t(`${tPrefix}.remove.subtitle`, {
@@ -50,7 +50,7 @@ export const RemoveBrandMembership = ({
           buttonType="danger"
           onPress={onPress}
         />
-      </CompactView>
+      </Compactor>
     </ScrollablePage>
   );
 };

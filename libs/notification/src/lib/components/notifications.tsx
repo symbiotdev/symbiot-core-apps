@@ -1,8 +1,6 @@
 import {
-  AnimatedList,
   Avatar,
   CompactView,
-  InitView,
   RegularText,
   SemiBoldText,
 } from '@symbiot-core-apps/ui';
@@ -18,7 +16,13 @@ import {
 } from '@symbiot-core-apps/api';
 import { View, XStack } from 'tamagui';
 import { DateHelper, emitHaptic } from '@symbiot-core-apps/shared';
-import { Attention, Page, useHeaderHeight } from '@symbiot-core-apps/ui2';
+import {
+  AnimatedList,
+  AttentionView,
+  FallbackView,
+  Page,
+  useHeaderHeight,
+} from '@symbiot-core-apps/ui2';
 
 export const Notifications = ({
   onPressNotification,
@@ -75,11 +79,11 @@ export const Notifications = ({
               <RegularText color="$placeholder" numberOfLines={1}>
                 {item.from.name}
               </RegularText>
-              <Attention dotOffset={-5} active={!item.read}>
+              <AttentionView dotOffset={-5} active={!item.read}>
                 <RegularText color="$placeholder" numberOfLines={1}>
                   {DateHelper.format(item.cAt, preferences.dateFormat)}
                 </RegularText>
-              </Attention>
+              </AttentionView>
             </XStack>
 
             <SemiBoldText numberOfLines={1}>{item.title}</SemiBoldText>
@@ -108,7 +112,7 @@ export const Notifications = ({
       style={{ paddingBottom: 0 }}
     >
       {!notifications?.length ? (
-        <InitView loading={isLoading} error={error} />
+        <FallbackView loading={isLoading} error={error} />
       ) : (
         <AnimatedList
           refreshing={isManualRefetching}

@@ -1,7 +1,7 @@
-import { InitView } from '@symbiot-core-apps/ui';
 import { useBrandMembershipProfileByIdReq } from '@symbiot-core-apps/api';
 import { useLocalSearchParams } from 'expo-router';
 import { RemoveBrandMembership } from '@symbiot-core-apps/brand-membership';
+import { FallbackView } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { id } = useLocalSearchParams<{
@@ -14,7 +14,7 @@ export default () => {
   } = useBrandMembershipProfileByIdReq(id, false);
 
   if (!membership || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return (

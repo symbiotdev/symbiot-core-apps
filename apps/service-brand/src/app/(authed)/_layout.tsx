@@ -29,7 +29,7 @@ import type { ScreenProps } from 'react-native-screens';
 import {
   GlassView,
   HeaderTitle,
-  LoadingContainer,
+  LoadingView,
   PAGE_STYLE,
   useSideMenu,
   useStackNavigationOptions,
@@ -92,7 +92,7 @@ export default () => {
           <XStack flex={1}>
             {sideMenuVisible && <DrawerMenu />}
             {!currentEntitiesLoaded ? (
-              <LoadingContainer />
+              <LoadingView />
             ) : (
               <StackNavigation animated={!sideMenuVisible} />
             )}

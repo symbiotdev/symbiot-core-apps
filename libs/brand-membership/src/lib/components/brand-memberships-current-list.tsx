@@ -1,4 +1,3 @@
-import { AnimatedList, EmptyView } from '@symbiot-core-apps/ui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React, {
   ComponentType,
@@ -16,7 +15,13 @@ import {
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
-import { GlassViewBackground, Page, PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import {
+  AnimatedList,
+  EmptyView,
+  GlassViewBackground,
+  Page,
+  PAGE_STYLE,
+} from '@symbiot-core-apps/ui2';
 
 export const BrandMembershipsCurrentList = ({
   offsetTop,

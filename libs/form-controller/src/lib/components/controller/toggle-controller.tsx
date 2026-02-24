@@ -1,7 +1,12 @@
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { useEffect } from 'react';
-import { ToggleGroup, ToggleGroupItem } from '../form-element/toggle-group';
-import { PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import {
+  PAGE_STYLE,
+  ToggleList,
+  ToggleListOption,
+} from '@symbiot-core-apps/ui2';
+import { FormField } from '../wrapper/form-field';
+import { View } from 'tamagui';
 
 export function ToggleController<T extends FieldValues>({
   name,
@@ -22,7 +27,7 @@ export function ToggleController<T extends FieldValues>({
   label: string;
   required?: boolean;
   multiselect?: boolean;
-  items?: ToggleGroupItem[];
+  items?: ToggleListOption[];
   itemsLoading?: boolean;
   itemsError?: string | null;
   noDataMessage?: string;
@@ -51,23 +56,27 @@ export function ToggleController<T extends FieldValues>({
               : errors?.required || !!value,
       }}
       render={({ field: { value, onChange } }) => (
-        <ToggleGroup
-          allowEmpty
-          multiselect={multiselect}
-          disabled={disabled}
-          viewProps={{
-            backgroundColor: '$background1',
-            borderRadius: '$10',
-            paddingHorizontal: PAGE_STYLE.paddingHorizontal,
-          }}
-          label={label}
-          items={items}
-          loading={itemsLoading}
-          noDataMessage={noDataMessage}
-          error={itemsError}
-          value={value}
-          onChange={onChange}
-        />
+        <FormField label={label} required={required}>
+          <View
+            backgroundColor="$background1"
+            borderRadius="$10"
+            paddingHorizontal={PAGE_STYLE.paddingHorizontal}
+            paddingVertical={PAGE_STYLE.paddingVertical / 2}
+          >
+            <ToggleList
+              allowEmpty
+              scrollEnabled={false}
+              multiselect={multiselect}
+              disabled={disabled}
+              options={items}
+              optionsLoading={itemsLoading}
+              optionsError={itemsError}
+              noOptionsMessage={noDataMessage}
+              value={value}
+              onChange={onChange}
+            />
+          </View>
+        </FormField>
       )}
     />
   );

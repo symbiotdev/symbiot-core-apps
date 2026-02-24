@@ -1,10 +1,9 @@
 import { View, XStack } from 'tamagui';
 import { DateHelper, useI18n, Weekday } from '@symbiot-core-apps/shared';
 import { useCallback, useMemo, useState } from 'react';
-import { Picker } from './picker';
+import { Picker, PickerOnChange } from './picker';
 import {
   CompactView,
-  EmptyView,
   H4,
   LightText,
   MediumText,
@@ -12,10 +11,9 @@ import {
 } from '@symbiot-core-apps/ui';
 import { FormField } from '../wrapper/form-field';
 import { InputFieldView } from '../wrapper/input-field-view';
-import { ToggleOnChange } from './toggle-group';
 import { Switch } from './switch';
 import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
-import { AdaptiveSheet } from '@symbiot-core-apps/ui2';
+import { AdaptiveSheet, EmptyView } from '@symbiot-core-apps/ui2';
 
 export type WeekdaySchedule = {
   day: number;
@@ -263,7 +261,7 @@ const WeekdayScheduleElement = ({
               lazy
               value={value?.start}
               options={minutes}
-              onChange={onChangeStartValue as ToggleOnChange}
+              onChange={onChangeStartValue as PickerOnChange}
               {...touchHandleProps}
             />
           )}
@@ -273,14 +271,14 @@ const WeekdayScheduleElement = ({
               lazy
               value={value?.end}
               options={endMinutes}
-              onChange={onChangeEndValue as ToggleOnChange}
+              onChange={onChangeEndValue as PickerOnChange}
               {...touchHandleProps}
             />
           )}
         </CompactView>
       ) : (
         <EmptyView
-          padding={75.5}
+          style={{ padding: 75.5 }}
           iconName="Calendar"
           message={t('shared.schedule.day_off')}
         />

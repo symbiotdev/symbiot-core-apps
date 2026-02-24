@@ -1,7 +1,7 @@
 import { LayoutChangeEvent, View, ViewProps } from 'react-native';
 import { isDeviceSlow, useRendered } from '@symbiot-core-apps/shared';
 import { ReactElement, useCallback, useRef } from 'react';
-import { LoadingContainer } from '../progress/loading-container';
+import { LoadingView } from '../appearance/loading-view';
 
 export type ContainerProps = ViewProps & {
   lazy?: boolean;
@@ -39,7 +39,7 @@ export const Container = ({
   );
 
   if (!rendered) {
-    return LoadingElement ?? <LoadingContainer />;
+    return LoadingElement ?? <LoadingView />;
   }
 
   return (

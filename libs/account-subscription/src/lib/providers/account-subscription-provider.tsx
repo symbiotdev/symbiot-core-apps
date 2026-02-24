@@ -29,7 +29,7 @@ import {
 import {
   AdaptiveSheet,
   AdaptiveSheetRef,
-  LoadingContainer,
+  LoadingView,
 } from '@symbiot-core-apps/ui2';
 
 type AccountSubscriptionContext = {
@@ -183,7 +183,7 @@ export const AccountSubscriptionProvider = ({
             <DevelopmentPaywall onApplyPromoCode={showPromoCodeForm} />
           ) : (
             <ScrollView>
-              {!packages.length && <LoadingContainer />}
+              {!packages.length && <LoadingView />}
 
               {!!packages.length && (
                 <SubscriptionsPaywall

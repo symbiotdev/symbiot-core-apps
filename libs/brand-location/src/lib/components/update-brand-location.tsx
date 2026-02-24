@@ -6,7 +6,6 @@ import {
   useUpdateBrandLocationReq,
 } from '@symbiot-core-apps/api';
 import {
-  CompactView,
   ListItem,
   ListItemGroup,
   SlideSheetModal,
@@ -38,7 +37,12 @@ import { BrandLocationAdvantagesController } from './controller/brand-location-a
 import { BrandLocationTimezoneController } from './controller/brand-location-timezone-controller';
 import { BrandLocationCountryController } from './controller/brand-location-country-controller';
 import { BrandLocationUsStateController } from './controller/brand-location-us-state-controller';
-import { Icon, PAGE_STYLE, ScrollablePage } from '@symbiot-core-apps/ui2';
+import {
+  Compactor,
+  Icon,
+  PAGE_STYLE,
+  ScrollablePage,
+} from '@symbiot-core-apps/ui2';
 
 export const UpdateBrandLocation = ({
   location,
@@ -56,7 +60,7 @@ export const UpdateBrandLocation = ({
     >
       <BrandLocationMediaForm marginTop="$5" location={location} />
 
-      <CompactView paddingHorizontal={PAGE_STYLE.paddingHorizontal}>
+      <Compactor style={{ paddingHorizontal: PAGE_STYLE.paddingHorizontal }}>
         <Name location={location} />
 
         <ListItemGroup>
@@ -66,7 +70,7 @@ export const UpdateBrandLocation = ({
           <Advantages location={location} />
           <Contact location={location} />
         </ListItemGroup>
-      </CompactView>
+      </Compactor>
     </ScrollablePage>
   );
 };
@@ -131,7 +135,9 @@ const Address = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
+        <Compactor
+          style={{ gap: 15, paddingVertical: PAGE_STYLE.paddingVertical }}
+        >
           <SingeElementForm
             name="address"
             value={value.address}
@@ -156,7 +162,7 @@ const Address = ({ location }: { location: BrandLocation }) => {
             onUpdate={updateValue}
             Controller={BrandLocationRemarkController}
           />
-        </CompactView>
+        </Compactor>
       </SlideSheetModal>
     </>
   );
@@ -230,14 +236,14 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView paddingVertical={PAGE_STYLE.paddingVertical}>
+        <Compactor style={{ paddingVertical: PAGE_STYLE.paddingVertical }}>
           <ArrayForm
             name="schedules"
             value={value.schedules}
             onUpdate={updateValue}
             Controller={BrandLocationScheduleController}
           />
-        </CompactView>
+        </Compactor>
       </SlideSheetModal>
     </>
   );
@@ -291,7 +297,9 @@ const Locale = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
+        <Compactor
+          style={{ gap: 15, paddingVertical: PAGE_STYLE.paddingVertical }}
+        >
           {canChangeCountry && (
             <>
               <SingeElementForm
@@ -321,7 +329,7 @@ const Locale = ({ location }: { location: BrandLocation }) => {
             }}
             Controller={BrandLocationTimezoneController}
           />
-        </CompactView>
+        </Compactor>
       </SlideSheetModal>
     </>
   );
@@ -363,14 +371,16 @@ const Advantages = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
+        <Compactor
+          style={{ gap: 15, paddingVertical: PAGE_STYLE.paddingVertical }}
+        >
           <ArrayForm
             name="advantages"
             value={value.advantages}
             onUpdate={updateValue}
             Controller={BrandLocationAdvantagesController}
           />
-        </CompactView>
+        </Compactor>
       </SlideSheetModal>
     </>
   );
@@ -429,7 +439,9 @@ const Contact = ({ location }: { location: BrandLocation }) => {
         visible={modalVisible}
         onClose={closeModal}
       >
-        <CompactView gap="$5" paddingVertical={PAGE_STYLE.paddingVertical}>
+        <Compactor
+          style={{ gap: 15, paddingVertical: PAGE_STYLE.paddingVertical }}
+        >
           <SingleElementToArrayForm
             name="phones"
             value={value.phones}
@@ -448,7 +460,7 @@ const Contact = ({ location }: { location: BrandLocation }) => {
             onUpdate={updateValue}
             Controller={BrandLocationInstagramController}
           />
-        </CompactView>
+        </Compactor>
       </SlideSheetModal>
     </>
   );

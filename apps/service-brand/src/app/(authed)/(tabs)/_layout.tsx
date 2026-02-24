@@ -11,8 +11,8 @@ import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { useCountNewNotificationsReq } from '@symbiot-core-apps/api';
 import { CustomTabBar } from '../../../components/tabs/tab-bar';
 import {
-  Attention,
-  defaultIconSize,
+  AttentionView,
+  DEFAULT_ICON_SIZE,
   GlassView,
   Icon,
   useSideMenu,
@@ -69,14 +69,14 @@ export default () => {
         name="home"
         options={{
           tabBarIcon: ({ color, size, focused }) => (
-            <Attention active={!!stats.newNotifications}>
+            <AttentionView active={!!stats.newNotifications}>
               <Icon
                 name={icons.Home}
                 color={color}
-                size={Math.min(size, defaultIconSize)}
+                size={Math.min(size, DEFAULT_ICON_SIZE)}
                 type={focused ? 'SolarBold' : undefined}
               />
-            </Attention>
+            </AttentionView>
           ),
         }}
       />
@@ -89,7 +89,7 @@ export default () => {
               <Icon
                 name={icons.Calendar}
                 color={color}
-                size={Math.min(size, defaultIconSize)}
+                size={Math.min(size, DEFAULT_ICON_SIZE)}
                 type={focused ? 'SolarBold' : undefined}
               />
             ),
@@ -104,7 +104,7 @@ export default () => {
             <Icon
               name={icons.More}
               color={color}
-              size={Math.min(size, defaultIconSize)}
+              size={Math.min(size, DEFAULT_ICON_SIZE)}
               type={focused ? 'SolarBold' : undefined}
             />
           ),

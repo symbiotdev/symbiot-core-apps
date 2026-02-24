@@ -1,7 +1,7 @@
-import { EmptyView } from '@symbiot-core-apps/ui';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { EmptyView } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t } = useI18n();

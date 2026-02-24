@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useBrandClientMembershipByIdReq } from '@symbiot-core-apps/api';
-import { InitView } from '@symbiot-core-apps/ui';
 import { RemoveBrandClientMembership } from '@symbiot-core-apps/brand-client';
+import { FallbackView } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { id, membershipId } = useLocalSearchParams<{
@@ -15,7 +15,7 @@ export default () => {
   } = useBrandClientMembershipByIdReq(id, membershipId, false);
 
   if (!membership || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return <RemoveBrandClientMembership clientId={id} membership={membership} />;

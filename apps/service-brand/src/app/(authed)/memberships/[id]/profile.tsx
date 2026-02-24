@@ -1,4 +1,3 @@
-import { InitView } from '@symbiot-core-apps/ui';
 import {
   getTranslateKeyByBrandMembershipType,
   useBrandMembershipProfileByIdReq,
@@ -9,7 +8,7 @@ import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandMembershipProfile } from '@symbiot-core-apps/brand-membership';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { HeaderButton } from '@symbiot-core-apps/ui2';
+import { FallbackView, HeaderButton } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t } = useI18n();
@@ -54,7 +53,7 @@ export default () => {
   }, [hasPermission, id, membership?.type, navigation, t]);
 
   if (!membership || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return (

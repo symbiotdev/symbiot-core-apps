@@ -1,10 +1,9 @@
-import { InitView } from '@symbiot-core-apps/ui';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useLayoutEffect } from 'react';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { useBrandLocationByIdReq } from '@symbiot-core-apps/api';
 import { BrandLocationProfile } from '@symbiot-core-apps/brand-location';
-import { HeaderButton } from '@symbiot-core-apps/ui2';
+import { FallbackView, HeaderButton } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -35,7 +34,7 @@ export default () => {
   }, [hasPermission, id, navigation]);
 
   if (!location) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return <BrandLocationProfile location={location} />;

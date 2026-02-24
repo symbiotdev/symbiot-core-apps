@@ -1,7 +1,7 @@
-import { InitView } from '@symbiot-core-apps/ui';
 import { useBrandServiceProfileByIdReq } from '@symbiot-core-apps/api';
 import { useLocalSearchParams } from 'expo-router';
 import { RemoveBrandService } from '@symbiot-core-apps/brand-service';
+import { FallbackView } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -12,7 +12,7 @@ export default () => {
   } = useBrandServiceProfileByIdReq(id, false);
 
   if (!service || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return <RemoveBrandService service={service} />;

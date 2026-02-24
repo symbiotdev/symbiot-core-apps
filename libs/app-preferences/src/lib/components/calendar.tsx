@@ -12,13 +12,12 @@ import {
 } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import {
-  MultiToggle,
-  OnChangeMultiToggle,
+  HorizontalMultiToggle,
   PickerItem,
   PickerOnChange,
   SmartSelect,
 } from '@symbiot-core-apps/form-controller';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import { ScrollablePage, ToggleListOnChange } from '@symbiot-core-apps/ui2';
 
 const numberOfDaysLandscapeLabel = isPhone
   ? 'shared.preferences.calendar.number_of_days.landscape_label'
@@ -132,12 +131,12 @@ export const Calendar = () => {
           }
         />
 
-        <MultiToggle
+        <HorizontalMultiToggle
           max={6}
           label={t('shared.preferences.calendar.hidden_days.label')}
           value={preferences.appearance?.calendar?.hiddenDays}
-          items={hiddenDays}
-          onChange={onChangeHiddenDays as OnChangeMultiToggle}
+          options={hiddenDays}
+          onChange={onChangeHiddenDays as ToggleListOnChange}
         />
       </CompactView>
     </ScrollablePage>

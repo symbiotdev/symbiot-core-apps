@@ -2,7 +2,7 @@ import { AnimatePresence, View, XStack } from 'tamagui';
 import { ReactElement, useCallback } from 'react';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { Error, RegularText } from '@symbiot-core-apps/ui';
-import { defaultIconSize, Icon } from '@symbiot-core-apps/ui2';
+import { DEFAULT_ICON_SIZE, Icon } from '@symbiot-core-apps/ui2';
 
 export const Checkbox = ({
   value,
@@ -41,8 +41,8 @@ export const Checkbox = ({
           borderRadius="$3"
           justifyContent="center"
           alignItems="center"
-          width={defaultIconSize}
-          height={defaultIconSize}
+          width={DEFAULT_ICON_SIZE}
+          height={DEFAULT_ICON_SIZE}
         >
           <AnimatePresence>
             {value && (

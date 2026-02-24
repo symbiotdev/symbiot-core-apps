@@ -4,10 +4,14 @@ import {
   useBrandClientMembershipByIdReq,
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import { InitView } from '@symbiot-core-apps/ui';
 import React, { useCallback, useLayoutEffect, useMemo } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { ContextMenu, ContextMenuItem, Icon } from '@symbiot-core-apps/ui2';
+import {
+  ContextMenu,
+  ContextMenuItem,
+  FallbackView,
+  Icon,
+} from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t } = useI18n();
@@ -50,7 +54,7 @@ export default () => {
   }, [client, navigation, headerRight]);
 
   if (!membership || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return <UpdateBrandClientMembership clientId={id} membership={membership} />;

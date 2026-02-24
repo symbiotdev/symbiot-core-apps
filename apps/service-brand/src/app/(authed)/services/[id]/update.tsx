@@ -1,10 +1,14 @@
-import { InitView } from '@symbiot-core-apps/ui';
 import { useBrandServiceDetailedByIdReq } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { UpdateBrandService } from '@symbiot-core-apps/brand-service';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { ContextMenu, ContextMenuItem, Icon } from '@symbiot-core-apps/ui2';
+import {
+  ContextMenu,
+  ContextMenuItem,
+  FallbackView,
+  Icon,
+} from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t } = useI18n();
@@ -41,7 +45,7 @@ export default () => {
   }, [headerRight, navigation]);
 
   if (!service || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return <UpdateBrandService service={service} />;

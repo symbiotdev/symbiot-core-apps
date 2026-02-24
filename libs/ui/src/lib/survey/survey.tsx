@@ -41,7 +41,7 @@ import {
   Container,
   GlassView,
   Icon,
-  LoadingContainer,
+  LoadingView,
   PAGE_STYLE,
   useHeaderHeight,
 } from '@symbiot-core-apps/ui2';
@@ -200,7 +200,7 @@ export const Survey = ({
   }, [animatedValue$, selectedIndex]);
 
   return loading ? (
-    <LoadingContainer />
+    <LoadingView />
   ) : (
     <Container style={{ flex: 1 }}>
       <View flex={1}>

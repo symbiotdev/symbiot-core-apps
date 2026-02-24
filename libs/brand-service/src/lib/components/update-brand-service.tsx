@@ -47,7 +47,7 @@ import { View } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import {
   Icon,
-  LoadingContainer,
+  LoadingView,
   PAGE_STYLE,
   ScrollablePage,
 } from '@symbiot-core-apps/ui2';
@@ -320,7 +320,7 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
               Controller={BrandServiceEmployeesController}
             />
           ) : (
-            <LoadingContainer />
+            <LoadingView />
           )}
         </CompactView>
       </SlideSheetModal>

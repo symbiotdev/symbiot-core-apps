@@ -2,7 +2,6 @@ import {
   ActionCard,
   Avatar,
   CardsGrid,
-  CompactView,
   H2,
   H3,
   H4,
@@ -26,6 +25,7 @@ import {
 import { TodayBrandBookings } from '@symbiot-core-apps/brand-booking';
 import { BrandCongrats, MyBrandsSelectionList } from '@symbiot-core-apps/brand';
 import {
+  Compactor,
   HEADER_BUTTON_SIZE,
   HeaderButton,
   Icon,
@@ -76,7 +76,7 @@ const InitialAction = () => {
         {currentBrands?.length ? (
           <MyBrandsSelectionList />
         ) : (
-          <CompactView gap="$6" marginVertical="auto">
+          <Compactor style={{ gap: 20, marginVertical: 'auto' }}>
             <View gap="$2">
               <H2 textAlign="center">{t('initial_actions.title')}</H2>
               <RegularText textAlign="center">
@@ -101,7 +101,7 @@ const InitialAction = () => {
               buttonIcon={<Icon name="QrCode" />}
               onPress={onOpenQrCodeModal}
             />
-          </CompactView>
+          </Compactor>
         )}
       </ScrollablePage>
 
@@ -171,7 +171,7 @@ const BrandHome = () => {
 
   return (
     <ScrollablePage style={{ paddingBottom: 100 }}>
-      <CompactView gap="$3">
+      <Compactor style={{ gap: 10 }}>
         {!!currentBrand && <BrandCongrats brand={currentBrand} />}
 
         <TodayBrandBookings />
@@ -259,7 +259,7 @@ const BrandHome = () => {
             ]}
           />
         )}
-      </CompactView>
+      </Compactor>
     </ScrollablePage>
   );
 };

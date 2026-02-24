@@ -1,4 +1,4 @@
-import { ActionCard, InitView, Link, MediumText } from '@symbiot-core-apps/ui';
+import { ActionCard, Link, MediumText } from '@symbiot-core-apps/ui';
 import React, { useMemo } from 'react';
 import { useBrandBookingLoader } from '../hooks/use-brand-booking-loader';
 import {
@@ -16,7 +16,7 @@ import {
 import { View, XStack } from 'tamagui';
 import { router } from 'expo-router';
 import { BrandBookingType } from '@symbiot-core-apps/api';
-import { Icon } from '@symbiot-core-apps/ui2';
+import { FallbackView, Icon } from '@symbiot-core-apps/ui2';
 
 export const TodayBrandBookings = () => {
   const { t } = useI18n();
@@ -59,7 +59,13 @@ export const TodayBrandBookings = () => {
   );
 
   if (!adjustedBookings) {
-    return <InitView height={100} loading={isPending} error={error?.message} />;
+    return (
+      <FallbackView
+        loading={isPending}
+        error={error?.message}
+        style={{ height: 150 }}
+      />
+    );
   } else {
     return (
       <View gap="$1">

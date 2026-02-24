@@ -1,4 +1,3 @@
-import { InitView } from '@symbiot-core-apps/ui';
 import { useLocalSearchParams } from 'expo-router';
 import {
   BrandBookingType,
@@ -11,6 +10,7 @@ import {
   ServiceBrandBookingProfile,
   UnavailableBrandBookingProfile,
 } from '@symbiot-core-apps/brand-booking';
+import { FallbackView } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { id, type } = useLocalSearchParams<{
@@ -24,7 +24,7 @@ export default () => {
   } = useBrandBookingDetailedByIdReq(id, type);
 
   if (!booking || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   if (type === BrandBookingType.unavailable) {

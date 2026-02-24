@@ -1,13 +1,7 @@
 import { Control, Controller } from 'react-hook-form';
 import { BrandBookingSlot, BrandEmployee } from '@symbiot-core-apps/api';
 import { useEffect, useMemo } from 'react';
-import {
-  AnimatedList,
-  Avatar,
-  Button,
-  EmptyView,
-  InitView,
-} from '@symbiot-core-apps/ui';
+import { Avatar, Button } from '@symbiot-core-apps/ui';
 import {
   arraysOfObjectsEqual,
   DateHelper,
@@ -24,7 +18,12 @@ import {
   SmartSelect,
 } from '@symbiot-core-apps/form-controller';
 import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
-import { Icon } from '@symbiot-core-apps/ui2';
+import {
+  AnimatedList,
+  EmptyView,
+  FallbackView,
+  Icon,
+} from '@symbiot-core-apps/ui2';
 
 type ScheduleControl = Control<{
   schedule: {
@@ -82,7 +81,7 @@ export function ServiceBrandBookingScheduleController({
             />
 
             {!slots ? (
-              <InitView loading={slotsLoading} error={slotsError} />
+              <FallbackView loading={slotsLoading} error={slotsError} />
             ) : (
               <>
                 <Locations

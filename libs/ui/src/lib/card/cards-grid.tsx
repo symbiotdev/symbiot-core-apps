@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { BoldText, MediumText, RegularText } from '../text/text';
 import { StyleSheet, View as RNView } from 'react-native';
-import { defaultIconSize, Icon, IconName } from '@symbiot-core-apps/ui2';
+import { DEFAULT_ICON_SIZE, Icon, IconName } from '@symbiot-core-apps/ui2';
 
 type CardGridItem = {
   label: string;
@@ -95,7 +95,7 @@ const GridItem = ({
     <View marginTop="auto">
       <BoldText
         marginTop="$2"
-        lineHeight={defaultIconSize}
+        lineHeight={DEFAULT_ICON_SIZE}
         numberOfLines={labelNumberOfLines}
         color={color}
       >

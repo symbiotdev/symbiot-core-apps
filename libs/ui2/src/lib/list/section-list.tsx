@@ -1,39 +1,32 @@
 import React, { ForwardedRef } from 'react';
-import { FlatList } from 'react-native';
-import Animated, {
-  FadingTransition,
-  FlatListPropsWithLayout,
-} from 'react-native-reanimated';
-import { ListLoadingFooter } from './list-loading-footer';
-import { ViewProps } from 'tamagui';
+import { SectionList as RNSectionList, SectionListProps } from 'react-native';
 import { isWeb } from '@symbiot-core-apps/shared';
-import { Refresher } from '@symbiot-core-apps/ui2';
+import { Refresher } from '../progress/refresher';
+import { LoadingView } from '../appearance/loading-view';
 
-export function AnimatedList<T>({
+export function SectionList<T>({
   listRef,
-  listLoadingFooterProps,
   refreshing,
   expanding,
   ignoreAnimation,
   progressViewOffset,
   onRefresh,
-  ...flatListProps
-}: FlatListPropsWithLayout<T> & {
-  listRef?: ForwardedRef<FlatList>;
-  listLoadingFooterProps?: ViewProps;
+  onEndReached,
+  ...listProps
+}: SectionListProps<T> & {
+  listRef?: ForwardedRef<RNSectionList>;
   refreshing?: boolean;
   expanding?: boolean;
   ignoreAnimation?: boolean;
   progressViewOffset?: number;
   onRefresh?: () => void;
+  onEndReached?: () => void;
 }) {
   return (
-    <Animated.FlatList
+    <RNSectionList
+      stickySectionHeadersEnabled
       ref={listRef}
       keyExtractor={(_, index) => String(index)}
-      itemLayoutAnimation={
-        isWeb || ignoreAnimation ? undefined : FadingTransition
-      }
       onEndReachedThreshold={0.3}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
@@ -49,22 +42,22 @@ export function AnimatedList<T>({
       }
       ListFooterComponent={
         typeof expanding !== 'undefined' ? (
-          <ListLoadingFooter loading={expanding} {...listLoadingFooterProps} />
+          <LoadingView showSpinner={expanding} />
         ) : undefined
       }
-      // decelerationRate={0.9} // specially for swipe lists and keep the same behaviour on all list
-      {...flatListProps}
+      onEndReached={onEndReached}
+      {...listProps}
       style={[
         {
           flex: 1,
         },
-        flatListProps.style,
+        listProps.style,
       ]}
       contentContainerStyle={[
         {
           flexGrow: 1,
         },
-        flatListProps.contentContainerStyle,
+        listProps.contentContainerStyle,
       ]}
     />
   );

@@ -15,8 +15,6 @@ import {
   Button,
   CompactView,
   compactViewStyles,
-  EmptyView,
-  InitView,
   ListItem,
   ListItemGroup,
   RegularText,
@@ -38,6 +36,8 @@ import { View, ViewProps } from 'tamagui';
 import {
   AdaptiveSheet,
   AdaptiveSheetRef,
+  EmptyView,
+  FallbackView,
   Icon,
   PAGE_STYLE,
 } from '@symbiot-core-apps/ui2';
@@ -335,7 +335,7 @@ const Balance = ({
   const { data: client, error, isPending } = useBrandClientDetailedByIdReq(id);
 
   if (!client || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return (

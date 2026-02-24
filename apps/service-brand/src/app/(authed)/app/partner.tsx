@@ -1,7 +1,6 @@
 import {
   Accordion,
   ActionCard,
-  CompactView,
   H2,
   ListItem,
   ListItemGroup,
@@ -25,7 +24,7 @@ import {
   usePartnerPromoImage,
   usePartnerPromoPresentation,
 } from '@symbiot-core-apps/api';
-import { Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
+import { Compactor, Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 const downloadUrl = process.env['EXPO_PUBLIC_UNIVERSAL_DOWNLOAD_URL'] as string;
 const websiteUrl = process.env['EXPO_PUBLIC_WEBSITE_URL'] as string;
@@ -41,7 +40,7 @@ export default () => {
   return (
     !!me?.partner && (
       <ScrollablePage>
-        <CompactView gap="$5">
+        <Compactor style={{ paddingVertical: 15 }}>
           <ListItemGroup
             title={t('shared.partner_program.promo_code.your_promo_code')}
           >
@@ -181,7 +180,7 @@ export default () => {
             buttonIcon={<Icon name="Letter" />}
             onPress={openMail}
           />
-        </CompactView>
+        </Compactor>
       </ScrollablePage>
     )
   );

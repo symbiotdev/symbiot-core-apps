@@ -1,12 +1,13 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
 import { SwitchController } from '@symbiot-core-apps/form-controller';
-import { Card, InitView } from '@symbiot-core-apps/ui';
+import { Card } from '@symbiot-core-apps/ui';
 import {
   BrandEmployeePermissions,
   useBrandEmployeePermissionsReq,
 } from '@symbiot-core-apps/api';
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { useI18n } from '@symbiot-core-apps/shared';
+import { FallbackView } from '@symbiot-core-apps/ui2';
 
 export function BrandEmployeePermissionsController<
   T extends FieldValues,
@@ -20,7 +21,7 @@ export function BrandEmployeePermissionsController<
   const { data, isPending, error } = useBrandEmployeePermissionsReq();
 
   if (!data?.length) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return data

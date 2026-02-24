@@ -1,4 +1,3 @@
-import { AnimatedList, EmptyView, InitView } from '@symbiot-core-apps/ui';
 import {
   BrandEmployee,
   useBrandEmployeeCurrentListReq,
@@ -9,7 +8,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
-import { GlassViewBackground, Page, PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import {
+  AnimatedList,
+  EmptyView,
+  FallbackView,
+  GlassViewBackground,
+  Page,
+  PAGE_STYLE,
+} from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandEmployees = ({
   offsetTop,
@@ -45,7 +51,7 @@ export const CurrentBrandEmployees = ({
   );
 
   if (!employees?.length && !search) {
-    return <InitView loading={isLoading} error={error} />;
+    return <FallbackView loading={isLoading} error={error} />;
   }
 
   return (

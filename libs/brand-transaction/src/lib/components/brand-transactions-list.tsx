@@ -1,9 +1,13 @@
-import { AnimatedList, EmptyView, InitView } from '@symbiot-core-apps/ui';
 import { BrandTransactionItem } from '@symbiot-core-apps/brand';
 import { BrandTransaction } from '@symbiot-core-apps/api';
-import { useCallback } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { Container, PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import {
+  AnimatedList,
+  Container,
+  EmptyView,
+  FallbackView,
+  PAGE_STYLE,
+} from '@symbiot-core-apps/ui2';
 
 export const BrandTransactionsList = ({
   transactions,
@@ -25,11 +29,10 @@ export const BrandTransactionsList = ({
   onEndReached?: () => void;
 }) => {
   const { t } = useI18n();
-  const ListEmptyComponent = useCallback(() => <EmptyView />, []);
 
   if (!transactions?.length) {
     return (
-      <InitView
+      <FallbackView
         loading={isLoading}
         error={error}
         noDataIcon="Bill"
@@ -54,7 +57,7 @@ export const BrandTransactionsList = ({
           paddingBottom: 100,
         }}
         keyExtractor={(item) => item.id}
-        ListEmptyComponent={ListEmptyComponent}
+        ListEmptyComponent={EmptyView}
         renderItem={({ item }) => (
           <BrandTransactionItem
             backgroundColor="$background1"

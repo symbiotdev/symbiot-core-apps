@@ -4,7 +4,7 @@ import { Card } from './card';
 import { ButtonIcon } from '../button/button';
 import { RegularText } from '../text/text';
 import { H3 } from '../text/heading';
-import { defaultIconSize, Icon, IconName } from '@symbiot-core-apps/ui2';
+import { DEFAULT_ICON_SIZE, Icon, IconName } from '@symbiot-core-apps/ui2';
 
 export const ClosableCard = ({
   iconName,
@@ -22,7 +22,7 @@ export const ClosableCard = ({
       <XStack alignItems="flex-start" justifyContent="space-between" gap="$3">
         {!!iconName && <Icon name={iconName} />}
 
-        <H3 flex={1} lineHeight={defaultIconSize}>
+        <H3 flex={1} lineHeight={DEFAULT_ICON_SIZE}>
           {title}
         </H3>
 
@@ -36,7 +36,7 @@ export const ClosableCard = ({
       </XStack>
 
       {!!subtitle && (
-        <RegularText lineHeight={defaultIconSize}>{subtitle}</RegularText>
+        <RegularText lineHeight={DEFAULT_ICON_SIZE}>{subtitle}</RegularText>
       )}
     </Card>
   );

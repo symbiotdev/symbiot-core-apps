@@ -2,7 +2,7 @@ import { BaseSyntheticEvent, memo } from 'react';
 import { Pressable } from 'react-native';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { Icon, IconName } from '../../icon/icon';
-import { Attention } from '../../appearance/attention';
+import { AttentionView } from '../../appearance/attention-view';
 
 export const HeaderButton = memo(
   ({
@@ -16,7 +16,8 @@ export const HeaderButton = memo(
   }) => (
     <Pressable
       style={({ pressed }) => ({
-        height: '100%',
+        minWidth: 40,
+        minHeight: 40,
         justifyContent: 'center',
         alignItems: 'center',
         opacity: pressed ? 0.8 : 1,
@@ -27,9 +28,9 @@ export const HeaderButton = memo(
         emitHaptic();
       }}
     >
-      <Attention dotOffset={-1} active={Boolean(attention)}>
+      <AttentionView dotOffset={-1} active={Boolean(attention)}>
         <Icon name={iconName} />
-      </Attention>
+      </AttentionView>
     </Pressable>
   ),
 );

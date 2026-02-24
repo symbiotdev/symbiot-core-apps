@@ -1,9 +1,4 @@
-import {
-  AnimatedList,
-  Button,
-  EmptyView,
-  InitView,
-} from '@symbiot-core-apps/ui';
+import { Button } from '@symbiot-core-apps/ui';
 import { useCurrentBrandState } from '@symbiot-core-apps/state';
 import {
   BrandLocation,
@@ -14,7 +9,14 @@ import { useMemo } from 'react';
 import { BrandLocationItem } from '@symbiot-core-apps/brand';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { Page, ScrollablePage, useHeaderHeight } from '@symbiot-core-apps/ui2';
+import {
+  AnimatedList,
+  EmptyView,
+  FallbackView,
+  Page,
+  ScrollablePage,
+  useHeaderHeight,
+} from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandLocations = ({
   onLocationPress,
@@ -79,12 +81,11 @@ const Intro = ({
   const { tryAction } = useAccountLimits();
 
   if (loading || error) {
-    return <InitView loading={loading} error={error} />;
+    return <FallbackView loading={loading} error={error} />;
   } else {
     return (
       <ScrollablePage>
         <EmptyView
-          padding={0}
           iconName="MapPointWave"
           title={t('brand_location.create.intro.title')}
           message={t('brand_location.create.intro.subtitle')}

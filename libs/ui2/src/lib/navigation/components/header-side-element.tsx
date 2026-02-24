@@ -20,6 +20,7 @@ export const HeaderSideElement = memo(
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
+            flexShrink: 1,
             zIndex: 1,
             minWidth: 40,
             minHeight: 40,

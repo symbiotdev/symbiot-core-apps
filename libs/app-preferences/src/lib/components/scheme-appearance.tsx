@@ -6,13 +6,14 @@ import {
 } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { activeSystemScheme, useI18n } from '@symbiot-core-apps/shared';
-import {
-  Switch,
-  ToggleGroup,
-  ToggleOnChange,
-} from '@symbiot-core-apps/form-controller';
+import { Switch } from '@symbiot-core-apps/form-controller';
 import { AccountAppearance } from '@symbiot-core-apps/api';
-import { Icon, ScrollablePage } from '@symbiot-core-apps/ui2';
+import {
+  Icon,
+  ScrollablePage,
+  ToggleList,
+  ToggleListOnChange,
+} from '@symbiot-core-apps/ui2';
 
 export const SchemeAppearance = () => {
   const navigation = useNavigation();
@@ -21,7 +22,7 @@ export const SchemeAppearance = () => {
   const preferences = useCurrentAccountPreferences();
   const scheme = preferences?.appearance?.scheme;
 
-  const items = useMemo(
+  const options = useMemo(
     () => [
       {
         icon: <Icon name="Sun" />,
@@ -70,13 +71,13 @@ export const SchemeAppearance = () => {
             }
           />
 
-          {/*todo check*/}
           {!!scheme && (
-            <ToggleGroup
+            <ToggleList
+              scrollEnabled={false}
               disabled={updating}
-              items={items}
+              options={options}
               value={scheme}
-              onChange={onChange as ToggleOnChange}
+              onChange={onChange as ToggleListOnChange}
             />
           )}
         </ListItemGroup>

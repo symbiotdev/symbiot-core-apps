@@ -4,15 +4,14 @@ import { useCurrentAccountUpdater } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { queryClient } from '@symbiot-core-apps/api';
 import { allLanguages, useI18n } from '@symbiot-core-apps/shared';
-import { ToggleGroup } from '@symbiot-core-apps/form-controller';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import { ScrollablePage, ToggleList } from '@symbiot-core-apps/ui2';
 
 export const Language = () => {
   const { lang, supportedLanguages, changeLanguage } = useI18n();
   const navigation = useNavigation();
   const { updateAccount$, updating } = useCurrentAccountUpdater();
 
-  const items = useMemo(
+  const options = useMemo(
     () =>
       allLanguages
         .filter(({ code }) => supportedLanguages.includes(code))
@@ -34,8 +33,9 @@ export const Language = () => {
     <ScrollablePage>
       <CompactView>
         <Card paddingVertical={0}>
-          <ToggleGroup
-            items={items}
+          <ToggleList
+            scrollEnabled={false}
+            options={options}
             value={lang}
             onChange={async (language) => {
               await updateAccount$({ language: language as string });

@@ -8,13 +8,12 @@ import { View } from 'tamagui';
 import { PermissionStatus } from 'expo-image-picker';
 import { SlideSheetModal } from '../modal/slide-sheet-modal';
 import { Linking, StyleSheet, useWindowDimensions } from 'react-native';
-import { EmptyView } from '../view/empty-view';
 import { Button } from '../button/button';
 import { CompactView } from '../view/compact-view';
 import { isIos, useI18n, useRendered } from '@symbiot-core-apps/shared';
 import { Spinner } from '../loading/spinner';
 import Svg, { Mask, Rect } from 'react-native-svg';
-import { HEADER_HEIGHT, LoadingContainer } from '@symbiot-core-apps/ui2';
+import { EmptyView, HEADER_HEIGHT, LoadingView } from '@symbiot-core-apps/ui2';
 
 export const QrCodeScanModal = (props: {
   visible: boolean;
@@ -82,7 +81,7 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
   }, [permission?.granted, rendered, requestPermission]);
 
   if (!rendered) {
-    return <LoadingContainer />;
+    return <LoadingView />;
   }
 
   if (!permission) {

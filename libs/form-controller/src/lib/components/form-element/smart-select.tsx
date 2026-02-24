@@ -1,14 +1,7 @@
 import { ReactElement, useCallback, useMemo, useRef, useState } from 'react';
 import { FlatList, Modal, useWindowDimensions } from 'react-native';
 import { InputFieldView } from '../wrapper/input-field-view';
-import {
-  AnimatedList,
-  EmptyView,
-  InitView,
-  LightText,
-  RegularText,
-  Spinner,
-} from '@symbiot-core-apps/ui';
+import { LightText, RegularText, Spinner } from '@symbiot-core-apps/ui';
 import { View, XStack } from 'tamagui';
 import {
   emitHaptic,
@@ -20,7 +13,14 @@ import { Search } from './search';
 import { PickerItem } from './picker';
 import { FormField } from '../wrapper/form-field';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
-import { HEADER_HEIGHT, ModalHeader, PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import {
+  AnimatedList,
+  EmptyView,
+  FallbackView,
+  HEADER_HEIGHT,
+  ModalHeader,
+  PAGE_STYLE,
+} from '@symbiot-core-apps/ui2';
 
 export type SmartSelectValue = unknown | unknown[];
 export type SmartSelectOnChange = (value: SmartSelectValue) => void;
@@ -341,7 +341,7 @@ const OptionsList = ({
   const ListEmptyComponent = useCallback(
     () =>
       !options && !searchValue ? (
-        <InitView loading={optionsLoading} error={optionsError} />
+        <FallbackView loading={optionsLoading} error={optionsError} />
       ) : (
         <EmptyView iconName="Magnifer" message={t('shared.nothing_found')} />
       ),

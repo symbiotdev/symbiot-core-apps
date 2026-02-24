@@ -1,7 +1,8 @@
-import { Switch as UiSwitch, View, XStack } from 'tamagui';
+import { Switch as UiSwitch, useTheme, View, XStack } from 'tamagui';
 import { useCallback } from 'react';
-import { emitHaptic } from '@symbiot-core-apps/shared';
+import { emitHaptic, isWeb } from '@symbiot-core-apps/shared';
 import { Label, RegularText, Spinner } from '@symbiot-core-apps/ui';
+import { Switch as RNSwitch } from 'react-native';
 
 const switchHeight = 26;
 const switchWidth = 42;
@@ -23,6 +24,7 @@ export const Switch = ({
   loading?: boolean;
   onChange?: (value: boolean) => void;
 }) => {
+  const theme = useTheme();
   const onCheckedChange = useCallback(
     (value: boolean) => {
       emitHaptic();
@@ -59,29 +61,42 @@ export const Switch = ({
           <Spinner />
         </View>
       ) : (
-        <UiSwitch
-          native="mobile"
-          paddingHorizontal={2}
-          cursor="pointer"
-          width={switchWidth}
-          height={switchHeight}
-          checked={checked}
-          borderWidth={0}
-          disabled={disabled}
-          activeStyle={{
-            backgroundColor: '$switchSelectedColor',
-          }}
-          opacity={disabled ? 0.8 : 1}
-          onCheckedChange={onCheckedChange}
-        >
-          <UiSwitch.Thumb
-            top={2}
-            transition="bouncy"
-            backgroundColor={checked ? '$o_color' : '$color'}
-            width={21}
-            height={21}
-          />
-        </UiSwitch>
+        <>
+          {!isWeb && (
+            <RNSwitch
+              trackColor={{ false: '#DDDDDD', true: '#999999' }}
+              ios_backgroundColor="#DDDDDD"
+              thumbColor={theme.o_color?.val}
+              value={checked}
+              onValueChange={onCheckedChange}
+            />
+          )}
+
+          {isWeb && (
+            <UiSwitch
+              paddingHorizontal={2}
+              cursor="pointer"
+              width={switchWidth}
+              height={switchHeight}
+              checked={checked}
+              borderWidth={0}
+              disabled={disabled}
+              activeStyle={{
+                backgroundColor: '$switchSelectedColor',
+              }}
+              opacity={disabled ? 0.8 : 1}
+              onCheckedChange={onCheckedChange}
+            >
+              <UiSwitch.Thumb
+                top={2}
+                transition="bouncy"
+                backgroundColor={checked ? '$o_color' : '$color'}
+                width={21}
+                height={21}
+              />
+            </UiSwitch>
+          )}
+        </>
       )}
     </XStack>
   );

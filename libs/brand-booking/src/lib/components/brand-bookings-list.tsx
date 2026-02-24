@@ -1,11 +1,4 @@
-import {
-  Button,
-  compactViewStyles,
-  EmptyView,
-  InitView,
-  RegularText,
-  SectionList,
-} from '@symbiot-core-apps/ui';
+import { Button, compactViewStyles, RegularText } from '@symbiot-core-apps/ui';
 import {
   BrandBookingType,
   useBrandBookingCurrentListReq,
@@ -20,7 +13,13 @@ import { BrandBookingItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
 import { useBookingDatetime } from '../hooks/use-booking-datetime';
 import { useAppSettings } from '@symbiot-core-apps/app';
-import { PAGE_STYLE, useHeaderHeight } from '@symbiot-core-apps/ui2';
+import {
+  EmptyView,
+  FallbackView,
+  PAGE_STYLE,
+  SectionList,
+  useHeaderHeight,
+} from '@symbiot-core-apps/ui2';
 
 export const BrandBookingsList = () => {
   const { timezone } = useBookingDatetime();
@@ -125,11 +124,10 @@ const Intro = ({
   const { hasPermission } = useCurrentBrandEmployee();
 
   if (loading || error) {
-    return <InitView loading={loading} error={error} />;
+    return <FallbackView loading={loading} error={error} />;
   } else {
     return (
       <EmptyView
-        padding={0}
         iconName={icons.ServiceBooking}
         title={t(`brand_booking.empty.title`)}
         message={t(`brand_booking.empty.subtitle`)}

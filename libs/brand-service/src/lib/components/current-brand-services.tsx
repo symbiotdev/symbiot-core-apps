@@ -1,9 +1,4 @@
-import {
-  AnimatedList,
-  Button,
-  EmptyView,
-  InitView,
-} from '@symbiot-core-apps/ui';
+import { Button } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -18,6 +13,9 @@ import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
 import {
+  AnimatedList,
+  EmptyView,
+  FallbackView,
   GlassViewBackground,
   Page,
   PAGE_STYLE,
@@ -137,12 +135,11 @@ const Intro = ({
   const { tryAction } = useAccountLimits();
 
   if (loading || error) {
-    return <InitView loading={loading} error={error} />;
+    return <FallbackView loading={loading} error={error} />;
   } else {
     return (
       <ScrollablePage ignoreHeaderHeight>
         <EmptyView
-          padding={0}
           iconName={icons.Service}
           title={t('brand_service.create.intro.title')}
           message={t('brand_service.create.intro.subtitle')}

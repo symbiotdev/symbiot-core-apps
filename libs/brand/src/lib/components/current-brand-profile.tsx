@@ -4,7 +4,6 @@ import {
   ButtonIcon,
   CompactView,
   H3,
-  InitView,
   ListItemGroup,
   RegularText,
 } from '@symbiot-core-apps/ui';
@@ -21,7 +20,7 @@ import {
 } from '@symbiot-core-apps/state';
 import { BrandCongrats } from './brand-congrats';
 import { BrandProfileCompletion } from './brand-profile-completion';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import { FallbackView, ScrollablePage } from '@symbiot-core-apps/ui2';
 
 export const CurrentBrandProfile = () => {
   const { brand: currentBrand, setBrand } = useCurrentBrandState();
@@ -47,7 +46,7 @@ export const CurrentBrandProfile = () => {
   }, [brand, setBrand]);
 
   if (!currentBrand) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return (

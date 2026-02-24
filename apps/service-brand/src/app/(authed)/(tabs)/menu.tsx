@@ -19,7 +19,6 @@ import { router } from 'expo-router';
 import {
   ActionCard,
   Avatar,
-  CompactView,
   H3,
   ListItem,
   ListItemGroup,
@@ -38,7 +37,12 @@ import {
   useAppSettings,
   useAppVersionUpdateType,
 } from '@symbiot-core-apps/app';
-import { Icon, ScrollablePage, useSideMenu } from '@symbiot-core-apps/ui2';
+import {
+  Compactor,
+  Icon,
+  ScrollablePage,
+  useSideMenu,
+} from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { t, supportedLanguages } = useI18n();
@@ -79,7 +83,7 @@ export default () => {
   return (
     me && (
       <ScrollablePage ignoreHeaderHeight>
-        <CompactView gap="$3" flex={1} paddingTop={10}>
+        <Compactor style={{ gap: 10, paddingTop: 10, flex: 1 }}>
           {canSubscribe && (
             <ActionCard
               title={t('subscription.card.title')}
@@ -174,11 +178,12 @@ export default () => {
               onPress={() => router.push('/preferences/notifications')}
             />
 
-            <ListItem
-              label={t('shared.preferences.scheme.title')}
-              icon={<Icon name="Pallete2" />}
-              onPress={() => router.push('/preferences/scheme')}
-            />
+            {/*fixme uncomment*/}
+            {/*<ListItem*/}
+            {/*  label={t('shared.preferences.scheme.title')}*/}
+            {/*  icon={<Icon name="Pallete2" />}*/}
+            {/*  onPress={() => router.push('/preferences/scheme')}*/}
+            {/*/>*/}
 
             {supportedLanguages?.length > 1 && (
               <ListItem
@@ -298,7 +303,7 @@ export default () => {
               </RegularText>
             )}
           </View>
-        </CompactView>
+        </Compactor>
       </ScrollablePage>
     )
   );

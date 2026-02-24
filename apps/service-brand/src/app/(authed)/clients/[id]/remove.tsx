@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useBrandClientDetailedByIdReq } from '@symbiot-core-apps/api';
-import { InitView } from '@symbiot-core-apps/ui';
 import { RemoveBrandClient } from '@symbiot-core-apps/brand-client';
+import { FallbackView } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -12,7 +12,7 @@ export default () => {
   } = useBrandClientDetailedByIdReq(id, false);
 
   if (!client || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return <RemoveBrandClient client={client} />;

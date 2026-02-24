@@ -1,6 +1,5 @@
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useBrandEmployeeDetailedByIdReq } from '@symbiot-core-apps/api';
-import { InitView } from '@symbiot-core-apps/ui';
 import { UpdateBrandEmployee } from '@symbiot-core-apps/brand-employee';
 import { useCallback, useLayoutEffect, useMemo } from 'react';
 import {
@@ -8,7 +7,12 @@ import {
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { ContextMenu, ContextMenuItem, Icon } from '@symbiot-core-apps/ui2';
+import {
+  ContextMenu,
+  ContextMenuItem,
+  FallbackView,
+  Icon,
+} from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { brand } = useCurrentBrandState();
@@ -54,7 +58,7 @@ export default () => {
   }, [headerRight, navigation]);
 
   if (!employee || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return <UpdateBrandEmployee employee={employee} />;

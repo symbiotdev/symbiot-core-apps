@@ -43,7 +43,7 @@ import { useAllBrandLocation } from '@symbiot-core-apps/brand';
 import { BrandMembershipVisitsController } from './controller/brand-membership-visits-controller';
 import {
   Icon,
-  LoadingContainer,
+  LoadingView,
   PAGE_STYLE,
   ScrollablePage,
 } from '@symbiot-core-apps/ui2';
@@ -362,7 +362,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
               Controller={BrandMembershipServicesController}
             />
           ) : (
-            <LoadingContainer />
+            <LoadingView />
           )}
         </CompactView>
       </SlideSheetModal>

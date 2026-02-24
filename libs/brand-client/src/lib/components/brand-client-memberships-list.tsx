@@ -6,10 +6,14 @@ import {
   useBrandClientVisitsBasedMembershipsListReq,
 } from '@symbiot-core-apps/api';
 import React, { ReactElement, useCallback } from 'react';
-import { AnimatedList, InitView } from '@symbiot-core-apps/ui';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { useI18n } from '@symbiot-core-apps/shared';
-import { Container, PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import {
+  AnimatedList,
+  Container,
+  FallbackView,
+  PAGE_STYLE,
+} from '@symbiot-core-apps/ui2';
 
 const byType = {
   [BrandMembershipType.period]: {
@@ -55,7 +59,7 @@ export const BrandClientMembershipsList = ({
 
   const ListEmptyComponent = useCallback(
     () => (
-      <InitView
+      <FallbackView
         error={error}
         loading={isLoading}
         noDataIcon={icons[config.icon as AppConfigIconNameLegacy]}

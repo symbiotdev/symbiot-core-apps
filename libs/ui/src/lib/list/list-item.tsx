@@ -11,7 +11,7 @@ import { MediumText, RegularText } from '../text/text';
 import { Card } from '../card/card';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { GestureResponderEvent } from 'react-native';
-import { defaultIconSize } from '@symbiot-core-apps/ui2';
+import { DEFAULT_ICON_SIZE } from '@symbiot-core-apps/ui2';
 
 export const ListItemGroup = memo(
   (props: ViewProps & { title?: string; titleProps?: TextProps }) => {
@@ -92,7 +92,7 @@ export const ListItem = memo(
         <View flex={1} justifyContent="center">
           {!!label && (
             <RegularText
-              lineHeight={defaultIconSize}
+              lineHeight={DEFAULT_ICON_SIZE}
               numberOfLines={labelNumberOfLines}
               color={adjustedColor}
             >

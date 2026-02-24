@@ -1,7 +1,7 @@
 import { RemoveBrandLocation } from '@symbiot-core-apps/brand-location';
 import { useLocalSearchParams } from 'expo-router';
 import { useBrandLocationByIdReq } from '@symbiot-core-apps/api';
-import { InitView } from '@symbiot-core-apps/ui';
+import { FallbackView } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -12,7 +12,7 @@ export default () => {
   } = useBrandLocationByIdReq(id, false);
 
   if (!location || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return <RemoveBrandLocation location={location} />;

@@ -10,8 +10,8 @@ import {
 import { useTheme, View, ViewProps, XStack } from 'tamagui';
 import { FlatList, ViewStyle } from 'react-native';
 import { emitHaptic, isIos, useRendered } from '@symbiot-core-apps/shared';
-import { InitView, RegularText } from '@symbiot-core-apps/ui';
-import { LoadingContainer, PAGE_STYLE } from '@symbiot-core-apps/ui2';
+import { RegularText } from '@symbiot-core-apps/ui';
+import { FallbackView, LoadingView, PAGE_STYLE } from '@symbiot-core-apps/ui2';
 
 export type PickerItem = {
   label: string;
@@ -76,7 +76,7 @@ export const Picker = ({
   );
 
   if (!adjustedOptions?.length) {
-    return <InitView loading={optionsLoading} error={optionsError} />;
+    return <FallbackView loading={optionsLoading} error={optionsError} />;
   }
 
   return isIos ? (
@@ -233,7 +233,7 @@ const CustomPicker = ({
   }, [rendered, scrollToIndex]);
 
   if (!rendered) {
-    return <LoadingContainer style={{ height: 200 }} />;
+    return <LoadingView style={{ height: 200 }} />;
   }
 
   return (

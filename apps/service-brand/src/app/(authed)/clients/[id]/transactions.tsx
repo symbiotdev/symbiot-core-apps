@@ -1,9 +1,8 @@
-import { InitView } from '@symbiot-core-apps/ui';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { BrandClientTransactions } from '@symbiot-core-apps/brand-transaction';
 import { useEffect } from 'react';
 import { useBrandClientDetailedByIdReq } from '@symbiot-core-apps/api';
-import { useHeaderHeight } from '@symbiot-core-apps/ui2';
+import { FallbackView, useHeaderHeight } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -24,7 +23,7 @@ export default () => {
   }, [client, navigation]);
 
   if (!client || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return <BrandClientTransactions clientId={id} offsetTop={headerHeight} />;

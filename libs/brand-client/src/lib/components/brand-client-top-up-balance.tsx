@@ -7,7 +7,7 @@ import {
   useBrandVisitBasedMembershipCurrentListReq,
 } from '@symbiot-core-apps/api';
 import React, { ReactElement, RefObject, useCallback } from 'react';
-import { InitView, ListItem, SlideSheetModal } from '@symbiot-core-apps/ui';
+import { ListItem, SlideSheetModal } from '@symbiot-core-apps/ui';
 import { View } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { useI18n, useModal } from '@symbiot-core-apps/shared';
@@ -15,7 +15,12 @@ import { BrandMembershipsCurrentList } from '@symbiot-core-apps/brand-membership
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandMembershipItem } from '@symbiot-core-apps/brand';
 import { router } from 'expo-router';
-import { AdaptiveSheet, AdaptiveSheetRef, Icon } from '@symbiot-core-apps/ui2';
+import {
+  AdaptiveSheet,
+  AdaptiveSheetRef,
+  FallbackView,
+  Icon,
+} from '@symbiot-core-apps/ui2';
 
 export const BrandClientTopUpBalance = ({
   client,
@@ -110,7 +115,7 @@ export const BrandClientTopUpBalance = ({
             />
           )}
           Intro={({ loading, error }) => (
-            <InitView
+            <FallbackView
               loading={loading}
               error={error}
               noDataIcon={icons.VisitBasedMembership}
@@ -147,7 +152,7 @@ export const BrandClientTopUpBalance = ({
             />
           )}
           Intro={({ loading, error }) => (
-            <InitView
+            <FallbackView
               loading={loading}
               error={error}
               noDataIcon={icons.PeriodBasedMembership}

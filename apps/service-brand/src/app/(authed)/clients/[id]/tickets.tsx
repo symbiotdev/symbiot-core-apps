@@ -1,7 +1,7 @@
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { useBrandClientDetailedByIdReq } from '@symbiot-core-apps/api';
-import { EmptyView, InitView } from '@symbiot-core-apps/ui';
 import { useEffect } from 'react';
+import { EmptyView, FallbackView } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -21,7 +21,7 @@ export default () => {
   }, [client, navigation]);
 
   if (!client || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return <EmptyView />;

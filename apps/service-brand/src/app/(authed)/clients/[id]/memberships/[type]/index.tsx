@@ -3,11 +3,10 @@ import {
   BrandMembershipType,
   useBrandClientDetailedByIdReq,
 } from '@symbiot-core-apps/api';
-import { InitView } from '@symbiot-core-apps/ui';
 import React, { useEffect } from 'react';
 import { BrandClientMembershipsList } from '@symbiot-core-apps/brand-client';
 import { BrandClientMembershipItem } from '@symbiot-core-apps/brand';
-import { useHeaderHeight } from '@symbiot-core-apps/ui2';
+import { FallbackView, useHeaderHeight } from '@symbiot-core-apps/ui2';
 
 export default () => {
   const navigation = useNavigation();
@@ -31,7 +30,7 @@ export default () => {
   }, [client, navigation]);
 
   if (!client || error) {
-    return <InitView loading={isPending} error={error} />;
+    return <FallbackView loading={isPending} error={error} />;
   }
 
   return (

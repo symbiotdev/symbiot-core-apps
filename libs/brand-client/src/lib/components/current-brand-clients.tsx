@@ -1,9 +1,4 @@
-import {
-  AnimatedList,
-  Button,
-  EmptyView,
-  InitView,
-} from '@symbiot-core-apps/ui';
+import { Button } from '@symbiot-core-apps/ui';
 import {
   BrandClient,
   useBrandClientCurrentListReq,
@@ -18,6 +13,9 @@ import { useI18n } from '@symbiot-core-apps/shared';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { Search } from '@symbiot-core-apps/form-controller';
 import {
+  AnimatedList,
+  EmptyView,
+  FallbackView,
   GlassViewBackground,
   Icon,
   Page,
@@ -145,12 +143,11 @@ const Intro = ({
   const { tryAction } = useAccountLimits();
 
   if (loading || error) {
-    return <InitView loading={loading} error={error} />;
+    return <FallbackView loading={loading} error={error} />;
   } else {
     return (
       <ScrollablePage ignoreHeaderHeight>
         <EmptyView
-          padding={0}
           iconName="SmileCircle"
           title={t('brand_client.create.intro.title')}
           message={t('brand_client.create.intro.subtitle')}

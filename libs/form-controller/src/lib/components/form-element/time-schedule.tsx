@@ -1,6 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { Picker } from './picker';
-import { ToggleOnChange } from './toggle-group';
+import { Picker, PickerOnChange } from './picker';
 import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
 import { View, YStack } from 'tamagui';
 import {
@@ -162,7 +161,7 @@ export const TimeSchedule = ({
             lazy
             value={DateHelper.differenceInMinutes(value.start, startOfDay)}
             options={minutes}
-            onChange={onChangeStartValue as ToggleOnChange}
+            onChange={onChangeStartValue as PickerOnChange}
             {...touchHandleProps}
           />
         )}
@@ -172,7 +171,7 @@ export const TimeSchedule = ({
             lazy
             value={DateHelper.differenceInMinutes(value.end, startOfDay)}
             options={endMinutes}
-            onChange={onChangeEndValue as ToggleOnChange}
+            onChange={onChangeEndValue as PickerOnChange}
             {...touchHandleProps}
           />
         )}

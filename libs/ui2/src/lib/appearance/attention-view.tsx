@@ -1,6 +1,6 @@
 import { View, ViewProps } from 'react-native';
 
-export const Attention = ({
+export const AttentionView = ({
   active,
   size = 5,
   dotOffset = -2,

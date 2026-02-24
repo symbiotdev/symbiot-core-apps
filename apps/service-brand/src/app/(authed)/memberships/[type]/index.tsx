@@ -1,6 +1,6 @@
 import { BrandMembershipsCurrentList } from '@symbiot-core-apps/brand-membership';
 import React, { useCallback, useLayoutEffect, useMemo } from 'react';
-import { Button, EmptyView, InitView } from '@symbiot-core-apps/ui';
+import { Button } from '@symbiot-core-apps/ui';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import {
   BrandMembershipType,
@@ -13,6 +13,8 @@ import { useAppSettings } from '@symbiot-core-apps/app';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
 import { useI18n } from '@symbiot-core-apps/shared';
 import {
+  EmptyView,
+  FallbackView,
   HeaderButton,
   HeaderTitle,
   ScrollablePage,
@@ -37,14 +39,13 @@ export default () => {
   const Intro = useCallback(
     ({ loading, error }: { loading?: boolean; error?: string | null }) => {
       if (loading || error) {
-        return <InitView loading={loading} error={error} />;
+        return <FallbackView loading={loading} error={error} />;
       } else {
         const tPrefix = `${getTranslateKeyByBrandMembershipType(type)}.create.intro`;
 
         return (
           <ScrollablePage ignoreHeaderHeight>
             <EmptyView
-              padding={0}
               iconName={
                 type === BrandMembershipType.period
                   ? icons.PeriodBasedMembership

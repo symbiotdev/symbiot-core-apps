@@ -6,8 +6,8 @@ export const InputFieldView = (props: XStackProps) => {
   return (
     <XStack
       backgroundColor="$background1"
-      width="100%"
       gap="$5"
+      flexShrink={1}
       height={InputHeight}
       borderRadius="$10"
       paddingHorizontal="$4"

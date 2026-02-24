@@ -10,7 +10,7 @@ import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
 import { useI18n } from '@symbiot-core-apps/shared';
 import {
   PickerOnChange,
-  SmartSelect,
+  Select,
   Textarea,
 } from '@symbiot-core-apps/form-controller';
 
@@ -108,24 +108,24 @@ const Employee = ({
   );
 
   return (
-    <SmartSelect
+    <Select
       required
+      searchable
       value={value}
-      optionsTitle={t('unavailable_brand_booking.form.employee.label')}
       placeholder={t('unavailable_brand_booking.form.employee.placeholder')}
       options={options}
       optionsLoading={loading}
       optionsError={error}
       trigger={
         selectedEmployee ? (
-          <XStack alignItems="center" gap="$2">
-            <BrandEmployeeItem
-              flex={1}
-              backgroundColor="$background1"
-              borderRadius="$10"
-              padding="$4"
-              employee={selectedEmployee}
-            />
+          <XStack
+            alignItems="center"
+            gap="$2"
+            backgroundColor="$background1"
+            borderRadius="$10"
+            padding="$4"
+          >
+            <BrandEmployeeItem flex={1} employee={selectedEmployee} />
             <ButtonIcon iconName="Pen" type="clear" />
           </XStack>
         ) : undefined

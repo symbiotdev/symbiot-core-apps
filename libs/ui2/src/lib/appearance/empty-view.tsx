@@ -28,6 +28,7 @@ export const EmptyView = memo(
         {...viewProps}
         style={[
           {
+            flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
             gap: 20,
@@ -52,11 +53,9 @@ export const EmptyView = memo(
             </Text>
           )}
 
-          {!!message && (
-            <Text style={{ color, textAlign: 'center' }}>
-              {message?.trim() || t('shared.its_empty')}
-            </Text>
-          )}
+          <Text style={{ color, textAlign: 'center' }}>
+            {message?.trim() || t('shared.its_empty')}
+          </Text>
         </View>
 
         {children}

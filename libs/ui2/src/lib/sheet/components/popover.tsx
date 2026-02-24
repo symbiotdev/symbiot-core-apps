@@ -87,6 +87,7 @@ export const Popover = ({
             left: x,
             borderRadius: 25,
             maxHeight: maxHeight - 50,
+            minWidth: triggerRect.width,
             position: strategy as ViewStyle['position'],
             ...(disabled && {
               pointerEvents: 'none',

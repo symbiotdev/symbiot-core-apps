@@ -1,11 +1,13 @@
-import { Text, View } from 'react-native';
+import { Text, View, ViewProps } from 'react-native';
 import { useAppScheme } from '@symbiot-core-apps/state';
 
 // fixme colorize
 export const HeaderTitle = ({
   title,
   subtitle,
-}: {
+  style,
+  ...viewProps
+}: ViewProps & {
   title: string;
   subtitle?: string;
 }) => {
@@ -14,13 +16,13 @@ export const HeaderTitle = ({
   const titleColor = scheme === 'dark' ? '#FFFFFF' : '#000000';
 
   return (
-    <View style={{ gap: 2 }}>
+    <View style={[{ gap: 2 }, style]} {...viewProps}>
       <Text
         numberOfLines={subtitle ? 1 : 2}
         style={{
           textAlign: 'center',
           fontSize: 16,
-          fontWeight: 600,
+          fontWeight: 500,
           color: titleColor,
         }}
       >

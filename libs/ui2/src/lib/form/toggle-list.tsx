@@ -173,9 +173,7 @@ const Item = memo(
 
     const valueAsArr = useMemo(
       () =>
-        Array.isArray(value)
-          ? value
-          : [value].filter((v) => v !== undefined && v !== null),
+        Array.isArray(value) ? value : [value].filter((v) => v !== undefined),
       [value],
     );
 
@@ -241,6 +239,7 @@ const Item = memo(
               style={{
                 justifyContent: 'center',
                 gap: 2,
+                flexShrink: 1,
                 minHeight: DEFAULT_ICON_SIZE,
               }}
             >
@@ -259,13 +258,15 @@ const Item = memo(
               )}
             </View>
 
-            {selected && (
+            {selected ? (
               // fixme - colorize
               <Icon
                 name="Unread"
                 style={{ marginLeft: 'auto' }}
                 color={disabled ? '#999999' : undefined}
               />
+            ) : (
+              <View style={{ width: 24 }} />
             )}
           </>
         )}

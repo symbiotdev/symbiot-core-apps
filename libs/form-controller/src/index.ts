@@ -42,6 +42,7 @@ export * from './lib/components/form-element/phone-input';
 export * from './lib/components/form-element/picker';
 export * from './lib/components/form-element/price-input';
 export * from './lib/components/form-element/search';
+export * from './lib/components/form-element/select';
 export * from './lib/components/form-element/smart-select';
 export * from './lib/components/form-element/switch';
 export * from './lib/components/form-element/textarea';

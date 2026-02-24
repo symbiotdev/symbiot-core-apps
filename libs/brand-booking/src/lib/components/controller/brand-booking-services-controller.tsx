@@ -7,7 +7,7 @@ import { XStack } from 'tamagui';
 import { useI18n } from '@symbiot-core-apps/shared';
 import {
   PickerOnChange,
-  SmartSelect,
+  Select,
   Textarea,
 } from '@symbiot-core-apps/form-controller';
 
@@ -112,10 +112,12 @@ const SelectService = ({
   }, [items, onChange, value]);
 
   return (
-    <SmartSelect
+    <Select
       required
+      searchable
       value={value}
       label={!noLabel ? t('service_brand_booking.form.service.label') : ''}
+      optionsLabel={t('service_brand_booking.form.service.label')}
       placeholder={t('service_brand_booking.form.service.placeholder')}
       disabled={disabled}
       options={items}
@@ -123,13 +125,16 @@ const SelectService = ({
       optionsError={servicesError}
       trigger={
         selectedService ? (
-          <XStack alignItems="center" gap="$2" flex={1}>
+          <XStack
+            gap="$2"
+            padding="$4"
+            borderRadius="$10"
+            alignItems="center"
+            backgroundColor="$background1"
+          >
             <BrandServiceItem
               hidePricing
-              flex={1}
-              backgroundColor="$background1"
-              borderRadius="$10"
-              padding="$4"
+              flexShrink={1}
               service={selectedService}
             />
             <ButtonIcon iconName="Pen" type="clear" />

@@ -47,7 +47,7 @@ export const BrandServiceItem = ({
         </RegularText>
       )}
 
-      <XStack flex={1}>
+      <XStack>
         <MediumText numberOfLines={2} flex={1}>
           {service.name}
         </MediumText>
@@ -97,7 +97,7 @@ export const BrandServiceItemChips = ({
   type?: ChipType;
   size?: ChipSize;
 }) => (
-  <XStack flex={1} flexWrap="wrap" gap="$1">
+  <XStack flexWrap="wrap" gap="$1">
     {!!service.duration && (
       <Chip
         label={DateHelper.formatDuration(service.duration, {

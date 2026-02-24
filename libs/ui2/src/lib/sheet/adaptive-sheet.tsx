@@ -19,7 +19,6 @@ import {
   emitHaptic,
   isTablet,
   isWeb,
-  useKeyboardDismisser,
   useScreenOrientation,
 } from '@symbiot-core-apps/shared';
 import { Sheet } from './components/sheet';
@@ -61,45 +60,45 @@ export const AdaptiveSheet = forwardRef(
       contentVisible: false,
     });
 
-    const show = useKeyboardDismisser(
-      useCallback(() => {
-        emitHaptic();
-        setState((prev) => ({
-          ...prev,
-          modalRendered: true,
-          modalVisible: true,
-          contentVisible: true,
-        }));
-        onOpen?.();
-      }, [onOpen]),
-    );
+    const show = useCallback(() => {
+      Keyboard.dismiss();
+      emitHaptic();
 
-    const hide = useKeyboardDismisser(
-      useCallback(() => {
-        if (disabled) return;
+      // delay added to fix keyboard behavior
+      setTimeout(
+        () => {
+          setState((prev) => ({
+            ...prev,
+            modalRendered: true,
+            modalVisible: true,
+            contentVisible: true,
+          }));
+          onOpen?.();
+        },
+        Keyboard.isVisible() ? 100 : 10,
+      );
+    }, [onOpen]);
 
-        emitHaptic();
-        setState((prev) => ({ ...prev, contentVisible: false }));
-        setTimeout(() => {
-          setState((prev) => ({ ...prev, modalVisible: false }));
-          onClose?.();
-        }, 300);
-      }, [disabled, onClose]),
-    );
+    const hide = useCallback(() => {
+      if (disabled) return;
+
+      Keyboard.dismiss();
+      emitHaptic();
+      setState((prev) => ({ ...prev, contentVisible: false }));
+      setTimeout(() => {
+        setState((prev) => ({ ...prev, modalVisible: false }));
+        onClose?.();
+      }, 300);
+    }, [disabled, onClose]);
 
     const onTriggerPress = useCallback(
       (event: GestureResponderEvent) => {
-        Keyboard.dismiss();
-        emitHaptic();
         event.persist();
 
         if (event?.currentTarget?.measure) {
           event.currentTarget.measure((x, y, width, height, pageX, pageY) => {
             setState((prev) => ({
               ...prev,
-              modalRendered: true,
-              modalVisible: true,
-              contentVisible: true,
               triggerRect: {
                 x: pageX,
                 y: pageY,
@@ -107,6 +106,8 @@ export const AdaptiveSheet = forwardRef(
                 height,
               },
             }));
+
+            show();
           });
         } else {
           show();
@@ -127,7 +128,14 @@ export const AdaptiveSheet = forwardRef(
     return (
       <>
         {Boolean(trigger) && (
-          <Pressable style={{ position: 'relative' }} onPress={onTriggerPress}>
+          <Pressable
+            style={({ pressed }) => ({
+              position: 'relative',
+              opacity: pressed ? 0.8 : 1,
+              ...(disabled && { opacity: 0.5 }),
+            })}
+            onPress={onTriggerPress}
+          >
             {trigger}
           </Pressable>
         )}

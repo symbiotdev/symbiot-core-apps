@@ -5,7 +5,7 @@ import {
   Input,
   onChangeInput,
   PickerOnChange,
-  SmartSelect,
+  Select,
 } from '@symbiot-core-apps/form-controller';
 
 type FormValue = {
@@ -19,7 +19,6 @@ export const BrandSource = ({
   optionsError,
   label,
   placeholder,
-  optionsTitle,
   customPlaceholder,
   onUpdate,
   onBlur,
@@ -30,7 +29,6 @@ export const BrandSource = ({
   options?: BrandSourceOption[];
   optionsLoading?: boolean;
   optionsError?: string | null;
-  optionsTitle?: string;
   onUpdate: (source: string | null) => void;
   onBlur?: () => void;
 }) => {
@@ -90,14 +88,11 @@ export const BrandSource = ({
 
   return (
     <View gap="$2">
-      <SmartSelect
-        searchable={false}
-        moveSelectedToTop={false}
+      <Select
         value={sourceId}
         options={options}
         optionsLoading={optionsLoading}
         optionsError={optionsError}
-        optionsTitle={optionsTitle}
         label={label}
         placeholder={placeholder}
         onChange={onChangeReferralSource as PickerOnChange}

@@ -14,8 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import {
   HorizontalMultiToggle,
   PickerItem,
-  PickerOnChange,
-  SmartSelect,
+  Select,
 } from '@symbiot-core-apps/form-controller';
 import { ScrollablePage, ToggleListOnChange } from '@symbiot-core-apps/ui2';
 
@@ -86,19 +85,15 @@ export const Calendar = () => {
   return (
     <ScrollablePage>
       <CompactView>
-        <SmartSelect
-          searchable={false}
-          moveSelectedToTop={false}
+        <Select
           label={t('shared.preferences.calendar.week_starts_on.label')}
           value={preferences.appearance?.calendar?.weekStartsOn || 0}
           options={weekdaysOptions}
-          onChange={onChangeWeekdayStartsOn as PickerOnChange}
+          onChange={onChangeWeekdayStartsOn as ToggleListOnChange}
         />
 
         {isPhone && (
-          <SmartSelect
-            searchable={false}
-            moveSelectedToTop={false}
+          <Select
             label={t(
               'shared.preferences.calendar.number_of_days.portrait_label',
             )}
@@ -116,9 +111,7 @@ export const Calendar = () => {
           />
         )}
 
-        <SmartSelect
-          searchable={false}
-          moveSelectedToTop={false}
+        <Select
           label={t(numberOfDaysLandscapeLabel)}
           value={preferences.appearance?.calendar?.countDays?.landscape || null}
           options={

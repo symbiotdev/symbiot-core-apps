@@ -53,7 +53,7 @@ export const Chip = ({
   return (
     <View
       {...viewProps}
-      flex={0}
+      flexShrink={1}
       backgroundColor={typeConfig.backgroundColor}
       paddingHorizontal={sizeConfig.paddingHorizontal}
       paddingVertical={sizeConfig.paddingVertical}

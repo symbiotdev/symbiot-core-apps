@@ -7,12 +7,8 @@ import {
 } from '@symbiot-core-apps/state';
 import { useNavigation } from '@react-navigation/native';
 import { DateElementType } from '@symbiot-core-apps/api';
-import {
-  PickerItem,
-  PickerOnChange,
-  SmartSelect,
-} from '@symbiot-core-apps/form-controller';
-import { ScrollablePage } from '@symbiot-core-apps/ui2';
+import { PickerItem, Select } from '@symbiot-core-apps/form-controller';
+import { ScrollablePage, ToggleListOnChange } from '@symbiot-core-apps/ui2';
 
 export const Datetime = () => {
   const navigation = useNavigation();
@@ -51,9 +47,7 @@ export const Datetime = () => {
   return (
     <ScrollablePage>
       <CompactView>
-        <SmartSelect
-          searchable={false}
-          moveSelectedToTop={false}
+        <Select
           label={t('shared.preferences.datetime.date_format.label')}
           value={preferences.dateFormat}
           options={
@@ -61,12 +55,10 @@ export const Datetime = () => {
               returnObjects: true,
             }) as PickerItem[]
           }
-          onChange={onChangeDateFormat as PickerOnChange}
+          onChange={onChangeDateFormat as ToggleListOnChange}
         />
 
-        <SmartSelect
-          searchable={false}
-          moveSelectedToTop={false}
+        <Select
           label={t('shared.preferences.datetime.time_format.label')}
           value={preferences.timeFormat}
           options={
@@ -74,12 +66,10 @@ export const Datetime = () => {
               returnObjects: true,
             }) as PickerItem[]
           }
-          onChange={onChangeTimeFormat as PickerOnChange}
+          onChange={onChangeTimeFormat as ToggleListOnChange}
         />
 
-        <SmartSelect
-          searchable={false}
-          moveSelectedToTop={false}
+        <Select
           label={t('shared.preferences.datetime.date_element.label')}
           value={preferences.appearance?.date?.element || null}
           options={
@@ -87,7 +77,7 @@ export const Datetime = () => {
               returnObjects: true,
             }) as PickerItem[]
           }
-          onChange={onChangeDateElement as PickerOnChange}
+          onChange={onChangeDateElement as ToggleListOnChange}
         />
       </CompactView>
     </ScrollablePage>

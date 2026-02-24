@@ -25,7 +25,7 @@ const Container = ({ onPress }: { onPress: () => void }) => (
       position: 'absolute',
       alignItems: 'center',
       justifyContent: 'center',
-      height: 24,
+      height: 20,
       top: 0,
       left: 0,
       right: 0,
@@ -35,8 +35,8 @@ const Container = ({ onPress }: { onPress: () => void }) => (
   >
     <View
       style={{
-        width: 50,
-        height: 4,
+        width: 40,
+        height: 5,
         backgroundColor: '#77777750',
       }}
     />

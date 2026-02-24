@@ -18,11 +18,13 @@ export type AnimatedListProps<T> = FlatListPropsWithLayout<T> & {
 };
 
 export function AnimatedList<T>({
+  style,
   listRef,
   refreshing,
   expanding,
   ignoreAnimation,
   progressViewOffset,
+  contentContainerStyle,
   onRefresh,
   ...flatListProps
 }: AnimatedListProps<T>) {
@@ -56,13 +58,13 @@ export function AnimatedList<T>({
         {
           flex: 1,
         },
-        flatListProps.style,
+        style,
       ]}
       contentContainerStyle={[
         {
           flexGrow: 1,
         },
-        flatListProps.contentContainerStyle,
+        contentContainerStyle,
       ]}
     />
   );

@@ -22,6 +22,7 @@ import { Search } from './search';
 import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
 import { FlatList } from 'react-native';
 import { View } from 'tamagui';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const Select = ({
   value,
@@ -62,6 +63,7 @@ export const Select = ({
   onBlur?: () => void;
 }) => {
   const { t } = useI18n();
+  const {bottom} = useSafeAreaInsets()
 
   const listRef = useRef<FlatList>(null);
   const sheetRef = useRef<AdaptiveSheetRef>(null);
@@ -210,7 +212,7 @@ export const Select = ({
             position: 'absolute',
             left: PAGE_STYLE.paddingHorizontal,
             right: PAGE_STYLE.paddingHorizontal,
-            bottom: 10,
+            bottom: bottom + 10,
           }}
         >
           <Search

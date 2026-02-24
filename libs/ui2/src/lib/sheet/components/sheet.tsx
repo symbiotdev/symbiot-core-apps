@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useLayoutEffect } from 'react';
-import { ScrollViewProps, View } from 'react-native';
+import { ScrollViewProps, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
 import Animated, {
@@ -32,7 +32,6 @@ const defaultBorderRadius = Object.keys(iosCornerRadiusGroups).find((key) =>
 const defaultBorderTopRadius = Number(defaultBorderRadius || 30);
 const defaultBorderBottomRadius = Number(defaultBorderRadius || 0);
 const defaultMarginBottom = defaultBorderRadius ? 5 : -20;
-const defaultPaddingBottom = defaultBorderRadius ? 5 : 20;
 const AnimatedGlassView = Animated.createAnimatedComponent(GlassView);
 
 export const Sheet = ({
@@ -98,8 +97,8 @@ export const Sheet = ({
     .enabled(!gestureDisabled && !disabled);
 
   const sheetAnimatedStyle = useAnimatedStyle(() => ({
-    paddingBottom:
-      Math.abs(keyboardHeight$.value) + (defaultPaddingBottom ? bottom : 0),
+    paddingBottom: Math.abs(keyboardHeight$.value) - bottom,
+    marginBottom: keyboardShown$.value ? 0 : defaultMarginBottom,
     ...(isIos
       ? {
           bottom: 0,
@@ -111,11 +110,19 @@ export const Sheet = ({
     ...(keyboardShown$.value
       ? {
           marginHorizontal: -1,
+        }
+      : {
+          marginHorizontal: defaultBorderRadius ? 5 : 0,
+        }),
+  }));
+
+  const animatedBorderStyle = useAnimatedStyle(() => ({
+    ...(keyboardShown$.value
+      ? {
           borderBottomLeftRadius: 0,
           borderBottomRightRadius: 0,
         }
       : {
-          marginHorizontal: defaultBorderRadius ? 5 : 0,
           borderBottomLeftRadius: defaultBorderBottomRadius,
           borderBottomRightRadius: defaultBorderBottomRadius,
         }),
@@ -139,6 +146,7 @@ export const Sheet = ({
           interactive={!isCustomDesignMandatory}
           style={[
             sheetAnimatedStyle,
+            animatedBorderStyle,
             {
               left,
               right,
@@ -146,7 +154,6 @@ export const Sheet = ({
               zIndex: 1,
               borderTopLeftRadius: defaultBorderTopRadius,
               borderTopRightRadius: defaultBorderTopRadius,
-              marginBottom: defaultMarginBottom,
               maxHeight: maxHeight - top - 10,
               ...(disabled && {
                 pointerEvents: 'none',
@@ -156,19 +163,20 @@ export const Sheet = ({
           ]}
           onLayout={(e) => height$.set(e.nativeEvent.layout.height)}
         >
-          <View
-            style={{
-              flexShrink: 1,
-              overflow: 'hidden',
-              paddingTop: 5,
-              borderTopLeftRadius: defaultBorderTopRadius,
-              borderTopRightRadius: defaultBorderTopRadius,
-              borderBottomLeftRadius: defaultBorderBottomRadius,
-              borderBottomRightRadius: defaultBorderBottomRadius,
-              ...(!excludePaddings && {
-                paddingHorizontal: 14,
-              }),
-            }}
+          <Animated.View
+            style={[
+              animatedBorderStyle,
+              {
+                flexShrink: 1,
+                overflow: 'hidden',
+                paddingTop: 5,
+                borderTopLeftRadius: defaultBorderTopRadius,
+                borderTopRightRadius: defaultBorderTopRadius,
+                ...(!excludePaddings && {
+                  paddingHorizontal: 14,
+                }),
+              },
+            ]}
           >
             {handleVisible && (
               <SheetHandle
@@ -195,6 +203,13 @@ export const Sheet = ({
               : React.Children.toArray(children).map((child) => {
                   if (React.isValidElement(child)) {
                     const childProps = child.props as ScrollViewProps;
+                    const paddingBottom = (
+                      (Array.isArray(childProps.contentContainerStyle)
+                        ? childProps.contentContainerStyle[
+                            childProps.contentContainerStyle.length - 1
+                          ]
+                        : childProps.contentContainerStyle) as ViewStyle
+                    )?.paddingBottom;
 
                     return React.cloneElement(child, {
                       ...childProps,
@@ -204,11 +219,15 @@ export const Sheet = ({
                         childProps.scrollEventThrottle || 17,
                       ),
                       contentContainerStyle: [
+                        childProps.contentContainerStyle,
                         {
                           paddingTop:
                             (handleVisible ? 20 : 0) + (title ? 20 : 0),
+                          paddingBottom:
+                            (typeof paddingBottom === 'number'
+                              ? paddingBottom
+                              : 0) + bottom,
                         },
-                        childProps.contentContainerStyle,
                       ],
                       onScroll: (e) => {
                         childProps?.onScroll?.(e);
@@ -219,7 +238,7 @@ export const Sheet = ({
 
                   return child;
                 })}
-          </View>
+          </Animated.View>
         </AnimatedGlassView>
       </GestureDetector>
     </GestureHandlerRootView>

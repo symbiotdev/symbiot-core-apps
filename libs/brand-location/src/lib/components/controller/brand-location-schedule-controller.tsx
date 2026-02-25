@@ -6,7 +6,6 @@ export function BrandLocationScheduleController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
   disabled?: boolean;
-  disableDrag?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useI18n();

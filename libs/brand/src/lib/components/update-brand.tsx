@@ -145,9 +145,6 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
           <DateFrom
             name="birthday"
             value={brand.birthday}
-            controllerProps={{
-              disableDrag: true,
-            }}
             onUpdate={updateValue}
             Controller={BrandBirthdayController}
           />
@@ -165,7 +162,6 @@ const Information = ({ brand, onUpdated }: GroupProps) => {
 
 const NoDragForm = SingleElementToArrayForm<{
   disabled: boolean;
-  disableDrag: true;
 }>;
 
 const Localization = ({ brand, onUpdated }: GroupProps) => {
@@ -212,7 +208,6 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
             value={value.countries}
             controllerProps={{
               disabled: updating,
-              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandCountryController}
@@ -222,7 +217,6 @@ const Localization = ({ brand, onUpdated }: GroupProps) => {
             value={value.currencies}
             controllerProps={{
               disabled: updating,
-              disableDrag: true,
             }}
             onUpdate={updateValue}
             Controller={BrandCurrencyController}

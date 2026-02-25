@@ -17,7 +17,6 @@ export function BrandClientMembershipVisitsController<
   disabled?: boolean;
   loading?: boolean;
   includeZero?: boolean;
-  disableDrag?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useI18n();

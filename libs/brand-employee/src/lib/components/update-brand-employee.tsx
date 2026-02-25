@@ -170,17 +170,11 @@ const Personality = ({ employee }: { employee: BrandEmployee }) => {
             name="birthday"
             value={value.birthday}
             onUpdate={updateValue}
-            controllerProps={{
-              disableDrag: true,
-            }}
             Controller={BrandEmployeeBirthdayController}
           />
           <SingeElementForm
             name="gender"
             value={value.gender}
-            controllerProps={{
-              disableDrag: true,
-            }}
             onUpdate={updateValue}
             Controller={BrandEmployeeGenderController}
           />
@@ -388,9 +382,6 @@ const Location = ({ employee }: { employee: BrandEmployee }) => {
             value={
               value.locations.length ? value.locations : [dynamicLocation.value]
             }
-            controllerProps={{
-              disableDrag: true,
-            }}
             onUpdate={({ locations }) =>
               onChangeLocations(locations as string[])
             }

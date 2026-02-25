@@ -212,9 +212,6 @@ const Pricing = ({ service }: { service: BrandService }) => {
             <SingeElementForm
               name="currency"
               value={value.currency}
-              controllerProps={{
-                disableDrag: true,
-              }}
               onUpdate={updateValue}
               Controller={BrandServiceCurrencyController}
             />
@@ -297,9 +294,6 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
             value={
               value.locations?.length ? value.locations : [allLocations.value]
             }
-            controllerProps={{
-              disableDrag: true,
-            }}
             onUpdate={updateValue}
             Controller={BrandServiceLocationController}
           />
@@ -460,18 +454,12 @@ const Structure = ({ service }: { service: BrandService }) => {
           <SingeElementForm
             name="duration"
             value={value.duration}
-            controllerProps={{
-              disableDrag: true,
-            }}
             onUpdate={updateValue}
             Controller={BrandServiceDurationController}
           />
           <SingeElementForm
             name="gender"
             value={value.gender}
-            controllerProps={{
-              disableDrag: true,
-            }}
             onUpdate={updateValue}
             Controller={BrandServiceGenderController}
           />

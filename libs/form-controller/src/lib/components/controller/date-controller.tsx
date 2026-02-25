@@ -16,7 +16,6 @@ export function DateController<T extends FieldValues>({
   minDate,
   maxDate,
   disabled,
-  disableDrag,
   required,
   rules,
   onBlur,
@@ -28,7 +27,6 @@ export function DateController<T extends FieldValues>({
   minDate?: Date;
   maxDate?: Date;
   disabled?: boolean;
-  disableDrag?: boolean;
   required?: boolean;
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
@@ -42,7 +40,6 @@ export function DateController<T extends FieldValues>({
         <DatePicker
           required={required}
           disabled={disabled}
-          disableDrag={disableDrag}
           value={value}
           error={error?.message}
           minDate={minDate || DateHelper.addYears(new Date(), -100)}

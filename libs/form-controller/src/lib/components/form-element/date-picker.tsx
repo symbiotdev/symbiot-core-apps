@@ -39,7 +39,6 @@ export const DatePicker = ({
   value,
   required,
   disabled,
-  disableDrag,
   label,
   description,
   error,
@@ -60,7 +59,6 @@ export const DatePicker = ({
   placeholder?: string;
   required?: boolean;
   forceElement?: 'calendar' | 'input';
-  disableDrag?: boolean;
   startDate?: Date;
   minDate?: Date;
   maxDate?: Date;
@@ -108,7 +106,6 @@ export const DatePicker = ({
           forceCalendar={element === 'calendar'}
           disabled={disabled}
           weekStartsOn={weekStartsOn}
-          disableDrag={disableDrag}
           dateFormat={dateFormat}
           placeholder={placeholder}
           startDate={startDate}
@@ -408,7 +405,6 @@ const PopoverDateField = ({
   disabled,
   startDate,
   dateFormat,
-  disableDrag,
   placeholder,
   weekStartsOn,
   forceCalendar,
@@ -417,7 +413,6 @@ const PopoverDateField = ({
   ...viewProps
 }: Omit<ViewProps, 'onPress' | 'onChange'> & {
   forceCalendar?: boolean;
-  disableDrag?: boolean;
   dateFormat?: string;
   weekStartsOn?: Weekday;
   placeholder?: string;

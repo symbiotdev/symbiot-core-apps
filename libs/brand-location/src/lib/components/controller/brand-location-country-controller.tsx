@@ -9,7 +9,6 @@ export function BrandLocationCountryController<T extends FieldValues>(props: {
   control: Control<T>;
   noLabel?: boolean;
   disabled?: boolean;
-  disableDrag?: boolean;
   onBlur?: () => void;
 }) {
   const { t } = useI18n();

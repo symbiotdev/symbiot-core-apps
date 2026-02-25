@@ -337,10 +337,7 @@ const LocationServices = ({ membership }: { membership: BrandMembership }) => {
             value={
               value.locations?.length ? value.locations : [allLocations.value]
             }
-            controllerProps={{
-              type,
-              disableDrag: true,
-            }}
+            controllerProps={{ type }}
             onUpdate={updateValue}
             Controller={BrandMembershipLocationController}
           />

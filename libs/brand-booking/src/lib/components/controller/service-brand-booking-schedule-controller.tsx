@@ -41,14 +41,12 @@ export function ServiceBrandBookingScheduleController({
   slotsError,
   control,
   disabled,
-  disableDrag,
 }: {
   control: ScheduleControl;
   slots?: BrandBookingSlot[];
   slotsLoading?: boolean;
   slotsError?: string | null;
   disabled?: boolean;
-  disableDrag?: boolean;
 }) {
   const { t } = useI18n();
 
@@ -65,7 +63,6 @@ export function ServiceBrandBookingScheduleController({
             <DatePicker
               required
               disabled={disabled}
-              disableDrag={disableDrag}
               value={value.date}
               minDate={new Date()}
               maxDate={DateHelper.addYears(new Date(), 100)}

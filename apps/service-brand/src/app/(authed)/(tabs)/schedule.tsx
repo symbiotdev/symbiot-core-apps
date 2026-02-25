@@ -149,20 +149,27 @@ export default () => {
           optionsLoading={locationsLoading}
           optionsError={locationsError}
           trigger={
-            location ? (
-              <Avatar
-                cursor="pointer"
-                name={location?.name || allLocations.label}
-                size={HEADER_BUTTON_SIZE}
-                url={location?.avatar?.xsUrl}
-              />
-            ) : (
-              <ButtonIcon
-                type="clear"
-                iconSize={HEADER_BUTTON_SIZE}
-                iconName="MapPointWave"
-              />
-            )
+            <View
+              width={40}
+              height={40}
+              justifyContent="center"
+              alignItems="center"
+            >
+              {location ? (
+                <Avatar
+                  cursor="pointer"
+                  name={location?.name || allLocations.label}
+                  size={HEADER_BUTTON_SIZE}
+                  url={location?.avatar?.xsUrl}
+                />
+              ) : (
+                <ButtonIcon
+                  type="clear"
+                  iconSize={HEADER_BUTTON_SIZE}
+                  iconName="MapPointWave"
+                />
+              )}
+            </View>
           }
           onChange={(selectedId) => {
             !isIos && sheetRef.current?.hide();

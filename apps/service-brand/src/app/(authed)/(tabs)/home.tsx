@@ -148,6 +148,7 @@ const BrandHome = () => {
     navigation.setOptions({
       headerTitle: () => (
         <XStack
+          paddingHorizontal={10}
           pressStyle={{ opacity: 0.8 }}
           alignItems="center"
           gap="$2"

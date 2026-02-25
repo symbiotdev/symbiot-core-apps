@@ -31,6 +31,7 @@ import {
   Container,
   Icon,
 } from '@symbiot-core-apps/ui2';
+import { ScrollView } from 'react-native';
 
 type Value = Date | null | string;
 export type OnDatePickerChange = (date: Date | null) => void;
@@ -459,32 +460,41 @@ const PopoverDateField = ({
       }
       onClose={onBlur}
     >
-      <Container
-        style={{
-          paddingTop: label ? 0 : 25,
-          alignItems: 'center',
-          maxWidth: isWeb ? 350 : undefined,
-        }}
-      >
+      <ScrollView>
         {forceCalendar || !isIos ? (
-          <DateAsCalendar
-            value={value}
-            minDate={minDate}
-            maxDate={maxDate}
-            startDate={startDate}
-            weekStartsOn={weekStartsOn}
-            onChange={onChangeCalendarDate}
-          />
+          <Container
+            style={{
+              alignItems: 'center',
+              maxWidth: isWeb ? 350 : undefined,
+            }}
+          >
+            <DateAsCalendar
+              value={value}
+              minDate={minDate}
+              maxDate={maxDate}
+              startDate={startDate}
+              weekStartsOn={weekStartsOn}
+              onChange={onChangeCalendarDate}
+            />
+          </Container>
         ) : (
-          <DateAsPicker
-            value={value}
-            minDate={minDate}
-            maxDate={maxDate}
-            onChange={onChange}
-            onChangeGestureAvailability={setSheetGestureEnabled}
-          />
+          <Container
+            style={{
+              paddingVertical: 50,
+              alignItems: 'center',
+              maxWidth: isWeb ? 350 : undefined,
+            }}
+          >
+            <DateAsPicker
+              value={value}
+              minDate={minDate}
+              maxDate={maxDate}
+              onChange={onChange}
+              onChangeGestureAvailability={setSheetGestureEnabled}
+            />
+          </Container>
         )}
-      </Container>
+      </ScrollView>
     </AdaptiveSheet>
   );
 };

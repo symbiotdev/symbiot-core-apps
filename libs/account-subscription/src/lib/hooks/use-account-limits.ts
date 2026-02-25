@@ -81,7 +81,7 @@ export const useAccountLimits = () => {
 
   const tryAction = useCallback(
     (action: keyof AccountLimitActions, func: () => unknown) =>
-      canDo[action] ? func : showPaywall,
+      canDo[action] ? func : () => setTimeout(showPaywall, 500), // setTimeout helps to fix RN modals conflicts
     [canDo, showPaywall],
   );
 

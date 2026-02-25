@@ -29,7 +29,7 @@ const isGestureScrollLimited = isAndroid;
 const defaultBorderRadius = Object.keys(iosCornerRadiusGroups).find((key) =>
   iosCornerRadiusGroups[key].includes(DeviceInfo.modelName as string),
 );
-const defaultBorderTopRadius = Number(defaultBorderRadius || 30);
+const defaultBorderTopRadius = Number(defaultBorderRadius || 40) - 10;
 const defaultBorderBottomRadius = Number(defaultBorderRadius || 0);
 const defaultMarginBottom = defaultBorderRadius ? 5 : -20;
 const AnimatedGlassView = Animated.createAnimatedComponent(GlassView);

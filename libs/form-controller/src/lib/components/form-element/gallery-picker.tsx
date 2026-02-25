@@ -190,9 +190,6 @@ const AddImage = ({
         alignItems="center"
         backgroundColor="$background1"
         borderRadius="$10"
-        cursor="pointer"
-        pressStyle={{ opacity: 0.8 }}
-        disabledStyle={{ opacity: 0.5 }}
       >
         {!loading ? (
           <RegularText fontSize={imageSize / 5}>+</RegularText>

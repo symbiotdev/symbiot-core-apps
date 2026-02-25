@@ -16,7 +16,7 @@ import {
   useI18n,
 } from '@symbiot-core-apps/shared';
 import { filesize } from 'filesize';
-import { Linking } from 'react-native';
+import { Linking, ScrollView } from 'react-native';
 import { View } from 'tamagui';
 import { Link, ListItem } from '@symbiot-core-apps/ui';
 import { AdaptiveSheet, AdaptiveSheetRef, Icon } from '@symbiot-core-apps/ui2';
@@ -94,41 +94,43 @@ export const MediaPicker = ({
   ]);
 
   const pick = useCallback(
-    async (type: 'gallery' | 'camera') => {
+    (type: 'gallery' | 'camera') => {
       sheetRef.current?.hide?.();
 
       setProcessing(true);
 
-      try {
-        const result: ImagePickerResult = await (type === 'gallery'
-          ? pickFromGallery()
-          : openCamera());
+      setTimeout(async () => {
+        try {
+          const result: ImagePickerResult = await (type === 'gallery'
+            ? pickFromGallery()
+            : openCamera());
 
-        if (!result.assets?.length) {
-          throw new Error('Selection canceled');
-        }
+          if (!result.assets?.length) {
+            throw new Error('Selection canceled');
+          }
 
-        if (
-          result.assets.some(
-            ({ fileSize }) => fileSize && fileSize >= maxAvatarFileSize,
-          )
-        ) {
-          ShowNativeFailedAlert({
-            text: t('shared.error.validation_error.media_size', {
-              size: filesize(maxAvatarFileSize, {
-                base: 2,
-                standard: 'jedec',
+          if (
+            result.assets.some(
+              ({ fileSize }) => fileSize && fileSize >= maxAvatarFileSize,
+            )
+          ) {
+            ShowNativeFailedAlert({
+              text: t('shared.error.validation_error.media_size', {
+                size: filesize(maxAvatarFileSize, {
+                  base: 2,
+                  standard: 'jedec',
+                }),
               }),
-            }),
-          });
+            });
 
-          return;
+            return;
+          }
+
+          await onAdd(result.assets);
+        } finally {
+          setProcessing(false);
         }
-
-        await onAdd(result.assets);
-      } finally {
-        setProcessing(false);
-      }
+      }, 500);
     },
     [onAdd, openCamera, pickFromGallery, t],
   );
@@ -159,42 +161,46 @@ export const MediaPicker = ({
       sheetTitle={t('shared.preferences.media.trigger.label')}
       trigger={trigger}
     >
-      <View gap="$2" paddingVertical={10} paddingHorizontal={20}>
-        <ListItem
-          icon={<Icon name="Gallery" />}
-          label={t('shared.preferences.media.action.choose_from_gallery.label')}
-          disabled={galleryPermissions?.status === PermissionStatus.DENIED}
-          iconAfter={
-            galleryPermissions?.status === PermissionStatus.DENIED && (
-              <AppSettings />
-            )
-          }
-          onPress={() => pick('gallery')}
-        />
-
-        {!isWeb && (
+      <ScrollView>
+        <View gap="$2" paddingVertical={10} paddingHorizontal={20}>
           <ListItem
-            icon={<Icon name="Camera" />}
-            label={t('shared.preferences.media.action.take_phone.label')}
-            disabled={cameraPermissions?.status === PermissionStatus.DENIED}
+            icon={<Icon name="Gallery" />}
+            label={t(
+              'shared.preferences.media.action.choose_from_gallery.label',
+            )}
+            disabled={galleryPermissions?.status === PermissionStatus.DENIED}
             iconAfter={
-              cameraPermissions?.status === PermissionStatus.DENIED && (
+              galleryPermissions?.status === PermissionStatus.DENIED && (
                 <AppSettings />
               )
             }
-            onPress={() => pick('camera')}
+            onPress={() => pick('gallery')}
           />
-        )}
 
-        {removable && (
-          <ListItem
-            color="$error"
-            icon={<Icon name="TrashBinMinimalistic" />}
-            label={t('shared.preferences.media.action.delete.label')}
-            onPress={remove}
-          />
-        )}
-      </View>
+          {!isWeb && (
+            <ListItem
+              icon={<Icon name="Camera" />}
+              label={t('shared.preferences.media.action.take_phone.label')}
+              disabled={cameraPermissions?.status === PermissionStatus.DENIED}
+              iconAfter={
+                cameraPermissions?.status === PermissionStatus.DENIED && (
+                  <AppSettings />
+                )
+              }
+              onPress={() => pick('camera')}
+            />
+          )}
+
+          {removable && (
+            <ListItem
+              color="$error"
+              icon={<Icon name="TrashBinMinimalistic" />}
+              label={t('shared.preferences.media.action.delete.label')}
+              onPress={remove}
+            />
+          )}
+        </View>
+      </ScrollView>
     </AdaptiveSheet>
   );
 };

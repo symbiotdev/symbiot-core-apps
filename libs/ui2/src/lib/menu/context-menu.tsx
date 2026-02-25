@@ -36,8 +36,19 @@ export const ContextMenu = ({
       forceAdaptive="popover"
       ref={sheetRef}
       disabled={disabled}
-      popoverOffset={10}
-      trigger={loading ? <Spinner /> : <Icon name="MenuDotsCircle" />}
+      popoverOffset={5}
+      trigger={
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 40,
+            height: 40,
+          }}
+        >
+          {loading ? <Spinner /> : <Icon name="MenuDotsCircle" />}
+        </View>
+      }
     >
       <View style={{ paddingVertical: 10 }}>
         {items.map((item, index) => (

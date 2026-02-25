@@ -14,7 +14,6 @@ import React, {
   useState,
 } from 'react';
 import Animated, {
-  runOnJS,
   SharedValue,
   useAnimatedStyle,
   useSharedValue,
@@ -24,6 +23,7 @@ import { View, XStack } from 'tamagui';
 import { useWindowDimensions } from 'react-native';
 import { emitHaptic } from '@symbiot-core-apps/shared';
 import { Chip } from '../chip/chip';
+import { scheduleOnRN } from 'react-native-worklets';
 
 type StepProps = PropsWithChildren<{
   scrollX$: SharedValue<number>;
@@ -74,7 +74,7 @@ export const SimpleHorizontalCarousel = forwardRef(
         }
 
         setActiveSlideIndex(nextIndex);
-        onChangeActiveIndex && runOnJS(onChangeActiveIndex)(nextIndex);
+        onChangeActiveIndex && scheduleOnRN(onChangeActiveIndex, nextIndex);
 
         scrollX$.value = withTiming(
           -nextIndex * 100,
@@ -82,7 +82,7 @@ export const SimpleHorizontalCarousel = forwardRef(
             duration: 200,
           },
           () => {
-            onEndSwipe && runOnJS(onEndSwipe)();
+            onEndSwipe && scheduleOnRN(onEndSwipe);
           },
         );
       },
@@ -109,7 +109,7 @@ export const SimpleHorizontalCarousel = forwardRef(
       .onStart((e) => {
         panX$.value = e.x;
 
-        onStartSwipe && runOnJS(onStartSwipe)();
+        onStartSwipe && scheduleOnRN(onStartSwipe);
       })
       .onChange((e) => {
         if (e.numberOfPointers !== 1) {
@@ -139,7 +139,7 @@ export const SimpleHorizontalCarousel = forwardRef(
           nextIndex = activeSlideIndex - 1;
         }
 
-        runOnJS(moveSlides)(nextIndex);
+        scheduleOnRN(moveSlides, nextIndex);
       })
       .minDistance(1)
       .runOnJS(true);

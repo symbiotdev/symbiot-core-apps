@@ -60,7 +60,9 @@ export const UpdateBrandLocation = ({
     >
       <BrandLocationMediaForm marginTop="$5" location={location} />
 
-      <Compactor style={{ paddingHorizontal: PAGE_STYLE.paddingHorizontal }}>
+      <Compactor
+        style={{ paddingHorizontal: PAGE_STYLE.paddingHorizontal, gap: 10 }}
+      >
         <Name location={location} />
 
         <ListItemGroup>

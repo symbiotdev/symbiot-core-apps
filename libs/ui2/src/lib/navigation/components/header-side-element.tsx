@@ -17,8 +17,6 @@ export const HeaderSideElement = memo(
           interactive
           style={{
             flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
             flexShrink: 1,
             zIndex: 1,
             minWidth: 40,

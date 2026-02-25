@@ -35,7 +35,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
   );
 
   return (
-    <ScrollablePage style={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0 }}>
+    <ScrollablePage style={{ paddingLeft: 0, paddingRight: 0 }}>
       <Avatar
         name={service.name}
         url={service.avatar?.url}

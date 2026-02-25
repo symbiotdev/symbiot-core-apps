@@ -17,7 +17,6 @@ import {
 import { H2 } from '../text/heading';
 import { RegularText, SemiBoldText } from '../text/text';
 import Animated, {
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
@@ -45,6 +44,7 @@ import {
   PAGE_STYLE,
   useHeaderHeight,
 } from '@symbiot-core-apps/ui2';
+import { scheduleOnRN } from 'react-native-worklets';
 
 type SurveyStepProps = PropsWithChildren<{
   title: string;
@@ -162,9 +162,16 @@ export const Survey = ({
       gestureEnabled: false,
       headerShown: !loading && !finishedRef.current,
       headerRight: () => (
-        <RegularText>
-          {selectedIndex + 1}/{childrenArr.length}
-        </RegularText>
+        <View
+          width={40}
+          height={40}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <RegularText textAlign="center">
+            {selectedIndex + 1}/{childrenArr.length}
+          </RegularText>
+        </View>
       ),
     });
 
@@ -191,7 +198,7 @@ export const Survey = ({
       animatedValue$.value = withDelay(
         50,
         withTiming(0, { duration: 250 }, () => {
-          runOnJS(setScrollEnabled)(true);
+          scheduleOnRN(setScrollEnabled, true);
         }),
       );
 
@@ -203,99 +210,93 @@ export const Survey = ({
     <LoadingView />
   ) : (
     <Container style={{ flex: 1 }}>
-      <View flex={1}>
-        <KeyboardAwareScrollView
-          keyboardShouldPersistTaps="handled"
-          keyboardDismissMode="none"
-          ref={scrollViewRef}
-          scrollEnabled={scrollEnabled}
-          bottomOffset={100}
-          showsVerticalScrollIndicator={isWeb}
-          style={{ flex: 1 }}
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingTop: headerHeight + PAGE_STYLE.paddingVertical,
-            paddingHorizontal: PAGE_STYLE.paddingHorizontal,
-            gap: PAGE_STYLE.paddingVertical,
-          }}
-        >
-          {!!previousStep && (
-            <Pressable onPress={onBackPress}>
-              <GlassView
-                interactive
-                style={{ ...compactViewStyles, padding: 15, borderRadius: 20 }}
-              >
-                <Animated.View
-                  style={[animatedStyle, { gap: 6, flexDirection: 'row' }]}
-                >
-                  <View flex={1} gap="$1">
-                    <SemiBoldText numberOfLines={1}>
-                      {previousStep.props.title}
-                    </SemiBoldText>
-                    <RegularText
-                      numberOfLines={1}
-                      color="$placeholder"
-                      fontSize={12}
-                    >
-                      {previousStep.props.subtitle}
-                    </RegularText>
-                  </View>
-
-                  <Icon name="ArrowToTopLeft" />
-                </Animated.View>
-              </GlassView>
-            </Pressable>
-          )}
-
-          {!!currentStep && (
-            <Animated.View
-              style={[
-                animatedStyle,
-                compactViewStyles,
-                { gap: PAGE_STYLE.paddingVertical },
-              ]}
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="none"
+        ref={scrollViewRef}
+        scrollEnabled={scrollEnabled}
+        bottomOffset={100}
+        showsVerticalScrollIndicator={isWeb}
+        style={{ flex: 1 }}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingTop: headerHeight + PAGE_STYLE.paddingVertical,
+          paddingHorizontal: PAGE_STYLE.paddingHorizontal,
+          gap: PAGE_STYLE.paddingVertical,
+        }}
+      >
+        {!!previousStep && (
+          <Pressable onPress={onBackPress}>
+            <GlassView
+              interactive
+              style={{ ...compactViewStyles, padding: 15, borderRadius: 20 }}
             >
-              <View gap="$2" paddingVertical={headerTextPadding}>
-                <H2>{currentStep.props.title}</H2>
-                <RegularText>{currentStep.props.subtitle}</RegularText>
-              </View>
+              <Animated.View
+                style={[animatedStyle, { gap: 6, flexDirection: 'row' }]}
+              >
+                <View flex={1} gap="$1">
+                  <SemiBoldText numberOfLines={1}>
+                    {previousStep.props.title}
+                  </SemiBoldText>
+                  <RegularText
+                    numberOfLines={1}
+                    color="$placeholder"
+                    fontSize={12}
+                  >
+                    {previousStep.props.subtitle}
+                  </RegularText>
+                </View>
 
-              {currentStep}
-            </Animated.View>
-          )}
-        </KeyboardAwareScrollView>
+                <Icon name="ArrowToTopLeft" />
+              </Animated.View>
+            </GlassView>
+          </Pressable>
+        )}
 
         {!!currentStep && (
-          <Animated.View style={[animatedStyle]}>
-            <KeyboardStickyView
-              offset={{ opened: bottom }}
-              style={[
-                compactViewStyles,
-                {
-                  gap: 0,
-                  paddingHorizontal: PAGE_STYLE.paddingHorizontal,
-                  paddingTop: 4,
-                  paddingBottom: bottom + PAGE_STYLE.paddingVertical,
-                },
-              ]}
-            >
-              <Button
-                disabled={!currentStep.props.canGoNext}
-                label={t(isLastStep ? 'shared.finish' : 'shared.next')}
-                onPress={onNext}
-              />
+          <Animated.View
+            style={[
+              animatedStyle,
+              compactViewStyles,
+              { gap: PAGE_STYLE.paddingVertical },
+            ]}
+          >
+            <View gap="$2" paddingVertical={headerTextPadding}>
+              <H2>{currentStep.props.title}</H2>
+              <RegularText>{currentStep.props.subtitle}</RegularText>
+            </View>
 
-              {currentStep.props.skippable && (
-                <Button
-                  type="clear"
-                  label={t('shared.skip')}
-                  onPress={onNext}
-                />
-              )}
-            </KeyboardStickyView>
+            {currentStep}
           </Animated.View>
         )}
-      </View>
+      </KeyboardAwareScrollView>
+
+      {!!currentStep && (
+        <Animated.View style={[animatedStyle]}>
+          <KeyboardStickyView
+            offset={{ opened: bottom }}
+            style={[
+              compactViewStyles,
+              {
+                gap: 0,
+                paddingHorizontal: PAGE_STYLE.paddingHorizontal,
+                paddingTop: 4,
+                paddingBottom: bottom + PAGE_STYLE.paddingVertical,
+              },
+            ]}
+          >
+            <Button
+              disabled={!currentStep.props.canGoNext}
+              label={t(isLastStep ? 'shared.finish' : 'shared.next')}
+              onPress={onNext}
+            />
+
+            {currentStep.props.skippable && (
+              <Button type="clear" label={t('shared.skip')} onPress={onNext} />
+            )}
+          </KeyboardStickyView>
+        </Animated.View>
+      )}
     </Container>
   );
 };

@@ -151,6 +151,7 @@ const BrandHome = () => {
           <Avatar
             name={currentBrand.name}
             url={currentBrand.avatar?.xsUrl}
+            color={currentBrand.avatarColor}
             size={30}
           />
           <H3 lineHeight={HEADER_BUTTON_SIZE} numberOfLines={1}>

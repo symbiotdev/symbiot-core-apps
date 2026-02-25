@@ -56,9 +56,9 @@ export const CurrentBrandProfile = () => {
 
         <View alignItems="center" gap="$2">
           <Avatar
-            color="$background1"
             name={currentBrand.name}
             url={currentBrand.avatar?.url}
+            color={currentBrand.avatarColor}
             size={100}
           />
 

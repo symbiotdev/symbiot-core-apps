@@ -81,6 +81,7 @@ export default () => {
             <Avatar
               name={brand?.name || '*'}
               size={40}
+              color={brand?.avatarColor}
               url={brand?.avatar?.xsUrl}
             />
           ),
@@ -93,11 +94,18 @@ export default () => {
               name={name}
               size={40}
               url={avatar?.xsUrl || brand?.avatar?.xsUrl}
+              color={brand?.avatarColor}
             />
           ),
         })),
       ],
-    [allLocations, locations, brand?.name, brand?.avatar?.xsUrl],
+    [
+      allLocations,
+      locations,
+      brand?.name,
+      brand?.avatar?.xsUrl,
+      brand?.avatarColor,
+    ],
   );
 
   const headerTitle = useCallback(() => {

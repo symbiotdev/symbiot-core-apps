@@ -34,4 +34,7 @@ export * from './lib/page/scrollable-page';
 export * from './lib/progress/refresher';
 export * from './lib/progress/spinner';
 
+export * from './lib/qr-code/qr-code';
+export * from './lib/qr-code/qr-code-sheet';
+
 export * from './lib/sheet/adaptive-sheet';

@@ -91,7 +91,7 @@ const Camera = ({ onScan }: { onScan: (value: string) => void }) => {
         alignItems="center"
         flex={1}
         backgroundColor="$background"
-      ></View>
+      />
     );
   }
 

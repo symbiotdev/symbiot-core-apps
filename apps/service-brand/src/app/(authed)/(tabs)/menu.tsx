@@ -23,7 +23,6 @@ import {
   ListItem,
   ListItemGroup,
   MediumText,
-  QrCodeModalWithTrigger,
   RegularText,
   Spinner,
 } from '@symbiot-core-apps/ui';
@@ -40,6 +39,7 @@ import {
 import {
   Compactor,
   Icon,
+  QrCodeSheet,
   ScrollablePage,
   useSideMenu,
 } from '@symbiot-core-apps/ui2';
@@ -129,7 +129,7 @@ export default () => {
                 </View>
               </XStack>
 
-              <QrCodeModalWithTrigger
+              <QrCodeSheet
                 trigger={<Icon name="QrCode" />}
                 qrValue={me.id}
                 qrContent={<RegularText fontSize={30}>🤩</RegularText>}

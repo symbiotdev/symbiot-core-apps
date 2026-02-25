@@ -1,11 +1,12 @@
 import {
   ActionCard,
+  ActionCardWithCustomButton,
   Avatar,
+  Button,
   CardsGrid,
   H2,
   H3,
   H4,
-  QrCodeModal,
   RegularText,
 } from '@symbiot-core-apps/ui';
 import {
@@ -14,7 +15,7 @@ import {
   useCurrentBrandState,
 } from '@symbiot-core-apps/state';
 import { router, useNavigation } from 'expo-router';
-import React, { useCallback, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useLayoutEffect } from 'react';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { View, XStack } from 'tamagui';
 import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
@@ -30,6 +31,7 @@ import {
   HeaderButton,
   Icon,
   PAGE_STYLE,
+  QrCodeSheet,
   ScrollablePage,
   useSideMenu,
 } from '@symbiot-core-apps/ui2';
@@ -41,18 +43,7 @@ const InitialAction = () => {
   const { icons } = useAppSettings();
   const navigation = useNavigation();
 
-  const [qrCodeVisible, setQrCodeVisible] = useState(false);
-
   const createBrand = useCallback(() => router.push('/brand/create'), []);
-
-  const onOpenQrCodeModal = useCallback(() => {
-    emitHaptic();
-    setQrCodeVisible(true);
-  }, []);
-  const onCloseQrCodeModal = useCallback(() => {
-    emitHaptic();
-    setQrCodeVisible(false);
-  }, []);
 
   useLayoutEffect(() => {
     if (!me?.firstname) return;
@@ -65,56 +56,56 @@ const InitialAction = () => {
   }, [me?.firstname, navigation, t]);
 
   return (
-    <>
-      <ScrollablePage
-        style={{
-          alignItems: 'center',
-          gap: PAGE_STYLE.paddingVertical,
-          paddingBottom: 100,
-        }}
-      >
-        {currentBrands?.length ? (
-          <MyBrandsSelectionList />
-        ) : (
-          <Compactor style={{ gap: 20, marginVertical: 'auto' }}>
-            <View gap="$2">
-              <H2 textAlign="center">{t('initial_actions.title')}</H2>
-              <RegularText textAlign="center">
-                {t('initial_actions.subtitle')}
-              </RegularText>
-            </View>
+    <ScrollablePage
+      style={{
+        alignItems: 'center',
+        gap: PAGE_STYLE.paddingVertical,
+        paddingBottom: 100,
+      }}
+    >
+      {currentBrands?.length ? (
+        <MyBrandsSelectionList />
+      ) : (
+        <Compactor style={{ gap: 20, marginVertical: 'auto' }}>
+          <View gap="$2">
+            <H2 textAlign="center">{t('initial_actions.title')}</H2>
+            <RegularText textAlign="center">
+              {t('initial_actions.subtitle')}
+            </RegularText>
+          </View>
 
-            <ActionCard
-              title={t('initial_actions.create_workspace.title')}
-              subtitle={t('initial_actions.create_workspace.subtitle')}
-              buttonLabel={t('initial_actions.create_workspace.button.label')}
-              buttonIcon={<Icon name={icons.Workspace} />}
-              onPress={createBrand}
-            />
+          <ActionCard
+            title={t('initial_actions.create_workspace.title')}
+            subtitle={t('initial_actions.create_workspace.subtitle')}
+            buttonLabel={t('initial_actions.create_workspace.button.label')}
+            buttonIcon={<Icon name={icons.Workspace} />}
+            onPress={createBrand}
+          />
 
-            <H4 textAlign="center">{t('shared.or')}</H4>
+          <H4 textAlign="center">{t('shared.or')}</H4>
 
-            <ActionCard
+          {me && (
+            <ActionCardWithCustomButton
               title={t('initial_actions.join_workspace.title')}
               subtitle={t('initial_actions.join_workspace.subtitle')}
-              buttonLabel={t('initial_actions.join_workspace.button.label')}
-              buttonIcon={<Icon name="QrCode" />}
-              onPress={onOpenQrCodeModal}
+              button={
+                <QrCodeSheet
+                  qrValue={me.id}
+                  qrContent={<RegularText fontSize={30}>🤩</RegularText>}
+                  title={`ID: ${me.id}`}
+                  trigger={
+                    <Button
+                      icon={<Icon name="QrCode" />}
+                      label={t('initial_actions.join_workspace.button.label')}
+                    />
+                  }
+                />
+              }
             />
-          </Compactor>
-        )}
-      </ScrollablePage>
-
-      {me && (
-        <QrCodeModal
-          visible={qrCodeVisible}
-          qrValue={me.id}
-          title={`ID: ${me.id}`}
-          qrContent={<RegularText fontSize={30}>🤩</RegularText>}
-          onClose={onCloseQrCodeModal}
-        />
+          )}
+        </Compactor>
       )}
-    </>
+    </ScrollablePage>
   );
 };
 

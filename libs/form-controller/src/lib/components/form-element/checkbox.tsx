@@ -56,7 +56,6 @@ export const Checkbox = ({
                 <Icon
                   name="Unread"
                   size={20}
-                  color={disabled ? '$disabled' : '$checkboxColor'}
                 />
               </View>
             )}

@@ -10,8 +10,8 @@ import {
 } from 'tamagui';
 import { Spinner } from '../loading/spinner';
 import { emitHaptic } from '@symbiot-core-apps/shared';
-import { Icon, IconName } from '../icons';
-import { ViewStyle } from 'react-native';
+import { Pressable, ViewStyle } from 'react-native';
+import { Icon, IconName } from '@symbiot-core-apps/ui2';
 
 export const ButtonTheme = {
   default: {
@@ -31,7 +31,7 @@ export const ButtonTheme = {
   },
   danger: {
     color: '$buttonTextColor',
-    backgroundColor: '$error',
+    backgroundColor: 'red',
     borderColor: 'transparent',
   },
 };
@@ -67,54 +67,64 @@ export const Button = ({
     theme[themeConfig.borderColor]?.val || themeConfig.borderColor;
 
   return (
-    <XStack
-      backgroundColor={backgroundColor}
-      borderColor={borderColor}
-      borderWidth={2}
-      borderRadius="$10"
-      justifyContent="center"
-      alignItems="center"
-      paddingVertical="$1"
-      paddingHorizontal="$6"
-      minHeight={46}
-      width="100%"
-      gap="$3"
-      disabled={disabled}
-      disabledStyle={{
-        cursor: 'auto',
-        opacity: 0.5,
-      }}
-      {...xStackProps}
-      {...(onPress && {
-        cursor: 'pointer',
-        pressStyle: { opacity: 0.8 },
-        onPress: (e) => {
-          hapticable && emitHaptic();
-          onPress?.(e);
-        },
+    <Pressable
+      style={({ pressed }) => ({
+        flexShrink: 1,
+        width: '100%',
+        ...(!disabled
+          ? {
+              cursor: 'pointer',
+            }
+          : {
+              opacity: 0.5,
+              pointerEvents: 'none',
+            }),
+        ...(pressed && {
+          opacity: 0.8,
+        }),
       })}
-    >
-      {loading ? (
-        <Spinner color={color} size="small" />
-      ) : (
-        <>
-          {!!icon &&
-            cloneElement(icon, {
-              color,
-            })}
+      onPress={(e) => {
+        if (disabled) return;
 
-          {!!label && (
-            <MediumText
-              textAlign={!icon ? 'center' : 'left'}
-              fontSize={fontSize}
-              color={color}
-            >
-              {label}
-            </MediumText>
-          )}
-        </>
-      )}
-    </XStack>
+        hapticable && emitHaptic();
+        onPress?.(e);
+      }}
+    >
+      <XStack
+        backgroundColor={backgroundColor}
+        borderColor={borderColor}
+        borderWidth={2}
+        borderRadius="$10"
+        justifyContent="center"
+        alignItems="center"
+        paddingVertical="$1"
+        paddingHorizontal="$6"
+        minHeight={46}
+        gap="$3"
+        {...xStackProps}
+      >
+        {loading ? (
+          <Spinner color={color} size="small" />
+        ) : (
+          <>
+            {!!icon &&
+              cloneElement(icon, {
+                color,
+              })}
+
+            {!!label && (
+              <MediumText
+                textAlign={!icon ? 'center' : 'left'}
+                fontSize={fontSize}
+                color={color}
+              >
+                {label}
+              </MediumText>
+            )}
+          </>
+        )}
+      </XStack>
+    </Pressable>
   );
 };
 
@@ -149,35 +159,50 @@ export const ButtonIcon = ({
     theme[themeConfig.borderColor]?.val || themeConfig.borderColor;
 
   return (
-    <View
-      borderRadius="100%"
-      justifyContent="center"
-      alignItems="center"
-      width={size}
-      height={size}
-      backgroundColor={backgroundColor}
-      borderColor={borderColor}
-      borderWidth={2}
-      disabledStyle={{
-        cursor: 'auto',
-        opacity: 0.5,
-      }}
-      disabled={disabled}
-      {...viewProps}
-      {...(onPress && {
-        cursor: 'pointer',
-        pressStyle: { opacity: 0.8 },
-        onPress: (e) => {
-          hapticable && emitHaptic();
-          onPress?.(e);
-        },
+    <Pressable
+      style={({ pressed }) => ({
+        ...(!disabled
+          ? {
+              cursor: 'pointer',
+            }
+          : {
+              opacity: 0.5,
+              pointerEvents: 'none',
+            }),
+        ...(pressed && {
+          opacity: 0.8,
+        }),
       })}
+      onPress={(e) => {
+        if (disabled) return;
+
+        hapticable && emitHaptic();
+        onPress?.(e);
+      }}
     >
-      {loading ? (
-        <Spinner color={color} size="small" />
-      ) : (
-        <Icon color={color} name={iconName} size={iconSize} style={iconStyle} />
-      )}
-    </View>
+      <View
+        borderRadius="100%"
+        justifyContent="center"
+        alignItems="center"
+        width={size}
+        height={size}
+        backgroundColor={backgroundColor}
+        borderColor={borderColor}
+        borderWidth={2}
+        disabled={disabled}
+        {...viewProps}
+      >
+        {loading ? (
+          <Spinner color={color} size="small" />
+        ) : (
+          <Icon
+            color={color}
+            name={iconName}
+            size={iconSize}
+            style={iconStyle}
+          />
+        )}
+      </View>
+    </Pressable>
   );
 };

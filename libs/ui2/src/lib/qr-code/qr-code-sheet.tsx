@@ -20,9 +20,9 @@ export const QrCodeSheet = memo(
     <AdaptiveSheet sheetTitle={title} trigger={trigger}>
       <View
         style={{
-          minHeight: 300,
           justifyContent: 'center',
           alignItems: 'center',
+          padding: 50
         }}
       >
         <QrCode size={qrSize} value={qrValue} content={qrContent} />

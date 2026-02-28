@@ -259,7 +259,7 @@ export const CreateBrandEmployee = () => {
           removable={!!avatar}
           alignSelf="center"
           marginTop="$5"
-          url={avatar}
+          url={avatar || account?.avatar?.url}
           name={`${firstname} ${lastname}`}
           color="$placeholder"
           size={140}

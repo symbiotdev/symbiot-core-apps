@@ -51,9 +51,9 @@ export const UpdateBrandClient = ({ client }: { client: BrandClient }) => {
       <CompactView gap="$10" paddingVertical="$5">
         <AvatarPicker
           marginHorizontal="auto"
+          color="$background1"
           loading={avatarUpdating}
           name={`${client.firstname} ${client.lastname}`}
-          color="$background1"
           url={client.avatar?.url}
           size={100}
           onAttach={onAddAvatar}

@@ -41,6 +41,7 @@ export const BrandLocationItem = ({
         name={location.name}
         size={40}
         url={location.avatar?.xsUrl || brand?.avatar?.xsUrl}
+        color={brand?.avatarColor}
       />
 
       <View gap="$1" flex={1}>

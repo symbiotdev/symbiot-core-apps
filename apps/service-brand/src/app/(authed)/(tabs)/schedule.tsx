@@ -169,6 +169,7 @@ export default () => {
                   name={location?.name || allLocations.label}
                   size={HEADER_BUTTON_SIZE}
                   url={location?.avatar?.xsUrl}
+                  color={brand?.avatarColor}
                 />
               ) : (
                 <ButtonIcon
@@ -197,6 +198,7 @@ export default () => {
       location,
       setLocation,
       allLocations,
+      brand?.avatarColor,
       hasPermission,
     ],
   );

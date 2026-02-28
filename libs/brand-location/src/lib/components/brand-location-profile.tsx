@@ -96,7 +96,7 @@ export const BrandLocationProfile = ({
             name={location.name}
             size={100}
             url={location.avatar?.url || brand?.avatar?.url}
-            color="$background1"
+            color={brand?.avatarColor}
           />
 
           <H3 marginTop="$1" textAlign="center">

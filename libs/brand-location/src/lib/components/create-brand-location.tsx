@@ -117,7 +117,7 @@ export const CreateBrandLocation = () => {
     const { advantages } = advantagesGetValues();
     const { phone, email, instagram } = contactGetValues();
 
-    await mutateAsync({
+    const location = await mutateAsync({
       name,
       country,
       usState,
@@ -133,7 +133,7 @@ export const CreateBrandLocation = () => {
     });
 
     return {
-      replaceUrl: '/locations',
+      replaceUrl: `/locations/${location.id}/profile`,
       postCallback: rateApp,
     };
   }, [

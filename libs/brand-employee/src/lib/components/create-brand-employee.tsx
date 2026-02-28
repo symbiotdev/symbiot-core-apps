@@ -144,7 +144,7 @@ export const CreateBrandEmployee = () => {
     const { permissions } = permissionsGetValues();
     const { about } = aboutGetValues();
 
-    await createEmployee({
+    const employee = await createEmployee({
       id: account.id,
       data: {
         avatar,
@@ -173,7 +173,7 @@ export const CreateBrandEmployee = () => {
     });
 
     return {
-      replaceUrl: '/employees',
+      replaceUrl: `/employees/${employee.id}/profile`,
       postCallback: rateApp,
     };
   }, [

@@ -49,7 +49,6 @@ export const AuthFormView = ({
 
         <Button
           marginTop="$5"
-          alignSelf="center"
           disabled={loading || disabled}
           loading={loading}
           label={buttonLabel}

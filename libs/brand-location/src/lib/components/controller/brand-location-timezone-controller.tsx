@@ -5,7 +5,7 @@ import { useI18n } from '@symbiot-core-apps/shared';
 export function BrandLocationTimezoneController<T extends FieldValues>(props: {
   name: Path<T>;
   control: Control<T>;
-  country?: string;
+  countries?: string[];
   noLabel?: boolean;
   disabled?: boolean;
   onBlur?: () => void;

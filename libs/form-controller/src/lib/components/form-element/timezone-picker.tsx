@@ -2,6 +2,7 @@ import { PickerOnChange } from './picker';
 import {
   getAllTimezones,
   getTimezonesForCountry,
+  Timezone,
 } from 'countries-and-timezones';
 import { useEffect, useMemo } from 'react';
 import { isIos } from '@symbiot-core-apps/shared';
@@ -9,7 +10,7 @@ import { Select } from './select';
 
 export const TimezonePicker = ({
   value,
-  country,
+  countries,
   label,
   error,
   placeholder,
@@ -20,7 +21,7 @@ export const TimezonePicker = ({
   onBlur,
 }: {
   value?: string;
-  country?: string;
+  countries?: string[];
   label?: string;
   error?: string;
   placeholder?: string;
@@ -33,8 +34,10 @@ export const TimezonePicker = ({
   const options = useMemo(() => {
     const allTimezones = Object.values(getAllTimezones());
     const timezones = onlyCountryTimezones
-      ? country
-        ? getTimezonesForCountry(country) || []
+      ? countries
+        ? (countries
+            .flatMap((country) => getTimezonesForCountry(country))
+            .filter(Boolean) as Timezone[])
         : []
       : allTimezones;
 
@@ -57,7 +60,7 @@ export const TimezonePicker = ({
         };
       })
       .sort((a, b) => (a.label > b.label ? 1 : -1));
-  }, [country, onlyCountryTimezones, value]);
+  }, [countries, onlyCountryTimezones, value]);
 
   useEffect(() => {
     if (onlyCountryTimezones) {

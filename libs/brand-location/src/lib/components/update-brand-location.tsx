@@ -252,7 +252,7 @@ const Schedule = ({ location }: { location: BrandLocation }) => {
 };
 
 const TimezoneForm = SingeElementForm<{
-  country?: string;
+  countries?: string[];
 }>;
 
 const Locale = ({ location }: { location: BrandLocation }) => {
@@ -327,7 +327,12 @@ const Locale = ({ location }: { location: BrandLocation }) => {
             value={value.timezone}
             onUpdate={updateValue}
             controllerProps={{
-              country: value.country,
+              countries: Array.from(
+                new Set([
+                  ...(brand?.countries?.map(({ value }) => value) || []),
+                  value.country,
+                ]),
+              ),
             }}
             Controller={BrandLocationTimezoneController}
           />

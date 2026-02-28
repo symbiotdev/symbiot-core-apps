@@ -12,7 +12,7 @@ export function TimezoneController<T extends FieldValues>({
   control,
   label,
   placeholder,
-  country,
+  countries,
   disabled,
   rules,
   onBlur,
@@ -21,7 +21,7 @@ export function TimezoneController<T extends FieldValues>({
   control: Control<T>;
   label: string;
   placeholder: string;
-  country?: string;
+  countries?: string[];
   disabled?: boolean;
   rules?: ControllerProps<T>['rules'];
   onBlur?: () => void;
@@ -34,8 +34,8 @@ export function TimezoneController<T extends FieldValues>({
       render={({ field: { value, onChange }, fieldState: { error } }) => (
         <TimezonePicker
           disabled={disabled}
-          onlyCountryTimezones={!!country}
-          country={country}
+          onlyCountryTimezones={!!countries}
+          countries={countries}
           value={value}
           error={error?.message}
           label={label}

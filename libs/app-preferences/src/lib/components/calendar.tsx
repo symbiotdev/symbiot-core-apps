@@ -125,6 +125,7 @@ export const Calendar = () => {
         />
 
         <HorizontalMultiToggle
+          allowEmpty
           max={6}
           label={t('shared.preferences.calendar.hidden_days.label')}
           value={preferences.appearance?.calendar?.hiddenDays}

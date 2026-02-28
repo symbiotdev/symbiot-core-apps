@@ -63,7 +63,7 @@ export const ContextMenu = ({
             }}
             onPress={(e) => {
               sheetRef.current?.hide();
-              item.onPress(e);
+              setTimeout(() => item.onPress(e), 500); // helps with modals conflicts
             }}
           >
             {!!item.icon &&

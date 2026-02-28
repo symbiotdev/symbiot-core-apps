@@ -41,6 +41,7 @@ import {
   Icon,
   PAGE_STYLE,
 } from '@symbiot-core-apps/ui2';
+import { ScrollView } from 'react-native';
 
 const ClientItem = ({
   client,
@@ -113,6 +114,7 @@ export const ServiceBrandBookingProfileClients = ({
   return (
     <>
       <ListItemGroup
+        overflow="unset"
         title={`${t('service_brand_booking.profile.clients.title')} (${sortedClients.length}/${booking.places})`}
         titleProps={{
           ...(sortedClients?.length > booking.places && {
@@ -133,8 +135,8 @@ export const ServiceBrandBookingProfileClients = ({
               paddingVertical={0}
               position="absolute"
               right={0}
-              top={-24}
-              paddingHorizontal="$4"
+              top={-28}
+              paddingHorizontal={0}
               label={t(`service_brand_booking.profile.clients.add`)}
               onPress={openClientsModal}
             />
@@ -167,7 +169,8 @@ export const ServiceBrandBookingProfileClients = ({
 
       <SlideSheetModal
         withKeyboard={false}
-        paddingHorizontal={0}
+        paddingLeft={0}
+        paddingRight={0}
         headerTitle={t(`service_brand_booking.profile.clients.title`)}
         visible={clientsModalVisible}
         onClose={closeClientsModal}
@@ -253,7 +256,9 @@ const Client = ({
         />
       }
     >
-      <View minWidth={220} paddingHorizontal={20}>
+      <ScrollView
+        contentContainerStyle={{ minWidth: 220, paddingHorizontal: 20 }}
+      >
         <ClientItem
           hideArrow
           marginTop="$5"
@@ -302,7 +307,7 @@ const Client = ({
             onPress={onRemove}
           />
         </View>
-      </View>
+      </ScrollView>
 
       <SlideSheetModal
         scrollable

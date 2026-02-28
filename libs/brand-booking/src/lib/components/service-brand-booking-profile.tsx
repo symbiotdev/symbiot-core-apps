@@ -253,6 +253,7 @@ export const ServiceBrandBookingProfile = ({
             gap="$4"
             paddingVertical="$4"
             title={t('service_brand_booking.profile.employee')}
+            overflow="unset"
           >
             {booking.employees.map((employee) => (
               <BrandEmployeeItem

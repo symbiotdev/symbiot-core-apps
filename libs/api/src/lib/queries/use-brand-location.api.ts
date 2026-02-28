@@ -12,6 +12,7 @@ import { ImagePickerAsset } from 'expo-image-picker';
 import { refetchQueriesByChanges } from '../utils/query';
 import { useQuery } from '../hooks/use-query';
 import { useMutation } from '../hooks/use-mutation';
+import { useInfiniteQuery } from '../hooks/use-infinite-query';
 
 export enum BrandLocationQueryKey {
   currentList = 'brand-location-current-list',
@@ -147,10 +148,10 @@ export const useCurrentBrandLocationsReq = ({
 }: {
   enabled?: boolean;
 } = {}) =>
-  useQuery<PaginationList<BrandLocation>, string>({
+  useInfiniteQuery<BrandLocation>({
     enabled,
-    queryKey: [BrandLocationQueryKey.currentList],
     url: '/api/brand-location/current',
+    queryKey: [BrandLocationQueryKey.currentList],
   });
 
 export const useBrandLocationsByServiceIdReq = (

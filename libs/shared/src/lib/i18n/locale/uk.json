@@ -29,7 +29,7 @@
   "greeting_firstname": "\uD83D\uDC4B Привіт, {{firstname}}",
   "contact_information": "Контакти",
   "locale": "Локаль",
-  "timezone": "Часовний пояс",
+  "timezone": "Часовий пояс",
   "media_files": "Медіафайли",
   "logotype": "Логотип",
   "not_specified": "Не задано",

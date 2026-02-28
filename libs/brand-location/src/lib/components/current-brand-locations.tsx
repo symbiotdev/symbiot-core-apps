@@ -25,12 +25,12 @@ export const CurrentBrandLocations = ({
 }) => {
   const { brand } = useCurrentBrandState();
   const headerHeight = useHeaderHeight();
-  const { data, isLoading, isRefetching, error, refetch } =
+  const { items, isLoading, isManualRefetching, error, refetch } =
     useCurrentBrandLocationsReq();
 
   const locations = useMemo(
-    () => data?.items || brand?.locations,
-    [data?.items, brand?.locations],
+    () => items || brand?.locations,
+    [items, brand?.locations],
   );
 
   if (!locations?.length) {
@@ -45,7 +45,7 @@ export const CurrentBrandLocations = ({
       style={{ paddingBottom: 0 }}
     >
       <AnimatedList
-        refreshing={isRefetching && !isLoading}
+        refreshing={isManualRefetching}
         data={locations}
         progressViewOffset={headerHeight}
         contentContainerStyle={{

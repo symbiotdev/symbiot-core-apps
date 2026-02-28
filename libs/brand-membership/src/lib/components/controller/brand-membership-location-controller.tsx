@@ -20,21 +20,21 @@ export function BrandMembershipLocationController<
   onBlur?: () => void;
 }) {
   const { t } = useI18n();
-  const { data, isPending, error } = useCurrentBrandLocationsReq();
+  const { items, isPending, error } = useCurrentBrandLocationsReq();
   const allLocations = useAllBrandLocation();
   const tPrefix = getTranslateKeyByBrandMembershipType(props.type);
 
   const options = useMemo(
     () =>
-      data && [
+      items && [
         allLocations,
-        ...data.items.map((location) => ({
+        ...items.map((location) => ({
           label: location.name,
           description: location.address,
           value: location.id,
         })),
       ],
-    [allLocations, data],
+    [allLocations, items],
   );
 
   return (
@@ -42,7 +42,7 @@ export function BrandMembershipLocationController<
       {...props}
       searchable
       moveSelectedToTop
-      disabled={!data?.items?.length}
+      disabled={!items?.length}
       label={!props.noLabel ? t(`${tPrefix}.form.location.label`) : ''}
       placeholder={t(`${tPrefix}.form.location.placeholder`)}
       options={options}

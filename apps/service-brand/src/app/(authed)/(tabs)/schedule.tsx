@@ -51,7 +51,7 @@ export default () => {
   const [selectedDate, setSelectedDate] = useState<Date>(today);
 
   const {
-    data: locations,
+    items: locations,
     isFetching: locationsLoading,
     error: locationsError,
   } = useCurrentBrandLocationsReq({
@@ -86,9 +86,10 @@ export default () => {
             />
           ),
         },
-        ...locations.items.map(({ id, name, avatar }) => ({
+        ...locations.map(({ id, name, avatar, address }) => ({
           label: name,
           value: id,
+          description: address,
           icon: (
             <Avatar
               name={name}
@@ -119,9 +120,7 @@ export default () => {
           <HeaderTitle
             title={date}
             subtitle={
-              locations?.items?.length
-                ? location?.name || allLocations.label
-                : ''
+              locations?.length ? location?.name || allLocations.label : ''
             }
           />
         }
@@ -141,17 +140,16 @@ export default () => {
     lang,
     allLocations.label,
     location?.name,
-    locations?.items?.length,
+    locations?.length,
   ]);
 
   const headerLeft = useCallback(
     () =>
-      locations?.items &&
-      locations.items.length > 1 &&
+      locations &&
+      locations.length > 1 &&
       hasPermission('locations') && (
         <Select
           searchable
-          moveSelectedToTop
           value={location?.id || allLocations.value}
           options={locationsOptions}
           optionsLoading={locationsLoading}
@@ -184,7 +182,7 @@ export default () => {
             !isIos && sheetRef.current?.hide();
 
             setLocation(
-              locations?.items.find(({ id }) => selectedId === id) ||
+              locations?.find(({ id }) => selectedId === id) ||
                 allLocations.value,
             );
           }}

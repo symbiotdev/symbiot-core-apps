@@ -13,19 +13,19 @@ export function BrandEmployeeLocationController<T extends FieldValues>(props: {
 }) {
   const { t } = useI18n();
   const dynamicLocation = useDynamicBrandLocation();
-  const { data, isPending, error } = useCurrentBrandLocationsReq();
+  const { items, isPending, error } = useCurrentBrandLocationsReq();
 
   const options = useMemo(
     () =>
-      data?.items && [
+      items && [
         dynamicLocation,
-        ...data.items.map((location) => ({
+        ...items.map((location) => ({
           label: location.name,
           description: location.address,
           value: location.id,
         })),
       ],
-    [dynamicLocation, data],
+    [dynamicLocation, items],
   );
 
   return (
@@ -33,7 +33,7 @@ export function BrandEmployeeLocationController<T extends FieldValues>(props: {
       {...props}
       searchable
       moveSelectedToTop
-      disabled={!data?.items?.length}
+      disabled={!items?.length}
       label={t('brand_employee.form.location.label')}
       placeholder={t('brand_employee.form.location.placeholder')}
       options={options}

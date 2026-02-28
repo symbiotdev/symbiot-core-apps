@@ -113,7 +113,7 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
   const stackNavigationOptions = useStackNavigationOptions();
   const { brand: currentBrand, brands: currentBrands } = useCurrentBrandState();
   const { location, setLocation } = useCurrentBrandBookingsState();
-  const { data: locations } = useCurrentBrandLocationsReq({
+  const { items: locations } = useCurrentBrandLocationsReq({
     enabled: hasPermission('locations'),
   });
 
@@ -127,14 +127,14 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
   );
 
   useEffect(() => {
-    if (locations?.items) {
+    if (locations) {
       if (
         location &&
-        !locations.items.some((locationItem) => isEqual(locationItem, location))
+        !locations.some((locationItem) => isEqual(locationItem, location))
       ) {
         setLocation(null);
-      } else if (!location && locations.items.length === 1) {
-        setLocation(locations.items[0]);
+      } else if (!location && locations.length === 1) {
+        setLocation(locations[0]);
       }
     }
   }, [location, locations, setLocation]);

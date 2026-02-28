@@ -13,20 +13,20 @@ export function BrandServiceLocationController<T extends FieldValues>(props: {
   onBlur?: () => void;
 }) {
   const { t } = useI18n();
-  const { data, isPending, error } = useCurrentBrandLocationsReq();
+  const { items, isPending, error } = useCurrentBrandLocationsReq();
   const allLocations = useAllBrandLocation();
 
   const options = useMemo(
     () =>
-      data && [
+      items && [
         allLocations,
-        ...data.items.map((location) => ({
+        ...items.map((location) => ({
           label: location.name,
           description: location.address,
           value: location.id,
         })),
       ],
-    [allLocations, data],
+    [allLocations, items],
   );
 
   return (
@@ -34,7 +34,7 @@ export function BrandServiceLocationController<T extends FieldValues>(props: {
       {...props}
       searchable
       moveSelectedToTop
-      disabled={!data?.items?.length}
+      disabled={!items?.length}
       label={!props.noLabel ? t('brand_service.form.location.label') : ''}
       placeholder={t('brand_service.form.location.placeholder')}
       options={options}

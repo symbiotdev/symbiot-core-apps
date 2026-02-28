@@ -20,7 +20,6 @@ export const useAnyBrandLocation = () => {
   return useMemo(
     () => ({
       label: t('brand_location.form.any.label'),
-      description: t('brand_location.form.any.placeholder'),
       value: null,
     }),
     [t],
@@ -33,7 +32,6 @@ export const useAllBrandLocation = () => {
   return useMemo(
     () => ({
       label: t('brand_location.form.all.label'),
-      description: t('brand_location.form.all.placeholder'),
       value: null,
     }),
     [t],

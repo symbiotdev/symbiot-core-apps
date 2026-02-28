@@ -53,14 +53,13 @@ const Item = ({
       borderBottomColor={theme?.$background?.val}
     >
       <XStack
-        flex={1}
         cursor="pointer"
         gap="$5"
         justifyContent="space-between"
         alignItems="center"
         onPress={toggle}
       >
-        <SemiBoldText lineHeight={20} paddingVertical="$4" flex={1}>
+        <SemiBoldText lineHeight={20} paddingVertical="$4">
           {item.title}
         </SemiBoldText>
 
@@ -68,9 +67,7 @@ const Item = ({
       </XStack>
 
       <Collapsible collapsed={collapsed}>
-        <View flex={1} paddingBottom="$3">
-          {item.content}
-        </View>
+        <View paddingBottom="$3">{item.content}</View>
       </Collapsible>
     </View>
   );

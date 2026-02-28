@@ -39,7 +39,8 @@ import { getMonth } from 'date-fns/getMonth';
 import { formatDistance } from 'date-fns/formatDistance';
 import { enUS, Locale, uk } from 'date-fns/locale';
 import { getAppLanguage } from '../i18n/i18n-provider';
-import { parse } from 'date-fns';
+import { parse } from 'date-fns/parse';
+import { addSeconds } from 'date-fns/addSeconds';
 
 export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export type Duration = {
@@ -84,6 +85,7 @@ export const DateHelper = {
   isAfter,
   isBefore,
   isValid,
+  addSeconds,
   addMinutes,
   addHours,
   addDays,

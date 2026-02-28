@@ -1,5 +1,5 @@
 import { PhoneNumber } from 'react-native-phone-input/dist';
-import { parse } from 'date-fns';
+import { parse } from 'date-fns/parse';
 import { Gender, ImportBrandClient } from '@symbiot-core-apps/api';
 import { DateHelper, isEmailValid } from '@symbiot-core-apps/shared';
 

@@ -10,6 +10,7 @@ export type OnboardingState = {
   removeTokens: () => Promise<void>;
 };
 
+export const authTokenAccessTimeInSeconds = 15 * 60; // 15 min
 export const authTokenHeaderKey = {
   access: 'x-authorization',
   refresh: 'x-refresh-token',
@@ -25,7 +26,10 @@ export const useAuthTokens = create<OnboardingState>()(
       setTokens: async (tokens) => {
         set({
           tokens,
-          accessToDate: DateHelper.addMinutes(new Date(), 5),
+          accessToDate: DateHelper.addSeconds(
+            new Date(),
+            authTokenAccessTimeInSeconds,
+          ),
         });
 
         return Promise.resolve();

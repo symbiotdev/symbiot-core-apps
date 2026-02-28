@@ -60,7 +60,7 @@ const ClientItem = ({
       hideArrow={hideArrow}
       style={compactViewStyles}
       client={client}
-      subtitleColor={!client.membership && !client.free ? '$error' : undefined}
+      subtitleColor={!client.membership && !client.free ? 'red' : undefined}
       subtitle={
         client.free
           ? t(`service_brand_booking.profile.clients.free_visit`)
@@ -116,7 +116,7 @@ export const ServiceBrandBookingProfileClients = ({
         title={`${t('service_brand_booking.profile.clients.title')} (${sortedClients.length}/${booking.places})`}
         titleProps={{
           ...(sortedClients?.length > booking.places && {
-            color: '$error',
+            color: 'red',
           }),
         }}
       >
@@ -294,7 +294,7 @@ const Client = ({
             }}
           />
           <ListItem
-            color="$error"
+            color="red"
             label={t(
               `service_brand_booking.profile.clients.actions.cancel_by_brand.label`,
             )}

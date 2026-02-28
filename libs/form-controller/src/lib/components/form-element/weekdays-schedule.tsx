@@ -1,5 +1,5 @@
-import { View, XStack } from 'tamagui';
-import { DateHelper, useI18n, Weekday } from '@symbiot-core-apps/shared';
+import { XStack } from 'tamagui';
+import { DateHelper, isIos, useI18n, Weekday } from '@symbiot-core-apps/shared';
 import { useCallback, useMemo, useState } from 'react';
 import { Picker, PickerOnChange } from './picker';
 import {
@@ -103,8 +103,6 @@ const WeekdayScheduleElement = ({
   const preferences = useCurrentAccountPreferences();
 
   const [activeSegment, setActiveSegment] = useState<string>('start');
-  const [sheetGestureDisabled, setSheetGestureDisabled] =
-    useState<boolean>(false);
 
   const endMinutes = useMemo(
     () =>
@@ -144,16 +142,6 @@ const WeekdayScheduleElement = ({
       },
     ],
     [end, isDayOff, start, t],
-  );
-
-  const touchHandleProps = useMemo(
-    () => ({
-      onTouchStart: () => setSheetGestureDisabled(true),
-      onTouchMove: () => setSheetGestureDisabled(true),
-      onTouchEnd: () => setSheetGestureDisabled(false),
-      onTouchCancel: () => setSheetGestureDisabled(false),
-    }),
-    [],
   );
 
   const resetSegment = useCallback(() => setActiveSegment('start'), []);
@@ -223,19 +211,18 @@ const WeekdayScheduleElement = ({
   return (
     <AdaptiveSheet
       excludePaddings
+      sheetGestureDisabled={isIos}
+      sheetHandleVisible={!isIos}
       key={`weekday${weekday.value}`}
       popoverPlacement="bottom-start"
-      sheetGestureDisabled={sheetGestureDisabled}
       trigger={
-        <View>
-          <InputFieldView justifyContent="space-between" disabled={disabled}>
-            <LightText>{weekday.label}</LightText>
+        <InputFieldView justifyContent="space-between" disabled={disabled}>
+          <LightText>{weekday.label}</LightText>
 
-            <MediumText color={'$disabled'}>
-              {isDayOff ? t('shared.schedule.day_off') : `${start} - ${end}`}
-            </MediumText>
-          </InputFieldView>
-        </View>
+          <MediumText color={'$disabled'}>
+            {isDayOff ? t('shared.schedule.day_off') : `${start} - ${end}`}
+          </MediumText>
+        </InputFieldView>
       }
       onOpen={resetSegment}
       onClose={onClose}
@@ -262,7 +249,6 @@ const WeekdayScheduleElement = ({
               value={value?.start}
               options={minutes}
               onChange={onChangeStartValue as PickerOnChange}
-              {...touchHandleProps}
             />
           )}
 
@@ -272,7 +258,6 @@ const WeekdayScheduleElement = ({
               value={value?.end}
               options={endMinutes}
               onChange={onChangeEndValue as PickerOnChange}
-              {...touchHandleProps}
             />
           )}
         </CompactView>

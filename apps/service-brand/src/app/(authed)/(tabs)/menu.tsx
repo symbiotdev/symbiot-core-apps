@@ -229,7 +229,7 @@ export default () => {
                 label={t('shared.preferences.subscriptions.title')}
                 icon={<Icon name="Rocket2" />}
                 iconAfter={subscriptionProcessing ? <Spinner /> : undefined}
-                color={brand.subscription.canceled ? '$error' : undefined}
+                color={brand.subscription.canceled ? 'red' : undefined}
                 text={`${brand.subscription.environment === AccountSubscriptionEnvironment.sandbox ? '[Sandbox] ' : ''}${
                   brand.subscription.canceled && brand.subscription.expiresDate
                     ? t('shared.preferences.subscriptions.expires_on', {

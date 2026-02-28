@@ -14,6 +14,7 @@ import {
   Modal,
   Pressable,
   useWindowDimensions,
+  View,
 } from 'react-native';
 import {
   emitHaptic,
@@ -136,7 +137,7 @@ export const AdaptiveSheet = forwardRef(
             })}
             onPress={onTriggerPress}
           >
-            {trigger}
+            <View style={{ pointerEvents: 'none' }}>{trigger}</View>
           </Pressable>
         )}
 

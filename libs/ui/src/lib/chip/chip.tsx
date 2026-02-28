@@ -26,7 +26,7 @@ const _typeConfig = {
   },
   danger: {
     backgroundColor: '$background1',
-    textColor: '$error',
+    textColor: 'red',
   },
   highlighted: {
     backgroundColor: '$background1',

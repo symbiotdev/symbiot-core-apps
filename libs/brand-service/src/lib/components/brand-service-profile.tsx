@@ -56,7 +56,7 @@ export const BrandServiceProfile = ({ service }: { service: BrandService }) => {
           <H2>{service.name}</H2>
 
           {service.hidden && (
-            <RegularText color="$error">
+            <RegularText color="red">
               {t('brand_service.unavailable')}
             </RegularText>
           )}

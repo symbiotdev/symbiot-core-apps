@@ -369,13 +369,11 @@ const DateAsPicker = ({
   minDate,
   maxDate,
   onChange,
-  onChangeGestureAvailability,
 }: {
   value?: Value;
   minDate?: Date;
   maxDate?: Date;
   onChange?: (date: Date | null) => void;
-  onChangeGestureAvailability: (enabled: boolean) => void;
 }) => {
   const { lang } = useI18n();
   const { scheme } = useAppScheme();
@@ -389,10 +387,6 @@ const DateAsPicker = ({
       minimumDate={minDate}
       maximumDate={maxDate}
       onDateChange={onChange}
-      onTouchStart={() => onChangeGestureAvailability(false)}
-      onTouchMove={() => onChangeGestureAvailability(false)}
-      onTouchEnd={() => onChangeGestureAvailability(true)}
-      onTouchCancel={() => onChangeGestureAvailability(true)}
     />
   );
 };
@@ -428,8 +422,6 @@ const PopoverDateField = ({
 }) => {
   const sheetRef = useRef<AdaptiveSheetRef>(null);
 
-  const [sheetGestureEnabled, setSheetGestureEnabled] = useState(true);
-
   const onChangeCalendarDate = useCallback(
     (date: Date | null) => {
       sheetRef.current?.hide();
@@ -439,11 +431,14 @@ const PopoverDateField = ({
     [onChange, onBlur],
   );
 
+  const isCalendarActivated = forceCalendar || !isIos;
+
   return (
     <AdaptiveSheet
       ref={sheetRef}
       disabled={disabled}
-      sheetGestureDisabled={!sheetGestureEnabled}
+      sheetHandleVisible={isCalendarActivated}
+      sheetGestureDisabled={!isCalendarActivated}
       sheetTitle={label}
       trigger={
         trigger || (
@@ -461,7 +456,7 @@ const PopoverDateField = ({
       onClose={onBlur}
     >
       <ScrollView>
-        {forceCalendar || !isIos ? (
+        {isCalendarActivated ? (
           <Container
             style={{
               alignItems: 'center',
@@ -490,7 +485,6 @@ const PopoverDateField = ({
               minDate={minDate}
               maxDate={maxDate}
               onChange={onChange}
-              onChangeGestureAvailability={setSheetGestureEnabled}
             />
           </Container>
         )}

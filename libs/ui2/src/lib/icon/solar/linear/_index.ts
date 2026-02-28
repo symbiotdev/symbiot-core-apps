@@ -37,7 +37,6 @@ import { PaperclipRounded } from './PaperclipRounded';
 import { Login } from './Login';
 import { AltArrowLeft } from './AltArrowLeft';
 import { AltArrowRight } from './AltArrowRight';
-import { IconMap } from '../../config';
 import { Maximize } from './Maximize';
 import { Minimize } from './Minimize';
 import { SettingsMinimalistic } from './SettingsMinimalistic';
@@ -83,6 +82,7 @@ import { ChatRoundLike } from './ChatRoundLike';
 import { Bug } from './Bug';
 import { Logout } from './Logout';
 import { Bolt } from './Bolt';
+import { IconMap } from '../../types/config';
 
 export const Map: IconMap = {
   AddCircle,

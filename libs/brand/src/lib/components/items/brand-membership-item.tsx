@@ -198,7 +198,7 @@ const BrandPeriodBasedMembershipItemView = ({
 
       <View gap="$2">
         {!!hidden && (
-          <MediumText color="$error">
+          <MediumText color="red">
             {t(
               `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.unavailable`,
             )}
@@ -353,7 +353,7 @@ const BrandVisitBasedMembershipItemView = ({
 
       <View gap="$2">
         {!!hidden && (
-          <MediumText color="$error">
+          <MediumText color="red">
             {t(
               `${getTranslateKeyByBrandMembershipType(BrandMembershipType.period)}.unavailable`,
             )}

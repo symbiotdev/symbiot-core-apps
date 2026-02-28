@@ -42,7 +42,7 @@ export const BrandServiceItem = ({
       })}
     >
       {service.hidden && (
-        <RegularText color="$error" fontSize={12}>
+        <RegularText color="red" fontSize={12}>
           {t('brand_service.unavailable')}
         </RegularText>
       )}

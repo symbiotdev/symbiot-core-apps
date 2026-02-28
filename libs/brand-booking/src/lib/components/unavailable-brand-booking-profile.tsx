@@ -195,8 +195,8 @@ export const UnavailableBrandBookingProfile = ({
 
               {!!booking.cancelAt && (
                 <XStack gap="$1">
-                  <Icon name="Close" color="$error" />
-                  <RegularText color="$error" alignSelf="center">
+                  <Icon name="Close" color="red" />
+                  <RegularText color="red" alignSelf="center">
                     {t('shared.canceled')}
                   </RegularText>
                 </XStack>

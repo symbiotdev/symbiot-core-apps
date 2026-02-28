@@ -193,7 +193,7 @@ export const MediaPicker = ({
 
           {removable && (
             <ListItem
-              color="$error"
+              color="red"
               icon={<Icon name="TrashBinMinimalistic" />}
               label={t('shared.preferences.media.action.delete.label')}
               onPress={remove}

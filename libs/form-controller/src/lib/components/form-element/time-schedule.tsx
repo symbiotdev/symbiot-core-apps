@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Picker, PickerOnChange } from './picker';
-import { DateHelper, useI18n } from '@symbiot-core-apps/shared';
-import { View, YStack } from 'tamagui';
+import { DateHelper, isIos, useI18n } from '@symbiot-core-apps/shared';
+import { YStack } from 'tamagui';
 import {
   CompactView,
   LightText,
@@ -38,8 +38,6 @@ export const TimeSchedule = ({
   const timeFormat = preferences.timeFormat;
 
   const [activeSegment, setActiveSegment] = useState<string>('start');
-  const [sheetGestureDisabled, setSheetGestureDisabled] =
-    useState<boolean>(false);
 
   const minutes = useMemo(
     () =>
@@ -81,16 +79,6 @@ export const TimeSchedule = ({
     [value.end, disabled, value.start, t, preferences.timeFormat],
   );
 
-  const touchHandleProps = useMemo(
-    () => ({
-      onTouchStart: () => setSheetGestureDisabled(true),
-      onTouchMove: () => setSheetGestureDisabled(true),
-      onTouchEnd: () => setSheetGestureDisabled(false),
-      onTouchCancel: () => setSheetGestureDisabled(false),
-    }),
-    [],
-  );
-
   const onChangeStartValue = useCallback(
     (minutes: number) => {
       const adjustedStart = DateHelper.addMinutes(startOfDay, minutes);
@@ -127,24 +115,23 @@ export const TimeSchedule = ({
     <AdaptiveSheet
       excludePaddings
       popoverPlacement="bottom-start"
-      sheetGestureDisabled={sheetGestureDisabled}
+      sheetGestureDisabled={isIos}
+      sheetHandleVisible={!isIos}
       trigger={
-        <View>
-          <YStack gap="$1" disabled={disabled}>
-            <FormField label={label} error={error} required={required}>
-              <InputFieldView>
-                <LightText>
-                  {`${DateHelper.format(value.start, timeFormat)} - ${DateHelper.format(value.end, timeFormat)}`}
-                </LightText>
-              </InputFieldView>
-            </FormField>
-            <RegularText color="$disabled" marginHorizontal="$4">
-              {`${t('shared.duration')} - ${DateHelper.formatDuration(
-                DateHelper.differenceInMinutes(value.end, value.start),
-              )}`}
-            </RegularText>
-          </YStack>
-        </View>
+        <YStack gap="$1" disabled={disabled}>
+          <FormField label={label} error={error} required={required}>
+            <InputFieldView>
+              <LightText>
+                {`${DateHelper.format(value.start, timeFormat)} - ${DateHelper.format(value.end, timeFormat)}`}
+              </LightText>
+            </InputFieldView>
+          </FormField>
+          <RegularText color="$disabled" marginHorizontal="$4">
+            {`${t('shared.duration')} - ${DateHelper.formatDuration(
+              DateHelper.differenceInMinutes(value.end, value.start),
+            )}`}
+          </RegularText>
+        </YStack>
       }
       onClose={onBlur}
     >
@@ -162,7 +149,6 @@ export const TimeSchedule = ({
             value={DateHelper.differenceInMinutes(value.start, startOfDay)}
             options={minutes}
             onChange={onChangeStartValue as PickerOnChange}
-            {...touchHandleProps}
           />
         )}
 
@@ -172,7 +158,6 @@ export const TimeSchedule = ({
             value={DateHelper.differenceInMinutes(value.end, startOfDay)}
             options={endMinutes}
             onChange={onChangeEndValue as PickerOnChange}
-            {...touchHandleProps}
           />
         )}
       </CompactView>

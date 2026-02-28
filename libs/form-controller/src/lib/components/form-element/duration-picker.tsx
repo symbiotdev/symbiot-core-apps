@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import {
   DateHelper,
   isIos,
@@ -7,7 +7,7 @@ import {
   useI18n,
 } from '@symbiot-core-apps/shared';
 import { minutesInDay, minutesInHour } from 'date-fns/constants';
-import { View, ViewProps, XStack } from 'tamagui';
+import { ViewProps, XStack } from 'tamagui';
 import { LightText } from '@symbiot-core-apps/ui';
 import { FormField } from '../wrapper/form-field';
 import { InputFieldView } from '../wrapper/input-field-view';
@@ -55,9 +55,6 @@ export const DurationPicker = ({
   const { t } = useI18n();
 
   const sheetRef = useRef<AdaptiveSheetRef>(null);
-
-  const [sheetGestureDisabled, setSheetGestureDisabled] =
-    useState<boolean>(false);
 
   const { minutes, hours, days, months, years } = useMemo(() => {
     const totalMinutes = value || 0;
@@ -121,16 +118,6 @@ export const DurationPicker = ({
     [formatOptions, minutesInterval, t],
   );
 
-  const touchHandleProps = useMemo(
-    () => ({
-      onTouchStart: () => setSheetGestureDisabled(true),
-      onTouchMove: () => setSheetGestureDisabled(true),
-      onTouchEnd: () => setSheetGestureDisabled(false),
-      onTouchCancel: () => setSheetGestureDisabled(false),
-    }),
-    [],
-  );
-
   const onChangeDate = useCallback(
     (y: number, m: number, d: number, h: number, min: number) => {
       onChange?.(
@@ -150,19 +137,18 @@ export const DurationPicker = ({
         ref={sheetRef}
         disabled={disabled}
         sheetTitle={label}
-        sheetGestureDisabled={sheetGestureDisabled}
+        sheetGestureDisabled={isIos}
+        sheetHandleVisible={!isIos}
         trigger={
-          <View>
-            <InputFieldView disabled={disabled} {...viewProps}>
-              <LightText
-                color={
-                  !value ? '$placeholder' : disabled ? '$disabled' : '$color'
-                }
-              >
-                {value ? DateHelper.formatDuration(value) : placeholder}
-              </LightText>
-            </InputFieldView>
-          </View>
+          <InputFieldView disabled={disabled} {...viewProps}>
+            <LightText
+              color={
+                !value ? '$placeholder' : disabled ? '$disabled' : '$color'
+              }
+            >
+              {value ? DateHelper.formatDuration(value) : placeholder}
+            </LightText>
+          </InputFieldView>
         }
         onClose={onBlur}
       >
@@ -176,7 +162,6 @@ export const DurationPicker = ({
               onChange={(years) =>
                 onChangeDate(years as number, months, days, hours, minutes)
               }
-              {...touchHandleProps}
             />
           )}
 
@@ -189,7 +174,6 @@ export const DurationPicker = ({
               onChange={(months) =>
                 onChangeDate(years, months as number, days, hours, minutes)
               }
-              {...touchHandleProps}
             />
           )}
 
@@ -202,7 +186,6 @@ export const DurationPicker = ({
               onChange={(days) =>
                 onChangeDate(years, months, days as number, hours, minutes)
               }
-              {...touchHandleProps}
             />
           )}
 
@@ -215,7 +198,6 @@ export const DurationPicker = ({
               onChange={(hours) =>
                 onChangeDate(years, months, days, hours as number, minutes)
               }
-              {...touchHandleProps}
             />
           )}
 
@@ -228,7 +210,6 @@ export const DurationPicker = ({
               onChange={(minutes) =>
                 onChangeDate(years, months, days, hours, minutes as number)
               }
-              {...touchHandleProps}
             />
           )}
         </XStack>

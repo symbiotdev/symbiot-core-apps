@@ -46,7 +46,7 @@ export const FileChip = ({
             hapticable
             iconName="TrashBinMinimalistic"
             backgroundColor="transparent"
-            color="$error"
+            color="red"
             onPress={onRemove}
           />
         )}

@@ -66,8 +66,8 @@ export const BrandBookingItem = ({
     >
       {!hideCancelledText && !!booking.cancelAt && (
         <XStack gap="$1" alignSelf="flex-end" justifyContent="space-between">
-          <Icon name="Close" size={16} color="$error" />
-          <RegularText color="$error" alignSelf="center" fontSize={12}>
+          <Icon name="Close" size={16} color="red" />
+          <RegularText color="red" alignSelf="center" fontSize={12}>
             {t('shared.canceled')}
           </RegularText>
         </XStack>

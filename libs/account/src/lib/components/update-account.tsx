@@ -114,7 +114,7 @@ export const UpdateAccount = () => {
         {isIos && (
           <Button
             type="clear"
-            color="$error"
+            color="red"
             opacity={0.7}
             fontSize={14}
             label={t('shared.account.update.context_menu.remove_account.label')}

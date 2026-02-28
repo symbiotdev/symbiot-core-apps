@@ -74,8 +74,8 @@ export const BrandEmployeeProfile = ({
 
         {!employee.provider && (
           <Card width="100%" flexDirection="row" alignItems="center" gap="$3">
-            <Icon name="InfoCircle" color="$error" />
-            <RegularText color="$error">
+            <Icon name="InfoCircle" color="red" />
+            <RegularText color="red">
               {t('brand_employee.profile.not_provider')}
             </RegularText>
           </Card>

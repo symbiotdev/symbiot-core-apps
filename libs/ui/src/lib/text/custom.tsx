@@ -6,7 +6,7 @@ export const Error = styled(TamaguiText, {
   ...defaultTextStyles,
   fontSize: 14,
   lineHeight: isWeb ? 16 : undefined,
-  color: '$error',
+  color: 'red',
 }) as typeof TamaguiText;
 
 export const Link = styled(TamaguiText, {

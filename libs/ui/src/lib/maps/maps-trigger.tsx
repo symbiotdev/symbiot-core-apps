@@ -1,5 +1,5 @@
 import { ReactElement, useCallback, useRef } from 'react';
-import { Alert, Linking } from 'react-native';
+import { Alert, Linking, ScrollView } from 'react-native';
 import { ListItem } from '../list/list-item';
 import { useI18n } from '@symbiot-core-apps/shared';
 import { AdaptiveSheet, AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
@@ -45,12 +45,14 @@ export const MapsTrigger = ({
   return (
     <AdaptiveSheet
       ref={sheetRef}
-      disabled={disabled}
       sheetTitle={t('shared.maps.open.title')}
       trigger={trigger}
+      triggerDisabled={disabled}
     >
-      <ListItem label="Apple Maps" onPress={() => open('apple')} />
-      <ListItem label="Google Maps" onPress={() => open('google')} />
+      <ScrollView>
+        <ListItem label="Apple Maps" onPress={() => open('apple')} />
+        <ListItem label="Google Maps" onPress={() => open('google')} />
+      </ScrollView>
     </AdaptiveSheet>
   );
 };

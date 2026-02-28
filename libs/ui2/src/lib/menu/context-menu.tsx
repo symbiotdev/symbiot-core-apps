@@ -35,7 +35,7 @@ export const ContextMenu = ({
       popoverPlacement="bottom-start"
       forceAdaptive="popover"
       ref={sheetRef}
-      disabled={disabled}
+      triggerDisabled={disabled}
       popoverOffset={5}
       trigger={
         <View

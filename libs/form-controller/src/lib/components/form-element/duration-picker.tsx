@@ -135,7 +135,7 @@ export const DurationPicker = ({
     <FormField label={label} error={error} required={required}>
       <AdaptiveSheet
         ref={sheetRef}
-        disabled={disabled}
+        triggerDisabled={disabled}
         sheetTitle={label}
         sheetGestureDisabled={isIos}
         sheetHandleVisible={!isIos}

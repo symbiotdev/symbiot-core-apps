@@ -33,6 +33,7 @@ export type AdaptiveSheetRef = {
 
 type Props = PropsWithChildren<{
   trigger?: ReactElement;
+  triggerDisabled?: boolean;
   disabled?: boolean;
   forceAdaptive?: 'sheet' | 'popover';
   popoverOffset?: number;
@@ -47,7 +48,7 @@ type Props = PropsWithChildren<{
 
 export const AdaptiveSheet = forwardRef(
   (
-    { trigger, disabled, onOpen, onClose, ...props }: Props,
+    { trigger, triggerDisabled, disabled, onOpen, onClose, ...props }: Props,
     ref: ForwardedRef<AdaptiveSheetRef>,
   ) => {
     const [state, setState] = useState<{
@@ -94,6 +95,8 @@ export const AdaptiveSheet = forwardRef(
 
     const onTriggerPress = useCallback(
       (event: GestureResponderEvent) => {
+        if (triggerDisabled) return;
+
         event.persist();
 
         if (event?.currentTarget?.measure) {
@@ -114,7 +117,7 @@ export const AdaptiveSheet = forwardRef(
           show();
         }
       },
-      [show],
+      [triggerDisabled, show],
     );
 
     useImperativeHandle(
@@ -133,7 +136,7 @@ export const AdaptiveSheet = forwardRef(
             style={({ pressed }) => ({
               position: 'relative',
               opacity: pressed ? 0.8 : 1,
-              ...(disabled && { opacity: 0.5 }),
+              ...((disabled || triggerDisabled) && { opacity: 0.5 }),
             })}
             onPress={onTriggerPress}
           >

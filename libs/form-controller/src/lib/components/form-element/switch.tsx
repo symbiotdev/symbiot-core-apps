@@ -64,8 +64,6 @@ export const Switch = ({
         <>
           {!isWeb && (
             <RNSwitch
-              trackColor={{ false: '#DDDDDD', true: '#999999' }}
-              ios_backgroundColor="#DDDDDD"
               thumbColor={theme.o_color?.val}
               value={checked}
               onValueChange={onCheckedChange}

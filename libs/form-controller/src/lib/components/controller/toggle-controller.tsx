@@ -65,7 +65,6 @@ export function ToggleController<T extends FieldValues>({
           >
             <ToggleList
               allowEmpty
-              style={{flexShrink: 1}}
               scrollEnabled={false}
               multiselect={multiselect}
               initialNumToRender={items?.length}

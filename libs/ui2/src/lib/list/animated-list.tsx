@@ -56,7 +56,7 @@ export function AnimatedList<T>({
       {...flatListProps}
       style={[
         {
-          flex: 1,
+          flexShrink: 1,
         },
         style,
       ]}

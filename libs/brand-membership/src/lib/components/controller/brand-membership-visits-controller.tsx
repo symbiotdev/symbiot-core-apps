@@ -1,6 +1,5 @@
 import { Control, FieldValues, Path } from 'react-hook-form';
-import { SelectController } from '@symbiot-core-apps/form-controller';
-import { useMemo } from 'react';
+import { NumberController } from '@symbiot-core-apps/form-controller';
 import {
   BrandMembershipType,
   getTranslateKeyByBrandMembershipType,
@@ -18,26 +17,11 @@ export function BrandMembershipVisitsController<T extends FieldValues>(props: {
   const { t } = useI18n();
   const tPrefix = getTranslateKeyByBrandMembershipType(props.type);
 
-  const options = useMemo(
-    () =>
-      Array.from({ length: 100 }).map((_, i) => {
-        const value = i + 1;
-
-        return {
-          label: String(value),
-          value,
-        };
-      }),
-    [],
-  );
-
   return (
-    <SelectController
-      searchable
-      moveSelectedToTop
+    <NumberController
+      maxLength={3}
       label={!props.noLabel ? t(`${tPrefix}.form.visits.label`) : ''}
       placeholder={t(`${tPrefix}.form.visits.placeholder`)}
-      options={options}
       rules={{
         required: {
           value: true,

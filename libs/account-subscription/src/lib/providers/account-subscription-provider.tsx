@@ -36,7 +36,6 @@ type AccountSubscriptionContext = {
   processing: boolean;
   canSubscribe: boolean;
   hasActualSubscription: boolean;
-  hasFullAccess: boolean;
   isSubscriptionsAvailable: boolean;
   showPaywall: () => void;
   manageSubscriptions: () => Promise<void>;
@@ -69,25 +68,22 @@ export const AccountSubscriptionProvider = ({
   const [isPromoCodeFormVisible, setIsPromoCodeFormVisible] =
     useState<boolean>(false);
 
-  const hasFullAccess = useMemo(() => Boolean(me?.partner), [me?.partner]);
 
   const isSubscriptionsAvailable = useMemo(
     () =>
       (!isWeb || isDevMode) &&
-      !hasFullAccess &&
       !!me?.offering &&
       !!brand?.owner?.id &&
       currentEmployee?.id === brand.owner.id,
-    [brand?.owner?.id, currentEmployee?.id, me?.offering, hasFullAccess],
+    [brand?.owner?.id, currentEmployee?.id, me?.offering],
   );
 
   const hasActualSubscription = useMemo(
     () =>
       Boolean(
-        hasFullAccess ||
         me?.subscriptions?.some(({ active, canceled }) => active && !canceled),
       ),
-    [hasFullAccess, me?.subscriptions],
+    [me?.subscriptions],
   );
 
   const canSubscribe = useMemo(
@@ -163,7 +159,6 @@ export const AccountSubscriptionProvider = ({
     <Context.Provider
       value={{
         canSubscribe,
-        hasFullAccess,
         hasActualSubscription,
         isSubscriptionsAvailable,
         processing: subscribing || restoring,

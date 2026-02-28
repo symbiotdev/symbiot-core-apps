@@ -108,6 +108,7 @@ export const ApiProvider = ({
       languageCode: lang,
       onUnauthorized,
       onNoRespond,
+      refreshTokens,
     });
 
     if (tokens.access) {
@@ -133,7 +134,15 @@ export const ApiProvider = ({
       socket.disconnect();
       socket.close();
     };
-  }, [devId, lang, onNoRespond, onUnauthorized, tokens.access, tokens.refresh]);
+  }, [
+    devId,
+    lang,
+    onNoRespond,
+    onUnauthorized,
+    tokens.access,
+    tokens.refresh,
+    refreshTokens,
+  ]);
 
   useEffect(() => {
     if (!apiConfigured) return;

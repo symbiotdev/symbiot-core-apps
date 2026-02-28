@@ -133,8 +133,12 @@ export const useAccountAuthRefreshTokenReq = () => {
       )) as AccountAuthTokens;
 
       setTokens(newTokens);
-    } catch {
+
+      return newTokens;
+    } catch (error) {
       removeTokens();
+
+      throw Error(JSON.stringify(error));
     }
   }, [setTokens, removeTokens, tokens.refresh]);
 };

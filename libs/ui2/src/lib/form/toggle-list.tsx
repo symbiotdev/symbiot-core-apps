@@ -217,6 +217,7 @@ const Item = memo(
     return (
       <Pressable
         style={({ pressed }) => ({
+          flexShrink: 1,
           flexDirection: 'row',
           alignItems: 'center',
           cursor: 'pointer',
@@ -249,7 +250,7 @@ const Item = memo(
 
               {!!item.description && (
                 <Text
-                  numberOfLines={1}
+                  numberOfLines={2}
                   // fixme - colorize
                   style={{ color: '#999999', fontSize: 12 }}
                 >

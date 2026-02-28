@@ -8,7 +8,6 @@ import {
 } from '@symbiot-core-apps/api';
 import React, { ReactElement, RefObject, useCallback } from 'react';
 import { ListItem, SlideSheetModal } from '@symbiot-core-apps/ui';
-import { View } from 'tamagui';
 import { useAppSettings } from '@symbiot-core-apps/app';
 import { useI18n, useModal } from '@symbiot-core-apps/shared';
 import { BrandMembershipsCurrentList } from '@symbiot-core-apps/brand-membership';
@@ -21,6 +20,7 @@ import {
   FallbackView,
   Icon,
 } from '@symbiot-core-apps/ui2';
+import { ScrollView } from 'react-native';
 
 export const BrandClientTopUpBalance = ({
   client,
@@ -80,7 +80,12 @@ export const BrandClientTopUpBalance = ({
       ref={sheetRef}
       sheetTitle={t('brand_client.balance.top_up.title')}
     >
-      <View paddingHorizontal={20} paddingVertical={10}>
+      <ScrollView
+        contentContainerStyle={{
+          paddingVertical: 10,
+          paddingHorizontal: 20,
+        }}
+      >
         <ListItem
           label={t('brand_client.balance.menu.add_visit_based_membership')}
           icon={<Icon name={icons.VisitBasedMembership} />}
@@ -91,7 +96,7 @@ export const BrandClientTopUpBalance = ({
           icon={<Icon name={icons.PeriodBasedMembership} />}
           onPress={openPeriodBasedMembershipsModal}
         />
-      </View>
+      </ScrollView>
 
       <SlideSheetModal
         withKeyboard={false}

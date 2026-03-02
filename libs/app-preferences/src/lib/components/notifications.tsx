@@ -35,7 +35,9 @@ export const Notifications = () => {
     getPermissionsAsync().then(setPermissionsStatus);
 
     navigation.setOptions({
-      headerRight: updating ? () => <Spinner /> : undefined,
+      headerRight: updating
+        ? () => <Spinner style={{ margin: 'auto' }} />
+        : undefined,
     });
   }, [updating, navigation]);
 

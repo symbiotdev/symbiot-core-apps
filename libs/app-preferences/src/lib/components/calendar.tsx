@@ -78,7 +78,9 @@ export const Calendar = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: updating ? () => <Spinner /> : undefined,
+      headerRight: updating
+        ? () => <Spinner style={{ margin: 'auto' }} />
+        : undefined,
     });
   }, [updating, navigation]);
 

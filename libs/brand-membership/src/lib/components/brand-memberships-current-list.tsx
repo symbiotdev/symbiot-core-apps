@@ -1,4 +1,3 @@
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React, {
   ComponentType,
   ReactElement,
@@ -13,7 +12,7 @@ import {
   PaginationListParams,
 } from '@symbiot-core-apps/api';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { useI18n, useInsets } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
 import {
   AnimatedList,
@@ -41,7 +40,7 @@ export const BrandMembershipsCurrentList = ({
   Intro: ComponentType<{ loading?: boolean; error?: string | null }>;
 }) => {
   const { t } = useI18n();
-  const { bottom } = useSafeAreaInsets();
+  const { bottom } = useInsets({ ignoreAndroidIssue: true });
   const tPrefix = getTranslateKeyByBrandMembershipType(type);
 
   const [search, setSearch] = useState('');

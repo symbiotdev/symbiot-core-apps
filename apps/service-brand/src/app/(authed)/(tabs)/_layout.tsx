@@ -39,7 +39,12 @@ export default () => {
 
   return (
     <Tabs
-      screenOptions={stackNavigationOptions as BottomTabNavigationOptions}
+      screenOptions={
+        {
+          ...stackNavigationOptions,
+          animation: 'none',
+        } as BottomTabNavigationOptions
+      }
       tabBar={(props) => (
         <CustomTabBar
           {...props}

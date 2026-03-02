@@ -4,8 +4,7 @@ import { ScrollView } from 'react-native';
 import { ReactElement } from 'react';
 import { H2, H4, MediaBackground } from '@symbiot-core-apps/ui';
 import { SignInButtons } from './sign-in-buttons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { isWeb } from '@symbiot-core-apps/shared';
+import { isWeb, useInsets } from '@symbiot-core-apps/shared';
 
 export const Auth = ({
   title,
@@ -22,7 +21,7 @@ export const Auth = ({
   videoSource: VideoSource;
   logo: ReactElement;
 }) => {
-  const { bottom } = useSafeAreaInsets();
+  const { bottom } = useInsets();
 
   return (
     <View flex={1} position="relative">

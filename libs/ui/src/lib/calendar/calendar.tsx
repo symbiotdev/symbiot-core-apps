@@ -10,12 +10,12 @@ import {
   DateHelper,
   getDateLocale,
   useI18n,
+  useInsets,
   useNativeNow,
   useScreenOrientation,
 } from '@symbiot-core-apps/shared';
 import { BoldText, RegularText } from '../text/text';
 import { Orientation } from 'expo-screen-orientation';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { DeterminedProgressBar } from '../loading/determined-progress';
 
 export const Calendar = ({
@@ -30,7 +30,7 @@ export const Calendar = ({
   const { lang } = useI18n();
   const theme = useTheme();
   const { orientation } = useScreenOrientation();
-  const { left, right } = useSafeAreaInsets();
+  const { left, right } = useInsets();
   const { now } = useNativeNow();
 
   const [width, setWidth] = useState(0);

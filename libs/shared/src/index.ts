@@ -1,5 +1,6 @@
 export * from './lib/hooks/use-app-state';
 export * from './lib/hooks/use-debounce';
+export * from './lib/hooks/use-insets';
 export * from './lib/hooks/use-keyboard';
 export * from './lib/hooks/use-modal';
 export * from './lib/hooks/use-native-now';

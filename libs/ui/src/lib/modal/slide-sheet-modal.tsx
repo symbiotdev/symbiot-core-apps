@@ -1,7 +1,7 @@
 import { DimensionValue, Modal, ModalProps, StyleSheet } from 'react-native';
 import { BaseSyntheticEvent, PropsWithChildren, ReactElement } from 'react';
 import { ScrollView, View, ViewProps } from 'tamagui';
-import { isIos, isTablet, isWeb } from '@symbiot-core-apps/shared';
+import { isIos, isTablet, isWeb, useInsets } from '@symbiot-core-apps/shared';
 import { PortalProvider } from '@tamagui/portal';
 import { ContainerView, ContainerViewProps } from '../view/container-view';
 import {
@@ -15,7 +15,6 @@ import {
   Refresher,
   useHeaderHeight,
 } from '@symbiot-core-apps/ui2';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const SlideSheetModal = ({
   children,
@@ -168,7 +167,7 @@ const PageContent = ({
   ignoreBottomSafeArea?: boolean;
 }) => {
   const headerHeight = useHeaderHeight();
-  const { top, bottom, left, right } = useSafeAreaInsets();
+  const { top, bottom, left, right } = useInsets();
 
   return (
     <ContainerView

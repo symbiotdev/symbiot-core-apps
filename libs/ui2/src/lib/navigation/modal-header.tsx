@@ -1,6 +1,5 @@
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BaseSyntheticEvent, memo, ReactElement } from 'react';
-import { isIos } from '@symbiot-core-apps/shared';
+import { isIos, useInsets } from '@symbiot-core-apps/shared';
 import { View } from 'react-native';
 import { HEADER_HEIGHT } from './consts/dimensions';
 import { PAGE_STYLE } from '../page/utils/style-rules';
@@ -21,7 +20,7 @@ export const ModalHeader = memo(
     headerRight?: () => ReactElement;
     onClose?: (e: BaseSyntheticEvent) => void;
   }) => {
-    const { top, left, right } = useSafeAreaInsets();
+    const { top, left, right } = useInsets();
 
     const _top = isIos ? 5 : top;
 

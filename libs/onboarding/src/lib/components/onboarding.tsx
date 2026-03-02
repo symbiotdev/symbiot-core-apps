@@ -7,11 +7,10 @@ import {
   SimpleHorizontalCarousel,
   SimpleHorizontalCarouselRef,
 } from '@symbiot-core-apps/ui';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image, ImageSource } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useOnboardingState } from '@symbiot-core-apps/state';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { useI18n, useInsets } from '@symbiot-core-apps/shared';
 
 export type OnboardingSlide = {
   id: string;
@@ -24,7 +23,7 @@ export const Onboarding = memo(({ slides }: { slides: OnboardingSlide[] }) => {
   const { t } = useI18n();
   const theme = useTheme();
   const { finish } = useOnboardingState();
-  const { bottom, left, right } = useSafeAreaInsets();
+  const { bottom, left, right } = useInsets();
 
   const ref = useRef<SimpleHorizontalCarouselRef>(null);
 

@@ -19,10 +19,9 @@ import { InputFieldView } from '../wrapper/input-field-view';
 import { LightText, Spinner } from '@symbiot-core-apps/ui';
 import { FormField } from '../wrapper/form-field';
 import { Search } from './search';
-import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
+import { emitHaptic, useI18n, useInsets } from '@symbiot-core-apps/shared';
 import { FlatList } from 'react-native';
 import { View } from 'tamagui';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const Select = ({
   value,
@@ -63,7 +62,7 @@ export const Select = ({
   onBlur?: () => void;
 }) => {
   const { t } = useI18n();
-  const {bottom} = useSafeAreaInsets()
+  const { bottom } = useInsets();
 
   const listRef = useRef<FlatList>(null);
   const sheetRef = useRef<AdaptiveSheetRef>(null);

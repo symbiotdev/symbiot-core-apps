@@ -4,9 +4,8 @@ import {
 } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BrandEmployeeItem } from '@symbiot-core-apps/brand';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { useI18n, useInsets } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
 import {
   AnimatedList,
@@ -25,7 +24,7 @@ export const CurrentBrandEmployees = ({
   onEmployeePress: (employee: BrandEmployee) => void;
 }) => {
   const { t } = useI18n();
-  const { bottom } = useSafeAreaInsets();
+  const { bottom } = useInsets({ ignoreAndroidIssue: true });
 
   const [search, setSearch] = useState('');
 

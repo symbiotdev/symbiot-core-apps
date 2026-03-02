@@ -22,7 +22,6 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { compactViewStyles } from '../view/compact-view';
 import { Button } from '../button/button';
 import {
@@ -30,6 +29,7 @@ import {
   emitHaptic,
   isWeb,
   useI18n,
+  useInsets,
   useKeyboardDismisser,
   useRendered,
 } from '@symbiot-core-apps/shared';
@@ -89,7 +89,7 @@ export const Survey = ({
   onFinish: () => Promise<onSurveyFinish>;
 }>) => {
   const { t } = useI18n();
-  const { bottom } = useSafeAreaInsets();
+  const { bottom } = useInsets({ ignoreAndroidIssue: true });
   const navigation = useNavigation();
   const headerHeight = useHeaderHeight();
   const animatedValue$ = useSharedValue(0);

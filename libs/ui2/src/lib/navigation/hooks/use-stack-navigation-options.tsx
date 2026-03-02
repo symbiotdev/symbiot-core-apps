@@ -1,5 +1,8 @@
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { isAndroid, useScreenOrientation } from '@symbiot-core-apps/shared';
+import {
+  isAndroid,
+  useInsets,
+  useScreenOrientation,
+} from '@symbiot-core-apps/shared';
 import { useCallback } from 'react';
 import {
   NativeStackHeaderProps,
@@ -9,7 +12,7 @@ import { Header } from '../header';
 import { useHeaderHeight } from './use-header-height';
 
 export const useStackNavigationOptions = () => {
-  const { top, left, right } = useSafeAreaInsets();
+  const { top, left, right } = useInsets();
   const { orientationFormat } = useScreenOrientation();
   const headerHeight = useHeaderHeight();
 

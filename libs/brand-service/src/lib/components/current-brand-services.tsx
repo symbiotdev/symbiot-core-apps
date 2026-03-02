@@ -1,7 +1,6 @@
 import { Button } from '@symbiot-core-apps/ui';
 import { router } from 'expo-router';
 import { useAppSettings } from '@symbiot-core-apps/app';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCallback, useState } from 'react';
 import {
   BrandService,
@@ -10,7 +9,7 @@ import {
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
 import { BrandServiceItem } from '@symbiot-core-apps/brand';
 import { useAccountLimits } from '@symbiot-core-apps/account-subscription';
-import { useI18n } from '@symbiot-core-apps/shared';
+import { useI18n, useInsets } from '@symbiot-core-apps/shared';
 import { Search } from '@symbiot-core-apps/form-controller';
 import {
   AnimatedList,
@@ -30,7 +29,7 @@ export const CurrentBrandServices = ({
   onServicePress: (service: BrandService) => void;
 }) => {
   const { t } = useI18n();
-  const { bottom } = useSafeAreaInsets();
+  const { bottom } = useInsets({ ignoreAndroidIssue: true });
 
   const [search, setSearch] = useState('');
 

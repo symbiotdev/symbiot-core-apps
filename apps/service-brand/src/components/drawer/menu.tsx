@@ -1,9 +1,8 @@
 import { ScrollView, View, XStackProps } from 'tamagui';
 import { Avatar, Br, ListItem } from '@symbiot-core-apps/ui';
 import { router, usePathname } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { memo, ReactElement, useCallback } from 'react';
-import { emitHaptic, useI18n } from '@symbiot-core-apps/shared';
+import { emitHaptic, useI18n, useInsets } from '@symbiot-core-apps/shared';
 import Animated, {
   useAnimatedStyle,
   withTiming,
@@ -99,7 +98,7 @@ export const DrawerMenu = () => {
   const { icons } = useAppSettings();
   const { t } = useI18n();
   const { permanent } = useSideMenu();
-  const { top, bottom, left } = useSafeAreaInsets();
+  const { top, bottom, left } = useInsets();
   const { hasPermission, hasAnyOfPermissions } = useCurrentBrandEmployee();
   const headerHeight = useHeaderHeight();
 

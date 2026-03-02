@@ -1,6 +1,5 @@
 import React, { PropsWithChildren, useLayoutEffect } from 'react';
 import { ScrollViewProps, ViewStyle } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
 import Animated, {
   useAnimatedStyle,
@@ -18,6 +17,7 @@ import {
   iosCornerRadiusGroups,
   isAndroid,
   isIos,
+  useInsets,
 } from '@symbiot-core-apps/shared';
 import { Overlay } from './overlay';
 import { isCustomDesignMandatory } from '@symbiot-core-apps/theme';
@@ -54,7 +54,7 @@ export const Sheet = ({
   excludePaddings?: boolean;
   onClose: () => void;
 }>) => {
-  const { top, left, right, bottom } = useSafeAreaInsets();
+  const { top, left, right, bottom } = useInsets();
   const { progress: keyboardShown$, height: keyboardHeight$ } =
     useReanimatedKeyboardAnimation();
 
@@ -148,8 +148,6 @@ export const Sheet = ({
             sheetAnimatedStyle,
             animatedBorderStyle,
             {
-              left,
-              right,
               position: 'absolute',
               zIndex: 1,
               borderTopLeftRadius: defaultBorderTopRadius,
@@ -159,6 +157,16 @@ export const Sheet = ({
                 pointerEvents: 'none',
                 opacity: 0.5,
               }),
+              ...(isAndroid
+                ? {
+                    maxWidth: 500,
+                    width: '100%',
+                    alignSelf: 'center',
+                  }
+                : {
+                    left,
+                    right,
+                  }),
             },
           ]}
           onLayout={(e) => height$.set(e.nativeEvent.layout.height)}
@@ -198,46 +206,43 @@ export const Sheet = ({
               />
             )}
 
-            {isGestureScrollLimited
-              ? children
-              : React.Children.toArray(children).map((child) => {
-                  if (React.isValidElement(child)) {
-                    const childProps = child.props as ScrollViewProps;
-                    const paddingBottom = (
-                      (Array.isArray(childProps.contentContainerStyle)
-                        ? childProps.contentContainerStyle[
-                            childProps.contentContainerStyle.length - 1
-                          ]
-                        : childProps.contentContainerStyle) as ViewStyle
-                    )?.paddingBottom;
+            {React.Children.toArray(children).map((child) => {
+              if (React.isValidElement(child)) {
+                const childProps = child.props as ScrollViewProps;
+                const paddingBottom = (
+                  (Array.isArray(childProps.contentContainerStyle)
+                    ? childProps.contentContainerStyle[
+                        childProps.contentContainerStyle.length - 1
+                      ]
+                    : childProps.contentContainerStyle) as ViewStyle
+                )?.paddingBottom;
 
-                    return React.cloneElement(child, {
-                      ...childProps,
-                      bounces: false,
-                      scrollEventThrottle: Math.min(
-                        16,
-                        childProps.scrollEventThrottle || 17,
-                      ),
-                      contentContainerStyle: [
-                        childProps.contentContainerStyle,
-                        {
-                          paddingTop:
-                            (handleVisible ? 20 : 0) + (title ? 20 : 0),
-                          paddingBottom:
-                            (typeof paddingBottom === 'number'
-                              ? paddingBottom
-                              : 0) + bottom,
-                        },
-                      ],
-                      onScroll: (e) => {
-                        childProps?.onScroll?.(e);
-                        scrolled$.set(e.nativeEvent.contentOffset.y > 0);
-                      },
-                    } as ScrollViewProps);
-                  }
+                return React.cloneElement(child, {
+                  ...childProps,
+                  bounces: false,
+                  scrollEventThrottle: Math.min(
+                    16,
+                    childProps.scrollEventThrottle || 17,
+                  ),
+                  contentContainerStyle: [
+                    childProps.contentContainerStyle,
+                    {
+                      paddingTop: (handleVisible ? 20 : 0) + (title ? 20 : 0),
+                      paddingBottom:
+                        (typeof paddingBottom === 'number'
+                          ? paddingBottom
+                          : 0) + bottom,
+                    },
+                  ],
+                  onScroll: (e) => {
+                    childProps?.onScroll?.(e);
+                    scrolled$.set(e.nativeEvent.contentOffset.y > 0);
+                  },
+                } as ScrollViewProps);
+              }
 
-                  return child;
-                })}
+              return child;
+            })}
           </Animated.View>
         </AnimatedGlassView>
       </GestureDetector>

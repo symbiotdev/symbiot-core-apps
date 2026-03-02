@@ -1,8 +1,7 @@
 import { memo, useMemo } from 'react';
 import { useAppScheme } from '@symbiot-core-apps/state';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, useWindowDimensions, ViewStyle } from 'react-native';
-import { isIos, isWeb } from '@symbiot-core-apps/shared';
+import { isIos, isWeb, useInsets } from '@symbiot-core-apps/shared';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
 const SHADOW_HEIGHT = 25;
@@ -15,7 +14,7 @@ export const PageShadow = isWeb
   ? () => null
   : memo(() => {
       const { scheme } = useAppScheme();
-      const { top, bottom } = useSafeAreaInsets();
+      const { top, bottom } = useInsets();
       const { width, height } = useWindowDimensions();
 
       const color = useMemo(

@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { useAppScheme } from '@symbiot-core-apps/state';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, useWindowDimensions, ViewStyle } from 'react-native';
-import { isWeb } from '@symbiot-core-apps/shared';
+import { isIos, isWeb } from '@symbiot-core-apps/shared';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
 const SHADOW_HEIGHT = 25;
@@ -55,13 +55,15 @@ export const PageShadow = isWeb
           />
 
           {/* Bottom shadow */}
-          <Rect
-            x={0}
-            y={height - bottom - SHADOW_HEIGHT}
-            width={width}
-            height={bottom + SHADOW_HEIGHT}
-            fill={`url(#${bottomId})`}
-          />
+          {isIos && (
+            <Rect
+              x={0}
+              y={height - bottom - SHADOW_HEIGHT}
+              width={width}
+              height={bottom + SHADOW_HEIGHT}
+              fill={`url(#${bottomId})`}
+            />
+          )}
         </Svg>
       );
     });

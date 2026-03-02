@@ -53,7 +53,7 @@ export const CustomTabBar = ({
           gap: 10,
           paddingLeft: insets.left + 20,
           paddingRight: insets.right + 20,
-          bottom: insets.bottom + (insets.bottom ? 0 : 20),
+          bottom: insets.bottom + 10,
         },
       ]}
     >

@@ -61,7 +61,7 @@ export const Popover = ({
 
   useLayoutEffect(() => {
     overlayOpacity$.value = withSpring(visible ? 1 : 0);
-    y$.value = withSpring(visible ? (isAndroid ? 10 : 0) : -20);
+    y$.value = withSpring(visible ? 0 : -20);
   }, [visible, y$, overlayOpacity$]);
 
   return (
@@ -73,7 +73,7 @@ export const Popover = ({
         ref={refs.setReference}
         style={{
           position: 'absolute',
-          top: triggerRect.y + triggerRect.height,
+          top: triggerRect.y,
           left: triggerRect.x + triggerRect.width,
         }}
       />

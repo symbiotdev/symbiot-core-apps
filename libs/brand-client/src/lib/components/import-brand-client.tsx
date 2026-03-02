@@ -17,11 +17,12 @@ import {
   useImportBrandClientsReq,
 } from '@symbiot-core-apps/api';
 import { useCallback, useState } from 'react';
-import { readAsStringAsync } from 'expo-file-system';
+import { File } from 'expo-file-system';
 import {
   downloadArrayBuffer,
   isWeb,
   readFileWeb,
+  ShowNativeFailedAlert,
   useI18n,
 } from '@symbiot-core-apps/shared';
 import { router } from 'expo-router';
@@ -82,43 +83,49 @@ export const ImportBrandClient = () => {
     async (assets: DocumentPickerAsset[]) => {
       if (!brand?.stats) return;
 
-      let fileContent: string;
-      const asset = assets[0];
+      try {
+        let fileContent: string;
+        const asset = assets[0];
 
-      if (isWeb) {
-        if (!asset.file) return;
+        if (isWeb) {
+          if (!asset.file) return;
 
-        fileContent = await readFileWeb(asset.file);
-      } else {
-        fileContent = await readAsStringAsync(asset.uri);
-      }
+          fileContent = await readFileWeb(asset.file);
+        } else {
+          fileContent = await new File(asset.uri).text();
+        }
 
-      setFile(asset);
-      setFileError(undefined);
+        setFile(asset);
+        setFileError(undefined);
 
-      parse(fileContent, {
-        skipEmptyLines: true,
-        complete: (parsedData: { data: Array<string[]> }) => {
-          try {
-            const { summary, clients } = parseImportedClients(
-              parsedData.data,
-              gendersWithoutEmptyOption(genders) || [],
-            );
+        parse(fileContent, {
+          skipEmptyLines: true,
+          complete: (parsedData: { data: Array<string[]> }) => {
+            try {
+              const { summary, clients } = parseImportedClients(
+                parsedData.data,
+                gendersWithoutEmptyOption(genders) || [],
+              );
 
-            setClients(
-              limits.clients
-                ? clients.slice(0, limits.clients - brand.stats.clients)
-                : clients,
-            );
-            setSummary(summary);
-          } catch (error) {
+              setClients(
+                limits.clients
+                  ? clients.slice(0, limits.clients - brand.stats.clients)
+                  : clients,
+              );
+              setSummary(summary);
+            } catch (error) {
+              handleFileError(error);
+            }
+          },
+          error: (error: Error) => {
             handleFileError(error);
-          }
-        },
-        error: (error: Error) => {
-          handleFileError(error);
-        },
-      });
+          },
+        });
+      } catch (err) {
+        ShowNativeFailedAlert({
+          text: JSON.stringify(err),
+        });
+      }
     },
     [brand?.stats, genders, handleFileError, limits.clients],
   );

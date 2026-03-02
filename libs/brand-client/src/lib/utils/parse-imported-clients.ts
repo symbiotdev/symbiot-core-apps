@@ -54,7 +54,7 @@ export const parseImportedClients = (
       client[keys.avatar] &&
       client[keys.avatar] !== '-' &&
       client[keys.avatar].indexOf('http') === 0 &&
-        new URL(client[keys.avatar]).pathname !== '/'
+      new URL(client[keys.avatar]).pathname !== '/'
         ? String(client[keys.avatar])
         : '';
     const gender =
@@ -70,8 +70,8 @@ export const parseImportedClients = (
         ? String(client[keys.email]).trim().substring(0, 150)
         : '';
     let phone =
-      client[keys.phone] && client[keys.phone] !== '-'
-        ? `+${String(client[keys.phone]).trim().replace(/\D/g, '')}`
+      client[keys.phone]?.trim() && client[keys.phone] !== '-'
+        ? `${String(client[keys.phone]).trim().replace(/\D/g, '')}`
         : '';
     let birthday =
       client[keys.birthday] && client[keys.birthday] !== '-'
@@ -86,8 +86,8 @@ export const parseImportedClients = (
       !phone ||
       (phone &&
         !PhoneNumber.isValidNumber(
-          phone,
-          PhoneNumber.getCountryCodeOfNumber(phone),
+          `+${phone}`,
+          PhoneNumber.getCountryCodeOfNumber(`+${phone}`),
         ))
     ) {
       phone = '';

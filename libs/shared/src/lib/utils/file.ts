@@ -2,7 +2,7 @@ import { Asset } from 'expo-asset';
 import { shareAsync } from 'expo-sharing';
 import { ShowNativeFailedAlert } from './burnt';
 import { isWeb } from './device';
-import { cacheDirectory, writeAsStringAsync } from 'expo-file-system/legacy';
+import { File as ExpoFile, Paths } from 'expo-file-system';
 
 export async function downloadArrayBuffer(
   arrayBuffer: ArrayBufferLike,
@@ -32,10 +32,10 @@ export async function downloadArrayBuffer(
         binary += String.fromCharCode(bytes[i]);
       }
 
-      const uri = `${cacheDirectory}${fileName}`;
+      const uri = `${Paths.cache.uri}${fileName}`;
       const base64 = btoa(binary);
 
-      await writeAsStringAsync(uri, base64, {
+      new ExpoFile(uri).write(base64, {
         encoding: 'base64',
       });
 

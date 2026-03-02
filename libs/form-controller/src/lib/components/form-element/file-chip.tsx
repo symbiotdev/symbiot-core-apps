@@ -33,9 +33,9 @@ export const FileChip = ({
 
   return (
     <FormField label={label}>
-      <Card flexDirection="row" gap="$3">
-        <View gap="$1" flex={1}>
-          <SemiBoldText flex={1} numberOfLines={1}>
+      <Card flexDirection="row" justifyContent="space-between" gap="$3">
+        <View gap="$1" flexShrink={1}>
+          <SemiBoldText flexShrink={1} numberOfLines={1}>
             {file.name}
           </SemiBoldText>
           <RegularText color="$placeholder">{fileSize}</RegularText>
@@ -45,8 +45,6 @@ export const FileChip = ({
           <ButtonIcon
             hapticable
             iconName="TrashBinMinimalistic"
-            backgroundColor="transparent"
-            color="red"
             onPress={onRemove}
           />
         )}

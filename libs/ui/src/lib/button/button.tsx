@@ -152,7 +152,9 @@ export const ButtonIcon = ({
   const disabled = viewProps.disabled || loading;
   const themeConfig = ButtonTheme[type];
   const color =
-    theme[viewProps.color || themeConfig.color]?.val || themeConfig.color;
+    theme[viewProps.color || themeConfig.color]?.val ||
+    themeConfig.color ||
+    viewProps.color;
   const backgroundColor =
     theme[themeConfig.backgroundColor]?.val || themeConfig.backgroundColor;
   const borderColor =

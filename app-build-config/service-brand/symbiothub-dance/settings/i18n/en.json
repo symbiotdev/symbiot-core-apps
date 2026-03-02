@@ -1551,7 +1551,13 @@
           "title": "Included Classes",
           "subtitle": "Choose the classes to include in this VIP pass to help students see exactly what it offers.",
           "empty": "No classes added yet. Go to the Classes section to add the first one.",
-          "all_included": "If you skip this step, all classes will be included in the VIP pass."
+          "all_included": "If you skip this step, all classes will be included in the VIP pass.",
+          "no_services": {
+            "title": "No classes have been added yet. Add at least one class first to create a VIP pass.",
+            "action": {
+              "label": "Go to Classes"
+            }
+          }
         },
         "pricing": {
           "title": "Pricing",
@@ -1710,7 +1716,13 @@
           "title": "Included Classes",
           "subtitle": "Choose the classes to include in this pack to help students see exactly what it offers.",
           "empty": "No classes added yet. Go to the Classes section to add the first one.",
-          "all_included": "If you skip this step, all classes will be included in the pass."
+          "all_included": "If you skip this step, all classes will be included in the pass.",
+          "no_services": {
+            "title": "No classes have been added yet. Add at least one class first to create a pass.",
+            "action": {
+              "label": "Go to Classes"
+            }
+          }
         },
         "pricing": {
           "title": "Pricing",

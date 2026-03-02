@@ -7,7 +7,13 @@ import {
   useCreateBrandVisitBasedMembershipReq,
 } from '@symbiot-core-apps/api';
 import { useI18n, useRateApp } from '@symbiot-core-apps/shared';
-import { Card, SemiBoldText, Survey, SurveyStep } from '@symbiot-core-apps/ui';
+import {
+  Card,
+  MediumText,
+  SemiBoldText,
+  Survey,
+  SurveyStep,
+} from '@symbiot-core-apps/ui';
 import { useForm } from 'react-hook-form';
 import { BrandMembershipAvailabilityController } from './controller/brand-membership-availability-controller';
 import { BrandMembershipNameController } from './controller/brand-membership-name-controller';
@@ -21,6 +27,7 @@ import { BrandMembershipLocationController } from './controller/brand-membership
 import { BrandMembershipVisitsController } from './controller/brand-membership-visits-controller';
 import { BrandMembershipPeriodController } from './controller/brand-membership-period-controller';
 import { Icon } from '@symbiot-core-apps/ui2';
+import { router } from 'expo-router';
 
 export const CreateBrandMembership = ({
   type,
@@ -214,28 +221,48 @@ export const CreateBrandMembership = ({
         />
       </SurveyStep>
 
-      <SurveyStep
-        skippable
-        canGoNext={servicesFormState.isValid}
-        title={t(`${tPrefix}.create.steps.services.title`)}
-        subtitle={t(`${tPrefix}.create.steps.services.subtitle`)}
-      >
-        <Card flexDirection="row" gap="$3">
-          <Icon name="InfoCircle" />
+      {brand?.stats?.services ? (
+        <SurveyStep
+          skippable
+          canGoNext={servicesFormState.isValid}
+          title={t(`${tPrefix}.create.steps.services.title`)}
+          subtitle={t(`${tPrefix}.create.steps.services.subtitle`)}
+        >
+          <Card flexDirection="row" gap="$3">
+            <Icon name="InfoCircle" />
 
-          <SemiBoldText flex={1}>
-            {t(`${tPrefix}.create.steps.services.all_included`)}
-          </SemiBoldText>
-        </Card>
+            <SemiBoldText flexShrink={1}>
+              {t(`${tPrefix}.create.steps.services.all_included`)}
+            </SemiBoldText>
+          </Card>
 
-        <BrandMembershipServicesController
-          required
-          name="services"
-          type={type}
-          location={location}
-          control={servicesControl}
-        />
-      </SurveyStep>
+          <BrandMembershipServicesController
+            required
+            name="services"
+            type={type}
+            location={location}
+            control={servicesControl}
+          />
+        </SurveyStep>
+      ) : (
+        <SurveyStep
+          canGoNext
+          title={t(`${tPrefix}.create.steps.services.title`)}
+          subtitle={t(`${tPrefix}.create.steps.services.subtitle`)}
+          nextButtonLabel={t(
+            `${tPrefix}.create.steps.services.no_services.action.label`,
+          )}
+          interruptNextSteps={{
+            callback: () => router.replace('/services'),
+          }}
+        >
+          <Card padding={30}>
+            <MediumText textAlign="center" flexShrink={1}>
+              {t(`${tPrefix}.create.steps.services.no_services.title`)}
+            </MediumText>
+          </Card>
+        </SurveyStep>
+      )}
 
       <SurveyStep
         canGoNext={pricingFormState.isValid && discount <= price}

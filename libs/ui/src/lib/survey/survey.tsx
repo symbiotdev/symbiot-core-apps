@@ -51,7 +51,11 @@ type SurveyStepProps = PropsWithChildren<{
   title: string;
   subtitle: string;
   canGoNext: boolean;
+  nextButtonLabel?: string;
   skippable?: boolean;
+  interruptNextSteps?: {
+    callback: () => void;
+  };
 }>;
 
 export type onSurveyFinish = {
@@ -115,6 +119,12 @@ export const Survey = ({
   const onNext = useKeyboardDismisser(
     useCallback(async () => {
       if (!currentStep) return;
+
+      if (currentStep.props.interruptNextSteps) {
+        finishedRef.current = true;
+
+        currentStep.props.interruptNextSteps.callback();
+      }
 
       if (isLastStep) {
         try {
@@ -288,7 +298,10 @@ export const Survey = ({
           >
             <Button
               disabled={!currentStep.props.canGoNext}
-              label={t(isLastStep ? 'shared.finish' : 'shared.next')}
+              label={
+                currentStep.props.nextButtonLabel ||
+                t(isLastStep ? 'shared.finish' : 'shared.next')
+              }
               onPress={onNext}
             />
 

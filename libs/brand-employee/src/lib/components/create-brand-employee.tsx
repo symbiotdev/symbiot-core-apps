@@ -250,7 +250,7 @@ export const CreateBrandEmployee = () => {
 
       <SurveyStep
         skippable
-        canGoNext={!!avatar}
+        canGoNext={Boolean(avatar || account?.avatar?.url)}
         title={t('brand_employee.create.steps.avatar.title')}
         subtitle={t('brand_employee.create.steps.avatar.subtitle')}
       >

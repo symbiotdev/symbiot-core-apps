@@ -208,18 +208,20 @@ export const CreateBrandMembership = ({
         />
       </SurveyStep>
 
-      <SurveyStep
-        canGoNext={locationFormState.isValid}
-        title={t(`${tPrefix}.create.steps.location.title`)}
-        subtitle={t(`${tPrefix}.create.steps.location.subtitle`)}
-      >
-        <BrandMembershipLocationController
-          noLabel
-          name="location"
-          type={type}
-          control={locationControl}
-        />
-      </SurveyStep>
+      {!!brand?.stats.locations && (
+        <SurveyStep
+          canGoNext={locationFormState.isValid}
+          title={t(`${tPrefix}.create.steps.location.title`)}
+          subtitle={t(`${tPrefix}.create.steps.location.subtitle`)}
+        >
+          <BrandMembershipLocationController
+            noLabel
+            name="location"
+            type={type}
+            control={locationControl}
+          />
+        </SurveyStep>
+      )}
 
       {brand?.stats?.services ? (
         <SurveyStep

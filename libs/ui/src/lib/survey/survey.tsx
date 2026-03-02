@@ -42,6 +42,7 @@ import {
   Icon,
   LoadingView,
   PAGE_STYLE,
+  PageShadow,
   useHeaderHeight,
 } from '@symbiot-core-apps/ui2';
 import { scheduleOnRN } from 'react-native-worklets';
@@ -297,6 +298,8 @@ export const Survey = ({
           </KeyboardStickyView>
         </Animated.View>
       )}
+
+      <PageShadow />
     </Container>
   );
 };

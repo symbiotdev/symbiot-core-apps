@@ -7,7 +7,6 @@ export const useDynamicBrandLocation = () => {
   return useMemo(
     () => ({
       label: t('brand_location.form.dynamic.label'),
-      description: t('brand_location.form.dynamic.placeholder'),
       value: null,
     }),
     [t],

@@ -810,8 +810,8 @@
           {
             "name": "Address",
             "options": [
-              "Limit: Maximum 150 characters.",
-              "For example, 221B Baker Street, London, UK"
+              "Обмеження: максимум 150 символів.",
+              "Наприклад: вул. Хрещатик, 22, Київ, Україна"
             ]
           },
           {

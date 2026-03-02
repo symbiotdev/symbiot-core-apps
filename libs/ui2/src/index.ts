@@ -26,6 +26,7 @@ export * from './lib/navigation/hooks/use-side-menu';
 export * from './lib/navigation/hooks/use-stack-navigation-options';
 export * from './lib/navigation/modal-header';
 
+export * from './lib/page/components/page-shadow';
 export * from './lib/page/utils/style-rules';
 export * from './lib/page/page';
 export * from './lib/page/scrollable-page';

@@ -59,7 +59,7 @@ const Item = ({
         alignItems="center"
         onPress={toggle}
       >
-        <SemiBoldText lineHeight={20} paddingVertical="$4">
+        <SemiBoldText flexShrink={1} lineHeight={20} paddingVertical="$4">
           {item.title}
         </SemiBoldText>
 

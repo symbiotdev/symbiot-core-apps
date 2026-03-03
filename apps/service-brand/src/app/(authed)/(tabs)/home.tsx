@@ -154,7 +154,7 @@ const BrandHome = () => {
             color={currentBrand.avatarColor}
             size={30}
           />
-          <H3 lineHeight={HEADER_BUTTON_SIZE} numberOfLines={1}>
+          <H3 flexShrink={1} lineHeight={HEADER_BUTTON_SIZE} numberOfLines={1}>
             {currentBrand.name}
           </H3>
         </XStack>

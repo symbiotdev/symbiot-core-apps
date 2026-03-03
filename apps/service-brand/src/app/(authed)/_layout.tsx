@@ -404,12 +404,6 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
             headerTitle: t('brand_location.update.title'),
           }}
         />
-        <Stack.Screen
-          name="locations/[id]/profile"
-          options={{
-            headerTitle: t('brand_location.profile.title'),
-          }}
-        />
         <Stack.Protected guard={canDo.addLocation}>
           <Stack.Screen
             name="locations/create"
@@ -418,19 +412,26 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
             }}
           />
         </Stack.Protected>
-        <Stack.Screen
-          name="locations/index"
-          options={{
-            ...animationControlProps,
-            headerTitle: () => (
-              <HeaderTitle
-                title={t('brand_location.title')}
-                subtitle={used.locations}
-              />
-            ),
-          }}
-        />
       </Stack.Protected>
+
+      <Stack.Screen
+        name="locations/[id]/profile"
+        options={{
+          headerTitle: t('brand_location.profile.title'),
+        }}
+      />
+      <Stack.Screen
+        name="locations/index"
+        options={{
+          ...animationControlProps,
+          headerTitle: () => (
+            <HeaderTitle
+              title={t('brand_location.title')}
+              subtitle={used.locations}
+            />
+          ),
+        }}
+      />
 
       {/*MEMBERSHIPS*/}
 

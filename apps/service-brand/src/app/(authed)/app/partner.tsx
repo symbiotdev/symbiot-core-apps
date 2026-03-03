@@ -40,7 +40,7 @@ export default () => {
   return (
     !!me?.partner && (
       <ScrollablePage>
-        <Compactor style={{ paddingVertical: 15 }}>
+        <Compactor style={{ gap: 10 }}>
           <ListItemGroup
             title={t('shared.partner_program.promo_code.your_promo_code')}
           >

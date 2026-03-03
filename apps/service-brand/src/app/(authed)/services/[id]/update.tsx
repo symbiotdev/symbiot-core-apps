@@ -1,7 +1,7 @@
 import { useBrandServiceDetailedByIdReq } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { UpdateBrandService } from '@symbiot-core-apps/brand-service';
-import { useCallback, useLayoutEffect, useMemo } from 'react';
+import { useLayoutEffect, useMemo } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
 import {
   ContextMenu,
@@ -33,16 +33,13 @@ export default () => {
     [id, t],
   );
 
-  const headerRight = useCallback(
-    () => <ContextMenu items={contextMenuItems} />,
-    [contextMenuItems],
-  );
-
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight,
+      ...(contextMenuItems.length && {
+        headerRight: () => <ContextMenu items={contextMenuItems} />,
+      }),
     });
-  }, [headerRight, navigation]);
+  }, [contextMenuItems, navigation]);
 
   if (!service || error) {
     return <FallbackView loading={isPending} error={error} />;

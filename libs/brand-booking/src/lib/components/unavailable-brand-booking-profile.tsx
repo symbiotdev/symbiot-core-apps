@@ -133,31 +133,30 @@ export const UnavailableBrandBookingProfile = ({
     [t, openRescheduleModal, openNoteModal, cancel, booking.id, getRecurring],
   );
 
-  const headerRight = useCallback(
-    () =>
-      !!booking?.id &&
-      !booking?.cancelAt && (
-        <ContextMenu
-          loading={cancelProcessing || updateProcessing}
-          disabled={cancelProcessing || updateProcessing}
-          items={contextMenuItems}
-        />
-      ),
-    [
-      booking?.id,
-      booking?.cancelAt,
-      cancelProcessing,
-      updateProcessing,
-      contextMenuItems,
-    ],
-  );
-
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight,
       headerTitle: t(`unavailable_brand_booking.profile.title`),
+      ...(contextMenuItems.length &&
+        !!booking?.id &&
+        !booking?.cancelAt && {
+          headerRight: () => (
+            <ContextMenu
+              loading={cancelProcessing || updateProcessing}
+              disabled={cancelProcessing || updateProcessing}
+              items={contextMenuItems}
+            />
+          ),
+        }),
     });
-  }, [navigation, headerRight, t]);
+  }, [
+    booking?.cancelAt,
+    booking?.id,
+    cancelProcessing,
+    contextMenuItems,
+    navigation,
+    t,
+    updateProcessing,
+  ]);
 
   return (
     <>

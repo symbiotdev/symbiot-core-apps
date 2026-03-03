@@ -1,7 +1,7 @@
 import { UpdateBrandLocation } from '@symbiot-core-apps/brand-location';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useBrandLocationByIdReq } from '@symbiot-core-apps/api';
-import { useCallback, useLayoutEffect, useMemo } from 'react';
+import { useLayoutEffect, useMemo } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
 import {
   ContextMenu,
@@ -28,16 +28,13 @@ export default () => {
     [t, id],
   );
 
-  const headerRight = useCallback(
-    () => <ContextMenu items={contextMenuItems} />,
-    [contextMenuItems],
-  );
-
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight,
+      ...(contextMenuItems.length && {
+        headerRight: () => <ContextMenu items={contextMenuItems} />,
+      }),
     });
-  }, [headerRight, navigation]);
+  }, [contextMenuItems, navigation]);
 
   if (!location || error) {
     return <FallbackView loading={isPending} error={error} />;

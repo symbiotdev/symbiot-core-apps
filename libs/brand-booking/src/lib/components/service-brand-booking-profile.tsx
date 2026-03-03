@@ -155,33 +155,32 @@ export const ServiceBrandBookingProfile = ({
     ],
   );
 
-  const headerRight = useCallback(
-    () =>
-      !!booking?.id &&
-      !booking?.cancelAt &&
-      hasPermission('bookings') && (
-        <ContextMenu
-          loading={cancelProcessing || updateProcessing}
-          disabled={cancelProcessing || updateProcessing}
-          items={contextMenuItems}
-        />
-      ),
-    [
-      booking?.id,
-      booking?.cancelAt,
-      hasPermission,
-      cancelProcessing,
-      updateProcessing,
-      contextMenuItems,
-    ],
-  );
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: t(`service_brand_booking.profile.title`),
-      headerRight,
+      ...(contextMenuItems.length &&
+        !!booking?.id &&
+        !booking?.cancelAt &&
+        hasPermission('bookings') && {
+          headerRight: () => (
+            <ContextMenu
+              loading={cancelProcessing || updateProcessing}
+              disabled={cancelProcessing || updateProcessing}
+              items={contextMenuItems}
+            />
+          ),
+        }),
     });
-  }, [navigation, t, headerRight]);
+  }, [
+    booking?.cancelAt,
+    booking?.id,
+    cancelProcessing,
+    contextMenuItems,
+    t,
+    hasPermission,
+    navigation,
+    updateProcessing,
+  ]);
 
   return (
     <>

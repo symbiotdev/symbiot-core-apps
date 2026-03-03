@@ -1,6 +1,6 @@
 import { useCurrentBrandEmployee } from '@symbiot-core-apps/state';
 import { BrandEmployeeProfile } from '@symbiot-core-apps/brand-employee';
-import React, { useCallback, useLayoutEffect, useMemo } from 'react';
+import React, { useLayoutEffect, useMemo } from 'react';
 import { router, useNavigation } from 'expo-router';
 import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import { useAccountAuthSignOutReq } from '@symbiot-core-apps/api';
@@ -45,16 +45,13 @@ export default () => {
     [currentEmployee?.id, hasPermission, signOut, t],
   );
 
-  const headerRight = useCallback(
-    () => <ContextMenu items={contextMenuItems} />,
-    [contextMenuItems],
-  );
-
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight,
+      ...(contextMenuItems.length && {
+        headerRight: () => <ContextMenu items={contextMenuItems} />,
+      }),
     });
-  }, [headerRight, navigation]);
+  }, [contextMenuItems, navigation]);
 
   if (!currentEmployee) {
     return <FallbackView loading />;

@@ -4,7 +4,7 @@ import {
   useBrandClientMembershipByIdReq,
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import React, { useCallback, useLayoutEffect, useMemo } from 'react';
+import React, { useLayoutEffect, useMemo } from 'react';
 import { useI18n } from '@symbiot-core-apps/shared';
 import {
   ContextMenu,
@@ -41,17 +41,14 @@ export default () => {
     [id, membershipId, t],
   );
 
-  const headerRight = useCallback(
-    () => <ContextMenu items={contextMenuItems} />,
-    [contextMenuItems],
-  );
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: client && `${client.firstname} ${client.lastname}`,
-      headerRight,
+      ...(contextMenuItems.length && {
+        headerRight: () => <ContextMenu items={contextMenuItems} />,
+      }),
     });
-  }, [client, navigation, headerRight]);
+  }, [client, navigation, contextMenuItems]);
 
   if (!membership || error) {
     return <FallbackView loading={isPending} error={error} />;

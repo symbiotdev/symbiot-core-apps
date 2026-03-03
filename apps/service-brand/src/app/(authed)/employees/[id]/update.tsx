@@ -1,7 +1,7 @@
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useBrandEmployeeDetailedByIdReq } from '@symbiot-core-apps/api';
 import { UpdateBrandEmployee } from '@symbiot-core-apps/brand-employee';
-import { useCallback, useLayoutEffect, useMemo } from 'react';
+import { useLayoutEffect, useMemo } from 'react';
 import {
   useCurrentBrandEmployee,
   useCurrentBrandState,
@@ -43,19 +43,13 @@ export default () => {
     [brand?.owner?.id, id, currentEmployee?.id, t],
   );
 
-  const headerRight = useCallback(
-    () =>
-      contextMenuItems.length ? (
-        <ContextMenu items={contextMenuItems} />
-      ) : undefined,
-    [contextMenuItems],
-  );
-
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight,
+      ...(contextMenuItems.length && {
+        headerRight: () => <ContextMenu items={contextMenuItems} />,
+      }),
     });
-  }, [headerRight, navigation]);
+  }, [contextMenuItems, navigation]);
 
   if (!employee || error) {
     return <FallbackView loading={isPending} error={error} />;

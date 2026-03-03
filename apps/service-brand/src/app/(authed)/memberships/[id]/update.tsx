@@ -3,7 +3,7 @@ import {
   useBrandMembershipDetailedByIdReq,
 } from '@symbiot-core-apps/api';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import { useCallback, useLayoutEffect, useMemo } from 'react';
+import { useLayoutEffect, useMemo } from 'react';
 import { UpdateBrandMembership } from '@symbiot-core-apps/brand-membership';
 import { useI18n } from '@symbiot-core-apps/shared';
 import {
@@ -43,21 +43,18 @@ export default () => {
     [id, membership?.type, t],
   );
 
-  const headerRight = useCallback(
-    () => <ContextMenu items={contextMenuItems} />,
-    [contextMenuItems],
-  );
-
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight,
       headerTitle: membership?.type
         ? t(
             `${getTranslateKeyByBrandMembershipType(membership.type)}.update.title`,
           )
         : '',
+      ...(contextMenuItems.length && {
+        headerRight: () => <ContextMenu items={contextMenuItems} />,
+      }),
     });
-  }, [headerRight, membership?.type, navigation, t]);
+  }, [contextMenuItems, membership?.type, navigation, t]);
 
   if (!membership || error) {
     return <FallbackView loading={isPending} error={error} />;

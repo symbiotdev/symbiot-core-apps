@@ -1,6 +1,6 @@
 import { UpdateAccount } from '@symbiot-core-apps/account';
 import { useNavigation } from 'expo-router';
-import React, { useCallback, useLayoutEffect, useMemo } from 'react';
+import React, { useLayoutEffect, useMemo } from 'react';
 import { ConfirmAlert, useI18n } from '@symbiot-core-apps/shared';
 import { useAccountAuthSignOutReq } from '@symbiot-core-apps/api';
 import { ContextMenu, ContextMenuItem, Icon } from '@symbiot-core-apps/ui2';
@@ -25,16 +25,13 @@ export default () => {
     [signOut, t],
   );
 
-  const headerRight = useCallback(
-    () => <ContextMenu items={contextMenuItems} />,
-    [contextMenuItems],
-  );
-
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight,
+      ...(contextMenuItems.length && {
+        headerRight: <ContextMenu items={contextMenuItems} />,
+      }),
     });
-  }, [headerRight, navigation]);
+  }, [contextMenuItems, navigation]);
 
   return <UpdateAccount />;
 };

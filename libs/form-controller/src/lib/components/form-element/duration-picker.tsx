@@ -13,6 +13,7 @@ import { FormField } from '../wrapper/form-field';
 import { InputFieldView } from '../wrapper/input-field-view';
 import { Picker } from './picker';
 import { AdaptiveSheet, AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
+import { ScrollView } from 'react-native';
 
 export type DurationPickerUnit =
   | 'minutes'
@@ -152,67 +153,69 @@ export const DurationPicker = ({
         }
         onClose={onBlur}
       >
-        <XStack justifyContent="center" gap={isIos ? 0 : 5}>
-          {units.includes('years') && (
-            <Picker
-              lazy
-              options={yearsOptions}
-              value={years}
-              contentContainerStyle={{ paddingHorizontal: 0 }}
-              onChange={(years) =>
-                onChangeDate(years as number, months, days, hours, minutes)
-              }
-            />
-          )}
+        <ScrollView>
+          <XStack justifyContent="center" gap={isIos ? 0 : 5}>
+            {units.includes('years') && (
+              <Picker
+                lazy
+                options={yearsOptions}
+                value={years}
+                contentContainerStyle={{ paddingHorizontal: 0 }}
+                onChange={(years) =>
+                  onChangeDate(years as number, months, days, hours, minutes)
+                }
+              />
+            )}
 
-          {units.includes('months') && (
-            <Picker
-              lazy
-              options={monthsOptions}
-              value={months}
-              contentContainerStyle={{ paddingHorizontal: 0 }}
-              onChange={(months) =>
-                onChangeDate(years, months as number, days, hours, minutes)
-              }
-            />
-          )}
+            {units.includes('months') && (
+              <Picker
+                lazy
+                options={monthsOptions}
+                value={months}
+                contentContainerStyle={{ paddingHorizontal: 0 }}
+                onChange={(months) =>
+                  onChangeDate(years, months as number, days, hours, minutes)
+                }
+              />
+            )}
 
-          {units.includes('days') && (
-            <Picker
-              lazy
-              options={daysOptions}
-              value={days}
-              contentContainerStyle={{ paddingHorizontal: 0 }}
-              onChange={(days) =>
-                onChangeDate(years, months, days as number, hours, minutes)
-              }
-            />
-          )}
+            {units.includes('days') && (
+              <Picker
+                lazy
+                options={daysOptions}
+                value={days}
+                contentContainerStyle={{ paddingHorizontal: 0 }}
+                onChange={(days) =>
+                  onChangeDate(years, months, days as number, hours, minutes)
+                }
+              />
+            )}
 
-          {units.includes('hours') && (
-            <Picker
-              lazy
-              options={hoursOptions}
-              value={hours}
-              contentContainerStyle={{ paddingHorizontal: 0 }}
-              onChange={(hours) =>
-                onChangeDate(years, months, days, hours as number, minutes)
-              }
-            />
-          )}
+            {units.includes('hours') && (
+              <Picker
+                lazy
+                options={hoursOptions}
+                value={hours}
+                contentContainerStyle={{ paddingHorizontal: 0 }}
+                onChange={(hours) =>
+                  onChangeDate(years, months, days, hours as number, minutes)
+                }
+              />
+            )}
 
-          {units.includes('minutes') && (
-            <Picker
-              lazy
-              options={minutesOptions}
-              value={minutes}
-              contentContainerStyle={{ paddingHorizontal: 0 }}
-              onChange={(minutes) =>
-                onChangeDate(years, months, days, hours, minutes as number)
-              }
-            />
-          )}
-        </XStack>
+            {units.includes('minutes') && (
+              <Picker
+                lazy
+                options={minutesOptions}
+                value={minutes}
+                contentContainerStyle={{ paddingHorizontal: 0 }}
+                onChange={(minutes) =>
+                  onChangeDate(years, months, days, hours, minutes as number)
+                }
+              />
+            )}
+          </XStack>
+        </ScrollView>
       </AdaptiveSheet>
     </FormField>
   );

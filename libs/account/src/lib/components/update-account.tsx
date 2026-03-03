@@ -113,6 +113,7 @@ export const UpdateAccount = () => {
 
         {isIos && (
           <Button
+            alignSelf="center"
             type="clear"
             color="red"
             opacity={0.7}

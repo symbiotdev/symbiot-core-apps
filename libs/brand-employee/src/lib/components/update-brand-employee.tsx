@@ -59,7 +59,7 @@ export const UpdateBrandEmployee = ({
   employee: BrandEmployee;
 }) => {
   const { brand } = useCurrentBrandState();
-  const { currentEmployee, hasAnyPermission } = useCurrentBrandEmployee();
+  const { currentEmployee } = useCurrentBrandEmployee();
   const { mutateAsync: updateAvatar, isPending: avatarUpdating } =
     useUpdateBrandEmployeeReq();
 
@@ -98,8 +98,9 @@ export const UpdateBrandEmployee = ({
           <Identification employee={employee} />
 
           {brand?.owner?.id !== employee.id &&
-            employee.id !== currentEmployee?.id &&
-            hasAnyPermission && <Permissions employee={employee} />}
+            brand?.owner?.id === currentEmployee?.id && (
+              <Permissions employee={employee} />
+            )}
         </ListItemGroup>
       </CompactView>
     </ScrollablePage>

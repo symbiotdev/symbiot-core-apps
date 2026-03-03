@@ -87,6 +87,7 @@ export const GalleryPicker = ({
           width={imageSize}
           height={imageSize}
           borderRadius="$10"
+          zIndex={-1}
           overflow="hidden"
         >
           {removingIndex === index && (

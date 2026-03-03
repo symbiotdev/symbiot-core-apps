@@ -82,7 +82,7 @@ export default () => {
 
   return (
     me && (
-      <ScrollablePage ignoreHeaderHeight>
+      <ScrollablePage ignoreHeaderHeight style={{ paddingBottom: 150 }}>
         <Compactor style={{ gap: 10, paddingTop: 10, flex: 1 }}>
           {canSubscribe && (
             <ActionCard

@@ -117,7 +117,7 @@ const DiscountForm = SingeElementForm<{
 }>;
 
 const EmployeesForm = SingeElementForm<{
-  location: string | null;
+  location?: string;
 }>;
 
 const Availability = ({ service }: { service: BrandService }) => {
@@ -294,7 +294,12 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
             value={
               value.locations?.length ? value.locations : [allLocations.value]
             }
-            onUpdate={updateValue}
+            onUpdate={({ locations }) =>
+              updateValue({
+                locations: locations as string[],
+                employees: [],
+              })
+            }
             Controller={BrandServiceLocationController}
           />
 
@@ -305,12 +310,7 @@ const LocationProviders = ({ service }: { service: BrandService }) => {
               controllerProps={{
                 location: service.locations?.[0]?.id,
               }}
-              onUpdate={({ employees }: TUpdateBrandService) =>
-                !modalVisible &&
-                updateValue({
-                  employees,
-                })
-              }
+              onUpdate={updateValue}
               Controller={BrandServiceEmployeesController}
             />
           ) : (

@@ -171,7 +171,9 @@ export const PlusActionAdaptiveModal = ({
 
         {hasPermission('bookings') && (
           <>
-            {hasPermission('clients') && <Br marginVertical="$2" />}
+            {hasAnyOfPermissions(['employees', 'locations', 'clients']) && (
+              <Br marginVertical="$2" />
+            )}
 
             <ListItem
               iconName={icons.ServiceBooking}

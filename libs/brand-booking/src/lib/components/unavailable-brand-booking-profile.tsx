@@ -25,10 +25,7 @@ import {
   useI18n,
   useModal,
 } from '@symbiot-core-apps/shared';
-import {
-  useCurrentAccountPreferences,
-  useCurrentBrandEmployee,
-} from '@symbiot-core-apps/state';
+import { useCurrentAccountPreferences } from '@symbiot-core-apps/state';
 import { useForm } from 'react-hook-form';
 import { UnavailableBrandBookingDatetimeController } from './controller/unavailable-brand-booking-datetime-controller';
 import { BrandBookingNoteController } from './controller/brand-booking-note-controller';
@@ -51,7 +48,6 @@ export const UnavailableBrandBookingProfile = ({
   const { icons } = useAppSettings();
   const { t } = useI18n();
   const preferences = useCurrentAccountPreferences();
-  const { hasPermission } = useCurrentBrandEmployee();
   const navigation = useNavigation();
   const { timezone } = useBookingDatetime({ fallbackZone: booking.timezone });
   const { mutateAsync: cancel, isPending: cancelProcessing } =
@@ -140,8 +136,7 @@ export const UnavailableBrandBookingProfile = ({
   const headerRight = useCallback(
     () =>
       !!booking?.id &&
-      !booking?.cancelAt &&
-      hasPermission('bookings') && (
+      !booking?.cancelAt && (
         <ContextMenu
           loading={cancelProcessing || updateProcessing}
           disabled={cancelProcessing || updateProcessing}
@@ -151,7 +146,6 @@ export const UnavailableBrandBookingProfile = ({
     [
       booking?.id,
       booking?.cancelAt,
-      hasPermission,
       cancelProcessing,
       updateProcessing,
       contextMenuItems,

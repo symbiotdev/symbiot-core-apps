@@ -203,12 +203,14 @@ const StackNavigation = ({ animated }: { animated: boolean }) => {
 
       <Stack.Protected guard={hasPermission('bookings')}>
         <Stack.Protected guard={hasPermission('analytics')}>
-          <Stack.Screen name="bookings/[type]/[id]/analytics" />
+          <Stack.Screen name="bookings/service/[id]/analytics" />
         </Stack.Protected>
-        <Stack.Screen name="bookings/[type]/create" />
+        <Stack.Screen name="bookings/service/create" />
       </Stack.Protected>
 
-      <Stack.Screen name="bookings/[type]/[id]/profile" />
+      <Stack.Screen name="bookings/unavailable/create" />
+      <Stack.Screen name="bookings/unavailable/[id]/profile" />
+      <Stack.Screen name="bookings/service/[id]/profile" />
       <Stack.Screen
         name="bookings/index"
         options={{

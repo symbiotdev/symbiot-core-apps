@@ -95,104 +95,102 @@ export const PlusActionAdaptiveModal = ({
   }, []);
 
   return (
-    hasAnyOfPermissions(['employees', 'locations', 'catalog', 'clients']) && (
-      <AdaptiveSheet
-        excludePaddings
-        popoverPlacement="left-end"
-        ref={sheetRef}
-        trigger={trigger}
-      >
-        <ScrollView contentContainerStyle={{ padding: 20 }}>
-          {hasAnyOfPermissions(['employees', 'locations']) && (
-            <>
-              {hasPermission('locations') && (
-                <ListItem
-                  iconName="MapPointWave"
-                  label={t('navigation.tabs.plus.actions.add_location.label')}
-                  onPress={addLocation}
-                />
+    <AdaptiveSheet
+      excludePaddings
+      popoverPlacement="left-end"
+      ref={sheetRef}
+      trigger={trigger}
+    >
+      <ScrollView contentContainerStyle={{ padding: 20 }}>
+        {hasAnyOfPermissions(['employees', 'locations']) && (
+          <>
+            {hasPermission('locations') && (
+              <ListItem
+                iconName="MapPointWave"
+                label={t('navigation.tabs.plus.actions.add_location.label')}
+                onPress={addLocation}
+              />
+            )}
+
+            {hasPermission('employees') && (
+              <ListItem
+                iconName="UsersGroupRounded"
+                label={t('navigation.tabs.plus.actions.add_employee.label')}
+                onPress={addEmployee}
+              />
+            )}
+          </>
+        )}
+
+        {hasPermission('catalog') && (
+          <>
+            {hasAnyOfPermissions(['employees', 'locations']) && (
+              <Br marginVertical="$2" />
+            )}
+
+            <ListItem
+              iconName={icons.Service}
+              label={t('navigation.tabs.plus.actions.add_service.label')}
+              onPress={addService}
+            />
+            <ListItem
+              iconName={icons.VisitBasedMembership}
+              label={t(
+                'navigation.tabs.plus.actions.add_visit_based_membership.label',
               )}
-
-              {hasPermission('employees') && (
-                <ListItem
-                  iconName="UsersGroupRounded"
-                  label={t('navigation.tabs.plus.actions.add_employee.label')}
-                  onPress={addEmployee}
-                />
+              onPress={addVisitBasedMembership}
+            />
+            <ListItem
+              iconName={icons.PeriodBasedMembership}
+              label={t(
+                'navigation.tabs.plus.actions.add_period_based_membership.label',
               )}
-            </>
-          )}
+              onPress={addPeriodBasedMembership}
+            />
+          </>
+        )}
 
-          {hasPermission('catalog') && (
-            <>
-              {hasAnyOfPermissions(['employees', 'locations']) && (
-                <Br marginVertical="$2" />
+        {hasPermission('clients') && (
+          <>
+            {hasAnyOfPermissions(['employees', 'locations', 'catalog']) && (
+              <Br marginVertical="$2" />
+            )}
+
+            <ListItem
+              iconName="Import"
+              label={t('navigation.tabs.plus.actions.import_client.label')}
+              onPress={importClients}
+            />
+            <ListItem
+              iconName="SmileCircle"
+              label={t('navigation.tabs.plus.actions.add_client.label')}
+              onPress={addClient}
+            />
+          </>
+        )}
+
+        {hasPermission('bookings') && (
+          <>
+            {hasPermission('clients') && <Br marginVertical="$2" />}
+
+            <ListItem
+              iconName={icons.ServiceBooking}
+              label={t(
+                'navigation.tabs.plus.actions.add_service_booking.label',
               )}
+              onPress={addServiceBooking}
+            />
+          </>
+        )}
 
-              <ListItem
-                iconName={icons.Service}
-                label={t('navigation.tabs.plus.actions.add_service.label')}
-                onPress={addService}
-              />
-              <ListItem
-                iconName={icons.VisitBasedMembership}
-                label={t(
-                  'navigation.tabs.plus.actions.add_visit_based_membership.label',
-                )}
-                onPress={addVisitBasedMembership}
-              />
-              <ListItem
-                iconName={icons.PeriodBasedMembership}
-                label={t(
-                  'navigation.tabs.plus.actions.add_period_based_membership.label',
-                )}
-                onPress={addPeriodBasedMembership}
-              />
-            </>
+        <ListItem
+          iconName={icons.UnavailableBooking}
+          label={t(
+            'navigation.tabs.plus.actions.add_unavailable_booking.label',
           )}
-
-          {hasPermission('clients') && (
-            <>
-              {hasAnyOfPermissions(['employees', 'locations', 'catalog']) && (
-                <Br marginVertical="$2" />
-              )}
-
-              <ListItem
-                iconName="Import"
-                label={t('navigation.tabs.plus.actions.import_client.label')}
-                onPress={importClients}
-              />
-              <ListItem
-                iconName="SmileCircle"
-                label={t('navigation.tabs.plus.actions.add_client.label')}
-                onPress={addClient}
-              />
-            </>
-          )}
-
-          {hasPermission('bookings') && (
-            <>
-              {hasPermission('clients') && <Br marginVertical="$2" />}
-
-              <ListItem
-                iconName={icons.ServiceBooking}
-                label={t(
-                  'navigation.tabs.plus.actions.add_service_booking.label',
-                )}
-                onPress={addServiceBooking}
-              />
-
-              <ListItem
-                iconName={icons.UnavailableBooking}
-                label={t(
-                  'navigation.tabs.plus.actions.add_unavailable_booking.label',
-                )}
-                onPress={addUnavailableBooking}
-              />
-            </>
-          )}
-        </ScrollView>
-      </AdaptiveSheet>
-    )
+          onPress={addUnavailableBooking}
+        />
+      </ScrollView>
+    </AdaptiveSheet>
   );
 };

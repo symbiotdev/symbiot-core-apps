@@ -1,19 +1,23 @@
-import { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import {
   DateHelper,
+  isAndroid,
   isIos,
   minutesInMonth,
   minutesInYear,
   useI18n,
 } from '@symbiot-core-apps/shared';
 import { minutesInDay, minutesInHour } from 'date-fns/constants';
-import { ViewProps, XStack } from 'tamagui';
+import { View, ViewProps, XStack } from 'tamagui';
 import { LightText } from '@symbiot-core-apps/ui';
 import { FormField } from '../wrapper/form-field';
 import { InputFieldView } from '../wrapper/input-field-view';
 import { Picker } from './picker';
-import { AdaptiveSheet, AdaptiveSheetRef } from '@symbiot-core-apps/ui2';
-import { ScrollView } from 'react-native';
+import {
+  AdaptiveSheet,
+  AdaptiveSheetRef,
+  HeaderTitle,
+} from '@symbiot-core-apps/ui2';
 
 export type DurationPickerUnit =
   | 'minutes'
@@ -135,9 +139,9 @@ export const DurationPicker = ({
   return (
     <FormField label={label} error={error} required={required}>
       <AdaptiveSheet
+        excludePaddings
         ref={sheetRef}
         triggerDisabled={disabled}
-        sheetTitle={label}
         sheetGestureDisabled={isIos}
         sheetHandleVisible={!isIos}
         trigger={
@@ -153,7 +157,13 @@ export const DurationPicker = ({
         }
         onClose={onBlur}
       >
-        <ScrollView>
+        <View
+          paddingTop={30}
+          paddingBottom={50}
+          backgroundColor={isAndroid ? '$background1' : undefined}
+        >
+          {!!label && <HeaderTitle title={label} />}
+
           <XStack justifyContent="center" gap={isIos ? 0 : 5}>
             {units.includes('years') && (
               <Picker
@@ -215,7 +225,7 @@ export const DurationPicker = ({
               />
             )}
           </XStack>
-        </ScrollView>
+        </View>
       </AdaptiveSheet>
     </FormField>
   );

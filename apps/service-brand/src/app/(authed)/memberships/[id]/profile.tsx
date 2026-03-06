@@ -30,25 +30,25 @@ export default () => {
             `${getTranslateKeyByBrandMembershipType(membership.type)}.profile.title`,
           )
         : '',
-      headerRight: () => (
-        <>
-          {/*todo - analytics*/}
-          {/*{hasPermission('analytics') && (*/}
-          {/*  <HeaderButton*/}
-          {/*    iconName="ChartSquare"*/}
-          {/*    onPress={() =>*/}
-          {/*      router.push(`/memberships/${id}/analytics`)*/}
-          {/*    }*/}
-          {/*  />*/}
-          {/*)}*/}
-          {hasPermission('catalog') && (
+      ...(hasPermission('catalog') && {
+        headerRight: () => (
+          <>
+            {/*todo - analytics*/}
+            {/*{hasPermission('analytics') && (*/}
+            {/*  <HeaderButton*/}
+            {/*    iconName="ChartSquare"*/}
+            {/*    onPress={() =>*/}
+            {/*      router.push(`/memberships/${id}/analytics`)*/}
+            {/*    }*/}
+            {/*  />*/}
+            {/*)}*/}
             <HeaderButton
               iconName="SettingsMinimalistic"
               onPress={() => router.push(`/memberships/${id}/update`)}
             />
-          )}
-        </>
-      ),
+          </>
+        ),
+      }),
     });
   }, [hasPermission, id, membership?.type, navigation, t]);
 

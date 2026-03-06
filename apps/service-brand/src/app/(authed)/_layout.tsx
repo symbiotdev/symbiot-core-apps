@@ -37,8 +37,10 @@ import {
 
 const PlusButton = () => {
   const pathname = usePathname();
+  const { brand: currentBrand } = useCurrentBrandState();
 
   return (
+    currentBrand &&
     pathname.split('/').filter(Boolean).length === 1 && (
       <View
         style={{

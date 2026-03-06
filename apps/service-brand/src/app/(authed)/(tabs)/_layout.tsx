@@ -50,22 +50,24 @@ export default () => {
           {...props}
           hidden={sideMenuVisible || segments.includes('(stack)')}
           DynamicButton={
-            <PlusActionAdaptiveModal
-              trigger={
-                <GlassView
-                  interactive
-                  style={{
-                    width: 55,
-                    height: 55,
-                    borderRadius: 50,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <LightText fontSize={30}>+</LightText>
-                </GlassView>
-              }
-            />
+            currentBrand && (
+              <PlusActionAdaptiveModal
+                trigger={
+                  <GlassView
+                    interactive
+                    style={{
+                      width: 55,
+                      height: 55,
+                      borderRadius: 50,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <LightText fontSize={30}>+</LightText>
+                  </GlassView>
+                }
+              />
+            )
           }
         />
       )}

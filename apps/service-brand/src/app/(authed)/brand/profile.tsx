@@ -11,24 +11,24 @@ export default () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <>
-          {/*todo - analytics*/}
-          {/*{!drawerVisible && hasPermission('analytics') && (*/}
-          {/*  <HeaderButton*/}
-          {/*    iconName="ChartSquare"*/}
-          {/*    onPress={() => router.push(`/brand/analytics`)}*/}
-          {/*  />*/}
-          {/*)}*/}
+      ...(hasPermission('brand') && {
+        headerRight: () => (
+          <>
+            {/*todo - analytics*/}
+            {/*{!drawerVisible && hasPermission('analytics') && (*/}
+            {/*  <HeaderButton*/}
+            {/*    iconName="ChartSquare"*/}
+            {/*    onPress={() => router.push(`/brand/analytics`)}*/}
+            {/*  />*/}
+            {/*)}*/}
 
-          {hasPermission('brand') && (
             <HeaderButton
               iconName="SettingsMinimalistic"
               onPress={() => router.push(`/brand/update`)}
             />
-          )}
-        </>
-      ),
+          </>
+        ),
+      }),
     });
   }, [sideMenuVisible, hasPermission, navigation]);
 

@@ -13,23 +13,23 @@ export default () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <>
-          {/*todo - analytics*/}
-          {/*{hasPermission('analytics') && (*/}
-          {/*  <HeaderButton*/}
-          {/*    iconName="ChartSquare"*/}
-          {/*    onPress={() => router.push(`/clients/${id}/analytics`)}*/}
-          {/*  />*/}
-          {/*)}*/}
-          {hasPermission('clients') && (
+      ...(hasPermission('clients') && {
+        headerRight: () => (
+          <>
+            {/*todo - analytics*/}
+            {/*{hasPermission('analytics') && (*/}
+            {/*  <HeaderButton*/}
+            {/*    iconName="ChartSquare"*/}
+            {/*    onPress={() => router.push(`/clients/${id}/analytics`)}*/}
+            {/*  />*/}
+            {/*)}*/}
             <HeaderButton
               iconName="SettingsMinimalistic"
               onPress={() => router.push(`/clients/${id}/update`)}
             />
-          )}
-        </>
-      ),
+          </>
+        ),
+      }),
     });
   }, [hasPermission, id, navigation]);
 

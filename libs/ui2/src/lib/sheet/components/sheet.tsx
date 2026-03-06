@@ -177,10 +177,10 @@ export const Sheet = ({
               {
                 flexShrink: 1,
                 overflow: 'hidden',
-                paddingTop: 5,
                 borderTopLeftRadius: defaultBorderTopRadius,
                 borderTopRightRadius: defaultBorderTopRadius,
                 ...(!excludePaddings && {
+                  paddingTop: 5,
                   paddingHorizontal: 14,
                 }),
               },
